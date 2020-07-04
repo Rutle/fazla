@@ -18,8 +18,8 @@ const MainMenu = (): JSX.Element => {
         <NavLink to="/home" activeStyle={selectedStyle}>
           [Home]
         </NavLink>
-        <NavLink to="/list" activeStyle={selectedStyle}>
-          [List]
+        <NavLink to="/shiplist" activeStyle={selectedStyle}>
+          [Ship list]
         </NavLink>
         <NavLink to="/products" activeStyle={selectedStyle}>
           [Placeholder]

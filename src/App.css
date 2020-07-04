@@ -52,10 +52,16 @@ div.page {
   flex-direction: column;
 }
 section.home,
-section.list {
+section.ship-list {
   height: 100%;
   display: flex;
+  flex-direction: column;
+}
+section.ship-list {
+  margin: 0px 5px;
+  color: white;
+}
+section.home {
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }

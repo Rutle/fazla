@@ -4,7 +4,7 @@ import './index.css';
 import './App.css';
 // import App from './App';
 import * as serviceWorker from './serviceWorker';
-import List from './components/List';
+import ShipList from './components/ShipList';
 import Home from './components/Home';
 
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
@@ -18,7 +18,7 @@ ReactDOM.render(
             <Redirect to="/home" />
           </Route>
           <Route path="/home" component={Home} />
-          <Route path="/list" component={List} />
+          <Route path="/shiplist" component={ShipList} />
         </Switch>
       </div>
     </HashRouter>
