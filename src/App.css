@@ -1,0 +1,61 @@
+
+/*
+.App {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+*/
+.App {
+  /* background-color: #282c34;*/
+  background: rgb(47,48,50);
+background: linear-gradient(172deg, rgba(47,48,50,1) 4%, rgba(39,41,48,1) 15%, rgba(33,35,45,1) 70%);
+}
+html, body, #root, #root > div {
+  height: 100%;
+}
+
+body, nav, header {
+  display: flex;
+}
+body {
+  flex-direction: column;
+}
+div.main-menu {
+  margin: 5px 5px;
+  border-bottom: 1px solid rgb(80, 91, 100);
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.main-menu > nav > a {
+  border-radius: 5px 5px 0px 0px;
+  padding: 5px 15px;
+  text-decoration: none;
+  /* background-color: #72A0C1; */
+  background-color: rgba(105, 105, 105, 0);
+  color: white;
+}
+
+.main-menu > nav > a:hover {
+  background-color: rgba(176, 196, 222, 0.2);
+  color: white;
+}
+
+div.page {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+section.home,
+section.list {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
