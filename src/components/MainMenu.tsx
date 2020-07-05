@@ -4,11 +4,15 @@ import { NavLink } from 'react-router-dom';
 interface styleInterface {
   backgroundColor: string;
   color: string;
+  border: string;
+  borderBottom: string;
 }
 
 const selectedStyle: styleInterface = {
-  backgroundColor: 'rgba(176, 196, 222, 0.2)',
+  backgroundColor: '#353b48',
   color: 'white',
+  border: '1px solid #353b48',
+  borderBottom: '0px',
 };
 
 const MainMenu = (): JSX.Element => {

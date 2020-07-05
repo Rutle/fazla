@@ -1,7 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
-// import projects from './slices/projects';
+import shipListSlice from './slices/shipListSlice';
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  shipList: shipListSlice,
+});
 
 export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;

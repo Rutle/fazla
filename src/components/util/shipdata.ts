@@ -201,4 +201,4 @@ export const getShips = (name: string): ShipData => {
 export const getShipById = (id: string): Ship => {
   const t: Ship = (shipData as any)[id];
   return t;
-}
+};
