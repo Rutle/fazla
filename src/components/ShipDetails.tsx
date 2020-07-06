@@ -8,9 +8,15 @@ const ShipDetails: React.FC = () => {
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
 
   useEffect(() => {
-    console.log('details', shipDetails);
+    // console.log('details', shipDetails);
   }, [shipDetails]);
-  return <div>{shipDetails.names.code}</div>;
+  return (
+    <>
+      <div>
+        <h1>{shipDetails.names.code}</h1>
+      </div>
+    </>
+  );
 };
 
 export default ShipDetails;

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { setList } from '../reducers/slices/shipListSlice';
 import PageTemplate from './PageTemplate';
-import { getShips, ShipData, Ship, getShipById } from './util/shipdata';
+import { getShipsSimple, ShipDataSimple, ShipSimple, getShipById } from './util/shipdata';
 import ShipDetails from './ShipDetails';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 
@@ -15,16 +15,30 @@ const ShipDetailView: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState('search');
 
   useEffect(() => {
-    console.log('useEffect', getShips('KMS'));
+    // console.log('useEffect', getShips('KMS'));
     try {
-      const data: ShipData = getShips('KMS');
-      console.log('shipData', data);
+      // const data: ShipData = getShips('KMS');
+      const data: ShipDataSimple = getShipsSimple('KMS');
+      // console.log('shipData', data.ships.length);
       dispatch(setList(data));
     } catch (e) {
       console.log(e);
     }
-    console.log('end of useEffect', shipList);
   }, []);
+
+  // Set the first item on the list as active when ship list is updated.
+  useEffect(() => {
+    console.log('Shiplist', selectedId);
+    try {
+      if (shipList.ships.length > 0) {
+        // console.log('>0');
+        dispatch(setDetails(getShipById(shipList.ships[0].id)));
+        setSelected(shipList.ships[0].id);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, [shipList]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
     try {
@@ -60,12 +74,18 @@ const ShipDetailView: React.FC = () => {
                 PH2
               </button>
             </div>
-            <div id="search" className={`tab-content ${selectedTab === 'search' ? 'active' : 'hidden'}`}>Search</div>
-            <div id="PH1" className={`tab-content ${selectedTab === 'PH1' ? 'active' : 'hidden'}`}>PH!</div>
-            <div id="PH2" className={`tab-content ${selectedTab === 'PH2' ? 'active' : 'hidden'}`}>PH2</div>
+            <div id="search" className={`tab-content ${selectedTab === 'search' ? 'active' : 'hidden'}`}>
+              Search
+            </div>
+            <div id="PH1" className={`tab-content ${selectedTab === 'PH1' ? 'active' : 'hidden'}`}>
+              PH!
+            </div>
+            <div id="PH2" className={`tab-content ${selectedTab === 'PH2' ? 'active' : 'hidden'}`}>
+              PH2
+            </div>
           </div>
           <div className="rList">
-            {shipList.ships.map((ship: Ship) => {
+            {shipList.ships.map((ship: ShipSimple) => {
               /*
               return (
                 <li key={ship.id} className="rList-item" onClick={(e) => handleClick(e, ship.id)}>
@@ -81,7 +101,7 @@ const ShipDetailView: React.FC = () => {
                   type="button"
                   onClick={(e) => handleClick(e, ship.id)}
                 >
-                  {ship.names.code}
+                  {ship.name}
                 </button>
               );
             })}

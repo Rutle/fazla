@@ -17,6 +17,7 @@
   height: 100%;
   min-height: 100vh;
   flex-direction: column;
+  color: rgb(184, 184, 184);
   background: rgb(47,48,50);
   background: linear-gradient(172deg, rgba(47,48,50,1) 4%, rgba(39,41,48,1) 15%, rgba(33,35,45,1) 70%);
 }
@@ -65,7 +66,7 @@ div.main-menu {
   border: 1px solid #353b48;
   border-bottom: 0px;
   /* outline: 3px double #353b48; */
-  color: white;
+  color: rgb(184, 184, 184);
   transition: 0.3s;
 }
 
@@ -73,7 +74,7 @@ div.main-menu {
   background-color: rgba(176, 196, 222, 0.2);
   border: 1px solid #353b48;
   border-bottom: 0px;
-  color: white;
+  color: rgb(184, 184, 184);
   /*
   -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
@@ -94,7 +95,6 @@ section.home {
   margin: 10px 5px 0px 5px;
   height: 100%;
   min-height: 94vh;
-  color: white;
   display: flex;
   justify-content: center;
   flex-direction: row;

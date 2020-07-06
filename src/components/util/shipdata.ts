@@ -6,6 +6,16 @@ export interface ShipData {
   ships: Ship[];
 }
 
+export interface ShipDataSimple {
+  ships: ShipSimple[];
+}
+
+export interface ShipSimple {
+  name: string;
+  id: string;
+  class: string;
+}
+
 export interface Ship {
   wikiUrl?: string;
   id: string;
@@ -189,12 +199,26 @@ export interface Stats {
   baseStats: { [key: string]: string };
 }
 
-export const getShips = (name: string): ShipData => {
-  const t: ShipData = { ships: [] };
+export const getShipsSimple = (name: string): ShipDataSimple => {
+  // const t: ShipData = { ships: [] };
+  const t: ShipDataSimple = { ships: [] };
+  /*
   Object.keys(shipData).forEach((element) => {
     const obj = (shipData as any)[element];
     if (obj.names.code.includes(name)) t.ships.push(obj as Ship);
   });
+  */
+  t.ships = Object.assign(
+    Object.keys(shipData)
+      .filter((e) => {
+        if ((shipData as any)[e].names.code.includes(name)) return true;
+      })
+      .map((key) => ({
+        name: (shipData as any)[key].names.code,
+        id: (shipData as any)[key].id,
+        class: (shipData as any)[key].class,
+      })),
+  );
   return t;
 };
 
