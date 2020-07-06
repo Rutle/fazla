@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import ShipList from './components/ShipList';
+import ShipDetailView from './components/ShipDetailView';
 import Home from './components/Home';
 
 import { HashRouter, Route, Switch } from 'react-router-dom';
@@ -11,7 +11,7 @@ function App(): JSX.Element {
       <div className="App">
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/shiplist" component={ShipList} />
+          <Route path="/shipdetails" component={ShipDetailView} />
         </Switch>
       </div>
     </HashRouter>

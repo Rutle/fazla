@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
-import ShipList from './components/ShipList';
+import ShipDetailView from './components/ShipDetailView';
 import Home from './components/Home';
 import './index.css';
 import './App.css';
@@ -20,7 +20,7 @@ ReactDOM.render(
               <Redirect to="/home" />
             </Route>
             <Route path="/home" component={Home} />
-            <Route path="/shiplist" component={ShipList} />
+            <Route path="/shipdetails" component={ShipDetailView} />
           </Switch>
         </div>
       </HashRouter>

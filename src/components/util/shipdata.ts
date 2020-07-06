@@ -7,30 +7,30 @@ export interface ShipData {
 }
 
 export interface Ship {
-  wikiUrl: string;
+  wikiUrl?: string;
   id: string;
   names: ShipNames;
-  class: string;
-  nationality: string;
-  hullType: string;
-  thumbnail: string;
-  rarity: string;
-  stars: Stars;
-  stats: Stats;
-  slots: { [key: string]: Slot };
-  enhanceValue: EnhanceValue;
-  scrapValue: ScrapValue;
-  skills: Skill[];
-  limitBreaks: Array<string[]>;
-  fleetTech: FleetTech;
-  retrofit: boolean;
-  retrofitId: string;
-  retrofitProjects: RetrofitProjects;
-  construction: Construction;
-  obtainedFrom: ObtainedFrom;
-  misc: Misc;
-  skins: Skin[];
-  gallery: Gallery[];
+  class?: string;
+  nationality?: string;
+  hullType?: string;
+  thumbnail?: string;
+  rarity?: string;
+  stars?: Stars;
+  stats?: Stats;
+  slots?: { [key: string]: Slot };
+  enhanceValue?: EnhanceValue;
+  scrapValue?: ScrapValue;
+  skills?: Skill[];
+  limitBreaks?: Array<string[]>;
+  fleetTech?: FleetTech;
+  retrofit?: boolean;
+  retrofitId?: string;
+  retrofitProjects?: RetrofitProjects;
+  construction?: Construction;
+  obtainedFrom?: ObtainedFrom;
+  misc?: Misc;
+  skins?: Skin[];
+  gallery?: Gallery[];
 }
 
 export interface Construction {
@@ -198,7 +198,4 @@ export const getShips = (name: string): ShipData => {
   return t;
 };
 
-export const getShipById = (id: string): Ship => {
-  const t: Ship = (shipData as any)[id];
-  return t;
-};
+export const getShipById = (id: string): Ship => (shipData as any)[id];
