@@ -58,7 +58,7 @@ div.main-menu {
 .main-menu > nav > a {
   margin: 0px 2px;
   border-radius: 5px 5px 0px 0px;
-  padding: 5px 15px;
+  padding: 14px 16px;
   text-decoration: none;
   /* background-color: #72A0C1; */
   /* background-color: rgba(105, 105, 105, 0); */
@@ -66,6 +66,7 @@ div.main-menu {
   border-bottom: 0px;
   /* outline: 3px double #353b48; */
   color: white;
+  transition: 0.3s;
 }
 
 .main-menu > nav > a:hover {
@@ -110,9 +111,63 @@ section.home {
 #ship-side-list {
   min-width: 20%;
   justify-content: center;
+  flex-direction: column;
 }
 
+/* List top selector group */
+.top-container {
+  margin-top: 0px;
+  margin-bottom: 10px;
+  padding: 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.top-container > div.tab {
+  display: flex;
+  flex-direction: row;
+}
 
+div.top-container > div.hidden {
+  display: none;
+}
+
+div.top-container > div.active {
+  display: flex;
+}
+
+.tab {
+  overflow: hidden;
+  border: 1px solid #353b48;
+  background-color: #292e38;
+}
+
+.tab button {
+  background-color: inherit;
+  color: rgb(184, 184, 184);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: rgba(176, 196, 222, 0.2);
+  /* border: 1px solid #353b48; */
+  /* border: 1px solid rgb(182, 182, 182);*/
+}
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #4b5366;
+}
+/* Style the tab content */
+.tab-content {
+  padding: 6px 12px;
+  border: 1px solid #353b48;
+  border-top: none;
+}
 #ship-data {
   min-width: 75%;
 }
@@ -160,6 +215,7 @@ section.home {
   background-color: #292e38;
   color: rgb(184, 184, 184);
   border: 1px solid #353b48;
+  transition: 0.3s;
   /* transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;*/
 }
 

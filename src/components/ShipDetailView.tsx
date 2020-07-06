@@ -12,6 +12,7 @@ const ShipDetailView: React.FC = () => {
   const shipList = useSelector((state: RootState) => state.shipList);
 
   const [selectedId, setSelected] = useState('');
+  const [selectedTab, setSelectedTab] = useState('search');
 
   useEffect(() => {
     console.log('useEffect', getShips('KMS'));
@@ -38,6 +39,31 @@ const ShipDetailView: React.FC = () => {
     <PageTemplate>
       <section id="ship-list-page-content">
         <div id="ship-side-list">
+          <div className="top-container">
+            <div className="tab">
+              <button
+                className={`tab-content ${selectedTab === 'search' ? 'active' : ''}`}
+                onClick={() => setSelectedTab('search')}
+              >
+                Search
+              </button>
+              <button
+                className={`tab-content ${selectedTab === 'PH1' ? 'active' : ''}`}
+                onClick={() => setSelectedTab('PH1')}
+              >
+                PH1
+              </button>
+              <button
+                className={`tab-content ${selectedTab === 'PH2' ? 'active' : ''}`}
+                onClick={() => setSelectedTab('PH2')}
+              >
+                PH2
+              </button>
+            </div>
+            <div id="search" className={`tab-content ${selectedTab === 'search' ? 'active' : 'hidden'}`}>Search</div>
+            <div id="PH1" className={`tab-content ${selectedTab === 'PH1' ? 'active' : 'hidden'}`}>PH!</div>
+            <div id="PH2" className={`tab-content ${selectedTab === 'PH2' ? 'active' : 'hidden'}`}>PH2</div>
+          </div>
           <div className="rList">
             {shipList.ships.map((ship: Ship) => {
               /*
