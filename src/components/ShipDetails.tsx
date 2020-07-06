@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { Ship } from './util/shipdata';
+// import { Ship } from './util/shipdata';
 
 const ShipDetails: React.FC = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
 
   useEffect(() => {

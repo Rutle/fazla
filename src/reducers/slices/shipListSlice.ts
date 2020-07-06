@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ShipData, ShipDataSimple } from '../../components/util/shipdata';
+import { ShipDataSimple } from '../../components/util/shipdata';
 
 const initialState: ShipDataSimple = {
   ships: [],
@@ -14,7 +14,7 @@ const shipListSlice = createSlice({
       return action.payload;
       // console.log("state", state.ships);
     },
-    resetList(state, action) {
+    resetList() {
       return initialState;
     },
   },

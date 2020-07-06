@@ -13,6 +13,7 @@ const ShipDetailView: React.FC = () => {
 
   const [selectedId, setSelected] = useState('');
   const [selectedTab, setSelectedTab] = useState('search');
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     // console.log('useEffect', getShips('KMS'));
@@ -49,6 +50,11 @@ const ShipDetailView: React.FC = () => {
     }
   };
 
+  const searchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(searchValue);
+  };
+
   return (
     <PageTemplate>
       <section id="ship-list-page-content">
@@ -56,26 +62,33 @@ const ShipDetailView: React.FC = () => {
           <div className="top-container">
             <div className="tab">
               <button
-                className={`tab-content ${selectedTab === 'search' ? 'active' : ''}`}
+                className={`tab-btn ${selectedTab === 'search' ? 'active' : ''}`}
                 onClick={() => setSelectedTab('search')}
               >
                 Search
               </button>
               <button
-                className={`tab-content ${selectedTab === 'PH1' ? 'active' : ''}`}
+                className={`tab-btn ${selectedTab === 'PH1' ? 'active' : ''}`}
                 onClick={() => setSelectedTab('PH1')}
               >
                 PH1
               </button>
               <button
-                className={`tab-content ${selectedTab === 'PH2' ? 'active' : ''}`}
+                className={`tab-btn ${selectedTab === 'PH2' ? 'active' : ''}`}
                 onClick={() => setSelectedTab('PH2')}
               >
                 PH2
               </button>
             </div>
             <div id="search" className={`tab-content ${selectedTab === 'search' ? 'active' : 'hidden'}`}>
-              Search
+              <form onSubmit={(e) => searchSubmit(e)}>
+                <input
+                  id="search-input"
+                  type="text"
+                  value={searchValue}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
+                />
+              </form>
             </div>
             <div id="PH1" className={`tab-content ${selectedTab === 'PH1' ? 'active' : 'hidden'}`}>
               PH!

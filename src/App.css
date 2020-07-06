@@ -130,10 +130,12 @@ section.home {
 
 div.top-container > div.hidden {
   display: none;
+  height: 0px;
 }
 
 div.top-container > div.active {
   display: flex;
+  min-height: 58px;
 }
 
 .tab {
@@ -168,6 +170,27 @@ div.top-container > div.active {
   border: 1px solid #353b48;
   border-top: none;
 }
+
+#search-input {
+  color: rgb(184, 184, 184);
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #323844;
+  border: 1px solid #353b48;
+  border-radius: 2px;
+  margin: 10px auto;
+  transition:background-color 0.5s ease;
+}
+
+#search-input:focus {
+  background-color: rgba(0,0,0,0.45);
+}
+
+div#search > form {
+  width: 100%;
+}
+
 #ship-data {
   min-width: 75%;
 }
