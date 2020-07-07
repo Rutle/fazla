@@ -246,3 +246,49 @@ section.home {
 .btn-selected {
   background-color: #4b5366;
 }
+
+#passives {
+  border: 1px solid #353b48;
+  padding: 5px;
+  /* max-width: 50%; */
+  display: inline-flex;
+  flex-direction: column;
+}
+
+#passives > div {
+  background-color: #292e38;
+  margin-bottom: 5px;
+  
+}
+#passives > div > div:first-child {
+  font-size: 21px;
+  padding-bottom: 1px;
+}
+
+#passives > div > div {
+  padding: 6px;
+  margin: 0px;
+}
+
+#passives > div.pink {
+  border: 1px solid rgba(243, 215, 220, 0.651);
+  border-radius: 5px;
+}
+#passives > div.pink > :first-child {
+  border-bottom: 1px dashed rgba(243, 215, 220, 0.651);
+}
+#passives > div.gold > :first-child {
+  border-bottom: 1px dashed rgba(255, 217, 0, 0.651);
+}
+#passives > div.deepskyblue > :first-child {
+  border-bottom: 1px dashed rgba(0, 191, 255, 0.651);
+}
+#passives > div.gold {
+  border: 1px solid rgba(255, 217, 0, 0.651);
+  border-radius: 5px;
+}
+
+#passives > div.deepskyblue {
+  border: 1px solid rgba(0, 191, 255, 0.651);
+  border-radius: 5px;
+}

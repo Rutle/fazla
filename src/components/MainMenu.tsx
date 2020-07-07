@@ -25,11 +25,11 @@ const MainMenu = (): JSX.Element => {
         <NavLink to="/shipdetails" activeStyle={selectedStyle}>
           [Ship list]
         </NavLink>
-        <NavLink to="/products" activeStyle={selectedStyle}>
-          [Placeholder]
+        <NavLink to="/docks" activeStyle={selectedStyle}>
+          [Docks]
         </NavLink>
-        <NavLink to="/contact" activeStyle={selectedStyle}>
-          [Placeholder]
+        <NavLink to="/formation" activeStyle={selectedStyle}>
+          [Formation]
         </NavLink>
       </nav>
     </div>

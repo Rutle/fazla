@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-// import { Ship } from './util/shipdata';
+import { Skill } from './util/shipdata';
 
 const ShipDetails: React.FC = () => {
   // const dispatch = useDispatch();
@@ -14,6 +14,16 @@ const ShipDetails: React.FC = () => {
     <>
       <div>
         <h1>{shipDetails.names.code}</h1>
+        <div id="passives">
+          {shipDetails.skills?.map((skill: Skill) => {
+            return (
+              <div key={skill.names.en} className={skill.color}>
+                <div>{skill.names.en}</div>
+                <div>{skill.description}</div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );
