@@ -16,10 +16,8 @@ const ShipDetailView: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
-    // console.log('useEffect', getShips('KMS'));
     try {
-      // const data: ShipData = getShips('KMS');
-      const data: ShipDataSimple = getShipsSimple('KMS');
+      const data: ShipDataSimple = getShipsSimple('');
       // console.log('shipData', data.ships.length);
       dispatch(setList(data));
     } catch (e) {
@@ -53,6 +51,11 @@ const ShipDetailView: React.FC = () => {
   const searchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(searchValue);
+    try {
+      dispatch(setList(getShipsSimple(searchValue)));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
