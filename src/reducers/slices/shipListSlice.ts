@@ -10,9 +10,7 @@ const shipListSlice = createSlice({
   initialState,
   reducers: {
     setList(state, action: PayloadAction<ShipDataSimple>) {
-      // console.log("payload", action.payload);
       return action.payload;
-      // console.log("state", state.ships);
     },
     resetList() {
       return initialState;

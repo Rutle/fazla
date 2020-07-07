@@ -200,13 +200,14 @@ section.home {
 }
 
 /* Lists */
-
 .rList {
   margin-top: 0px;
   padding: 0px;
   /*list-style-type: none;*/
   width: 100%;
   overflow-y: auto;
+  scrollbar-color: dark;
+  scrollbar-width: thin;
 }
 
 .rList > li.rList-item {

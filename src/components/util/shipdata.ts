@@ -211,7 +211,8 @@ export const getShipsSimple = (name: string): ShipDataSimple => {
   t.ships = Object.assign(
     Object.keys(shipData)
       .filter((e) => {
-        if ((shipData as any)[e].names.code.includes(name)) return true;
+        // const ce: string = (shipData as any)[e].names.code.toLowerCase();
+        if ((shipData as any)[e].names.code.toLowerCase().includes(name.toLowerCase())) return true;
       })
       .map((key) => ({
         name: (shipData as any)[key].names.code,
