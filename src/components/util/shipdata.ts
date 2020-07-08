@@ -20,7 +20,7 @@ export interface Ship {
   wikiUrl?: string;
   id: string;
   names: ShipNames;
-  class?: string;
+  class: string;
   nationality?: string;
   hullType?: string;
   thumbnail?: string;

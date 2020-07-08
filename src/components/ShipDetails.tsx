@@ -1,19 +1,32 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { Skill } from './util/shipdata';
+import { Skill, Ship, ShipSimple } from './util/shipdata';
+import { addShip, removeShip } from '../reducers/slices/ownedShipListSlice';
 
 const ShipDetails: React.FC = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
+  const ownedShips = useSelector((state: RootState) => state.ownedShips);
 
   useEffect(() => {
     // console.log('details', shipDetails);
   }, [shipDetails]);
+
+  const addShipToOwned = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, ship: Ship) => {
+    dispatch(addShip({ name: ship.names.code, id: ship.id, class: ship.class }));
+  };
+
+  const removeFromOwned = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
+    dispatch(removeShip(id));
+  };
+
   return (
     <>
       <div>
-        <h1>{shipDetails.names.code}</h1>
+        <h1>
+          {shipDetails.names.code} <span className={shipDetails.rarity}>{` ${shipDetails.stars?.stars}`}</span>
+        </h1>
         <div id="passives">
           {shipDetails.skills?.map((skill: Skill) => {
             return (
@@ -23,6 +36,14 @@ const ShipDetails: React.FC = () => {
               </div>
             );
           })}
+        </div>
+        <div className={'button-group'}>
+          <button onClick={(e) => addShipToOwned(e, shipDetails)} className={'btn selected'} type="button" disabled>
+            <b>Already in docks</b>
+          </button>
+          <button onClick={(e) => removeFromOwned(e, shipDetails.id)} className={'btn'} type="button">
+            <b>Remove from docks</b>
+          </button>
         </div>
       </div>
     </>

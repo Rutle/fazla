@@ -6,6 +6,7 @@ const initialState: Ship = {
   id: '',
   names: { en: '', code: '', cn: '', jp: '', kr: '' },
   skills: [],
+  class: '',
 };
 
 const shipDetailsSlice = createSlice({

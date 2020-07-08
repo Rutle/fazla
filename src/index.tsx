@@ -9,6 +9,7 @@ import Home from './components/Home';
 import './index.css';
 import './App.css';
 import store from './store';
+import DocksView from './components/DocksView';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -21,6 +22,7 @@ ReactDOM.render(
             </Route>
             <Route path="/home" component={Home} />
             <Route path="/shipdetails" component={ShipDetailView} />
+            <Route path="/docks" component={DocksView} />
           </Switch>
         </div>
       </HashRouter>

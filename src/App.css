@@ -7,9 +7,14 @@
   flex-direction: row;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-}
+} 
 */
-
+:root {
+  --main-dark-bg: #292e38;
+  --main-dark-border: #353b48;
+  --main-dark-hover-bg: rgba(176, 196, 222, 0.2);
+  --main-dark-hover-border: rgb(182, 182, 182);
+}
 .App {
   /* background-color: #282c34; */
   /* font-size: calc(10px + 2vmin); */
@@ -17,9 +22,11 @@
   height: 100%;
   min-height: 100vh;
   flex-direction: column;
-  color: rgb(184, 184, 184);
+  /* color: rgb(184, 184, 184);*/
+  color: rgba(255, 255, 255, 0.747);
   background: rgb(47,48,50);
   background: linear-gradient(172deg, rgba(47,48,50,1) 4%, rgba(39,41,48,1) 15%, rgba(33,35,45,1) 70%);
+
 }
 html {
   margin: 0px;
@@ -194,6 +201,32 @@ div#search > form {
   min-width: 75%;
 }
 
+#ship-data > div > h1 {
+  border-top: thick double #353b48;
+  border-bottom: thick double #353b48;
+  border-left: 1px solid #353b48;
+  border-right: 1px solid #353b48;
+  padding: 5px;
+  margin-top: 0px;
+}
+
+#ship-data > div > span {
+  border-right: 1px solid black;
+  padding: 5px;
+}
+
+#ship-data > div > h1 > span.Super.Rare:last-child {
+  color: rgba(253, 209, 98, 0.616);
+}
+
+#ship-data > div > h1 > span.Rare:last-child {
+  color: rgba(98, 134, 253, 0.616);
+}
+
+#ship-data > div > h1 > span.Elite:last-child {
+  color: rgba(144, 98, 253, 0.616);
+}
+
 section.home {
   justify-content: center;
   align-items: center;
@@ -223,6 +256,9 @@ section.home {
   margin-bottom: 1px;
 }
 
+.rList > button.selected {
+  background-color: #4b5366;
+}
 .rList > li.rList-item:hover {
   background-color: rgba(176, 196, 222, 0.2);
   /* border: 1px solid #353b48; */
@@ -243,12 +279,43 @@ section.home {
   /* transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;*/
 }
 
-.btn-selected {
+.btn {
+  background-color: #292e38;
+  color: rgb(184, 184, 184);
+  border: 1px solid #353b48;
+  transition: 0.3s;
+  width: 100%;
+  height: 35px;
+  padding: 5px;
+  transition: 0.4s;
+  /* transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;*/
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn.selected {
   background-color: #4b5366;
 }
 
-#passives {
+
+.btn:hover {
+  background-color: rgba(176, 196, 222, 0.2);
+  /* border: 1px solid #353b48; */
+  border: 1px solid rgb(182, 182, 182);
+}
+
+.btn.selected:hover {
+  background-color: #4b5366;
   border: 1px solid #353b48;
+}
+.button-group {
+  display: flex;
+}
+
+#passives {
+  /* border: 1px solid #353b48;*/
   padding: 5px;
   /* max-width: 50%; */
   display: inline-flex;
@@ -271,24 +338,27 @@ section.home {
 }
 
 #passives > div.pink {
-  border: 1px solid rgba(243, 215, 220, 0.651);
+  border: 2px solid rgba(243, 196, 204, 0.651);
+  background-color: rgba(216, 112, 147, 0.068);
   border-radius: 5px;
 }
 #passives > div.pink > :first-child {
-  border-bottom: 1px dashed rgba(243, 215, 220, 0.651);
+  border-bottom: 2px dashed rgba(243, 196, 204, 0.651);
 }
 #passives > div.gold > :first-child {
-  border-bottom: 1px dashed rgba(255, 217, 0, 0.651);
+  border-bottom: 2px dashed rgba(255, 217, 0, 0.651);
 }
 #passives > div.deepskyblue > :first-child {
-  border-bottom: 1px dashed rgba(0, 191, 255, 0.651);
+  border-bottom: 2px dashed rgba(0, 191, 255, 0.651);
 }
 #passives > div.gold {
-  border: 1px solid rgba(255, 217, 0, 0.651);
+  border: 2px solid rgba(255, 217, 0, 0.651);
+  background-color: rgba(218, 165, 32, 0.068);
   border-radius: 5px;
 }
 
 #passives > div.deepskyblue {
-  border: 1px solid rgba(0, 191, 255, 0.651);
+  border: 2px solid rgba(0, 191, 255, 0.651);
+  background-color: rgba(0, 191, 255, 0.068);;
   border-radius: 5px;
 }

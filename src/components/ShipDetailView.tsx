@@ -6,31 +6,35 @@ import PageTemplate from './PageTemplate';
 import { getShipsSimple, ShipDataSimple, ShipSimple, getShipById } from './util/shipdata';
 import ShipDetails from './ShipDetails';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 const ShipDetailView: React.FC = () => {
   const dispatch = useDispatch();
   const shipList = useSelector((state: RootState) => state.shipList);
 
   const [selectedId, setSelected] = useState('');
   const [selectedTab, setSelectedTab] = useState('search');
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
 
+  // Populate list
   useEffect(() => {
     try {
-      const data: ShipDataSimple = getShipsSimple('');
-      // console.log('shipData', data.ships.length);
+      const data: ShipDataSimple = getShipsSimple(searchValue);
       dispatch(setList(data));
     } catch (e) {
       console.log(e);
     }
   }, []);
 
+  // Remember search value
+  useEffect(() => {
+    localStorage.setItem('searchValue', searchValue);
+  }, [searchValue]);
+
   // Set the first item on the list as active when ship list is updated.
   useEffect(() => {
-    console.log('Shiplist', selectedId);
     try {
       if (shipList.ships.length > 0) {
-        // console.log('>0');
         dispatch(setDetails(getShipById(shipList.ships[0].id)));
         setSelected(shipList.ships[0].id);
       }
@@ -112,8 +116,7 @@ const ShipDetailView: React.FC = () => {
               return (
                 <button
                   key={ship.id}
-                  // className="rList-item btn-rList"
-                  className={`rList-item btn-rList ${ship.id === selectedId ? 'btn-selected' : ''}`}
+                  className={`rList-item btn-rList ${ship.id === selectedId ? 'selected' : ''}`}
                   type="button"
                   onClick={(e) => handleClick(e, ship.id)}
                 >
