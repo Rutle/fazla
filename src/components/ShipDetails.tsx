@@ -8,6 +8,7 @@ const ShipDetails: React.FC = () => {
   const dispatch = useDispatch();
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
+  const config = useSelector((state: RootState) => state.config);
 
   useEffect(() => {
     // console.log('details', shipDetails);
@@ -38,10 +39,19 @@ const ShipDetails: React.FC = () => {
           })}
         </div>
         <div className={'button-group'}>
-          <button onClick={(e) => addShipToOwned(e, shipDetails)} className={'btn selected'} type="button" disabled>
-            <b>Already in docks</b>
+          <button
+            onClick={(e) => addShipToOwned(e, shipDetails)}
+            className={`btn ${config.themeColor} selected`}
+            type="button"
+            disabled
+          >
+            <b>&#x1F5F8; Already in docks</b>
           </button>
-          <button onClick={(e) => removeFromOwned(e, shipDetails.id)} className={'btn'} type="button">
+          <button
+            onClick={(e) => removeFromOwned(e, shipDetails.id)}
+            className={`btn ${config.themeColor}`}
+            type="button"
+          >
             <b>Remove from docks</b>
           </button>
         </div>

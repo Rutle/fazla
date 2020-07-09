@@ -6,11 +6,11 @@ import PageTemplate from './PageTemplate';
 import { getShipsSimple, ShipDataSimple, ShipSimple, getShipById } from './util/shipdata';
 import ShipDetails from './ShipDetails';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 const ShipDetailView: React.FC = () => {
   const dispatch = useDispatch();
   const shipList = useSelector((state: RootState) => state.shipList);
+  const config = useSelector((state: RootState) => state.config);
 
   const [selectedId, setSelected] = useState('');
   const [selectedTab, setSelectedTab] = useState('search');
@@ -92,6 +92,7 @@ const ShipDetailView: React.FC = () => {
                 <input
                   id="search-input"
                   type="text"
+                  className={`${config.themeColor}`}
                   value={searchValue}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
                 />
@@ -116,7 +117,7 @@ const ShipDetailView: React.FC = () => {
               return (
                 <button
                   key={ship.id}
-                  className={`rList-item btn-rList ${ship.id === selectedId ? 'selected' : ''}`}
+                  className={`rList-item btn ${config.themeColor} ${ship.id === selectedId ? 'selected' : ''}`}
                   type="button"
                   onClick={(e) => handleClick(e, ship.id)}
                 >
