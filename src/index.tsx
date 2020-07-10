@@ -23,6 +23,7 @@ ReactDOM.render(
             <Route path="/home" component={Home} />
             <Route path="/shipdetails" component={ShipDetailView} />
             <Route path="/docks" component={DocksView} />
+            <Route path="/formation" component={DocksView} />
           </Switch>
         </div>
       </HashRouter>

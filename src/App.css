@@ -50,11 +50,23 @@
 
 input[type="text"].dark {
   background-color: #323844;
-  border: 1px solid var(--main-dark-border);
+  border: 2px solid var(--main-dark-border);
+  border-left: 0px;
 }
 
 input[type="text"].dark:focus {
   background-color: rgba(0,0,0,0.45);
+  border: 2px solid #444b5a;
+  border-left: 0px;
+}
+
+.radio-group label.dark {
+  background-color: var(--main-dark-bg);
+  border: 1px solid var(--main-dark-border);
+}
+
+.radio-group input[type="radio"]:checked + label {
+  background-color: var(--main-dark-selected);
 }
 
 /* ##### LIGHT ##### */
@@ -226,18 +238,6 @@ div.top-container > div.active {
   border-top: none;
 }
 
-input[type="text"] {
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: 2px;
-  margin: 10px auto;
-  transition:background-color 0.5s ease;
-}
-
-div#search > form {
-  width: 100%;
-}
 
 #ship-data {
   min-width: 75%;
@@ -284,6 +284,11 @@ section.home {
   scrollbar-width: thin;
 }
 
+.rList.hidden {
+  display: none;
+  height: 0px;
+}
+
 .rList > .rList-item {
   width: 100%;
   height: 35px;
@@ -310,6 +315,72 @@ section.home {
 
 .button-group {
   display: flex;
+}
+.radio-group {
+  margin-top: 0px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+
+/* #### INPUT ##### */
+.radio-group input[type="radio"] {
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+
+.radio-group label {
+  flex-grow: 1;
+  padding: 4px;
+  text-align: center;
+}
+
+div#search > form {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+#input-group,
+#input-group:focus {
+  display: flex;
+  box-sizing: border-box;
+}
+
+input[type="text"] {
+  padding: 10px;
+  height: 35px;
+  width: 100%;
+  box-sizing: border-box;
+  /* border-radius: 2px; */
+  margin: 10px auto;
+  transition: box-shadow .2s ease-in,border .2s ease-in,background-color .2s ease-in;
+  margin-bottom: 1px;
+}
+
+.searchIcon {
+  text-align: center;
+  box-sizing: border-box;
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  margin: 10px auto;
+  margin-bottom: 1px;
+}
+
+.searchIcon.dark {
+  background-color: #323844;
+  border: 2px solid var(--main-dark-border);
+  transition: box-shadow .2s ease-in,border .2s ease-in,background-color .2s ease-in;
+  border-right: 0px;
+}
+
+.searchIcon.dark.input-focus {
+  background-color: rgba(0,0,0,0.45);
+  border: 2px solid #444b5a;
+  border-right: 0px;
 }
 
 #passives {

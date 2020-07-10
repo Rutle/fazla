@@ -202,6 +202,19 @@ export interface Stats {
 export const getShipsSimple = (name: string): ShipDataSimple => {
   // const t: ShipData = { ships: [] };
   const t: ShipDataSimple = { ships: [] };
+  console.log(name);
+  if (name === '') {
+    console.log("empty", name);
+    t.ships = Object.assign(
+      Object.keys(shipData).map((key) => ({
+        name: (shipData as any)[key].names.code,
+        id: (shipData as any)[key].id,
+        class: (shipData as any)[key].class,
+      })),
+    );
+    console.log(t);
+    return t;
+  }
   /*
   Object.keys(shipData).forEach((element) => {
     const obj = (shipData as any)[element];
