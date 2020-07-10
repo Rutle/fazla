@@ -23,6 +23,7 @@ const ShipList: React.FC<{
   const [selectedTab, setSelectedTab] = useState('search');
   const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
   const [inputFocus, setInputFocus] = useState(false);
+  const [searchParam, setSearchParam] = useState('name');
 
   // Populate list
   useEffect(() => {
@@ -47,6 +48,7 @@ const ShipList: React.FC<{
         break;
       case 'owned':
         dispatch(setDetails(getShipById(listState.owned.id)));
+        break;
       default:
         break;
     }
@@ -60,13 +62,30 @@ const ShipList: React.FC<{
 
   const searchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    switch (listToggle) {
+      case 'all':
+        dispatch(setList(getShipsSimple(searchValue)));
+        break;
+      case 'owned':
+        dispatch(setList(getShipsSimple(searchValue)));
+        break;
+      default:
+        break;
+    }
     try {
       dispatch(setList(getShipsSimple(searchValue)));
     } catch (err) {
       console.log(err);
     }
   };
-
+  const searchPredicate = (ele: ShipSimple) => {
+    switch (searchParam) {
+      case 'name':
+        return ele.name.toLowerCase().includes(searchValue.toLowerCase());
+      default:
+        break;
+    }
+  };
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
     try {
       const ship: Ship = getShipById(id);
@@ -165,7 +184,8 @@ const ShipList: React.FC<{
         })}
       </div>
       <div className={`rList ${listToggle === 'owned' ? 'active' : 'hidden'}`}>
-        {ownedList.map((ship: ShipSimple) => {
+        {
+          /*ownedList.map((ship: ShipSimple) => {
           return (
             <button
               key={ship.id}
@@ -176,7 +196,20 @@ const ShipList: React.FC<{
               {ship.name}
             </button>
           );
-        })}
+        })*/
+          ownedList.filter(searchPredicate).map((ship: ShipSimple) => {
+            return (
+              <button
+                key={ship.id}
+                className={`rList-item btn ${config.themeColor} ${ship.id === listState.owned.id ? 'selected' : ''}`}
+                type="button"
+                onClick={(e) => handleClick(e, ship.id)}
+              >
+                {ship.name}
+              </button>
+            );
+          })
+        }
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { Skill, Ship, ShipSimple } from './util/shipdata';
+import { Skill, Ship } from './util/shipdata';
 import { addShip, removeShip } from '../reducers/slices/ownedShipListSlice';
-import { setListState } from '../reducers/slices/listStateSlice';
+// import { setListState } from '../reducers/slices/listStateSlice';
 
+// eslint-disable-next-line react/prop-types
 const ShipDetails: React.FC<{ toggle: string }> = ({ toggle }) => {
   const dispatch = useDispatch();
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
