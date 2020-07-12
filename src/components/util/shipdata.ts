@@ -199,20 +199,17 @@ export interface Stats {
   baseStats: { [key: string]: string };
 }
 
-export const getShipsSimple = (name: string): ShipDataSimple => {
+export const getShipsSimple = (name: string): ShipSimple[] => {
   // const t: ShipData = { ships: [] };
-  const t: ShipDataSimple = { ships: [] };
-  console.log(name);
+  let t: ShipSimple[] = [];
   if (name === '') {
-    console.log("empty", name);
-    t.ships = Object.assign(
+    t = Object.assign(
       Object.keys(shipData).map((key) => ({
         name: (shipData as any)[key].names.code,
         id: (shipData as any)[key].id,
         class: (shipData as any)[key].class,
       })),
     );
-    console.log(t);
     return t;
   }
   /*
@@ -221,7 +218,7 @@ export const getShipsSimple = (name: string): ShipDataSimple => {
     if (obj.names.code.includes(name)) t.ships.push(obj as Ship);
   });
   */
-  t.ships = Object.assign(
+  t = Object.assign(
     Object.keys(shipData)
       .filter((e) => {
         // const ce: string = (shipData as any)[e].names.code.toLowerCase();

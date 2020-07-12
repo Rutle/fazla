@@ -4,6 +4,7 @@ import shipDetailsSlice from './slices/shipDetailsSlice';
 import ownedShipListSlice from './slices/ownedShipListSlice';
 import programConfigSlice from './slices/programConfigSlice';
 import listStateSlice from './slices/listStateSlice';
+import ownedSearchListSlice from './slices/ownedSearchListSlice';
 
 const rootReducer = combineReducers({
   shipList: shipListSlice,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   ownedShips: ownedShipListSlice,
   config: programConfigSlice,
   listState: listStateSlice,
+  ownedSearchList: ownedSearchListSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ShipDataSimple } from '../../components/util/shipdata';
+import { ShipSimple } from '../../components/util/shipdata';
 
-const initialState: ShipDataSimple = {
-  ships: [],
-};
+const initialState: ShipSimple[] = [];
 
 const shipListSlice = createSlice({
   name: 'shipListSlice',
   initialState,
   reducers: {
-    setList(state, action: PayloadAction<ShipDataSimple>) {
+    setList(state, action: PayloadAction<ShipSimple[]>) {
       return action.payload;
     },
     resetList() {

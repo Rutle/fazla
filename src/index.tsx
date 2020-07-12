@@ -10,6 +10,7 @@ import './index.css';
 import './App.css';
 import store from './store';
 import DocksView from './components/DocksView';
+import FormationView from './components/FormationView';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,7 +24,7 @@ ReactDOM.render(
             <Route path="/home" component={Home} />
             <Route path="/shipdetails" component={ShipDetailView} />
             <Route path="/docks" component={DocksView} />
-            <Route path="/formation" component={DocksView} />
+            <Route path="/formation" component={FormationView} />
           </Switch>
         </div>
       </HashRouter>

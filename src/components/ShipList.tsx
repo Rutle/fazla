@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { setList } from '../reducers/slices/shipListSlice';
-import { getShipsSimple, ShipDataSimple, ShipSimple, getShipById, Ship } from './util/shipdata';
+import { getShipsSimple, ShipSimple, getShipById, Ship } from './util/shipdata';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { setListState } from '../reducers/slices/listStateSlice';
+import { setListState, setCurrentToggle } from '../reducers/slices/listStateSlice';
+import { setOwnedSearchList } from '../reducers/slices/ownedSearchListSlice';
 
 const ShipList: React.FC<{
   listToggle: string;
@@ -18,6 +19,7 @@ const ShipList: React.FC<{
   const ownedList = useSelector((state: RootState) => state.ownedShips);
   const config = useSelector((state: RootState) => state.config);
   const listState = useSelector((state: RootState) => state.listState);
+  const ownedSearch = useSelector((state: RootState) => state.ownedSearchList);
 
   // const [selectedId, setSelected] = useState('');
   const [selectedTab, setSelectedTab] = useState('search');
@@ -28,11 +30,12 @@ const ShipList: React.FC<{
   // Populate list
   useEffect(() => {
     try {
-      const data: ShipDataSimple = getShipsSimple('');
+      const data: ShipSimple[] = getShipsSimple('');
       dispatch(setList(data));
-      dispatch(setDetails(getShipById(data.ships[0].id)));
-      // setSelected(shipList.ships[0].id);
-      dispatch(setListState({ key: 'all', data: { id: data.ships[0].id, index: 0 } }));
+      dispatch(setDetails(getShipById(data[0].id)));
+      dispatch(setListState({ key: 'all', data: { id: data[0].id, index: 0 } }));
+      // dispatch(setListState({ key: 'owned', data: { id: ownedList[0].id, index: 0 } }));
+      dispatch(setOwnedSearchList(ownedList));
       dispatch(setDetails(getShipById(ownedList[0].id)));
       // setSelected(ownedList[0].id);
       dispatch(setListState({ key: 'owned', data: { id: ownedList[0].id, index: 0 } }));
@@ -42,40 +45,66 @@ const ShipList: React.FC<{
   }, []);
 
   useEffect(() => {
-    switch (listToggle) {
+    console.log(listState);
+    switch (listState.currentToggle) {
       case 'all':
+        const t: ShipSimple[] = getShipsSimple(searchValue);
         dispatch(setDetails(getShipById(listState.all.id)));
+        dispatch(setList(t));
+        // dispatch(setListState({ key: 'all', data: { id: t[0].id, index: 0 } }));
         break;
       case 'owned':
+        const s: ShipSimple[] = ownedList.filter(searchPredicate);
         dispatch(setDetails(getShipById(listState.owned.id)));
+        dispatch(setOwnedSearchList(s));
+        // dispatch(setListState({ key: 'owned', data: { id: s[0].id, index: 0 } }));
         break;
       default:
         break;
     }
-  }, [listToggle]);
+  }, [listState.currentToggle]);
 
   // Remember search value
   useEffect(() => {
+    switch (listState.currentToggle) {
+      case 'all':
+        const t: ShipSimple[] = getShipsSimple(searchValue);
+        dispatch(setDetails(getShipById(t[0].id)));
+        dispatch(setList(t));
+        if (t.length === 0) return;
+        dispatch(setListState({ key: 'all', data: { id: t[0].id, index: 0 } }));
+        break;
+      case 'owned':
+        const s: ShipSimple[] = ownedList.filter(searchPredicate);
+        dispatch(setOwnedSearchList(s));
+        if (s.length === 0) return;
+        dispatch(setDetails(getShipById(s[0].id)));
+        dispatch(setListState({ key: 'owned', data: { id: s[0].id, index: 0 } }));
+        break;
+      default:
+        break;
+    }
     localStorage.setItem('searchValue', searchValue);
     localStorage.setItem('listToggle', listToggle);
   }, [searchValue]);
 
   const searchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    switch (listToggle) {
+    switch (listState.currentToggle) {
       case 'all':
-        dispatch(setList(getShipsSimple(searchValue)));
+        const t: ShipSimple[] = getShipsSimple(searchValue);
+        dispatch(setList(t));
+        if (t.length === 0) return;
+        dispatch(setListState({ key: 'all', data: { id: t[0].id, index: 0 } }));
         break;
       case 'owned':
-        dispatch(setList(getShipsSimple(searchValue)));
+        const d: ShipSimple[] = ownedList.filter(searchPredicate);
+        dispatch(setOwnedSearchList(d));
+        if (d.length === 0) return;
+        dispatch(setListState({ key: 'owned', data: { id: d[0].id, index: 0 } }));
         break;
       default:
         break;
-    }
-    try {
-      dispatch(setList(getShipsSimple(searchValue)));
-    } catch (err) {
-      console.log(err);
     }
   };
   const searchPredicate = (ele: ShipSimple) => {
@@ -86,22 +115,89 @@ const ShipList: React.FC<{
         break;
     }
   };
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
     try {
       const ship: Ship = getShipById(id);
       let index = 0;
-      if (listToggle === 'all') {
-        index = shipList.ships.findIndex((ship) => ship.id === id);
-        console.log(index);
+      if (listState.currentToggle === 'all') {
+        index = shipList.findIndex((ship) => ship.id === id);
       }
-      if (listToggle === 'owned') {
-        index = ownedList.findIndex((ship) => ship.id === id);
+      if (listState.currentToggle === 'owned') {
+        index = ownedSearch.findIndex((ship) => ship.id === id);
       }
       dispatch(setDetails(ship));
-      // setSelected(id);
-      dispatch(setListState({ key: listToggle, data: { id: ship.id, index: index } }));
+      dispatch(setListState({ key: listState.currentToggle, data: { id: ship.id, index: index } }));
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const renderList = () => {
+    switch (listState.currentToggle) {
+      case 'all':
+        return (
+          <div className={`rList`}>
+            {shipList.map((ship: ShipSimple) => {
+              return (
+                <button
+                  key={ship.id}
+                  className={`rList-item btn ${config.themeColor} ${
+                    ship.id === listState[listState.currentToggle as string].id ? 'selected' : ''
+                  }`}
+                  type="button"
+                  onClick={(e) => handleClick(e, ship.id)}
+                >
+                  {ship.name}
+                </button>
+              );
+            })}
+          </div>
+        );
+      case 'owned':
+        return (
+          <div className={`rList`}>
+            {ownedSearch.map((ship: ShipSimple) => {
+              return (
+                <button
+                  key={ship.id}
+                  className={`rList-item btn ${config.themeColor} ${ship.id === listState.owned.id ? 'selected' : ''}`}
+                  type="button"
+                  onClick={(e) => handleClick(e, ship.id)}
+                >
+                  {ship.name}
+                </button>
+              );
+            })}
+          </div>
+        );
+      /*ownedList.map((ship: ShipSimple) => {
+      return (
+        <button
+          key={ship.id}
+          className={`rList-item btn ${config.themeColor} ${ship.id === listState.owned.id ? 'selected' : ''}`}
+          type="button"
+          onClick={(e) => handleClick(e, ship.id)}
+        >
+          {ship.name}
+        </button>
+      );
+    })
+      renderOwnedList().map((ship: ShipSimple) => {
+        return (
+          <button
+            key={ship.id}
+            className={`rList-item btn ${config.themeColor} ${ship.id === listState.owned.id ? 'selected' : ''}`}
+            type="button"
+            onClick={(e) => handleClick(e, ship.id)}
+          >
+            {ship.name}
+          </button>
+        );
+      })
+    }*/
+      default:
+        break;
     }
   };
 
@@ -143,8 +239,8 @@ const ShipList: React.FC<{
                 id="all"
                 type="radio"
                 value="all"
-                checked={listToggle === 'all'}
-                onChange={() => setListToggle('all')}
+                checked={listState.currentToggle === 'all'}
+                onChange={() => dispatch(setCurrentToggle('all'))}
               />
               <label className={`${config.themeColor}`} htmlFor="all">
                 All
@@ -153,8 +249,8 @@ const ShipList: React.FC<{
                 id="owned"
                 type="radio"
                 value="false"
-                checked={listToggle === 'owned'}
-                onChange={() => setListToggle('owned')}
+                checked={listState.currentToggle === 'owned'}
+                onChange={() => dispatch(setCurrentToggle('owned'))}
               />
               <label className={`${config.themeColor}`} htmlFor="owned">
                 Owned
@@ -169,48 +265,7 @@ const ShipList: React.FC<{
           PH2
         </div>
       </div>
-      <div className={`rList ${listToggle === 'all' ? 'active' : 'hidden'}`}>
-        {shipList.ships.map((ship: ShipSimple) => {
-          return (
-            <button
-              key={ship.id}
-              className={`rList-item btn ${config.themeColor} ${ship.id === listState.all.id ? 'selected' : ''}`}
-              type="button"
-              onClick={(e) => handleClick(e, ship.id)}
-            >
-              {ship.name}
-            </button>
-          );
-        })}
-      </div>
-      <div className={`rList ${listToggle === 'owned' ? 'active' : 'hidden'}`}>
-        {
-          /*ownedList.map((ship: ShipSimple) => {
-          return (
-            <button
-              key={ship.id}
-              className={`rList-item btn ${config.themeColor} ${ship.id === listState.owned.id ? 'selected' : ''}`}
-              type="button"
-              onClick={(e) => handleClick(e, ship.id)}
-            >
-              {ship.name}
-            </button>
-          );
-        })*/
-          ownedList.filter(searchPredicate).map((ship: ShipSimple) => {
-            return (
-              <button
-                key={ship.id}
-                className={`rList-item btn ${config.themeColor} ${ship.id === listState.owned.id ? 'selected' : ''}`}
-                type="button"
-                onClick={(e) => handleClick(e, ship.id)}
-              >
-                {ship.name}
-              </button>
-            );
-          })
-        }
-      </div>
+      {renderList()}
     </div>
   );
 };
