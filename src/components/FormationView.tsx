@@ -15,9 +15,11 @@ const FormationView: React.FC = () => {
       <section id="ship-list-page-content">
         <ShipList listToggle={listToggle} setListToggle={setListToggle} />
         <div id="ship-data">
+          <div style={{ color: 'red', backgroundColor: 'gray', height: '35px', width: '100%' }}></div>
           {/* 
           <div className={''}>Selected ship:</div>
-          <PassivesList orient={'horizontal'} page={'formation'} /> */}
+          <PassivesList orient={'horizontal'} page={'formation'} /> 
+          <FormationDropDownMenu />*/}
           <FormationGrid />
           {/* <FormationPassives /> */}
         </div>

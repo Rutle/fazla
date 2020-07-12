@@ -1,6 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import FormationGridItem from './FormationGridItem';
 
 const FormationGrid: React.FC = () => {
   const currentFormation = useSelector((state: RootState) => state.formationGrid);
@@ -8,14 +11,14 @@ const FormationGrid: React.FC = () => {
   return (
     <div className={'f-grid rounded'}>
       <div className={'f-row'}>
-        <div className={'dark'}>{currentFormation[0].name}</div>
-        <div className={'dark'}>{currentFormation[1].name}</div>
-        <div className={'dark'}>{currentFormation[2].name}</div>
+        <FormationGridItem index={0} />
+        <FormationGridItem index={1} />
+        <FormationGridItem index={2} />
       </div>
       <div className={'f-row'}>
-        <div className={'dark'}>{currentFormation[3].name}</div>
-        <div className={'dark'}>{currentFormation[4].name}</div>
-        <div className={'dark'}>{currentFormation[5].name}</div>
+        <FormationGridItem index={3} />
+        <FormationGridItem index={4} />
+        <FormationGridItem index={5} />
       </div>
     </div>
   );

@@ -8,32 +8,32 @@ interface Formation {
 const initialState: Formation = {
   0: {
     id: '',
-    name: '1',
+    name: '',
     class: '',
   },
   1: {
     id: '',
-    name: '2',
+    name: '',
     class: '',
   },
   2: {
     id: '',
-    name: '3',
+    name: '',
     class: '',
   },
   3: {
     id: '',
-    name: '4',
+    name: '',
     class: '',
   },
   4: {
     id: '',
-    name: '5',
+    name: '',
     class: '',
   },
   5: {
     id: '',
-    name: '6',
+    name: '',
     class: '',
   },
 };
@@ -43,6 +43,7 @@ const formationGridSlice = createSlice({
   initialState,
   reducers: {
     setShip(state, action: PayloadAction<{ index: number; data: ShipSimple }>) {
+      console.log(action.payload.data);
       return {
         ...state,
         [action.payload.index]: action.payload.data,
