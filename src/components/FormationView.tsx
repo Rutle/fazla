@@ -5,6 +5,7 @@ import PageTemplate from './PageTemplate';
 import ShipList from './ShipList';
 import ShipDetails from './ShipDetails';
 import PassivesList from './PassivesList';
+import FormationGrid from './FormationGrid';
 
 const FormationView: React.FC = () => {
   const [listToggle, setListToggle] = useState('all');
@@ -14,8 +15,10 @@ const FormationView: React.FC = () => {
       <section id="ship-list-page-content">
         <ShipList listToggle={listToggle} setListToggle={setListToggle} />
         <div id="ship-data">
-          <PassivesList orient={'horizontal'} page={'formation'} />
-          {/* <FormationGrid />*/}
+          {/* 
+          <div className={''}>Selected ship:</div>
+          <PassivesList orient={'horizontal'} page={'formation'} /> */}
+          <FormationGrid />
           {/* <FormationPassives /> */}
         </div>
       </section>

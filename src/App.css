@@ -440,7 +440,6 @@ div.deepskyblue {
   margin-right: 1px;
 }
 
-
 #passives.formation {
   font-size: 14px;
 }
@@ -450,6 +449,47 @@ div.deepskyblue {
   font-weight: bold;
 }
 
-#passives.formation div{
+#passives.formation div {
   border-width: 1px;
+}
+
+/* ##### GRID ##### */
+.f-grid {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  padding: 5px;
+}
+
+.f-grid > div.f-row {
+  display: flex;
+  
+  flex: 1;
+  flex-direction: row;
+  margin-bottom: 1px;
+  align-items: center;
+  border-radius: inherit;
+}
+
+.f-grid > div.f-row > div {
+  display: flex;
+  flex: 1;
+  min-width: 15%;
+  height: 100px;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+}
+
+.f-grid > div.f-row > div {
+  margin-right: 1px;
+}
+
+.f-grid > div.f-row:last-child {
+  margin-bottom: 0px;
+}
+
+.f-grid.rounded {
+  border-radius: 5px;
 }
