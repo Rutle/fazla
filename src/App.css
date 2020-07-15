@@ -20,15 +20,24 @@
   --main-dark-hover-border: rgb(182, 182, 182);
   --main-dark-selected: #4b5366;
 
-
-  --main-light-bg: ;
-  --main-light-border: ;
-  --main-light-color: ;
-  --main-light-hover-bg: ;
+  --root-light-bg: rgb(255, 255, 255);
+  --main-light-color: black;
+  --main-light-bg: rgb(245, 245, 245);
+  --main-light-border: #9c9c9c;
+  --main-light-hover-bg: rgb(235, 235, 235);
   --main-light-hover-border: ;
+  --main-light-selected: rgb(199, 199, 199);
+  --main-light-focus: rgb(211, 211, 211);
+  --main-light-focus-border: #575757;
 }
 /* ##### DARK ##### */
 .dark {
+  background-color: var(--main-dark-bg);
+  /* border: 1px solid var(--main-dark-border);*/
+  color: var(--main-dark-color);
+}
+
+.btn.dark {
   background-color: var(--main-dark-bg);
   border: 1px solid var(--main-dark-border);
   color: var(--main-dark-color);
@@ -36,7 +45,7 @@
 
 .btn.dark:hover {
   background-color: var(--main-dark-hover-bg);
-  border: 1px solid var(--main-dark-hover-border);
+  /* border: 1px solid var(--main-dark-hover-border); */
 }
 
 .btn.dark.selected:disabled {
@@ -65,20 +74,102 @@ input[type="text"].dark:focus {
   border: 1px solid var(--main-dark-border);
 }
 
-.radio-group input[type="radio"]:checked + label {
+.radio-group input[type="radio"]:checked + label.dark {
   background-color: var(--main-dark-selected);
 }
 
+.tab.dark {
+  overflow: hidden;
+  border: 1px solid #353b48;
+  background-color: #292e38;
+}
+
+.tab button.dark {
+  background-color: inherit;
+  color: rgb(184, 184, 184);
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: rgba(176, 196, 222, 0.2);
+  /* border: 1px solid #353b48; */
+  /* border: 1px solid rgb(182, 182, 182);*/
+}
+/* Create an active/current tablink class */
+.tab button.dark.active {
+  background-color: #4b5366;
+}
+/* Style the tab content */
+.tab-content.dark {
+  border: 1px solid #353b48;
+}
 /* ##### LIGHT ##### */
 .light {
   background-color: var(--main-light-bg);
-  border: 1px solid var(--main-light-border);
+  /* border: 1px solid var(--main-light-border);*/
   color: var(--main-light-color);
+}
+
+.btn.light {
+  background-color: var(--main-light-bg);
+  color: var(--main-light-color);
+  border: 1px solid rgb(177, 177, 177);
 }
 
 .btn.light:hover {
   background-color: var(--main-light-hover-bg);
-  border: 1px solid var(--main-light-hover-border);
+  /* border: 1px solid var(--main-light-hover-border); */
+  color: var(--main-light-color);
+  border: 1px solid rgb(177, 177, 177);
+}
+
+.btn.light.selected {
+  background-color: var(--main-light-selected);
+}
+
+.radio-group input[type="radio"]:checked + label.light {
+  background-color: var(--main-light-selected);
+}
+
+input[type="text"].light {
+  /* background-color: #323844;*/
+  border: 2px solid var(--main-light-border);
+  border-left: 0px;
+}
+
+input[type="text"].light:focus {
+  background-color: var(--main-light-focus);
+  border: 2px solid var(--main-light-focus-border);
+  border-left: 0px;
+}
+
+.radio-group label.light {
+  background-color: var(--main-light-bg);
+}
+
+.tab.light {
+  overflow: hidden;
+  border-bottom: 1px solid var(--main-light-border);
+}
+
+.tab button.light {
+  /* background-color: inherit;*/
+  color: var(--main-light-color);
+}
+
+/* Change background color of buttons on hover */
+.tab button.light:hover {
+  background-color: var(--main-light-hover-bg);
+}
+
+/* Create an active/current tablink class */
+.tab button.light.active {
+  background-color: var(--main-light-selected);
+  color: var(--main-light-color);
+}
+/* Style the tab content */
+.tab-content {
+  border-top: none;
 }
 
 .App {
@@ -86,8 +177,13 @@ input[type="text"].dark:focus {
   height: 100%;
   min-height: 100vh;
   flex-direction: column;
+  
   color: var(--main-dark-color);
   background: var(--root-dark-bg);
+  /*
+  color: var(--main-light-color);
+  background: var(--root-light-bg);
+  */
   /* background: rgb(47,48,50);*/
   /* background: linear-gradient(172deg, rgba(47,48,50,1) 4%, rgba(39,41,48,1) 15%, rgba(33,35,45,1) 70%); */
 
@@ -181,7 +277,7 @@ section.home {
   min-width: 20%;
 }
 
-/* List top selector group */
+/* List top selector group + tabs*/
 .top-container {
   margin-top: 0px;
   margin-bottom: 10px;
@@ -203,17 +299,14 @@ div.top-container > div.hidden {
 div.top-container > div.active {
   display: flex;
   min-height: 58px;
+  flex-direction: column;
 }
 
 .tab {
   overflow: hidden;
-  border: 1px solid #353b48;
-  background-color: #292e38;
 }
 
 .tab button {
-  background-color: inherit;
-  color: rgb(184, 184, 184);
   border: none;
   outline: none;
   cursor: pointer;
@@ -223,21 +316,20 @@ div.top-container > div.active {
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-  background-color: rgba(176, 196, 222, 0.2);
+  /* background-color: rgba(176, 196, 222, 0.2); <--*/
   /* border: 1px solid #353b48; */
   /* border: 1px solid rgb(182, 182, 182);*/
 }
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: #4b5366;
+  /* background-color: #4b5366;*/
 }
 /* Style the tab content */
 .tab-content {
   padding: 6px 12px;
-  border: 1px solid #353b48;
+  /* border: 1px solid #353b48;*/
   border-top: none;
 }
-
 
 #ship-data {
   min-width: 75%;
@@ -284,23 +376,22 @@ section.home {
   scrollbar-width: thin;
 }
 
-.rList.hidden {
-  display: none;
-  height: 0px;
-}
-
 .rList > .rList-item {
   width: 100%;
   height: 35px;
   padding: 5px;
   margin-bottom: 1px;
+  background-color: unset;
+}
+
+.rList > .rList-item.btn {
+  /* background-color: unset;*/
+  border: unset;
 }
 
 /* button */
 .btn {
-  background-color: #292e38;
-  color: rgb(184, 184, 184);
-  border: 1px solid #353b48;
+  /* border: 0px;*/
   /* transition: 0.1s; */
   width: 100%;
   height: 35px;
@@ -308,7 +399,9 @@ section.home {
   /* transition: 0.4s; */
   /* transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;*/
 }
-
+.r-List-item-container {
+  padding: 10px;
+}
 .btn:active {
   transform: translateY(1px);
 }
@@ -321,7 +414,6 @@ section.home {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  
 }
 
 /* #### INPUT ##### */
@@ -377,6 +469,19 @@ input[type="text"] {
   border-right: 0px;
 }
 
+.searchIcon.light {
+  background-color: var(--main-light-bg);
+  border: 2px solid var(--main-light-border);
+  transition: box-shadow .2s ease-in,border .2s ease-in,background-color .2s ease-in;
+  border-right: 0px;
+}
+
+.searchIcon.light.input-focus {
+  background-color: var(--main-light-focus);
+  border: 2px solid var(--main-light-focus-border);
+  border-right: 0px;
+}
+
 .searchIcon.dark.input-focus {
   background-color: rgba(0,0,0,0.45);
   border: 2px solid #444b5a;
@@ -402,27 +507,28 @@ input[type="text"] {
   margin: 0px;
 }
 
-div.pink {
+#passives > div.pink {
   border: 2px solid rgba(243, 196, 204, 0.651);
   background-color: rgba(216, 112, 147, 0.068);
   border-radius: 5px;
 }
-div.pink > :first-child {
+#passives > div.pink > :first-child {
   border-bottom: 2px dashed rgba(243, 196, 204, 0.651);
 }
-div.gold > :first-child {
+#passives > div.gold > :first-child {
   border-bottom: 2px dashed rgba(255, 217, 0, 0.651);
 }
-div.deepskyblue > :first-child {
+#passives > div.deepskyblue > :first-child {
   border-bottom: 2px dashed rgba(0, 191, 255, 0.651);
 }
-div.gold {
+
+#passives > div.gold {
   border: 2px solid rgba(255, 217, 0, 0.651);
   background-color: rgba(218, 165, 32, 0.068);
   border-radius: 5px;
 }
 
-div.deepskyblue {
+#passives > div.deepskyblue {
   border: 2px solid rgba(0, 191, 255, 0.651);
   background-color: rgba(0, 191, 255, 0.068);;
   border-radius: 5px;
@@ -457,34 +563,51 @@ div.deepskyblue {
 .f-grid {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   padding: 5px;
 }
 
-.f-grid > div.f-row {
+div.f-row {
   display: flex;
-  flex: 1;
+  /* flex: 1;
+  /* flex-grow: 1;*/
+  /* flex-wrap: wrap;*/
   flex-direction: row;
-  margin-bottom: 4px;
-  align-items: center;
+  /* justify-content: center;*/
   border-radius: inherit;
+  margin-bottom: 5px;
 }
 
-.f-grid > div.f-row > div {
-  display: flex;
-  flex: 1;
-  min-width: 15%;
-  height: 140px;
-  align-items: center;
-  justify-content: center;
-  border-radius: inherit;
+div.f-row.wrap {
+  flex-wrap: wrap;
 }
 
-.f-grid > div.f-row > div {
-  margin-right: 2px;
+div.f-column {
   display: flex;
-  flex: 1;
   flex-direction: column;
+  border-radius: inherit;
+  margin-bottom: 5px;
+  /* width: 33%;*/
+  flex: 1;
+  min-width: 350px;
+  margin-right: 2px;
+}
+/*
+div.f-column.full {
+  min-width: 350px;
+}
+*/
+div.grid-item {
+  display: flex;
+  flex-grow: 1;
+  /* width: calc(25% + 26px);*/
+  margin-bottom: 3px;
+  flex-direction: column;
+  height: 100%;
+  /* min-width: 15%;*/
+  border-radius: inherit;
+  line-height: 25px;
+  min-height: 25px;
+  /* border: 2px solid rgba(190, 201, 231, 0.171); */
 }
 
 .f-grid > div.f-row:last-child {
@@ -494,39 +617,145 @@ div.deepskyblue {
 .f-grid.rounded {
   border-radius: 5px;
 }
+
+.grid-item > button.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: inherit;
+  height: 22px;
+}
+
+.grid-item > div.content {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  width: 100%;
+  border-radius: inherit;
+}
+
+.grid-item > div.content > div.details {
+  line-height: 22px;
+  padding: 2px;
+  color: inherit;
+  text-align: center;
+}
+
+div.footer-misc {
+  display: flex;
+  min-height: 22px;
+}
+
+.grid-item .content > div.footer-misc > .pos-indicator {
+  min-height: 22px;
+  height: 100%;
+  margin: auto;
+  width: calc(50% - 5px);
+  background-color: inherit;
+  color: inherit;
+  padding-left: 5px;
+  border-radius: inherit;
+  border-top: 1px dashed #20242b;
+  font-size: 12px;
+  line-height: 22px;
+}
+
+.grid-item .content > div.footer-misc > div.hull-type {
+  min-height: 22px;
+  height: 100%;
+  width: calc(50% - 5px);
+  background-color: inherit;
+  color: inherit;
+  padding-left: 5px;
+  border-radius: inherit;
+  border-top: 1px dashed #20242b;
+  border-left: 1px solid #20242b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  line-height: 22px;
+}
+
+div.f-title {
+  padding: 10px 12px;
+  margin-bottom: 5px;
+  border: 1px solid #353b48;
+  text-align: center;
+  /* width: 25%; */
+}
+
+.grid-item.name-title {
+  min-width: 200px;
+  max-width: 200px;
+  padding-left: 5px;
+  border-bottom: 2px solid #353b48;
+}
+
+.grid-item.name {
+  min-width: 200px;
+  max-width: 200px;
+  padding-left: 5px;
+  padding-right: 5px;
+  justify-content: center;
+  border-right: 1px solid #353b48;
+  margin-top: 0px;
+}
 /*
-.f-grid > div > div .btn {
-  position: relative;
-  top: -50px;
+.grid-item.name:hover {
+  padding-left: 10px;
+  padding-right: 0px;
+  border-right: 1px solid #6d6d6d;
+}
+
+.f-column > div.f-row:hover {
+  background-color: var(--main-dark-hover-bg);
+  
 }
 */
-.grid-item > .btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;;
-  border-radius: 5px;
-  height: 22px;
-  background-color: #30333b;
-}
-.btn.icon :first-child {
-  text-align: center;
-  padding: 2px;
+.grid-item.passive-title {
+  padding-left: 5px;
+  border-bottom: 2px solid #353b48;
 }
 
-.btn.icon :last-child {
-  text-align: center;
-  padding: 2px;
+.grid-item.passive {
+  padding-left: 5px;
+  justify-content: center;
 }
 
-.grid-item .content {
-  display: flex;
-  background-color: #292e38;
-  width: 100%;
-  height: 100%;
+div.f-row.pink {
+  border: 1px solid rgba(243, 196, 204, 0.651);
+  background-color: rgba(216, 112, 147, 0.068);
   border-radius: 5px;
-  border-top: 1px solid #20242b;
-  margin-top: -1px;
-  justify-content: center;
-  align-items: center;
+}
+
+div.f-row.pink > :first-child {
+  border-right: 2px dashed rgba(243, 196, 204, 0.651);
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+div.f-row.gold > :first-child {
+  border-right: 2px dashed rgba(255, 217, 0, 0.651);
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+div.f-row.deepskyblue > :first-child {
+  border-right: 2px dashed rgba(0, 191, 255, 0.651);
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+div.f-row.gold {
+  border: 1px solid rgba(255, 217, 0, 0.651);
+  background-color: rgba(218, 165, 32, 0.068);
+  border-radius: 5px;
+}
+
+div.f-row.deepskyblue {
+  border: 1px solid rgba(0, 191, 255, 0.651);
+  background-color: rgba(0, 191, 255, 0.068);;
+  border-radius: 5px;
 }

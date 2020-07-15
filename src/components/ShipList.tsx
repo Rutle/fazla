@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { setList } from '../reducers/slices/shipListSlice';
-import { getShipsSimple, ShipSimple, getShipById, Ship } from './util/shipdata';
+import { getShipsSimple, ShipSimple, getShipById, Ship, getShipsFull } from './util/shipdata';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -31,6 +31,7 @@ const ShipList: React.FC<{
   useEffect(() => {
     try {
       const data: ShipSimple[] = getShipsSimple('');
+      // const data: Ship[] = getShipsFull('');
       dispatch(setList(data));
       dispatch(setDetails(getShipById(data[0].id)));
       dispatch(setListState({ key: 'all', data: { id: data[0].id, index: 0 } }));
@@ -49,6 +50,7 @@ const ShipList: React.FC<{
     switch (listState.currentToggle) {
       case 'all':
         const t: ShipSimple[] = getShipsSimple(searchValue);
+        // const t: Ship[] = getShipsFull(searchValue);
         dispatch(setDetails(getShipById(listState.all.id)));
         dispatch(setList(t));
         // dispatch(setListState({ key: 'all', data: { id: t[0].id, index: 0 } }));
@@ -69,6 +71,7 @@ const ShipList: React.FC<{
     switch (listState.currentToggle) {
       case 'all':
         const t: ShipSimple[] = getShipsSimple(searchValue);
+        // const t: Ship[] = getShipsFull(searchValue);
         dispatch(setDetails(getShipById(t[0].id)));
         dispatch(setList(t));
         if (t.length === 0) return;
@@ -93,6 +96,7 @@ const ShipList: React.FC<{
     switch (listState.currentToggle) {
       case 'all':
         const t: ShipSimple[] = getShipsSimple(searchValue);
+        // const t: Ship[] = getShipsFull(searchValue);
         dispatch(setList(t));
         if (t.length === 0) return;
         dispatch(setListState({ key: 'all', data: { id: t[0].id, index: 0 } }));
@@ -204,17 +208,23 @@ const ShipList: React.FC<{
   return (
     <div id="ship-side-list">
       <div className="top-container">
-        <div className="tab">
+        <div className={`tab ${config.themeColor}`}>
           <button
-            className={`tab-btn ${selectedTab === 'search' ? 'active' : ''}`}
+            className={`tab-btn ${config.themeColor} ${selectedTab === 'search' ? 'active' : ''}`}
             onClick={() => setSelectedTab('search')}
           >
             Search
           </button>
-          <button className={`tab-btn ${selectedTab === 'PH1' ? 'active' : ''}`} onClick={() => setSelectedTab('PH1')}>
+          <button
+            className={`tab-btn ${config.themeColor} ${selectedTab === 'PH1' ? 'active' : ''}`}
+            onClick={() => setSelectedTab('PH1')}
+          >
             PH1
           </button>
-          <button className={`tab-btn ${selectedTab === 'PH2' ? 'active' : ''}`} onClick={() => setSelectedTab('PH2')}>
+          <button
+            className={`tab-btn ${config.themeColor} ${selectedTab === 'PH2' ? 'active' : ''}`}
+            onClick={() => setSelectedTab('PH2')}
+          >
             PH2
           </button>
         </div>
@@ -242,7 +252,7 @@ const ShipList: React.FC<{
                 checked={listState.currentToggle === 'all'}
                 onChange={() => dispatch(setCurrentToggle('all'))}
               />
-              <label className={`${config.themeColor}`} htmlFor="all">
+              <label className={`toggle ${config.themeColor}`} htmlFor="all">
                 All
               </label>
               <input
@@ -252,7 +262,7 @@ const ShipList: React.FC<{
                 checked={listState.currentToggle === 'owned'}
                 onChange={() => dispatch(setCurrentToggle('owned'))}
               />
-              <label className={`${config.themeColor}`} htmlFor="owned">
+              <label className={`toggle ${config.themeColor}`} htmlFor="owned">
                 Owned
               </label>
             </div>

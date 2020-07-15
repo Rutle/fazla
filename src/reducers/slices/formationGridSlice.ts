@@ -1,48 +1,56 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ShipSimple } from '../../components/util/shipdata';
+import { ShipSimple, Ship } from '../../components/util/shipdata';
 
 interface Formation {
-  [key: string]: ShipSimple;
+  [key: string]: Ship;
 }
 
 const initialState: Formation = {
+  /*
   0: {
     id: '',
     name: '',
     class: '',
+    rarity: '',
   },
   1: {
     id: '',
     name: '',
     class: '',
+    rarity: '',
   },
   2: {
     id: '',
     name: '',
     class: '',
+    rarity: '',
   },
   3: {
     id: '',
     name: '',
     class: '',
+    rarity: '',
   },
   4: {
     id: '',
     name: '',
     class: '',
+    rarity: '',
   },
   5: {
     id: '',
     name: '',
     class: '',
+    rarity: '',
   },
+  */
 };
 
 const formationGridSlice = createSlice({
   name: 'formationGridSlice',
   initialState,
   reducers: {
-    setShip(state, action: PayloadAction<{ index: number; data: ShipSimple }>) {
+    setShip(state, action: PayloadAction<{ index: number; data: Ship }>) {
       console.log(action.payload.data);
       return {
         ...state,
