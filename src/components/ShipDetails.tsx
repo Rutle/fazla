@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { Skill, Ship } from './util/shipdata';
-
 import PassivesList from './PassivesList';
-
-// import { setListState } from '../reducers/slices/listStateSlice';
 
 interface ShipDetails {
   orient?: string;

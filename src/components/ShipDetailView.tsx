@@ -11,11 +11,9 @@ const ShipDetailView: React.FC = () => {
   const dispatch = useDispatch();
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
   const config = useSelector((state: RootState) => state.config);
-  const listState = useSelector((state: RootState) => state.listState);
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
-
   const [isShips, setIsShips] = useState(ownedShips.length > 0);
-  const [listToggle, setListToggle] = useState('all');
+
   const isOwned = (id: string) => {
     return ownedShips.some((ele) => ele.id === id);
   };
@@ -32,13 +30,12 @@ const ShipDetailView: React.FC = () => {
     // Check if there any ships left.
     setIsShips(ownedShips.length > 0);
     // dispatch(dispatch(setDetails(getShipById(data.ships[0].id)));)
-    console.log('listState', listState);
   }, [ownedShips]);
 
   return (
     <PageTemplate>
       <section id="ship-list-page-content">
-        <ShipList listToggle={listToggle} setListToggle={setListToggle} />
+        <ShipList />
         <div id="ship-data">
           {!isShips ? (
             <div>Select ship or add new ship to docks</div>

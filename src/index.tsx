@@ -9,7 +9,7 @@ import Home from './components/Home';
 import './index.css';
 import './App.css';
 import store from './store';
-import DocksView from './components/DocksView';
+
 import FormationView from './components/FormationView';
 
 ReactDOM.render(
@@ -23,7 +23,7 @@ ReactDOM.render(
             </Route>
             <Route path="/home" component={Home} />
             <Route path="/shipdetails" component={ShipDetailView} />
-            <Route path="/docks" component={DocksView} />
+
             <Route path="/formation" component={FormationView} />
           </Switch>
         </div>

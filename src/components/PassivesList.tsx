@@ -1,6 +1,6 @@
 import React from 'react';
-import { Skill, Ship } from './util/shipdata';
-import { useSelector, useDispatch } from 'react-redux';
+import { Skill } from './util/shipdata';
+import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 
 interface PassiveProps {

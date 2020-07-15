@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { setShip } from '../reducers/slices/formationGridSlice';
@@ -40,10 +40,6 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index }) => {
         return '';
     }
   };
-
-  useEffect(() => {
-    console.log(index);
-  }, []);
 
   const isSet = (): boolean => {
     return currentFormation[index] !== undefined;

@@ -1,16 +1,7 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../reducers/rootReducer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 import FormationGridItem from './FormationGridItem';
 
 const FormationGrid: React.FC = () => {
-  const currentFormation = useSelector((state: RootState) => state.formationGrid);
-
-  useEffect(() => {
-    console.log(currentFormation);
-  }, []);
   return (
     <div className={'f-grid'}>
       <div className={'f-row wrap'}>

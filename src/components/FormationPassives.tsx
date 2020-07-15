@@ -1,19 +1,15 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { getShipById, Ship } from './util/shipdata';
+// import { getShipById, Ship } from './util/shipdata';
 import FormationShipPassives from './FormationShipPassives';
 
 const FormationPassives: React.FC = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const currentFormation = useSelector((state: RootState) => state.formationGrid);
-  const listState = useSelector((state: RootState) => state.listState);
-  const shipList = useSelector((state: RootState) => state.shipList);
-  const config = useSelector((state: RootState) => state.config);
-
-  useEffect(() => {
-    console.log(currentFormation);
-  }, [currentFormation]);
+  // const listState = useSelector((state: RootState) => state.listState);
+  // const shipList = useSelector((state: RootState) => state.shipList);
+  // const config = useSelector((state: RootState) => state.config);
 
   return (
     <div className={'f-grid'}>

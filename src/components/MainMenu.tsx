@@ -1,5 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../reducers/rootReducer';
 
 interface styleInterface {
   backgroundColor: string;
@@ -15,22 +17,14 @@ const selectedStyle: styleInterface = {
   borderBottom: '0px',
 };
 
-const MainMenu = (): JSX.Element => {
+const MainMenu: React.FC = () => {
+  const config = useSelector((state: RootState) => state.config);
   return (
-    <div className="main-menu">
-      <nav>
-        <NavLink to="/home" activeStyle={selectedStyle}>
-          [Home]
-        </NavLink>
-        <NavLink to="/shipdetails" activeStyle={selectedStyle}>
-          [Ship list]
-        </NavLink>
-        <NavLink to="/formation" activeStyle={selectedStyle}>
-          [Formation]
-        </NavLink>
-        <NavLink to="/formation" activeStyle={selectedStyle}>
-          [Formation]
-        </NavLink>
+    <div className={`top-container`}>
+      <nav className={`tab ${config.themeColor}`}>
+        <NavLink to="/home">[Home]</NavLink>
+        <NavLink to="/shipdetails">[Ship list]</NavLink>
+        <NavLink to="/formation">[Formation]</NavLink>
       </nav>
     </div>
   );

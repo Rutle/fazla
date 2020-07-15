@@ -2,18 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { setList } from '../reducers/slices/shipListSlice';
-import { getShipsSimple, ShipSimple, getShipById, Ship, getShipsFull } from './util/shipdata';
+import { getShipsSimple, ShipSimple, getShipById, Ship } from './util/shipdata';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { setListState, setCurrentToggle } from '../reducers/slices/listStateSlice';
 import { setOwnedSearchList } from '../reducers/slices/ownedSearchListSlice';
+import Menu from './Menu';
 
-const ShipList: React.FC<{
-  listToggle: string;
-  setListToggle: React.Dispatch<React.SetStateAction<string>>;
-  // eslint-disable-next-line react/prop-types
-}> = ({ listToggle, setListToggle }) => {
+const ShipList: React.FC = () => {
   const dispatch = useDispatch();
   const shipList = useSelector((state: RootState) => state.shipList);
   const ownedList = useSelector((state: RootState) => state.ownedShips);
@@ -21,10 +18,10 @@ const ShipList: React.FC<{
   const listState = useSelector((state: RootState) => state.listState);
   const ownedSearch = useSelector((state: RootState) => state.ownedSearchList);
 
-  // const [selectedId, setSelected] = useState('');
-  const [selectedTab, setSelectedTab] = useState('search');
+  const [selectedTab, setSelectedTab] = useState('Search');
   const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
   const [inputFocus, setInputFocus] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchParam, setSearchParam] = useState('name');
 
   // Populate list
@@ -43,10 +40,10 @@ const ShipList: React.FC<{
     } catch (e) {
       console.log(e);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    console.log(listState);
     switch (listState.currentToggle) {
       case 'all':
         const t: ShipSimple[] = getShipsSimple(searchValue);
@@ -64,6 +61,7 @@ const ShipList: React.FC<{
       default:
         break;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listState.currentToggle]);
 
   // Remember search value
@@ -87,8 +85,9 @@ const ShipList: React.FC<{
       default:
         break;
     }
-    localStorage.setItem('searchValue', searchValue);
-    localStorage.setItem('listToggle', listToggle);
+    // localStorage.setItem('searchValue', searchValue);
+    // localStorage.setItem('listToggle', listToggle);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue]);
 
   const searchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -175,31 +174,6 @@ const ShipList: React.FC<{
             })}
           </div>
         );
-      /*ownedList.map((ship: ShipSimple) => {
-      return (
-        <button
-          key={ship.id}
-          className={`rList-item btn ${config.themeColor} ${ship.id === listState.owned.id ? 'selected' : ''}`}
-          type="button"
-          onClick={(e) => handleClick(e, ship.id)}
-        >
-          {ship.name}
-        </button>
-      );
-    })
-      renderOwnedList().map((ship: ShipSimple) => {
-        return (
-          <button
-            key={ship.id}
-            className={`rList-item btn ${config.themeColor} ${ship.id === listState.owned.id ? 'selected' : ''}`}
-            type="button"
-            onClick={(e) => handleClick(e, ship.id)}
-          >
-            {ship.name}
-          </button>
-        );
-      })
-    }*/
       default:
         break;
     }
@@ -208,27 +182,8 @@ const ShipList: React.FC<{
   return (
     <div id="ship-side-list">
       <div className="top-container">
-        <div className={`tab ${config.themeColor}`}>
-          <button
-            className={`tab-btn ${config.themeColor} ${selectedTab === 'search' ? 'active' : ''}`}
-            onClick={() => setSelectedTab('search')}
-          >
-            Search
-          </button>
-          <button
-            className={`tab-btn ${config.themeColor} ${selectedTab === 'PH1' ? 'active' : ''}`}
-            onClick={() => setSelectedTab('PH1')}
-          >
-            PH1
-          </button>
-          <button
-            className={`tab-btn ${config.themeColor} ${selectedTab === 'PH2' ? 'active' : ''}`}
-            onClick={() => setSelectedTab('PH2')}
-          >
-            PH2
-          </button>
-        </div>
-        <div id="search" className={`tab-content ${selectedTab === 'search' ? 'active' : 'hidden'}`}>
+        <Menu setActiveTab={setSelectedTab} currentActiveTab={selectedTab} tabs={['Search', 'PH1', 'PH2']} />
+        <div id="search" className={`tab-content ${selectedTab === 'Search' ? 'active' : 'hidden'}`}>
           <form onSubmit={(e) => searchSubmit(e)}>
             <div id="input-group">
               <div className={`searchIcon ${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
