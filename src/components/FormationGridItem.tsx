@@ -57,7 +57,7 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index }) => {
   };
 
   return (
-    <div className={`grid-item `}>
+    <div className={`grid-item ${config.themeColor}`}>
       <button className={`btn ${config.themeColor}`} onClick={() => openShipSelector()}>
         <div>Add ship</div>
       </button>
