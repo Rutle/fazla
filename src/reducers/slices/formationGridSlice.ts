@@ -5,46 +5,7 @@ interface Formation {
   [key: string]: Ship;
 }
 
-const initialState: Formation = {
-  /*
-  0: {
-    id: '',
-    name: '',
-    class: '',
-    rarity: '',
-  },
-  1: {
-    id: '',
-    name: '',
-    class: '',
-    rarity: '',
-  },
-  2: {
-    id: '',
-    name: '',
-    class: '',
-    rarity: '',
-  },
-  3: {
-    id: '',
-    name: '',
-    class: '',
-    rarity: '',
-  },
-  4: {
-    id: '',
-    name: '',
-    class: '',
-    rarity: '',
-  },
-  5: {
-    id: '',
-    name: '',
-    class: '',
-    rarity: '',
-  },
-  */
-};
+const initialState: Formation = {};
 
 const formationGridSlice = createSlice({
   name: 'formationGridSlice',

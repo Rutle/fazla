@@ -24,6 +24,8 @@
   /* --main-dark-selected: #4b5366;*/
   --main-dark-selected: #272c3b;
   --main-dark-active: #272c3b;
+  --main-dark-input-bg: #323844;
+  --main-dark-input-focus-border: #444b5a;
 
   --root-light-bg: rgb(255, 255, 255);
   --main-light-color: black;
@@ -84,14 +86,15 @@ nav.tab.dark > a:hover {
 }
 
 input[type="text"].dark {
-  background-color: #323844;
-  border: 2px solid var(--main-dark-border);
+  /* background-color: #323844;*/
+  background-color: var(--main-dark-input-bg);
+  border: 2px solid var(--main-dark-input-bg);
   border-left: 0px;
 }
 
 input[type="text"].dark:focus {
   background-color: rgba(0,0,0,0.45);
-  border: 2px solid #444b5a;
+  border: 2px solid var(--main-dark-input-focus-border);
   border-left: 0px;
 }
 
@@ -531,8 +534,8 @@ input[type="text"] {
 }
 
 .searchIcon.dark {
-  background-color: #323844;
-  border: 2px solid var(--main-dark-border);
+  background-color: var(--main-dark-input-bg);
+  border: 2px solid var(--main-dark-input-bg);
   transition: box-shadow .2s ease-in,border .2s ease-in,background-color .2s ease-in;
   border-right: 0px;
 }
@@ -552,7 +555,7 @@ input[type="text"] {
 
 .searchIcon.dark.input-focus {
   background-color: rgba(0,0,0,0.45);
-  border: 2px solid #444b5a;
+  border: 2px solid var(--main-dark-input-focus-border);
   border-right: 0px;
 }
 

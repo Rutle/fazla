@@ -16,6 +16,7 @@ export interface ShipSimple {
   class: string;
   rarity?: string;
   hullType?: string;
+  nationality?: string;
 }
 
 export interface Ship {

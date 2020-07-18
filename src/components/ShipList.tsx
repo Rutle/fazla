@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { setListState, setCurrentToggle } from '../reducers/slices/listStateSlice';
 import { setOwnedSearchList } from '../reducers/slices/ownedSearchListSlice';
+import { setParameter } from '../reducers/slices/searchParametersSlice';
 import Menu from './Menu';
 
 const ShipList: React.FC = () => {
@@ -17,12 +18,13 @@ const ShipList: React.FC = () => {
   const config = useSelector((state: RootState) => state.config);
   const listState = useSelector((state: RootState) => state.listState);
   const ownedSearch = useSelector((state: RootState) => state.ownedSearchList);
+  const searchParameters = useSelector((state: RootState) => state.searchParameters);
 
   const [selectedTab, setSelectedTab] = useState('Search');
   const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
   const [inputFocus, setInputFocus] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [searchParam, setSearchParam] = useState('name');
+  // const [searchParam, setSearchParam] = useState('name');
 
   // Populate list
   useEffect(() => {
@@ -66,9 +68,10 @@ const ShipList: React.FC = () => {
 
   // Remember search value
   useEffect(() => {
+    console.log('search parameters changed', searchParameters.name);
     switch (listState.currentToggle) {
       case 'all':
-        const t: ShipSimple[] = getShipsSimple(searchValue);
+        const t: ShipSimple[] = getShipsSimple(searchParameters.name);
         // const t: Ship[] = getShipsFull(searchValue);
         dispatch(setDetails(getShipById(t[0].id)));
         dispatch(setList(t));
@@ -88,7 +91,7 @@ const ShipList: React.FC = () => {
     // localStorage.setItem('searchValue', searchValue);
     // localStorage.setItem('listToggle', listToggle);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchValue]);
+  }, [searchParameters]);
 
   const searchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -111,12 +114,28 @@ const ShipList: React.FC = () => {
     }
   };
   const searchPredicate = (ele: ShipSimple) => {
-    switch (searchParam) {
-      case 'name':
-        return ele.name.toLowerCase().includes(searchValue.toLowerCase());
-      default:
-        break;
+    return ele.name.toLowerCase().includes(searchParameters.name.toLowerCase());
+  };
+
+  const hullPredicate = (ele: ShipSimple) => {
+    if (searchParameters.hullType === '') {
+      return true;
     }
+    return ele.hullType?.toLowerCase() === searchParameters.hullType.toLowerCase();
+  };
+
+  const nationalityPredicate = (ele: ShipSimple) => {
+    if (searchParameters.nationality === '') {
+      return true;
+    }
+    return ele.nationality?.toLowerCase() === searchParameters.nationality.toLowerCase();
+  };
+
+  const rarityPredicate = (ele: ShipSimple) => {
+    if (searchParameters.rarity === '') {
+      return true;
+    }
+    return ele.rarity?.toLowerCase() === searchParameters.rarity.toLowerCase();
   };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
@@ -194,7 +213,10 @@ const ShipList: React.FC = () => {
                 type="text"
                 className={`${config.themeColor}`}
                 value={searchValue}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchValue(e.target.value);
+                  dispatch(setParameter({ key: 'name', value: e.target.value }));
+                }}
                 onFocus={() => setInputFocus(true)}
                 onBlur={() => setInputFocus(false)}
               />
@@ -224,10 +246,10 @@ const ShipList: React.FC = () => {
           </form>
         </div>
         <div id="PH1" className={`tab-content ${selectedTab === 'PH1' ? 'active' : 'hidden'}`}>
-          PH!
+          Nation
         </div>
         <div id="PH2" className={`tab-content ${selectedTab === 'PH2' ? 'active' : 'hidden'}`}>
-          PH2
+          Type
         </div>
       </div>
       {renderList()}

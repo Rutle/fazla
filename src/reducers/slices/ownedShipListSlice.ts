@@ -1,7 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ShipSimple } from '../../components/util/shipdata';
 
-const initialState: ShipSimple[] = [{ id: '107', name: 'HMS Dido', class: 'Dido' }];
+const initialState: ShipSimple[] = [
+  {
+    id: '107',
+    name: 'HMS Dido',
+    class: 'Dido',
+    rarity: 'Super Rare',
+    nationality: 'Royal Navy',
+    hullType: 'Light Cruiser',
+  },
+];
 
 const ownedShipListSlice = createSlice({
   name: 'ownedShipListSlice',
