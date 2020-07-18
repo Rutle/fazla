@@ -180,7 +180,7 @@ const ShipList: React.FC = () => {
   };
 
   return (
-    <div id="ship-side-list">
+    <div className="ship-side-container dark">
       <div className="top-container">
         <Menu setActiveTab={setSelectedTab} currentActiveTab={selectedTab} tabs={['Search', 'PH1', 'PH2']} />
         <div id="search" className={`tab-content ${selectedTab === 'Search' ? 'active' : 'hidden'}`}>

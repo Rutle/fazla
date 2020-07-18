@@ -36,7 +36,7 @@ const ShipDetailView: React.FC = () => {
     <PageTemplate>
       <section id="ship-list-page-content">
         <ShipList />
-        <div id="ship-data">
+        <div className="ship-data-container dark">
           {!isShips ? (
             <div>Select ship or add new ship to docks</div>
           ) : (

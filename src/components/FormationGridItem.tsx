@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { setShip } from '../reducers/slices/formationGridSlice';
-import { getShipById } from './util/shipdata';
+// import { setShip } from '../reducers/slices/formationGridSlice';
+// import { getShipById } from './util/shipdata';
+import { openModal } from '../reducers/slices/formationModalSlice';
 
 interface GridItemProps {
   index: number;
@@ -12,20 +13,30 @@ interface GridItemProps {
 const FormationGridItem: React.FC<GridItemProps> = ({ index }) => {
   const dispatch = useDispatch();
   const currentFormation = useSelector((state: RootState) => state.formationGrid);
-  const listState = useSelector((state: RootState) => state.listState);
-  const shipList = useSelector((state: RootState) => state.shipList);
+  // const listState = useSelector((state: RootState) => state.listState);
+  // const shipList = useSelector((state: RootState) => state.shipList);
   const config = useSelector((state: RootState) => state.config);
-
+  // const ownedSearch = useSelector((state: RootState) => state.ownedSearchList);
+  // const formationModal = useSelector((state: RootState) => state.formationModal);
+  /*
   const addShipToFormation = () => {
+    // dispatch(setModalState(true));
+    const n: number = listState[listState.currentToggle].index;
     switch (listState.currentToggle) {
       case 'all':
-        const n: number = listState[listState.currentToggle].index;
         // dispatch(setShip({ index, data: shipList[n] }));
         dispatch(setShip({ index, data: getShipById(shipList[n].id) }));
+        break;
+      case 'owned':
+        dispatch(setShip({ index, data: getShipById(ownedSearch[n].id) }));
         break;
       default:
         break;
     }
+  };
+*/
+  const openShipSelector = () => {
+    dispatch(openModal({ isOpen: true, gridIndex: index }));
   };
 
   const getLocation = (idx: number): string => {
@@ -46,15 +57,12 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index }) => {
   };
 
   return (
-    <div className={`grid-item`}>
-      {console.log(currentFormation[index] === undefined)}
-      <button className={`btn ${config.themeColor}`} onClick={() => addShipToFormation()}>
-        <div>Add selected ship</div>
+    <div className={`grid-item `}>
+      <button className={`btn ${config.themeColor}`} onClick={() => openShipSelector()}>
+        <div>Add ship</div>
       </button>
-      <div className={`content ${config.themeColor}`}>
-        <div className={`details ${config.themeColor} ${isSet() ? currentFormation[index].rarity : ''}`}>
-          {isSet() ? currentFormation[index].names.en : 'Empty'}
-        </div>
+      <div className={`content ${isSet() ? currentFormation[index].rarity : ''}`}>
+        <div className={`details`}>{isSet() ? currentFormation[index].names.en : 'Empty'}</div>
         <div className={'footer-misc'}>
           <div className={'pos-indicator'}>{getLocation(index)}</div>
           <div className={`hull-type ${isSet() ? currentFormation[index].hullType : ''}`}>

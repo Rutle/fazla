@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-
+/*
 interface styleInterface {
   backgroundColor: string;
   color: string;
@@ -16,6 +16,7 @@ const selectedStyle: styleInterface = {
   border: '1px solid #353b48',
   borderBottom: '0px',
 };
+*/
 
 const MainMenu: React.FC = () => {
   const config = useSelector((state: RootState) => state.config);

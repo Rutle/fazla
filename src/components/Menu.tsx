@@ -13,7 +13,7 @@ const Menu: React.FC<MenuProps> = ({ setActiveTab, currentActiveTab, tabs }) => 
   const config = useSelector((state: RootState) => state.config);
 
   return (
-    <div className={`tab ${config.themeColor}`}>
+    <div className={`tab dark`}>
       <button
         className={`tab-btn ${config.themeColor} ${currentActiveTab === tabs[0] ? 'active' : ''}`}
         onClick={() => setActiveTab(tabs[0])}

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import PageTemplate from './PageTemplate';
-import ShipList from './ShipList';
+// import ShipList from './ShipList';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
 import Menu from './Menu';
+// import { RootState } from '../reducers/rootReducer';
+import FormationModal from './FormationModal';
 
 const FormationView: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState('Formation');
@@ -11,8 +13,9 @@ const FormationView: React.FC = () => {
   return (
     <PageTemplate>
       <section id="ship-list-page-content">
-        <ShipList />
-        <div id="ship-data">
+        {/* <ShipList /> */}
+        <FormationModal />
+        <div className={'ship-data-container dark'}>
           <div className="top-container">
             <Menu setActiveTab={setSelectedTab} currentActiveTab={selectedTab} tabs={['Formation', 'Summary']} />
             <div id="formation" className={`tab-content ${selectedTab === 'Formation' ? 'active' : 'hidden'}`}>

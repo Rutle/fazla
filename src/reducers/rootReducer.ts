@@ -6,6 +6,7 @@ import programConfigSlice from './slices/programConfigSlice';
 import listStateSlice from './slices/listStateSlice';
 import ownedSearchListSlice from './slices/ownedSearchListSlice';
 import formationGridSlice from './slices/formationGridSlice';
+import formationModalSlice from './slices/formationModalSlice';
 
 const rootReducer = combineReducers({
   shipList: shipListSlice,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   listState: listStateSlice,
   ownedSearchList: ownedSearchListSlice,
   formationGrid: formationGridSlice,
+  formationModal: formationModalSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

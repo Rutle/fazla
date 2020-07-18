@@ -12,13 +12,18 @@
 
 /* Global colors */
 :root {
-  --root-dark-bg: linear-gradient(172deg, rgba(47,48,50,1) 4%, rgba(39,41,48,1) 15%, rgba(33,35,45,1) 70%);
-  --main-dark-bg: #292e38;
+  /* --root-dark-bg: linear-gradient(172deg, rgba(47,48,50,1) 4%, rgba(39,41,48,1) 15%, rgba(33,35,45,1) 70%);*/
+  --root-dark-bg: rgb(42, 46, 54);
+  /* --main-dark-bg: #292e38;*/
+  --main-dark-bg: #1b1d24;
+  /* --main-dark-bg: rgba(0,0,0,0.3);*/
   --main-dark-border: #353b48;
   --main-dark-color: rgb(184, 184, 184);
-  --main-dark-hover-bg: rgba(176, 196, 222, 0.2);
+  --main-dark-hover-bg: #272c3b;
   --main-dark-hover-border: rgb(182, 182, 182);
-  --main-dark-selected: #4b5366;
+  /* --main-dark-selected: #4b5366;*/
+  --main-dark-selected: #272c3b;
+  --main-dark-active: #272c3b;
 
   --root-light-bg: rgb(255, 255, 255);
   --main-light-color: black;
@@ -32,7 +37,8 @@
 }
 /* ##### DARK ##### */
 .dark {
-  background-color: var(--main-dark-bg);
+  /* background-color: var(--main-dark-bg);*/
+  background-color: rgba(0,0,0,0.3);
   /* border: 1px solid var(--main-dark-border);*/
   color: var(--main-dark-color);
 }
@@ -62,11 +68,11 @@ nav.tab.dark > a {
 }
 
 nav.tab.dark > a.active {
-  background-color: #4b5366;
+  background-color: var(--main-dark-active);
 }
 
 nav.tab.dark > a:hover {
-  background-color: rgba(176, 196, 222, 0.2);
+  background-color: var(--main-dark-hover-bg);
 }
 
 input[type="text"].dark {
@@ -93,23 +99,22 @@ input[type="text"].dark:focus {
 .tab.dark {
   overflow: hidden;
   border: 1px solid #353b48;
-  background-color: #292e38;
+  background-color: var(--main-dark-bg);
+  /* background-color: #292e38;*/
 }
 
 .tab button.dark {
-  background-color: inherit;
+  background-color: var(--main-dark-bg);
   color: rgb(184, 184, 184);
 }
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-  background-color: rgba(176, 196, 222, 0.2);
-  /* border: 1px solid #353b48; */
-  /* border: 1px solid rgb(182, 182, 182);*/
+  background-color: var(--main-dark-hover-bg);
 }
 /* Create an active/current tablink class */
 .tab button.dark.active {
-  background-color: #4b5366;
+  background-color: var(--main-dark-active);
 }
 /* Style the tab content */
 .tab-content.dark {
@@ -243,18 +248,49 @@ section.home {
   flex-direction: row;
 }
 
-#ship-data,
-#ship-side-list {
+.formation-model-container {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  padding: 0px;
+  /*
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  */
+  left: 10%;
+  top: 10%;
+  height: 80%;
+  width: 80%;
+  justify-content: center;  
+}
+.formation-model-container.dark {
+  background-color: var(--root-dark-bg);
+  border: 2px solid #9c9c9ca1;
+  border-radius: 2px;
+}
+.formation-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.ship-data-container,
+.ship-side-container {
   display: flex;
   flex-direction: column;
   padding: 15px;
-  margin: 0px 5px 5px 5px;
+  margin: 5px 5px 5px 5px;
   border: 1px dotted #353b48;
   max-height: 88vh;
+  width: 100%;
 }
-
-#ship-side-list {
-  min-width: 20%;
+.ship-side-container {
+  min-width: 15%;
 }
 
 /* List top selector group + tabs*/
@@ -348,11 +384,11 @@ div.main-menu {
 }
 */
 
-#ship-data {
+.ship-data-container {
   min-width: 75%;
 }
 
-#ship-data > div > h1 {
+.ship-data-container > div > h1 {
   border-top: thick double #353b48;
   border-bottom: thick double #353b48;
   border-left: 1px solid #353b48;
@@ -361,20 +397,20 @@ div.main-menu {
   margin-top: 0px;
 }
 
-#ship-data > div > span {
+.ship-data-container > div > span {
   border-right: 1px solid black;
   padding: 5px;
 }
 
-#ship-data > div > h1 > span.Super.Rare:last-child {
+.ship-data-container > div > h1 > span.Super.Rare:last-child {
   color: rgba(253, 209, 98, 0.616);
 }
 
-#ship-data > div > h1 > span.Rare:last-child {
+.ship-data-container > div > h1 > span.Rare:last-child {
   color: rgba(98, 134, 253, 0.616);
 }
 
-#ship-data > div > h1 > span.Elite:last-child {
+.ship-data-container > div > h1 > span.Elite:last-child {
   color: rgba(144, 98, 253, 0.616);
 }
 
@@ -585,11 +621,7 @@ input[type="text"] {
 
 div.f-row {
   display: flex;
-  /* flex: 1;
-  /* flex-grow: 1;*/
-  /* flex-wrap: wrap;*/
   flex-direction: row;
-  /* justify-content: center;*/
   border-radius: inherit;
   margin-bottom: 5px;
 }
@@ -603,28 +635,26 @@ div.f-column {
   flex-direction: column;
   border-radius: inherit;
   margin-bottom: 5px;
-  /* width: 33%;*/
   flex: 1;
   min-width: 350px;
   margin-right: 2px;
 }
-/*
-div.f-column.full {
-  min-width: 350px;
-}
-*/
+
 div.grid-item {
   display: flex;
   flex-grow: 1;
-  /* width: calc(25% + 26px);*/
   margin-bottom: 3px;
   flex-direction: column;
   height: 100%;
-  /* min-width: 15%;*/
   border-radius: inherit;
-  line-height: 25px;
-  min-height: 25px;
+  line-height: 23px;
+  min-height: 23px;
   /* border: 2px solid rgba(190, 201, 231, 0.171); */
+}
+
+div.content.dark.Rare  {
+  /* border: 3px solid rgba(190, 201, 231, 0.349);*/
+  background-color: rgba(81, 120, 248, 0.336);
 }
 
 .f-grid > div.f-row:last-child {
@@ -641,7 +671,8 @@ div.grid-item {
   justify-content: center;
   width: 100%;
   border-radius: inherit;
-  height: 22px;
+  height: 25px;
+  line-height: 25px;
 }
 
 .grid-item > div.content {
@@ -653,9 +684,10 @@ div.grid-item {
 }
 
 .grid-item > div.content > div.details {
-  line-height: 22px;
-  padding: 2px;
+  /* line-height: 22px;*/
+  padding: 5px;
   color: inherit;
+  background-color: inherit;
   text-align: center;
 }
 

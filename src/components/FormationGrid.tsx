@@ -1,6 +1,7 @@
 import React from 'react';
 import FormationGridItem from './FormationGridItem';
 
+// eslint-disable-next-line react/prop-types
 const FormationGrid: React.FC = () => {
   return (
     <div className={'f-grid'}>
