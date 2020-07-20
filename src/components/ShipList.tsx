@@ -8,8 +8,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { setListState, setCurrentToggle } from '../reducers/slices/listStateSlice';
 import { setOwnedSearchList } from '../reducers/slices/ownedSearchListSlice';
-import { setParameter } from '../reducers/slices/searchParametersSlice';
-import Menu from './Menu';
+import { setSearchString } from '../reducers/slices/searchParametersSlice';
+// import Menu from './Menu';
+import Popover from 'react-tiny-popover';
+// import ParameterPopover from './SearchParameterContent';
+import SearchParameterContent from './SearchParameterContent';
 
 const ShipList: React.FC = () => {
   const dispatch = useDispatch();
@@ -19,10 +22,10 @@ const ShipList: React.FC = () => {
   const listState = useSelector((state: RootState) => state.listState);
   const ownedSearch = useSelector((state: RootState) => state.ownedSearchList);
   const searchParameters = useSelector((state: RootState) => state.searchParameters);
-
-  const [selectedTab, setSelectedTab] = useState('Search');
+  // const [selectedTab, setSelectedTab] = useState('Search');
   const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
   const [inputFocus, setInputFocus] = useState(false);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const [searchParam, setSearchParam] = useState('name');
 
@@ -118,24 +121,31 @@ const ShipList: React.FC = () => {
   };
 
   const hullPredicate = (ele: ShipSimple) => {
+    /*
     if (searchParameters.hullType === '') {
       return true;
     }
     return ele.hullType?.toLowerCase() === searchParameters.hullType.toLowerCase();
+    */
   };
 
   const nationalityPredicate = (ele: ShipSimple) => {
+    /*
     if (searchParameters.nationality === '') {
       return true;
     }
+    
     return ele.nationality?.toLowerCase() === searchParameters.nationality.toLowerCase();
+    */
   };
 
   const rarityPredicate = (ele: ShipSimple) => {
+    /*
     if (searchParameters.rarity === '') {
       return true;
     }
     return ele.rarity?.toLowerCase() === searchParameters.rarity.toLowerCase();
+    */
   };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
@@ -201,56 +211,59 @@ const ShipList: React.FC = () => {
   return (
     <div className="ship-side-container dark">
       <div className="top-container">
-        <Menu setActiveTab={setSelectedTab} currentActiveTab={selectedTab} tabs={['Search', 'PH1', 'PH2']} />
-        <div id="search" className={`tab-content ${selectedTab === 'Search' ? 'active' : 'hidden'}`}>
-          <form onSubmit={(e) => searchSubmit(e)}>
-            <div id="input-group">
-              <div className={`searchIcon ${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
-                <FontAwesomeIcon icon={faSearch} />
-              </div>
-              <input
-                id="search-input"
-                type="text"
-                className={`${config.themeColor}`}
-                value={searchValue}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setSearchValue(e.target.value);
-                  dispatch(setParameter({ key: 'name', value: e.target.value }));
-                }}
-                onFocus={() => setInputFocus(true)}
-                onBlur={() => setInputFocus(false)}
-              />
+        {/* <Menu setActiveTab={setSelectedTab} currentActiveTab={selectedTab} tabs={['Search', 'PH1', 'PH2']} /> */}
+        <Popover
+          isOpen={isPopoverOpen}
+          position={'bottom'} // preferred position
+          onClickOutside={() => setIsPopoverOpen(false)}
+          content={<SearchParameterContent />}
+          containerClassName={'popover-container dark'}
+        >
+          <button className="btn small dark" onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
+            Categories
+          </button>
+        </Popover>
+        <form onSubmit={(e) => searchSubmit(e)}>
+          <div id="input-group">
+            <div className={`searchIcon ${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
+              <FontAwesomeIcon icon={faSearch} />
             </div>
-            <div className={`radio-group`}>
-              <input
-                id="all"
-                type="radio"
-                value="all"
-                checked={listState.currentToggle === 'all'}
-                onChange={() => dispatch(setCurrentToggle('all'))}
-              />
-              <label className={`toggle ${config.themeColor}`} htmlFor="all">
-                All
-              </label>
-              <input
-                id="owned"
-                type="radio"
-                value="false"
-                checked={listState.currentToggle === 'owned'}
-                onChange={() => dispatch(setCurrentToggle('owned'))}
-              />
-              <label className={`toggle ${config.themeColor}`} htmlFor="owned">
-                Owned
-              </label>
-            </div>
-          </form>
-        </div>
-        <div id="PH1" className={`tab-content ${selectedTab === 'PH1' ? 'active' : 'hidden'}`}>
-          Nation
-        </div>
-        <div id="PH2" className={`tab-content ${selectedTab === 'PH2' ? 'active' : 'hidden'}`}>
-          Type
-        </div>
+            <input
+              id="search-input"
+              type="text"
+              className={`${config.themeColor}`}
+              value={searchValue}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setSearchValue(e.target.value);
+                dispatch(setSearchString({ str: e.target.value }));
+              }}
+              onFocus={() => setInputFocus(true)}
+              onBlur={() => setInputFocus(false)}
+            />
+          </div>
+          <div className={`radio-group`}>
+            <input
+              id="all"
+              type="radio"
+              value="all"
+              checked={listState.currentToggle === 'all'}
+              onChange={() => dispatch(setCurrentToggle('all'))}
+            />
+            <label className={`toggle ${config.themeColor}`} htmlFor="all">
+              All
+            </label>
+            <input
+              id="owned"
+              type="radio"
+              value="false"
+              checked={listState.currentToggle === 'owned'}
+              onChange={() => dispatch(setCurrentToggle('owned'))}
+            />
+            <label className={`toggle ${config.themeColor}`} htmlFor="owned">
+              Owned
+            </label>
+          </div>
+        </form>
       </div>
       {renderList()}
     </div>

@@ -54,11 +54,13 @@ const FormationModal: React.FC = () => {
     >
       <ShipList />
       <div className="ship-data-container dark">
-        <ShipDetails />
-        <div className={'button-group'}>
-          <button onClick={() => addShipToFormation()} className={`btn ${config.themeColor}`} type="button">
-            <b>Add to formation</b>
-          </button>
+        <div className="scroll">
+          <ShipDetails />
+          <div className={'button-group'}>
+            <button onClick={() => addShipToFormation()} className={`btn ${config.themeColor}`} type="button">
+              <b>Add to formation</b>
+            </button>
+          </div>
         </div>
       </div>
     </ReactModal>

@@ -41,26 +41,28 @@ const ShipDetailView: React.FC = () => {
             <div>Select ship or add new ship to docks</div>
           ) : (
             <>
-              <ShipDetails />
-              <div className={'button-group'}>
-                {!isOwned(shipDetails.id) ? (
-                  <button
-                    onClick={(e) => addShipToOwned(e, shipDetails)}
-                    className={`btn ${config.themeColor}`}
-                    type="button"
-                    disabled={isOwned(shipDetails.id)}
-                  >
-                    <b>Add to docks</b>
-                  </button>
-                ) : (
-                  <button
-                    onClick={(e) => removeFromOwned(e, shipDetails.id)}
-                    className={`btn ${config.themeColor}`}
-                    type="button"
-                  >
-                    <b>Remove from docks</b>
-                  </button>
-                )}
+              <div>
+                <ShipDetails />
+                <div className={'button-group'}>
+                  {!isOwned(shipDetails.id) ? (
+                    <button
+                      onClick={(e) => addShipToOwned(e, shipDetails)}
+                      className={`btn ${config.themeColor}`}
+                      type="button"
+                      disabled={isOwned(shipDetails.id)}
+                    >
+                      <b>Add to docks</b>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={(e) => removeFromOwned(e, shipDetails.id)}
+                      className={`btn ${config.themeColor}`}
+                      type="button"
+                    >
+                      <b>Remove from docks</b>
+                    </button>
+                  )}
+                </div>
               </div>
             </>
           )}

@@ -17,7 +17,7 @@ const PassivesList: React.FC<PassiveProps> = ({ orient = 'vertical', page }: Pas
   // const config = useSelector((state: RootState) => state.config);
 
   return (
-    <div id="passives" className={`container ${orient} ${page}`}>
+    <div id="passives" className={`container ${orient}`}>
       {shipDetails.skills?.map((skill: Skill) => {
         return (
           <div key={skill.names.en} className={skill.color}>

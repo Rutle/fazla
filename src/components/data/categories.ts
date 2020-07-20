@@ -2,6 +2,20 @@ export interface Pair {
   [key: string]: string;
 }
 
+export const nationCategories: Pair = {
+  'Sakura Empire': 'IJN',
+  'Eagle Union': 'USS',
+  'Royal Navy': 'HMS',
+  Ironblood: 'KMS',
+  'Eastern Radiance': 'ROC',
+  'North Union': 'SN',
+  'Iris Libre': 'FFNF',
+  'Vichya Dominion': 'MNF',
+  'Sardegna Empire': 'RN',
+};
+
+export const rarityCategories: string[] = ['Normal', 'Rare', 'Elite', 'Super Rare']
+
 export const hullTypes: Pair = {
   Destroyer: 'Destroyer',
   'Light Cruiser': 'Light Cruiser',
