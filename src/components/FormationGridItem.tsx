@@ -1,8 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-// import { setShip } from '../reducers/slices/formationGridSlice';
-// import { getShipById } from './util/shipdata';
 import { openModal } from '../reducers/slices/formationModalSlice';
 
 interface GridItemProps {
@@ -13,28 +11,8 @@ interface GridItemProps {
 const FormationGridItem: React.FC<GridItemProps> = ({ index }) => {
   const dispatch = useDispatch();
   const currentFormation = useSelector((state: RootState) => state.formationGrid);
-  // const listState = useSelector((state: RootState) => state.listState);
-  // const shipList = useSelector((state: RootState) => state.shipList);
   const config = useSelector((state: RootState) => state.config);
-  // const ownedSearch = useSelector((state: RootState) => state.ownedSearchList);
-  // const formationModal = useSelector((state: RootState) => state.formationModal);
-  /*
-  const addShipToFormation = () => {
-    // dispatch(setModalState(true));
-    const n: number = listState[listState.currentToggle].index;
-    switch (listState.currentToggle) {
-      case 'all':
-        // dispatch(setShip({ index, data: shipList[n] }));
-        dispatch(setShip({ index, data: getShipById(shipList[n].id) }));
-        break;
-      case 'owned':
-        dispatch(setShip({ index, data: getShipById(ownedSearch[n].id) }));
-        break;
-      default:
-        break;
-    }
-  };
-*/
+
   const openShipSelector = () => {
     dispatch(openModal({ isOpen: true, gridIndex: index }));
   };
@@ -77,6 +55,6 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index }) => {
 export default FormationGridItem;
 /*
 FormationGridItem.propTypes = {
-  index: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
 };
 */

@@ -26,34 +26,6 @@ const SearchParameterContent: React.FC = () => {
       </div>
     </div>
   );
-  /*
-  return (
-    <>
-      <div className="f-row wrap">
-        <div className="grid-item">
-          <button className="btn small dark">Eagle</button>
-        </div>
-        <div className="grid-item">
-          <button className="btn small dark">Sakura</button>
-        </div>
-        <div className="grid-item">
-          <button className="btn small dark">Royal</button>
-        </div>
-      </div>
-      <div className="f-row wrap">
-        <div className="grid-item">
-          <button className="btn small dark">CL</button>
-        </div>
-        <div className="grid-item">
-          <button className="btn small dark">CA</button>
-        </div>
-        <div className="grid-item">
-          <button className="btn small dark">DD</button>
-        </div>
-      </div>
-    </>
-  );
-  */
 };
 
 export default SearchParameterContent;

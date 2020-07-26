@@ -205,10 +205,11 @@ export interface Stats {
 export const getShipsFull = (name: string): Ship[] => {
   // const t: ShipData = { ships: [] };
   let t: Ship[] = [];
+  /*
   if (name === '') {
     t = Object.assign(Object.keys(shipData).map((key) => (shipData as any)[key]));
     return t;
-  }
+  }*/
   /* (shipData as any)[id];
 Object.keys(shipData).forEach((element) => {
   const obj = (shipData as any)[element];
@@ -229,6 +230,7 @@ Object.keys(shipData).forEach((element) => {
 export const getShipsSimple = (name: string): ShipSimple[] => {
   // const t: ShipData = { ships: [] };
   let t: ShipSimple[] = [];
+  /*
   if (name === '') {
     t = Object.assign(
       Object.keys(shipData).map((key) => ({
@@ -240,7 +242,7 @@ export const getShipsSimple = (name: string): ShipSimple[] => {
       })),
     );
     return t;
-  }
+  }*/
   /*
   Object.keys(shipData).forEach((element) => {
     const obj = (shipData as any)[element];
@@ -259,8 +261,10 @@ export const getShipsSimple = (name: string): ShipSimple[] => {
         class: (shipData as any)[key].class,
         rarity: (shipData as any)[key].rarity,
         hullType: (shipData as any)[key].hullType,
+        nationality: (shipData as any)[key].nationality,
       })),
   );
+  console.log('shipdata, ', t.length);
   return t;
 };
 

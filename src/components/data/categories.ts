@@ -3,18 +3,32 @@ export interface Pair {
 }
 
 export const nationCategories: Pair = {
-  'Sakura Empire': 'IJN',
-  'Eagle Union': 'USS',
   'Royal Navy': 'HMS',
+  'Sakura Empire': 'IJN',
   Ironblood: 'KMS',
   'Eastern Radiance': 'ROC',
   'North Union': 'SN',
+  'Eagle Union': 'USS',
   'Iris Libre': 'FFNF',
   'Vichya Dominion': 'MNF',
   'Sardegna Empire': 'RN',
+  Universal: 'UNI',
+  Neptunia: 'NEP',
+  Bilibili: 'BIL',
+  Utawarerumono: 'UTA',
+  KizunaAI: 'KA',
+  Hololive: 'HOL',
 };
 
-export const rarityCategories: string[] = ['Normal', 'Rare', 'Elite', 'Super Rare']
+export const rarityCategories: string[] = [
+  'Normal',
+  'Rare',
+  'Elite',
+  'Super Rare',
+  'Unreleased',
+  'Priority',
+  'Decisive',
+];
 
 export const hullTypes: Pair = {
   Destroyer: 'Destroyer',
