@@ -241,7 +241,7 @@ const ShipList: React.FC = () => {
       case 'all':
         return (
           <div className={`rList`}>
-            {shipList.map((ship: ShipSimple, idx: number) => {
+            {shipList.map((ship: ShipSimple) => {
               return (
                 <button
                   key={ship.id}
@@ -251,7 +251,7 @@ const ShipList: React.FC = () => {
                   type="button"
                   onClick={(e) => handleClick(e, ship.id)}
                 >
-                  {`${idx + 1}. ${ship.name}`}
+                  {`${ship.name}`}
                 </button>
               );
             })}

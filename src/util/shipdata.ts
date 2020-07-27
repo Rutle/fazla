@@ -220,7 +220,7 @@ Object.keys(shipData).forEach((element) => {
     Object.keys(shipData)
       .filter((e) => {
         // const ce: string = (shipData as any)[e].names.code.toLowerCase();
-        if ((shipData as any)[e].names.code.toLowerCase().includes(name.toLowerCase())) return true;
+        if ((shipData as any)[e].names.en.toLowerCase().includes(name.toLowerCase())) return true;
       })
       .map((key) => (shipData as any)[key]),
   );
@@ -256,7 +256,7 @@ export const getShipsSimple = (name: string): ShipSimple[] => {
         if ((shipData as any)[e].names.code.toLowerCase().includes(name.toLowerCase())) return true;
       })
       .map((key) => ({
-        name: (shipData as any)[key].names.code,
+        name: (shipData as any)[key].names.en,
         id: (shipData as any)[key].id,
         class: (shipData as any)[key].class,
         rarity: (shipData as any)[key].rarity,
