@@ -21,7 +21,7 @@ const selectedStyle: styleInterface = {
 const MainMenu: React.FC = () => {
   const config = useSelector((state: RootState) => state.config);
   return (
-    <div className={`top-container`}>
+    <div className={`top-container fixed`}>
       <nav className={`tab ${config.themeColor}`}>
         <NavLink to="/home">[Home]</NavLink>
         <NavLink to="/shipdetails">[Ship list]</NavLink>

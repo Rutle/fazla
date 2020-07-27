@@ -4,13 +4,7 @@ interface ListState {
   id: string;
   index: number;
 }
-/*
-interface ListStateObject {
-  currentToggle: string;
-  all: ListState;
-  owned: ListState;
-}
-*/
+
 interface ListStateObject {
   [key: string]: any;
   all: ListState;

@@ -1,30 +1,26 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow } from 'electron'
-import * as path from 'path'
-import * as isDev from 'electron-is-dev'
-import 'electron-reload'
+import { app, BrowserWindow } from 'electron';
+import * as path from 'path';
+import * as isDev from 'electron-is-dev';
+import 'electron-reload';
 
-let mainWindow
+let mainWindow;
 
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1350,
+    height: 900,
+    titleBarStyle: 'hidden',
     webPreferences: {
       nodeIntegration: true,
     },
-  })
+  });
 
-  mainWindow.loadURL(
-    isDev
-      ? 'http://localhost:3000'
-      : `file://${path.join(__dirname, '../build/index.html')}`,
-  )
+  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
-
+  mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -32,11 +28,11 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
-  
+
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 

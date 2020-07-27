@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { setList } from '../reducers/slices/shipListSlice';
-import { getShipsSimple, ShipSimple, getShipById, Ship } from './util/shipdata';
+import { getShipsSimple, ShipSimple, getShipById, Ship } from '../util/shipdata';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Ship } from '../../components/util/shipdata';
+import { Ship } from '../../util/shipdata';
 
 interface Formation {
   [key: string]: Ship;

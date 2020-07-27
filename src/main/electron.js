@@ -9,17 +9,16 @@ var mainWindow;
 function createWindow() {
     // Create the browser window.
     mainWindow = new electron_1.BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1350,
+        height: 900,
+        titleBarStyle: 'hidden',
         webPreferences: {
             nodeIntegration: true
         }
     });
-    mainWindow.loadURL(isDev
-        ? 'http://localhost:3000'
-        : "file://" + path.join(__dirname, '../build/index.html'));
+    mainWindow.loadURL(isDev ? 'http://localhost:3000' : "file://" + path.join(__dirname, '../build/index.html'));
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools();
 }
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

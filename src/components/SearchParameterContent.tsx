@@ -1,5 +1,5 @@
 import React from 'react';
-import { nationCategories, rarityCategories, hullTypesAbb } from './data/categories';
+import { nationCategories, rarityCategories, hullTypesAbb } from '../data/categories';
 import CategoryToggleButton from './CategoryToggleButton';
 
 const SearchParameterContent: React.FC = () => {

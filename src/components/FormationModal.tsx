@@ -5,7 +5,7 @@ import { RootState } from '../reducers/rootReducer';
 import ShipList from './ShipList';
 import ShipDetails from './ShipDetails';
 import { setShip } from '../reducers/slices/formationGridSlice';
-import { getShipById } from './util/shipdata';
+import { getShipById } from '../util/shipdata';
 import { closeModal } from '../reducers/slices/formationModalSlice';
 
 ReactModal.setAppElement('#root');

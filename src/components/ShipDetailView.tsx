@@ -5,7 +5,7 @@ import ShipDetails from './ShipDetails';
 import { RootState } from '../reducers/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { addShip, removeShip } from '../reducers/slices/ownedShipListSlice';
-import { Ship } from './util/shipdata';
+import { Ship } from '../util/shipdata';
 
 const ShipDetailView: React.FC = () => {
   const dispatch = useDispatch();

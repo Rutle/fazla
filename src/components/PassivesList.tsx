@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skill } from './util/shipdata';
+import { Skill } from '../util/shipdata';
 import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 
