@@ -11,7 +11,9 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1350,
     height: 900,
-    titleBarStyle: 'hidden',
+    // titleBarStyle: 'hidden',
+    frame: false,
+    //thickFrame: true,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -19,8 +21,9 @@ function createWindow() {
 
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
 
+  mainWindow.removeMenu();
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools();
 }
 
 // This method will be called when Electron has finished

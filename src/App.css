@@ -262,6 +262,10 @@ input, button, textarea, :focus {
   flex-direction: column;
 }
 
+#root {
+  margin-top: 32px;
+}
+
 body, nav, header {
   display: flex;
 }
@@ -270,6 +274,20 @@ body {
   flex-direction: column;
 }
 
+#titlebar {
+  display: block;
+  position: fixed;
+  height: 32px;
+  padding: 4px;
+  width: 100%; /*Compensate for body 1px border*/
+  background: var(--main-dark-bg);
+}
+
+#titlebar #drag-region {
+  width: 100%;
+  height: 100%;
+  -webkit-app-region: drag;
+}
 .page,
 section.home {
   height: 100%;
@@ -446,7 +464,9 @@ div > div.tab-content.active {
   padding: 14px 16px;
   transition: 0.3s;
 }
-
+.top-container.fixed > nav.tab {
+  border-top: unset;
+}
 .ship-data-container > div.scroll {
   overflow-y: auto;
   scrollbar-color: dark;

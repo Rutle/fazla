@@ -11,12 +11,15 @@ function createWindow() {
     mainWindow = new electron_1.BrowserWindow({
         width: 1350,
         height: 900,
-        titleBarStyle: 'hidden',
+        // titleBarStyle: 'hidden',
+        frame: false,
+        //thickFrame: true,
         webPreferences: {
             nodeIntegration: true
         }
     });
     mainWindow.loadURL(isDev ? 'http://localhost:3000' : "file://" + path.join(__dirname, '../build/index.html'));
+    mainWindow.removeMenu();
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
 }
