@@ -41,7 +41,7 @@ const ShipDetailView: React.FC = () => {
             <div>Select ship or add new ship to docks</div>
           ) : (
             <>
-              <div>
+              <div className="scroll">
                 <ShipDetails />
                 <div className={'button-group'}>
                   {!isOwned(shipDetails.id) ? (

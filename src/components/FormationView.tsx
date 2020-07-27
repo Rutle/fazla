@@ -18,6 +18,8 @@ const FormationView: React.FC = () => {
         <div className={'ship-data-container dark'}>
           <div className="top-container">
             <Menu setActiveTab={setSelectedTab} currentActiveTab={selectedTab} tabs={['Formation', 'Summary']} />
+          </div>
+          <div className="scroll">
             <div id="formation" className={`tab-content ${selectedTab === 'Formation' ? 'active' : 'hidden'}`}>
               {/*
                 <div style={{ color: 'black', backgroundColor: 'gray', height: '35px', width: '100%' }}>DropDown</div>

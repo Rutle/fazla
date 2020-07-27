@@ -229,6 +229,7 @@ Object.keys(shipData).forEach((element) => {
 
 export const getShipsSimple = (name: string): ShipSimple[] => {
   // const t: ShipData = { ships: [] };
+  // console.log(process.env.NODE_ENV);
   let t: ShipSimple[] = [];
   /*
   if (name === '') {

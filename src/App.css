@@ -375,7 +375,16 @@ div.top-container > div.active {
   min-height: 58px;
   flex-direction: column;
 }
+div > div.tab-content.hidden {
+  display: none;
+  height: 0px;
+}
 
+div > div.tab-content.active {
+  display: flex;
+  min-height: 58px;
+  flex-direction: column;
+}
 .tab {
   overflow: hidden;
 }
@@ -488,7 +497,7 @@ section.home {
 
 .rList > .rList-item {
   width: 100%;
-  height: 35px;
+  /* height: 35px;*/
   padding: 5px;
   margin-bottom: 1px;
 }
@@ -496,6 +505,9 @@ section.home {
 .rList > .rList-item.btn {
   /* background-color: unset;*/
   border: unset;
+  height: unset;
+  max-height: 45px;
+  min-height: 35px;
 }
 
 /* button */
@@ -839,6 +851,7 @@ div.f-title {
 .grid-item.name {
   min-width: 200px;
   max-width: 200px;
+  height: inherit;
   padding-left: 5px;
   padding-right: 5px;
   justify-content: center;
