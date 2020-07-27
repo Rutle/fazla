@@ -220,7 +220,8 @@ input[type="text"].light:focus {
 .App {
   display: flex;
   height: 100%;
-  /* min-height: 100vh;*/
+  margin-top: 32px;
+  border-top: 1px solid black;
   overflow-y: auto;
   flex-direction: column;
   color: var(--main-dark-color);
@@ -262,10 +263,6 @@ input, button, textarea, :focus {
   flex-direction: column;
 }
 
-#root {
-  margin-top: 32px;
-}
-
 body, nav, header {
   display: flex;
 }
@@ -278,9 +275,8 @@ body {
   display: block;
   position: fixed;
   height: 32px;
-  padding: 4px;
-  width: 100%; /*Compensate for body 1px border*/
-  background: var(--main-dark-bg);
+  width: 100%;
+  background: var(--root-dark-bg);
 }
 
 #titlebar #drag-region {
@@ -288,6 +284,90 @@ body {
   height: 100%;
   -webkit-app-region: drag;
 }
+
+#window-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 32px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+}
+
+#window-controls .button {
+  grid-row: 1 / span 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+}
+
+#min-button {
+  color: var(--main-dark-color);
+  grid-column: 1;
+}
+#max-button, #restore-button {
+  color: var(--main-dark-color);
+  grid-column: 2;
+}
+#close-button {
+  color: var(--main-dark-color);
+  grid-column: 3;
+}
+
+#window-controls {
+  -webkit-app-region: no-drag;
+}
+
+#window-controls .button {
+  user-select: none;
+}
+#window-controls .button:hover {
+  background: rgba(255,255,255,0.1);
+}
+#window-controls .button:active {
+  background: rgba(255,255,255,0.2);
+}
+/*
+#close-button:hover {
+  background: #E81123 !important;
+}
+#close-button:active {
+  background: #F1707A !important;
+}
+*/
+#close-button:active svg {
+  filter: invert(30%);
+}
+
+#restore-button {
+  display: none !important;
+}
+
+#titlebar #drag-region {
+  display: grid;
+  grid-template-columns: auto 138px;
+}
+
+#window-title {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  overflow: hidden;
+  /* font-family: "Segoe UI", sans-serif;*/
+  font-size: 14px;
+  color: var(--main-dark-color);
+}
+
+#window-title span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
 .page,
 section.home {
   height: 100%;

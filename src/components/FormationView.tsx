@@ -13,7 +13,6 @@ const FormationView: React.FC = () => {
   return (
     <PageTemplate>
       <section id="ship-list-page-content">
-        {/* <ShipList /> */}
         <FormationModal />
         <div className={'ship-data-container dark'}>
           <div className="top-container">
@@ -21,13 +20,6 @@ const FormationView: React.FC = () => {
           </div>
           <div className="scroll">
             <div id="formation" className={`tab-content ${selectedTab === 'Formation' ? 'active' : 'hidden'}`}>
-              {/*
-                <div style={{ color: 'black', backgroundColor: 'gray', height: '35px', width: '100%' }}>DropDown</div>
-                */}
-              {/* 
-              <div className={''}>Selected ship:</div>
-              <PassivesList orient={'horizontal'} page={'formation'} /> 
-              <FormationDropDownMenu />*/}
               <FormationGrid />
             </div>
             <div id="summary" className={`tab-content ${selectedTab === 'Summary' ? 'active' : 'hidden'}`}>
