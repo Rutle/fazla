@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { setDetails } from './shipDetailsSlice';
+import { setDetails, resetDetails } from './shipDetailsSlice';
 import { getShipById, ShipSimple } from '../../util/shipdata';
 import { batch } from 'react-redux';
 import { AppThunk, AppDispatch } from '../../store';
 import { setList } from './shipSearchListSlice';
+import { setOwnedSearchList } from './ownedSearchListSlice';
 
 interface ListState {
   id: string;
@@ -75,7 +76,7 @@ export const initListState = (
       dispatch(toggleInitState());
     });
   } catch (e) {
-    console.log('Set Selected Ship error: ', e);
+    console.log('Setting list states error: ', e);
   }
 };
 
@@ -91,16 +92,30 @@ export const setSelectedShip = (key: string, index: number, id: string): AppThun
   }
 };
 
-export const setSearchResults = (allShips: ShipSimple[], ownedShips: ShipSimple[]): AppThunk => async (dispatch: AppDispatch) => {
+export const setSearchResults = (allShips: ShipSimple[], ownedShips: ShipSimple[], cToggle: string): AppThunk => async (
+  dispatch: AppDispatch,
+) => {
   try {
     console.log('Setting search results!');
+    const aLen = allShips.length;
+    const oLen = ownedShips.length;
     batch(() => {
-      dispatch(setDetails(getShipById(allShips[0].id)));
+      if (cToggle === 'all' && aLen > 0) {
+        dispatch(setDetails(getShipById(allShips[0].id)));
+      } else if (cToggle === 'owned' && oLen > 0) {
+        dispatch(setDetails(getShipById(ownedShips[0].id)));
+      } else {
+        dispatch(resetDetails());
+      }
+      // Set empty state in case search is empty. Check for it in ShipList/ShipDetailView/ShipDetails
+      // SetList / setOwnedSearchList -> empty list, ListState has to have empty values.
       dispatch(setList(allShips));
       dispatch(setListState({ key: 'all', data: { id: allShips[0].id, index: 0 } }));
+      dispatch(setOwnedSearchList(ownedShips));
+      dispatch(setListState({ key: 'owned', data: { id: ownedShips[0].id, index: 0 } }));
     });
   } catch (e) {
-    console.log('Set Selected Ship error: ', e);
+    console.log('setSearchResults error: ', e);
   }
 };
 export default listStateSlice.reducer;

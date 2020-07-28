@@ -203,23 +203,10 @@ export interface Stats {
 }
 
 export const getShipsFull = (name: string): Ship[] => {
-  // const t: ShipData = { ships: [] };
   let t: Ship[] = [];
-  /*
-  if (name === '') {
-    t = Object.assign(Object.keys(shipData).map((key) => (shipData as any)[key]));
-    return t;
-  }*/
-  /* (shipData as any)[id];
-Object.keys(shipData).forEach((element) => {
-  const obj = (shipData as any)[element];
-  if (obj.names.code.includes(name)) t.ships.push(obj as Ship);
-});
-*/
   t = Object.assign(
     Object.keys(shipData)
       .filter((e) => {
-        // const ce: string = (shipData as any)[e].names.code.toLowerCase();
         if ((shipData as any)[e].names.en.toLowerCase().includes(name.toLowerCase())) return true;
       })
       .map((key) => (shipData as any)[key]),
@@ -228,32 +215,10 @@ Object.keys(shipData).forEach((element) => {
 };
 
 export const getShipsSimple = (name: string): ShipSimple[] => {
-  // const t: ShipData = { ships: [] };
-  // console.log(process.env.NODE_ENV);
   let t: ShipSimple[] = [];
-  /*
-  if (name === '') {
-    t = Object.assign(
-      Object.keys(shipData).map((key) => ({
-        name: (shipData as any)[key].names.code,
-        id: (shipData as any)[key].id,
-        class: (shipData as any)[key].class,
-        rarity: (shipData as any)[key].rarity,
-        hullType: (shipData as any)[key].hullType,
-      })),
-    );
-    return t;
-  }*/
-  /*
-  Object.keys(shipData).forEach((element) => {
-    const obj = (shipData as any)[element];
-    if (obj.names.code.includes(name)) t.ships.push(obj as Ship);
-  });
-  */
   t = Object.assign(
     Object.keys(shipData)
       .filter((e) => {
-        // const ce: string = (shipData as any)[e].names.code.toLowerCase();
         if ((shipData as any)[e].names.code.toLowerCase().includes(name.toLowerCase())) return true;
       })
       .map((key) => ({

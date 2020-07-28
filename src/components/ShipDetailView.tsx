@@ -10,9 +10,10 @@ import { Ship } from '../util/shipdata';
 const ShipDetailView: React.FC = () => {
   const dispatch = useDispatch();
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
+  const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
   const config = useSelector((state: RootState) => state.config);
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
-  const [isShips, setIsShips] = useState(ownedShips.length > 0);
+  const [isShips, setIsShips] = useState(ownedSearchList.length > 0);
 
   const isOwned = (id: string) => {
     return ownedShips.some((ele) => ele.id === id);
@@ -28,9 +29,9 @@ const ShipDetailView: React.FC = () => {
 
   useEffect(() => {
     // Check if there any ships left.
-    setIsShips(ownedShips.length > 0);
+    setIsShips(ownedSearchList.length > 0);
     // dispatch(dispatch(setDetails(getShipById(data.ships[0].id)));)
-  }, [ownedShips]);
+  }, [ownedSearchList]);
 
   return (
     <PageTemplate>
@@ -38,7 +39,7 @@ const ShipDetailView: React.FC = () => {
         <ShipList />
         <div className="ship-data-container dark">
           {!isShips ? (
-            <div>Select ship or add new ship to docks</div>
+            <div>No ship selected</div>
           ) : (
             <>
               <div className="scroll">

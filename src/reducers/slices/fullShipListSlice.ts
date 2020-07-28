@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ShipSimple, Ship } from '../../util/shipdata';
+import { ShipSimple } from '../../util/shipdata';
 import { AppThunk, AppDispatch } from '../../store';
 import { setList } from './shipSearchListSlice';
 import { batch } from 'react-redux';
