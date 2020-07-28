@@ -341,7 +341,11 @@ body {
   filter: invert(30%);
 }
 
-#restore-button {
+#restore-button.hidden {
+  display: none !important;
+}
+
+#max-button.hidden {
   display: none !important;
 }
 
