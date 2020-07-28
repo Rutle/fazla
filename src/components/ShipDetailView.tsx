@@ -11,10 +11,15 @@ const ShipDetailView: React.FC = () => {
   const dispatch = useDispatch();
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
   const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
+  const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
   const config = useSelector((state: RootState) => state.config);
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
-  const [isShips, setIsShips] = useState(ownedSearchList.length > 0);
+  const listState = useSelector((state: RootState) => state.listState);
+  const [isShips, setIsShips] = useState(false);
 
+  useEffect(() => {
+    setIsShips(shipSearchList.length > 0);
+  }, []);
   const isOwned = (id: string) => {
     return ownedShips.some((ele) => ele.id === id);
   };
@@ -29,9 +34,20 @@ const ShipDetailView: React.FC = () => {
 
   useEffect(() => {
     // Check if there any ships left.
-    setIsShips(ownedSearchList.length > 0);
+    switch (listState.currentToggle) {
+      case 'all':
+        setIsShips(shipSearchList.length > 0);
+        break;
+      case 'owned':
+        setIsShips(ownedSearchList.length > 0);
+        break;
+      default:
+        break;
+    }
+    console.log('isShips: [', isShips, '] cToggle: [', listState.currentToggle, ']');
+    // setIsShips(ownedSearchList.length > 0);
     // dispatch(dispatch(setDetails(getShipById(data.ships[0].id)));)
-  }, [ownedSearchList]);
+  }, [ownedSearchList, shipSearchList, listState.currentToggle]);
 
   return (
     <PageTemplate>

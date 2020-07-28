@@ -20,11 +20,11 @@ const initialState: ListStateObject = {
   currentToggle: 'all',
   isInitState: true,
   all: {
-    id: '',
+    id: 'NONE',
     index: 0,
   },
   owned: {
-    id: '',
+    id: 'NONE',
     index: 0,
   },
 };
@@ -107,12 +107,20 @@ export const setSearchResults = (allShips: ShipSimple[], ownedShips: ShipSimple[
       } else {
         dispatch(resetDetails());
       }
+      if (aLen !== 0) {
+        dispatch(setListState({ key: 'all', data: { id: allShips[0].id, index: 0 } }));
+      } else {
+        dispatch(setListState({ key: 'all', data: { id: 'NONE', index: 0 } }));
+      }
+      if (oLen !== 0) {
+        dispatch(setListState({ key: 'owned', data: { id: ownedShips[0].id, index: 0 } }));
+      } else {
+        dispatch(setListState({ key: 'owned', data: { id: 'NONE', index: 0 } }));
+      }
       // Set empty state in case search is empty. Check for it in ShipList/ShipDetailView/ShipDetails
       // SetList / setOwnedSearchList -> empty list, ListState has to have empty values.
       dispatch(setList(allShips));
-      dispatch(setListState({ key: 'all', data: { id: allShips[0].id, index: 0 } }));
       dispatch(setOwnedSearchList(ownedShips));
-      dispatch(setListState({ key: 'owned', data: { id: ownedShips[0].id, index: 0 } }));
     });
   } catch (e) {
     console.log('setSearchResults error: ', e);

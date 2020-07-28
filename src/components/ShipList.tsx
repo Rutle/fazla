@@ -71,46 +71,11 @@ const ShipList: React.FC = () => {
       console.log('[Init] ship lists are not setup for search param yet. Skipping.');
       return;
     }
-    const allS: ShipSimple[] = fullShipList.filter(searchPredicate);
-    const ownedS: ShipSimple[] = ownedList.filter(searchPredicate);
+    const allS: ShipSimple[] = getSearchList(fullShipList);
+    const ownedS: ShipSimple[] = getSearchList(ownedList);
     console.log('all length: [', allS.length, '] owned length [', ownedS.length, ']');
     dispatch(setSearchResults(allS, ownedS, listState.currentToggle));
 
-    switch (listState.currentToggle) {
-      case 'all':
-        /*
-        // const t: ShipSimple[] = getShipsSimple(searchParameters.name);
-        // const t: Ship[] = getShipsFull(searchValue);
-        // console.log("searchParameters ", fullShipList.length);
-        const t: ShipSimple[] = fullShipList
-          .filter(searchPredicate)
-          .filter(rarityPredicate)
-          .filter(nationalityPredicate)
-          .filter(hullPredicate);
-        if (t.length === 0 || t === undefined) {
-          console.log('searchParameters no ships');
-          return;
-        }
-        console.log('search result: ', t.length);
-        dispatch(setDetails(getShipById(t[0].id)));
-        dispatch(setList(t));
-        dispatch(setListState({ key: 'all', data: { id: t[0].id, index: 0 } }));
-        */
-        break;
-      case 'owned':
-        /*
-        const s: ShipSimple[] = ownedList.filter(searchPredicate);
-        dispatch(setOwnedSearchList(s));
-        if (s.length === 0) return;
-        dispatch(setDetails(getShipById(s[0].id)));
-        dispatch(setListState({ key: 'owned', data: { id: s[0].id, index: 0 } }));
-        */
-        break;
-      default:
-        break;
-    }
-    // localStorage.setItem('searchValue', searchValue);
-    // localStorage.setItem('listToggle', listToggle);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParameters]);
 
@@ -119,8 +84,8 @@ const ShipList: React.FC = () => {
   };
 
   const searchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    console.log('searchSubmit', fullShipList.length);
     event.preventDefault();
+    /*
     switch (listState.currentToggle) {
       case 'all':
         const t: ShipSimple[] = getSearchList(fullShipList);
@@ -143,47 +108,9 @@ const ShipList: React.FC = () => {
       default:
         break;
     }
+     */
   };
-  /*
-  const fullPredicate = (ele: ShipSimple) => {
-    // rarity = rare
-    // nationality = none
-    // hulltype = light cruiser
-    //const isRar = Object.entries(searchParameters.rarity).
-    //const isNat = false;
-    //const isHull = false;
-    if (ele.id === '100') {
-      console.log(
-        'Name: ',
-        ele.name,
-        ' vs search: ',
-        searchParameters.name,
-        ' state: ',
-        ele.name.toLowerCase().includes(searchParameters.name.toLowerCase()),
-      );
-      console.log('rarity: ', ele.rarity, ' state: ', searchParameters.rarity[ele.rarity as string]);
-      console.log(
-        'nationality: ',
-        ele.nationality,
-        ' state: ',
-        searchParameters.nationality[ele.nationality as string],
-      );
-      console.log('hull: ', ele.hullType, ' state: ', searchParameters.hullType[ele.hullType as string]);
-    }
-    if (
-      searchParameters.rarity[ele.rarity as string] &&
-      searchParameters.nationality[ele.nationality as string] &&
-      searchParameters.hullType[ele.hullType as string] &&
-      ele.name.toLowerCase().includes(searchParameters.name.toLowerCase())
-    ) {
-      console.log('fullPredicate');
-      return true;
-    }
-    return false;
 
-    // return ele.name.toLowerCase().includes(searchParameters.name.toLowerCase());
-  };
-  */
   const searchPredicate = (ele: ShipSimple) => {
     return ele.name.toLowerCase().includes(searchParameters.name.toLowerCase());
   };
@@ -211,7 +138,6 @@ const ShipList: React.FC = () => {
 
   const selectShip = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
     try {
-      // const ship: Ship = getShipById(id);
       let index = 0;
       if (listState.currentToggle === 'all') {
         index = shipSearchList.findIndex((ship) => ship.id === id);
@@ -219,10 +145,6 @@ const ShipList: React.FC = () => {
       if (listState.currentToggle === 'owned') {
         index = ownedSearchList.findIndex((ship) => ship.id === id);
       }
-      /*
-      dispatch(setDetails(ship));
-      dispatch(setListState({ key: listState.currentToggle, data: { id: ship.id, index: index } }));
-      */
       dispatch(setSelectedShip(listState.currentToggle, index, id));
     } catch (err) {
       console.log(err);
