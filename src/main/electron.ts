@@ -1,10 +1,10 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as isDev from 'electron-is-dev';
 import 'electron-reload';
 
-let mainWindow: BrowserWindow;
+let mainWindow;
 
 function createWindow() {
   // Create the browser window.
@@ -43,25 +43,8 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', function () {
-  console.log('Called close');
   if (process.platform !== 'darwin') app.quit();
 });
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-
-ipcMain.on('close-application', () => {
-  if (process.platform !== 'darwin') app.quit();
-});
-
-ipcMain.on('minimize-application', () => {
-  mainWindow.minimize();
-});
-
-ipcMain.on('maximize-application', () => {
-  mainWindow.maximize();
-});
-
-ipcMain.on('restore-application', () => {
-  mainWindow.restore();
-});
