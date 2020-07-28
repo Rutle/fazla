@@ -44,3 +44,16 @@ electron_1.app.on('window-all-closed', function () {
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+electron_1.ipcMain.on('close-application', function () {
+    if (process.platform !== 'darwin')
+        electron_1.app.quit();
+});
+electron_1.ipcMain.on('minimize-application', function () {
+    mainWindow.minimize();
+});
+electron_1.ipcMain.on('maximize-application', function () {
+    mainWindow.maximize();
+});
+electron_1.ipcMain.on('restore-application', function () {
+    mainWindow.restore();
+});

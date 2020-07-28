@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
-import { ipcRenderer } from 'electron';
-
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
 /*
 const electron = window.require('electron');
 const fs = electron.remote.require('fs');
@@ -40,7 +40,7 @@ function handleWindowControls() {
 */
 const TitleBar: React.FC = () => {
   const closeWindow = () => {
-    // ipcRenderer.send('window-all-closed');
+    ipcRenderer.send('close-application');
   };
   return (
     <header id="titlebar">
