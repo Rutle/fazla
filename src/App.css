@@ -523,10 +523,10 @@ div > div.tab-content.active {
   background-color: var(--main-dark-active-bg);
   border: 1px solid var(--main-dark-active-border);
 }
-
+/*
 .popover-content {
 }
-
+*/
 .popover-content > .f-grid > .f-row {
   margin-bottom: 5px;
 }

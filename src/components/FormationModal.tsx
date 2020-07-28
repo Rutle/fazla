@@ -15,7 +15,7 @@ const FormationModal: React.FC = () => {
   const formationModal = useSelector((state: RootState) => state.formationModal);
   const config = useSelector((state: RootState) => state.config);
   const listState = useSelector((state: RootState) => state.listState);
-  const shipList = useSelector((state: RootState) => state.shipList);
+  const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
   const ownedSearch = useSelector((state: RootState) => state.ownedSearchList);
 
   const addShipToFormation = () => {
@@ -23,7 +23,7 @@ const FormationModal: React.FC = () => {
     switch (listState.currentToggle) {
       case 'all':
         // dispatch(setShip({ index, data: shipList[n] }));
-        dispatch(setShip({ index: formationModal.gridIndex, data: getShipById(shipList[n].id) }));
+        dispatch(setShip({ index: formationModal.gridIndex, data: getShipById(shipSearchList[n].id) }));
         break;
       case 'owned':
         dispatch(setShip({ index: formationModal.gridIndex, data: getShipById(ownedSearch[n].id) }));

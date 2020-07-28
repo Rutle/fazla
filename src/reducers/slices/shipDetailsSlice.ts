@@ -16,7 +16,7 @@ const shipDetailsSlice = createSlice({
     setDetails(state, action: PayloadAction<Ship>) {
       return action.payload;
     },
-    resetDetails(state, action) {
+    resetDetails() {
       return initialState;
     },
   },

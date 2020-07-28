@@ -265,7 +265,7 @@ export const getShipsSimple = (name: string): ShipSimple[] => {
         nationality: (shipData as any)[key].nationality,
       })),
   );
-  console.log('shipdata, ', t.length);
+  console.log('Ship data has been acquired: ', t.length);
   return t;
 };
 

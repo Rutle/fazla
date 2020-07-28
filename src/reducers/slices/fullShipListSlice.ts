@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ShipSimple } from '../../util/shipdata';
+import { ShipSimple, Ship } from '../../util/shipdata';
 import { AppThunk, AppDispatch } from '../../store';
-import { setList } from './shipListSlice';
+import { setList } from './shipSearchListSlice';
 import { batch } from 'react-redux';
+import { setOwnedSearchList } from './ownedSearchListSlice';
 
 const initialState: ShipSimple[] = [];
 
@@ -21,14 +22,18 @@ const fullShipListSlice = createSlice({
 
 export const { setFullList, resetList } = fullShipListSlice.actions;
 
-export const initializeFullShipList = (ships: ShipSimple[]): AppThunk => async (dispatch: AppDispatch) => {
+export const initializeShipLists = (allShips: ShipSimple[], ownedShips: ShipSimple[]): AppThunk => async (
+  dispatch: AppDispatch,
+) => {
   try {
+    console.log('[Init] Initializing ship list in slice: ');
     batch(() => {
-      dispatch(setFullList(ships));
-      dispatch(setList(ships));
+      dispatch(setFullList(allShips));
+      dispatch(setList(allShips));
+      dispatch(setOwnedSearchList(ownedShips));
     });
   } catch (e) {
-    console.log(e);
+    console.log('[Init] Initializing error: ', e);
   }
 };
 

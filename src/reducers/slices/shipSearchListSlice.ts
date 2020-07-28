@@ -3,7 +3,7 @@ import { ShipSimple } from '../../util/shipdata';
 
 const initialState: ShipSimple[] = [];
 
-const shipListSlice = createSlice({
+const shipSearchListSlice = createSlice({
   name: 'shipListSlice',
   initialState,
   reducers: {
@@ -16,6 +16,6 @@ const shipListSlice = createSlice({
   },
 });
 
-export const { setList, resetList } = shipListSlice.actions;
+export const { setList, resetList } = shipSearchListSlice.actions;
 
-export default shipListSlice.reducer;
+export default shipSearchListSlice.reducer;

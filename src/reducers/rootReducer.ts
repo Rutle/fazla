@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import shipListSlice from './slices/shipListSlice';
+import shipSearchListSlice from './slices/shipSearchListSlice';
 import shipDetailsSlice from './slices/shipDetailsSlice';
 import ownedShipListSlice from './slices/ownedShipListSlice';
 import programConfigSlice from './slices/programConfigSlice';
@@ -11,7 +11,7 @@ import searchParametersSlice from './slices/searchParametersSlice';
 import fullShipListSlice from './slices/fullShipListSlice';
 
 const rootReducer = combineReducers({
-  shipList: shipListSlice,
+  shipSearchList: shipSearchListSlice,
   shipDetails: shipDetailsSlice,
   ownedShips: ownedShipListSlice,
   config: programConfigSlice,
