@@ -34,7 +34,7 @@ const ShipDetailView: React.FC = () => {
 
   useEffect(() => {
     // Check if there any ships left.
-    switch (listState.currentToggle) {
+    switch (listState.cToggle) {
       case 'all':
         setIsShips(shipSearchList.length > 0);
         break;
@@ -44,10 +44,8 @@ const ShipDetailView: React.FC = () => {
       default:
         break;
     }
-    console.log('isShips: [', isShips, '] cToggle: [', listState.currentToggle, ']');
-    // setIsShips(ownedSearchList.length > 0);
-    // dispatch(dispatch(setDetails(getShipById(data.ships[0].id)));)
-  }, [ownedSearchList, shipSearchList, listState.currentToggle]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ownedSearchList, shipSearchList, listState.cToggle]);
 
   return (
     <PageTemplate>
@@ -55,7 +53,9 @@ const ShipDetailView: React.FC = () => {
         <ShipList />
         <div className="ship-data-container dark">
           {!isShips ? (
-            <div>No ship selected</div>
+            <div>
+              <h1>No ship selected or found</h1>
+            </div>
           ) : (
             <>
               <div className="scroll">

@@ -5,20 +5,27 @@ import { batch } from 'react-redux';
 import { AppThunk, AppDispatch } from '../../store';
 import { setList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
+import { setFullList } from './fullShipListSlice';
+// import { setCurrentState } from './appStateSlice';
+
+interface CurrentState {
+  cState: 'INIT' | 'RUNNING' | 'ERROR';
+  cMsg: 'Initializing.' | 'Running.';
+}
 
 interface ListState {
   id: string;
   index: number;
 }
 
-interface ListStateObject {
+type ListStateObject = {
   [key: string]: any;
   all: ListState;
   owned: ListState;
-}
+} & CurrentState;
+
 const initialState: ListStateObject = {
-  currentToggle: 'all',
-  isInitState: true,
+  cToggle: 'all',
   all: {
     id: 'NONE',
     index: 0,
@@ -27,6 +34,8 @@ const initialState: ListStateObject = {
     id: 'NONE',
     index: 0,
   },
+  cState: 'INIT',
+  cMsg: 'Initializing.',
 };
 
 const listStateSlice = createSlice({
@@ -42,14 +51,12 @@ const listStateSlice = createSlice({
     setCurrentToggle(state, action: PayloadAction<string>) {
       return {
         ...state,
-        currentToggle: action.payload,
+        cToggle: action.payload,
       };
     },
-    toggleInitState(state) {
-      return {
-        ...state,
-        isInitState: !state.isInitState,
-      };
+    setCurrentState(state, action: PayloadAction<CurrentState>) {
+      const { cState, cMsg } = action.payload;
+      return { ...state, cState: cState, cMsg: cMsg };
     },
     resetList() {
       return initialState;
@@ -57,8 +64,26 @@ const listStateSlice = createSlice({
   },
 });
 
-export const { setListState, resetList, setCurrentToggle, toggleInitState } = listStateSlice.actions;
+export const { setListState, resetList, setCurrentToggle, setCurrentState } = listStateSlice.actions;
 
+// Initialize ship lists.
+export const initShipLists = (allShips: ShipSimple[], ownedShips: ShipSimple[]): AppThunk => async (
+  dispatch: AppDispatch,
+) => {
+  try {
+    console.log('[INIT] {1}: Inside slice setting lists.');
+    batch(() => {
+      dispatch(setFullList(allShips));
+      dispatch(setList(allShips));
+      dispatch(setOwnedSearchList(ownedShips));
+    });
+  } catch (e) {
+    console.log('[INIT] {1}: Initializing error: ', e);
+    dispatch(setCurrentState({ cState: 'ERROR', cMsg: e.message }));
+  }
+};
+
+// Initialize the list states.
 export const initListState = (
   key: string,
   index: number,
@@ -68,18 +93,19 @@ export const initListState = (
   id2: string,
 ): AppThunk => async (dispatch: AppDispatch) => {
   try {
-    console.log('[Init] Setting list states');
+    console.log('[INIT] {2}: Setting list states');
     batch(() => {
       dispatch(setDetails(getShipById(id)));
       dispatch(setListState({ key: key, data: { id: id, index: index } }));
       dispatch(setListState({ key: key2, data: { id: id2, index: index2 } }));
-      dispatch(toggleInitState());
+      dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
     });
   } catch (e) {
     console.log('Setting list states error: ', e);
   }
 };
 
+// Set details of the selected ship
 export const setSelectedShip = (key: string, index: number, id: string): AppThunk => async (dispatch: AppDispatch) => {
   try {
     console.log('Setting selected ship: index [', index, '], id [', id, '] key', key, ']');
@@ -92,6 +118,7 @@ export const setSelectedShip = (key: string, index: number, id: string): AppThun
   }
 };
 
+// Set the search results.
 export const setSearchResults = (allShips: ShipSimple[], ownedShips: ShipSimple[], cToggle: string): AppThunk => async (
   dispatch: AppDispatch,
 ) => {

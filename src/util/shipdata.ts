@@ -208,6 +208,7 @@ export const getShipsFull = (name: string): Ship[] => {
     Object.keys(shipData)
       .filter((e) => {
         if ((shipData as any)[e].names.en.toLowerCase().includes(name.toLowerCase())) return true;
+        return false;
       })
       .map((key) => (shipData as any)[key]),
   );
@@ -220,6 +221,7 @@ export const getShipsSimple = (name: string): ShipSimple[] => {
     Object.keys(shipData)
       .filter((e) => {
         if ((shipData as any)[e].names.code.toLowerCase().includes(name.toLowerCase())) return true;
+        return false;
       })
       .map((key) => ({
         name: (shipData as any)[key].names.en,
@@ -230,7 +232,6 @@ export const getShipsSimple = (name: string): ShipSimple[] => {
         nationality: (shipData as any)[key].nationality,
       })),
   );
-  console.log('Ship data has been acquired: ', t.length);
   return t;
 };
 

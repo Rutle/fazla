@@ -373,9 +373,9 @@ section.home {
 }
 
 #ship-list-page-content {
-  margin: 65px 5px 0px 5px;
+  margin: 51px 5px 0px 5px;
   height: 100%;
-  max-height: calc(100% - 70px);
+  max-height: calc(100% - 56px);
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -529,7 +529,7 @@ div > div.tab-content.active {
   border: none;
   outline: none;
   cursor: pointer;
-  padding: 14px 16px;
+  padding: 7px 16px;
   transition: 0.3s;
 }
 .top-container.fixed > nav.tab {
