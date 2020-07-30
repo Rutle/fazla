@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
-import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '../util/appUtilities';
+import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow, getConfig } from '../util/appUtilities';
 
 const TitleBar: React.FC = () => {
   const [isMax, setIsMax] = useState(false);
@@ -12,7 +12,14 @@ const TitleBar: React.FC = () => {
           <span>Azur Lane</span>
         </div>
         <div id="window-controls">
-          <div className="button" id="min-button" onClick={() => minimizeWindow()}>
+          <div
+            className="button"
+            id="min-button"
+            onClick={() => {
+              minimizeWindow();
+              getConfig();
+            }}
+          >
             <FontAwesomeIcon icon={faWindowMinimize} size="xs" />
           </div>
           <div

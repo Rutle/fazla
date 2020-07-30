@@ -39,3 +39,11 @@ export const minimizeWindow = (): void => {
 export const maximizeWindow = (): void => {
   ipcRenderer.send('maximize-application');
 };
+
+export const openUrl = (str: string): void => {
+  electron.shell.openExternal(str);
+};
+
+export const getConfig = (): void => {
+  ipcRenderer.send('get-config');
+};

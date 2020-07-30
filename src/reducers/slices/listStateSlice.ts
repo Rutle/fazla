@@ -121,9 +121,11 @@ export const setSelectedShip = (key: string, index: number, id: string): AppThun
 // Set the search results.
 export const setSearchResults = (allShips: ShipSimple[], ownedShips: ShipSimple[], cToggle: string): AppThunk => async (
   dispatch: AppDispatch,
+  getState,
 ) => {
   try {
-    console.log('Setting search results!');
+    const searchParameters = { ...getState() };
+    console.log('Setting search results! ', searchParameters);
     const aLen = allShips.length;
     const oLen = ownedShips.length;
     batch(() => {

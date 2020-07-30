@@ -19,6 +19,7 @@ const ShipDetailView: React.FC = () => {
 
   useEffect(() => {
     setIsShips(shipSearchList.length > 0);
+    console.log('Ship detail view: [', listState.cState, ']');
   }, []);
   const isOwned = (id: string) => {
     return ownedShips.some((ele) => ele.id === id);
@@ -47,12 +48,58 @@ const ShipDetailView: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ownedSearchList, shipSearchList, listState.cToggle]);
 
+  const renderShipDetails = () => {
+    if (listState.cState === 'INIT') {
+      return (
+        <div style={{ textAlign: 'center' }}>
+          <h1>{listState.cMsg}</h1>
+        </div>
+      );
+    }
+    if (!isShips) {
+      return (
+        <div>
+          <h1>No ship selected or found</h1>
+        </div>
+      );
+    } else {
+      return (
+        <>
+          <div className="scroll">
+            <ShipDetails />
+          </div>
+          <div className={'button-group'}>
+            {!isOwned(shipDetails.id) ? (
+              <button
+                onClick={(e) => addShipToOwned(e, shipDetails)}
+                className={`btn ${config.themeColor}`}
+                type="button"
+                disabled={isOwned(shipDetails.id)}
+              >
+                <b>Add to docks</b>
+              </button>
+            ) : (
+              <button
+                onClick={(e) => removeFromOwned(e, shipDetails.id)}
+                className={`btn ${config.themeColor}`}
+                type="button"
+              >
+                <b>Remove from docks</b>
+              </button>
+            )}
+          </div>
+        </>
+      );
+    }
+  };
   return (
     <PageTemplate>
       <section id="ship-list-page-content">
         <ShipList />
         <div className="ship-data-container dark">
-          {!isShips ? (
+          {renderShipDetails()}
+          {/*
+          !isShips ? (
             <div>
               <h1>No ship selected or found</h1>
             </div>
@@ -82,7 +129,8 @@ const ShipDetailView: React.FC = () => {
                 </div>
               </div>
             </>
-          )}
+          )
+                  */}
         </div>
       </section>
     </PageTemplate>

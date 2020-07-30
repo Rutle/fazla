@@ -81,6 +81,14 @@
   border: 1px solid var(--main-dark-border);
 }
 
+.btn.dark:disabled {
+  text-decoration: line-through;
+}
+
+.btn.dark:disabled:hover {
+  background-color: var(--main-dark-bg);
+}
+
 .btn.dark.selected {
   background-color: var(--main-dark-selected);
 }

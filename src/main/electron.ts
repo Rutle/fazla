@@ -64,3 +64,7 @@ ipcMain.on('maximize-application', () => {
 ipcMain.on('restore-application', () => {
   mainWindow.restore();
 });
+
+ipcMain.on('get-config', () => {
+  console.log(app.getPath('userData'));
+});

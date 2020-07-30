@@ -57,3 +57,6 @@ electron_1.ipcMain.on('maximize-application', function () {
 electron_1.ipcMain.on('restore-application', function () {
     mainWindow.restore();
 });
+electron_1.ipcMain.on('get-config', function () {
+    console.log(electron_1.app.getPath('userData'));
+});
