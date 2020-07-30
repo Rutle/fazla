@@ -24,6 +24,9 @@ pids
 # Distribution directories
 dist/
 
+# Release
+/release
+
 # misc
 .DS_Store
 .env.local
