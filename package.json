@@ -15,10 +15,10 @@
       "build/**/*",
       "node_modules/**/*",
       "package.json",
-      "./src/main/electron.js"
+      "src/main/electron.js"
     ],
     "directories": {
-      "buildResources": "assets",
+      "buildResources": "resources",
       "output": "release"
     }
   },
@@ -44,8 +44,8 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "electron": "concurrently \"tsc ./src/main/electron.ts -w\" \"cross-env NODE_ENV=dev nodemon --exec \"\"wait-on http://localhost:3000 && electron src/main/electron.js\"\"",
-    "start": "cross-env BROWSER=none npm run react-start",
+    "electron": "concurrently \"tsc ./src/main/electron.ts -w\" \"cross-env NODE_ENV=development nodemon --exec \"\"wait-on http://localhost:3000 && electron src/main/electron.js\"\"",
+    "start": "cross-env NODE_ENV=development BROWSER=none npm run react-start",
     "react-start": "react-scripts start",
     "react-build": "react-scripts build",
     "react-test": "react-scripts test",

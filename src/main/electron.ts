@@ -18,8 +18,8 @@ function createWindow() {
       nodeIntegration: true,
     },
   });
-
-  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
+  console.log(`${__dirname}`);
+  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../src/build/index.html')}`);
 
   mainWindow.removeMenu();
   // Open the DevTools.
