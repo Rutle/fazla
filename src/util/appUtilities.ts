@@ -45,5 +45,7 @@ export const openUrl = (str: string): void => {
 };
 
 export const getConfig = (): void => {
-  ipcRenderer.send('get-config');
+  ipcRenderer.invoke('get-config', 'test').then((result: any) => {
+    console.log(result);
+  });
 };

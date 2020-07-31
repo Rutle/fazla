@@ -18,12 +18,13 @@ function createWindow() {
       nodeIntegration: true,
     },
   });
-  console.log(`${__dirname}`);
+
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
 
   mainWindow.removeMenu();
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+  console.log(`${__dirname}`);
 }
 
 // This method will be called when Electron has finished
@@ -65,6 +66,13 @@ ipcMain.on('restore-application', () => {
   mainWindow.restore();
 });
 
+/*
 ipcMain.on('get-config', () => {
   console.log(app.getPath('userData'));
+});
+*/
+
+ipcMain.handle('get-config', async (event, arg) => {
+  const result = await app.getPath('userData');
+  return result;
 });

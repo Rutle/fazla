@@ -17,7 +17,6 @@ const TitleBar: React.FC = () => {
             id="min-button"
             onClick={() => {
               minimizeWindow();
-              getConfig();
             }}
           >
             <FontAwesomeIcon icon={faWindowMinimize} size="xs" />

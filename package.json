@@ -2,10 +2,10 @@
   "name": "eletest",
   "version": "0.1.0",
   "private": true,
-  "main": "./src/main/electron.js",
   "homepage": "./",
   "license": "MIT",
   "description": "Azur Lane formation utility application",
+  "main": "./electron/electron.js",
   "author": "RuTle",
   "email": "rutle4@gmail.com",
   "build": {
@@ -14,13 +14,19 @@
     "files": [
       "build/**/*",
       "node_modules/**/*",
-      "package.json",
-      "src/main/electron.js"
+      "electron/electron.js"
     ],
     "directories": {
       "buildResources": "resources",
       "output": "release"
-    }
+    },
+    "extraResources": [
+      {
+        "from": "./src/data",
+        "to": "data",
+        "filter": [ "**/*" ]
+      }
+    ]
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.29",
@@ -44,13 +50,14 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "electron": "concurrently \"tsc ./src/main/electron.ts -w\" \"cross-env NODE_ENV=development nodemon --exec \"\"wait-on http://localhost:3000 && electron src/main/electron.js\"\"",
+    "electron": "concurrently \"tsc ./electron/electron.ts -w\" \"cross-env NODE_ENV=development nodemon --exec \"\"wait-on http://localhost:3000 && electron electron/electron.js\"\"",
     "start": "cross-env NODE_ENV=development BROWSER=none npm run react-start",
     "react-start": "react-scripts start",
     "react-build": "react-scripts build",
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
-    "electron-build": "electron-builder",
+    "preelectron-build": "npm run react-build",
+    "electron-pack": "electron-builder build --win",
     "build": "npm run react-build && npm run electron-build"
   },
   "eslintConfig": {
