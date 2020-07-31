@@ -5,7 +5,7 @@ import { RootState } from '../reducers/rootReducer';
 import ShipList from './ShipList';
 import ShipDetails from './ShipDetails';
 import { setShip } from '../reducers/slices/formationGridSlice';
-import { getShipById } from '../util/shipdata';
+import { getShipById } from '../util/appUtilities';
 import { closeModal } from '../reducers/slices/formationModalSlice';
 
 ReactModal.setAppElement('#root');
@@ -23,10 +23,10 @@ const FormationModal: React.FC = () => {
     switch (listState.currentToggle) {
       case 'all':
         // dispatch(setShip({ index, data: shipList[n] }));
-        dispatch(setShip({ index: formationModal.gridIndex, data: getShipById(shipSearchList[n].id) }));
+        dispatch(setShip({ index: formationModal.gridIndex, data: getShipById(shipSearchList[n].id, true) }));
         break;
       case 'owned':
-        dispatch(setShip({ index: formationModal.gridIndex, data: getShipById(ownedSearch[n].id) }));
+        dispatch(setShip({ index: formationModal.gridIndex, data: getShipById(ownedSearch[n].id, true) }));
         break;
       default:
         break;

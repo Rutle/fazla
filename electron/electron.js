@@ -38,10 +38,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 // Modules to control application life and create native browser window
 var electron_1 = require("electron");
+var electron_store_1 = require("electron-store");
 var path = require("path");
 var isDev = require("electron-is-dev");
 require("electron-reload");
 var mainWindow;
+var electronStore = new electron_store_1["default"]();
 function createWindow() {
     // Create the browser window.
     mainWindow = new electron_1.BrowserWindow({
@@ -100,13 +102,30 @@ ipcMain.on('get-config', () => {
 });
 */
 electron_1.ipcMain.handle('get-config', function (event, arg) { return __awaiter(void 0, void 0, void 0, function () {
-    var result;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, electron_1.app.getPath('userData')];
-            case 1:
-                result = _a.sent();
-                return [2 /*return*/, result];
+        return [2 /*return*/, electron_1.app.getPath('userData')];
+    });
+}); });
+electron_1.ipcMain.handle('get-ship-data', function (event) { return __awaiter(void 0, void 0, void 0, function () {
+    var ships;
+    return __generator(this, function (_a) {
+        ships = electronStore.get('ships');
+        if (ships) {
+            return [2 /*return*/, { shipData: ships, isConfigShipData: true }];
         }
+        else {
+            return [2 /*return*/, { shipData: [], isConfigShipData: false }];
+        }
+        return [2 /*return*/];
+    });
+}); });
+electron_1.ipcMain.handle('save-ship-data', function (event, arg) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        // console.log('save, ', arg[100]);
+        // console.log(app.getPath('userData'));
+        electronStore.set({
+            ships: arg
+        });
+        return [2 /*return*/];
     });
 }); });

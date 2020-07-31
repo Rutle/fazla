@@ -8,6 +8,11 @@
   "main": "./electron/electron.js",
   "author": "RuTle",
   "email": "rutle4@gmail.com",
+  "keywords": [
+    "ReactJS",
+    "Electron",
+    "Typescript"
+  ],
   "build": {
     "appId": "com.eletest",
     "extends": null,
@@ -19,14 +24,7 @@
     "directories": {
       "buildResources": "resources",
       "output": "release"
-    },
-    "extraResources": [
-      {
-        "from": "./src/data",
-        "to": "data",
-        "filter": [ "**/*" ]
-      }
-    ]
+    }
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.29",
@@ -38,6 +36,7 @@
     "@types/react-router-dom": "^5.1.5",
     "electron-is-dev": "^1.2.0",
     "electron-reload": "^1.5.0",
+    "electron-store": "^6.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropdown": "^1.7.0",

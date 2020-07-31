@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { setDetails, resetDetails } from './shipDetailsSlice';
-import { getShipById, ShipSimple } from '../../util/shipdata';
+import { getShipById, getShipData } from '../../util/appUtilities';
 import { batch } from 'react-redux';
 import { AppThunk, AppDispatch } from '../../store';
 import { setList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import { setFullList } from './fullShipListSlice';
+import { ShipSimple } from '../../util/shipdatatypes';
 // import { setCurrentState } from './appStateSlice';
 
 interface CurrentState {
@@ -36,6 +37,7 @@ const initialState: ListStateObject = {
   },
   cState: 'INIT',
   cMsg: 'Initializing.',
+  useTempData: true,
 };
 
 const listStateSlice = createSlice({
@@ -46,6 +48,12 @@ const listStateSlice = createSlice({
       return {
         ...state,
         [action.payload.key]: action.payload.data,
+      };
+    },
+    setListValue(state, action: PayloadAction<{ key: string; value: boolean }>) {
+      return {
+        ...state,
+        [action.payload.key]: action.payload.value,
       };
     },
     setCurrentToggle(state, action: PayloadAction<string>) {
@@ -64,17 +72,21 @@ const listStateSlice = createSlice({
   },
 });
 
-export const { setListState, resetList, setCurrentToggle, setCurrentState } = listStateSlice.actions;
+export const { setListState, resetList, setCurrentToggle, setCurrentState, setListValue } = listStateSlice.actions;
 
 // Initialize ship lists.
-export const initShipLists = (allShips: ShipSimple[], ownedShips: ShipSimple[]): AppThunk => async (
+export const initShipLists = (/* allShips: ShipSimple[],  ownedShips: ShipSimple[]*/): AppThunk => async (
   dispatch: AppDispatch,
+  getState,
 ) => {
   try {
     console.log('[INIT] {1}: Inside slice setting lists.');
+    const { data, isTempData } = await getShipData();
+    const ownedShips = getState().ownedShips.slice();
     batch(() => {
-      dispatch(setFullList(allShips));
-      dispatch(setList(allShips));
+      dispatch(setListValue({ key: 'useTempData', value: !isTempData }));
+      dispatch(setFullList(data));
+      dispatch(setList(data));
       dispatch(setOwnedSearchList(ownedShips));
     });
   } catch (e) {
@@ -91,11 +103,12 @@ export const initListState = (
   key2: string,
   index2: number,
   id2: string,
+  useTempData: boolean,
 ): AppThunk => async (dispatch: AppDispatch) => {
   try {
     console.log('[INIT] {2}: Setting list states');
     batch(() => {
-      dispatch(setDetails(getShipById(id)));
+      dispatch(setDetails(getShipById(id, useTempData)));
       dispatch(setListState({ key: key, data: { id: id, index: index } }));
       dispatch(setListState({ key: key2, data: { id: id2, index: index2 } }));
       dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
@@ -106,11 +119,13 @@ export const initListState = (
 };
 
 // Set details of the selected ship
-export const setSelectedShip = (key: string, index: number, id: string): AppThunk => async (dispatch: AppDispatch) => {
+export const setSelectedShip = (key: string, index: number, id: string, useTempData: boolean): AppThunk => async (
+  dispatch: AppDispatch,
+) => {
   try {
     console.log('Setting selected ship: index [', index, '], id [', id, '] key', key, ']');
     batch(() => {
-      dispatch(setDetails(getShipById(id)));
+      dispatch(setDetails(getShipById(id, useTempData)));
       dispatch(setListState({ key: key, data: { id: id, index: index } }));
     });
   } catch (e) {
@@ -119,10 +134,12 @@ export const setSelectedShip = (key: string, index: number, id: string): AppThun
 };
 
 // Set the search results.
-export const setSearchResults = (allShips: ShipSimple[], ownedShips: ShipSimple[], cToggle: string): AppThunk => async (
-  dispatch: AppDispatch,
-  getState,
-) => {
+export const setSearchResults = (
+  allShips: ShipSimple[],
+  ownedShips: ShipSimple[],
+  cToggle: string,
+  useTempData: boolean,
+): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const searchParameters = { ...getState() };
     console.log('Setting search results! ', searchParameters);
@@ -130,9 +147,9 @@ export const setSearchResults = (allShips: ShipSimple[], ownedShips: ShipSimple[
     const oLen = ownedShips.length;
     batch(() => {
       if (cToggle === 'all' && aLen > 0) {
-        dispatch(setDetails(getShipById(allShips[0].id)));
+        dispatch(setDetails(getShipById(allShips[0].id, useTempData)));
       } else if (cToggle === 'owned' && oLen > 0) {
-        dispatch(setDetails(getShipById(ownedShips[0].id)));
+        dispatch(setDetails(getShipById(ownedShips[0].id, useTempData)));
       } else {
         dispatch(resetDetails());
       }

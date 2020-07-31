@@ -5,8 +5,9 @@ interface Setting {
   value: string;
 }
 
-const initialState = {
+const initialState: { [key: string]: any } = {
   themeColor: 'dark',
+  firstTime: true,
 };
 
 const programConfigSlice = createSlice({

@@ -1,10 +1,12 @@
 // Modules to control application life and create native browser window
 import { app, BrowserWindow, ipcMain } from 'electron';
+import Store from 'electron-store';
 import * as path from 'path';
 import * as isDev from 'electron-is-dev';
 import 'electron-reload';
 
 let mainWindow: BrowserWindow;
+const electronStore = new Store();
 
 function createWindow() {
   // Create the browser window.
@@ -73,6 +75,23 @@ ipcMain.on('get-config', () => {
 */
 
 ipcMain.handle('get-config', async (event, arg) => {
-  const result = await app.getPath('userData');
-  return result;
+  return app.getPath('userData');
+});
+
+ipcMain.handle('get-ship-data', async (event) => {
+  const ships = electronStore.get('ships');
+  if (ships) {
+    return { shipData: ships, isConfigShipData: true };
+  } else {
+    return { shipData: [], isConfigShipData: false };
+  }
+});
+
+ipcMain.handle('save-ship-data', async (event, arg) => {
+  // console.log('save, ', arg[100]);
+  // console.log(app.getPath('userData'));
+  electronStore.set({
+    ships: arg,
+  });
+  // console.log(electronStore.get('ships.100.rarity'));
 });

@@ -5,7 +5,7 @@ import ShipDetails from './ShipDetails';
 import { RootState } from '../reducers/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { addShip, removeShip } from '../reducers/slices/ownedShipListSlice';
-import { Ship } from '../util/shipdata';
+import { Ship } from '../util/shipdatatypes';
 
 const ShipDetailView: React.FC = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const ShipDetailView: React.FC = () => {
 
   useEffect(() => {
     setIsShips(shipSearchList.length > 0);
-    console.log('Ship detail view: [', listState.cState, ']');
+    // console.log('Ship detail view: [', listState.cState, ']');
   }, []);
   const isOwned = (id: string) => {
     return ownedShips.some((ele) => ele.id === id);

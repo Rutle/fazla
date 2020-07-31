@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Ship } from '../util/shipdata';
+import { Ship } from '../util/shipdatatypes';
 
 const FormationShipPassives: React.FC<{ ship: Ship }> = ({ ship }) => {
   const isShip = (): boolean => {
