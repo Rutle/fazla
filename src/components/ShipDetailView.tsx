@@ -14,12 +14,12 @@ const ShipDetailView: React.FC = () => {
   const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
   const config = useSelector((state: RootState) => state.config);
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
-  const listState = useSelector((state: RootState) => state.listState);
+  const appState = useSelector((state: RootState) => state.appState);
   const [isShips, setIsShips] = useState(false);
 
   useEffect(() => {
     setIsShips(shipSearchList.length > 0);
-    // console.log('Ship detail view: [', listState.cState, ']');
+    // console.log('Ship detail view: [', appState.cState, ']');
   }, []);
   const isOwned = (id: string) => {
     return ownedShips.some((ele) => ele.id === id);
@@ -35,7 +35,7 @@ const ShipDetailView: React.FC = () => {
 
   useEffect(() => {
     // Check if there any ships left.
-    switch (listState.cToggle) {
+    switch (appState.cToggle) {
       case 'all':
         setIsShips(shipSearchList.length > 0);
         break;
@@ -46,13 +46,13 @@ const ShipDetailView: React.FC = () => {
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ownedSearchList, shipSearchList, listState.cToggle]);
+  }, [ownedSearchList, shipSearchList, appState.cToggle]);
 
   const renderShipDetails = () => {
-    if (listState.cState === 'INIT') {
+    if (appState.cState === 'INIT') {
       return (
         <div style={{ textAlign: 'center' }}>
-          <h1>{listState.cMsg}</h1>
+          <h1>{appState.cMsg}</h1>
         </div>
       );
     }

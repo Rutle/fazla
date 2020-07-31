@@ -54,17 +54,19 @@ export const getConfig = (): void => {
 
 export const getShipData = (): { data: ShipSimple[]; isTempData: boolean } => {
   return ipcRenderer.invoke('get-ship-data').then((result: { shipData: any; isConfigShipData: boolean }) => {
+    /*
     console.log(
       '[appUtils: getShipData] Ship data length: ',
       Object.keys(result.shipData).length,
       'isConfig :',
       result.isConfigShipData,
     );
+    */
     if (!result.isConfigShipData) {
-      console.log('No data in config');
+      // console.log('No data in config');
       return { data: getShipsSimple('', shipData), isTempData: !result.isConfigShipData };
     }
-    console.log('data in config');
+    // console.log('data in config');
     return { data: getShipsSimple('', result.shipData), isTempData: !result.isConfigShipData };
   });
 };
@@ -84,7 +86,11 @@ export const getShipById = (id: string, useTempData: boolean): Ship => {
 };
 
 // Data utilities
-export const getShipsFull = (name: string): Ship[] => {
+/**
+ * Return detailed ship list.
+ * @param name Substring to search for.
+ */
+const getShipsFull = (name: string): Ship[] => {
   let t: Ship[] = [];
   t = Object.assign(
     Object.keys(shipData)
@@ -96,8 +102,12 @@ export const getShipsFull = (name: string): Ship[] => {
   );
   return t;
 };
-
-export const getShipsSimple = (name: string, data = {}): ShipSimple[] => {
+/**
+ * Returns lists of ships with simpler details.
+ * @param name Substring to search for.
+ * @param data Json data to search from.
+ */
+const getShipsSimple = (name: string, data = {}): ShipSimple[] => {
   let t: ShipSimple[] = [];
   t = Object.assign(
     Object.keys(data)
@@ -116,5 +126,8 @@ export const getShipsSimple = (name: string, data = {}): ShipSimple[] => {
   );
   return t;
 };
-
-export const getShipTempById = (id: string): Ship => (shipData as never)[id];
+/**
+ * Return data of a ship by ID.
+ * @param id ID of a ship.
+ */
+const getShipTempById = (id: string): Ship => (shipData as never)[id];

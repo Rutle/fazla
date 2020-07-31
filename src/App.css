@@ -228,8 +228,6 @@ input[type="text"].light:focus {
 .App {
   display: flex;
   height: 100%;
-  margin-top: 32px;
-  border-top: 1px solid black;
   overflow-y: auto;
   flex-direction: column;
   color: var(--main-dark-color);
@@ -352,7 +350,7 @@ body {
 
 #titlebar #drag-region {
   display: grid;
-  grid-template-columns: auto 138px;
+  grid-template-columns: auto 100px 138px;
 }
 
 #window-title {
@@ -372,12 +370,28 @@ body {
   line-height: 1.5;
 }
 
-.page,
-section.home {
+#window-title-state {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  overflow: hidden;
+  font-size: 12px;
+  color: var(--main-dark-color);
+}
+#window-title-state span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+.page {
   height: 100%;
   display: flex;
   min-height: 92vh;
   flex-direction: column;
+  margin-top: 32px;
+  border-top: 1px solid black;
 }
 
 #ship-list-page-content {
@@ -415,7 +429,8 @@ section.home {
 }
 
 .ship-data-container,
-.ship-side-container {
+.ship-side-container,
+.home-container {
   display: flex;
   flex-direction: column;
   padding: 15px;
@@ -428,6 +443,10 @@ section.home {
   -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+}
+.home-container > div {
+  display: flex;
+  justify-content: center;
 }
 .ship-side-container {
   min-width: 18%;

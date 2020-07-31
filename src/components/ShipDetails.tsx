@@ -11,11 +11,11 @@ interface ShipDetails {
 
 // eslint-disable-next-line react/prop-types
 const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page }) => {
-  const listState = useSelector((state: RootState) => state.listState);
+  const appState = useSelector((state: RootState) => state.appState);
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
 
   useEffect(() => {
-    console.log('ship details: [', listState.cState, ']');
+    console.log('ship details: [', appState.cState, ']');
   }, []);
 
   const openWikiUrl = () => {

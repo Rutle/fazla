@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { getShipsSimple, getShipById } from '../util/appUtilities';
+import { getShipById } from '../util/appUtilities';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,7 @@ import {
   setSearchResults,
   initShipLists,
   initListState,
-} from '../reducers/slices/listStateSlice';
+} from '../reducers/slices/appStateSlice';
 import { setSearchString } from '../reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';
 import { ShipSimple } from '../util/shipdatatypes';
@@ -22,20 +22,18 @@ const ShipList: React.FC = () => {
   const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
   const ownedList = useSelector((state: RootState) => state.ownedShips);
   const config = useSelector((state: RootState) => state.config);
-  const listState = useSelector((state: RootState) => state.listState);
+  const appState = useSelector((state: RootState) => state.appState);
   const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
   const searchParameters = useSelector((state: RootState) => state.searchParameters);
   const fullShipList = useSelector((state: RootState) => state.fullList);
   const [searchValue, setSearchValue] = useState(searchParameters.name || '');
   const [inputFocus, setInputFocus] = useState(false);
-
+  /*
   // Initialize ship state, lists and etc.
   useEffect(() => {
     try {
       if (fullShipList.length === 0) {
         console.log('[INIT] {1}: Initialize full ship list');
-        // const data: ShipSimple[] = getShipsSimple('');
-        // dispatch(initShipLists(data, ownedList));
         dispatch(initShipLists());
       }
     } catch (e) {
@@ -43,17 +41,17 @@ const ShipList: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  */
   // Catch when the search list of ships is being modified.
   // INIT:    First time updated.
   //          Set initial list states and select ship as well as modify state to 'RUNNING'.
   // RUNNING:
   useEffect(() => {
-    if (listState.cState === 'INIT') {
+    if (appState.cState === 'INIT') {
       if (shipSearchList.length !== 0) {
         console.log('[INIT] {2}: Set initial lists states after Init {1}.');
         dispatch(
-          initListState('all', 0, shipSearchList[0].id, 'owned', 0, ownedSearchList[0].id, listState.useTempData),
+          initListState('all', 0, shipSearchList[0].id, 'owned', 0, ownedSearchList[0].id, appState.useTempData),
         );
       } else {
         console.log(
@@ -68,23 +66,23 @@ const ShipList: React.FC = () => {
 
   // Set details of the selected ship when changed between 'all ships' and 'owned ships'.
   useEffect(() => {
-    if (listState.cState === 'INIT') return;
-    const { cToggle } = listState;
-    console.log('Toggle: [', cToggle, ']', listState[cToggle]);
-    dispatch(setDetails(getShipById(listState[cToggle].id, listState.useTempData)));
+    if (appState.cState === 'INIT') return;
+    const { cToggle } = appState;
+    console.log('Toggle: [', cToggle, ']', appState[cToggle]);
+    dispatch(setDetails(getShipById(appState[cToggle].id, appState.useTempData)));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listState.cToggle]);
+  }, [appState.cToggle]);
 
   // Update lists when search parameter changes.
   useEffect(() => {
-    if (listState.cState === 'INIT') {
+    if (appState.cState === 'INIT') {
       console.log('[INIT] {1}: ship lists are not setup for searching yet. Skipping.');
       return;
     }
     const allS: ShipSimple[] = getSearchList(fullShipList);
     const ownedS: ShipSimple[] = getSearchList(ownedList);
-    dispatch(setSearchResults(allS, ownedS, listState.cToggle, listState.useTempData));
+    dispatch(setSearchResults(allS, ownedS, appState.cToggle, appState.useTempData));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParameters]);
 
@@ -95,7 +93,7 @@ const ShipList: React.FC = () => {
   const searchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     /*
-    switch (listState.cToggle) {
+    switch (appState.cToggle) {
       case 'all':
         const t: ShipSimple[] = getSearchList(fullShipList);
         dispatch(setList(t));
@@ -148,20 +146,20 @@ const ShipList: React.FC = () => {
   const selectShip = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
     try {
       let index = 0;
-      if (listState.cToggle === 'all') {
+      if (appState.cToggle === 'all') {
         index = shipSearchList.findIndex((ship) => ship.id === id);
       }
-      if (listState.cToggle === 'owned') {
+      if (appState.cToggle === 'owned') {
         index = ownedSearchList.findIndex((ship) => ship.id === id);
       }
-      dispatch(setSelectedShip(listState.cToggle, index, id, listState.useTempData));
+      dispatch(setSelectedShip(appState.cToggle, index, id, appState.useTempData));
     } catch (err) {
       console.log(err);
     }
   };
 
   const renderList = () => {
-    switch (listState.cToggle) {
+    switch (appState.cToggle) {
       case 'all':
         return (
           <div className={`rList`}>
@@ -170,7 +168,7 @@ const ShipList: React.FC = () => {
                 <button
                   key={ship.id}
                   className={`rList-item btn ${config.themeColor} ${
-                    ship.id === listState[listState.cToggle as string].id ? 'selected' : ''
+                    ship.id === appState[appState.cToggle as string].id ? 'selected' : ''
                   }`}
                   type="button"
                   onClick={(e) => selectShip(e, ship.id)}
@@ -188,7 +186,7 @@ const ShipList: React.FC = () => {
               return (
                 <button
                   key={ship.id}
-                  className={`rList-item btn ${config.themeColor} ${ship.id === listState.owned.id ? 'selected' : ''}`}
+                  className={`rList-item btn ${config.themeColor} ${ship.id === appState.owned.id ? 'selected' : ''}`}
                   type="button"
                   onClick={(e) => selectShip(e, ship.id)}
                 >
@@ -244,7 +242,7 @@ const ShipList: React.FC = () => {
               id="all"
               type="radio"
               value="all"
-              checked={listState.cToggle === 'all'}
+              checked={appState.cToggle === 'all'}
               onChange={() => dispatch(setCurrentToggle('all'))}
             />
             <label className={`toggle ${config.themeColor}`} htmlFor="all">
@@ -254,7 +252,7 @@ const ShipList: React.FC = () => {
               id="owned"
               type="radio"
               value="false"
-              checked={listState.cToggle === 'owned'}
+              checked={appState.cToggle === 'owned'}
               onChange={() => dispatch(setCurrentToggle('owned'))}
             />
             <label className={`toggle ${config.themeColor}`} htmlFor="owned">

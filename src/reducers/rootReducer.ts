@@ -3,7 +3,7 @@ import shipSearchListSlice from './slices/shipSearchListSlice';
 import shipDetailsSlice from './slices/shipDetailsSlice';
 import ownedShipListSlice from './slices/ownedShipListSlice';
 import programConfigSlice from './slices/programConfigSlice';
-import listStateSlice from './slices/listStateSlice';
+import appStateSlice from './slices/appStateSlice';
 import ownedSearchListSlice from './slices/ownedSearchListSlice';
 import formationGridSlice from './slices/formationGridSlice';
 import formationModalSlice from './slices/formationModalSlice';
@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   shipDetails: shipDetailsSlice,
   ownedShips: ownedShipListSlice,
   config: programConfigSlice,
-  listState: listStateSlice,
+  appState: appStateSlice,
   ownedSearchList: ownedSearchListSlice,
   formationGrid: formationGridSlice,
   formationModal: formationModalSlice,

@@ -14,13 +14,13 @@ const FormationModal: React.FC = () => {
   const dispatch = useDispatch();
   const formationModal = useSelector((state: RootState) => state.formationModal);
   const config = useSelector((state: RootState) => state.config);
-  const listState = useSelector((state: RootState) => state.listState);
+  const appState = useSelector((state: RootState) => state.appState);
   const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
   const ownedSearch = useSelector((state: RootState) => state.ownedSearchList);
 
   const addShipToFormation = () => {
-    const n: number = listState[listState.currentToggle].index;
-    switch (listState.currentToggle) {
+    const n: number = appState[appState.currentToggle].index;
+    switch (appState.currentToggle) {
       case 'all':
         // dispatch(setShip({ index, data: shipList[n] }));
         dispatch(setShip({ index: formationModal.gridIndex, data: getShipById(shipSearchList[n].id, true) }));

@@ -9,24 +9,12 @@ import './index.css';
 import './App.css';
 import store from './store';
 import FormationView from './components/FormationView';
-import TitleBar from './components/TitleBar';
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <HashRouter>
-        <TitleBar />
-        <div className="App">
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-            <Route path="/home" component={Home} />
-            <Route path="/shipdetails" component={ShipDetailView} />
-            <Route path="/formation" component={FormationView} />
-          </Switch>
-        </div>
-      </HashRouter>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

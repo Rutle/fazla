@@ -7,11 +7,12 @@ import { setList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import { setFullList } from './fullShipListSlice';
 import { ShipSimple } from '../../util/shipdatatypes';
-// import { setCurrentState } from './appStateSlice';
+
+const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 
 interface CurrentState {
-  cState: 'INIT' | 'RUNNING' | 'ERROR';
-  cMsg: 'Initializing.' | 'Running.';
+  cState: 'INIT' | 'RUNNING' | 'ERROR' | 'UPDATING';
+  cMsg: 'Initializing.' | 'Running.' | 'Updating in progress.';
 }
 
 interface ListState {
@@ -40,8 +41,8 @@ const initialState: ListStateObject = {
   useTempData: true,
 };
 
-const listStateSlice = createSlice({
-  name: 'listStateSlice',
+const appStateSlice = createSlice({
+  name: 'appStateSlice',
   initialState,
   reducers: {
     setListState(state, action: PayloadAction<{ key: string; data: ListState }>) {
@@ -72,13 +73,10 @@ const listStateSlice = createSlice({
   },
 });
 
-export const { setListState, resetList, setCurrentToggle, setCurrentState, setListValue } = listStateSlice.actions;
+export const { setListState, resetList, setCurrentToggle, setCurrentState, setListValue } = appStateSlice.actions;
 
 // Initialize ship lists.
-export const initShipLists = (/* allShips: ShipSimple[],  ownedShips: ShipSimple[]*/): AppThunk => async (
-  dispatch: AppDispatch,
-  getState,
-) => {
+export const initShipLists = (): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     console.log('[INIT] {1}: Inside slice setting lists.');
     const { data, isTempData } = await getShipData();
@@ -123,7 +121,7 @@ export const setSelectedShip = (key: string, index: number, id: string, useTempD
   dispatch: AppDispatch,
 ) => {
   try {
-    console.log('Setting selected ship: index [', index, '], id [', id, '] key', key, ']');
+    // console.log('Setting selected ship: index [', index, '], id [', id, '] key', key, ']');
     batch(() => {
       dispatch(setDetails(getShipById(id, useTempData)));
       dispatch(setListState({ key: key, data: { id: id, index: index } }));
@@ -172,4 +170,30 @@ export const setSearchResults = (
     console.log('setSearchResults error: ', e);
   }
 };
-export default listStateSlice.reducer;
+
+// Set details of the selected ship
+export const updateShipData = (): AppThunk => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Updating in progress.' }));
+    fetch(SHIPAPIURL)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log('Fetched: ', Object.keys(result));
+          dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          console.log('fetch error: ', error);
+        },
+      );
+    // dispatch() -> set list
+    // console.log('Setting selected ship: index [', index, '], id [', id, '] key', key, ']');
+  } catch (e) {
+    console.log('Set Selected Ship error: ', e);
+  }
+};
+
+export default appStateSlice.reducer;
