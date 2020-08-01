@@ -12,7 +12,7 @@ const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/m
 
 interface CurrentState {
   cState: 'INIT' | 'RUNNING' | 'ERROR' | 'UPDATING';
-  cMsg: 'Initializing.' | 'Running.' | 'Updating in progress.';
+  cMsg: 'Initializing.' | 'Running.' | 'Please wait. Downloading and updating in progress.';
 }
 
 interface ListState {
@@ -174,12 +174,12 @@ export const setSearchResults = (
 // Set details of the selected ship
 export const updateShipData = (): AppThunk => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Updating in progress.' }));
+    dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait. Downloading and updating in progress.' }));
     fetch(SHIPAPIURL)
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log('Fetched: ', Object.keys(result));
+          console.log('Fetched: ', Object.keys(result).length);
           dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
         },
         // Note: it's important to handle errors here

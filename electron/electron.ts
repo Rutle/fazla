@@ -88,7 +88,7 @@ ipcMain.handle('get-ship-data', async (event) => {
 });
 
 ipcMain.handle('save-ship-data', async (event, arg) => {
-  // console.log('save, ', arg[100]);
+  console.log('save, ', Object.keys(arg).length);
   // console.log(app.getPath('userData'));
   electronStore.set({
     ships: arg,

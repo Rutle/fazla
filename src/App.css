@@ -447,10 +447,7 @@ body {
   box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
   */
 }
-.home-container > div {
-  display: flex;
-  justify-content: center;
-}
+
 .ship-side-container {
   min-width: 18%;
   max-width: 18%;
@@ -811,11 +808,15 @@ input[type="text"] {
   padding: 5px;
 }
 
+.f-grid.half {
+  width: 50%;
+}
+
 div.f-row {
   display: flex;
   flex-direction: row;
   border-radius: inherit;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 
 div.f-row.wrap {
@@ -824,11 +825,10 @@ div.f-row.wrap {
 
 div.f-column {
   display: flex;
+  flex: 1;
   flex-direction: column;
   border-radius: inherit;
   margin-bottom: 5px;
-  flex: 1;
-  min-width: 350px;
   margin-right: 2px;
 }
 
@@ -966,6 +966,13 @@ div.f-title {
   /* width: 25%; */
 }
 
+.home-container div.f-title {
+  width: 25%;
+  border:unset;
+  border-bottom: 2px solid var(--main-dark-border);
+  text-align: start;
+}
+
 .grid-item.name-title {
   min-width: 160px;
   max-width: 160px;
@@ -982,9 +989,15 @@ div.f-title {
   border-right: 1px solid #353b48;
   margin-top: 0px;
   font-size: 14px;
-
 }
-
+div.grid-item.action {
+  flex: unset;
+  padding: 1px 1px 1px 5px;
+  min-height: 27px;
+}
+.home-container div.grid-item.action {
+  justify-content: center;
+}
 .grid-item.passive-title {
   padding-left: 5px;
   border-bottom: 2px solid #353b48;

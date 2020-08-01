@@ -121,7 +121,7 @@ electron_1.ipcMain.handle('get-ship-data', function (event) { return __awaiter(v
 }); });
 electron_1.ipcMain.handle('save-ship-data', function (event, arg) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        // console.log('save, ', arg[100]);
+        console.log('save, ', Object.keys(arg).length);
         // console.log(app.getPath('userData'));
         electronStore.set({
             ships: arg
