@@ -647,7 +647,10 @@ section.home {
 .btn:active {
   transform: translateY(1px);
 }
-
+.btn.informative {
+  border:unset;
+  border-bottom: 2px solid var(--main-dark-border);
+}
 .button-group {
   display: flex;
 }
@@ -834,12 +837,13 @@ div.f-column > div.grid-item {
 }
 div.grid-item {
   display: flex;
-  flex-grow: 1;
+  flex: 1;
   flex-direction: column;
   height: 100%;
   border-radius: inherit;
-  line-height: 23px;
-  min-height: 23px;
+  margin-right: 1px;
+  /* line-height: 23px;
+  min-height: 23px; */
 }
 /*
 div.content.dark.Rare  {
@@ -851,6 +855,9 @@ div.content.dark.Rare  {
   margin-bottom: 0px;
 }
 
+div.f-row .grid-item:last-child {
+  margin-right: 0px;
+}
 .f-grid.rounded {
   border-radius: 5px;
 }
@@ -864,10 +871,6 @@ div.content.dark.Rare  {
   height: 25px;
   line-height: 25px;
   font-size: 15px;
-}
-
-.f-row > .grid-item > button.btn {
-  margin-right: 1px;
 }
 
 .grid-item > button.btn.small {
@@ -887,9 +890,10 @@ button.btn.small {
 .grid-item > div.content {
   display: flex;
   height: 100%;
-  padding: 5px;
+  padding: 1px;
   flex-direction: column;
   margin-top: 2px;
+  border: 1px solid var(--main-dark-border);
   border-radius: inherit;
 }
 
@@ -934,8 +938,8 @@ div.footer-misc {
   min-height: 22px;
   height: 100%;
   margin: auto;
-  width: calc(50% - 5px);
-  padding-left: 5px;
+  width: calc(50% - 1px);
+  padding-left: 1px;
   border-radius: inherit;
   font-size: 12px;
   line-height: 22px;
@@ -944,8 +948,8 @@ div.footer-misc {
 .grid-item .content > div.footer-misc > div.hull-type {
   min-height: 22px;
   height: 100%;
-  width: calc(50% - 5px);
-  padding-left: 5px;
+  width: calc(50% - 1px);
+  padding-left: 1px;
   border-radius: inherit;
   white-space: nowrap;
   overflow: hidden;
@@ -963,21 +967,22 @@ div.f-title {
 }
 
 .grid-item.name-title {
-  min-width: 200px;
-  max-width: 200px;
+  min-width: 160px;
+  max-width: 160px;
   padding-left: 5px;
   border-bottom: 2px solid #353b48;
 }
 
 .grid-item.name {
-  min-width: 200px;
-  max-width: 200px;
+  min-width: 160px;
+  max-width: 160px;
   height: inherit;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 1px 5px 1px 5px;
   justify-content: center;
   border-right: 1px solid #353b48;
   margin-top: 0px;
+  font-size: 14px;
+
 }
 
 .grid-item.passive-title {
@@ -986,9 +991,11 @@ div.f-title {
 }
 
 .grid-item.passive {
-  padding-left: 5px;
+  padding: 1px 1px 1px 5px;
   justify-content: center;
+  font-size: 14px;
 }
+
 
 div.f-row.pink {
   border: 1px solid rgba(243, 196, 204, 0.651);

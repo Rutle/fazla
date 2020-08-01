@@ -196,4 +196,21 @@ export const updateShipData = (): AppThunk => async (dispatch: AppDispatch) => {
   }
 };
 
+// Set details of the selected ship
+export const updateOwnedSearchList = (ownedShips: ShipSimple[]): AppThunk => async (dispatch: AppDispatch) => {
+  try {
+    const oLen = ownedShips.length;
+    batch(() => {
+      dispatch(setOwnedSearchList(ownedShips));
+      if (oLen !== 0) {
+        dispatch(setListState({ key: 'owned', data: { id: ownedShips[0].id, index: 0 } }));
+      } else {
+        dispatch(setListState({ key: 'owned', data: { id: 'NONE', index: 0 } }));
+      }
+    });
+  } catch (e) {
+    console.log('Set Selected Ship error: ', e);
+  }
+};
+
 export default appStateSlice.reducer;

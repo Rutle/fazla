@@ -4,6 +4,7 @@ import FormationGridItem from './FormationGridItem';
 // eslint-disable-next-line react/prop-types
 const FormationGrid: React.FC = () => {
   return (
+    /*
     <div className={'f-grid'}>
       <div className={'f-row wrap'}>
         <div className={'f-column full'}>
@@ -20,6 +21,29 @@ const FormationGrid: React.FC = () => {
         </div>
       </div>
     </div>
+    */
+    <>
+      <div className="f-grid">
+        <div className="f-row wrap">
+          <div className="f-column">
+            <div className={'f-title'}>Main</div>
+            <div className="f-row">
+              <FormationGridItem index={0} />
+              <FormationGridItem index={1} />
+              <FormationGridItem index={2} />
+            </div>
+          </div>
+          <div className="f-column">
+            <div className={'f-title'}>Vanguard</div>
+            <div className="f-row">
+              <FormationGridItem index={3} />
+              <FormationGridItem index={4} />
+              <FormationGridItem index={5} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

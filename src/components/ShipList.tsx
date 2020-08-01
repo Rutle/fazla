@@ -5,7 +5,7 @@ import { getShipById } from '../util/appUtilities';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { setCurrentToggle, setSelectedShip, setSearchResults } from '../reducers/slices/appStateSlice';
+import { setCurrentToggle, setSelectedShip, setSearchResults, updateOwnedSearchList } from '../reducers/slices/appStateSlice';
 import { setSearchString } from '../reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';
 import { ShipSimple } from '../util/shipdatatypes';
@@ -21,48 +21,13 @@ const ShipList: React.FC = () => {
   const fullShipList = useSelector((state: RootState) => state.fullList);
   const [searchValue, setSearchValue] = useState(searchParameters.name || '');
   const [inputFocus, setInputFocus] = useState(false);
-  /*
-  // Initialize ship state, lists and etc.
-  useEffect(() => {
-    try {
-      if (fullShipList.length === 0) {
-        console.log('[INIT] {1}: Initialize full ship list');
-        dispatch(initShipLists());
-      }
-    } catch (e) {
-      console.log('[INIT] {1}: Error, useEffect []: ', e);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  */
-  // Catch when the search list of ships is being modified.
-  // INIT:    First time updated.
-  //          Set initial list states and select ship as well as modify state to 'RUNNING'.
-  // RUNNING:
-  /*
-  useEffect(() => {
-    if (appState.cState === 'INIT') {
-      if (shipSearchList.length !== 0) {
-        console.log('[INIT] {2}: Set initial lists states after Init {1}.');
-        dispatch(
-          initListState('all', 0, shipSearchList[0].id, 'owned', 0, ownedSearchList[0].id, appState.useTempData),
-        );
-      } else {
-        console.log(
-          '[INIT] {1}: and shipSearchList length: [',
-          shipSearchList.length,
-          ']: Ship data has not been set in search list yet.',
-        );
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shipSearchList]);
-  */
+
   // Set details of the selected ship when changed between 'all ships' and 'owned ships'.
   useEffect(() => {
     if (appState.cState === 'INIT') return;
     const { cToggle } = appState;
     console.log('Toggle: [', cToggle, ']', appState[cToggle]);
+    console.log(ownedList.length);
     dispatch(setDetails(getShipById(appState[cToggle].id, appState.useTempData)));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,6 +48,15 @@ const ShipList: React.FC = () => {
   const getSearchList = (list: ShipSimple[]): ShipSimple[] => {
     return list.filter(searchPredicate).filter(rarityPredicate).filter(nationalityPredicate).filter(hullPredicate);
   };
+
+  useEffect(() => {
+    if (appState.cState !== 'INIT') {
+      console.log('owned list muuttu');
+      // dispatch(setSearchResults(fullShipList, ownedList, appState.cToggle, appState.useTempData));
+      const ownedS: ShipSimple[] = getSearchList(ownedList);
+      dispatch(updateOwnedSearchList(ownedS));
+    }
+  }, [ownedList]);
 
   const searchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

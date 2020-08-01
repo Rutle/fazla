@@ -4,16 +4,10 @@ import ShipList from './ShipList';
 import ShipDetails from './ShipDetails';
 import { RootState } from '../reducers/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
-import { addShip, removeShip } from '../reducers/slices/ownedShipListSlice';
-import { Ship } from '../util/shipdatatypes';
 
 const ShipDetailView: React.FC = () => {
-  const dispatch = useDispatch();
-  const ownedShips = useSelector((state: RootState) => state.ownedShips);
   const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
   const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
-  const config = useSelector((state: RootState) => state.config);
-  const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const appState = useSelector((state: RootState) => state.appState);
   const [isShips, setIsShips] = useState(false);
 
@@ -21,17 +15,7 @@ const ShipDetailView: React.FC = () => {
     setIsShips(shipSearchList.length > 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const isOwned = (id: string) => {
-    return ownedShips.some((ele) => ele.id === id);
-  };
 
-  const addShipToOwned = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, ship: Ship) => {
-    dispatch(addShip({ name: ship.names.code, id: ship.id, class: ship.class }));
-  };
-
-  const removeFromOwned = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
-    dispatch(removeShip(id));
-  };
 
   useEffect(() => {
     // Check if there any ships left.
@@ -68,26 +52,6 @@ const ShipDetailView: React.FC = () => {
           <div className="scroll">
             <ShipDetails />
           </div>
-          <div className={'button-group'}>
-            {!isOwned(shipDetails.id) ? (
-              <button
-                onClick={(e) => addShipToOwned(e, shipDetails)}
-                className={`btn ${config.themeColor}`}
-                type="button"
-                disabled={isOwned(shipDetails.id)}
-              >
-                <b>Add to docks</b>
-              </button>
-            ) : (
-              <button
-                onClick={(e) => removeFromOwned(e, shipDetails.id)}
-                className={`btn ${config.themeColor}`}
-                type="button"
-              >
-                <b>Remove from docks</b>
-              </button>
-            )}
-          </div>
         </>
       );
     }
@@ -96,42 +60,7 @@ const ShipDetailView: React.FC = () => {
     <PageTemplate>
       <section className="page-content">
         <ShipList />
-        <div className="ship-data-container dark">
-          {renderShipDetails()}
-          {/*
-          !isShips ? (
-            <div>
-              <h1>No ship selected or found</h1>
-            </div>
-          ) : (
-            <>
-              <div className="scroll">
-                <ShipDetails />
-                <div className={'button-group'}>
-                  {!isOwned(shipDetails.id) ? (
-                    <button
-                      onClick={(e) => addShipToOwned(e, shipDetails)}
-                      className={`btn ${config.themeColor}`}
-                      type="button"
-                      disabled={isOwned(shipDetails.id)}
-                    >
-                      <b>Add to docks</b>
-                    </button>
-                  ) : (
-                    <button
-                      onClick={(e) => removeFromOwned(e, shipDetails.id)}
-                      className={`btn ${config.themeColor}`}
-                      type="button"
-                    >
-                      <b>Remove from docks</b>
-                    </button>
-                  )}
-                </div>
-              </div>
-            </>
-          )
-                  */}
-        </div>
+        <div className="ship-data-container dark">{renderShipDetails()}</div>
       </section>
     </PageTemplate>
   );

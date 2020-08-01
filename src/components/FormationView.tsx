@@ -21,6 +21,9 @@ const FormationView: React.FC = () => {
           <div className="scroll">
             <div id="formation" className={`tab-content ${selectedTab === 'Formation' ? 'active' : 'hidden'}`}>
               <FormationGrid />
+              <div className="scroll">
+                <FormationPassives />
+              </div>
             </div>
             <div id="summary" className={`tab-content ${selectedTab === 'Summary' ? 'active' : 'hidden'}`}>
               <FormationPassives />

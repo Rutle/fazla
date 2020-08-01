@@ -19,8 +19,8 @@ const FormationModal: React.FC = () => {
   const ownedSearch = useSelector((state: RootState) => state.ownedSearchList);
 
   const addShipToFormation = () => {
-    const n: number = appState[appState.currentToggle].index;
-    switch (appState.currentToggle) {
+    const n: number = appState[appState.cToggle].index;
+    switch (appState.cToggle) {
       case 'all':
         // dispatch(setShip({ index, data: shipList[n] }));
         dispatch(setShip({ index: formationModal.gridIndex, data: getShipById(shipSearchList[n].id, true) }));
@@ -45,11 +45,9 @@ const FormationModal: React.FC = () => {
       <div className="ship-data-container dark">
         <div className="scroll">
           <ShipDetails />
-          <div className={'button-group'}>
-            <button onClick={() => addShipToFormation()} className={`btn ${config.themeColor}`} type="button">
-              <b>Add to formation</b>
-            </button>
-          </div>
+          <button onClick={() => addShipToFormation()} className={`btn ${config.themeColor}`} type="button">
+            <b>Add to formation</b>
+          </button>
         </div>
       </div>
     </ReactModal>

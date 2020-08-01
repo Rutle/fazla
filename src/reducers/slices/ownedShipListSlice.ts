@@ -20,6 +20,7 @@ const ownedShipListSlice = createSlice({
       return initialState;
     },
     addShip(state, action: PayloadAction<ShipSimple>) {
+      console.log(action.payload);
       return [...state, action.payload];
     },
     removeShip(state, action: PayloadAction<string>) {
