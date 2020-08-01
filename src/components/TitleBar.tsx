@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
-import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow, saveShipData } from '../util/appUtilities';
+import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '../util/appUtilities';
 import { RootState } from '../reducers/rootReducer';
 import { useSelector } from 'react-redux';
 

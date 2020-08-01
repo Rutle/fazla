@@ -5,20 +5,13 @@ import { getShipById } from '../util/appUtilities';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import {
-  setCurrentToggle,
-  setSelectedShip,
-  setSearchResults,
-  initShipLists,
-  initListState,
-} from '../reducers/slices/appStateSlice';
+import { setCurrentToggle, setSelectedShip, setSearchResults } from '../reducers/slices/appStateSlice';
 import { setSearchString } from '../reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';
 import { ShipSimple } from '../util/shipdatatypes';
 
 const ShipList: React.FC = () => {
   const dispatch = useDispatch();
-  // const appState = useSelector((state: RootState) => state.appState);
   const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
   const ownedList = useSelector((state: RootState) => state.ownedShips);
   const config = useSelector((state: RootState) => state.config);
@@ -46,6 +39,7 @@ const ShipList: React.FC = () => {
   // INIT:    First time updated.
   //          Set initial list states and select ship as well as modify state to 'RUNNING'.
   // RUNNING:
+  /*
   useEffect(() => {
     if (appState.cState === 'INIT') {
       if (shipSearchList.length !== 0) {
@@ -63,7 +57,7 @@ const ShipList: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shipSearchList]);
-
+  */
   // Set details of the selected ship when changed between 'all ships' and 'owned ships'.
   useEffect(() => {
     if (appState.cState === 'INIT') return;

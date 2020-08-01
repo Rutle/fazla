@@ -1,14 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
-import ShipDetailView from './components/ShipDetailView';
-import Home from './components/Home';
 import './index.css';
 import './App.css';
 import store from './store';
-import FormationView from './components/FormationView';
 import App from './App';
 
 ReactDOM.render(

@@ -394,10 +394,10 @@ body {
   border-top: 1px solid black;
 }
 
-#ship-list-page-content {
-  margin: 51px 5px 0px 5px;
+.page-content { /* 32 + 1 + 37 */
+  margin: 37px 0px 0px 0px;
   height: 100%;
-  max-height: calc(100% - 56px);
+  max-height: calc(100% - 37px);
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -414,6 +414,7 @@ body {
   width: 80%;
   justify-content: center;  
 }
+
 .formation-model-container.dark {
   background-color: var(--root-dark-bg);
   border: 2px solid #9c9c9ca1;
@@ -434,15 +435,17 @@ body {
   display: flex;
   flex-direction: column;
   padding: 15px;
-  margin: 5px 5px 5px 5px;
+  margin: 0px;
   /* border: 1px dotted #353b48;*/
   /* max-height: calc(100% - 15vh);*/
   /* max-height: 85vh;*/
   /* height: 100%;*/
   width: 100%;
+  /*
   -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+  */
 }
 .home-container > div {
   display: flex;
@@ -453,10 +456,13 @@ body {
   max-width: 18%;
 }
 
+.ship-side-container > div.top-container {
+  margin-bottom: 10px;
+}
 /* ###### List top selector group + tabs + popover ##### */
 .top-container {
   margin-top: 0px;
-  margin-bottom: 10px;
+  /*margin-bottom: 10px;*/
   padding: 0px;
   width: 100%;
   display: flex;
@@ -466,13 +472,13 @@ body {
 .top-container.fixed {
   position: fixed;
 }
-
+/* 32 + 1 + 37
 div.page > div.top-container {
   -webkit-box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.315);
   -moz-box-shadow: 0px 2px 2px 1px rgba(0,0,0,0.315);
   box-shadow: 0px 2px 2px 1px rgba(0,0,0,0.315);
 }
-
+*/
 .top-container > div.tab {
   display: flex;
   flex-direction: row;

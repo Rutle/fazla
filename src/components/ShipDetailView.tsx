@@ -19,7 +19,7 @@ const ShipDetailView: React.FC = () => {
 
   useEffect(() => {
     setIsShips(shipSearchList.length > 0);
-    // console.log('Ship detail view: [', appState.cState, ']');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const isOwned = (id: string) => {
     return ownedShips.some((ele) => ele.id === id);
@@ -94,7 +94,7 @@ const ShipDetailView: React.FC = () => {
   };
   return (
     <PageTemplate>
-      <section id="ship-list-page-content">
+      <section className="page-content">
         <ShipList />
         <div className="ship-data-container dark">
           {renderShipDetails()}

@@ -12,7 +12,7 @@ const FormationView: React.FC = () => {
 
   return (
     <PageTemplate>
-      <section id="ship-list-page-content">
+      <section className="page-content">
         <FormationModal />
         <div className={'ship-data-container dark'}>
           <div className="top-container">

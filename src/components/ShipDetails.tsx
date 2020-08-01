@@ -16,6 +16,7 @@ const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page }) => {
 
   useEffect(() => {
     console.log('ship details: [', appState.cState, ']');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const openWikiUrl = () => {

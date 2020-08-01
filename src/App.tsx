@@ -29,6 +29,11 @@ const App: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Catch when the search list of ships is being modified.
+  // INIT:    First time updated.
+  //          Set initial list states and select ship as well as modify state to 'RUNNING'.
+  // RUNNING:
+
   useEffect(() => {
     if (appState.cState === 'INIT') {
       if (shipSearchList.length !== 0) {
@@ -46,6 +51,7 @@ const App: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shipSearchList]);
+
   return (
     <HashRouter>
       <div className="App">
