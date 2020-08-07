@@ -25,6 +25,42 @@ debugger;
             this.setState({files: files});
         });
 */
+/*
+const searchPredicate = (searchParameters: any) => (ele: ShipSimple | Ship) => {
+  return ele.name.toLowerCase().includes(searchParameters.name.toLowerCase());
+};
+*/
+/*
+const hullPredicate = (searchParameters: any) => (ele: ShipSimple | Ship) => {
+  if (searchParameters.hullTypeArr.length === 0) {
+    return true;
+  }
+  return searchParameters.hullType[ele.hullType as string];
+};
+
+const nationalityPredicate = (searchParameters: any) => (ele: ShipSimple | Ship) => {
+  if (searchParameters.nationalityArr.length === 0) {
+    return true;
+  }
+  return searchParameters.nationality[ele.nationality as string];
+};
+
+const rarityPredicate = (searchParameters: any) => (ele: ShipSimple | Ship) => {
+  if (searchParameters.rarityArr.length === 0) {
+    return true;
+  }
+  return searchParameters.rarity[ele.rarity as string];
+};
+*/
+/*
+export const getSearchList = (list: ShipSimple[] | Ship[], searchParameters: any): ShipSimple[] => {
+  return list
+    .filter(searchPredicate(searchParameters))
+    .filter(rarityPredicate(searchParameters))
+    .filter(nationalityPredicate(searchParameters))
+    .filter(hullPredicate(searchParameters));
+};
+*/
 // Renderer to Main
 export const closeWindow = (): void => {
   ipcRenderer.send('close-application');
@@ -42,7 +78,7 @@ export const maximizeWindow = (): void => {
   ipcRenderer.send('maximize-application');
 };
 
-export const openUrl = (str: string): void => {
+const openUrl = (str: string): void => {
   electron.shell.openExternal(str);
 };
 
@@ -64,10 +100,10 @@ export const getShipData = (): { data: ShipSimple[]; isTempData: boolean } => {
     */
     if (!result.isConfigShipData) {
       // console.log('No data in config');
-      return { data: getShipsSimple('', shipData), isTempData: !result.isConfigShipData };
+      // return { data: getShipsSimple('', shipData), isTempData: !result.isConfigShipData };
     }
     // console.log('data in config');
-    return { data: getShipsSimple('', result.shipData), isTempData: !result.isConfigShipData };
+    // return { data: getShipsSimple('', result.shipData), isTempData: !result.isConfigShipData };
   });
 };
 
@@ -78,41 +114,37 @@ export const saveShipData = (data = {}): void => {
   });
 };
 
-export const getShipById = (id: string, useTempData: boolean): Ship => {
-  if (useTempData) return getShipTempById(id);
-  return ipcRenderer.invoke('get-ship-by-id', id).then((result: Ship) => {
+export const saveOwnedShipData = (data = {}): { isOk: boolean; msg: string } => {
+  return ipcRenderer.invoke('save-owned-ships', data).then((result: { isOk: boolean; msg: string }) => {
+    console.log('[appUtils: saveOwnedShipData] :', result.isOk);
     return result;
   });
 };
 
-// Data utilities
-/**
- * Return detailed ship list.
- * @param name Substring to search for.
- */
-const getShipsFull = (name: string): Ship[] => {
-  let t: Ship[] = [];
-  t = Object.assign(
-    Object.keys(shipData)
-      .filter((e) => {
-        if ((shipData as any)[e].names.en.toLowerCase().includes(name.toLowerCase())) return true;
-        return false;
-      })
-      .map((key) => (shipData as any)[key]),
-  );
-  return t;
+export const initData = (): { shipData: Ship[]; config: any; ownedShips: string[]; msg: string } => {
+  return ipcRenderer
+    .invoke('initData')
+    .then((result: { shipData: Ship[]; config: any; ownedShips: string[]; msg: string }) => {
+      if (result.msg === 'success') {
+        // console.log('initData: ', result.shipData.length);
+        return { ...result };
+      }
+    });
 };
+
+// Data utilities
+
 /**
  * Returns lists of ships with simpler details.
  * @param name Substring to search for.
  * @param data Json data to search from.
  */
-const getShipsSimple = (name: string, data = {}): ShipSimple[] => {
+export const getShipsSimpleById = (id: string, data = {}): ShipSimple[] => {
   let t: ShipSimple[] = [];
   t = Object.assign(
     Object.keys(data)
       .filter((e) => {
-        if ((data as any)[e].names.code.toLowerCase().includes(name.toLowerCase())) return true;
+        if ((data as any)[e].id.toLowerCase().includes(id.toLowerCase())) return true;
         return false;
       })
       .map((key) => ({
@@ -126,8 +158,15 @@ const getShipsSimple = (name: string, data = {}): ShipSimple[] => {
   );
   return t;
 };
-/**
- * Return data of a ship by ID.
- * @param id ID of a ship.
- */
-const getShipTempById = (id: string): Ship => (shipData as never)[id];
+
+export const openWikiUrl = (str: string): void => {
+  openUrl(str);
+};
+
+export const urlValidation = (str: string): boolean => {
+  if (str === undefined || str === '') return false;
+  const urlVal = 'https?://(www.)?azurlane.koumakan.jp.*';
+  const flags = 'gi';
+  const re = new RegExp(urlVal, flags);
+  return re.test(str);
+};

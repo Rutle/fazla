@@ -1,21 +1,31 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import PageTemplate from './PageTemplate';
 import ShipList from './ShipList';
 import ShipDetails from './ShipDetails';
 import { RootState } from '../reducers/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
-
-const ShipDetailView: React.FC = () => {
+import DataStore from '../util/dataStore';
+import SideBar from './SideBar';
+import { setCurrentPage } from '../reducers/slices/appStateSlice';
+interface ShipDetailViewProps {
+  shipData: DataStore;
+}
+const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData }) => {
+  const dispatch = useDispatch();
   const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
   const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
+  const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const appState = useSelector((state: RootState) => state.appState);
   const [isShips, setIsShips] = useState(false);
 
   useEffect(() => {
     setIsShips(shipSearchList.length > 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log('[ShipDetailView] [] appState :[', appState.cState, '] cPage: [', appState.cPage, ']');
+    if (appState.cPage !== 'LIST') {
+      dispatch(setCurrentPage({ cPage: 'LIST' }));
+    }
   }, []);
-
 
   useEffect(() => {
     // Check if there any ships left.
@@ -50,7 +60,7 @@ const ShipDetailView: React.FC = () => {
       return (
         <>
           <div className="scroll">
-            <ShipDetails />
+            <ShipDetails ship={shipData.shipsArr[shipDetails.index]} />
           </div>
         </>
       );
@@ -59,7 +69,7 @@ const ShipDetailView: React.FC = () => {
   return (
     <PageTemplate>
       <section className="page-content">
-        <ShipList />
+        <SideBar shipData={shipData} />
         <div className="ship-data-container dark">{renderShipDetails()}</div>
       </section>
     </PageTemplate>

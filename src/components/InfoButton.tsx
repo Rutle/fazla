@@ -10,7 +10,11 @@ interface InfoButtonProps {
 
 const InfoButton: React.FC<InfoButtonProps> = ({ buttonAction, classes, text, width }) => {
   return (
-    <button className={`${classes}`} style={{ width: width, height: '25px' }} onClick={() => buttonAction()}>
+    <button
+      className={`${classes}`}
+      style={{ width: width, height: '22px', padding: 0 }}
+      onClick={() => buttonAction()}
+    >
       <b>{`${text}`}</b>
     </button>
   );

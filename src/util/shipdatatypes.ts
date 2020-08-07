@@ -9,12 +9,8 @@ export interface ShipDataSimple {
 }
 
 export interface ShipSimple {
-  name: string;
   id: string;
-  class: string;
-  rarity?: string;
-  hullType?: string;
-  nationality?: string;
+  index: number;
 }
 
 export interface Ship {

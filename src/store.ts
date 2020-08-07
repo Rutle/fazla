@@ -1,10 +1,11 @@
-import { configureStore, Action } from '@reduxjs/toolkit';
+import { configureStore, Action, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk';
 // import { useDispatch } from 'react-redux';
 import rootReducer, { RootState } from './reducers/rootReducer';
 
 const store = configureStore({
   reducer: rootReducer,
+  middleware: [...getDefaultMiddleware({ immutableCheck: false, serializableCheck: false })],
 });
 
 export type AppDispatch = typeof store.dispatch;

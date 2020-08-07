@@ -7,6 +7,7 @@ const SearchParameterContent: React.FC = () => {
     <div className="popover-content dark">
       <div className="f-grid">
         <div className="f-row wrap">
+          <CategoryToggleButton category={'nationality'} catKey={'all'} value={'All'} />
           {Object.keys(nationCategories).map((key) => {
             return (
               <CategoryToggleButton key={key} category={'nationality'} catKey={key} value={nationCategories[key]} />
@@ -14,11 +15,13 @@ const SearchParameterContent: React.FC = () => {
           })}
         </div>
         <div className="f-row wrap">
+          <CategoryToggleButton category={'hullType'} catKey={'all'} value={'All'} />
           {Object.keys(hullTypesAbb).map((key) => {
             return <CategoryToggleButton key={key} category={'hullType'} catKey={key} value={hullTypesAbb[key]} />;
           })}
         </div>
         <div className="f-row wrap">
+          <CategoryToggleButton category={'rarity'} catKey={'all'} value={'All'} />
           {rarityCategories.map((value) => {
             return <CategoryToggleButton key={value} category={'rarity'} catKey={value} value={value} />;
           })}

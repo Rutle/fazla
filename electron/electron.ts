@@ -1,12 +1,15 @@
 // Modules to control application life and create native browser window
 import { app, BrowserWindow, ipcMain } from 'electron';
 import Store from 'electron-store';
+import * as fs from 'fs';
 import * as path from 'path';
 import * as isDev from 'electron-is-dev';
 import 'electron-reload';
+import { Ship } from '../src/util/shipdatatypes';
 
 let mainWindow: BrowserWindow;
 const electronStore = new Store();
+const fsPromises = fs.promises;
 
 function createWindow() {
   // Create the browser window.
@@ -68,12 +71,6 @@ ipcMain.on('restore-application', () => {
   mainWindow.restore();
 });
 
-/*
-ipcMain.on('get-config', () => {
-  console.log(app.getPath('userData'));
-});
-*/
-
 ipcMain.handle('get-config', async (event, arg) => {
   return app.getPath('userData');
 });
@@ -87,11 +84,48 @@ ipcMain.handle('get-ship-data', async (event) => {
   }
 });
 
+/* change to owned ship data ids */
 ipcMain.handle('save-ship-data', async (event, arg) => {
   console.log('save, ', Object.keys(arg).length);
-  // console.log(app.getPath('userData'));
   electronStore.set({
     ships: arg,
   });
-  // console.log(electronStore.get('ships.100.rarity'));
+});
+
+ipcMain.handle('save-owned-ships', async (event, data) => {
+  console.log('save-owned-ships ', data);
+  try {
+    electronStore.set({
+      ownedShips: data,
+    });
+  } catch (error) {
+    return { isOk: false, msg: error.message };
+  }
+  return { isOk: true, msg: 'Owned ships succesfully saved.' };
+});
+
+ipcMain.handle('initData', async (event, arg) => {
+  let jsonData: { [key: string]: Ship } = {};
+  let dataArr: Ship[] = [];
+  const configData = {};
+  try {
+    if (process.env.NODE_ENV === 'development') {
+      const rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
+      jsonData = JSON.parse(rawData);
+      dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
+      console.log('userData', app.getPath('userData'));
+    } else {
+      const userDir = app.getPath('userData');
+      const appDirCont = await fsPromises.readdir(`${userDir}\\resources`);
+      console.log(appDirCont);
+      const rawData = await fsPromises.readFile(`${userDir}\\resources\\ships.json`, 'utf8');
+      jsonData = JSON.parse(rawData);
+      dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
+    }
+  } catch (error) {
+    console.log('error', error);
+    return { shipData: dataArr, config: configData, msg: error.message };
+  }
+  console.log('dataArr: ', dataArr.length);
+  return { shipData: dataArr, config: configData, msg: 'success' };
 });

@@ -2,20 +2,28 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // import { AppThunk, AppDispatch } from '../../store';
 // import { batch } from 'react-redux';
 
-const initialState: {
-  [name: string]: any;
+export interface BooleanSearchParam {
+  [key: string]: boolean;
+}
+
+export type SearchParams = {
+  [key: string]: any;
+  name: string;
   hullTypeArr: string[];
   nationalityArr: string[];
   rarityArr: string[];
-  hullType: { [key: string]: boolean };
-  nationality: { [key: string]: boolean };
-  rarity: { [key: string]: boolean };
-} = {
+  hullType: BooleanSearchParam;
+  nationality: BooleanSearchParam;
+  rarity: BooleanSearchParam;
+};
+
+const initialState: SearchParams = {
   name: '',
   hullTypeArr: [],
   nationalityArr: [],
   rarityArr: [],
   hullType: {
+    All: true,
     Destroyer: false,
     'Light Cruiser': false,
     'Heavy Cruiser': false,
@@ -30,6 +38,7 @@ const initialState: {
     'Large Cruiser': false,
   },
   nationality: {
+    All: true,
     'Sakura Empire': false,
     'Eagle Union': false,
     'Royal Navy': false,
@@ -47,6 +56,7 @@ const initialState: {
     Hololive: false,
   },
   rarity: {
+    All: true,
     Normal: false,
     Rare: false,
     Elite: false,
@@ -105,15 +115,6 @@ const searchParametersSlice = createSlice({
           break;
       }
       return newObj;
-      /*
-      return {
-        ...state,
-        [cat]: {
-          ...state[cat],
-          [param]: !state[cat][param],
-        },
-      };
-      */
     },
     setSearchString(state, action: PayloadAction<{ str: string }>) {
       return { ...state, name: action.payload.str };
@@ -125,18 +126,5 @@ const searchParametersSlice = createSlice({
 });
 
 export const { resetParameters, toggleParameter, setSearchString } = searchParametersSlice.actions;
-/*
-export const toggleParam = (cat: string, param: string): AppThunk => async (dispatch: AppDispatch) => {
-  batch(() => {
-    switch (cat) {
-      case 'nationality':
-        break;
 
-      default:
-        break;
-    }
-    dispatch(todoSlice.actions.addTodo(newTodo));
-  });
-};
-*/
 export default searchParametersSlice.reducer;

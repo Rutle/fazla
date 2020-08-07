@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { setDetails, resetDetails } from './shipDetailsSlice';
-import { getShipById, getShipData } from '../../util/appUtilities';
-import { batch } from 'react-redux';
 import { AppThunk, AppDispatch } from '../../store';
-import { setList } from './shipSearchListSlice';
+import { setSearchList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
-import { setFullList } from './fullShipListSlice';
-import { ShipSimple } from '../../util/shipdatatypes';
+import DataStore from '../../util/dataStore';
+import { Ship, ShipSimple } from '../../util/shipdatatypes';
+import { batch } from 'react-redux';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 
@@ -20,11 +19,19 @@ interface ListState {
   index: number;
 }
 
+interface CurrentPage {
+  cPage: 'HOME' | 'LIST' | 'FORMATION';
+}
+
 type ListStateObject = {
   [key: string]: any;
+  cToggle: string;
   all: ListState;
   owned: ListState;
-} & CurrentState;
+  ownedIsReady: boolean;
+  allIsReady: boolean;
+} & CurrentState &
+  CurrentPage;
 
 const initialState: ListStateObject = {
   cToggle: 'all',
@@ -38,7 +45,9 @@ const initialState: ListStateObject = {
   },
   cState: 'INIT',
   cMsg: 'Initializing.',
-  useTempData: true,
+  cPage: 'HOME',
+  ownedIsReady: false,
+  allIsReady: false,
 };
 
 const appStateSlice = createSlice({
@@ -70,101 +79,103 @@ const appStateSlice = createSlice({
     resetList() {
       return initialState;
     },
+    setCurrentPage(state, action: PayloadAction<CurrentPage>) {
+      const { cPage } = action.payload;
+      return { ...state, cPage: cPage };
+    },
   },
 });
 
-export const { setListState, resetList, setCurrentToggle, setCurrentState, setListValue } = appStateSlice.actions;
+export const {
+  setListState,
+  resetList,
+  setCurrentToggle,
+  setCurrentState,
+  setListValue,
+  setCurrentPage,
+} = appStateSlice.actions;
 
-// Initialize ship lists.
-export const initShipLists = (): AppThunk => async (dispatch: AppDispatch, getState) => {
+/**
+ * Initialize all and owned lists with data.
+ * @param data Ship json data.
+ */
+export const initShipLists = (/* ownedData: ShipSimple[]*/ data: DataStore): AppThunk => async (
+  dispatch: AppDispatch,
+  getState,
+) => {
+  const ownedShips = getState().ownedShips;
+  let fullSimple: ShipSimple[] = [];
+  let ownedSearch: ShipSimple[] = [];
+  let searchInitId = 'NONE';
+  let searchInitIndex = 0;
+  let ownedInitId = 'NONE';
+  let ownedInitIndex = 0;
   try {
     console.log('[INIT] {1}: Inside slice setting lists.');
-    const { data, isTempData } = await getShipData();
-    const ownedShips = getState().ownedShips.slice();
-    batch(() => {
-      dispatch(setListValue({ key: 'useTempData', value: !isTempData }));
-      dispatch(setFullList(data));
-      dispatch(setList(data));
-      dispatch(setOwnedSearchList(ownedShips));
-    });
+    fullSimple = await DataStore.transformShipList(data.shipsArr);
+    ownedSearch = await DataStore.transformStringList(data.shipsArr, ownedShips);
+    searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
+    searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
+    ownedInitId = ownedSearch.length > 0 ? fullSimple[0].id : 'NONE';
+    ownedInitIndex = ownedSearch.length > 0 ? fullSimple[0].index : NaN;
   } catch (e) {
     console.log('[INIT] {1}: Initializing error: ', e);
     dispatch(setCurrentState({ cState: 'ERROR', cMsg: e.message }));
   }
-};
-
-// Initialize the list states.
-export const initListState = (
-  key: string,
-  index: number,
-  id: string,
-  key2: string,
-  index2: number,
-  id2: string,
-  useTempData: boolean,
-): AppThunk => async (dispatch: AppDispatch) => {
-  try {
-    console.log('[INIT] {2}: Setting list states');
-    batch(() => {
-      dispatch(setDetails(getShipById(id, useTempData)));
-      dispatch(setListState({ key: key, data: { id: id, index: index } }));
-      dispatch(setListState({ key: key2, data: { id: id2, index: index2 } }));
-      dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
-    });
-  } catch (e) {
-    console.log('Setting list states error: ', e);
-  }
+  batch(() => {
+    dispatch(setSearchList(fullSimple));
+    dispatch(setOwnedSearchList(ownedSearch));
+    dispatch(setListState({ key: 'all', data: { id: searchInitId, index: searchInitIndex } }));
+    dispatch(setListState({ key: 'owned', data: { id: ownedInitId, index: ownedInitIndex } }));
+    dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
+  });
+  dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
 };
 
 // Set details of the selected ship
-export const setSelectedShip = (key: string, index: number, id: string, useTempData: boolean): AppThunk => async (
-  dispatch: AppDispatch,
-) => {
+export const setSelectedShip = (key: string, id: string, index: number): AppThunk => async (dispatch: AppDispatch) => {
   try {
-    // console.log('Setting selected ship: index [', index, '], id [', id, '] key', key, ']');
-    batch(() => {
-      dispatch(setDetails(getShipById(id, useTempData)));
-      dispatch(setListState({ key: key, data: { id: id, index: index } }));
-    });
+    dispatch(setDetails({ id: id, index: index }));
   } catch (e) {
     console.log('Set Selected Ship error: ', e);
   }
+  dispatch(setListState({ key: key, data: { id: id, index: index } }));
 };
 
 // Set the search results.
-export const setSearchResults = (
-  allShips: ShipSimple[],
-  ownedShips: ShipSimple[],
-  cToggle: string,
-  useTempData: boolean,
-): AppThunk => async (dispatch: AppDispatch, getState) => {
+export const setSearchResults = (shipData: DataStore): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
-    const searchParameters = { ...getState() };
-    console.log('Setting search results! ', searchParameters);
-    const aLen = allShips.length;
-    const oLen = ownedShips.length;
+    const { searchParameters, ownedShips, appState } = { ...getState() };
+    const allShipsSearch = await shipData.getShipsByParams(searchParameters);
+    let ownedSearch: ShipSimple[] = [];
+    ownedSearch = DataStore.transformStringList(shipData.shipsArr, ownedShips);
+    ownedSearch = await DataStore.reduceByParams(shipData, ownedSearch, searchParameters);
+    const aLen = allShipsSearch.length;
+    const oLen = ownedSearch.length;
     batch(() => {
-      if (cToggle === 'all' && aLen > 0) {
-        dispatch(setDetails(getShipById(allShips[0].id, useTempData)));
-      } else if (cToggle === 'owned' && oLen > 0) {
-        dispatch(setDetails(getShipById(ownedShips[0].id, useTempData)));
+      if (appState.cToggle === 'all' && aLen > 0) {
+        const { id, index } = allShipsSearch[0];
+        dispatch(setDetails({ id, index }));
+      } else if (appState.cToggle === 'owned' && oLen > 0) {
+        const { id, index } = ownedSearch[0];
+        dispatch(setDetails({ id, index }));
       } else {
         dispatch(resetDetails());
       }
       if (aLen !== 0) {
-        dispatch(setListState({ key: 'all', data: { id: allShips[0].id, index: 0 } }));
+        dispatch(setListState({ key: 'all', data: { id: allShipsSearch[0].id, index: allShipsSearch[0].index } }));
       } else {
-        dispatch(setListState({ key: 'all', data: { id: 'NONE', index: 0 } }));
+        dispatch(setListState({ key: 'all', data: { id: 'NONE', index: NaN } }));
       }
       if (oLen !== 0) {
-        dispatch(setListState({ key: 'owned', data: { id: ownedShips[0].id, index: 0 } }));
+        dispatch(setListState({ key: 'owned', data: { id: ownedSearch[0].id, index: ownedSearch[0].index } }));
       } else {
-        dispatch(setListState({ key: 'owned', data: { id: 'NONE', index: 0 } }));
+        dispatch(setListState({ key: 'owned', data: { id: 'NONE', index: NaN } }));
       }
       // Set empty state in case search is empty. Check for it in ShipList/ShipDetailView/ShipDetails
       // SetList / setOwnedSearchList -> empty list, ListState has to have empty values.
-      dispatch(setList(allShips));
-      dispatch(setOwnedSearchList(ownedShips));
+      dispatch(setSearchList(allShipsSearch));
+      dispatch(setOwnedSearchList(ownedSearch));
     });
   } catch (e) {
     console.log('setSearchResults error: ', e);
@@ -189,27 +200,51 @@ export const updateShipData = (): AppThunk => async (dispatch: AppDispatch) => {
           console.log('fetch error: ', error);
         },
       );
-    // dispatch() -> set list
-    // console.log('Setting selected ship: index [', index, '], id [', id, '] key', key, ']');
   } catch (e) {
     console.log('Set Selected Ship error: ', e);
   }
 };
 
 // Set details of the selected ship
-export const updateOwnedSearchList = (ownedShips: ShipSimple[]): AppThunk => async (dispatch: AppDispatch) => {
+export const updateOwnedSearchList = (data: DataStore): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
+    const { ownedShips, searchParameters } = getState();
     const oLen = ownedShips.length;
+    let ownedSearch: ShipSimple[] = [];
+    ownedSearch = DataStore.transformStringList(data.shipsArr, ownedShips);
+    ownedSearch = await DataStore.reduceByParams(data, ownedSearch, searchParameters);
+    console.log(ownedSearch);
     batch(() => {
-      dispatch(setOwnedSearchList(ownedShips));
+      dispatch(setOwnedSearchList(ownedSearch));
       if (oLen !== 0) {
-        dispatch(setListState({ key: 'owned', data: { id: ownedShips[0].id, index: 0 } }));
+        dispatch(setListState({ key: 'owned', data: { id: ownedSearch[0].id, index: ownedSearch[0].index } }));
       } else {
-        dispatch(setListState({ key: 'owned', data: { id: 'NONE', index: 0 } }));
+        dispatch(setListState({ key: 'owned', data: { id: 'NONE', index: NaN } }));
       }
     });
   } catch (e) {
-    console.log('Set Selected Ship error: ', e);
+    console.log('updateOwnedSearchList: ', e);
+  }
+};
+
+// Set details of the selected ship
+export const updateSearchList = (data: DataStore): AppThunk => async (dispatch: AppDispatch, getState) => {
+  try {
+    const { ownedShips, searchParameters } = getState();
+    const oLen = ownedShips.length;
+    let ownedSearch: ShipSimple[] = [];
+    ownedSearch = DataStore.transformStringList(data.shipsArr, ownedShips);
+    ownedSearch = await DataStore.reduceByParams(data, ownedSearch, searchParameters);
+    batch(() => {
+      dispatch(setOwnedSearchList(ownedSearch));
+      if (oLen !== 0) {
+        dispatch(setListState({ key: 'owned', data: { id: ownedSearch[0].id, index: ownedSearch[0].index } }));
+      } else {
+        dispatch(setListState({ key: 'owned', data: { id: 'NONE', index: NaN } }));
+      }
+    });
+  } catch (e) {
+    console.log('updateOwnedSearchList: ', e);
   }
 };
 

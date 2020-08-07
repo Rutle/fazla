@@ -21,6 +21,9 @@
       "node_modules/**/*",
       "electron/electron.js"
     ],
+    "extraResources": [
+      "src/data/ships.json"
+    ],
     "directories": {
       "buildResources": "resources",
       "output": "release"

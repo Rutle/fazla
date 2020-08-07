@@ -1,16 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ShipSimple } from '../../util/shipdatatypes';
 
-const initialState: ShipSimple[] = [
-  {
-    id: '107',
-    name: 'HMS Dido',
-    class: 'Dido',
-    rarity: 'Super Rare',
-    nationality: 'Royal Navy',
-    hullType: 'Light Cruiser',
-  },
-];
+const initialState: string[] = [];
 
 const ownedShipListSlice = createSlice({
   name: 'ownedShipListSlice',
@@ -19,15 +10,14 @@ const ownedShipListSlice = createSlice({
     resetList() {
       return initialState;
     },
-    addShip(state, action: PayloadAction<ShipSimple>) {
-      console.log(action.payload);
+    addShip(state, action: PayloadAction<string>) {
+      console.log('addShip', [...state, action.payload]);
       return [...state, action.payload];
     },
     removeShip(state, action: PayloadAction<string>) {
-      return state.filter((item, index) => {
-        if (item.id === action.payload) return false;
-        return true;
-      });
+      const id = action.payload;
+      const newState = state.filter((cId) => cId !== id);
+      return newState;
     },
   },
 });

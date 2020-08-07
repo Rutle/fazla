@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '../util/appUtilities';
-import { RootState } from '../reducers/rootReducer';
-import { useSelector } from 'react-redux';
 
 const TitleBar: React.FC = () => {
-  const appState = useSelector((state: RootState) => state.appState);
   const [isMax, setIsMax] = useState(false);
   return (
     <header id="titlebar">
@@ -14,16 +11,12 @@ const TitleBar: React.FC = () => {
         <div id="window-title">
           <span>Azur Lane</span>
         </div>
-        <div id="window-title-state">
-          <span>{appState.cMsg}</span>
-        </div>
         <div id="window-controls">
           <div
             className="button"
             id="min-button"
             onClick={() => {
               minimizeWindow();
-              // saveShipData();
             }}
           >
             <FontAwesomeIcon icon={faWindowMinimize} size="xs" />

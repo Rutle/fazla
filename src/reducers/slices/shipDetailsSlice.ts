@@ -1,20 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Ship } from '../../util/shipdatatypes';
 
-const initialState: Ship = {
-  wikiUrl: '',
+const initialState: { id: string; index: number } = {
   id: '',
-  names: { en: '', code: '', cn: '', jp: '', kr: '' },
-  skills: [],
-  class: '',
+  index: 0,
 };
 
 const shipDetailsSlice = createSlice({
   name: 'shipDetailsSlice',
   initialState,
   reducers: {
-    setDetails(state, action: PayloadAction<Ship>) {
-      return action.payload;
+    setDetails(state, action: PayloadAction<{ id: string; index: number }>) {
+      return { ...state, id: action.payload.id, index: action.payload.index };
     },
     resetDetails() {
       return initialState;

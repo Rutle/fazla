@@ -1,18 +1,17 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import { Skill } from '../util/shipdatatypes';
-import { useSelector } from 'react-redux';
-import { RootState } from '../reducers/rootReducer';
+import { Skill, Ship } from '../util/shipdatatypes';
 
 interface PassiveProps {
   orient?: string;
   page?: string;
+  ship: Ship;
 }
 
-const PassivesList: React.FC<PassiveProps> = ({ orient = 'vertical', page }: PassiveProps) => {
-  const shipDetails = useSelector((state: RootState) => state.shipDetails);
+const PassivesList: React.FC<PassiveProps> = ({ orient = 'vertical', page, ship }) => {
   return (
     <div id="passives" className={`container ${orient}`}>
-      {shipDetails.skills?.map((skill: Skill) => {
+      {ship.skills?.map((skill: Skill) => {
         return (
           <div key={skill.names.en} className={skill.color}>
             <div>{skill.names.en}</div>
