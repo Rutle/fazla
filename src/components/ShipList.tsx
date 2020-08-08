@@ -27,7 +27,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName 
   const [inputFocus, setInputFocus] = useState(false);
 
   useEffect(() => {
-    console.log('[ShipList] [', listName, ']');
+    console.log('[ShipList] [', shipSearchList.length, ']');
   }, []);
 
   /*
@@ -78,7 +78,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName 
   */
   return (
     <div className={`rList ${listName !== appState.cToggle ? 'hidden' : ''}`}>
-      {shipSearchList.map((ship, index) => {
+      {shipSearchList.map((ship) => {
         return (
           <button
             key={ship.id}
@@ -86,7 +86,10 @@ const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName 
               ship.id === appState[appState.cToggle as string].id ? 'selected' : ''
             }`}
             type="button"
-            onClick={() => dispatch(setSelectedShip(appState.cToggle, ship.id, index))}
+            onClick={() => {
+              dispatch(setSelectedShip(appState.cToggle, ship.id, ship.index));
+              console.log('ship id ', ship.id, ' index: ', ship.index);
+            }}
           >
             {`${shipData.shipsArr[ship.index].names.en}`}
           </button>

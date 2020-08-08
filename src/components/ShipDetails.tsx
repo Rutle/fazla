@@ -14,15 +14,6 @@ interface ShipDetails {
   ship: Ship;
 }
 
-interface ShipInfo {
-  name: string;
-  id: string;
-  class: string;
-  hullType: string;
-  nationality: string;
-}
-
-// eslint-disable-next-line react/prop-types
 const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship }) => {
   const dispatch = useDispatch();
   const ownedShips = useSelector((state: RootState) => state.ownedShips);

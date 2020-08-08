@@ -110,10 +110,10 @@ electron_1.ipcMain.handle('get-config', function (event, arg) { return __awaiter
         return [2 /*return*/, electron_1.app.getPath('userData')];
     });
 }); });
-electron_1.ipcMain.handle('get-ship-data', function (event) { return __awaiter(void 0, void 0, void 0, function () {
+electron_1.ipcMain.handle('get-owned-ship-data', function (event) { return __awaiter(void 0, void 0, void 0, function () {
     var ships;
     return __generator(this, function (_a) {
-        ships = electronStore.get('ships');
+        ships = electronStore.get('ownedShips');
         if (ships) {
             return [2 /*return*/, { shipData: ships, isConfigShipData: true }];
         }
@@ -125,17 +125,37 @@ electron_1.ipcMain.handle('get-ship-data', function (event) { return __awaiter(v
 }); });
 /* change to owned ship data ids */
 electron_1.ipcMain.handle('save-ship-data', function (event, arg) { return __awaiter(void 0, void 0, void 0, function () {
+    var rawData, userDir, error_1;
     return __generator(this, function (_a) {
-        console.log('save, ', Object.keys(arg).length);
-        electronStore.set({
-            ships: arg
-        });
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 5, , 6]);
+                rawData = JSON.stringify(arg);
+                if (!(process.env.NODE_ENV === 'development')) return [3 /*break*/, 2];
+                console.log('DEVELOPMENT');
+                return [4 /*yield*/, fsPromises.writeFile(path.join(__dirname, '../src/data/ships.json'), rawData, 'utf8')];
+            case 1:
+                _a.sent();
+                return [3 /*break*/, 4];
+            case 2:
+                userDir = electron_1.app.getPath('userData');
+                return [4 /*yield*/, fsPromises.writeFile(userDir + "\\resources\\ships.json", rawData, 'utf8')];
+            case 3:
+                _a.sent();
+                _a.label = 4;
+            case 4: return [3 /*break*/, 6];
+            case 5:
+                error_1 = _a.sent();
+                console.log('Failure save');
+                return [2 /*return*/, { isOk: false, msg: error_1.message }];
+            case 6:
+                console.log('Successful save');
+                return [2 /*return*/, { isOk: true, msg: 'Ship data saved succesfully.' }];
+        }
     });
 }); });
 electron_1.ipcMain.handle('save-owned-ships', function (event, data) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        console.log('save-owned-ships ', data);
         try {
             electronStore.set({
                 ownedShips: data
@@ -148,44 +168,48 @@ electron_1.ipcMain.handle('save-owned-ships', function (event, data) { return __
     });
 }); });
 electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(void 0, void 0, void 0, function () {
-    var jsonData, dataArr, configData, rawData, userDir, appDirCont, rawData, error_1;
+    var jsonData, dataArr, oShips, rawData, userDir, appDirCont, rawData, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 jsonData = {};
                 dataArr = [];
-                configData = {};
+                oShips = [];
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 7, , 8]);
-                if (!(process.env.NODE_ENV === 'development')) return [3 /*break*/, 3];
+                _a.trys.push([1, 8, , 9]);
+                if (!(process.env.NODE_ENV === 'development')) return [3 /*break*/, 4];
+                console.log('DEVELOPMENT');
                 return [4 /*yield*/, fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8')];
             case 2:
                 rawData = _a.sent();
-                jsonData = JSON.parse(rawData);
-                dataArr = __spreadArrays(Object.keys(jsonData).map(function (key) { return jsonData[key]; }));
-                console.log('userData', electron_1.app.getPath('userData'));
-                return [3 /*break*/, 6];
+                return [4 /*yield*/, JSON.parse(rawData)];
             case 3:
+                jsonData = _a.sent();
+                dataArr = __spreadArrays(Object.keys(jsonData).map(function (key) { return jsonData[key]; }));
+                oShips = electronStore.get('ownedShips');
+                return [3 /*break*/, 7];
+            case 4:
                 userDir = electron_1.app.getPath('userData');
                 return [4 /*yield*/, fsPromises.readdir(userDir + "\\resources")];
-            case 4:
+            case 5:
                 appDirCont = _a.sent();
                 console.log(appDirCont);
                 return [4 /*yield*/, fsPromises.readFile(userDir + "\\resources\\ships.json", 'utf8')];
-            case 5:
+            case 6:
                 rawData = _a.sent();
                 jsonData = JSON.parse(rawData);
                 dataArr = __spreadArrays(Object.keys(jsonData).map(function (key) { return jsonData[key]; }));
-                _a.label = 6;
-            case 6: return [3 /*break*/, 8];
-            case 7:
-                error_1 = _a.sent();
-                console.log('error', error_1);
-                return [2 /*return*/, { shipData: dataArr, config: configData, msg: error_1.message }];
+                oShips = electronStore.get('ownedShips');
+                _a.label = 7;
+            case 7: return [3 /*break*/, 9];
             case 8:
+                error_2 = _a.sent();
+                console.log('error', error_2);
+                return [2 /*return*/, { shipData: dataArr, config: {}, ownedShips: oShips, msg: error_2.message }];
+            case 9:
                 console.log('dataArr: ', dataArr.length);
-                return [2 /*return*/, { shipData: dataArr, config: configData, msg: 'success' }];
+                return [2 /*return*/, { shipData: dataArr, config: {}, ownedShips: oShips, msg: 'success' }];
         }
     });
 }); });

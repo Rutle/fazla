@@ -30,7 +30,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
           const initDataObj = await initData();
           await shipData.setArray(initDataObj.shipData);
           setShipCount(shipData.shipsArr.length);
-          dispatch(initShipLists(shipData));
+          dispatch(initShipLists(initDataObj.ownedShips, shipData));
         })();
       }
     } catch (e) {

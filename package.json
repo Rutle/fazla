@@ -60,7 +60,9 @@
     "react-eject": "react-scripts eject",
     "preelectron-build": "npm run react-build",
     "electron-pack": "electron-builder build --win",
-    "build": "npm run react-build && npm run electron-build"
+    "build": "npm run react-build && npm run electron-build",
+    "electron-start": "electron electron/electron.js",
+    "ele-dev-test": "SET NODE_ENV=development&& npm run electron-start"
   },
   "eslintConfig": {
     "extends": "react-app"

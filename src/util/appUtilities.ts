@@ -107,21 +107,21 @@ export const getShipData = (): { data: ShipSimple[]; isTempData: boolean } => {
   });
 };
 
-export const saveShipData = (data = {}): void => {
-  return ipcRenderer.invoke('save-ship-data', data).then((result: boolean) => {
-    console.log('[appUtils: saveShipData] Ship data length: ', Object.keys(result).length);
-    return;
+export const saveShipData = async (data = {}): Promise<{ isOk: boolean; msg: string }> => {
+  return await ipcRenderer.invoke('save-ship-data', data).then((result: { isOk: boolean; msg: string }) => {
+    console.log('[appUtils: saveShipData] Ship data save: ', result.isOk);
+    return result;
   });
 };
 
-export const saveOwnedShipData = (data = {}): { isOk: boolean; msg: string } => {
-  return ipcRenderer.invoke('save-owned-ships', data).then((result: { isOk: boolean; msg: string }) => {
+export const saveOwnedShipData = async (data: string[] = []): Promise<{ isOk: boolean; msg: string }> => {
+  return await ipcRenderer.invoke('save-owned-ships', data).then((result: { isOk: boolean; msg: string }) => {
     console.log('[appUtils: saveOwnedShipData] :', result.isOk);
     return result;
   });
 };
 
-export const initData = (): { shipData: Ship[]; config: any; ownedShips: string[]; msg: string } => {
+export const initData = async (): Promise<{ shipData: Ship[]; config: any; ownedShips: string[]; msg: string }> => {
   return ipcRenderer
     .invoke('initData')
     .then((result: { shipData: Ship[]; config: any; ownedShips: string[]; msg: string }) => {

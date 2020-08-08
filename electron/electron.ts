@@ -75,8 +75,8 @@ ipcMain.handle('get-config', async (event, arg) => {
   return app.getPath('userData');
 });
 
-ipcMain.handle('get-ship-data', async (event) => {
-  const ships = electronStore.get('ships');
+ipcMain.handle('get-owned-ship-data', async (event) => {
+  const ships = electronStore.get('ownedShips');
   if (ships) {
     return { shipData: ships, isConfigShipData: true };
   } else {
@@ -86,14 +86,24 @@ ipcMain.handle('get-ship-data', async (event) => {
 
 /* change to owned ship data ids */
 ipcMain.handle('save-ship-data', async (event, arg) => {
-  console.log('save, ', Object.keys(arg).length);
-  electronStore.set({
-    ships: arg,
-  });
+  try {
+    const rawData = JSON.stringify(arg);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('DEVELOPMENT');
+      await fsPromises.writeFile(path.join(__dirname, '../src/data/ships.json'), rawData, 'utf8');
+    } else {
+      const userDir = app.getPath('userData');
+      await fsPromises.writeFile(`${userDir}\\resources\\ships.json`, rawData, 'utf8');
+    }
+  } catch (error) {
+    console.log('Failure save');
+    return { isOk: false, msg: error.message };
+  }
+  console.log('Successful save');
+  return { isOk: true, msg: 'Ship data saved succesfully.' };
 });
 
 ipcMain.handle('save-owned-ships', async (event, data) => {
-  console.log('save-owned-ships ', data);
   try {
     electronStore.set({
       ownedShips: data,
@@ -107,13 +117,14 @@ ipcMain.handle('save-owned-ships', async (event, data) => {
 ipcMain.handle('initData', async (event, arg) => {
   let jsonData: { [key: string]: Ship } = {};
   let dataArr: Ship[] = [];
-  const configData = {};
+  let oShips: string[] = [];
   try {
     if (process.env.NODE_ENV === 'development') {
+      console.log('DEVELOPMENT');
       const rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
-      jsonData = JSON.parse(rawData);
+      jsonData = await JSON.parse(rawData);
       dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
-      console.log('userData', app.getPath('userData'));
+      oShips = electronStore.get('ownedShips') as string[];
     } else {
       const userDir = app.getPath('userData');
       const appDirCont = await fsPromises.readdir(`${userDir}\\resources`);
@@ -121,11 +132,12 @@ ipcMain.handle('initData', async (event, arg) => {
       const rawData = await fsPromises.readFile(`${userDir}\\resources\\ships.json`, 'utf8');
       jsonData = JSON.parse(rawData);
       dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
+      oShips = electronStore.get('ownedShips') as string[];
     }
   } catch (error) {
     console.log('error', error);
-    return { shipData: dataArr, config: configData, msg: error.message };
+    return { shipData: dataArr, config: {}, ownedShips: oShips, msg: error.message };
   }
   console.log('dataArr: ', dataArr.length);
-  return { shipData: dataArr, config: configData, msg: 'success' };
+  return { shipData: dataArr, config: {}, ownedShips: oShips, msg: 'success' };
 });

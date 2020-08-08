@@ -6,12 +6,18 @@ import { setOwnedSearchList } from './ownedSearchListSlice';
 import DataStore from '../../util/dataStore';
 import { Ship, ShipSimple } from '../../util/shipdatatypes';
 import { batch } from 'react-redux';
+import { saveShipData } from '../../util/appUtilities';
+import { setOwnedList } from './ownedShipListSlice';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 
 interface CurrentState {
-  cState: 'INIT' | 'RUNNING' | 'ERROR' | 'UPDATING';
-  cMsg: 'Initializing.' | 'Running.' | 'Please wait. Downloading and updating in progress.';
+  cState: 'INIT' | 'RUNNING' | 'ERROR' | 'UPDATING' | 'SAVING';
+  cMsg:
+    | 'Initializing.'
+    | 'Running.'
+    | 'Please wait. Downloading and updating in progress.'
+    | 'Please wait. Updating saved data.';
 }
 
 interface ListState {
@@ -97,13 +103,12 @@ export const {
 
 /**
  * Initialize all and owned lists with data.
- * @param data Ship json data.
+ * @param {string[]} ownedShips Array of strings containing ship IDs.
+ * @param {DataStore} data Data structure containg full ship data.
  */
-export const initShipLists = (/* ownedData: ShipSimple[]*/ data: DataStore): AppThunk => async (
-  dispatch: AppDispatch,
-  getState,
-) => {
-  const ownedShips = getState().ownedShips;
+export const initShipLists = (ownedShips: string[], data: DataStore): AppThunk => async (dispatch: AppDispatch) => {
+  // const ownedShips = getState().ownedShips;
+
   let fullSimple: ShipSimple[] = [];
   let ownedSearch: ShipSimple[] = [];
   let searchInitId = 'NONE';
@@ -125,6 +130,7 @@ export const initShipLists = (/* ownedData: ShipSimple[]*/ data: DataStore): App
   batch(() => {
     dispatch(setSearchList(fullSimple));
     dispatch(setOwnedSearchList(ownedSearch));
+    dispatch(setOwnedList(ownedShips));
     dispatch(setListState({ key: 'all', data: { id: searchInitId, index: searchInitIndex } }));
     dispatch(setListState({ key: 'owned', data: { id: ownedInitId, index: ownedInitIndex } }));
     dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
@@ -132,7 +138,12 @@ export const initShipLists = (/* ownedData: ShipSimple[]*/ data: DataStore): App
   dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
 };
 
-// Set details of the selected ship
+/**
+ * Set details of the seleced ship
+ * @param key Key 'all' or 'owned.
+ * @param id ID of the shp.
+ * @param index Index of the ship in the main DataStore array.
+ */
 export const setSelectedShip = (key: string, id: string, index: number): AppThunk => async (dispatch: AppDispatch) => {
   try {
     dispatch(setDetails({ id: id, index: index }));
@@ -142,7 +153,10 @@ export const setSelectedShip = (key: string, id: string, index: number): AppThun
   dispatch(setListState({ key: key, data: { id: id, index: index } }));
 };
 
-// Set the search results.
+/**
+ * Set the search results.
+ * @param {DataStore} shipData Data structure containg full ship data.
+ */
 export const setSearchResults = (shipData: DataStore): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const { searchParameters, ownedShips, appState } = { ...getState() };
@@ -172,8 +186,6 @@ export const setSearchResults = (shipData: DataStore): AppThunk => async (dispat
       } else {
         dispatch(setListState({ key: 'owned', data: { id: 'NONE', index: NaN } }));
       }
-      // Set empty state in case search is empty. Check for it in ShipList/ShipDetailView/ShipDetails
-      // SetList / setOwnedSearchList -> empty list, ListState has to have empty values.
       dispatch(setSearchList(allShipsSearch));
       dispatch(setOwnedSearchList(ownedSearch));
     });
@@ -182,22 +194,31 @@ export const setSearchResults = (shipData: DataStore): AppThunk => async (dispat
   }
 };
 
-// Set details of the selected ship
+/**
+ * Update the ship data by downloading raw data from github.
+ */
 export const updateShipData = (): AppThunk => async (dispatch: AppDispatch) => {
   try {
     dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait. Downloading and updating in progress.' }));
     fetch(SHIPAPIURL)
       .then((res) => res.json())
       .then(
-        (result) => {
+        async (result) => {
           console.log('Fetched: ', Object.keys(result).length);
-          dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
+          try {
+            const { isOk, msg } = await saveShipData(result);
+            console.log(isOk, 'after saveShipData', isOk);
+          } catch (error) {
+            console.log(error);
+          }
+          // return { result, isOk, msg };
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
-        (error) => {
+        async (error) => {
           console.log('fetch error: ', error);
+          return error;
         },
       );
   } catch (e) {
@@ -205,7 +226,10 @@ export const updateShipData = (): AppThunk => async (dispatch: AppDispatch) => {
   }
 };
 
-// Set details of the selected ship
+/**
+ * Updates owned ships search list.
+ * @param {DataStore} data Data structure containg full ship data.
+ */
 export const updateOwnedSearchList = (data: DataStore): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const { ownedShips, searchParameters } = getState();
@@ -226,8 +250,10 @@ export const updateOwnedSearchList = (data: DataStore): AppThunk => async (dispa
     console.log('updateOwnedSearchList: ', e);
   }
 };
-
-// Set details of the selected ship
+/**
+ * Updates all ships search list.
+ * @param {DataStore} data Data structure containg full ship data.
+ */
 export const updateSearchList = (data: DataStore): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const { ownedShips, searchParameters } = getState();

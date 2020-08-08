@@ -63,6 +63,13 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
   }, [ownedSearchList]);
 
   useEffect(() => {
+    if (appState.cState !== 'INIT' && appState.cToggle === 'all' && appState.cPage === 'LIST') {
+      console.log('shipSearchList muuttu: ', shipSearchList[0]);
+      // dispatch(updateSearchList());
+    }
+  }, [shipSearchList]);
+
+  useEffect(() => {
     if (appState.cState !== 'INIT' && appState.cPage === 'LIST') {
       console.log('owned list muuttu - ollaan LIST sivulla -> lisattiin/poistettiin. NOT INIT');
       dispatch(updateOwnedSearchList(shipData));
