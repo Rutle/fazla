@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Ship } from '../../util/shipdatatypes';
 
 interface Formation {
-  [key: string]: Ship;
+  [key: number]: string;
 }
 
 const initialState: Formation = {};
@@ -11,22 +10,21 @@ const formationGridSlice = createSlice({
   name: 'formationGridSlice',
   initialState,
   reducers: {
-    setShip(state, action: PayloadAction<{ index: number; data: Ship }>) {
-      console.log(action.payload.data);
+    addShipToFormation(state, action: PayloadAction<{ index: number; id: string }>) {
       return {
         ...state,
-        [action.payload.index]: action.payload.data,
+        [action.payload.index]: action.payload.id,
       };
     },
     setFormation(state, action: PayloadAction<Formation>) {
       return initialState;
     },
-    resetList() {
+    resetFormation() {
       return initialState;
     },
   },
 });
 
-export const { setShip } = formationGridSlice.actions;
+export const { addShipToFormation, setFormation, resetFormation } = formationGridSlice.actions;
 
 export default formationGridSlice.reducer;

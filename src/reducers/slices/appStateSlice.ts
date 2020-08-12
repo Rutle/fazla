@@ -4,7 +4,7 @@ import { AppThunk, AppDispatch } from '../../store';
 import { setSearchList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import DataStore from '../../util/dataStore';
-import { Ship, ShipSimple } from '../../util/shipdatatypes';
+import { ShipSimple } from '../../util/shipdatatypes';
 import { batch } from 'react-redux';
 import { saveShipData } from '../../util/appUtilities';
 import { setOwnedList } from './ownedShipListSlice';
@@ -29,6 +29,11 @@ interface CurrentPage {
   cPage: 'HOME' | 'LIST' | 'FORMATION';
 }
 
+export interface AppConfig {
+  jsonURL: string;
+  themeColor: string;
+}
+
 type ListStateObject = {
   [key: string]: any;
   cToggle: string;
@@ -37,7 +42,8 @@ type ListStateObject = {
   ownedIsReady: boolean;
   allIsReady: boolean;
 } & CurrentState &
-  CurrentPage;
+  CurrentPage &
+  AppConfig;
 
 const initialState: ListStateObject = {
   cToggle: 'all',
@@ -54,6 +60,8 @@ const initialState: ListStateObject = {
   cPage: 'HOME',
   ownedIsReady: false,
   allIsReady: false,
+  jsonURL: '',
+  themeColor: '',
 };
 
 const appStateSlice = createSlice({
@@ -70,6 +78,12 @@ const appStateSlice = createSlice({
       return {
         ...state,
         [action.payload.key]: action.payload.value,
+      };
+    },
+    setAppConfigValue(state, action: PayloadAction<AppConfig>) {
+      return {
+        ...state,
+        ...action.payload,
       };
     },
     setCurrentToggle(state, action: PayloadAction<string>) {
@@ -99,6 +113,7 @@ export const {
   setCurrentState,
   setListValue,
   setCurrentPage,
+  setAppConfigValue,
 } = appStateSlice.actions;
 
 /**
@@ -106,9 +121,7 @@ export const {
  * @param {string[]} ownedShips Array of strings containing ship IDs.
  * @param {DataStore} data Data structure containg full ship data.
  */
-export const initShipLists = (ownedShips: string[], data: DataStore): AppThunk => async (dispatch: AppDispatch) => {
-  // const ownedShips = getState().ownedShips;
-
+export const initShipLists = (ownedShips: string[], data: DataStore, config: AppConfig): AppThunk => async (dispatch: AppDispatch) => {
   let fullSimple: ShipSimple[] = [];
   let ownedSearch: ShipSimple[] = [];
   let searchInitId = 'NONE';
@@ -118,7 +131,9 @@ export const initShipLists = (ownedShips: string[], data: DataStore): AppThunk =
   try {
     console.log('[INIT] {1}: Inside slice setting lists.');
     fullSimple = await DataStore.transformShipList(data.shipsArr);
-    ownedSearch = await DataStore.transformStringList(data.shipsArr, ownedShips);
+    if (ownedSearch !== undefined) {
+      ownedSearch = await DataStore.transformStringList(data.shipsArr, ownedShips);
+    }
     searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
     searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
     ownedInitId = ownedSearch.length > 0 ? fullSimple[0].id : 'NONE';
@@ -135,14 +150,15 @@ export const initShipLists = (ownedShips: string[], data: DataStore): AppThunk =
     dispatch(setListState({ key: 'owned', data: { id: ownedInitId, index: ownedInitIndex } }));
     dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
   });
+  dispatch(setAppConfigValue(config));
   dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
 };
 
 /**
  * Set details of the seleced ship
- * @param key Key 'all' or 'owned.
- * @param id ID of the shp.
- * @param index Index of the ship in the main DataStore array.
+ * @param {string} key Key 'all' or 'owned.
+ * @param {string} id ID of the ship.
+ * @param {number} index Index of the ship in the main DataStore array.
  */
 export const setSelectedShip = (key: string, id: string, index: number): AppThunk => async (dispatch: AppDispatch) => {
   try {

@@ -1,14 +1,6 @@
 import { Ship, ShipSimple } from './shipdatatypes';
 import { SearchParams } from '../reducers/slices/searchParametersSlice';
 
-export interface ShipJson {
-  [key: string]: Ship;
-}
-
-export interface SimpleShipJson {
-  [key: string]: ShipSimple;
-}
-
 export interface RarityParam {
   [key: string]: boolean;
 }
@@ -35,6 +27,12 @@ export default class DataStore {
   constructor(shipData: Ship[]) {
     this.shipsArr = [...shipData];
     this.count = shipData.length;
+    this.init = 'INIT';
+  }
+
+  getShipById(id: string): Ship | undefined {
+    if (id === '') return undefined;
+    return this.shipsArr.find((ship) => ship.id === id);
   }
 
   async setArray(data: Ship[]): Promise<Ship[]> {
@@ -80,41 +78,6 @@ export default class DataStore {
     isNameMatch = ship.names.en.toLowerCase().includes(searchPs.name.toLowerCase());
     return isNameMatch && isNatMatch && isHullMatch && isRarityMatch;
   }
-  /*
-  async _getShipsByRarity(shipData: Ship[], rarity: RarityParam | undefined): Promise<Ship[]> {
-    if (rarity === undefined) return await Promise.resolve(shipData);
-    let rarityShips: Ship[] = [];
-    try {
-      // return searchParameters.rarity[ele.rarity as string];
-      rarityShips = shipData.filter((ele) => rarity[ele.rarity as string]);
-    } catch (error) {
-      return await Promise.reject(new Error(error.message));
-    }
-    return await Promise.resolve(rarityShips);
-  }
-
-  async _getShipsByNationality(shipData: Ship[], nationality: NationalityParam | undefined): Promise<Ship[]> {
-    if (nationality === undefined) return await Promise.resolve(shipData);
-    let nationalityShips: Ship[] = [];
-    try {
-      nationalityShips = shipData.filter((ele) => nationality[ele.nationality as string]);
-    } catch (error) {
-      return await Promise.reject(new Error(error.message));
-    }
-    return await Promise.resolve(nationalityShips);
-  }
-
-  async _getShipsByHullType(shipData: Ship[], hullType: HullTypeParam | undefined): Promise<Ship[]> {
-    if (hullType === undefined) return await Promise.resolve(shipData);
-    let hullTypeShips: Ship[] = [];
-    try {
-      hullTypeShips = shipData.filter((ele) => hullType[ele.hullType as string]);
-    } catch (error) {
-      return await Promise.reject(new Error(error.message));
-    }
-    return await Promise.resolve(hullTypeShips);
-  }
-  */
 
   static transformShipList(data: Ship[]): ShipSimple[] {
     let t: ShipSimple[] = [];

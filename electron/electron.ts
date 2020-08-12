@@ -11,6 +11,13 @@ let mainWindow: BrowserWindow;
 const electronStore = new Store();
 const fsPromises = fs.promises;
 
+const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
+const THEMECOLOR = 'dark';
+interface AppConfig {
+  jsonURL: string;
+  themeColor: string;
+}
+
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -29,7 +36,6 @@ function createWindow() {
   mainWindow.removeMenu();
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
-  console.log(`${__dirname}`);
 }
 
 // This method will be called when Electron has finished
@@ -71,10 +77,9 @@ ipcMain.on('restore-application', () => {
   mainWindow.restore();
 });
 
-ipcMain.handle('get-config', async (event, arg) => {
-  return app.getPath('userData');
-});
-
+/**
+ * Get owned ship data from config data file.
+ */
 ipcMain.handle('get-owned-ship-data', async (event) => {
   const ships = electronStore.get('ownedShips');
   if (ships) {
@@ -84,7 +89,9 @@ ipcMain.handle('get-owned-ship-data', async (event) => {
   }
 });
 
-/* change to owned ship data ids */
+/**
+ * Save ship data to json file.
+ */
 ipcMain.handle('save-ship-data', async (event, arg) => {
   try {
     const rawData = JSON.stringify(arg);
@@ -102,7 +109,9 @@ ipcMain.handle('save-ship-data', async (event, arg) => {
   console.log('Successful save');
   return { isOk: true, msg: 'Ship data saved succesfully.' };
 });
-
+/**
+ * Save owned ship data to config data file.
+ */
 ipcMain.handle('save-owned-ships', async (event, data) => {
   try {
     electronStore.set({
@@ -114,11 +123,26 @@ ipcMain.handle('save-owned-ships', async (event, data) => {
   return { isOk: true, msg: 'Owned ships succesfully saved.' };
 });
 
+/**
+ * Initialize by getting data from .json and config data from config file.
+ */
 ipcMain.handle('initData', async (event, arg) => {
   let jsonData: { [key: string]: Ship } = {};
   let dataArr: Ship[] = [];
   let oShips: string[] = [];
+  let configData: AppConfig = { jsonURL: '', themeColor: '' };
   try {
+    if (!electronStore.has('firstRun')) {
+      electronStore.set('firstRun', false);
+      electronStore.set({
+        config: {
+          jsonURL: SHIPAPIURL,
+          themeColor: THEMECOLOR,
+        },
+        ownedShips: [],
+      });
+    }
+    configData = electronStore.get('config') as AppConfig;
     if (process.env.NODE_ENV === 'development') {
       console.log('DEVELOPMENT');
       const rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
@@ -136,8 +160,8 @@ ipcMain.handle('initData', async (event, arg) => {
     }
   } catch (error) {
     console.log('error', error);
-    return { shipData: dataArr, config: {}, ownedShips: oShips, msg: error.message };
+    return { shipData: dataArr, config: configData, ownedShips: oShips, msg: error.message };
   }
   console.log('dataArr: ', dataArr.length);
-  return { shipData: dataArr, config: {}, ownedShips: oShips, msg: 'success' };
+  return { shipData: dataArr, config: configData, ownedShips: oShips, msg: 'success' };
 });

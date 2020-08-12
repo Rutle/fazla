@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, MutableRefObject } from 'react';
 import PageTemplate from './PageTemplate';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
@@ -17,10 +17,16 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
   const ownedList = useSelector((state: RootState) => state.ownedShips);
   const [shipCount, setShipCount] = useState(shipData.count);
   const [docksCount, setDocksCount] = useState(0);
+  const [srcInputLen, setSRCInputLen] = useState(appState.jsonURL.length | 25);
+  const [jsonSRCValue, setJSONSRCValue] = useState<string | undefined>('');
+  const [isSRCFocus, setSRCFocus] = useState<boolean>(false);
+  const [srcV, setSRCV] = useState<string>('');
 
   useEffect(() => {
     if (appState.cPage !== 'HOME') {
       dispatch(setCurrentPage({ cPage: 'HOME' }));
+      setSRCFocus(false);
+      setSRCInputLen(25);
     }
     console.log('[Home] [] appState :[', appState.cState, '] cPage: [', appState.cPage, ']');
     try {
@@ -30,7 +36,8 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
           const initDataObj = await initData();
           await shipData.setArray(initDataObj.shipData);
           setShipCount(shipData.shipsArr.length);
-          dispatch(initShipLists(initDataObj.ownedShips, shipData));
+          dispatch(initShipLists(initDataObj.ownedShips, shipData, initDataObj.config));
+          setJSONSRCValue(initDataObj.config.jsonURL);
         })();
       }
     } catch (e) {
@@ -56,6 +63,11 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
       </button>
     );
   };
+  const setSRCInputFocus = (e: React.FocusEvent<HTMLInputElement>, len: number) => {
+    setSRCInputLen(len);
+    setSRCFocus(!isSRCFocus);
+    // console.log(window.innerWidth);
+  };
 
   return (
     <PageTemplate>
@@ -70,9 +82,22 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
               <div className="grid-item action">{renderUpdate()}</div>
             </div>
             <div className="f-row wrap">
-              <div className="grid-item name">Update Data:</div>
+              <div className="grid-item name">Raw data URL:</div>
               <div className="grid-item action">
-                <button className="btn dark">Update</button>
+                <input
+                  type="url"
+                  placeholder={appState.jsonURL !== '' ? appState.jsonURL : ''}
+                  spellCheck="false"
+                  className={`text-input ${appState.themeColor}`}
+                  style={{ width: `${srcInputLen}ch` }}
+                  // value={jsonSRCValue}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    console.log(e);
+                  }}
+                  onFocus={(e) => setSRCInputFocus(e, appState.jsonURL.length)}
+                  onBlur={(e) => setSRCInputFocus(e, 25)}
+                />
+                <button className={`btn dark ${isSRCFocus ? '' : 'hidden'}`}>Update</button>
               </div>
             </div>
             <div className="f-row wrap">

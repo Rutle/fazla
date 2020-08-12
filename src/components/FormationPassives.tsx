@@ -2,8 +2,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import FormationShipPassives from './FormationShipPassives';
-
-const FormationPassives: React.FC = () => {
+import DataStore from '../util/dataStore';
+import PropTypes from 'prop-types';
+interface FormationPassives {
+  shipData: DataStore;
+}
+const FormationPassives: React.FC<FormationPassives> = ({ shipData }) => {
   const currentFormation = useSelector((state: RootState) => state.formationGrid);
 
   return (
@@ -15,9 +19,9 @@ const FormationPassives: React.FC = () => {
             <div className={'grid-item name-title'}>Ship</div>
             <div className={'grid-item passive-title'}>Passive</div>
           </div>
-          <FormationShipPassives ship={currentFormation[0]} />
-          <FormationShipPassives ship={currentFormation[1]} />
-          <FormationShipPassives ship={currentFormation[2]} />
+          <FormationShipPassives ship={shipData.getShipById(currentFormation[0])} />
+          <FormationShipPassives ship={shipData.getShipById(currentFormation[1])} />
+          <FormationShipPassives ship={shipData.getShipById(currentFormation[2])} />
         </div>
       </div>
       <div className={'f-row'}>
@@ -27,9 +31,9 @@ const FormationPassives: React.FC = () => {
             <div className={'grid-item name-title'}>Name</div>
             <div className={'grid-item passive-title'}>Passive</div>
           </div>
-          <FormationShipPassives ship={currentFormation[3]} />
-          <FormationShipPassives ship={currentFormation[4]} />
-          <FormationShipPassives ship={currentFormation[5]} />
+          <FormationShipPassives ship={shipData.getShipById(currentFormation[3])} />
+          <FormationShipPassives ship={shipData.getShipById(currentFormation[4])} />
+          <FormationShipPassives ship={shipData.getShipById(currentFormation[5])} />
         </div>
       </div>
     </div>
@@ -37,3 +41,7 @@ const FormationPassives: React.FC = () => {
 };
 
 export default FormationPassives;
+
+FormationPassives.propTypes = {
+  shipData: PropTypes.instanceOf(DataStore).isRequired,
+};

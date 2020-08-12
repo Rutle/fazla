@@ -5,12 +5,7 @@ import { RootState } from '../reducers/rootReducer';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import {
-  setCurrentToggle,
-  setSelectedShip,
-  updateOwnedSearchList,
-  setSearchResults,
-} from '../reducers/slices/appStateSlice';
+import { setCurrentToggle, updateOwnedSearchList, setSearchResults } from '../reducers/slices/appStateSlice';
 import { setSearchString } from '../reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';
 import DataStore from '../util/dataStore';
@@ -27,7 +22,6 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
   const appState = useSelector((state: RootState) => state.appState);
   const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
   const searchParameters = useSelector((state: RootState) => state.searchParameters);
-  const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const [searchValue, setSearchValue] = useState('');
   const [inputFocus, setInputFocus] = useState(false);
 
@@ -40,8 +34,6 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
     const { cToggle } = appState;
     if (appState.cState === 'INIT') return;
     dispatch(setDetails({ id: appState[cToggle].id, index: appState[cToggle].index }));
-    console.log(ownedList);
-    console.log(ownedSearchList);
   }, [appState.cToggle]);
 
   // Update lists when search parameter changes.

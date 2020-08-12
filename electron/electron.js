@@ -53,6 +53,8 @@ require("electron-reload");
 var mainWindow;
 var electronStore = new electron_store_1["default"]();
 var fsPromises = fs.promises;
+var SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
+var THEMECOLOR = 'dark';
 function createWindow() {
     // Create the browser window.
     mainWindow = new electron_1.BrowserWindow({
@@ -69,7 +71,6 @@ function createWindow() {
     mainWindow.removeMenu();
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
-    console.log("" + __dirname);
 }
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -105,11 +106,9 @@ electron_1.ipcMain.on('maximize-application', function () {
 electron_1.ipcMain.on('restore-application', function () {
     mainWindow.restore();
 });
-electron_1.ipcMain.handle('get-config', function (event, arg) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        return [2 /*return*/, electron_1.app.getPath('userData')];
-    });
-}); });
+/**
+ * Get owned ship data from config data file.
+ */
 electron_1.ipcMain.handle('get-owned-ship-data', function (event) { return __awaiter(void 0, void 0, void 0, function () {
     var ships;
     return __generator(this, function (_a) {
@@ -123,7 +122,9 @@ electron_1.ipcMain.handle('get-owned-ship-data', function (event) { return __awa
         return [2 /*return*/];
     });
 }); });
-/* change to owned ship data ids */
+/**
+ * Save ship data to json file.
+ */
 electron_1.ipcMain.handle('save-ship-data', function (event, arg) { return __awaiter(void 0, void 0, void 0, function () {
     var rawData, userDir, error_1;
     return __generator(this, function (_a) {
@@ -154,6 +155,9 @@ electron_1.ipcMain.handle('save-ship-data', function (event, arg) { return __awa
         }
     });
 }); });
+/**
+ * Save owned ship data to config data file.
+ */
 electron_1.ipcMain.handle('save-owned-ships', function (event, data) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
@@ -167,17 +171,32 @@ electron_1.ipcMain.handle('save-owned-ships', function (event, data) { return __
         return [2 /*return*/, { isOk: true, msg: 'Owned ships succesfully saved.' }];
     });
 }); });
+/**
+ * Initialize by getting data from .json and config data from config file.
+ */
 electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(void 0, void 0, void 0, function () {
-    var jsonData, dataArr, oShips, rawData, userDir, appDirCont, rawData, error_2;
+    var jsonData, dataArr, oShips, configData, rawData, userDir, appDirCont, rawData, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 jsonData = {};
                 dataArr = [];
                 oShips = [];
+                configData = { jsonURL: '', themeColor: '' };
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 8, , 9]);
+                if (!electronStore.has('firstRun')) {
+                    electronStore.set('firstRun', false);
+                    electronStore.set({
+                        config: {
+                            jsonURL: SHIPAPIURL,
+                            themeColor: THEMECOLOR
+                        },
+                        ownedShips: []
+                    });
+                }
+                configData = electronStore.get('config');
                 if (!(process.env.NODE_ENV === 'development')) return [3 /*break*/, 4];
                 console.log('DEVELOPMENT');
                 return [4 /*yield*/, fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8')];
@@ -206,10 +225,10 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
             case 8:
                 error_2 = _a.sent();
                 console.log('error', error_2);
-                return [2 /*return*/, { shipData: dataArr, config: {}, ownedShips: oShips, msg: error_2.message }];
+                return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, msg: error_2.message }];
             case 9:
                 console.log('dataArr: ', dataArr.length);
-                return [2 /*return*/, { shipData: dataArr, config: {}, ownedShips: oShips, msg: 'success' }];
+                return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, msg: 'success' }];
         }
     });
 }); });

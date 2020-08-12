@@ -1,5 +1,7 @@
 import { ShipSimple, Ship } from './shipdatatypes';
 import shipData from '../data/ships.json';
+import { AppConfig } from '../reducers/slices/appStateSlice';
+import { App } from 'electron';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
@@ -14,53 +16,7 @@ https://www.electronjs.org/docs/api/ipc-renderer#ipcrendererinvokechannel-args
 // for config
 https://www.npmjs.com/package/electron-store#how-do-i-get-store-values-in-the-renderer-process-when-my-store-was-initialized-in-the-main-process
 */
-/*
-debugger;
-        const appPath = app.getAppPath();
-        console.log(appPath);
-        const path = app.getPath('userData');
-        console.log(path);
-        fs.readdir(appPath + '/data', (err, files) => {
-            debugger;
-            this.setState({files: files});
-        });
-*/
-/*
-const searchPredicate = (searchParameters: any) => (ele: ShipSimple | Ship) => {
-  return ele.name.toLowerCase().includes(searchParameters.name.toLowerCase());
-};
-*/
-/*
-const hullPredicate = (searchParameters: any) => (ele: ShipSimple | Ship) => {
-  if (searchParameters.hullTypeArr.length === 0) {
-    return true;
-  }
-  return searchParameters.hullType[ele.hullType as string];
-};
 
-const nationalityPredicate = (searchParameters: any) => (ele: ShipSimple | Ship) => {
-  if (searchParameters.nationalityArr.length === 0) {
-    return true;
-  }
-  return searchParameters.nationality[ele.nationality as string];
-};
-
-const rarityPredicate = (searchParameters: any) => (ele: ShipSimple | Ship) => {
-  if (searchParameters.rarityArr.length === 0) {
-    return true;
-  }
-  return searchParameters.rarity[ele.rarity as string];
-};
-*/
-/*
-export const getSearchList = (list: ShipSimple[] | Ship[], searchParameters: any): ShipSimple[] => {
-  return list
-    .filter(searchPredicate(searchParameters))
-    .filter(rarityPredicate(searchParameters))
-    .filter(nationalityPredicate(searchParameters))
-    .filter(hullPredicate(searchParameters));
-};
-*/
 // Renderer to Main
 export const closeWindow = (): void => {
   ipcRenderer.send('close-application');
@@ -121,12 +77,17 @@ export const saveOwnedShipData = async (data: string[] = []): Promise<{ isOk: bo
   });
 };
 
-export const initData = async (): Promise<{ shipData: Ship[]; config: any; ownedShips: string[]; msg: string }> => {
+export const initData = async (): Promise<{
+  shipData: Ship[];
+  config: AppConfig;
+  ownedShips: string[];
+  msg: string;
+}> => {
   return ipcRenderer
     .invoke('initData')
-    .then((result: { shipData: Ship[]; config: any; ownedShips: string[]; msg: string }) => {
+    .then((result: { shipData: Ship[]; config: AppConfig; ownedShips: string[]; msg: string }) => {
       if (result.msg === 'success') {
-        // console.log('initData: ', result.shipData.length);
+        console.log('initData: ', result.config);
         return { ...result };
       }
     });

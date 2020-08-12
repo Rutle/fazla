@@ -2,14 +2,10 @@
 import React from 'react';
 import { Ship } from '../util/shipdatatypes';
 
-const FormationShipPassives: React.FC<{ ship: Ship }> = ({ ship }) => {
-  const isShip = (): boolean => {
-    return ship !== undefined;
-  };
-
+const FormationShipPassives: React.FC<{ ship: Ship | undefined }> = ({ ship }) => {
   return (
     <>
-      {isShip() ? (
+      {ship !== undefined ? (
         ship.skills?.map((skill) => {
           return (
             <div key={skill.names.en} className={`f-row ${skill.color}`}>
