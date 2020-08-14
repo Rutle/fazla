@@ -1,7 +1,6 @@
 import { ShipSimple, Ship } from './shipdatatypes';
 import shipData from '../data/ships.json';
 import { AppConfig } from '../reducers/slices/appStateSlice';
-import { App } from 'electron';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
@@ -62,7 +61,10 @@ export const getShipData = (): { data: ShipSimple[]; isTempData: boolean } => {
     // return { data: getShipsSimple('', result.shipData), isTempData: !result.isConfigShipData };
   });
 };
-
+/**
+ * Function that calls electron along with data to save data to .json file.
+ * @param data Data that is saved to .json.
+ */
 export const saveShipData = async (data = {}): Promise<{ isOk: boolean; msg: string }> => {
   return await ipcRenderer.invoke('save-ship-data', data).then((result: { isOk: boolean; msg: string }) => {
     console.log('[appUtils: saveShipData] Ship data save: ', result.isOk);
@@ -70,6 +72,10 @@ export const saveShipData = async (data = {}): Promise<{ isOk: boolean; msg: str
   });
 };
 
+/**
+ * Function that calls electron along with owned ship data to save data to config file.
+ * @param {string[]} data Owned ship data to be saved to config.
+ */
 export const saveOwnedShipData = async (data: string[] = []): Promise<{ isOk: boolean; msg: string }> => {
   return await ipcRenderer.invoke('save-owned-ships', data).then((result: { isOk: boolean; msg: string }) => {
     console.log('[appUtils: saveOwnedShipData] :', result.isOk);

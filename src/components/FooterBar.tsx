@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { RootState } from '../reducers/rootReducer';
 import { useSelector } from 'react-redux';
 

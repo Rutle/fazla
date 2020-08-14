@@ -3,7 +3,7 @@ import './App.css';
 import ShipDetailView from './components/ShipDetailView';
 import Home from './components/Home';
 import DataStore from './util/dataStore';
-import { BrowserRouter, HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import FormationView from './components/FormationView';
 
 const App: React.FC = () => {

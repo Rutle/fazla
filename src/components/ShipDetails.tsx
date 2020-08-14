@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import PassivesList from './PassivesList';
@@ -17,7 +17,6 @@ interface ShipDetails {
 const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship }) => {
   const dispatch = useDispatch();
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
-  const shipDetails = useSelector((state: RootState) => state.shipDetails);
 
   const isOwned = () => {
     return ownedShips.some((ele) => ele === ship.id);
@@ -55,21 +54,12 @@ const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship })
 
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <div style={{ display: 'flex', flexGrow: 1 }}>
-          <h1>
-            {ship.names.en}
-            <span className={ship.rarity}>{` ${ship.stars?.stars}`}</span>
-          </h1>
+      <div className="ship-title-bar">
+        <div>
+          <span className="ship-name">{ship.names.en}</span>
+          <span className={ship.rarity}>{` ${ship.stars?.stars}`}</span>
         </div>
-        <span
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            borderTop: '2px solid var(--main-dark-border)',
-          }}
-        >
+        <span className="end-buttons">
           {renderAddRemoveButton()}
           <button
             className="btn dark informative"

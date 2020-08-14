@@ -424,10 +424,10 @@ body {
   flex-direction: row;
   position: absolute;
   padding: 0px;
-  left: 10%;
-  top: 10%;
-  height: 80%;
-  width: 80%;
+  left: 5%;
+  top: 5%;
+  height: 90%;
+  width: 90%;
   justify-content: center;  
 }
 
@@ -452,17 +452,9 @@ body {
   flex-direction: column;
   padding: 15px;
   margin: 0px;
-  /* border: 1px dotted #353b48;*/
-  /* max-height: calc(100% - 15vh);*/
-  /* max-height: 85vh;*/
-  /* height: 100%;*/
   width: 100%;
-  /*
-  -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
-  */
 }
+
 .ship-side-container {
   min-width: 18%;
   max-width: 18%;
@@ -586,31 +578,43 @@ div > div.tab-content.active {
   scrollbar-width: thin;
 }
 
-.ship-data-container > div > div > div > h1 {
+.ship-data-container .ship-title-bar {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.ship-title-bar > span.end-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 2px solid var(--main-dark-border);
+}
+
+.ship-title-bar > div  {
   display: flex;
   flex-grow: 1;
   border: 2px solid var(--main-dark-border);
   border-left: 0px;
   border-right: 0px;
   padding: 5px;
-  margin-top: 0px;
+  font-size: 1.5em;
+  justify-content: flex-start;
 }
-
-.ship-data-container > div > span {
-  border-right: 1px solid black;
-  padding: 5px;
+.ship-title-bar > div > span.ship-name { 
+  margin-right: 10px;
 }
-
-.ship-data-container > div > h1 > span.Super.Rare:last-child {
+.ship-title-bar > div > span.Super.Rare:last-child {
   /* color: rgba(253, 209, 98, 0.616);*/
   color: PaleGoldenrod;
 }
 
-.ship-data-container > div > h1 > span.Rare:last-child {
+.ship-title-bar > div > span.Rare:last-child {
   color: rgba(98, 134, 253, 0.616);
 }
 
-.ship-data-container > div > h1 > span.Elite:last-child {
+.ship-title-bar > div > span.Elite:last-child {
   color: rgba(144, 98, 253, 0.616);
 }
 
@@ -781,10 +785,17 @@ input[type="url"] {
 
 #passives > div {
   margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
 }
 #passives > div > div:first-child {
-  font-size: 21px;
+  font-size: 15px;
   padding-bottom: 1px;
+}
+
+#passives > div > div:last-child {
+  font-size: 15px;
+  
 }
 
 #passives > div > div {
@@ -1002,11 +1013,10 @@ div.footer-misc {
 }
 
 div.f-title {
-  padding: 10px 12px;
+  padding: 3px 12px;
   margin-bottom: 5px;
   border: 1px solid #353b48;
   text-align: center;
-  /* width: 25%; */
 }
 
 .home-container div.f-title {

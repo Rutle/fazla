@@ -223,7 +223,7 @@ export const updateShipData = (): AppThunk => async (dispatch: AppDispatch) => {
           console.log('Fetched: ', Object.keys(result).length);
           try {
             const { isOk, msg } = await saveShipData(result);
-            console.log(isOk, 'after saveShipData', isOk);
+            console.log(isOk, 'after saveShipData', isOk, msg);
           } catch (error) {
             console.log(error);
           }

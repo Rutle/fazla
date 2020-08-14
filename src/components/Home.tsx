@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, MutableRefObject } from 'react';
+import React, { useState, useEffect } from 'react';
 import PageTemplate from './PageTemplate';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
@@ -20,7 +20,6 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
   const [srcInputLen, setSRCInputLen] = useState(appState.jsonURL.length | 25);
   const [jsonSRCValue, setJSONSRCValue] = useState<string | undefined>('');
   const [isSRCFocus, setSRCFocus] = useState<boolean>(false);
-  const [srcV, setSRCV] = useState<string>('');
 
   useEffect(() => {
     if (appState.cPage !== 'HOME') {
@@ -43,6 +42,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
     } catch (e) {
       console.log('[INIT] {1}: Error, useEffect []: ', e);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
                   spellCheck="false"
                   className={`text-input ${appState.themeColor}`}
                   style={{ width: `${srcInputLen}ch` }}
-                  // value={jsonSRCValue}
+                  value={jsonSRCValue}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     console.log(e);
                   }}

@@ -22,6 +22,7 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
     if (appState.cPage !== 'FORMATION') {
       dispatch(setCurrentPage({ cPage: 'FORMATION' }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

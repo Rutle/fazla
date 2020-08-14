@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ShipSimple } from '../../util/shipdatatypes';
 import { AppDispatch, AppThunk } from '../../store';
 import { saveOwnedShipData } from '../../util/appUtilities';
 import { setCurrentState } from './appStateSlice';

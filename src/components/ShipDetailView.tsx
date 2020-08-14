@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import PageTemplate from './PageTemplate';
-import ShipList from './ShipList';
 import ShipDetails from './ShipDetails';
 import { RootState } from '../reducers/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,6 +24,7 @@ const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData }) => {
     if (appState.cPage !== 'LIST') {
       dispatch(setCurrentPage({ cPage: 'LIST' }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

@@ -34,6 +34,7 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
     const { cToggle } = appState;
     if (appState.cState === 'INIT') return;
     dispatch(setDetails({ id: appState[cToggle].id, index: appState[cToggle].index }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState.cToggle]);
 
   // Update lists when search parameter changes.
@@ -45,6 +46,7 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
       console.log('LIST -> update search results');
       dispatch(setSearchResults(shipData));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParameters]);
 
   useEffect(() => {
@@ -52,6 +54,7 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
       console.log('ownedSearchList muuttu: ', ownedSearchList);
       // dispatch(updateSearchList());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ownedSearchList]);
 
   useEffect(() => {
@@ -59,6 +62,7 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
       console.log('shipSearchList muuttu: ', shipSearchList[0]);
       // dispatch(updateSearchList());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shipSearchList]);
 
   useEffect(() => {
@@ -66,6 +70,7 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
       console.log('owned list muuttu - ollaan LIST sivulla -> lisattiin/poistettiin. NOT INIT');
       dispatch(updateOwnedSearchList(shipData));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ownedList]);
 
   const searchSubmit = (event: React.FormEvent<HTMLFormElement>) => {

@@ -18,6 +18,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName 
 
   useEffect(() => {
     console.log('[ShipList] [', shipSearchList.length, ']');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

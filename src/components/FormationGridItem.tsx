@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { openModal } from '../reducers/slices/formationModalSlice';
 import { Ship } from '../util/shipdatatypes';
-import PropTypes from 'prop-types';
 
 interface GridItemProps {
   index: number;
@@ -33,11 +32,6 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
     }
   };
 
-  const isSet = (): boolean => {
-    return ship !== undefined;
-    // return currentFormation[index] !== undefined;
-  };
-
   return (
     <div className={`grid-item ${config.themeColor}`}>
       <button className={`btn ${config.themeColor}`} onClick={() => openShipSelector()}>
@@ -57,8 +51,3 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
 };
 
 export default FormationGridItem;
-/*
-FormationGridItem.propTypes = {
-  ship: PropTypes.object,
-};
-*/
