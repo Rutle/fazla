@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
-import Menu from './Menu';
+// import Menu from './Menu';
 import FormationModal from './FormationModal';
 import DataStore from '../util/dataStore';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { setCurrentPage } from '../reducers/slices/appStateSlice';
+import FormationDropDown from './DropDown/FormationDropDown';
 interface FormationViewProps {
   shipData: DataStore;
 }
@@ -24,6 +25,9 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const selectFormation = () => {
+    console.log('selected');
+  };
 
   return (
     <PageTemplate>
@@ -31,7 +35,19 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
         <FormationModal shipData={shipData} />
         <div className={'ship-data-container dark'}>
           <div className="top-container">
-            <Menu setActiveTab={setSelectedTab} currentActiveTab={selectedTab} tabs={['Formation', 'Summary']} />
+            <div className={`dropdown dark`}>
+              <FormationDropDown />
+            </div>
+          </div>
+          <FormationGrid shipData={shipData} />
+          <div className="scroll">
+            <FormationPassives shipData={shipData} />
+          </div>
+          {/*
+          <div className="top-container">
+            <Menu setActiveTab={setSelectedTab} currentActiveTab={selectedTab} tabs={['Formation', 'Summary']}>
+              <p>testi</p>
+            </Menu>
           </div>
           <div className="scroll">
             <div id="formation" className={`tab-content ${selectedTab === 'Formation' ? 'active' : 'hidden'}`}>
@@ -47,6 +63,7 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
               PH2
             </div>
           </div>
+          */}
         </div>
       </section>
     </PageTemplate>

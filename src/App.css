@@ -146,6 +146,7 @@ input[type="url"].dark:focus {
   color: rgb(184, 184, 184);
 }
 
+
 /* Change background color of buttons on hover */
 .tab button:hover {
   background-color: var(--main-dark-hover-bg);
@@ -516,9 +517,71 @@ div > div.tab-content.active {
   border: none;
   outline: none;
   cursor: pointer;
-  padding: 14px 16px;
+  /* padding: 14px 16px;*/
+  padding: 5px 16px;
   transition: 0.3s;
 }
+
+/* ###### FORMATION DROPDOWN ###### */
+.dropdown.dark {
+  overflow: hidden;
+  border: 2px solid #3f4657;
+  border-left: 0px;
+  border-right: 0px;
+  background-color: var(--main-dark-bg);
+  /* background-color: #292e38;*/
+}
+
+.dropdown {
+  overflow: hidden;
+}
+
+.dropdown .toggle.dark {
+  background-color: var(--main-dark-bg);
+  color: rgb(184, 184, 184);
+}
+
+.dropdown .toggle:hover {
+  background-color: var(--main-dark-hover-bg);
+}
+
+.dropdown .toggle.dark.active {
+  background-color: var(--main-dark-active-bg);
+}
+
+.dropdown .toggle {
+  width: 105px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  /* padding: 14px 16px;*/
+  padding: 5px 16px;
+  transition: 0.3s;
+}
+
+.formation-dropdown-menu.dark {
+  border: var(--main-dark-border);
+}
+
+.formation-dropdown-menu .menu-item:first-child {
+  border-bottom: unset;
+}
+
+.formation-dropdown-menu .btn.menu-item {
+  height: unset;
+  width: 105px;
+  padding: 5px 5px;
+}
+
+.formation-dropdown-menu {
+  position: absolute;
+  z-index: 1000;
+  flex-direction: column;
+  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+/* ###### END ###### */
 
 .popover-container {
   /*min-width: 16%;*/
@@ -544,10 +607,7 @@ div > div.tab-content.active {
   background-color: var(--main-dark-active-bg);
   border: 1px solid var(--main-dark-active-border);
 }
-/*
-.popover-content {
-}
-*/
+
 .popover-content > .f-grid > .f-row {
   margin-bottom: 5px;
 }

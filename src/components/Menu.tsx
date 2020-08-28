@@ -6,10 +6,11 @@ interface MenuProps {
   setActiveTab: (event: React.SetStateAction<string>) => void;
   currentActiveTab: string;
   tabs: string[];
+  children: JSX.Element;
 }
 
 // eslint-disable-next-line react/prop-types
-const Menu: React.FC<MenuProps> = ({ setActiveTab, currentActiveTab, tabs }) => {
+const Menu: React.FC<MenuProps> = ({ setActiveTab, currentActiveTab, tabs, children }) => {
   const config = useSelector((state: RootState) => state.config);
 
   return (
@@ -29,9 +30,8 @@ const Menu: React.FC<MenuProps> = ({ setActiveTab, currentActiveTab, tabs }) => 
       <button
         className={`tab-btn ${config.themeColor} ${currentActiveTab === tabs[2] ? 'active' : ''}`}
         onClick={() => setActiveTab(tabs[2])}
-      >
-        {tabs[2]}
-      </button>
+      ></button>
+      {children}
     </div>
   );
 };
