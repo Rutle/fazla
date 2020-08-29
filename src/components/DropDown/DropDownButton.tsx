@@ -15,9 +15,7 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({ show, onToggle, drop, a
   <Dropdown show={show} onToggle={onToggle} drop={drop} alignEnd={alignEnd} itemSelector="button:not(:disabled)">
     {({ props }) => (
       <div {...props}>
-        <DropDownToggle id="formation-toggle">
-          <b>Formations</b>
-        </DropDownToggle>
+        <DropDownToggle id="formation-toggle" text="Formations"></DropDownToggle>
         <DropDownMenu />
       </div>
     )}

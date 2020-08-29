@@ -6,10 +6,18 @@ import * as path from 'path';
 import * as isDev from 'electron-is-dev';
 import 'electron-reload';
 import { Ship } from '../src/util/shipdatatypes';
+// import { Formation } from '../src/reducers/slices/formationGridSlice';
 
 let mainWindow: BrowserWindow;
 const electronStore = new Store();
 const fsPromises = fs.promises;
+interface MiscInformation {
+  name: string | undefined;
+}
+
+export type Formation = {
+  [key: number]: string;
+} & MiscInformation;
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 const THEMECOLOR = 'dark';
@@ -130,6 +138,7 @@ ipcMain.handle('initData', async (event, arg) => {
   let jsonData: { [key: string]: Ship } = {};
   let dataArr: Ship[] = [];
   let oShips: string[] = [];
+  let formationData: Formation[] = [];
   let configData: AppConfig = { jsonURL: '', themeColor: '' };
   try {
     if (!electronStore.has('firstRun')) {
@@ -140,6 +149,7 @@ ipcMain.handle('initData', async (event, arg) => {
           themeColor: THEMECOLOR,
         },
         ownedShips: [],
+        formations: [],
       });
     }
     configData = electronStore.get('config') as AppConfig;
@@ -149,6 +159,7 @@ ipcMain.handle('initData', async (event, arg) => {
       jsonData = await JSON.parse(rawData);
       dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
       oShips = electronStore.get('ownedShips') as string[];
+      formationData = electronStore.get('formations') as Formation[];
     } else {
       const userDir = app.getPath('userData');
       const appDirCont = await fsPromises.readdir(`${userDir}\\resources`);
@@ -157,11 +168,12 @@ ipcMain.handle('initData', async (event, arg) => {
       jsonData = JSON.parse(rawData);
       dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
       oShips = electronStore.get('ownedShips') as string[];
+      formationData = electronStore.get('formations') as Formation[];
     }
   } catch (error) {
     console.log('error', error);
-    return { shipData: dataArr, config: configData, ownedShips: oShips, msg: error.message };
+    return { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: error.message };
   }
   console.log('dataArr: ', dataArr.length);
-  return { shipData: dataArr, config: configData, ownedShips: oShips, msg: 'success' };
+  return { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: 'success' };
 });

@@ -34,11 +34,16 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
 
   return (
     <div className={`grid-item ${config.themeColor}`}>
-      <button className={`btn ${config.themeColor}`} onClick={() => openShipSelector()}>
+      {/*
+            <button className={`btn ${config.themeColor}`}>
         <div>Add ship</div>
       </button>
+       */}
+
       <div className={`content ${ship !== undefined ? ship.rarity : ''}`}>
-        <div className={`details`}>{ship !== undefined ? ship.names.en : 'Empty'}</div>
+        <div className={`details`} onClick={() => openShipSelector()}>
+          {ship !== undefined ? ship.names.en : 'Add ship'}
+        </div>
         <div className={'footer-misc'}>
           <div className={'pos-indicator'}>{getLocation(index)}</div>
           <div className={`hull-type ${ship !== undefined ? ship.hullType : ''}`}>

@@ -50,6 +50,7 @@ var fs = require("fs");
 var path = require("path");
 var isDev = require("electron-is-dev");
 require("electron-reload");
+// import { Formation } from '../src/reducers/slices/formationGridSlice';
 var mainWindow;
 var electronStore = new electron_store_1["default"]();
 var fsPromises = fs.promises;
@@ -175,13 +176,14 @@ electron_1.ipcMain.handle('save-owned-ships', function (event, data) { return __
  * Initialize by getting data from .json and config data from config file.
  */
 electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(void 0, void 0, void 0, function () {
-    var jsonData, dataArr, oShips, configData, rawData, userDir, appDirCont, rawData, error_2;
+    var jsonData, dataArr, oShips, formationData, configData, rawData, userDir, appDirCont, rawData, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 jsonData = {};
                 dataArr = [];
                 oShips = [];
+                formationData = [];
                 configData = { jsonURL: '', themeColor: '' };
                 _a.label = 1;
             case 1:
@@ -193,7 +195,8 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                             jsonURL: SHIPAPIURL,
                             themeColor: THEMECOLOR
                         },
-                        ownedShips: []
+                        ownedShips: [],
+                        formations: []
                     });
                 }
                 configData = electronStore.get('config');
@@ -207,6 +210,7 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                 jsonData = _a.sent();
                 dataArr = __spreadArrays(Object.keys(jsonData).map(function (key) { return jsonData[key]; }));
                 oShips = electronStore.get('ownedShips');
+                formationData = electronStore.get('formations');
                 return [3 /*break*/, 7];
             case 4:
                 userDir = electron_1.app.getPath('userData');
@@ -220,15 +224,16 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                 jsonData = JSON.parse(rawData);
                 dataArr = __spreadArrays(Object.keys(jsonData).map(function (key) { return jsonData[key]; }));
                 oShips = electronStore.get('ownedShips');
+                formationData = electronStore.get('formations');
                 _a.label = 7;
             case 7: return [3 /*break*/, 9];
             case 8:
                 error_2 = _a.sent();
                 console.log('error', error_2);
-                return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, msg: error_2.message }];
+                return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: error_2.message }];
             case 9:
                 console.log('dataArr: ', dataArr.length);
-                return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, msg: 'success' }];
+                return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: 'success' }];
         }
     });
 }); });

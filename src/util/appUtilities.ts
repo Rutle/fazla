@@ -1,6 +1,7 @@
 import { ShipSimple, Ship } from './shipdatatypes';
 import shipData from '../data/ships.json';
 import { AppConfig } from '../reducers/slices/appStateSlice';
+import { Formation } from '../reducers/slices/formationGridSlice';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
@@ -87,16 +88,19 @@ export const initData = async (): Promise<{
   shipData: Ship[];
   config: AppConfig;
   ownedShips: string[];
+  formations: Formation[];
   msg: string;
 }> => {
   return ipcRenderer
     .invoke('initData')
-    .then((result: { shipData: Ship[]; config: AppConfig; ownedShips: string[]; msg: string }) => {
-      if (result.msg === 'success') {
-        console.log('initData: ', result.config);
-        return { ...result };
-      }
-    });
+    .then(
+      (result: { shipData: Ship[]; config: AppConfig; ownedShips: string[]; formations: Formation[]; msg: string }) => {
+        if (result.msg === 'success') {
+          console.log('initData: ', result.config);
+          return { ...result };
+        }
+      },
+    );
 };
 
 // Data utilities

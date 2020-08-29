@@ -8,6 +8,7 @@ import { ShipSimple } from '../../util/shipdatatypes';
 import { batch } from 'react-redux';
 import { saveShipData } from '../../util/appUtilities';
 import { setOwnedList } from './ownedShipListSlice';
+import { Formation } from './formationGridSlice';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 
@@ -41,6 +42,10 @@ type ListStateObject = {
   owned: ListState;
   ownedIsReady: boolean;
   allIsReady: boolean;
+  formationPage: {
+    formations: Formation[];
+    selectedIndex: number;
+  };
 } & CurrentState &
   CurrentPage &
   AppConfig;
@@ -62,6 +67,10 @@ const initialState: ListStateObject = {
   allIsReady: false,
   jsonURL: '',
   themeColor: '',
+  formationPage: {
+    formations: [],
+    selectedIndex: NaN,
+  },
 };
 
 const appStateSlice = createSlice({
@@ -84,6 +93,33 @@ const appStateSlice = createSlice({
       return {
         ...state,
         ...action.payload,
+      };
+    },
+    setFormationsData(state, action: PayloadAction<Formation[]>) {
+      const count = action.payload.length;
+      return {
+        ...state,
+        formationPage: {
+          formations: action.payload,
+          selectedIndex: count >= 0 ? 0 : NaN,
+        },
+      };
+    },
+    addNewFormationData(state, action: PayloadAction<Formation>) {
+      const newList = [...state.formationPage.formations, action.payload];
+      console.log({
+        ...state,
+        formationPage: {
+          formations: newList,
+          selectedIndex: newList.length - 1,
+        },
+      });
+      return {
+        ...state,
+        formationPage: {
+          formations: newList,
+          selectedIndex: newList.length - 1,
+        },
       };
     },
     setCurrentToggle(state, action: PayloadAction<string>) {
@@ -114,6 +150,8 @@ export const {
   setListValue,
   setCurrentPage,
   setAppConfigValue,
+  setFormationsData,
+  addNewFormationData,
 } = appStateSlice.actions;
 
 /**
@@ -121,7 +159,12 @@ export const {
  * @param {string[]} ownedShips Array of strings containing ship IDs.
  * @param {DataStore} data Data structure containg full ship data.
  */
-export const initShipLists = (ownedShips: string[], data: DataStore, config: AppConfig): AppThunk => async (dispatch: AppDispatch) => {
+export const initShipLists = (
+  ownedShips: string[],
+  data: DataStore,
+  config: AppConfig,
+  formations: Formation[],
+): AppThunk => async (dispatch: AppDispatch) => {
   let fullSimple: ShipSimple[] = [];
   let ownedSearch: ShipSimple[] = [];
   let searchInitId = 'NONE';
@@ -151,6 +194,7 @@ export const initShipLists = (ownedShips: string[], data: DataStore, config: App
     dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
   });
   dispatch(setAppConfigValue(config));
+  dispatch(setFormationsData(formations));
   dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
 };
 
@@ -287,6 +331,18 @@ export const updateSearchList = (data: DataStore): AppThunk => async (dispatch: 
     });
   } catch (e) {
     console.log('updateOwnedSearchList: ', e);
+  }
+};
+
+/**
+ * Updates all ships search list.
+ */
+export const createEmptyFormation = (): AppThunk => async (dispatch: AppDispatch, getState) => {
+  try {
+    const { appState } = getState();
+    dispatch(addNewFormationData({ name: 'Formation' }));
+  } catch (e) {
+    console.log('createEmptyFormation: ', e);
   }
 };
 

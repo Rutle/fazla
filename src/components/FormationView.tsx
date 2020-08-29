@@ -8,7 +8,7 @@ import FormationModal from './FormationModal';
 import DataStore from '../util/dataStore';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { setCurrentPage } from '../reducers/slices/appStateSlice';
+import { setCurrentPage, createEmptyFormation } from '../reducers/slices/appStateSlice';
 import FormationDropDown from './DropDown/FormationDropDown';
 interface FormationViewProps {
   shipData: DataStore;
@@ -16,17 +16,17 @@ interface FormationViewProps {
 
 const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
   const dispatch = useDispatch();
-  const [selectedTab, setSelectedTab] = useState('Formation');
   const appState = useSelector((state: RootState) => state.appState);
 
   useEffect(() => {
     if (appState.cPage !== 'FORMATION') {
+      console.log(appState);
       dispatch(setCurrentPage({ cPage: 'FORMATION' }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const selectFormation = () => {
-    console.log('selected');
+  const addNewFormation = () => {
+    dispatch(createEmptyFormation());
   };
 
   return (
@@ -35,35 +35,26 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
         <FormationModal shipData={shipData} />
         <div className={'ship-data-container dark'}>
           <div className="top-container">
-            <div className={`dropdown dark`}>
+            <div className={`tab dark`}>
               <FormationDropDown />
+              <button className={`tab-btn ${appState.themeColor} `} onClick={() => addNewFormation()}>
+                New formation
+              </button>
+              <button className={`tab-btn ${appState.themeColor} `} onClick={() => console.log('Remove')}>
+                Remove
+              </button>
+              <button className={`tab-btn ${appState.themeColor} `} onClick={() => console.log('Save')}>
+                Save
+              </button>
+              <button className={`tab-btn ${appState.themeColor} `} onClick={() => console.log('Save')}>
+                Rename
+              </button>
             </div>
           </div>
           <FormationGrid shipData={shipData} />
           <div className="scroll">
             <FormationPassives shipData={shipData} />
           </div>
-          {/*
-          <div className="top-container">
-            <Menu setActiveTab={setSelectedTab} currentActiveTab={selectedTab} tabs={['Formation', 'Summary']}>
-              <p>testi</p>
-            </Menu>
-          </div>
-          <div className="scroll">
-            <div id="formation" className={`tab-content ${selectedTab === 'Formation' ? 'active' : 'hidden'}`}>
-              <FormationGrid shipData={shipData} />
-              <div className="scroll">
-                <FormationPassives shipData={shipData} />
-              </div>
-            </div>
-            <div id="summary" className={`tab-content ${selectedTab === 'Summary' ? 'active' : 'hidden'}`}>
-              <FormationPassives shipData={shipData} />
-            </div>
-            <div id="PH2" className={`tab-content ${selectedTab === 'PH2' ? 'active' : 'hidden'}`}>
-              PH2
-            </div>
-          </div>
-          */}
         </div>
       </section>
     </PageTemplate>

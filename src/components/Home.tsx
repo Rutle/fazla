@@ -35,7 +35,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
           const initDataObj = await initData();
           await shipData.setArray(initDataObj.shipData);
           setShipCount(shipData.shipsArr.length);
-          dispatch(initShipLists(initDataObj.ownedShips, shipData, initDataObj.config));
+          dispatch(initShipLists(initDataObj.ownedShips, shipData, initDataObj.config, initDataObj.formations));
           setJSONSRCValue(initDataObj.config.jsonURL);
         })();
       }
