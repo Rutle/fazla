@@ -9,14 +9,31 @@ interface DropDownButtonProps {
   onToggle: (nextShow: boolean, event?: React.SyntheticEvent<Element, Event> | undefined) => void;
   drop: 'up' | 'down' | 'left' | 'right' | undefined;
   alignEnd: boolean | undefined;
+  selectedIdx: number;
+  listData: string[];
+  themeColor: string;
+  selectIndex: (idx: number) => void;
 }
 
-const DropDownButton: React.FC<DropDownButtonProps> = ({ show, onToggle, drop, alignEnd }) => (
+const DropDownButton: React.FC<DropDownButtonProps> = ({
+  show,
+  onToggle,
+  drop,
+  alignEnd,
+  selectedIdx,
+  listData,
+  themeColor,
+  selectIndex,
+}) => (
   <Dropdown show={show} onToggle={onToggle} drop={drop} alignEnd={alignEnd} itemSelector="button:not(:disabled)">
     {({ props }) => (
       <div {...props}>
-        <DropDownToggle id="formation-toggle" text="Formations"></DropDownToggle>
-        <DropDownMenu />
+        <DropDownToggle
+          id="formation-toggle"
+          text={selectedIdx === undefined || listData.length === 0 ? 'Formations' : listData[selectedIdx]}
+          themeColor={themeColor}
+        ></DropDownToggle>
+        <DropDownMenu listData={listData} themeColor={themeColor} selectedIdx={selectedIdx} selectIndex={selectIndex}/>
       </div>
     )}
   </Dropdown>

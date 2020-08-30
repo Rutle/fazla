@@ -40,10 +40,8 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
       </button>
        */}
 
-      <div className={`content ${ship !== undefined ? ship.rarity : ''}`}>
-        <div className={`details`} onClick={() => openShipSelector()}>
-          {ship !== undefined ? ship.names.en : 'Add ship'}
-        </div>
+      <div className={`content ${ship !== undefined ? ship.rarity : ''}`} onClick={() => openShipSelector()}>
+        <div className={`details`}>{ship !== undefined ? ship.names.en : 'Add ship'}</div>
         <div className={'footer-misc'}>
           <div className={'pos-indicator'}>{getLocation(index)}</div>
           <div className={`hull-type ${ship !== undefined ? ship.hullType : ''}`}>

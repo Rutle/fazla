@@ -10,7 +10,7 @@ interface PassiveProps {
 
 const PassivesList: React.FC<PassiveProps> = ({ orient = 'vertical', page, ship }) => {
   return (
-    <div id="passives" className={`container ${orient}`}>
+    <div /*id="passives"*/ className={`passives-container ${orient}`}>
       {ship.skills?.map((skill: Skill) => {
         return (
           <div key={skill.names.en} className={skill.color}>

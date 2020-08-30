@@ -12,6 +12,13 @@ import { Formation } from './formationGridSlice';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 
+export enum FormationAction {
+  New = 'NEW',
+  Remove = 'REMOVE',
+  Rename = 'RENAME',
+  Save = 'SAVE',
+}
+
 interface CurrentState {
   cState: 'INIT' | 'RUNNING' | 'ERROR' | 'UPDATING' | 'SAVING';
   cMsg:
@@ -107,18 +114,33 @@ const appStateSlice = createSlice({
     },
     addNewFormationData(state, action: PayloadAction<Formation>) {
       const newList = [...state.formationPage.formations, action.payload];
-      console.log({
-        ...state,
-        formationPage: {
-          formations: newList,
-          selectedIndex: newList.length - 1,
-        },
-      });
       return {
         ...state,
         formationPage: {
           formations: newList,
           selectedIndex: newList.length - 1,
+        },
+      };
+    },
+    removeFormation(state, action: PayloadAction<number>) {
+      const idx = action.payload;
+      const newForms = state.formationPage.formations.filter((item, index) => index !== idx);
+      const newLen = newForms.length;
+      const newIdx = newLen > 0 ? idx - 1 : NaN;
+      return {
+        ...state,
+        formationPage: {
+          formations: newForms,
+          selectedIndex: newIdx,
+        },
+      };
+    },
+    selectFormation(state, action: PayloadAction<number>) {
+      return {
+        ...state,
+        formationPage: {
+          ...state.formationPage,
+          selectedIndex: action.payload,
         },
       };
     },
@@ -152,6 +174,8 @@ export const {
   setAppConfigValue,
   setFormationsData,
   addNewFormationData,
+  removeFormation,
+  selectFormation,
 } = appStateSlice.actions;
 
 /**
@@ -340,10 +364,37 @@ export const updateSearchList = (data: DataStore): AppThunk => async (dispatch: 
 export const createEmptyFormation = (): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const { appState } = getState();
-    dispatch(addNewFormationData({ name: 'Formation' }));
+    const formCount = appState.formationPage.formations.length;
+    dispatch(addNewFormationData({ name: `Formation long name ${formCount}` }));
   } catch (e) {
     console.log('createEmptyFormation: ', e);
   }
 };
 
+/**
+ * Updates all ships search list.
+ */
+export const formationAction = (action: FormationAction): AppThunk => async (dispatch: AppDispatch, getState) => {
+  try {
+    const { appState } = getState();
+    switch (action) {
+      case 'NEW':
+        const formCount = appState.formationPage.formations.length;
+        dispatch(addNewFormationData({ name: `Formation long name ${formCount}` }));
+        break;
+      case 'REMOVE':
+        const idx = appState.formationPage.selectedIndex;
+        dispatch(removeFormation(idx));
+        break;
+      case 'RENAME':
+        break;
+      case 'SAVE':
+        break;
+      default:
+        break;
+    }
+  } catch (e) {
+    console.log('createEmptyFormation: ', e);
+  }
+};
 export default appStateSlice.reducer;

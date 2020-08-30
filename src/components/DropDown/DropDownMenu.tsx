@@ -1,15 +1,15 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { useDropdownMenu } from 'react-overlays';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../reducers/rootReducer';
 
 interface FormationDropDownProps {
-  role: string;
+  listData: string[] | undefined;
+  themeColor: string;
+  selectedIdx: number;
+  selectIndex: (idx: number) => void;
 }
 
-const DropDownMenu: React.FC = () => {
-  const dispatch = useDispatch();
-  const appState = useSelector((state: RootState) => state.appState);
+const DropDownMenu: React.FC<FormationDropDownProps> = ({ listData, themeColor, selectedIdx, selectIndex }) => {
   const { show, props } = useDropdownMenu({
     flip: true,
     offset: [0, 8],
@@ -18,17 +18,27 @@ const DropDownMenu: React.FC = () => {
     <div
       {...props}
       role="menu"
-      className="formation-dropdown-menu dark"
+      className={`formation-dropdown-menu ${themeColor}`}
       style={{
         opacity: `${show ? '1' : '0'}`,
         height: `${show ? 'auto' : '0'}`,
       }}
     >
-      {appState.formationPage !== undefined ? (
-        appState.formationPage.formations.map((value, index) => {
+      {listData !== undefined ? (
+        listData.map((value, index) => {
           return (
-            <button key={`${value.name}${index}`} type="button" className="btn menu-item dark">
-              {value.name}
+            <button
+              key={`${value}${index}`}
+              type="button"
+              style={{
+                display: `${show ? 'flex' : 'none'}`,
+              }}
+              className={`btn menu-item ${themeColor} ${index === selectedIdx ? 'active' : ''}`}
+              onClick={(e) => {
+                selectIndex(index);
+              }}
+            >
+              <span>{value}</span>
             </button>
           );
         })

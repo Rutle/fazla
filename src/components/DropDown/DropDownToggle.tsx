@@ -6,20 +6,23 @@ import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 interface DropDownToggleProps {
   id: string;
   text: string;
+  themeColor: string;
 }
 
 // eslint-disable-next-line react/prop-types
-const DropDownToggle: React.FC<DropDownToggleProps> = ({ id, text }) => {
+const DropDownToggle: React.FC<DropDownToggleProps> = ({ id, text, themeColor }) => {
   const ctrl = useDropdownToggle();
   return (
     <button
       type="button"
       id={id}
       {...ctrl[0]}
-      onClick={(e) => ctrl[1].toggle(ctrl[1].show, e)}
-      className={`toggle dark ${ctrl[1].show ? 'active' : ''}`}
+      onClick={(e) => {
+        ctrl[1].toggle(ctrl[1].show, e);
+      }}
+      className={`toggle ${themeColor} ${ctrl[1].show ? 'active' : ''}`}
     >
-      {text}
+      <span>{text}</span>
       <div className={`toggle-icon ${ctrl[1].show ? 'active' : ''}`}>
         <FontAwesomeIcon icon={faAngleLeft} />
       </div>

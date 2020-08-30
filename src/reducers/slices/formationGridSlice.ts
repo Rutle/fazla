@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface MiscInformation {
-  name: string | undefined; // Name displayed on the dropdown list
+  name: string; // Name displayed on the dropdown list
 }
 
 export type Formation = {
