@@ -1,10 +1,9 @@
-import { ShipSimple, Ship } from './shipdatatypes';
+import { Ship } from './shipdatatypes';
 import shipData from '../data/ships.json';
 import { AppConfig } from '../reducers/slices/appStateSlice';
 import { Formation } from '../reducers/slices/formationGridSlice';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
-const { getCurrentWebContents, Menu, MenuItem } = electron.remote;
 
 /*
 const electron = window.require('electron');
@@ -50,24 +49,6 @@ export const getConfig = (): void => {
   });
 };
 
-export const getShipData = (): { data: ShipSimple[]; isTempData: boolean } => {
-  return ipcRenderer.invoke('get-ship-data').then((result: { shipData: any; isConfigShipData: boolean }) => {
-    /*
-    console.log(
-      '[appUtils: getShipData] Ship data length: ',
-      Object.keys(result.shipData).length,
-      'isConfig :',
-      result.isConfigShipData,
-    );
-    */
-    if (!result.isConfigShipData) {
-      // console.log('No data in config');
-      // return { data: getShipsSimple('', shipData), isTempData: !result.isConfigShipData };
-    }
-    // console.log('data in config');
-    // return { data: getShipsSimple('', result.shipData), isTempData: !result.isConfigShipData };
-  });
-};
 /**
  * Function that calls electron along with data to save data to .json file.
  * @param data Data that is saved to .json.
@@ -101,7 +82,7 @@ export const saveFormationData = async (data: Formation[] = []): Promise<BasicRe
 };
 
 /**
- * Function that calls electron to save given data to electron-store .json config file.
+ * Function that calls electron to remove a formation from electron-store .json config gile.
  * @param {number} index Formation index
  */
 export const removeAFormation = async (index = 0): Promise<BasicResponse> => {
@@ -130,33 +111,6 @@ export const initData = async (): Promise<{
     );
 };
 
-// Data utilities
-
-/**
- * Returns lists of ships with simpler details.
- * @param name Substring to search for.
- * @param data Json data to search from.
- */
-export const getShipsSimpleById = (id: string, data = {}): ShipSimple[] => {
-  let t: ShipSimple[] = [];
-  t = Object.assign(
-    Object.keys(data)
-      .filter((e) => {
-        if ((data as any)[e].id.toLowerCase().includes(id.toLowerCase())) return true;
-        return false;
-      })
-      .map((key) => ({
-        name: (data as any)[key].names.en,
-        id: (data as any)[key].id,
-        class: (data as any)[key].class,
-        rarity: (data as any)[key].rarity,
-        hullType: (data as any)[key].hullType,
-        nationality: (data as any)[key].nationality,
-      })),
-  );
-  return t;
-};
-
 export const openWikiUrl = (str: string): void => {
   openUrl(str);
 };
@@ -167,23 +121,4 @@ export const urlValidation = (str: string): boolean => {
   const flags = 'gi';
   const re = new RegExp(urlVal, flags);
   return re.test(str);
-};
-
-export const formationContextMenu = () => {
-  /*
-  const webContents = getCurrentWebContents();
-  let rightClickPosition: { x: any; y: any };
-  const contextMenu = new Menu();
-  const menuItem = new MenuItem({
-    label: 'Inspect Element',
-    click: () => {
-      webContents.inspectElement(rightClickPosition.x, rightClickPosition.y);
-    },
-  });
-  contextMenu.append(menuItem);
-  webContents.on('context-menu', (event: any, params: { x: any; y: any }) => {
-    rightClickPosition = { x: params.x, y: params.y };
-    contextMenu.popup();
-  });
-  */
 };

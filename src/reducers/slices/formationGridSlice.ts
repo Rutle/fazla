@@ -8,6 +8,7 @@ export enum FormationAction {
   Rename = 'RENAME',
   Save = 'SAVE',
   AddShip = 'ADDSHIP',
+  RemoveShip = 'REMOVESHIP',
 }
 
 interface MiscInformation {
@@ -44,12 +45,6 @@ const formationGridSlice = createSlice({
           data: item.data.map((value, index) => (index !== gridIndex ? value : id)),
         };
       });
-      /*
-      console.log({
-        ...state,
-        formations: newForms,
-        isEdit: true,
-      });*/
       return {
         ...state,
         formations: newForms,
@@ -112,6 +107,23 @@ const formationGridSlice = createSlice({
         isEdit: state.isEdit.map((value, index) => (index !== selectedIdx ? value : !value)),
       };
     },
+    removeShipFromFormation(state, action: PayloadAction<{ gridIndex: number; selectedIndex: number }>) {
+      const { gridIndex, selectedIndex } = action.payload;
+      const newForms = state.formations.map((item, index) => {
+        if (index !== selectedIndex) {
+          return item;
+        }
+        return {
+          ...item,
+          data: item.data.map((value, index) => (index !== gridIndex ? value : 'NONE')),
+        };
+      });
+      return {
+        ...state,
+        formations: newForms,
+        isEdit: state.isEdit.map((value, index) => (index !== selectedIndex ? value : true)),
+      };
+    },
   },
 });
 
@@ -123,15 +135,22 @@ export const {
   removeFormation,
   selectFormation,
   toggleIsEdit,
+  removeShipFromFormation,
 } = formationGridSlice.actions;
 
 /**
  * Updates all ships search list.
  * @param {FormationAction} action Enum action
  */
-export const formationAction = (action: FormationAction): AppThunk => async (dispatch: AppDispatch, getState) => {
+export const formationAction = (action: FormationAction, gridIndex?: number): AppThunk => async (
+  dispatch: AppDispatch,
+  getState,
+) => {
   try {
     const { formationGrid, formationModal, shipDetails } = getState();
+    const formIdx = formationGrid.selectedIndex;
+    const { id } = shipDetails;
+
     switch (action) {
       case 'NEW':
         const formCount = formationGrid.formations.length;
@@ -139,26 +158,23 @@ export const formationAction = (action: FormationAction): AppThunk => async (dis
         dispatch(addNewFormationData({ data: emptyFormation, name: `Formation ${formCount}` }));
         break;
       case 'REMOVE':
-        const idx = formationGrid.selectedIndex;
-        await removeAFormation(idx).then((result) => {
-          console.log('removeAFormation slice', result.isOk);
-          dispatch(removeFormation(idx));
+        await removeAFormation(formIdx).then((result) => {
+          dispatch(removeFormation(formIdx));
         });
         break;
       case 'RENAME':
         break;
       case 'SAVE':
         await saveFormationData(formationGrid.formations).then((result) => {
-          console.log('slice', result.isOk);
-          const { selectedIndex } = formationGrid;
-          dispatch(toggleIsEdit(selectedIndex));
+          dispatch(toggleIsEdit(formIdx));
         });
         break;
       case 'ADDSHIP':
-        const { id } = shipDetails;
-        const { gridIndex } = formationModal;
-        const { selectedIndex } = formationGrid;
-        dispatch(addShipToFormation({ id, gridIndex, selectedIndex }));
+        const gIndex = formationModal.gridIndex;
+        dispatch(addShipToFormation({ id, gridIndex: gIndex, selectedIndex: formIdx }));
+        break;
+      case 'REMOVESHIP':
+        dispatch(removeShipFromFormation({ gridIndex: gridIndex as number, selectedIndex: formIdx }));
         break;
       default:
         break;

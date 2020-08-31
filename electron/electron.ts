@@ -177,6 +177,7 @@ ipcMain.handle('initData', async (event, arg) => {
         config: {
           jsonURL: SHIPAPIURL,
           themeColor: THEMECOLOR,
+          fTooltip: true,
         },
         ownedShips: [],
         formations: [],

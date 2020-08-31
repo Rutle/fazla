@@ -1,14 +1,12 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import ReactModal from 'react-modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import ShipDetails from './ShipDetails';
-import { addShipToFormation } from '../reducers/slices/formationGridSlice';
-// import { getShipById } from '../util/appUtilities';
 import { closeModal } from '../reducers/slices/formationModalSlice';
 import DataStore from '../util/dataStore';
 import SideBar from './SideBar';
+import PropTypes from 'prop-types';
 import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
 
 ReactModal.setAppElement('#root');
@@ -24,11 +22,10 @@ const FormationModal: React.FC<FormationModalProps> = ({ shipData }) => {
   const addShip = () => {
     switch (appState.cToggle) {
       case 'all':
-        // dispatch(addShipToFormation({ index: formationModal.gridIndex, id: shipDetails.id }));
         dispatch(formationAction(FormationAction.AddShip));
         break;
       case 'owned':
-        // dispatch(addShipToFormation({ index: formationModal.gridIndex, id: shipDetails.id }));
+        dispatch(formationAction(FormationAction.AddShip));
         break;
       default:
         break;
@@ -57,3 +54,7 @@ const FormationModal: React.FC<FormationModalProps> = ({ shipData }) => {
 };
 
 export default FormationModal;
+
+FormationModal.propTypes = {
+  shipData: PropTypes.instanceOf(DataStore).isRequired,
+};

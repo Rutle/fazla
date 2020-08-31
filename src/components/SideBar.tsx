@@ -110,20 +110,6 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
   return (
     <div className="ship-side-container dark">
       <div className="top-container">
-        {/* <Menu setActiveTab={setSelectedTab} currentActiveTab={selectedTab} tabs={['Search', 'PH1', 'PH2']} /> */}
-        {/*
-        <Popover
-          isOpen={isPopoverOpen}
-          position={'bottom'} // preferred position
-          onClickOutside={() => setIsPopoverOpen(false)}
-          content={<SearchParameterContent />}
-          containerClassName={'popover-container dark'}
-        >
-          <button className="btn small dark" onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
-            Categories
-          </button>
-        </Popover>
-        */}
         <CategoryOverlay />
         <form onSubmit={(e) => searchSubmit(e)}>
           <div id="input-group">

@@ -11,6 +11,9 @@ import { RootState } from '../reducers/rootReducer';
 import { setCurrentPage } from '../reducers/slices/appStateSlice';
 import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
 import FormationDropDown from './DropDown/FormationDropDown';
+import ReactTooltip from 'react-tooltip';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMouse } from '@fortawesome/free-solid-svg-icons';
 interface FormationViewProps {
   shipData: DataStore;
 }
@@ -32,6 +35,11 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
     <PageTemplate>
       <section className="page-content">
         <FormationModal shipData={shipData} />
+        <ReactTooltip id="click-help" place="bottom" type="dark" effect="solid" aria-haspopup="true" delayShow={1000}>
+          <span>
+            Add <FontAwesomeIcon icon={faMouse} /> Clear
+          </span>
+        </ReactTooltip>
         <div className={'ship-data-container dark'}>
           <div className="top-container">
             <div className={`tab dark`}>

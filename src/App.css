@@ -29,6 +29,8 @@
   --main-dark-input-bg: #323844;
   --main-dark-input-focus-border: #444b5a;
   --main-dark-inform-bg: #272c3b;
+  --main-dark-tooltip-bg: #1b1d24e3;
+  --main-dark-tooltip-border: #3f4657a6;
 
   --root-light-bg: rgb(255, 255, 255);
   --main-light-color: black;
@@ -1119,6 +1121,9 @@ div.f-title {
   text-align: start;
 }
 
+.home-container div.f-title > svg {
+  margin-right: 10px;
+}
 .grid-item.name-title {
   min-width: 160px;
   max-width: 160px;
@@ -1144,8 +1149,10 @@ div.grid-item.action {
   padding: 1px 1px 1px 5px;
   min-height: 27px;
 }
+
 .home-container div.grid-item.action {
   justify-content: center;
+  align-items: center;
 }
 .grid-item.passive-title {
   padding: 1px 5px 1px 5px;

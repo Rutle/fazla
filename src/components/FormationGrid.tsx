@@ -2,8 +2,6 @@
 import React from 'react';
 import FormationGridItem from './FormationGridItem';
 import DataStore from '../util/dataStore';
-import { useSelector } from 'react-redux';
-import { RootState } from '../reducers/rootReducer';
 import PropTypes from 'prop-types';
 import { Formation } from '../reducers/slices/formationGridSlice';
 interface FormationGridProps {

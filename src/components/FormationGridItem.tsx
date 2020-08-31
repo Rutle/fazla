@@ -4,9 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { openModal } from '../reducers/slices/formationModalSlice';
 import { Ship } from '../util/shipdatatypes';
-const electron = window.require('electron');
-const { getCurrentWebContents, Menu, MenuItem } = electron.remote;
-
+import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
 interface GridItemProps {
   index: number;
   ship: Ship | undefined;
@@ -19,15 +17,6 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
 
   const openShipSelector = () => {
     dispatch(openModal({ isOpen: true, gridIndex: index }));
-  };
-  const openContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.preventDefault();
-    const xPos = e.pageX + 'px';
-    const yPos = e.pageY + 'px';
-  };
-
-  const removeA = (str: string) => {
-    console.log(str);
   };
 
   const getLocation = (idx: number): string => {
@@ -46,18 +35,21 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
   return (
     <div className={`grid-item ${config.themeColor}`}>
       {/*
-            <button className={`btn ${config.themeColor}`}>
-        <div>Add ship</div>
-      </button>
+        <button className={`btn ${config.themeColor}`}>
+          <div>Add ship</div>
+        </button>
        */}
 
       <div
         className={`content ${ship !== undefined ? ship.rarity : ''}`}
         onClick={() => openShipSelector()}
-        onContextMenu={(e) => {
-          console.log(e);
-          openContextMenu(e);
-        }}
+        onContextMenu={() => dispatch(formationAction(FormationAction.RemoveShip, index))}
+        data-tip
+        data-for="click-help"
+        data-delay-show="1000"
+        data-background-color="var(--main-dark-tooltip-bg)"
+        data-border
+        data-border-color="var(--main-dark-tooltip-border)"
       >
         <div className={`details`}>{ship !== undefined ? ship.names.en : 'Add ship'}</div>
         <div className={'footer-misc'}>

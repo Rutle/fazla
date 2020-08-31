@@ -231,7 +231,8 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                     electronStore.set({
                         config: {
                             jsonURL: SHIPAPIURL,
-                            themeColor: THEMECOLOR
+                            themeColor: THEMECOLOR,
+                            fTooltip: true
                         },
                         ownedShips: [],
                         formations: []

@@ -6,6 +6,8 @@ import { updateShipData, initShipLists, setCurrentPage } from '../reducers/slice
 import { initData } from '../util/appUtilities';
 import DataStore from '../util/dataStore';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleRight, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 interface HomeProps {
   shipData: DataStore;
@@ -75,7 +77,10 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
         <div className="home-container dark">
           <div className="f-grid">
             <div className="f-row">
-              <div className="f-title">Options</div>
+              <div className="f-title">
+                <FontAwesomeIcon icon={faCaretRight} />
+                Options
+              </div>
             </div>
             <div className="f-row wrap">
               <div className="grid-item name">Update Data:</div>
@@ -104,7 +109,10 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
               <div className="grid-item name">Update Data:</div>
             </div>
             <div className="f-row">
-              <div className="f-title">Stats</div>
+              <div className="f-title">
+                <FontAwesomeIcon icon={faCaretRight} />
+                Stats
+              </div>
             </div>
             <div className="f-row wrap">
               <div className="grid-item name">Ship count</div>
@@ -115,7 +123,10 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
               <div className="grid-item action">{appState.cState === 'INIT' ? '-' : docksCount}</div>
             </div>
             <div className="f-row wrap">
-              <div className="grid-item name">Placeholder</div>
+              <div className="grid-item name">Formation tooltips</div>
+              <div className="grid-item action">
+                <input type="checkbox" />
+              </div>
             </div>
           </div>
         </div>
