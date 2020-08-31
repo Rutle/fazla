@@ -15,8 +15,8 @@ interface MiscInformation {
   name: string | undefined;
 }
 
-export type Formation = {
-  [key: number]: string;
+type Formation = {
+  data: string[];
 } & MiscInformation;
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
@@ -128,7 +128,37 @@ ipcMain.handle('save-owned-ships', async (event, data) => {
   } catch (error) {
     return { isOk: false, msg: error.message };
   }
-  return { isOk: true, msg: 'Owned ships succesfully saved.' };
+  return { isOk: true, msg: 'Owned ships saved succesfully.' };
+});
+/**
+ * Function that saved given formation data.
+ */
+ipcMain.handle('save-formation-data', async (event, data) => {
+  try {
+    const fData = data as Formation[];
+    electronStore.set({
+      formations: fData,
+    });
+  } catch (e) {
+    return { isOk: false, msg: e.message };
+  }
+  return { isOk: true, msg: 'Formation data saved succesfully.' };
+});
+/**
+ * Function removes formation from .json config file.
+ */
+ipcMain.handle('remove-formation-by-index', async (event, data) => {
+  try {
+    const idx = data as number;
+    const formationData = electronStore.get('formations') as Formation[];
+    const newForms = formationData.filter((item, index) => index !== idx);
+    electronStore.set({
+      formations: newForms,
+    });
+  } catch (e) {
+    return { isOk: false, msg: e.message };
+  }
+  return { isOk: true, msg: 'Formation data saved succesfully.' };
 });
 
 /**

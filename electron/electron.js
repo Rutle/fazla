@@ -169,7 +169,45 @@ electron_1.ipcMain.handle('save-owned-ships', function (event, data) { return __
         catch (error) {
             return [2 /*return*/, { isOk: false, msg: error.message }];
         }
-        return [2 /*return*/, { isOk: true, msg: 'Owned ships succesfully saved.' }];
+        return [2 /*return*/, { isOk: true, msg: 'Owned ships saved succesfully.' }];
+    });
+}); });
+/**
+ * Function that saved given formation data.
+ */
+electron_1.ipcMain.handle('save-formation-data', function (event, data) { return __awaiter(void 0, void 0, void 0, function () {
+    var fData;
+    return __generator(this, function (_a) {
+        try {
+            fData = data;
+            electronStore.set({
+                formations: fData
+            });
+        }
+        catch (e) {
+            return [2 /*return*/, { isOk: false, msg: e.message }];
+        }
+        return [2 /*return*/, { isOk: true, msg: 'Formation data saved succesfully.' }];
+    });
+}); });
+/**
+ * Function removes formation from .json config file.
+ */
+electron_1.ipcMain.handle('remove-formation-by-index', function (event, data) { return __awaiter(void 0, void 0, void 0, function () {
+    var idx_1, formationData, newForms;
+    return __generator(this, function (_a) {
+        try {
+            idx_1 = data;
+            formationData = electronStore.get('formations');
+            newForms = formationData.filter(function (item, index) { return index !== idx_1; });
+            electronStore.set({
+                formations: newForms
+            });
+        }
+        catch (e) {
+            return [2 /*return*/, { isOk: false, msg: e.message }];
+        }
+        return [2 /*return*/, { isOk: true, msg: 'Formation data saved succesfully.' }];
     });
 }); });
 /**

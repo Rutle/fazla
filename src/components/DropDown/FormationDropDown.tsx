@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import DropDownButton from './DropDownButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
-import { selectFormation } from '../../reducers/slices/appStateSlice';
+import { selectFormation } from '../../reducers/slices/formationGridSlice';
 
 const FormationDropDown: React.FC = () => {
   const dispatch = useDispatch();
   const appState = useSelector((state: RootState) => state.appState);
+  const fData = useSelector((state: RootState) => state.formationGrid);
   const [show, setShow] = useState(false);
 
   const selectIndex = (idx: number) => {
@@ -19,10 +20,11 @@ const FormationDropDown: React.FC = () => {
       onToggle={(nextShow) => setShow(nextShow)}
       drop="down"
       alignEnd={true}
-      selectedIdx={appState.formationPage.selectedIndex}
-      listData={appState.formationPage.formations.map((item) => item.name)}
+      selectedIdx={fData.selectedIndex}
+      listData={fData.formations.map((item) => item.name)}
       themeColor={appState.themeColor}
       selectIndex={selectIndex}
+      onSelect={setShow}
     />
   );
 };

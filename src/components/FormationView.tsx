@@ -8,7 +8,8 @@ import FormationModal from './FormationModal';
 import DataStore from '../util/dataStore';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { setCurrentPage, formationAction, FormationAction } from '../reducers/slices/appStateSlice';
+import { setCurrentPage } from '../reducers/slices/appStateSlice';
+import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
 import FormationDropDown from './DropDown/FormationDropDown';
 interface FormationViewProps {
   shipData: DataStore;
@@ -17,21 +18,15 @@ interface FormationViewProps {
 const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
   const dispatch = useDispatch();
   const appState = useSelector((state: RootState) => state.appState);
+  const fData = useSelector((state: RootState) => state.formationGrid);
 
   useEffect(() => {
     if (appState.cPage !== 'FORMATION') {
       dispatch(setCurrentPage({ cPage: 'FORMATION' }));
-      console.log(appState.formationPage.formations.length);
+      console.log(fData.formations.length);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const addNewFormation = () => {
-    dispatch(formationAction(FormationAction.New));
-  };
-
-  const removeFormation = () => {
-    dispatch(formationAction(FormationAction.Remove));
-  };
 
   return (
     <PageTemplate>
@@ -41,22 +36,28 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
           <div className="top-container">
             <div className={`tab dark`}>
               <FormationDropDown />
-              <button className={`tab-btn ${appState.themeColor} `} onClick={() => addNewFormation()}>
+              <button
+                className={`${appState.themeColor} `}
+                onClick={() => dispatch(formationAction(FormationAction.New))}
+              >
                 New formation
               </button>
-              {appState.formationPage.formations.length !== 0 ? (
+              {fData.formations.length !== 0 ? (
                 <>
                   <button
-                    className={`tab-btn ${appState.themeColor} `}
-                    onClick={() => removeFormation()}
-                    disabled={appState.formationPage.formations.length === 0}
+                    className={`${appState.themeColor} `}
+                    onClick={() => dispatch(formationAction(FormationAction.Remove))}
+                    disabled={fData.formations.length === 0}
                   >
                     Remove
                   </button>
-                  <button className={`tab-btn ${appState.themeColor} `} onClick={() => console.log('Save')}>
+                  <button
+                    className={`${appState.themeColor} ${fData.isEdit[fData.selectedIndex] ? 'inform' : ''}`}
+                    onClick={() => dispatch(formationAction(FormationAction.Save))}
+                  >
                     Save
                   </button>
-                  <button className={`tab-btn ${appState.themeColor} `} onClick={() => console.log('Save')}>
+                  <button className={`${appState.themeColor} `} onClick={() => console.log('Save')}>
                     Rename
                   </button>
                 </>
@@ -65,11 +66,11 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
               )}
             </div>
           </div>
-          {appState.formationPage.formations.length !== 0 ? (
+          {fData.formations.length !== 0 ? (
             <>
-              <FormationGrid shipData={shipData} />
+              <FormationGrid shipData={shipData} formation={fData.formations[fData.selectedIndex]} />
               <div className="scroll">
-                <FormationPassives shipData={shipData} />
+                <FormationPassives shipData={shipData} formation={fData.formations[fData.selectedIndex]} />
               </div>
             </>
           ) : (

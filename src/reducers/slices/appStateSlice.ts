@@ -8,16 +8,9 @@ import { ShipSimple } from '../../util/shipdatatypes';
 import { batch } from 'react-redux';
 import { saveShipData } from '../../util/appUtilities';
 import { setOwnedList } from './ownedShipListSlice';
-import { Formation } from './formationGridSlice';
+import { Formation, setFormationsData } from './formationGridSlice';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
-
-export enum FormationAction {
-  New = 'NEW',
-  Remove = 'REMOVE',
-  Rename = 'RENAME',
-  Save = 'SAVE',
-}
 
 interface CurrentState {
   cState: 'INIT' | 'RUNNING' | 'ERROR' | 'UPDATING' | 'SAVING';
@@ -49,10 +42,6 @@ type ListStateObject = {
   owned: ListState;
   ownedIsReady: boolean;
   allIsReady: boolean;
-  formationPage: {
-    formations: Formation[];
-    selectedIndex: number;
-  };
 } & CurrentState &
   CurrentPage &
   AppConfig;
@@ -74,10 +63,6 @@ const initialState: ListStateObject = {
   allIsReady: false,
   jsonURL: '',
   themeColor: '',
-  formationPage: {
-    formations: [],
-    selectedIndex: NaN,
-  },
 };
 
 const appStateSlice = createSlice({
@@ -100,48 +85,6 @@ const appStateSlice = createSlice({
       return {
         ...state,
         ...action.payload,
-      };
-    },
-    setFormationsData(state, action: PayloadAction<Formation[]>) {
-      const count = action.payload.length;
-      return {
-        ...state,
-        formationPage: {
-          formations: action.payload,
-          selectedIndex: count >= 0 ? 0 : NaN,
-        },
-      };
-    },
-    addNewFormationData(state, action: PayloadAction<Formation>) {
-      const newList = [...state.formationPage.formations, action.payload];
-      return {
-        ...state,
-        formationPage: {
-          formations: newList,
-          selectedIndex: newList.length - 1,
-        },
-      };
-    },
-    removeFormation(state, action: PayloadAction<number>) {
-      const idx = action.payload;
-      const newForms = state.formationPage.formations.filter((item, index) => index !== idx);
-      const newLen = newForms.length;
-      const newIdx = newLen > 0 ? idx - 1 : NaN;
-      return {
-        ...state,
-        formationPage: {
-          formations: newForms,
-          selectedIndex: newIdx,
-        },
-      };
-    },
-    selectFormation(state, action: PayloadAction<number>) {
-      return {
-        ...state,
-        formationPage: {
-          ...state.formationPage,
-          selectedIndex: action.payload,
-        },
       };
     },
     setCurrentToggle(state, action: PayloadAction<string>) {
@@ -172,16 +115,14 @@ export const {
   setListValue,
   setCurrentPage,
   setAppConfigValue,
-  setFormationsData,
-  addNewFormationData,
-  removeFormation,
-  selectFormation,
 } = appStateSlice.actions;
 
 /**
  * Initialize all and owned lists with data.
  * @param {string[]} ownedShips Array of strings containing ship IDs.
  * @param {DataStore} data Data structure containg full ship data.
+ * @param {AppConfig} config Configuration information
+ * @param {Formation[]} formations Formations saved/created by the user.
  */
 export const initShipLists = (
   ownedShips: string[],
@@ -358,43 +299,4 @@ export const updateSearchList = (data: DataStore): AppThunk => async (dispatch: 
   }
 };
 
-/**
- * Updates all ships search list.
- */
-export const createEmptyFormation = (): AppThunk => async (dispatch: AppDispatch, getState) => {
-  try {
-    const { appState } = getState();
-    const formCount = appState.formationPage.formations.length;
-    dispatch(addNewFormationData({ name: `Formation long name ${formCount}` }));
-  } catch (e) {
-    console.log('createEmptyFormation: ', e);
-  }
-};
-
-/**
- * Updates all ships search list.
- */
-export const formationAction = (action: FormationAction): AppThunk => async (dispatch: AppDispatch, getState) => {
-  try {
-    const { appState } = getState();
-    switch (action) {
-      case 'NEW':
-        const formCount = appState.formationPage.formations.length;
-        dispatch(addNewFormationData({ name: `Formation long name ${formCount}` }));
-        break;
-      case 'REMOVE':
-        const idx = appState.formationPage.selectedIndex;
-        dispatch(removeFormation(idx));
-        break;
-      case 'RENAME':
-        break;
-      case 'SAVE':
-        break;
-      default:
-        break;
-    }
-  } catch (e) {
-    console.log('createEmptyFormation: ', e);
-  }
-};
 export default appStateSlice.reducer;

@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { openModal } from '../reducers/slices/formationModalSlice';
 import { Ship } from '../util/shipdatatypes';
+const electron = window.require('electron');
+const { getCurrentWebContents, Menu, MenuItem } = electron.remote;
 
 interface GridItemProps {
   index: number;
@@ -17,6 +19,15 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
 
   const openShipSelector = () => {
     dispatch(openModal({ isOpen: true, gridIndex: index }));
+  };
+  const openContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    const xPos = e.pageX + 'px';
+    const yPos = e.pageY + 'px';
+  };
+
+  const removeA = (str: string) => {
+    console.log(str);
   };
 
   const getLocation = (idx: number): string => {
@@ -40,7 +51,14 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
       </button>
        */}
 
-      <div className={`content ${ship !== undefined ? ship.rarity : ''}`} onClick={() => openShipSelector()}>
+      <div
+        className={`content ${ship !== undefined ? ship.rarity : ''}`}
+        onClick={() => openShipSelector()}
+        onContextMenu={(e) => {
+          console.log(e);
+          openContextMenu(e);
+        }}
+      >
         <div className={`details`}>{ship !== undefined ? ship.names.en : 'Add ship'}</div>
         <div className={'footer-misc'}>
           <div className={'pos-indicator'}>{getLocation(index)}</div>

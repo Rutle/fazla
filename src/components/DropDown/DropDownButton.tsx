@@ -13,6 +13,7 @@ interface DropDownButtonProps {
   listData: string[];
   themeColor: string;
   selectIndex: (idx: number) => void;
+  onSelect: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DropDownButton: React.FC<DropDownButtonProps> = ({
@@ -24,16 +25,23 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({
   listData,
   themeColor,
   selectIndex,
+  onSelect,
 }) => (
   <Dropdown show={show} onToggle={onToggle} drop={drop} alignEnd={alignEnd} itemSelector="button:not(:disabled)">
     {({ props }) => (
-      <div {...props}>
+      <div {...props} id="dropdown">
         <DropDownToggle
-          id="formation-toggle"
+          id="dropdown-toggle"
           text={selectedIdx === undefined || listData.length === 0 ? 'Formations' : listData[selectedIdx]}
           themeColor={themeColor}
         ></DropDownToggle>
-        <DropDownMenu listData={listData} themeColor={themeColor} selectedIdx={selectedIdx} selectIndex={selectIndex}/>
+        <DropDownMenu
+          listData={listData}
+          themeColor={themeColor}
+          selectedIdx={selectedIdx}
+          selectIndex={selectIndex}
+          onSelect={onSelect}
+        />
       </div>
     )}
   </Dropdown>

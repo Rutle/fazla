@@ -4,6 +4,7 @@ import { AppConfig } from '../reducers/slices/appStateSlice';
 import { Formation } from '../reducers/slices/formationGridSlice';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
+const { getCurrentWebContents, Menu, MenuItem } = electron.remote;
 
 /*
 const electron = window.require('electron');
@@ -16,6 +17,11 @@ https://www.electronjs.org/docs/api/ipc-renderer#ipcrendererinvokechannel-args
 // for config
 https://www.npmjs.com/package/electron-store#how-do-i-get-store-values-in-the-renderer-process-when-my-store-was-initialized-in-the-main-process
 */
+
+interface BasicResponse {
+  isOk: boolean;
+  msg: string;
+}
 
 // Renderer to Main
 export const closeWindow = (): void => {
@@ -66,8 +72,8 @@ export const getShipData = (): { data: ShipSimple[]; isTempData: boolean } => {
  * Function that calls electron along with data to save data to .json file.
  * @param data Data that is saved to .json.
  */
-export const saveShipData = async (data = {}): Promise<{ isOk: boolean; msg: string }> => {
-  return await ipcRenderer.invoke('save-ship-data', data).then((result: { isOk: boolean; msg: string }) => {
+export const saveShipData = async (data = {}): Promise<BasicResponse> => {
+  return await ipcRenderer.invoke('save-ship-data', data).then((result: BasicResponse) => {
     console.log('[appUtils: saveShipData] Ship data save: ', result.isOk);
     return result;
   });
@@ -77,9 +83,30 @@ export const saveShipData = async (data = {}): Promise<{ isOk: boolean; msg: str
  * Function that calls electron along with owned ship data to save data to config file.
  * @param {string[]} data Owned ship data to be saved to config.
  */
-export const saveOwnedShipData = async (data: string[] = []): Promise<{ isOk: boolean; msg: string }> => {
-  return await ipcRenderer.invoke('save-owned-ships', data).then((result: { isOk: boolean; msg: string }) => {
+export const saveOwnedShipData = async (data: string[] = []): Promise<BasicResponse> => {
+  return await ipcRenderer.invoke('save-owned-ships', data).then((result: BasicResponse) => {
     console.log('[appUtils: saveOwnedShipData] :', result.isOk);
+    return result;
+  });
+};
+/**
+ * Function that calls electron to save given data to electron-store .json config file.
+ * @param {Formation[]} data Formation data
+ */
+export const saveFormationData = async (data: Formation[] = []): Promise<BasicResponse> => {
+  return await ipcRenderer.invoke('save-formation-data', data).then((result: BasicResponse) => {
+    console.log('appUtils: saveFormationData]', result.isOk);
+    return result;
+  });
+};
+
+/**
+ * Function that calls electron to save given data to electron-store .json config file.
+ * @param {number} index Formation index
+ */
+export const removeAFormation = async (index = 0): Promise<BasicResponse> => {
+  return await ipcRenderer.invoke('remove-formation-by-index', index).then((result: BasicResponse) => {
+    console.log('appUtils: removeAFormation]', result.isOk);
     return result;
   });
 };
@@ -140,4 +167,23 @@ export const urlValidation = (str: string): boolean => {
   const flags = 'gi';
   const re = new RegExp(urlVal, flags);
   return re.test(str);
+};
+
+export const formationContextMenu = () => {
+  /*
+  const webContents = getCurrentWebContents();
+  let rightClickPosition: { x: any; y: any };
+  const contextMenu = new Menu();
+  const menuItem = new MenuItem({
+    label: 'Inspect Element',
+    click: () => {
+      webContents.inspectElement(rightClickPosition.x, rightClickPosition.y);
+    },
+  });
+  contextMenu.append(menuItem);
+  webContents.on('context-menu', (event: any, params: { x: any; y: any }) => {
+    rightClickPosition = { x: params.x, y: params.y };
+    contextMenu.popup();
+  });
+  */
 };

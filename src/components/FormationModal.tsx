@@ -9,6 +9,7 @@ import { addShipToFormation } from '../reducers/slices/formationGridSlice';
 import { closeModal } from '../reducers/slices/formationModalSlice';
 import DataStore from '../util/dataStore';
 import SideBar from './SideBar';
+import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
 
 ReactModal.setAppElement('#root');
 interface FormationModalProps {
@@ -23,10 +24,11 @@ const FormationModal: React.FC<FormationModalProps> = ({ shipData }) => {
   const addShip = () => {
     switch (appState.cToggle) {
       case 'all':
-        dispatch(addShipToFormation({ index: formationModal.gridIndex, id: shipDetails.id }));
+        // dispatch(addShipToFormation({ index: formationModal.gridIndex, id: shipDetails.id }));
+        dispatch(formationAction(FormationAction.AddShip));
         break;
       case 'owned':
-        dispatch(addShipToFormation({ index: formationModal.gridIndex, id: shipDetails.id }));
+        // dispatch(addShipToFormation({ index: formationModal.gridIndex, id: shipDetails.id }));
         break;
       default:
         break;

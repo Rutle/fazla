@@ -28,6 +28,7 @@
   --main-dark-active-border: #818aa1;
   --main-dark-input-bg: #323844;
   --main-dark-input-focus-border: #444b5a;
+  --main-dark-inform-bg: #272c3b;
 
   --root-light-bg: rgb(255, 255, 255);
   --main-light-color: black;
@@ -513,13 +514,18 @@ div > div.tab-content.active {
   overflow: hidden;
 }
 
-.tab button {
+.tab > button {
   border: none;
   outline: none;
   cursor: pointer;
-  /* padding: 14px 16px;*/
   padding: 5px 16px;
   transition: 0.3s;
+}
+
+.tab > button.inform {
+  background-color: var(--main-dark-inform-bg);
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
 }
 
 /* ###### FORMATION DROPDOWN ###### */
@@ -529,20 +535,35 @@ div > div.tab-content.active {
   min-width: 200px;
   max-width: 200px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 5px 16px;
+  transition: 0.3s;
 }
-
+#dropdown {
+  cursor: pointer;
+}
 .toggle > span {
   overflow: hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-  width: 145px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /* width: 145px; */
+  max-width: 145px;
+  cursor: pointer;
 }
+
 .toggle-icon {
   padding: 0;
   margin-left: 10px;
   transition: 0.3s;
   width: 7px;
+  cursor: pointer;
+}
+
+.toggle-icon > svg {
+  cursor: pointer;
 }
 
 .toggle-icon.active {
@@ -556,8 +577,9 @@ div > div.tab-content.active {
   border-top: 1px solid var(--main-dark-border);
 }
 
-.formation-dropdown-menu .btn.menu-item {
+.formation-dropdown-menu > .btn.menu-item {
   height: 25px;
+  border-top: unset;
   justify-content: flex-start;
   text-align: left;
   min-width: 200px;
@@ -566,7 +588,7 @@ div > div.tab-content.active {
 }
 
 .btn.menu-item > span {
-  width: 166px;
+  width: inherit;
   border-top: unset;
   overflow: hidden;
   white-space:nowrap;
@@ -1132,7 +1154,7 @@ div.grid-item.action {
 
 .grid-item.passive {
   font-family: Lucida Sans Unicode;
-  padding: 1px 1px 1px 5px;
+  padding: 1px 5px 1px 5px;
   justify-content: center;
   font-size: 14px;
 }

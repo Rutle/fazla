@@ -7,9 +7,16 @@ interface FormationDropDownProps {
   themeColor: string;
   selectedIdx: number;
   selectIndex: (idx: number) => void;
+  onSelect: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DropDownMenu: React.FC<FormationDropDownProps> = ({ listData, themeColor, selectedIdx, selectIndex }) => {
+const DropDownMenu: React.FC<FormationDropDownProps> = ({
+  listData,
+  themeColor,
+  selectedIdx,
+  selectIndex,
+  onSelect,
+}) => {
   const { show, props } = useDropdownMenu({
     flip: true,
     offset: [0, 8],
@@ -36,6 +43,7 @@ const DropDownMenu: React.FC<FormationDropDownProps> = ({ listData, themeColor, 
               className={`btn menu-item ${themeColor} ${index === selectedIdx ? 'active' : ''}`}
               onClick={(e) => {
                 selectIndex(index);
+                onSelect(!show);
               }}
             >
               <span>{value}</span>
