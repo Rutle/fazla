@@ -55,11 +55,11 @@ const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship })
   return (
     <>
       <div className="ship-title-bar">
-        <div>
+        <div className="dark">
           <span className="ship-name">{ship.names.en}</span>
           <span className={ship.rarity}>{` ${ship.stars?.stars}`}</span>
         </div>
-        <span className="end-buttons">
+        <span className="end-buttons dark">
           {renderAddRemoveButton()}
           <button
             className="btn dark informative"

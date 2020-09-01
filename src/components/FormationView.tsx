@@ -21,6 +21,7 @@ interface FormationViewProps {
 const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
   const dispatch = useDispatch();
   const appState = useSelector((state: RootState) => state.appState);
+  const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
 
   useEffect(() => {
@@ -44,28 +45,26 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
           <div className="top-container">
             <div className={`tab dark`}>
               <FormationDropDown />
-              <button
-                className={`${appState.themeColor} `}
-                onClick={() => dispatch(formationAction(FormationAction.New))}
-              >
+              <button className={`${config.themeColor}`} onClick={() => dispatch(formationAction(FormationAction.New))}>
                 New formation
               </button>
               {fData.formations.length !== 0 ? (
                 <>
                   <button
-                    className={`${appState.themeColor} `}
+                    className={`${config.themeColor}`}
                     onClick={() => dispatch(formationAction(FormationAction.Remove))}
                     disabled={fData.formations.length === 0}
                   >
                     Remove
                   </button>
                   <button
-                    className={`${appState.themeColor} ${fData.isEdit[fData.selectedIndex] ? 'inform' : ''}`}
+                    className={`${config.themeColor} ${fData.isEdit[fData.selectedIndex] ? 'inform' : ''}`}
                     onClick={() => dispatch(formationAction(FormationAction.Save))}
+                    disabled={!fData.isEdit[fData.selectedIndex]}
                   >
                     Save
                   </button>
-                  <button className={`${appState.themeColor} `} onClick={() => console.log('Save')}>
+                  <button className={`${config.themeColor} `} onClick={() => console.log('Save')}>
                     Rename
                   </button>
                 </>
@@ -76,9 +75,17 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
           </div>
           {fData.formations.length !== 0 ? (
             <>
-              <FormationGrid shipData={shipData} formation={fData.formations[fData.selectedIndex]} />
+              <FormationGrid
+                shipData={shipData}
+                formation={fData.formations[fData.selectedIndex]}
+                themeColor={config.themeColor}
+              />
               <div className="scroll">
-                <FormationPassives shipData={shipData} formation={fData.formations[fData.selectedIndex]} />
+                <FormationPassives
+                  shipData={shipData}
+                  formation={fData.formations[fData.selectedIndex]}
+                  themeColor={config.themeColor}
+                />
               </div>
             </>
           ) : (

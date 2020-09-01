@@ -1,6 +1,6 @@
 import { Ship } from './shipdatatypes';
 import shipData from '../data/ships.json';
-import { AppConfig } from '../reducers/slices/appStateSlice';
+import { AppConfig } from '../reducers/slices/programConfigSlice';
 import { Formation } from '../reducers/slices/formationGridSlice';
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -82,12 +82,23 @@ export const saveFormationData = async (data: Formation[] = []): Promise<BasicRe
 };
 
 /**
- * Function that calls electron to remove a formation from electron-store .json config gile.
+ * Function that calls electron to remove a formation from electron-store .json config file.
  * @param {number} index Formation index
  */
 export const removeAFormation = async (index = 0): Promise<BasicResponse> => {
   return await ipcRenderer.invoke('remove-formation-by-index', index).then((result: BasicResponse) => {
     console.log('appUtils: removeAFormation]', result.isOk);
+    return result;
+  });
+};
+
+/**
+ * Function that calls electron to save config to electron-store .json config file.
+ * @param {AppConfig} data Config data
+ */
+export const saveConfig = async (data: AppConfig): Promise<BasicResponse> => {
+  return await ipcRenderer.invoke('update-config', data).then((result: BasicResponse) => {
+    console.log('appUtils: update-config]', result.isOk);
     return result;
   });
 };

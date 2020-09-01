@@ -7,7 +7,8 @@ import { initData } from '../util/appUtilities';
 import DataStore from '../util/dataStore';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleRight, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { setStateValue, configAction, AppConfigAction } from '../reducers/slices/programConfigSlice';
 
 interface HomeProps {
   shipData: DataStore;
@@ -17,9 +18,10 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
   const dispatch = useDispatch();
   const appState = useSelector((state: RootState) => state.appState);
   const ownedList = useSelector((state: RootState) => state.ownedShips);
+  const config = useSelector((state: RootState) => state.config);
   const [shipCount, setShipCount] = useState(shipData.count);
   const [docksCount, setDocksCount] = useState(0);
-  const [srcInputLen, setSRCInputLen] = useState(appState.jsonURL.length | 25);
+  const [srcInputLen, setSRCInputLen] = useState(config.jsonURL.length | 25);
   const [jsonSRCValue, setJSONSRCValue] = useState<string | undefined>('');
   const [isSRCFocus, setSRCFocus] = useState<boolean>(false);
 
@@ -51,24 +53,32 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
     setDocksCount(ownedList.length);
   }, [ownedList]);
 
-  const updateData = () => {
-    dispatch(updateShipData());
-  };
-
   const renderUpdate = () => {
     if (appState.cState === 'UPDATING') {
       return <span>Please wait</span>;
     }
     return (
-      <button className="btn dark" onClick={() => updateData()}>
+      <button className="btn dark" onClick={() => dispatch(updateShipData())}>
         Update
       </button>
     );
   };
+
+  const renderSave = () => {
+    return (
+      <button
+        className="btn dark"
+        onClick={() => dispatch(configAction(AppConfigAction.Save))}
+        disabled={!config.isEdit}
+      >
+        Save
+      </button>
+    );
+  };
+
   const setSRCInputFocus = (e: React.FocusEvent<HTMLInputElement>, len: number) => {
     setSRCInputLen(len);
     setSRCFocus(!isSRCFocus);
-    // console.log(window.innerWidth);
   };
 
   return (
@@ -91,22 +101,45 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
               <div className="grid-item action">
                 <input
                   type="url"
-                  placeholder={appState.jsonURL !== '' ? appState.jsonURL : ''}
+                  placeholder={config.jsonURL !== '' ? config.jsonURL : ''}
                   spellCheck="false"
-                  className={`text-input ${appState.themeColor}`}
+                  className={`text-input ${config.themeColor}`}
                   style={{ width: `${srcInputLen}ch` }}
                   value={jsonSRCValue}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     console.log(e);
                   }}
-                  onFocus={(e) => setSRCInputFocus(e, appState.jsonURL.length)}
+                  onFocus={(e) => setSRCInputFocus(e, config.jsonURL.length)}
                   onBlur={(e) => setSRCInputFocus(e, 25)}
                 />
                 <button className={`btn dark ${isSRCFocus ? '' : 'hidden'}`}>Update</button>
               </div>
             </div>
             <div className="f-row wrap">
-              <div className="grid-item name">Update Data:</div>
+              <div className="grid-item name">Formation tooltips</div>
+              <div className="grid-item action">
+                <form action="#" style={{ display: 'flex' }}>
+                  <div className="switch">
+                    <input
+                      id="form-tooltip"
+                      type="checkbox"
+                      className="switch-input"
+                      checked={config.formHelpTooltip}
+                      onClick={() => {
+                        dispatch(configAction(AppConfigAction.Update, 'formHelpToolTip', !config.formHelpTooltip));
+                      }}
+                      readOnly
+                    />
+                    <label htmlFor="form-tooltip" className="switch-label">
+                      Switch
+                    </label>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div className="f-row wrap">
+              <div className="grid-item name">Save</div>
+              <div className="grid-item action">{renderSave()}</div>
             </div>
             <div className="f-row">
               <div className="f-title">
@@ -121,12 +154,6 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
             <div className="f-row wrap">
               <div className="grid-item name">Docks count</div>
               <div className="grid-item action">{appState.cState === 'INIT' ? '-' : docksCount}</div>
-            </div>
-            <div className="f-row wrap">
-              <div className="grid-item name">Formation tooltips</div>
-              <div className="grid-item action">
-                <input type="checkbox" />
-              </div>
             </div>
           </div>
         </div>

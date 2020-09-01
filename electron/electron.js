@@ -61,7 +61,6 @@ function createWindow() {
     mainWindow = new electron_1.BrowserWindow({
         width: 1350,
         height: 900,
-        // titleBarStyle: 'hidden',
         frame: false,
         //thickFrame: true,
         webPreferences: {
@@ -173,7 +172,7 @@ electron_1.ipcMain.handle('save-owned-ships', function (event, data) { return __
     });
 }); });
 /**
- * Function that saved given formation data.
+ * Function that saves given formation data.
  */
 electron_1.ipcMain.handle('save-formation-data', function (event, data) { return __awaiter(void 0, void 0, void 0, function () {
     var fData;
@@ -188,6 +187,20 @@ electron_1.ipcMain.handle('save-formation-data', function (event, data) { return
             return [2 /*return*/, { isOk: false, msg: e.message }];
         }
         return [2 /*return*/, { isOk: true, msg: 'Formation data saved succesfully.' }];
+    });
+}); });
+/**
+ * Function that saves given config data.
+ */
+electron_1.ipcMain.handle('save-config', function (event, data) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+            electronStore.set({ config: data });
+        }
+        catch (e) {
+            return [2 /*return*/, { isOk: false, msg: e.message }];
+        }
+        return [2 /*return*/, { isOk: true, msg: 'Config data saved succesfully.' }];
     });
 }); });
 /**
@@ -232,7 +245,8 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                         config: {
                             jsonURL: SHIPAPIURL,
                             themeColor: THEMECOLOR,
-                            fTooltip: true
+                            formHelpTooltip: true,
+                            isEdit: false
                         },
                         ownedShips: [],
                         formations: []

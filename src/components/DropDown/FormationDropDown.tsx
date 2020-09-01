@@ -6,8 +6,8 @@ import { selectFormation } from '../../reducers/slices/formationGridSlice';
 
 const FormationDropDown: React.FC = () => {
   const dispatch = useDispatch();
-  const appState = useSelector((state: RootState) => state.appState);
   const fData = useSelector((state: RootState) => state.formationGrid);
+  const config = useSelector((state: RootState) => state.config);
   const [show, setShow] = useState(false);
 
   const selectIndex = (idx: number) => {
@@ -22,7 +22,7 @@ const FormationDropDown: React.FC = () => {
       alignEnd={true}
       selectedIdx={fData.selectedIndex}
       listData={fData.formations.map((item) => item.name)}
-      themeColor={appState.themeColor}
+      themeColor={config.themeColor}
       selectIndex={selectIndex}
       onSelect={setShow}
     />

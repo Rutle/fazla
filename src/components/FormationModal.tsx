@@ -18,6 +18,7 @@ const FormationModal: React.FC<FormationModalProps> = ({ shipData }) => {
   const formationModal = useSelector((state: RootState) => state.formationModal);
   const appState = useSelector((state: RootState) => state.appState);
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
+  const config = useSelector((state: RootState) => state.config);
 
   const addShip = () => {
     switch (appState.cToggle) {
@@ -44,7 +45,7 @@ const FormationModal: React.FC<FormationModalProps> = ({ shipData }) => {
       <div className="ship-data-container dark">
         <div className="scroll">
           <ShipDetails ship={shipData.shipsArr[shipDetails.index]} />
-          <button onClick={() => addShip()} className={`btn ${appState.themeColor}`} type="button">
+          <button onClick={() => addShip()} className={`btn ${config.themeColor}`} type="button">
             <b>Add to formation</b>
           </button>
         </div>

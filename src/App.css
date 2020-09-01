@@ -1,29 +1,12 @@
-
-/*
-.App {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-} 
-*/
-
 /* Global colors */
 :root {
-  /* --root-dark-bg: linear-gradient(172deg, rgba(47,48,50,1) 4%, rgba(39,41,48,1) 15%, rgba(33,35,45,1) 70%);*/
   --root-dark-bg: rgb(42, 46, 54);
-  /* --main-dark-bg: #292e38;*/
   --main-dark-bg: #1b1d24;
-  /* --main-dark-bg: rgba(0,0,0,0.3);*/
   --main-dark-border: #3f4657;
   --main-dark-color: rgb(184, 184, 184);
   --main-dark-hover-bg: #272c3b;
   --main-dark-hover-border: rgb(182, 182, 182);
-  /* --main-dark-selected: #4b5366;*/
   --main-dark-selected: #272c3b;
-  /* --main-dark-active: #272c3b; */
   --main-dark-active-bg: #343b4e;
   --main-dark-active-border: #818aa1;
   --main-dark-input-bg: #323844;
@@ -31,6 +14,8 @@
   --main-dark-inform-bg: #272c3b;
   --main-dark-tooltip-bg: #1b1d24e3;
   --main-dark-tooltip-border: #3f4657a6;
+  --main-dark-title-bg: #21252f;
+  --main-dark-item-bg: #21252f;
 
   --root-light-bg: rgb(255, 255, 255);
   --main-light-color: black;
@@ -46,27 +31,23 @@
 ::-webkit-scrollbar {     
   background-color: rgb(42, 46, 54);
   width: 0.5em;
-  /*border-radius: 10px;*/
 }
 
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
   box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-  /*border-radius: 10px;*/
 }
 
 ::-webkit-scrollbar-thumb {
-  /* border-radius: 10px;*/
   background-color:var(--main-dark-bg);
   border: 1px solid var(--main-dark-border);
-  /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.5);*/
 }
+
 /* ##### DARK ##### */
-.dark {
-  /* background-color: var(--main-dark-bg);*/
+.ship-data-container.dark,
+.ship-side-container.dark,
+.home-container.dark {
   background-color: rgba(0,0,0,0.3);
-  /* border: 1px solid var(--main-dark-border);*/
   color: var(--main-dark-color);
 }
 
@@ -81,13 +62,8 @@
   /* border: 1px solid var(--main-dark-hover-border); */
 }
 
-.btn.dark.selected:disabled {
-  background-color: var(--main-dark-selected);
-  border: 1px solid var(--main-dark-border);
-}
-
-.btn.dark:disabled {
-  text-decoration: line-through;
+button.dark:disabled {
+  opacity: 0.2;
 }
 
 .btn.dark:disabled:hover {
@@ -112,7 +88,7 @@ nav.tab.dark > a:hover {
 
 input[type="text"].dark,
 input[type="url"].dark  {
-  /* background-color: #323844;*/
+  color: var(--main-dark-color);
   background-color: var(--main-dark-input-bg);
   border: 2px solid var(--main-dark-input-bg);
 }
@@ -149,7 +125,6 @@ input[type="url"].dark:focus {
   color: rgb(184, 184, 184);
 }
 
-
 /* Change background color of buttons on hover */
 .tab button:hover {
   background-color: var(--main-dark-hover-bg);
@@ -158,10 +133,7 @@ input[type="url"].dark:focus {
 .tab button.dark.active {
   background-color: var(--main-dark-active-bg);
 }
-/* Style the tab content */
-.tab-content.dark {
-  border: 1px solid #353b48;
-}
+
 /* ##### LIGHT ##### */
 .light {
   background-color: var(--main-light-bg);
@@ -226,10 +198,6 @@ input[type="url"].light:focus {
   background-color: var(--main-light-selected);
   color: var(--main-light-color);
 }
-/* Style the tab content */
-.tab-content {
-  border-top: none;
-}
 
 .App {
   display: flex;
@@ -238,13 +206,6 @@ input[type="url"].light:focus {
   flex-direction: column;
   color: var(--main-dark-color);
   background: var(--root-dark-bg);
-  /*
-  color: var(--main-light-color);
-  background: var(--root-light-bg);
-  */
-  /* background: rgb(47,48,50);*/
-  /* background: linear-gradient(172deg, rgba(47,48,50,1) 4%, rgba(39,41,48,1) 15%, rgba(33,35,45,1) 70%); */
-
 }
 html {
   margin: 0px;
@@ -492,26 +453,12 @@ div.page > div.top-container {
   flex-direction: row;
 }
 
-div.top-container > div.hidden {
-  display: none;
-  height: 0px;
-}
-
 div.top-container > div.active {
   display: flex;
   min-height: 58px;
   flex-direction: column;
 }
-div > div.tab-content.hidden {
-  display: none;
-  height: 0px;
-}
 
-div > div.tab-content.active {
-  display: flex;
-  min-height: 58px;
-  flex-direction: column;
-}
 .tab {
   overflow: hidden;
 }
@@ -522,6 +469,10 @@ div > div.tab-content.active {
   cursor: pointer;
   padding: 5px 16px;
   transition: 0.3s;
+}
+
+button:disabled {
+  cursor: default;
 }
 
 .tab > button.inform {
@@ -616,7 +567,7 @@ div > div.tab-content.active {
   font-size: 30px;
 }
 
-/* ###### END ###### */
+/* ###### popover ###### */
 
 .popover-container {
   /*min-width: 16%;*/
@@ -650,12 +601,7 @@ div > div.tab-content.active {
   margin-bottom: 1px;
 }
 
-/* Style the tab content */
-.tab-content {
-  padding: 6px 12px;
-  border-top: none;
-}
-
+/* ##### top-container ##### */
 .top-container > nav > a {
   text-decoration: none;
   border: none;
@@ -667,13 +613,16 @@ div > div.tab-content.active {
 .top-container.fixed > nav.tab {
   border-top: unset;
 }
+
 .ship-data-container > div.scroll {
   overflow-y: auto;
   scrollbar-color: dark;
   scrollbar-width: thin;
 }
 
-.ship-data-container .ship-title-bar {
+
+/* ###### ship-title-bar ##### */
+.ship-title-bar {
   display: flex;
   flex-grow: 1;
   flex-direction: row;
@@ -684,18 +633,23 @@ div > div.tab-content.active {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.ship-title-bar > span.end-buttons.dark {
   border-top: 2px solid var(--main-dark-border);
 }
 
 .ship-title-bar > div  {
   display: flex;
   flex-grow: 1;
-  border: 2px solid var(--main-dark-border);
-  border-left: 0px;
-  border-right: 0px;
+  border-left: 0px!important;
+  border-right: 0px!important;
   padding: 5px;
   font-size: 1.5em;
   justify-content: flex-start;
+}
+.ship-title-bar > div.dark {
+  border: 2px solid var(--main-dark-border);
 }
 .ship-title-bar > div > span.ship-name { 
   margin-right: 10px;
@@ -713,12 +667,7 @@ div > div.tab-content.active {
   color: rgba(144, 98, 253, 0.616);
 }
 
-section.home {
-  justify-content: center;
-  align-items: center;
-}
-
-/* List */
+/* #####  rList  ##### */
 .rList {
   margin-top: 0px;
   padding: 0px;
@@ -1016,12 +965,7 @@ div.f-row .grid-item:last-child {
   font-size: 15px;
 }
 
-.grid-item > button.btn.small {
-  height: 23px;
-  line-height: 14px;
-  font-size: 14px;
-  padding: 2px;
-}
+
 
 button.btn.small {
   height: 23px;
@@ -1029,15 +973,18 @@ button.btn.small {
   font-size: 14px;
   padding: 2px;
 }
-
+/* ##### GRID-ITEM ##### */
 .grid-item > div.content {
   display: flex;
   height: 100%;
   padding: 1px;
   cursor: pointer;
   flex-direction: column;
-  border: 1px solid var(--main-dark-border);
   border-radius: inherit;
+}
+
+.grid-item.dark > div.content {
+  background-color: var(--main-dark-item-bg);
 }
 
 .grid-item.dark > div.content.Elite {
@@ -1075,7 +1022,7 @@ button.btn.small {
   background-color: var(--main-dark-hover-bg);
 }
 
-div.footer-misc {
+.grid-item div.footer-misc {
   display: flex;
   cursor: pointer;
   min-height: 22px;
@@ -1107,26 +1054,13 @@ div.footer-misc {
   line-height: 22px;
 }
 
-div.f-title {
-  padding: 3px 12px;
-  margin-bottom: 5px;
-  border: 1px solid #353b48;
-  text-align: center;
+.grid-item > button.btn.small {
+  height: 23px;
+  line-height: 14px;
+  font-size: 14px;
+  padding: 2px;
 }
-
-.home-container div.f-title {
-  width: 25%;
-  border:unset;
-  border-bottom: 2px solid var(--main-dark-border);
-  text-align: start;
-}
-
-.home-container div.f-title > svg {
-  margin-right: 10px;
-}
-.grid-item.name-title {
-  min-width: 160px;
-  max-width: 160px;
+.grid-item.header {
   padding: 1px 5px 1px 5px;
   border-bottom: 2px solid #353b48;
 }
@@ -1137,26 +1071,21 @@ div.f-title {
   height: inherit;
   padding: 1px 5px 1px 5px;
   justify-content: center;
-  border-right: 1px solid #353b48;
   margin-top: 0px;
   font-size: 14px;
   font-family: Lucida Sans Unicode;
 }
 
-div.grid-item.action {
+.grid-item.action {
   flex: 0;
   flex-direction: row;
   padding: 1px 1px 1px 5px;
   min-height: 27px;
 }
 
-.home-container div.grid-item.action {
+.grid-item.action {
   justify-content: center;
   align-items: center;
-}
-.grid-item.passive-title {
-  padding: 1px 5px 1px 5px;
-  border-bottom: 2px solid #353b48;
 }
 
 .grid-item.passive {
@@ -1166,7 +1095,32 @@ div.grid-item.action {
   font-size: 14px;
 }
 
+/* ##### f-title ##### */
+div.f-title {
+  padding: 3px 12px;
+  margin-bottom: 5px;
+  border-left: 0px!important;
+  border-right: 0px!important;
+  text-align: center;
+}
 
+div.f-title.dark {
+  background-color: var(--main-dark-title-bg);
+  border: 1px solid #353b48;
+}
+
+.home-container div.f-title {
+  width: 25%;
+  border: unset;
+  border-bottom: 2px solid var(--main-dark-border);
+  text-align: start;
+}
+
+.home-container div.f-title > svg {
+  margin-right: 10px;
+}
+
+/* ##### f-row ##### */
 div.f-row.pink {
   /* border: 1px solid rgba(243, 196, 204, 0.651);*/
   background-color: rgba(216, 112, 147, 0.068);
@@ -1203,6 +1157,57 @@ div.f-row.deepskyblue {
   border-radius: 5px;
 }
 
+/* https://css-tricks.com/the-checkbox-hack/ */
+.switch {
+  position: relative;
+  display: inline-block;
+}
+.switch-input {
+  display: none;
+}
+.switch-label {
+  display: block;
+  width: 43px;
+  height: 19px;
+  text-indent: -150%;
+  clip: rect(0 0 0 0);
+  color: transparent;
+  user-select: none;
+}
+.switch-label::before,
+.switch-label::after {
+  content: "";
+  display: block;
+  position: absolute;
+  cursor: pointer;
+}
+.switch-label::before {
+  width: 100%;
+  height: 100%;
+  background-color: #dedede;
+  border-radius: 9999em;
+  -webkit-transition: background-color 0.25s ease;
+  transition: background-color 0.25s ease;
+}
+.switch-label::after {
+  top: 0;
+  left: 0;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background-color: rgb(245, 245, 245);
+  /* border: 1px solid var(--main-dark-border); */
+  /* background-color: var(--main-dark-active-border); */
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+  -webkit-transition: left 0.25s ease;
+  transition: left 0.25s ease;
+}
+.switch-input:checked + .switch-label::before {
+  background-color: #72b352;
+}
+.switch-input:checked + .switch-label::after {
+  left: 24px;
+}
 @media only screen and (max-width: 1340px) {
   .formation-model-container div.ship-side-container div.top-container form div#input-group div.searchIcon {
     display: none;

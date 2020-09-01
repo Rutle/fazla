@@ -31,7 +31,6 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1350,
     height: 900,
-    // titleBarStyle: 'hidden',
     frame: false,
     //thickFrame: true,
     webPreferences: {
@@ -131,7 +130,7 @@ ipcMain.handle('save-owned-ships', async (event, data) => {
   return { isOk: true, msg: 'Owned ships saved succesfully.' };
 });
 /**
- * Function that saved given formation data.
+ * Function that saves given formation data.
  */
 ipcMain.handle('save-formation-data', async (event, data) => {
   try {
@@ -144,6 +143,19 @@ ipcMain.handle('save-formation-data', async (event, data) => {
   }
   return { isOk: true, msg: 'Formation data saved succesfully.' };
 });
+
+/**
+ * Function that saves given config data.
+ */
+ipcMain.handle('save-config', async (event, data) => {
+  try {
+    electronStore.set({ config: data });
+  } catch (e) {
+    return { isOk: false, msg: e.message };
+  }
+  return { isOk: true, msg: 'Config data saved succesfully.' };
+});
+
 /**
  * Function removes formation from .json config file.
  */
@@ -177,7 +189,8 @@ ipcMain.handle('initData', async (event, arg) => {
         config: {
           jsonURL: SHIPAPIURL,
           themeColor: THEMECOLOR,
-          fTooltip: true,
+          formHelpTooltip: true,
+          isEdit: false,
         },
         ownedShips: [],
         formations: [],
