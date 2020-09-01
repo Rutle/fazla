@@ -14,12 +14,13 @@ import { AppConfig, setConfig } from './programConfigSlice';
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 
 interface CurrentState {
-  cState: 'INIT' | 'RUNNING' | 'ERROR' | 'UPDATING' | 'SAVING';
+  cState: 'INIT' | 'RUNNING' | 'ERROR' | 'UPDATING' | 'SAVING' | 'DOWNLOADING';
   cMsg:
     | 'Initializing.'
     | 'Running.'
-    | 'Please wait. Downloading and updating in progress.'
-    | 'Please wait. Updating saved data.';
+    | 'Please wait while updating data.'
+    | 'Please wait while downloading data.'
+    | 'Please wait while saving data.';
 }
 
 interface ListState {
@@ -208,21 +209,35 @@ export const setSearchResults = (shipData: DataStore): AppThunk => async (dispat
 /**
  * Update the ship data by downloading raw data from github.
  */
-export const updateShipData = (): AppThunk => async (dispatch: AppDispatch) => {
+export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait. Downloading and updating in progress.' }));
+    dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Please wait while downloading data.' }));
     fetch(SHIPAPIURL)
       .then((res) => res.json())
       .then(
         async (result) => {
           console.log('Fetched: ', Object.keys(result).length);
           try {
+            dispatch(setCurrentState({ cState: 'SAVING', cMsg: 'Please wait while saving data.' }));
             const { isOk, msg } = await saveShipData(result);
-            console.log(isOk, 'after saveShipData', isOk, msg);
+            if (isOk) {
+              dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating data.' }));
+              const dataArr = await [...Object.keys(result).map((key) => result[key])];
+              await shipData.setArray(dataArr);
+              const fullSimple = await DataStore.transformShipList(shipData.shipsArr);
+              const searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
+              const searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
+              batch(() => {
+                dispatch(setSearchList(fullSimple));
+                dispatch(setListState({ key: 'all', data: { id: searchInitId, index: searchInitIndex } }));
+                dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
+              });
+              dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
+            }
           } catch (error) {
             console.log(error);
+            return error;
           }
-          // return { result, isOk, msg };
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -234,6 +249,7 @@ export const updateShipData = (): AppThunk => async (dispatch: AppDispatch) => {
       );
   } catch (e) {
     console.log('Set Selected Ship error: ', e);
+    dispatch(setCurrentState({ cState: 'ERROR', cMsg: e.message }));
   }
 };
 

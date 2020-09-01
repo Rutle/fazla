@@ -13,7 +13,7 @@ const TitleBar: React.FC = () => {
         </div>
         <div id="window-controls">
           <div
-            className="button"
+            className="title-button"
             id="min-button"
             onClick={() => {
               minimizeWindow();
@@ -22,7 +22,7 @@ const TitleBar: React.FC = () => {
             <FontAwesomeIcon icon={faWindowMinimize} size="xs" />
           </div>
           <div
-            className={`button ${isMax ? 'hidden' : ''}`}
+            className={`title-button ${isMax ? 'hidden' : ''}`}
             id="max-button"
             onClick={() => {
               maximizeWindow();
@@ -32,7 +32,7 @@ const TitleBar: React.FC = () => {
             <FontAwesomeIcon icon={faWindowMaximize} size="xs" />
           </div>
           <div
-            className={`button ${isMax ? '' : 'hidden'}`}
+            className={`title-button ${isMax ? '' : 'hidden'}`}
             id="restore-button"
             onClick={() => {
               restoreWindow();
@@ -41,7 +41,7 @@ const TitleBar: React.FC = () => {
           >
             <FontAwesomeIcon icon={faWindowRestore} size="xs" />
           </div>
-          <div className="button" id="close-button" onClick={() => closeWindow()}>
+          <div className="button title-button" id="close-button" onClick={() => closeWindow()}>
             <FontAwesomeIcon icon={faTimes} size="xs" />
           </div>
         </div>

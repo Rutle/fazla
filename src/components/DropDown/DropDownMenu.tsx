@@ -40,7 +40,7 @@ const DropDownMenu: React.FC<FormationDropDownProps> = ({
               style={{
                 display: `${show ? 'flex' : 'none'}`,
               }}
-              className={`btn menu-item ${themeColor} ${index === selectedIdx ? 'selected' : ''}`}
+              className={`btn normal menu-item ${themeColor} ${index === selectedIdx ? 'selected' : ''}`}
               onClick={(e) => {
                 selectIndex(index);
                 onSelect(!show);

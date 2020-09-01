@@ -8,7 +8,7 @@ import DataStore from '../util/dataStore';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import { setStateValue, configAction, AppConfigAction } from '../reducers/slices/programConfigSlice';
+import { configAction, AppConfigAction } from '../reducers/slices/programConfigSlice';
 
 interface HomeProps {
   shipData: DataStore;
@@ -58,7 +58,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
       return <span>Please wait</span>;
     }
     return (
-      <button className="btn dark" onClick={() => dispatch(updateShipData())}>
+      <button className="btn normal dark" onClick={() => dispatch(updateShipData(shipData))}>
         Update
       </button>
     );
@@ -67,7 +67,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
   const renderSave = () => {
     return (
       <button
-        className="btn dark"
+        className="btn normal dark"
         onClick={() => dispatch(configAction(AppConfigAction.Save))}
         disabled={!config.isEdit}
       >
@@ -112,7 +112,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
                   onFocus={(e) => setSRCInputFocus(e, config.jsonURL.length)}
                   onBlur={(e) => setSRCInputFocus(e, 25)}
                 />
-                <button className={`btn dark ${isSRCFocus ? '' : 'hidden'}`}>Update</button>
+                <button className={`btn normal dark ${isSRCFocus ? '' : 'hidden'}`}>Update</button>
               </div>
             </div>
             <div className="f-row wrap">

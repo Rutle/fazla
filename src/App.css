@@ -51,39 +51,10 @@
   color: var(--main-dark-color);
 }
 
-.btn.dark {
-  background-color: var(--main-dark-bg);
-  border: 1px solid var(--main-dark-border);
-  color: var(--main-dark-color);
-}
-
-.btn.dark:hover {
-  background-color: var(--main-dark-hover-bg);
-  /* border: 1px solid var(--main-dark-hover-border); */
-}
-
-button.dark:disabled {
-  opacity: 0.2;
-}
-
-.btn.dark:disabled:hover {
-  background-color: var(--main-dark-bg);
-}
-
-.btn.dark.selected {
-  background-color: var(--main-dark-selected);
-}
-
-nav.tab.dark > a {
-  color: var(--main-dark-color);
-}
-
-nav.tab.dark > a.active {
-  background-color: var(--main-dark-active-bg);
-}
-
-nav.tab.dark > a:hover {
-  background-color: var(--main-dark-hover-bg);
+.ship-data-container > div.scroll {
+  overflow-y: auto;
+  scrollbar-color: dark;
+  scrollbar-width: thin;
 }
 
 input[type="text"].dark,
@@ -120,19 +91,6 @@ input[type="url"].dark:focus {
   /* background-color: #292e38;*/
 }
 
-.tab button.dark {
-  background-color: var(--main-dark-bg);
-  color: rgb(184, 184, 184);
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: var(--main-dark-hover-bg);
-}
-/* Create an active/current tablink class */
-.tab button.dark.active {
-  background-color: var(--main-dark-active-bg);
-}
 
 /* ##### LIGHT ##### */
 .light {
@@ -278,7 +236,7 @@ body {
   height: 100%;
 }
 
-#window-controls .button {
+#window-controls .title-button {
   grid-row: 1 / span 1;
   display: flex;
   justify-content: center;
@@ -304,13 +262,13 @@ body {
   -webkit-app-region: no-drag;
 }
 
-#window-controls .button {
+#window-controls .title-button {
   user-select: none;
 }
-#window-controls .button:hover {
+#window-controls .title-button:hover {
   background: rgba(255,255,255,0.1);
 }
-#window-controls .button:active {
+#window-controls .title-button:active {
   background: rgba(255,255,255,0.2);
 }
 
@@ -375,7 +333,7 @@ body {
   border-top: 1px solid black;
 }
 
-.page-content { /* 32 + 1 + 37 |  37 + 25 62 */
+.page-content {
   margin: 37px 0px 25px 0px;
   height: 100%;
   max-height: calc(100% - 62px);
@@ -401,6 +359,7 @@ body {
   border: 2px solid #9c9c9ca1;
   border-radius: 2px;
 }
+
 .formation-modal-overlay {
   position: fixed;
   top: 0;
@@ -428,10 +387,86 @@ body {
 .ship-side-container > div.top-container {
   margin-bottom: 10px;
 }
-/* ###### List top selector group + tabs + popover ##### */
+
+/* ###### Buttons ###### */
+
+button {
+  cursor: default;
+  transition: 0.3s;
+  padding: 5px 16px;
+}
+
+button:disabled {
+  opacity: 0.2;
+}
+
+button.btn:active {
+  transform: translateY(1px);
+}
+
+button.btn.small {
+  height: 23px;
+  line-height: 14px;
+  font-size: 14px;
+  padding: 2px;
+}
+
+button.btn.normal {
+  height: 26px;
+  font-size: 14px;
+}
+
+button.tab-btn.normal {
+  border: none;
+  height: 26px;
+  font-size: 14px;
+}
+
+button.btn.hidden {
+  display: none!important;
+}
+button.dark {
+  background-color: var(--main-dark-bg);
+  color: rgb(184, 184, 184);
+}
+
+button.btn.dark {
+  border: 1px solid var(--main-dark-border);
+}
+button.btn.dark:hover,
+button.tab-btn.dark:hover {
+  background-color: var(--main-dark-hover-bg);
+}
+
+button.dark.active {
+  background-color: var(--main-dark-active-bg);
+}
+
+button.btn.dark:disabled:hover,
+button.tab-btn.dark:disabled:hover {
+  background-color: var(--main-dark-bg);
+}
+
+button.btn.dark.selected,
+button.tab-btn.dark.selected {
+  background-color: var(--main-dark-selected);
+}
+
+
+button.btn.dark.inform {
+  background-color: var(--main-dark-inform-bg);
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+}
+
+button.btn.dark.informative {
+  border: unset;
+  border-bottom: 2px solid var(--main-dark-border);
+}
+
+/* ###### top-container + tab ##### */
 .top-container {
   margin-top: 0px;
-  /*margin-bottom: 10px;*/
   padding: 0px;
   width: 100%;
   display: flex;
@@ -441,70 +476,50 @@ body {
 .top-container.fixed {
   position: fixed;
 }
-/* 32 + 1 + 37
-div.page > div.top-container {
-  -webkit-box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.315);
-  -moz-box-shadow: 0px 2px 2px 1px rgba(0,0,0,0.315);
-  box-shadow: 0px 2px 2px 1px rgba(0,0,0,0.315);
-}
-*/
-.top-container > div.tab {
-  display: flex;
-  flex-direction: row;
-}
-
-div.top-container > div.active {
-  display: flex;
-  min-height: 58px;
-  flex-direction: column;
-}
 
 .tab {
+  display: flex;
+  flex-direction: row;
   overflow: hidden;
 }
 
-.tab > button {
+.top-container > nav > a {
+  text-decoration: none;
   border: none;
   outline: none;
   cursor: pointer;
-  padding: 5px 16px;
+  padding: 7px 16px;
   transition: 0.3s;
 }
-
-button:disabled {
-  cursor: default;
+.top-container.fixed > nav.tab {
+  border-top: unset;
 }
 
-.tab > button.inform {
-  background-color: var(--main-dark-inform-bg);
-  text-decoration-line: underline;
-  text-decoration-style: dotted;
+nav.tab.dark > a {
+  color: var(--main-dark-color);
+}
+
+nav.tab.dark > a.active {
+  background-color: var(--main-dark-active-bg);
+}
+
+nav.tab.dark > a:hover {
+  background-color: var(--main-dark-hover-bg);
 }
 
 /* ###### FORMATION DROPDOWN ###### */
-
-.tab .toggle {
-  height: 25px;
+.dropdown-toggle {
   min-width: 200px;
   max-width: 200px;
   display: flex;
   justify-content: space-between;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 5px 16px;
-  transition: 0.3s;
 }
-#dropdown {
-  cursor: pointer;
-}
-.toggle > span {
+
+.dropdown-toggle > span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  /* width: 145px; */
   max-width: 145px;
-  cursor: pointer;
 }
 
 .toggle-icon {
@@ -512,11 +527,6 @@ button:disabled {
   margin-left: 10px;
   transition: 0.3s;
   width: 7px;
-  cursor: pointer;
-}
-
-.toggle-icon > svg {
-  cursor: pointer;
 }
 
 .toggle-icon.active {
@@ -531,13 +541,11 @@ button:disabled {
 }
 
 .formation-dropdown-menu > .btn.menu-item {
-  height: 25px;
   border-top: unset;
   justify-content: flex-start;
   text-align: left;
   min-width: 200px;
   max-width: 200px;
-  padding: 5px 16px;
 }
 
 .btn.menu-item > span {
@@ -570,9 +578,6 @@ button:disabled {
 /* ###### popover ###### */
 
 .popover-container {
-  /*min-width: 16%;*/
-  /* margin-top: 2px;*/
-  /* margin-left: -10px;*/
   overflow: hidden; 
   position: absolute;
   max-width: 19%;
@@ -600,26 +605,6 @@ button:disabled {
 .popover-content > .f-grid > .f-row .grid-item {
   margin-bottom: 1px;
 }
-
-/* ##### top-container ##### */
-.top-container > nav > a {
-  text-decoration: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 7px 16px;
-  transition: 0.3s;
-}
-.top-container.fixed > nav.tab {
-  border-top: unset;
-}
-
-.ship-data-container > div.scroll {
-  overflow-y: auto;
-  scrollbar-color: dark;
-  scrollbar-width: thin;
-}
-
 
 /* ###### ship-title-bar ##### */
 .ship-title-bar {
@@ -684,42 +669,19 @@ div.rList.hidden {
 
 .rList > .rList-item {
   width: 100%;
-  /* height: 35px;*/
   padding: 5px;
   margin-bottom: 1px;
 }
 
 .rList > .rList-item.btn {
-  /* background-color: unset;*/
   border: unset;
   height: unset;
   max-height: 45px;
   min-height: 35px;
 }
 
-/* button */
-.btn {
-  /* border: 0px;*/
-  /* transition: 0.1s; */
-  /* width: 100%;*/
-  height: 35px;
-  padding: 5px;
-  /* transition: 0.4s; */
-  /* transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;*/
-}
 .r-List-item-container {
   padding: 10px;
-}
-.btn:active {
-  transform: translateY(1px);
-}
-.btn.informative {
-  border:unset;
-  border-bottom: 2px solid var(--main-dark-border);
-}
-
-.btn.hidden {
-  display: none!important;
 }
 
 .button-group {
@@ -760,7 +722,6 @@ div#search > form {
 input[type="text"],
 input[type="url"] {
   box-sizing: border-box;
-  /* border-radius: 2px; */
   transition: box-shadow .2s ease-in,border .2s ease-in,background-color .2s ease-in, width 0.2s ease-in;
 }
 
@@ -775,10 +736,12 @@ input[type="url"] {
 
 .text-input {
   padding: 5px;
-  height: 25px;
+  height: 26px;
   min-width: 0;
+  margin-right: 2px;
   text-overflow: ellipsis;
   font-family: Lucida Sans Unicode;
+  font-size: 14px;
 }
 
 .text-input:focus {
@@ -954,25 +917,6 @@ div.f-row .grid-item:last-child {
   border-radius: 5px;
 }
 
-.grid-item > button.btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* width: 100%;*/
-  border-radius: inherit;
-  height: 25px;
-  line-height: 25px;
-  font-size: 15px;
-}
-
-
-
-button.btn.small {
-  height: 23px;
-  line-height: 14px;
-  font-size: 14px;
-  padding: 2px;
-}
 /* ##### GRID-ITEM ##### */
 .grid-item > div.content {
   display: flex;

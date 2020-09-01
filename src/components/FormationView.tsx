@@ -45,26 +45,31 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
           <div className="top-container">
             <div className={`tab dark`}>
               <FormationDropDown />
-              <button className={`${config.themeColor}`} onClick={() => dispatch(formationAction(FormationAction.New))}>
+              <button
+                className={`tab-btn normal ${config.themeColor}`}
+                onClick={() => dispatch(formationAction(FormationAction.New))}
+              >
                 New formation
               </button>
               {fData.formations.length !== 0 ? (
                 <>
                   <button
-                    className={`${config.themeColor}`}
+                    className={`tab-btn normal ${config.themeColor}`}
                     onClick={() => dispatch(formationAction(FormationAction.Remove))}
                     disabled={fData.formations.length === 0}
                   >
                     Remove
                   </button>
                   <button
-                    className={`${config.themeColor} ${fData.isEdit[fData.selectedIndex] ? 'inform' : ''}`}
+                    className={`tab-btn normal ${config.themeColor} ${
+                      fData.isEdit[fData.selectedIndex] ? 'inform' : ''
+                    }`}
                     onClick={() => dispatch(formationAction(FormationAction.Save))}
                     disabled={!fData.isEdit[fData.selectedIndex]}
                   >
                     Save
                   </button>
-                  <button className={`${config.themeColor} `} onClick={() => console.log('Save')}>
+                  <button className={`tab-btn normal ${config.themeColor} `} onClick={() => console.log('Save')}>
                     Rename
                   </button>
                 </>
