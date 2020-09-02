@@ -93,12 +93,12 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
     <PageTemplate>
       <section className="page-content">
         <div className="home-container dark">
-          <div className="f-grid">
+          <div className="f-grid dark">
             <div className="f-row">
-              <div className="f-title">
+              <div className="f-icon options">
                 <FontAwesomeIcon icon={faCaretRight} />
-                Options
               </div>
+              <div className="f-title options">Options</div>
             </div>
             <div className="f-row wrap">
               <div className="grid-item name">Update Data:</div>
@@ -153,10 +153,10 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
               <div className="grid-item action">{renderSave()}</div>
             </div>
             <div className="f-row">
-              <div className="f-title">
+              <div className="f-icon options">
                 <FontAwesomeIcon icon={faCaretRight} />
-                Stats
               </div>
+              <div className="f-title options">Stats</div>
             </div>
             <div className="f-row wrap">
               <div className="grid-item name">Ship count</div>

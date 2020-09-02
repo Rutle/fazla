@@ -13,10 +13,10 @@ interface FormationGridProps {
 const FormationGrid: React.FC<FormationGridProps> = ({ shipData, formation, themeColor }) => {
   return (
     <>
-      <div className="f-grid">
+      <div className={`f-grid ${themeColor}`}>
         <div className="f-row wrap">
           <div className="f-column">
-            <div className={`f-title ${themeColor}`}>Main</div>
+            <div className="f-title">Main</div>
             <div className="f-row">
               <FormationGridItem index={0} ship={shipData.getShipById(formation.data[0])} />
               <FormationGridItem index={1} ship={shipData.getShipById(formation.data[1])} />
@@ -24,7 +24,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({ shipData, formation, them
             </div>
           </div>
           <div className="f-column">
-            <div className={`f-title ${themeColor}`}>Vanguard</div>
+            <div className="f-title">Vanguard</div>
             <div className="f-row">
               <FormationGridItem index={3} ship={shipData.getShipById(formation.data[3])} />
               <FormationGridItem index={4} ship={shipData.getShipById(formation.data[4])} />

@@ -4,6 +4,8 @@ import FormationShipPassives from './FormationShipPassives';
 import DataStore from '../util/dataStore';
 import PropTypes from 'prop-types';
 import { Formation } from '../reducers/slices/formationGridSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 interface FormationPassivesProps {
   shipData: DataStore;
   formation: Formation;
@@ -21,14 +23,21 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formati
   };
 
   return (
-    <div className={'f-grid'}>
+    <div className={'f-grid dark'}>
       {!isShip('main') ? (
         <div className={'f-row'}>
           <div className={'f-column'}>
-            <div className={`f-title ${themeColor}`}>Main</div>
             <div className={'f-row'}>
-              <div className={'grid-item name header'}>Ship</div>
-              <div className={'grid-item passive header'}>Passive</div>
+              <div className={'f-icon'}>
+                <FontAwesomeIcon icon={faAngleDown} />
+              </div>
+
+              <div className="f-title">Main</div>
+            </div>
+
+            <div className={'f-row'}>
+              <div className={'name f-header'}>Ship</div>
+              <div className={'passive f-header'}>Passive</div>
             </div>
             <FormationShipPassives ship={shipData.getShipById(formation.data[0])} />
             <FormationShipPassives ship={shipData.getShipById(formation.data[1])} />
@@ -43,8 +52,8 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formati
           <div className={'f-column'}>
             <div className={`f-title ${themeColor}`}>Vanguard</div>
             <div className={'f-row'}>
-              <div className={'grid-item name header'}>Name</div>
-              <div className={'grid-item passive header'}>Passive</div>
+              <div className={'name f-header'}>Name</div>
+              <div className={'passive f-header'}>Passive</div>
             </div>
             <FormationShipPassives ship={shipData.getShipById(formation.data[3])} />
             <FormationShipPassives ship={shipData.getShipById(formation.data[4])} />

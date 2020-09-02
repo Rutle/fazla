@@ -49,7 +49,7 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
                 className={`tab-btn normal ${config.themeColor}`}
                 onClick={() => dispatch(formationAction(FormationAction.New))}
               >
-                New formation
+                New
               </button>
               {fData.formations.length !== 0 ? (
                 <>

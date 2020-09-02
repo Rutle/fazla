@@ -1,11 +1,16 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { setCurrentToggle, updateOwnedSearchList, setSearchResults } from '../reducers/slices/appStateSlice';
+import {
+  setCurrentToggle,
+  updateOwnedSearchList,
+  setSearchResults,
+  setSelectedShip,
+} from '../reducers/slices/appStateSlice';
 import { setSearchString } from '../reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';
 import DataStore from '../util/dataStore';
@@ -22,7 +27,7 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
   const appState = useSelector((state: RootState) => state.appState);
   const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
   const searchParameters = useSelector((state: RootState) => state.searchParameters);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState(searchParameters.name);
   const [inputFocus, setInputFocus] = useState(false);
 
   useEffect(() => {
@@ -100,12 +105,13 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
     }
      */
   };
-  /*
-  const selectShip = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number, id: string) => {
-    dispatch(setSelectedShip(appState.cToggle, index, id));
-
-  };
-*/
+  const selectShip = useCallback(
+    (id: string, index: number) => {
+      dispatch(setSelectedShip(appState.cToggle, id, index));
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [searchParameters],
+  );
 
   return (
     <div className="ship-side-container dark">
@@ -153,8 +159,8 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
           </div>
         </form>
       </div>
-      <ShipList shipData={shipData} shipSearchList={shipSearchList} listName={'all'} />
-      <ShipList shipData={shipData} shipSearchList={ownedSearchList} listName={'owned'} />
+      <ShipList shipData={shipData} shipSearchList={shipSearchList} listName={'all'} onClick={selectShip} />
+      <ShipList shipData={shipData} shipSearchList={ownedSearchList} listName={'owned'} onClick={selectShip} />
     </div>
   );
 };
