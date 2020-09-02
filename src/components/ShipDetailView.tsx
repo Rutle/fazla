@@ -39,7 +39,6 @@ const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData }) => {
       default:
         break;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ownedSearchList, shipSearchList, appState.cToggle]);
 
   const renderShipDetails = () => {
