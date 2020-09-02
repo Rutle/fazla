@@ -11,7 +11,7 @@ export type AppConfig = {
   themeColor: 'dark' | 'light';
   firstTime: boolean;
   formHelpTooltip: boolean;
-  isEdit: boolean;
+  isEdit?: boolean;
 };
 
 const initialState: AppConfig = {
@@ -19,7 +19,6 @@ const initialState: AppConfig = {
   themeColor: 'dark',
   firstTime: true,
   formHelpTooltip: true,
-  isEdit: false,
 };
 
 const programConfigSlice = createSlice({
@@ -27,6 +26,11 @@ const programConfigSlice = createSlice({
   initialState,
   reducers: {
     setStateValue(state, action: PayloadAction<{ key: string; value: string | boolean }>) {
+      console.log({
+        ...state,
+        [action.payload.key]: action.payload.value,
+        isEdit: true,
+      });
       return {
         ...state,
         [action.payload.key]: action.payload.value,
@@ -37,6 +41,8 @@ const programConfigSlice = createSlice({
       return {
         ...state,
         ...action.payload,
+        isEdit: false,
+        firstTime: false,
       };
     },
     setEditState(state, action: PayloadAction<boolean>) {
@@ -67,7 +73,8 @@ export const configAction = (action: AppConfigAction, key?: string, value?: stri
         dispatch(setStateValue({ key: key as string, value: value as string | boolean }));
         break;
       case 'SAVE':
-        await saveConfig(config).then((result) => {
+        const { isEdit, ...newConfig } = config;
+        await saveConfig(newConfig).then((result) => {
           console.log(result.isOk);
           if (result.isOk) {
             dispatch(setEditState(false));

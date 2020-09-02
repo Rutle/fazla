@@ -190,7 +190,7 @@ ipcMain.handle('initData', async (event, arg) => {
           jsonURL: SHIPAPIURL,
           themeColor: THEMECOLOR,
           formHelpTooltip: true,
-          isEdit: false,
+          firstTime: true,
         },
         ownedShips: [],
         formations: [],

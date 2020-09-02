@@ -246,7 +246,7 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                             jsonURL: SHIPAPIURL,
                             themeColor: THEMECOLOR,
                             formHelpTooltip: true,
-                            isEdit: false
+                            firstTime: true
                         },
                         ownedShips: [],
                         formations: []

@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { configAction, AppConfigAction } from '../reducers/slices/programConfigSlice';
+import RButton from './RButton.tsx/RButton';
 
 interface HomeProps {
   shipData: DataStore;
@@ -54,25 +55,32 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
   }, [ownedList]);
 
   const renderUpdate = () => {
-    if (appState.cState === 'UPDATING') {
-      return <span>Please wait</span>;
+    let text = 'Update';
+    let disabled = false;
+    if (appState.cState !== 'RUNNING' && appState.cState !== 'INIT') {
+      text = 'Please wait';
+      disabled = true;
     }
     return (
-      <button className="btn normal dark" onClick={() => dispatch(updateShipData(shipData))}>
-        Update
-      </button>
+      <RButton
+        themeColor={`${config.themeColor}`}
+        onClick={() => dispatch(updateShipData(shipData))}
+        disabled={disabled}
+      >
+        {text}
+      </RButton>
     );
   };
 
   const renderSave = () => {
     return (
-      <button
-        className="btn normal dark"
+      <RButton
+        themeColor={`${config.themeColor}`}
         onClick={() => dispatch(configAction(AppConfigAction.Save))}
         disabled={!config.isEdit}
       >
         Save
-      </button>
+      </RButton>
     );
   };
 
@@ -107,12 +115,14 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
                   style={{ width: `${srcInputLen}ch` }}
                   value={jsonSRCValue}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    console.log(e);
+                    setJSONSRCValue(e.target.value);
                   }}
                   onFocus={(e) => setSRCInputFocus(e, config.jsonURL.length)}
-                  onBlur={(e) => setSRCInputFocus(e, 25)}
+                  onBlur={(e) => {
+                    setSRCInputFocus(e, 25);
+                    dispatch(configAction(AppConfigAction.Update, 'jsonURL', jsonSRCValue));
+                  }}
                 />
-                <button className={`btn normal dark ${isSRCFocus ? '' : 'hidden'}`}>Update</button>
               </div>
             </div>
             <div className="f-row wrap">
@@ -125,10 +135,9 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
                       type="checkbox"
                       className="switch-input"
                       checked={config.formHelpTooltip}
-                      onClick={() => {
-                        dispatch(configAction(AppConfigAction.Update, 'formHelpToolTip', !config.formHelpTooltip));
+                      onChange={() => {
+                        dispatch(configAction(AppConfigAction.Update, 'formHelpTooltip', !config.formHelpTooltip));
                       }}
-                      readOnly
                     />
                     <label htmlFor="form-tooltip" className="switch-label">
                       Switch
@@ -138,7 +147,9 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
               </div>
             </div>
             <div className="f-row wrap">
-              <div className="grid-item name">Save</div>
+              <div className="grid-item name" style={{ opacity: `${config.isEdit ? '1' : '0.2'}` }}>
+                Save changes
+              </div>
               <div className="grid-item action">{renderSave()}</div>
             </div>
             <div className="f-row">

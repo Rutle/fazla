@@ -43,19 +43,12 @@ const openUrl = (str: string): void => {
   electron.shell.openExternal(str);
 };
 
-export const getConfig = (): void => {
-  ipcRenderer.invoke('get-config', 'test').then((result: any) => {
-    console.log(result);
-  });
-};
-
 /**
  * Function that calls electron along with data to save data to .json file.
  * @param data Data that is saved to .json.
  */
 export const saveShipData = async (data = {}): Promise<BasicResponse> => {
   return await ipcRenderer.invoke('save-ship-data', data).then((result: BasicResponse) => {
-    console.log('[appUtils: saveShipData] Ship data save: ', result.isOk);
     return result;
   });
 };
@@ -66,7 +59,6 @@ export const saveShipData = async (data = {}): Promise<BasicResponse> => {
  */
 export const saveOwnedShipData = async (data: string[] = []): Promise<BasicResponse> => {
   return await ipcRenderer.invoke('save-owned-ships', data).then((result: BasicResponse) => {
-    console.log('[appUtils: saveOwnedShipData] :', result.isOk);
     return result;
   });
 };
@@ -76,7 +68,6 @@ export const saveOwnedShipData = async (data: string[] = []): Promise<BasicRespo
  */
 export const saveFormationData = async (data: Formation[] = []): Promise<BasicResponse> => {
   return await ipcRenderer.invoke('save-formation-data', data).then((result: BasicResponse) => {
-    console.log('appUtils: saveFormationData]', result.isOk);
     return result;
   });
 };
@@ -87,7 +78,6 @@ export const saveFormationData = async (data: Formation[] = []): Promise<BasicRe
  */
 export const removeAFormation = async (index = 0): Promise<BasicResponse> => {
   return await ipcRenderer.invoke('remove-formation-by-index', index).then((result: BasicResponse) => {
-    console.log('appUtils: removeAFormation]', result.isOk);
     return result;
   });
 };
@@ -97,8 +87,7 @@ export const removeAFormation = async (index = 0): Promise<BasicResponse> => {
  * @param {AppConfig} data Config data
  */
 export const saveConfig = async (data: AppConfig): Promise<BasicResponse> => {
-  return await ipcRenderer.invoke('update-config', data).then((result: BasicResponse) => {
-    console.log('appUtils: update-config]', result.isOk);
+  return await ipcRenderer.invoke('save-config', data).then((result: BasicResponse) => {
     return result;
   });
 };
