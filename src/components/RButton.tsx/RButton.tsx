@@ -7,11 +7,19 @@ interface RButtonProps {
   themeColor: string;
   onClick(event: React.MouseEvent<HTMLButtonElement>): void;
   disabled?: boolean;
+  extraStyle?: React.CSSProperties;
 }
 
-const RButton: React.FC<RButtonProps> = ({ className = 'btn normal', children, themeColor, onClick, disabled }) => {
+const RButton: React.FC<RButtonProps> = ({
+  className = 'btn normal graphic',
+  children,
+  themeColor,
+  onClick,
+  disabled,
+  extraStyle,
+}) => {
   return (
-    <button className={`${className} ${themeColor}`} onClick={onClick} disabled={disabled}>
+    <button className={`${className} ${themeColor}`} onClick={onClick} disabled={disabled} style={extraStyle}>
       {children}
     </button>
   );
@@ -25,4 +33,5 @@ RButton.propTypes = {
   themeColor: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  extraStyle: PropTypes.object,
 };

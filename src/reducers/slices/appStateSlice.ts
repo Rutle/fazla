@@ -131,8 +131,8 @@ export const initShipLists = (
     }
     searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
     searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
-    ownedInitId = ownedSearch.length > 0 ? fullSimple[0].id : 'NONE';
-    ownedInitIndex = ownedSearch.length > 0 ? fullSimple[0].index : NaN;
+    ownedInitId = ownedSearch.length > 0 ? ownedSearch[0].id : 'NONE';
+    ownedInitIndex = ownedSearch.length > 0 ? ownedSearch[0].index : NaN;
   } catch (e) {
     console.log('[INIT] {1}: Initializing error: ', e);
     dispatch(setCurrentState({ cState: 'ERROR', cMsg: e.message }));

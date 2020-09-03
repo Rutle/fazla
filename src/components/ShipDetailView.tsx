@@ -29,12 +29,14 @@ const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData }) => {
 
   useEffect(() => {
     // Check if there any ships left.
+    console.log(appState.cToggle);
     switch (appState.cToggle) {
       case 'all':
         setIsShips(shipSearchList.length > 0);
         break;
       case 'owned':
         setIsShips(ownedSearchList.length > 0);
+        console.log(appState.owned);
         break;
       default:
         break;
@@ -58,9 +60,7 @@ const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData }) => {
     } else {
       return (
         <>
-          <div className="scroll">
-            <ShipDetails ship={shipData.shipsArr[shipDetails.index]} />
-          </div>
+          <ShipDetails ship={shipData.shipsArr[shipDetails.index]} />
         </>
       );
     }

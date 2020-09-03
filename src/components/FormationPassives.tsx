@@ -14,7 +14,6 @@ interface FormationPassivesProps {
 const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formation, themeColor }) => {
   const [showMain, setShowMain] = useState(true);
   const [showVanguard, setShowVanguard] = useState(true);
-
   const isShip = (position: string) => {
     if (position === 'main') {
       return formation.data.slice(0, 3).every((x) => x === 'NONE');
@@ -26,16 +25,24 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formati
   };
 
   return (
-    <div className={'f-grid dark'}>
+    <div className={`f-grid ${themeColor}`}>
       {!isShip('main') ? (
         <>
-          <div className={'f-row'}>
-            <div className={`f-icon ${showMain ? '' : 'f-hide'}`} onClick={() => setShowMain(!showMain)}>
+          <div
+            className={'f-row'}
+            onClick={() => {
+              setShowMain(!showMain);
+            }}
+          >
+            <div className={`f-icon ${showMain ? '' : 'f-collapse'}`}>
               <FontAwesomeIcon icon={faAngleDown} />
             </div>
             <div className="f-title">Main</div>
           </div>
-          <div className={`f-toggle-list ${showMain ? '' : 'f-collapse'}`}>
+          <div
+            className={`f-collapsible ${showMain ? '' : 'f-collapsed'}`}
+            // style={{ maxHeight: `${showMain ? height : null}px` }}
+          >
             <div className={`f-row`}>
               <div className={'name f-header'}>Ship</div>
               <div className={'passive f-header'}>Passive</div>
@@ -50,13 +57,13 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formati
       )}
       {!isShip('vanguard') ? (
         <>
-          <div className={'f-row'}>
-            <div className={`f-icon ${showVanguard ? '' : 'f-hide'}`} onClick={() => setShowVanguard(!showVanguard)}>
+          <div className={'f-row'} onClick={() => setShowVanguard(!showVanguard)}>
+            <div className={`f-icon ${showVanguard ? '' : 'f-collapse'}`}>
               <FontAwesomeIcon icon={faAngleDown} />
             </div>
             <div className="f-title">Vanguard</div>
           </div>
-          <div className={`f-toggle-list ${showVanguard ? '' : 'f-collapse'}`}>
+          <div className={`f-collapsible ${showVanguard ? '' : 'f-collapsed'}`}>
             <div className={'f-row'}>
               <div className={'name f-header'}>Name</div>
               <div className={'passive f-header'}>Passive</div>

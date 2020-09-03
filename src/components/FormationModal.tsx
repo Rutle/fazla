@@ -8,6 +8,7 @@ import DataStore from '../util/dataStore';
 import SideBar from './SideBar';
 import PropTypes from 'prop-types';
 import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
+import RButton from './RButton.tsx/RButton';
 
 ReactModal.setAppElement('#root');
 interface FormationModalProps {
@@ -43,12 +44,20 @@ const FormationModal: React.FC<FormationModalProps> = ({ shipData }) => {
     >
       <SideBar shipData={shipData} />
       <div className="ship-data-container dark">
-        <div className="scroll">
-          <ShipDetails ship={shipData.shipsArr[shipDetails.index]} />
-          <button onClick={() => addShip()} className={`btn ${config.themeColor}`} type="button">
-            <b>Add to formation</b>
-          </button>
-        </div>
+        <ShipDetails ship={shipData.shipsArr[shipDetails.index]} />
+        <RButton themeColor={config.themeColor} onClick={addShip} extraStyle={{ marginTop: '5px' }}>
+          Add to formation
+        </RButton>
+        {/*
+        <button
+          onClick={() => addShip()}
+          className={`btn ${config.themeColor}`}
+          type="button"
+          style={{ marginTop: '5px' }}
+        >
+          <b>Add to formation</b>
+        </button>
+        */}
       </div>
     </ReactModal>
   );

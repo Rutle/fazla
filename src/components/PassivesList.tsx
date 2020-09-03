@@ -10,15 +10,17 @@ interface PassiveProps {
 
 const PassivesList: React.FC<PassiveProps> = ({ orient = 'vertical', page, ship }) => {
   return (
-    <div className={`passives-container ${orient}`}>
-      {ship.skills?.map((skill: Skill) => {
-        return (
-          <div key={skill.names.en} className={skill.color}>
-            <div>{skill.names.en}</div>
-            <div>{skill.description}</div>
-          </div>
-        );
-      })}
+    <div className="scroll">
+      <div className={`passives-container ${orient}`}>
+        {ship.skills?.map((skill: Skill) => {
+          return (
+            <div key={skill.names.en} className={skill.color}>
+              <div>{skill.names.en}</div>
+              <div>{skill.description}</div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

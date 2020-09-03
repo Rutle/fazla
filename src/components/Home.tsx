@@ -95,10 +95,10 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
         <div className="home-container dark">
           <div className="f-grid dark">
             <div className="f-row">
-              <div className="f-icon options">
+              <div className="f-icon bottom-emp">
                 <FontAwesomeIcon icon={faCaretRight} />
               </div>
-              <div className="f-title options">Options</div>
+              <div className="f-title bottom-emp">Options</div>
             </div>
             <div className="f-row wrap">
               <div className="grid-item name">Update Data:</div>
@@ -120,7 +120,9 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
                   onFocus={(e) => setSRCInputFocus(e, config.jsonURL.length)}
                   onBlur={(e) => {
                     setSRCInputFocus(e, 25);
-                    dispatch(configAction(AppConfigAction.Update, 'jsonURL', jsonSRCValue));
+                    if (e.target.value !== config.jsonURL) {
+                      dispatch(configAction(AppConfigAction.Update, 'jsonURL', jsonSRCValue));
+                    }
                   }}
                 />
               </div>
@@ -153,10 +155,10 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
               <div className="grid-item action">{renderSave()}</div>
             </div>
             <div className="f-row">
-              <div className="f-icon options">
+              <div className="f-icon bottom-emp">
                 <FontAwesomeIcon icon={faCaretRight} />
               </div>
-              <div className="f-title options">Stats</div>
+              <div className="f-title bottom-emp">Stats</div>
             </div>
             <div className="f-row wrap">
               <div className="grid-item name">Ship count</div>
