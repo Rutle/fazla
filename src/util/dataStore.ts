@@ -52,6 +52,7 @@ export default class DataStore {
    */
   async getShipsByParams(searchPs: SearchParams): Promise<ShipSimple[]> {
     let t: ShipSimple[] = [];
+    console.log(searchPs);
     try {
       t = this.shipsArr.reduce<ShipSimple[]>((acc, item, index): ShipSimple[] => {
         if (DataStore._filterPredicate(searchPs, item)) {
@@ -76,6 +77,11 @@ export default class DataStore {
     let isHullMatch = true;
     let isRarityMatch = true;
     isNameMatch = ship.names.en.toLowerCase().includes(searchPs.name.toLowerCase());
+    if (ship.nationality) {
+      isNatMatch = searchPs.nationality['All'] ? true : searchPs.nationalityArr.includes(ship.nationality);
+    } else {
+      isNatMatch = false;
+    }
     return isNameMatch && isNatMatch && isHullMatch && isRarityMatch;
   }
 

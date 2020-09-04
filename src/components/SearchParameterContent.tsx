@@ -3,7 +3,7 @@ import { nationCategories, rarityCategories, hullTypesAbb } from '../data/catego
 import RButton from './RButton.tsx/RButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { toggleParameter } from '../reducers/slices/searchParametersSlice';
+import { toggleParameter, toggleAll } from '../reducers/slices/searchParametersSlice';
 
 const SearchParameterContent: React.FC = () => {
   const sParam = useSelector((state: RootState) => state.searchParameters);
@@ -15,9 +15,9 @@ const SearchParameterContent: React.FC = () => {
         <div className="f-row wrap">
           <div className="grid-item toggle">
             <RButton
-              className={`btn small ${sParam['nationality']['all'] ? 'active' : ''}`}
+              className={`btn small graphic ${sParam['nationality']['All'] ? 'selected' : ''}`}
               themeColor={config.themeColor}
-              onClick={() => dispatch(toggleParameter({ cat: 'nationality', param: 'all' }))}
+              onClick={() => dispatch(toggleAll('nationality'))}
             >
               All
             </RButton>
@@ -26,7 +26,7 @@ const SearchParameterContent: React.FC = () => {
             return (
               <div className="grid-item toggle" key={key}>
                 <RButton
-                  className={`btn small ${sParam['nationality'][key] ? 'active' : ''}`}
+                  className={`btn small graphic ${sParam['nationality'][key] ? 'selected' : ''}`}
                   themeColor={config.themeColor}
                   onClick={() => dispatch(toggleParameter({ cat: 'nationality', param: key }))}
                 >
@@ -39,9 +39,9 @@ const SearchParameterContent: React.FC = () => {
         <div className="f-row wrap">
           <div className="grid-item toggle">
             <RButton
-              className={`btn small ${sParam['hullType']['all'] ? 'active' : ''}`}
+              className={`btn small graphic ${sParam['hullType']['All'] ? 'selected' : ''}`}
               themeColor={config.themeColor}
-              onClick={() => dispatch(toggleParameter({ cat: 'hullType', param: 'all' }))}
+              onClick={() => dispatch(toggleAll('hullType'))}
             >
               All
             </RButton>
@@ -50,7 +50,7 @@ const SearchParameterContent: React.FC = () => {
             return (
               <div className="grid-item toggle" key={key}>
                 <RButton
-                  className={`btn small ${sParam['hullType'][key] ? 'active' : ''}`}
+                  className={`btn small graphic ${sParam['hullType'][key] ? 'selected' : ''}`}
                   themeColor={config.themeColor}
                   onClick={() => dispatch(toggleParameter({ cat: 'hullType', param: key }))}
                 >
@@ -63,9 +63,9 @@ const SearchParameterContent: React.FC = () => {
         <div className="f-row wrap">
           <div className="grid-item toggle">
             <RButton
-              className={`btn small ${sParam['rarity']['all'] ? 'active' : ''}`}
+              className={`btn small graphic ${sParam['rarity']['All'] ? 'selected' : ''}`}
               themeColor={config.themeColor}
-              onClick={() => dispatch(toggleParameter({ cat: 'rarity', param: 'all' }))}
+              onClick={() => dispatch(toggleAll('rarity'))}
             >
               All
             </RButton>
@@ -74,7 +74,7 @@ const SearchParameterContent: React.FC = () => {
             return (
               <div className="grid-item toggle" key={value}>
                 <RButton
-                  className={`btn small ${sParam['rarity'][value] ? 'active' : ''}`}
+                  className={`btn small graphic ${sParam['rarity'][value] ? 'selected' : ''}`}
                   themeColor={config.themeColor}
                   onClick={() => dispatch(toggleParameter({ cat: 'rarity', param: value }))}
                 >

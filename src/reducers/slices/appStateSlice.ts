@@ -219,7 +219,7 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
           console.log('Fetched: ', Object.keys(result).length);
           try {
             dispatch(setCurrentState({ cState: 'SAVING', cMsg: 'Please wait while saving data.' }));
-            const { isOk, msg } = await saveShipData(result);
+            const { isOk } = await saveShipData(result);
             if (isOk) {
               dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating data.' }));
               const dataArr = await [...Object.keys(result).map((key) => result[key])];

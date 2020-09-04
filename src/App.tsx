@@ -11,7 +11,7 @@ const App: React.FC = () => {
 
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className={`App`}>
         <Switch>
           <Route exact path="/">
             <Redirect to="/home" />

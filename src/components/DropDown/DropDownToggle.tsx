@@ -23,7 +23,7 @@ const DropDownToggle: React.FC<DropDownToggleProps> = ({ id, text, themeColor })
       className={`dropdown-toggle tab-btn normal ${themeColor} ${ctrl[1].show ? 'active' : ''}`}
     >
       <span>{text}</span>
-      <div className={`toggle-icon ${ctrl[1].show ? 'active' : ''}`}>
+      <div className={`toggle-icon ${ctrl[1].show ? 'open' : ''}`}>
         <FontAwesomeIcon icon={faAngleLeft} />
       </div>
     </button>

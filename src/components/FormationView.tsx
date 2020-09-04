@@ -97,7 +97,7 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
               </div>
             </>
           ) : (
-            <div id="formation-suggestion">Please create new formation</div>
+            <div className="info-text">Please create new formation</div>
           )}
         </div>
       </section>

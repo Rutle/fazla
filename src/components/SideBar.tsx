@@ -109,10 +109,9 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
   };
   const selectShip = useCallback(
     (id: string, index: number) => {
-      console.log('useCallback', id, index, appState.cToggle);
       dispatch(setSelectedShip(appState.cToggle, id, index));
     },
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchParameters, appState.cToggle],
   );
 

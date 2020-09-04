@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-// import { AppThunk, AppDispatch } from '../../store';
-// import { batch } from 'react-redux';
 
 export interface BooleanSearchParam {
   [key: string]: boolean;
@@ -79,6 +77,7 @@ const searchParametersSlice = createSlice({
         ...state,
         [cat]: {
           ...state[cat],
+          All: false,
           [param]: !state[cat][param],
         },
       };
@@ -116,6 +115,36 @@ const searchParametersSlice = createSlice({
       }
       return newObj;
     },
+    toggleAll(state, action: PayloadAction<string>) {
+      const cat = action.payload;
+      const newObject = Object.fromEntries(
+        Object.entries(state[cat])
+          .slice()
+          .map(([key, val]) => [key, false]),
+      );
+      const newState = {
+        ...state,
+        [cat]: {
+          ...newObject,
+          All: !state[cat]['All'],
+        },
+      };
+      switch (cat) {
+        case 'nationality':
+          newState.nationalityArr = [];
+          break;
+        case 'rarity':
+          newState.rarityArr = [];
+          break;
+        case 'hullType':
+          newState.hullTypeArr = [];
+          break;
+        default:
+          break;
+      }
+      console.log('newState: ', newState);
+      return newState;
+    },
     setSearchString(state, action: PayloadAction<{ str: string }>) {
       return { ...state, name: action.payload.str };
     },
@@ -125,6 +154,6 @@ const searchParametersSlice = createSlice({
   },
 });
 
-export const { resetParameters, toggleParameter, setSearchString } = searchParametersSlice.actions;
+export const { resetParameters, toggleParameter, toggleAll, setSearchString } = searchParametersSlice.actions;
 
 export default searchParametersSlice.reducer;
