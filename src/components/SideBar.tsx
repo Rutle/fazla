@@ -137,7 +137,7 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
               onBlur={() => setInputFocus(false)}
             />
           </div>
-          <div className={`radio-group`}>
+          <div className={`radio-group ${config.themeColor}`}>
             <input
               id="all"
               type="radio"
