@@ -13,6 +13,7 @@ export type SearchParams = {
   hullType: BooleanSearchParam;
   nationality: BooleanSearchParam;
   rarity: BooleanSearchParam;
+  fleet: 'ALL' | 'VANGUARD' | 'MAIN';
 };
 
 const initialState: SearchParams = {
@@ -63,6 +64,7 @@ const initialState: SearchParams = {
     Priority: false,
     Decisive: false,
   },
+  fleet: 'ALL',
 };
 
 const searchParametersSlice = createSlice({
@@ -148,12 +150,18 @@ const searchParametersSlice = createSlice({
     setSearchString(state, action: PayloadAction<{ str: string }>) {
       return { ...state, name: action.payload.str };
     },
+    setFleet(state, action: PayloadAction<{ fleet: 'ALL' | 'VANGUARD' | 'MAIN' }>) {
+      return {
+        ...state,
+        fleet: action.payload.fleet,
+      };
+    },
     resetParameters() {
       return initialState;
     },
   },
 });
 
-export const { resetParameters, toggleParameter, toggleAll, setSearchString } = searchParametersSlice.actions;
+export const { resetParameters, toggleParameter, toggleAll, setFleet, setSearchString } = searchParametersSlice.actions;
 
 export default searchParametersSlice.reducer;

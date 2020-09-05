@@ -2,6 +2,26 @@ export interface Pair {
   [key: string]: string;
 }
 
+export const fleets: { MAIN: string[]; VANGUARD: string[] } = {
+  MAIN: ['Battlecruiser', 'Battleship', 'Light Aircraft Carrier', 'Aircraft Carrier', 'Monitor', 'Repair Ship'],
+  VANGUARD: [
+    'Destroyer',
+    'Light Cruiser',
+    'Southampton subclass',
+    'Edinburgh subclass',
+    'London subclass',
+    'Kent subclass',
+    'Norfolk subclass',
+    'Heavy Cruiser',
+    'Ayanami subclass',
+    'Akatsuki subclass',
+    'St. Louis subclass',
+    'A subclass',
+    'B subclass',
+    'Large Cruiser',
+  ],
+};
+
 export const nationCategories: Pair = {
   'Royal Navy': 'HMS',
   'Sakura Empire': 'IJN',

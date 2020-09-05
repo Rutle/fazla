@@ -989,7 +989,10 @@ div.grid-item {
   /* background-color: var(--main-dark-item-bg);*/
   border: 1px dotted var(--main-dark-border);
 }
+.f-grid.dark .grid-item > div.content.Normal {
+  background-color: rgba(51, 51, 51, 0.82);
 
+}
 .f-grid.dark .grid-item > div.content.Elite {
   background-color: rgb(54, 30, 54);
 }

@@ -3,7 +3,7 @@ import ReactModal from 'react-modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import ShipDetails from './ShipDetails';
-import { closeModal } from '../reducers/slices/formationModalSlice';
+import { FormationModalAction, formationModalAction } from '../reducers/slices/formationModalSlice';
 import DataStore from '../util/dataStore';
 import SideBar from './SideBar';
 import PropTypes from 'prop-types';
@@ -32,7 +32,7 @@ const FormationModal: React.FC<FormationModalProps> = ({ shipData }) => {
       default:
         break;
     }
-    dispatch(closeModal());
+    dispatch(formationModalAction(FormationModalAction.Close));
   };
 
   return (
@@ -40,7 +40,7 @@ const FormationModal: React.FC<FormationModalProps> = ({ shipData }) => {
       isOpen={formationModal.isOpen}
       overlayClassName="formation-modal-overlay"
       className="formation-model-container dark"
-      onRequestClose={() => dispatch(closeModal())}
+      onRequestClose={() => dispatch(formationModalAction(FormationModalAction.Close))}
     >
       <SideBar shipData={shipData} />
       <div className="ship-data-container dark">
@@ -48,16 +48,6 @@ const FormationModal: React.FC<FormationModalProps> = ({ shipData }) => {
         <RButton themeColor={config.themeColor} onClick={addShip} extraStyle={{ marginTop: '5px' }}>
           Add to formation
         </RButton>
-        {/*
-        <button
-          onClick={() => addShip()}
-          className={`btn ${config.themeColor}`}
-          type="button"
-          style={{ marginTop: '5px' }}
-        >
-          <b>Add to formation</b>
-        </button>
-        */}
       </div>
     </ReactModal>
   );
