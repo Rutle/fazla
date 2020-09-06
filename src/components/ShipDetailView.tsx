@@ -28,15 +28,12 @@ const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData }) => {
   }, []);
 
   useEffect(() => {
-    // Check if there any ships left.
-    console.log(appState.cToggle);
     switch (appState.cToggle) {
       case 'all':
         setIsShips(shipSearchList.length > 0);
         break;
       case 'owned':
         setIsShips(ownedSearchList.length > 0);
-        console.log(appState.owned);
         break;
       default:
         break;
@@ -46,26 +43,11 @@ const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData }) => {
 
   const renderShipDetails = () => {
     if (appState.cState === 'INIT') {
-      return (
-        <div style={{ textAlign: 'center' }}>
-          <h1>{appState.cMsg}</h1>
-        </div>
-      );
+      return <div className="info-text">{appState.cMsg}</div>;
     }
-    if (!isShips) {
-      return (
-        <div>
-          <h1>No ship selected or found</h1>
-        </div>
-      );
-    } else {
-      return (
-        <>
-          <ShipDetails ship={shipData.shipsArr[shipDetails.index]} />
-        </>
-      );
-    }
+    return <ShipDetails ship={shipData.shipsArr[shipDetails.index]} />;
   };
+
   return (
     <PageTemplate>
       <section className="page-content">

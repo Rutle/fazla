@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: { id: string; index: number } = {
   id: '',
-  index: 0,
+  index: NaN,
 };
 
 const shipDetailsSlice = createSlice({

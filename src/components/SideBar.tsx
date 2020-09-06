@@ -30,16 +30,10 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
   const [searchValue, setSearchValue] = useState(searchParameters.name);
   const [inputFocus, setInputFocus] = useState(false);
 
-  useEffect(() => {
-    console.log('[SideBar]');
-  }, []);
-
   // Set details of the selected ship when changed between 'all ships' and 'owned ships'.
   useEffect(() => {
     const { cToggle } = appState;
     if (appState.cState === 'INIT') return;
-
-    console.log('toggle', appState[appState.cToggle]);
     dispatch(setDetails({ id: appState[cToggle].id, index: appState[cToggle].index }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState.cToggle]);
@@ -49,32 +43,14 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
     console.log('[searchParameters]: ', appState.cState, appState.cToggle, appState.cPage);
     if (appState.cState === 'INIT') {
       console.log('[INIT] {1}: ship lists are not setup for searching yet. Skipping.');
-    } else if (appState.cPage === 'LIST') {
-      console.log('LIST -> update search results');
+    } else if (appState.cPage === 'LIST' || appState.cPage === 'FORMATION') {
       dispatch(setSearchResults(shipData));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParameters]);
 
   useEffect(() => {
-    if (appState.cState !== 'INIT' && appState.cToggle === 'all' && appState.cPage === 'LIST') {
-      console.log('ownedSearchList muuttu: ', ownedSearchList);
-      // dispatch(updateSearchList());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ownedSearchList]);
-
-  useEffect(() => {
-    if (appState.cState !== 'INIT' && appState.cToggle === 'all' && appState.cPage === 'LIST') {
-      console.log('shipSearchList muuttu: ', shipSearchList[0]);
-      // dispatch(updateSearchList());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shipSearchList]);
-
-  useEffect(() => {
     if (appState.cState !== 'INIT' && appState.cPage === 'LIST') {
-      console.log('owned list muuttu - ollaan LIST sivulla -> lisattiin/poistettiin. NOT INIT');
       dispatch(updateOwnedSearchList(shipData));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

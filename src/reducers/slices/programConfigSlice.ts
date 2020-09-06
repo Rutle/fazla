@@ -75,7 +75,6 @@ export const configAction = (action: AppConfigAction, key?: string, value?: stri
       case 'SAVE':
         const { isEdit, ...newConfig } = config;
         await saveConfig(newConfig).then((result) => {
-          console.log(result.isOk);
           if (result.isOk) {
             dispatch(setEditState(false));
           }

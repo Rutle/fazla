@@ -14,6 +14,7 @@ interface FormationPassivesProps {
 const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formation, themeColor }) => {
   const [showMain, setShowMain] = useState(true);
   const [showVanguard, setShowVanguard] = useState(true);
+
   const isShip = (position: string) => {
     if (position === 'main') {
       return formation.data.slice(0, 3).every((x) => x === 'NONE');
@@ -39,10 +40,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formati
             </div>
             <div className="f-title">Main</div>
           </div>
-          <div
-            className={`f-collapsible ${showMain ? '' : 'f-collapsed'}`}
-            // style={{ maxHeight: `${showMain ? height : null}px` }}
-          >
+          <div className={`f-collapsible ${showMain ? '' : 'f-collapsed'}`}>
             <div className={`f-row`}>
               <div className={'name f-header'}>Ship</div>
               <div className={'passive f-header'}>Passive</div>

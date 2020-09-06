@@ -13,7 +13,6 @@ const ownedShipListSlice = createSlice({
       return initialState;
     },
     addShipId(state, action: PayloadAction<string>) {
-      console.log('addShip', [...state, action.payload]);
       return [...state, action.payload];
     },
     setOwnedList(state, action: PayloadAction<string[]>) {

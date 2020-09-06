@@ -45,9 +45,13 @@ const FormationModal: React.FC<FormationModalProps> = ({ shipData }) => {
       <SideBar shipData={shipData} />
       <div className="ship-data-container dark">
         <ShipDetails ship={shipData.shipsArr[shipDetails.index]} />
-        <RButton themeColor={config.themeColor} onClick={addShip} extraStyle={{ marginTop: '5px' }}>
-          Add to formation
-        </RButton>
+        {shipData.shipsArr[shipDetails.index] ? (
+          <RButton themeColor={config.themeColor} onClick={addShip} extraStyle={{ marginTop: '5px' }}>
+            Add to formation
+          </RButton>
+        ) : (
+          <> </>
+        )}
       </div>
     </ReactModal>
   );

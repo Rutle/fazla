@@ -11,7 +11,7 @@ import InfoButton from './InfoButton';
 interface ShipDetails {
   orient?: string;
   page?: string;
-  ship: Ship;
+  ship?: Ship;
 }
 
 const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship }) => {
@@ -19,15 +19,21 @@ const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship })
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
 
   const isOwned = () => {
-    return ownedShips.some((ele) => ele === ship.id);
+    if (ship) {
+      return ownedShips.some((ele) => ele === ship.id);
+    }
   };
 
   const addShipToOwned = () => {
-    dispatch(addShip(ship.id));
+    if (ship) {
+      dispatch(addShip(ship.id));
+    }
   };
 
   const removeFromOwned = () => {
-    dispatch(removeShip(ship.id));
+    if (ship) {
+      dispatch(removeShip(ship.id));
+    }
   };
 
   const renderAddRemoveButton = () => {
@@ -51,8 +57,7 @@ const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship })
       );
     }
   };
-
-  return (
+  return ship ? (
     <>
       <div className="ship-title-bar">
         <div>
@@ -73,6 +78,8 @@ const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship })
       </div>
       <PassivesList orient={orient} /* page={page} */ ship={ship} />
     </>
+  ) : (
+    <div className="info-text">No ship selected or found</div>
   );
 };
 

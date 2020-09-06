@@ -1,5 +1,6 @@
 import { Ship, ShipSimple } from './shipdatatypes';
 import { SearchParams } from '../reducers/slices/searchParametersSlice';
+import { fleets } from '../data/categories';
 
 export interface RarityParam {
   [key: string]: boolean;
@@ -29,7 +30,11 @@ export default class DataStore {
     this.count = shipData.length;
     this.init = 'INIT';
   }
-
+  /**
+   * Function returns a ship by given id.
+   * @param {string} id Ship id.
+   * @returns {Ship | undefined} Ship details.
+   */
   getShipById(id: string): Ship | undefined {
     if (id === '') return undefined;
     return this.shipsArr.find((ship) => ship.id === id);
@@ -73,15 +78,29 @@ export default class DataStore {
    */
   static _filterPredicate(searchPs: SearchParams, ship: Ship): boolean {
     let isNameMatch = false;
-    let isNatMatch = true;
-    let isHullMatch = true;
-    let isRarityMatch = true;
+    let isNatMatch = false;
+    let isHullMatch = false;
+    let isRarityMatch = false;
+
     isNameMatch = ship.names.en.toLowerCase().includes(searchPs.name.toLowerCase());
+
     if (ship.nationality) {
-      isNatMatch = searchPs.nationality['All'] ? true : searchPs.nationalityArr.includes(ship.nationality);
-    } else {
-      isNatMatch = false;
+      // isNatMatch = searchPs.nationality['All'] ? true : searchPs.nationalityArr.includes(ship.nationality);
+      isNatMatch = searchPs.nationality['All'] ? true : searchPs.nationality[ship.nationality];
     }
+    if (ship.hullType && searchPs.fleet === 'ALL') {
+      isHullMatch = searchPs.hullType['All'] ? true : searchPs.hullType[ship.hullType];
+    } else if (ship.hullType && searchPs.fleet === 'MAIN' && fleets.MAIN.includes(ship.hullType)) {
+      isHullMatch = searchPs.hullType['All'] ? true : searchPs.hullType[ship.hullType];
+
+    } else if (ship.hullType && searchPs.fleet === 'VANGUARD' && fleets.VANGUARD.includes(ship.hullType)) {
+      isHullMatch = searchPs.hullType['All'] ? true : searchPs.hullType[ship.hullType];
+    }
+
+    if (ship.rarity) {
+      isRarityMatch = searchPs.rarity['All'] ? true : searchPs.rarity[ship.rarity];
+    }
+
     return isNameMatch && isNatMatch && isHullMatch && isRarityMatch;
   }
 

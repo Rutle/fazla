@@ -144,7 +144,6 @@ const searchParametersSlice = createSlice({
         default:
           break;
       }
-      console.log('newState: ', newState);
       return newState;
     },
     setSearchString(state, action: PayloadAction<{ str: string }>) {

@@ -264,7 +264,6 @@ export const updateOwnedSearchList = (data: DataStore): AppThunk => async (dispa
     let ownedSearch: ShipSimple[] = [];
     ownedSearch = DataStore.transformStringList(data.shipsArr, ownedShips);
     ownedSearch = await DataStore.reduceByParams(data, ownedSearch, searchParameters);
-    console.log(ownedSearch);
     batch(() => {
       dispatch(setOwnedSearchList(ownedSearch));
       if (oLen !== 0) {

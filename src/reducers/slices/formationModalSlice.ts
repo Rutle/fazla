@@ -43,7 +43,7 @@ export const formationModalAction = (
     switch (action) {
       case 'OPEN':
         if (isOpen !== undefined && gridIndex !== undefined) {
-          const fleet = gridIndex !== undefined && gridIndex >= 2 ? 'MAIN' : 'VANGUARD';
+          const fleet = gridIndex !== undefined && gridIndex <= 2 ? 'MAIN' : 'VANGUARD';
           batch(() => {
             dispatch(setFleet({ fleet: fleet }));
             dispatch(openModal({ isOpen: isOpen, gridIndex: gridIndex }));
