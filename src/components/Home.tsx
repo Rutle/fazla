@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { configAction, AppConfigAction } from '../reducers/slices/programConfigSlice';
-import RButton from './RButton.tsx/RButton';
+import RButton from './RButton/RButton';
 
 interface HomeProps {
   shipData: DataStore;

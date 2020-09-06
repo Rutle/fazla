@@ -1,6 +1,6 @@
 import React from 'react';
 import { nationCategories, rarityCategories, hullTypesAbb } from '../data/categories';
-import RButton from './RButton.tsx/RButton';
+import RButton from './RButton/RButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { toggleParameter, toggleAll } from '../reducers/slices/searchParametersSlice';

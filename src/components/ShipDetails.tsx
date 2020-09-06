@@ -6,7 +6,7 @@ import PassivesList from './PassivesList';
 import { openWikiUrl, urlValidation } from '../util/appUtilities';
 import { addShip, removeShip } from '../reducers/slices/ownedShipListSlice';
 import { Ship } from '../util/shipdatatypes';
-import InfoButton from './InfoButton';
+import RButton from './RButton/RButton';
 
 interface ShipDetails {
   orient?: string;
@@ -39,21 +39,25 @@ const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship })
   const renderAddRemoveButton = () => {
     if (!isOwned()) {
       return (
-        <InfoButton
-          buttonAction={addShipToOwned}
-          classes={'btn dark informative'}
-          text={'Add to docks'}
-          width={'160px'}
-        />
+        <RButton
+          themeColor="dark"
+          onClick={addShipToOwned}
+          className="btn dark informative"
+          extraStyle={{ width: '160px', height: '22px', padding: 0 }}
+        >
+          <b>Add to docks</b>
+        </RButton>
       );
     } else {
       return (
-        <InfoButton
-          buttonAction={removeFromOwned}
-          classes={'btn dark informative'}
-          text={'Remove from docks'}
-          width={'160px'}
-        />
+        <RButton
+          themeColor="dark"
+          onClick={removeFromOwned}
+          className="btn dark informative"
+          extraStyle={{ width: '160px', height: '22px', padding: 0 }}
+        >
+          <b>Remove from docks</b>
+        </RButton>
       );
     }
   };
@@ -66,14 +70,15 @@ const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship })
         </div>
         <span className="end-buttons dark">
           {renderAddRemoveButton()}
-          <button
-            className="btn dark informative"
-            style={{ width: '160px', height: '22px', padding: 0 }}
+          <RButton
+            themeColor="dark"
             onClick={() => openWikiUrl(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
+            className="btn dark informative"
+            extraStyle={{ width: '160px', height: '22px', padding: 0 }}
             disabled={!urlValidation(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
           >
             <b>wiki</b>
-          </button>
+          </RButton>
         </span>
       </div>
       <PassivesList orient={orient} /* page={page} */ ship={ship} />

@@ -8,7 +8,7 @@ import DataStore from '../util/dataStore';
 import SideBar from './SideBar';
 import PropTypes from 'prop-types';
 import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
-import RButton from './RButton.tsx/RButton';
+import RButton from './RButton/RButton';
 
 ReactModal.setAppElement('#root');
 interface FormationModalProps {
