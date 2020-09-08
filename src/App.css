@@ -1,6 +1,7 @@
 /* Global colors */
 :root {
-  --root-dark-bg: rgb(42, 46, 54);
+  /* --root-dark-bg: rgb(42, 46, 54);*/
+  --root-dark-bg: rgb(46, 51, 62);
   --main-dark-bg: #1b1d24;
   --main-dark-border: #3f4657;
   --main-dark-color: rgb(184, 184, 184);
@@ -9,7 +10,7 @@
   /* --main-dark-selected-bg: #272c3b;*/
   --main-dark-button-top-bg: #272c3b;
   --main-dark-button-bottom-bg: #21252f;
-  --main-dark-selected-bg: #2f3442;
+  --main-dark-selected-bg: #363a46;
   --main-dark-selected-bottom-bg: #2a2e35;
   --main-dark-active-bg: #343b4e;
   --main-dark-active-border: #818aa1;
@@ -18,7 +19,7 @@
   --main-dark-inform-bg: #272c3b;
   --main-dark-tooltip-bg: #1b1d24e3;
   --main-dark-tooltip-border: #3f4657a6;
-  --main-dark-title-bg: #21252f;
+  --main-dark-title-bg: #1b1d24;
   --main-dark-item-bg: #21252f;
 
   --root-light-bg: rgb(255, 255, 255);
@@ -453,7 +454,7 @@ button.btn.graphic.dark:hover {
 }
 
 button.btn.graphic.dark.selected {
-  background: linear-gradient(to bottom, var(--main-dark-selected-bg) 40%, var(--main-dark-selected-bottom-bg) 100%);
+  background: linear-gradient(to bottom, var(--main-dark-selected-bottom-bg) 10%,  var(--main-dark-selected-bg) 100%);
   /* background: unset;*/
   /* background-color: var(--main-dark-selected-bg);*/
   text-shadow: 0px 1px 0px var(--main-dark-border);
@@ -673,6 +674,7 @@ nav.tab.dark > a:hover {
 }
 .ship-data-container.dark .ship-title-bar > div {
   border: 2px solid var(--main-dark-border);
+  background-color: var(--main-dark-title-bg);
 }
 .ship-title-bar > div > span.ship-name { 
   margin-right: 10px;
