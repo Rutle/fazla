@@ -37,6 +37,7 @@ type ListStateObject = {
   cToggle: string;
   all: ListState;
   owned: ListState;
+  shipCount: number;
 } & CurrentState &
   CurrentPage;
 
@@ -53,6 +54,7 @@ const initialState: ListStateObject = {
   cState: 'INIT',
   cMsg: 'Initializing.',
   cPage: 'HOME',
+  shipCount: 0,
 };
 
 const appStateSlice = createSlice({
@@ -88,6 +90,9 @@ const appStateSlice = createSlice({
       const { cPage } = action.payload;
       return { ...state, cPage: cPage };
     },
+    setShipCount(state, action: PayloadAction<number>) {
+      return { ...state, shipCount: action.payload };
+    },
   },
 });
 
@@ -98,6 +103,7 @@ export const {
   setCurrentState,
   setListValue,
   setCurrentPage,
+  setShipCount,
 } = appStateSlice.actions;
 
 /**
@@ -227,6 +233,7 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
                 dispatch(setSearchList(fullSimple));
                 dispatch(setListState({ key: 'all', data: { id: searchInitId, index: searchInitIndex } }));
                 dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
+                dispatch(setShipCount(shipData.count));
               });
               dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
             }

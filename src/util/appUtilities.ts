@@ -2,6 +2,7 @@ import { Ship } from './shipdatatypes';
 import shipData from '../data/ships.json';
 import { AppConfig } from '../reducers/slices/programConfigSlice';
 import { Formation } from '../reducers/slices/formationGridSlice';
+import DataStore from './dataStore';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -122,4 +123,11 @@ export const urlValidation = (str: string): boolean => {
   const flags = 'gi';
   const re = new RegExp(urlVal, flags);
   return re.test(str);
+};
+
+/**
+ * Function that calls electron to save config to electron-store .json config file.
+ */
+export const getDatastore = (): DataStore => {
+  return ipcRenderer.sendSync('get-datastore');
 };

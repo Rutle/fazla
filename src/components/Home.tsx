@@ -21,18 +21,20 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
   const ownedList = useSelector((state: RootState) => state.ownedShips);
   const config = useSelector((state: RootState) => state.config);
   const [shipCount, setShipCount] = useState(shipData.count);
-  const [docksCount, setDocksCount] = useState(0);
+  const [docksCount, setDocksCount] = useState(ownedList.length);
   const [srcInputLen, setSRCInputLen] = useState(config.jsonURL.length | 25);
   const [jsonSRCValue, setJSONSRCValue] = useState<string | undefined>('');
   const [isSRCFocus, setSRCFocus] = useState<boolean>(false);
 
   useEffect(() => {
+    console.log(shipData);
     if (appState.cPage !== 'HOME') {
       dispatch(setCurrentPage({ cPage: 'HOME' }));
       setSRCFocus(false);
       setSRCInputLen(25);
     }
     // console.log('[Home] [] appState :[', appState.cState, '] cPage: [', appState.cPage, ']');
+    /*
     try {
       if (shipData.init === 'INIT') {
         // console.log('[INIT] {1}: Async anonymous function call to init data.');
@@ -47,13 +49,18 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
     } catch (e) {
       console.log('[INIT] {1}: Error, useEffect []: ', e);
     }
+    */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     setDocksCount(ownedList.length);
   }, [ownedList]);
-
+/*
+  useState(() => {
+    console.log(shipData.count);
+  }, [shipData]);
+*/
   const renderUpdate = () => {
     let text = 'Update';
     let disabled = false;

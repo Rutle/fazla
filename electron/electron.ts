@@ -9,6 +9,7 @@ import { Ship } from '../src/util/shipdatatypes';
 
 let mainWindow: BrowserWindow;
 const electronStore = new Store();
+
 const fsPromises = fs.promises;
 interface MiscInformation {
   name: string | undefined;

@@ -50,8 +50,19 @@ var fs = require("fs");
 var path = require("path");
 var isDev = require("electron-is-dev");
 require("electron-reload");
+// import DataStore from '../src/util/dataStore';
 var mainWindow;
 var electronStore = new electron_store_1["default"]();
+/*
+const dataStore = new DataStore([]);
+if (process.env.NODE_ENV === 'development') {
+  console.log('DEVELOPMENT');
+  const rawData = fs.readFileSync(path.join(__dirname, '../src/data/ships.json'), 'utf8');
+  const jsonData = JSON.parse(rawData);
+  const dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
+  dataStore.setArray(dataArr);
+}
+*/
 var fsPromises = fs.promises;
 var SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 var THEMECOLOR = 'dark';
@@ -289,3 +300,8 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
         }
     });
 }); });
+/*
+ipcMain.on('get-datastore', function (event, arg) {
+  event.returnValue = dataStore;
+});
+*/ 

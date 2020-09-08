@@ -6,6 +6,8 @@ import './index.css';
 import './App.css';
 import store from './store';
 import App from './App';
+import { getDatastore } from './util/appUtilities';
+import DataStore from './util/dataStore';
 
 ReactDOM.render(
   <React.StrictMode>
