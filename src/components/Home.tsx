@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PageTemplate from './PageTemplate';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { updateShipData, initShipLists, setCurrentPage } from '../reducers/slices/appStateSlice';
-import { initData } from '../util/appUtilities';
+import { updateShipData, setCurrentPage } from '../reducers/slices/appStateSlice';
 import DataStore from '../util/dataStore';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,47 +19,29 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
   const appState = useSelector((state: RootState) => state.appState);
   const ownedList = useSelector((state: RootState) => state.ownedShips);
   const config = useSelector((state: RootState) => state.config);
-  const [shipCount, setShipCount] = useState(shipData.count);
+  const [shipCount, setShipCount] = useState(appState.shipCount);
   const [docksCount, setDocksCount] = useState(ownedList.length);
   const [srcInputLen, setSRCInputLen] = useState(config.jsonURL.length | 25);
   const [jsonSRCValue, setJSONSRCValue] = useState<string | undefined>('');
   const [isSRCFocus, setSRCFocus] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(shipData);
     if (appState.cPage !== 'HOME') {
       dispatch(setCurrentPage({ cPage: 'HOME' }));
       setSRCFocus(false);
       setSRCInputLen(25);
     }
-    // console.log('[Home] [] appState :[', appState.cState, '] cPage: [', appState.cPage, ']');
-    /*
-    try {
-      if (shipData.init === 'INIT') {
-        // console.log('[INIT] {1}: Async anonymous function call to init data.');
-        (async () => {
-          const initDataObj = await initData();
-          await shipData.setArray(initDataObj.shipData);
-          setShipCount(shipData.shipsArr.length);
-          dispatch(initShipLists(initDataObj.ownedShips, shipData, initDataObj.config, initDataObj.formations));
-          setJSONSRCValue(initDataObj.config.jsonURL);
-        })();
-      }
-    } catch (e) {
-      console.log('[INIT] {1}: Error, useEffect []: ', e);
-    }
-    */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     setDocksCount(ownedList.length);
   }, [ownedList]);
-/*
-  useState(() => {
-    console.log(shipData.count);
-  }, [shipData]);
-*/
+
+  useEffect(() => {
+    setShipCount(appState.shipCount);
+  }, [appState.shipCount]);
+
   const renderUpdate = () => {
     let text = 'Update';
     let disabled = false;

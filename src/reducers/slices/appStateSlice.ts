@@ -53,7 +53,7 @@ const initialState: ListStateObject = {
   },
   cState: 'INIT',
   cMsg: 'Initializing.',
-  cPage: 'HOME',
+  cPage: 'LIST',
   shipCount: 0,
 };
 
@@ -149,6 +149,7 @@ export const initShipLists = (
   });
   dispatch(setConfig(config));
   dispatch(setFormationsData(formations));
+  dispatch(setShipCount(fullSimple.length));
   dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
 };
 
@@ -226,6 +227,7 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
               dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating data.' }));
               const dataArr = await [...Object.keys(result).map((key) => result[key])];
               await shipData.setArray(dataArr);
+              console.log(shipData.count);
               const fullSimple = await DataStore.transformShipList(shipData.shipsArr);
               const searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
               const searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;

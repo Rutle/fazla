@@ -57,37 +57,14 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
 
   const searchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    /*
-    switch (appState.cToggle) {
-      case 'all':
-        const t: ShipSimple[] = getSearchList(fullShipList);
-        dispatch(setList(t));
-        if (t.length === 0) {
-          dispatch(resetDetails());
-          return;
-        }
-        dispatch(setListState({ key: 'all', data: { id: t[0].id, index: 0 } }));
-        break;
-      case 'owned':
-        const d: ShipSimple[] = getSearchList(ownedList);
-        dispatch(setOwnedSearchList(d));
-        if (d.length === 0) {
-          dispatch(resetDetails());
-          return;
-        }
-        dispatch(setListState({ key: 'owned', data: { id: d[0].id, index: 0 } }));
-        break;
-      default:
-        break;
-    }
-     */
   };
+
   const selectShip = useCallback(
     (id: string, index: number) => {
       dispatch(setSelectedShip(appState.cToggle, id, index));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchParameters, appState.cToggle],
+    [searchParameters, appState.cToggle, appState.cPage],
   );
 
   return (

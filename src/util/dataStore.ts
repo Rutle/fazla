@@ -48,7 +48,7 @@ export default class DataStore {
   async setArray(data: Ship[]): Promise<Ship[]> {
     try {
       this.shipsArr = [...data];
-      this.count = this.shipsArr.length;
+      this.count = data.length;
     } catch (error) {
       return await Promise.reject(new Error(error.message));
     }
@@ -62,7 +62,6 @@ export default class DataStore {
    */
   async getShipsByParams(searchPs: SearchParams): Promise<ShipSimple[]> {
     let t: ShipSimple[] = [];
-    console.log(searchPs);
     try {
       t = this.shipsArr.reduce<ShipSimple[]>((acc, item, index): ShipSimple[] => {
         if (DataStore._filterPredicate(searchPs, item)) {
