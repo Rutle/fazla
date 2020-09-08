@@ -668,10 +668,11 @@ nav.tab.dark > a:hover {
   flex-grow: 1;
   border-left: 0px!important;
   border-right: 0px!important;
-  padding: 5px;
+  padding: 5px 16px;
   font-size: 1.5em;
   justify-content: flex-start;
 }
+
 .ship-data-container.dark .ship-title-bar > div {
   border: 2px solid var(--main-dark-border);
   background-color: var(--main-dark-title-bg);

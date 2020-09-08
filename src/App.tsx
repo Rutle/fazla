@@ -14,11 +14,11 @@ const App: React.FC = () => {
       <div className={`App`}>
         <Switch>
           <Route exact path="/">
-            <Redirect to="/home" />
+            <Redirect to="/options" />
           </Route>
-          <Route path="/home" component={() => <Home shipData={shipData} />} />
+          <Route path="/options" component={() => <Home shipData={shipData} />} />
           <Route path="/shipdetails" component={() => <ShipDetailView shipData={shipData} />} />
-          <Route path="/formation" component={() => <FormationView shipData={shipData} />} />
+          <Route path="/formations" component={() => <FormationView shipData={shipData} />} />
         </Switch>
       </div>
     </BrowserRouter>

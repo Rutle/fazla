@@ -50,7 +50,6 @@ var fs = require("fs");
 var path = require("path");
 var isDev = require("electron-is-dev");
 require("electron-reload");
-// import { Formation } from '../src/reducers/slices/formationGridSlice';
 var mainWindow;
 var electronStore = new electron_store_1["default"]();
 var fsPromises = fs.promises;

@@ -6,7 +6,6 @@ import * as path from 'path';
 import * as isDev from 'electron-is-dev';
 import 'electron-reload';
 import { Ship } from '../src/util/shipdatatypes';
-// import { Formation } from '../src/reducers/slices/formationGridSlice';
 
 let mainWindow: BrowserWindow;
 const electronStore = new Store();

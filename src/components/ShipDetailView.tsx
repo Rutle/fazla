@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import DataStore from '../util/dataStore';
 import SideBar from './SideBar';
 import { setCurrentPage } from '../reducers/slices/appStateSlice';
+
 interface ShipDetailViewProps {
   shipData: DataStore;
 }
@@ -16,7 +17,7 @@ const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData }) => {
   const appState = useSelector((state: RootState) => state.appState);
 
   useEffect(() => {
-    console.log('[ShipDetailView] [] appState :[', appState.cState, '] cPage: [', appState.cPage, ']');
+    // console.log('[ShipDetailView] [] appState :[', appState.cState, '] cPage: [', appState.cPage, ']');
     if (appState.cPage !== 'LIST') {
       dispatch(setCurrentPage({ cPage: 'LIST' }));
     }

@@ -8,9 +8,9 @@ const MainMenu: React.FC = () => {
   return (
     <div className={`top-container fixed`}>
       <nav className={`tab ${config.themeColor}`}>
-        <NavLink to="/home">Options</NavLink>
+        <NavLink to="/options">Options</NavLink>
         <NavLink to="/shipdetails">Ships</NavLink>
-        <NavLink to="/formation">Formations</NavLink>
+        <NavLink to="/formations">Formations</NavLink>
       </nav>
     </div>
   );

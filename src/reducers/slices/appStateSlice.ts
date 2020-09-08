@@ -37,8 +37,6 @@ type ListStateObject = {
   cToggle: string;
   all: ListState;
   owned: ListState;
-  ownedIsReady: boolean;
-  allIsReady: boolean;
 } & CurrentState &
   CurrentPage;
 
@@ -55,8 +53,6 @@ const initialState: ListStateObject = {
   cState: 'INIT',
   cMsg: 'Initializing.',
   cPage: 'HOME',
-  ownedIsReady: false,
-  allIsReady: false,
 };
 
 const appStateSlice = createSlice({
@@ -124,7 +120,7 @@ export const initShipLists = (
   let ownedInitId = 'NONE';
   let ownedInitIndex = 0;
   try {
-    console.log('[INIT] {1}: Inside slice setting lists.');
+    // console.log('[INIT] {1}: Inside slice setting lists.');
     fullSimple = await DataStore.transformShipList(data.shipsArr);
     if (ownedSearch !== undefined) {
       ownedSearch = await DataStore.transformStringList(data.shipsArr, ownedShips);

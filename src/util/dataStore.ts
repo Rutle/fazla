@@ -30,6 +30,11 @@ export default class DataStore {
     this.count = shipData.length;
     this.init = 'INIT';
   }
+
+  getShipByIndex(index: number): Ship | undefined {
+    return this.shipsArr[index];
+  }
+
   /**
    * Function returns a ship by given id.
    * @param {string} id Ship id.
@@ -92,7 +97,6 @@ export default class DataStore {
       isHullMatch = searchPs.hullType['All'] ? true : searchPs.hullType[ship.hullType];
     } else if (ship.hullType && searchPs.fleet === 'MAIN' && fleets.MAIN.includes(ship.hullType)) {
       isHullMatch = searchPs.hullType['All'] ? true : searchPs.hullType[ship.hullType];
-
     } else if (ship.hullType && searchPs.fleet === 'VANGUARD' && fleets.VANGUARD.includes(ship.hullType)) {
       isHullMatch = searchPs.hullType['All'] ? true : searchPs.hullType[ship.hullType];
     }

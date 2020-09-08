@@ -32,10 +32,10 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
       setSRCFocus(false);
       setSRCInputLen(25);
     }
-    console.log('[Home] [] appState :[', appState.cState, '] cPage: [', appState.cPage, ']');
+    // console.log('[Home] [] appState :[', appState.cState, '] cPage: [', appState.cPage, ']');
     try {
       if (shipData.init === 'INIT') {
-        console.log('[INIT] {1}: Async anonymous function call to init data.');
+        // console.log('[INIT] {1}: Async anonymous function call to init data.');
         (async () => {
           const initDataObj = await initData();
           await shipData.setArray(initDataObj.shipData);

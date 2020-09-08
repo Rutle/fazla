@@ -14,6 +14,7 @@ interface ShipListProps {
 const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName, onClick }) => {
   const config = useSelector((state: RootState) => state.config);
   const appState = useSelector((state: RootState) => state.appState);
+
   return (
     <div className={`rList ${listName !== appState.cToggle ? 'hidden' : ''}`}>
       {shipSearchList.map((ship) => {

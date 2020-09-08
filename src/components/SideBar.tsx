@@ -40,9 +40,8 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
 
   // Update lists when search parameter changes.
   useEffect(() => {
-    console.log('[searchParameters]: ', appState.cState, appState.cToggle, appState.cPage);
     if (appState.cState === 'INIT') {
-      console.log('[INIT] {1}: ship lists are not setup for searching yet. Skipping.');
+      // console.log('[INIT] {1}: ship lists are not setup for searching yet. Skipping.');
     } else if (appState.cPage === 'LIST' || appState.cPage === 'FORMATION') {
       dispatch(setSearchResults(shipData));
     }
