@@ -22,8 +22,8 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
   const [shipCount, setShipCount] = useState(appState.shipCount);
   const [docksCount, setDocksCount] = useState(ownedList.length);
   const [srcInputLen, setSRCInputLen] = useState(config.jsonURL.length | 25);
-  const [jsonSRCValue, setJSONSRCValue] = useState<string | undefined>('');
-  const [isSRCFocus, setSRCFocus] = useState<boolean>(false);
+  const [jsonSRCValue, setJSONSRCValue] = useState(config.jsonURL);
+  const [isSRCFocus, setSRCFocus] = useState(false);
 
   useEffect(() => {
     if (appState.cPage !== 'HOME') {
@@ -97,7 +97,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
               <div className="grid-item action">
                 <input
                   type="url"
-                  placeholder={config.jsonURL !== '' ? config.jsonURL : ''}
+                  placeholder={config.jsonURL ? config.jsonURL : ''}
                   spellCheck="false"
                   className={`text-input ${config.themeColor}`}
                   style={{ width: `${srcInputLen}ch` }}

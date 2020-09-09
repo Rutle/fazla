@@ -77,11 +77,12 @@ input[type="url"].dark:focus {
   background-color: rgba(0,0,0,0.45);
   border: 2px solid var(--main-dark-input-focus-border);
 }
-
+/*
 .radio-group.dark label {
   background-color: var(--main-dark-bg);
   border: 1px solid var(--main-dark-border);
 }
+
 .radio-group.dark label:hover {
   background-color: var(--main-dark-hover-bg);
 }
@@ -89,7 +90,7 @@ input[type="url"].dark:focus {
 .radio-group.dark input[type="radio"]:checked + label {
   background-color: var(--main-dark-selected-bg);
 }
-
+*/
 .tab.dark {
   overflow: hidden;
   border: 2px solid #3f4657;
@@ -119,11 +120,11 @@ input[type="url"].dark:focus {
 .btn.light.selected {
   background-color: var(--main-light-selected);
 }
-
+/*
 .radio-group input[type="radio"]:checked + label.light {
   background-color: var(--main-light-selected);
 }
-
+*/
 input[type="text"].light,
 input[type="url"].light {
   border: 2px solid var(--main-light-border);
@@ -134,11 +135,11 @@ input[type="url"].light:focus {
   background-color: var(--main-light-focus);
   border: 2px solid var(--main-light-focus-border);
 }
-
+/*
 .radio-group label.light {
   background-color: var(--main-light-bg);
 }
-
+*/
 .tab.light {
   overflow: hidden;
   border-bottom: 1px solid var(--main-light-border);
@@ -442,18 +443,18 @@ button.btn.hidden {
   display: none!important;
 }
 
-button.btn.graphic {
+.btn.graphic {
 	border-radius: 3px;
 	text-decoration:none;
 }
 
-button.btn.graphic.dark:hover {
+.btn.graphic.dark:hover {
 	background: linear-gradient(to bottom, var(--main-dark-button-bottom-bg) 5%, var(--main-dark-button-top-bg) 100%);
   /* background-color: var(--main-dark-hover-bg);*/
   text-shadow: 0px 1px 0px var(--main-dark-border);
 }
 
-button.btn.graphic.dark.selected {
+.btn.graphic.dark.selected {
   background: linear-gradient(to bottom, var(--main-dark-selected-bottom-bg) 10%,  var(--main-dark-selected-bg) 100%);
   /* background: unset;*/
   /* background-color: var(--main-dark-selected-bg);*/
@@ -462,7 +463,7 @@ button.btn.graphic.dark.selected {
   box-shadow: inset 1px 1px 1px #252525;
 }
 
-button.btn.graphic.dark {
+.btn.graphic.dark {
   box-shadow: inset 0px 1px 0px 0px var(--main-dark-input-bg);
 	background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 5%, var(--main-dark-button-bottom-bg) 100%);
 }
@@ -471,7 +472,7 @@ button.btn.dark {
   border: 1px solid var(--main-dark-border);
 }
 
-button.btn.graphic.dark {
+.btn.graphic.dark {
   border: 1px solid var(--main-dark-bg);
 }
 
@@ -629,6 +630,7 @@ nav.tab.dark > a:hover {
 .popover-container {
   overflow: hidden; 
   position: absolute;
+  z-index: 100;
   max-width: 19%;
   width: 19%;
   -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
@@ -695,12 +697,15 @@ nav.tab.dark > a:hover {
 
 /* #####  rList  ##### */
 .rList {
+  flex: 1 1 auto; /* added for List2 */
   margin-top: 0px;
   padding: 0px;
   width: 100%;
+  /*
   overflow-y: scroll;
   scrollbar-color: dark;
   scrollbar-width: thin;
+  */
   height: 100%;
 }
 
@@ -708,31 +713,29 @@ div.rList.hidden {
   display: none;
 }
 
-.rList > .rList-item {
-  width: 100%;
+.rList .rList-item {
+  /* width: 100%;*/
   padding: 5px;
   margin-bottom: 1px;
 }
 
-.rList > .rList-item.btn {
+.rList .rList-item.btn {
   border: unset;
   height: unset;
   max-height: 45px;
   min-height: 35px;
 }
 
-.r-List-item-container {
-  padding: 10px;
-}
-
 .button-group {
   display: flex;
 }
 .radio-group {
-  margin-top: 0px;
+  margin-top: 2px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row;
+  /* padding: 0px 5px 0px 5px;*/
 }
 
 /* #### INPUT ##### */
@@ -743,21 +746,24 @@ div.rList.hidden {
 }
 
 .radio-group label {
-  flex-grow: 1;
-  padding: 4px;
-  text-align: center;
+  display: flex;
+  flex: 1;
+  /* flex-basis: auto;*/
+  padding: 5px;
+  /* text-align: center;*/
+  justify-content: center;
+  margin-right: 3px;
 }
 
-div#search > form {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
+.radio-group label:last-child {
+  margin-right: 0px;
 }
 
 #input-group,
 #input-group:focus {
   display: flex;
   box-sizing: border-box;
+  padding: 0px 2px 0px 2px;
 }
 
 input[type="text"],
@@ -768,21 +774,24 @@ input[type="url"] {
 
 #search-input {
   margin-top: 10px;
-  padding: 10px;
+  padding: 5px;
   height: 35px;
   width: 100%;
   margin-bottom: 1px;
   border-left: 0px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 
 .text-input {
-  padding: 5px;
-  height: 26px;
+  padding: 2px;
+  height: 27px;
   min-width: 0;
   margin-right: 2px;
   text-overflow: ellipsis;
   font-family: Lucida Sans Unicode;
   font-size: 14px;
+  border-radius: 2px;
 }
 
 .text-input:focus {
@@ -797,6 +806,8 @@ input[type="url"] {
   padding: 5px;
   margin: 10px auto;
   margin-bottom: 1px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
 }
 
 .searchIcon.dark {
@@ -913,6 +924,7 @@ input[type="url"] {
   display: flex;
   flex-direction: column;
   padding: 5px;
+  border-radius: 2px;
 }
 
 div.f-grid.dark div.f-header {
@@ -959,7 +971,7 @@ div.f-column {
   flex-direction: column;
   border-radius: inherit;
   margin-bottom: 5px;
-  margin-right: 2px;
+  /* margin-right: 2px;*/
 }
 
 div.f-column > div.grid-item {

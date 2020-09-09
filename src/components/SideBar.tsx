@@ -89,29 +89,36 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
               onBlur={() => setInputFocus(false)}
             />
           </div>
-          <div className={`radio-group ${config.themeColor}`}>
-            <input
-              id="all"
-              type="radio"
-              value="all"
-              checked={appState.cToggle === 'all'}
-              onChange={() => dispatch(setCurrentToggle('all'))}
-            />
-            <label className={`toggle ${config.themeColor}`} htmlFor="all">
-              All
-            </label>
-            <input
-              id="owned"
-              type="radio"
-              value="false"
-              checked={appState.cToggle === 'owned'}
-              onChange={() => dispatch(setCurrentToggle('owned'))}
-            />
-            <label className={`toggle ${config.themeColor}`} htmlFor="owned">
-              Owned
-            </label>
-          </div>
         </form>
+        <div className={`radio-group ${config.themeColor}`}>
+          <input
+            id="all"
+            type="radio"
+            value="all"
+            checked={appState.cToggle === 'all'}
+            onChange={() => dispatch(setCurrentToggle('all'))}
+          />
+          <label
+            className={`btn graphic ${config.themeColor}${appState.cToggle === 'all' ? ' selected' : ''}`}
+            htmlFor="all"
+          >
+            All
+          </label>
+          
+          <input
+            id="owned"
+            type="radio"
+            value="false"
+            checked={appState.cToggle === 'owned'}
+            onChange={() => dispatch(setCurrentToggle('owned'))}
+          />
+          <label
+            className={`btn graphic ${config.themeColor}${appState.cToggle === 'owned' ? ' selected' : ''}`}
+            htmlFor="owned"
+          >
+            Owned
+          </label>
+        </div>
       </div>
       <ShipList shipData={shipData} shipSearchList={shipSearchList} listName={'all'} onClick={selectShip} />
       <ShipList shipData={shipData} shipSearchList={ownedSearchList} listName={'owned'} onClick={selectShip} />
