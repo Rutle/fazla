@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import FormationShipPassives from './FormationShipPassives';
 import DataStore from '../util/dataStore';
 import PropTypes from 'prop-types';
-import { Formation } from '../reducers/slices/formationGridSlice';
+import { Formation } from '../util/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 interface FormationPassivesProps {

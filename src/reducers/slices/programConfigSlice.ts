@@ -1,18 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '../../store';
 import { saveConfig } from '../../util/appUtilities';
+import { AppConfig } from '../../util/types';
 
 export enum AppConfigAction {
   Save = 'SAVE',
   Update = 'UPDATE',
 }
-export type AppConfig = {
-  jsonURL: string;
-  themeColor: 'dark' | 'light';
-  firstTime: boolean;
-  formHelpTooltip: boolean;
-  isEdit?: boolean;
-};
 
 const initialState: AppConfig = {
   jsonURL: '',

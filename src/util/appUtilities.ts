@@ -1,7 +1,4 @@
-import { Ship } from './shipdatatypes';
-import shipData from '../data/ships.json';
-import { AppConfig } from '../reducers/slices/programConfigSlice';
-import { Formation } from '../reducers/slices/formationGridSlice';
+import { Ship, Formation, AppConfig } from './types';
 import DataStore from './dataStore';
 
 const electron = window.require('electron');

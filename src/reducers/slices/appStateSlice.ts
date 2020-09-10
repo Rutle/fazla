@@ -4,12 +4,12 @@ import { AppThunk, AppDispatch } from '../../store';
 import { setSearchList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import DataStore from '../../util/dataStore';
-import { ShipSimple } from '../../util/shipdatatypes';
+import { ShipSimple, Formation, AppConfig } from '../../util/types';
 import { batch } from 'react-redux';
 import { saveShipData } from '../../util/appUtilities';
 import { setOwnedList } from './ownedShipListSlice';
-import { Formation, setFormationsData } from './formationGridSlice';
-import { AppConfig, setConfig } from './programConfigSlice';
+import { setFormationsData } from './formationGridSlice';
+import { setConfig } from './programConfigSlice';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 

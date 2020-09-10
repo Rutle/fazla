@@ -234,7 +234,7 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                 dataArr = [];
                 oShips = [];
                 formationData = [];
-                configData = { jsonURL: '', themeColor: '' };
+                configData = { jsonURL: '', themeColor: 'dark', firstTime: false, formHelpTooltip: true };
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 8, , 9]);

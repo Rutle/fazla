@@ -357,6 +357,19 @@ body {
   flex-direction: row;
 }
 
+.close-app-modal-container {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  margin: auto;
+}
+
+.close-app-modal-container.dark {
+  background-color: var(--root-dark-bg);
+  border: 2px solid #9c9c9ca1;
+  border-radius: 2px;
+}
+
 .formation-model-container {
   display: flex;
   flex-direction: row;
@@ -375,7 +388,8 @@ body {
   border-radius: 2px;
 }
 
-.formation-modal-overlay {
+.modal-overlay {
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
@@ -728,6 +742,12 @@ div.rList.hidden {
 
 .button-group {
   display: flex;
+  flex-direction: row;
+}
+.button-group button {
+  display: flex;
+  flex: 1 1;
+  flex-basis: auto;
 }
 .radio-group {
   margin-top: 2px;

@@ -3,7 +3,7 @@ import React from 'react';
 import FormationGridItem from './FormationGridItem';
 import DataStore from '../util/dataStore';
 import PropTypes from 'prop-types';
-import { Formation } from '../reducers/slices/formationGridSlice';
+import { Formation } from '../util/types';
 interface FormationGridProps {
   shipData: DataStore;
   formation: Formation;

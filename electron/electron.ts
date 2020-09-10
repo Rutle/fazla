@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as isDev from 'electron-is-dev';
 import 'electron-reload';
-import { Ship, Formation } from '../src/util/types';
+import { Ship, Formation, AppConfig } from '../src/util/types';
 
 let mainWindow: BrowserWindow;
 const electronStore = new Store();
@@ -14,10 +14,6 @@ const fsPromises = fs.promises;
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 const THEMECOLOR = 'dark';
-interface AppConfig {
-  jsonURL: string;
-  themeColor: string;
-}
 
 function createWindow() {
   // Create the browser window.
@@ -174,7 +170,8 @@ ipcMain.handle('initData', async (event, arg) => {
   let dataArr: Ship[] = [];
   let oShips: string[] = [];
   let formationData: Formation[] = [];
-  let configData: AppConfig = { jsonURL: '', themeColor: '' };
+  let configData: AppConfig = { jsonURL: '', themeColor: 'dark', firstTime: false, formHelpTooltip: true };
+
   try {
     if (!electronStore.has('firstRun')) {
       electronStore.set('firstRun', false);

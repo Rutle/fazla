@@ -37,13 +37,6 @@ const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData, setShipData }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const renderShipDetails = () => {
-    if (appState.cState === 'INIT') {
-      return <div className="info-text">{appState.cMsg}</div>;
-    }
-    return <ShipDetails ship={shipData.shipsArr[shipDetails.index]} />;
-  };
-
   return (
     <PageTemplate>
       <section className="page-content">
@@ -54,7 +47,9 @@ const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData, setShipData }
         ) : (
           <>
             <SideBar shipData={shipData} />
-            <div className="ship-data-container dark">{renderShipDetails()}</div>
+            <div className="ship-data-container dark">
+              <ShipDetails ship={shipData.shipsArr[shipDetails.index]} />
+            </div>
           </>
         )}
       </section>

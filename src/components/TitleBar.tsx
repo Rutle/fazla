@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '../util/appUtilities';
+import { RootState } from '../reducers/rootReducer';
+import CloseAppModal from './Modal/CloseAppModalContent';
+import ReactModal from 'react-modal';
+
+ReactModal.setAppElement('#root');
 
 const TitleBar: React.FC = () => {
+  const formGrid = useSelector((state: RootState) => state.formationGrid);
+  const config = useSelector((state: RootState) => state.config);
   const [isMax, setIsMax] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const isEdit = () => {
+    return formGrid.isEdit.some((status) => status === true);
+  };
+
   return (
     <header id="titlebar">
       <div id="drag-region">
@@ -41,11 +55,29 @@ const TitleBar: React.FC = () => {
           >
             <FontAwesomeIcon icon={faWindowRestore} size="xs" />
           </div>
-          <div className="button title-button" id="close-button" onClick={() => closeWindow()}>
+          <div
+            className="button title-button"
+            id="close-button"
+            onClick={() => {
+              if (isEdit()) {
+                setModalOpen(!isModalOpen);
+              } else {
+                closeWindow();
+              }
+            }}
+          >
             <FontAwesomeIcon icon={faTimes} size="xs" />
           </div>
         </div>
       </div>
+      <ReactModal
+        overlayClassName="modal-overlay"
+        isOpen={isModalOpen}
+        onAfterClose={closeWindow}
+        className={`close-app-modal-container ${config.themeColor}`}
+      >
+        <CloseAppModal setModalOpen={setModalOpen} />
+      </ReactModal>
     </header>
   );
 };

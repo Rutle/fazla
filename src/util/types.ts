@@ -1,3 +1,11 @@
+export type AppConfig = {
+  jsonURL: string;
+  themeColor: 'dark' | 'light';
+  firstTime: boolean;
+  formHelpTooltip: boolean;
+  isEdit?: boolean;
+};
+
 export interface BooleanSearchParam {
   [key: string]: boolean;
 }
