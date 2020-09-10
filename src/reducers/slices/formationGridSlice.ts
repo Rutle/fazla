@@ -10,6 +10,7 @@ export enum FormationAction {
   Save = 'SAVE',
   AddShip = 'ADDSHIP',
   RemoveShip = 'REMOVESHIP',
+  SaveAll = 'SAVEALL',
 }
 
 interface Formations {
@@ -168,6 +169,9 @@ export const formationAction = (action: FormationAction, gridIndex?: number): Ap
         break;
       case 'REMOVESHIP':
         dispatch(removeShipFromFormation({ gridIndex: gridIndex as number, selectedIndex: formIdx }));
+        break;
+      case 'SAVEALL':
+        await saveFormationData(formationGrid.formations);
         break;
       default:
         break;

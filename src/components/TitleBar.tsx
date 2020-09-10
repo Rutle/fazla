@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '../util/appUtilities';
 import { RootState } from '../reducers/rootReducer';
-import CloseAppModal from './Modal/CloseAppModalContent';
+import CloseAppModalContent from './Modal/CloseAppModalContent';
 import ReactModal from 'react-modal';
 
 ReactModal.setAppElement('#root');
@@ -15,10 +15,13 @@ const TitleBar: React.FC = () => {
   const [isMax, setIsMax] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
+
   const isEdit = () => {
     return formGrid.isEdit.some((status) => status === true);
   };
-
+  const test = () => {
+    console.log('test');
+  };
   return (
     <header id="titlebar">
       <div id="drag-region">
@@ -73,10 +76,11 @@ const TitleBar: React.FC = () => {
       <ReactModal
         overlayClassName="modal-overlay"
         isOpen={isModalOpen}
-        onAfterClose={closeWindow}
         className={`close-app-modal-container ${config.themeColor}`}
+        shouldCloseOnEsc={true}
+        onRequestClose={() => setModalOpen(false)}
       >
-        <CloseAppModal setModalOpen={setModalOpen} />
+        <CloseAppModalContent setModalOpen={setModalOpen} />
       </ReactModal>
     </header>
   );
