@@ -14,7 +14,6 @@ interface ShipListProps {
   onClick(id: string, index: number): void;
 }
 
-
 const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName, onClick }) => {
   const config = useSelector((state: RootState) => state.config);
   const appState = useSelector((state: RootState) => state.appState);

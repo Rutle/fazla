@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '../../store';
 import { saveFormationData, removeAFormation } from '../../util/appUtilities';
+import { Formation } from '../../util/types';
 
 export enum FormationAction {
   New = 'NEW',
@@ -10,14 +11,6 @@ export enum FormationAction {
   AddShip = 'ADDSHIP',
   RemoveShip = 'REMOVESHIP',
 }
-
-interface MiscInformation {
-  name: string; // Name displayed on the dropdown list
-}
-
-export type Formation = {
-  data: string[];
-} & MiscInformation;
 
 interface Formations {
   formations: Formation[];

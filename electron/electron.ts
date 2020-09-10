@@ -5,19 +5,12 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as isDev from 'electron-is-dev';
 import 'electron-reload';
-import { Ship } from '../src/util/shipdatatypes';
+import { Ship, Formation } from '../src/util/types';
 
 let mainWindow: BrowserWindow;
 const electronStore = new Store();
 
 const fsPromises = fs.promises;
-interface MiscInformation {
-  name: string | undefined;
-}
-
-type Formation = {
-  data: string[];
-} & MiscInformation;
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 const THEMECOLOR = 'dark';

@@ -104,7 +104,6 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
           >
             All
           </label>
-          
           <input
             id="owned"
             type="radio"

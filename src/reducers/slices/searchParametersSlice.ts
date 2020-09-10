@@ -1,20 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export interface BooleanSearchParam {
-  [key: string]: boolean;
-}
-
-export type SearchParams = {
-  [key: string]: any;
-  name: string;
-  hullTypeArr: string[];
-  nationalityArr: string[];
-  rarityArr: string[];
-  hullType: BooleanSearchParam;
-  nationality: BooleanSearchParam;
-  rarity: BooleanSearchParam;
-  fleet: 'ALL' | 'VANGUARD' | 'MAIN';
-};
+import { SearchParams } from '../../util/types';
 
 const initialState: SearchParams = {
   name: '',

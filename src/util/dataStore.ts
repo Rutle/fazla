@@ -1,18 +1,6 @@
 import { Ship, ShipSimple } from './shipdatatypes';
-import { SearchParams } from '../reducers/slices/searchParametersSlice';
+import { SearchParams } from './types';
 import { fleets } from '../data/categories';
-
-export interface RarityParam {
-  [key: string]: boolean;
-}
-
-export interface NationalityParam {
-  [key: string]: boolean;
-}
-
-export interface HullTypeParam {
-  [key: string]: boolean;
-}
 
 /**
  * Ship data wrapper.
