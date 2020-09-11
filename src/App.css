@@ -2,7 +2,8 @@
 :root {
   /* --root-dark-bg: rgb(42, 46, 54);*/
   /*--root-dark-bg: rgb(46, 51, 62); */
-  --root-dark-bg: rgb(32, 36, 41);
+  /* --root-dark-bg: rgb(32, 36, 41);*/
+  --root-dark-bg: rgb(22, 23, 25);
   --main-dark-bg: #1b1d24;
   --main-dark-border: #3f4657;
   --main-dark-color: rgb(184, 184, 184);
@@ -22,6 +23,7 @@
   --main-dark-tooltip-border: #3f4657a6;
   --main-dark-title-bg: #1b1d24;
   --main-dark-item-bg: #21252f;
+  --main-dark-footer-titlebar-bg: #202023;
 
   --root-light-bg: rgb(255, 255, 255);
   --main-light-color: black;
@@ -215,7 +217,7 @@ body {
   position: fixed;
   height: 32px;
   width: 100%;
-  background: var(--root-dark-bg);
+  background: var(--main-dark-footer-titlebar-bg);
 }
 
 #footer {
@@ -225,7 +227,7 @@ body {
   bottom: 0;
   height: 24px;
   width: 100%;
-  background: var(--main-dark-bg);
+  background: var(--main-dark-footer-titlebar-bg);
   border-top: 1px solid black;
 }
 
@@ -365,7 +367,6 @@ body {
   flex-direction: column;
   align-self: center;
   margin: auto;
-  /* padding: 15px;*/
 }
 
 .close-app-modal-container > div.close-title {
@@ -409,8 +410,9 @@ body {
 
 .formation-model-container.dark {
   background-color: var(--root-dark-bg);
-  border: 2px solid #9c9c9ca1;
+  border: 1px solid var(--main-dark-border);
   border-radius: 2px;
+  color: var(--main-dark-color);
 }
 
 .modal-overlay {
@@ -740,11 +742,6 @@ nav.tab.dark > a:hover {
   margin-top: 0px;
   padding: 0px;
   width: 100%;
-  /*
-  overflow-y: scroll;
-  scrollbar-color: dark;
-  scrollbar-width: thin;
-  */
   height: 100%;
 }
 
@@ -753,7 +750,7 @@ div.rList.hidden {
 }
 
 .rList .rList-item {
-  /* width: 100%;*/
+  /* width: calc(100% - 0.5em)!important;*/
   padding: 5px;
   margin-bottom: 1px;
 }
@@ -922,7 +919,7 @@ input[type="url"] {
 }
 
 .passives-container > div.deepskyblue > :first-child {
-  border-bottom: 2px dashed rgba(24, 86, 107, 0.82);
+  border-bottom: 2px dashed rgb(24, 86, 107);
 }
 
 .passives-container > div.gold {
@@ -934,8 +931,8 @@ input[type="url"] {
 }
 
 .passives-container > div.deepskyblue {
-  border: 2px solid rgba(24, 86, 107, 0.82);
-  background-color: rgb(35, 46, 49);
+  border: 2px solid rgb(24, 86, 107);
+  background-color: rgb(31, 41, 43);
   border-radius: 5px;
 }
 

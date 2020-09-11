@@ -123,8 +123,15 @@ export const urlValidation = (str: string): boolean => {
 };
 
 /**
- * Function that calls electron to save config to electron-store .json config file.
+ * Function that calls electron to get data.
  */
-export const getDatastore = (): DataStore => {
-  return ipcRenderer.sendSync('get-datastore');
+export const getDatastore = async (): Promise<DataStore> => {
+  return await ipcRenderer.invoke('get-ship-data');
+};
+
+/**
+ * Function that calls electron to get a ship.
+ */
+export const getShipById = async (): Promise<Ship> => {
+  return await ipcRenderer.invoke('get-ship-by-id');
 };

@@ -6,14 +6,12 @@ import { RootState } from '../reducers/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import DataStore from '../util/dataStore';
 import SideBar from './SideBar';
-import { setCurrentPage, initShipLists } from '../reducers/slices/appStateSlice';
-import { initData } from '../util/appUtilities';
+import { setCurrentPage } from '../reducers/slices/appStateSlice';
 
 interface ShipDetailViewProps {
   shipData: DataStore;
-  setShipData: (e: React.SetStateAction<DataStore>) => void;
 }
-const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData, setShipData }) => {
+const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData }) => {
   const dispatch = useDispatch();
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const appState = useSelector((state: RootState) => state.appState);
@@ -21,18 +19,6 @@ const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData, setShipData }
   useEffect(() => {
     if (appState.cPage !== 'LIST') {
       dispatch(setCurrentPage({ cPage: 'LIST' }));
-    }
-    try {
-      if (appState.cState === 'INIT') {
-        console.log('async');
-        (async () => {
-          const initDataObj = await initData();
-          await shipData.setArray(initDataObj.shipData);
-          dispatch(initShipLists(initDataObj.ownedShips, shipData, initDataObj.config, initDataObj.formations));
-        })();
-      }
-    } catch (e) {
-      console.log('[INIT] {1}: Error, useEffect []: ', e);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

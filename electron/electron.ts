@@ -6,11 +6,12 @@ import * as path from 'path';
 import * as isDev from 'electron-is-dev';
 import 'electron-reload';
 import { Ship, Formation, AppConfig } from '../src/util/types';
+// import DataStore from '../src/util/dataStore';
 
 let mainWindow: BrowserWindow;
 const electronStore = new Store();
-
 const fsPromises = fs.promises;
+// const shipData = new DataStore();
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 const THEMECOLOR = 'dark';
@@ -56,7 +57,15 @@ app.on('window-all-closed', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-
+/*
+if (process.env.NODE_ENV === 'development') {
+  console.log('DEVELOPMENT', ' load .json');
+  const rawData = fs.readFileSync(path.join(__dirname, '../src/data/ships.json'), 'utf8');
+  const jsonData = JSON.parse(rawData);
+  const dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
+  shipData.setArray(dataArr);
+}
+*/
 ipcMain.on('close-application', () => {
   if (process.platform !== 'darwin') app.quit();
 });
@@ -211,3 +220,12 @@ ipcMain.handle('initData', async (event, arg) => {
   console.log('dataArr: ', dataArr.length);
   return { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: 'success' };
 });
+/*
+ipcMain.handle('get-ship-data', async (event, arg) => {
+  return shipData;
+});
+
+ipcMain.handle('get-ship-by-id', async (event, id) => {
+  return shipData.getShipById(id);
+});
+*/

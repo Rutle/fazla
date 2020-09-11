@@ -50,9 +50,11 @@ var fs = require("fs");
 var path = require("path");
 var isDev = require("electron-is-dev");
 require("electron-reload");
+// import DataStore from '../src/util/dataStore';
 var mainWindow;
 var electronStore = new electron_store_1["default"]();
 var fsPromises = fs.promises;
+// const shipData = new DataStore();
 var SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 var THEMECOLOR = 'dark';
 function createWindow() {
@@ -92,6 +94,15 @@ electron_1.app.on('window-all-closed', function () {
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+/*
+if (process.env.NODE_ENV === 'development') {
+  console.log('DEVELOPMENT', ' load .json');
+  const rawData = fs.readFileSync(path.join(__dirname, '../src/data/ships.json'), 'utf8');
+  const jsonData = JSON.parse(rawData);
+  const dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
+  shipData.setArray(dataArr);
+}
+*/
 electron_1.ipcMain.on('close-application', function () {
     if (process.platform !== 'darwin')
         electron_1.app.quit();
@@ -289,3 +300,12 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
         }
     });
 }); });
+/*
+ipcMain.handle('get-ship-data', async (event, arg) => {
+  return shipData;
+});
+
+ipcMain.handle('get-ship-by-id', async (event, id) => {
+  return shipData.getShipById(id);
+});
+*/

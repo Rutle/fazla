@@ -8,15 +8,15 @@ import { fleets } from '../data/categories';
 export default class DataStore {
   shipsArr: Ship[] = [];
   count = 0;
-  init: 'INIT' | 'READY' | 'UPDATING' = 'INIT';
+  state: 'INIT' | 'READY' | 'UPDATING' = 'INIT';
   /**
    * Constructor for DataStore
    * @param shipData Ship data json.
    */
-  constructor(shipData: Ship[]) {
-    this.shipsArr = [...shipData];
-    this.count = shipData.length;
-    this.init = 'INIT';
+  constructor() {
+    this.shipsArr = [];
+    this.count = 0;
+    this.state = 'INIT';
   }
 
   getShipByIndex(index: number): Ship | undefined {
@@ -35,12 +35,12 @@ export default class DataStore {
 
   async setArray(data: Ship[]): Promise<Ship[]> {
     try {
-      this.shipsArr = [...data];
+      this.shipsArr = [...data.slice()];
       this.count = data.length;
     } catch (error) {
       return await Promise.reject(new Error(error.message));
     }
-    this.init = 'READY';
+    this.state = 'READY';
     return await Promise.resolve(data);
   }
 

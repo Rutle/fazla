@@ -42,7 +42,13 @@ const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName,
     <div className={`rList${listName !== appState.cToggle ? ' hidden' : ''}`}>
       <AutoSizer>
         {({ height, width }) => (
-          <List height={height} itemCount={shipSearchList.length} itemSize={36} width={width}>
+          <List
+            height={height}
+            itemCount={shipSearchList.length}
+            itemSize={36}
+            width={width}
+            style={{ overflowY: 'scroll' }}
+          >
             {({ index, style }) => (
               <button
                 type="button"
