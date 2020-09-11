@@ -137,6 +137,37 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
               </div>
             </div>
             <div className="f-row wrap">
+              <div className="grid-item name">Theme color</div>
+              <div className="grid-item action">
+                <div className={`radio-group ${config.themeColor}`}>
+                  <input
+                    id="dark-input"
+                    type="radio"
+                    checked={config.themeColor === 'dark'}
+                    onChange={() => dispatch(configAction(AppConfigAction.Update, 'themeColor', 'dark'))}
+                  />
+                  <label
+                    className={`btn graphic ${config.themeColor}${appState.cToggle === 'all' ? ' selected' : ''}`}
+                    htmlFor="dark-input"
+                  >
+                    Dark
+                  </label>
+                  <input
+                    id="light-input"
+                    type="radio"
+                    checked={config.themeColor === 'light'}
+                    onChange={() => dispatch(configAction(AppConfigAction.Update, 'themeColor', 'light'))}
+                  />
+                  <label
+                    className={`btn graphic ${config.themeColor}${appState.cToggle === 'owned' ? ' selected' : ''}`}
+                    htmlFor="light-input"
+                  >
+                    Light
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="f-row wrap">
               <div className="grid-item name" style={{ opacity: `${config.isEdit ? '1' : '0.2'}` }}>
                 Save changes
               </div>

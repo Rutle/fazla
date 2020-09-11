@@ -36,7 +36,8 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
   return (
     <div className={`grid-item ${config.themeColor}`}>
       <div
-        className={`content ${ship !== undefined ? ship.rarity : ''}`}
+        // className={`content ${ship !== undefined ? ship.rarity : ''}`}
+        className={`content`}
         onClick={() => openShipSelector()}
         onContextMenu={() => dispatch(formationAction(FormationAction.RemoveShip, index))}
         data-tip
@@ -46,6 +47,22 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
         data-border
         data-border-color="var(--main-dark-tooltip-border)"
       >
+        {ship !== undefined ? (
+          <div
+            className={`${ship.hullType !== undefined ? hullTypes[ship.hullType] : ''}`}
+            style={{ display: 'flex', flexDirection: 'row', padding: '2px 5px' }}
+          >
+            <div className="hull-type">{ship.hullType !== undefined ? hullTypesAbb[hullTypes[ship.hullType]] : ''}</div>
+            <div className={`details`}>{ship.names.en}</div>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'row', padding: '2px 5px' }}>
+            <div className={`details`}>Add ship</div>
+          </div>
+        )}
+        <div className={'pos-indicator'}>{getLocation(index)}</div>
+
+        {/*
         <div className={`details`}>{ship !== undefined ? ship.names.en : 'Add ship'}</div>
         <div className={'footer-misc'}>
           <div
@@ -55,6 +72,7 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
           </div>
           <div className={'pos-indicator'}>{getLocation(index)}</div>
         </div>
+        */}
       </div>
     </div>
   );

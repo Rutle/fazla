@@ -48,13 +48,6 @@ const App: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  useEffect(() => {
-    console.log('cState:', appState.cState, shipData);
-  }, [appState.cState]);
-
-  useEffect(() => {
-    console.log('shidata:', appState.cState, shipData);
-  }, [shipData.state]);
 
   return (
     <BrowserRouter>

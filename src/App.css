@@ -81,20 +81,7 @@ input[type="url"].dark:focus {
   background-color: rgba(0,0,0,0.45);
   border: 2px solid var(--main-dark-input-focus-border);
 }
-/*
-.radio-group.dark label {
-  background-color: var(--main-dark-bg);
-  border: 1px solid var(--main-dark-border);
-}
 
-.radio-group.dark label:hover {
-  background-color: var(--main-dark-hover-bg);
-}
-
-.radio-group.dark input[type="radio"]:checked + label {
-  background-color: var(--main-dark-selected-bg);
-}
-*/
 .tab.dark {
   overflow: hidden;
   border: 2px solid #3f4657;
@@ -124,11 +111,7 @@ input[type="url"].dark:focus {
 .btn.light.selected {
   background-color: var(--main-light-selected);
 }
-/*
-.radio-group input[type="radio"]:checked + label.light {
-  background-color: var(--main-light-selected);
-}
-*/
+
 input[type="text"].light,
 input[type="url"].light {
   border: 2px solid var(--main-light-border);
@@ -139,11 +122,7 @@ input[type="url"].light:focus {
   background-color: var(--main-light-focus);
   border: 2px solid var(--main-light-focus-border);
 }
-/*
-.radio-group label.light {
-  background-color: var(--main-light-bg);
-}
-*/
+
 .tab.light {
   overflow: hidden;
   border-bottom: 1px solid var(--main-light-border);
@@ -772,12 +751,10 @@ div.rList.hidden {
   flex-basis: auto;
 }
 .radio-group {
-  margin-top: 2px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  /* padding: 0px 5px 0px 5px;*/
 }
 
 /* #### INPUT ##### */
@@ -788,13 +765,14 @@ div.rList.hidden {
 }
 
 .radio-group label {
-  display: flex;
-  flex: 1;
-  /* flex-basis: auto;*/
-  padding: 5px;
-  /* text-align: center;*/
-  justify-content: center;
+  box-sizing: border-box;
+  padding: 5px 16px;
+  height: 26px;
   margin-right: 3px;
+  font-size: 14px;
+  outline: none;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .radio-group label:last-child {
@@ -905,7 +883,7 @@ input[type="url"] {
 
 .passives-container > div.pink {
   border: 2px solid rgb(99, 85, 88);
-  background-color: rgb(45, 38, 40);
+  background-color: #2d2224;
   border-radius: 5px;
 }
 
@@ -1036,88 +1014,47 @@ div.grid-item {
 .grid-item > div.content {
   display: flex;
   height: 100%;
-  padding: 1px;
   cursor: pointer;
   flex-direction: column;
   border-radius: inherit;
-}
-
-.f-grid.dark .grid-item > div.content {
-  /* background-color: var(--main-dark-item-bg);*/
-  border: 1px dotted var(--main-dark-border);
-}
-.f-grid.dark .grid-item > div.content.Normal {
-  background-color: rgba(51, 51, 51, 0.82);
-
-}
-.f-grid.dark .grid-item > div.content.Elite {
-  background-color: rgb(54, 30, 54);
-}
-
-.f-grid.dark .grid-item > div.content.Elite > div.details {
-  color: plum;
-}
-
-.f-grid.dark .grid-item > div.content.Rare {
-  background-color: rgba(60, 91, 97, 0.82);
-}
-
-.f-grid.dark .grid-item > div.content.Rare > div.details {
-  color: powderblue;
-}
-
-.f-grid.dark .grid-item > div.content.Super.Rare {
-  background-color: rgba(84, 66, 15, 0.82);
-}
-
-.f-grid.dark .grid-item > div.content.Super.Rare > div.details {
-  color: goldenrod;
-}
-
-.grid-item > div.content > div.details {
-  padding: 5px 16px;
-  cursor: pointer;
-  text-align: center;
   font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+div.content div.hull-type {
+  /* padding: 2px 5px;*/
+  margin-right: 7px;
+  cursor: pointer;
+  text-align: center;
+}
+
+div.content > div.Aircraft.Carrier {
+  background-color: #352035;
+}
+div.content > div.Battleship {
+  background-color: #3e1c1a;
+}
+
+.grid-item div.details {
+  cursor: pointer;
+  width: 100%;
+  text-align: start;
+}
+
 .grid-item > div.content:hover {
   background-color: var(--main-dark-hover-bg);
 }
 
-.grid-item div.footer-misc {
-  display: flex;
+.grid-item div.pos-indicator {
+  border-top: 1px solid var(--main-dark-border);
   cursor: pointer;
-  min-height: 22px;
-}
-
-.grid-item .content > div.footer-misc > .pos-indicator {
-  cursor: pointer;
-  min-height: 22px;
-  height: 100%;
-  margin: auto;
-  width: calc(50% - 1px);
-  padding-left: 1px;
+  min-height: 17px;
+  padding: 2px 5px;
   border-radius: inherit;
+  text-align: start;
   font-size: 12px;
-  line-height: 22px;
-}
-
-.grid-item .content > div.footer-misc > div.hull-type {
-  cursor: pointer;
-  min-height: 22px;
-  height: 100%;
-  width: calc(50% - 1px);
-  padding-left: 1px;
-  border-radius: inherit;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 12px;
-  line-height: 22px;
 }
 
 div.f-grid div.grid-item.toggle {
@@ -1216,39 +1153,32 @@ div.f-grid.dark div.f-title.bottom-emp {
   border-bottom: 2px solid var(--main-dark-border);
 }
 
-/* ##### f-row ##### */
 div.f-grid div.f-row.pink {
-  /* border: 1px solid rgba(243, 196, 204, 0.651);*/
-  background-color: rgb(45, 38, 40);
+  background-color: #2d2224;
   border-radius: 5px;
 }
 
 div.f-grid div.f-row.pink > :first-child {
-  /* border-right: 2px dashed rgba(243, 196, 204, 0.651); */
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
 div.f-grid div.f-row.gold > :first-child {
-  /* border-right: 2px dashed rgba(255, 217, 0, 0.651); */
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
 div.f-grid div.f-row.deepskyblue > :first-child {
-  /* border-right: 2px dashed rgba(0, 191, 255, 0.651); */
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
 div.f-grid div.f-row.gold {
-  /* border: 1px solid rgba(255, 217, 0, 0.651);*/
   background-color: rgb(51, 49, 42);
   border-radius: 5px;
 }
 
 div.f-grid div.f-row.deepskyblue {
-  /* border: 1px solid rgba(0, 191, 255, 0.651);*/
   background-color: rgb(35, 46, 49);
   border-radius: 5px;
 }

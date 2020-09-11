@@ -15,13 +15,10 @@ const TitleBar: React.FC = () => {
   const [isMax, setIsMax] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
-
   const isEdit = () => {
     return formGrid.isEdit.some((status) => status === true);
   };
-  const test = () => {
-    console.log('test');
-  };
+
   return (
     <header id="titlebar">
       <div id="drag-region">
