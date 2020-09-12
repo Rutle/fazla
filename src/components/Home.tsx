@@ -80,8 +80,8 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
   return (
     <PageTemplate>
       <section className="page-content">
-        <div className="home-container dark">
-          <div className="f-grid dark">
+        <div className="home-container">
+          <div className={`f-grid ${config.themeColor}`}>
             <div className="f-row">
               <div className="f-icon bottom-emp">
                 <FontAwesomeIcon icon={faCaretRight} />

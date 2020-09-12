@@ -71,9 +71,9 @@ const TitleBar: React.FC = () => {
         </div>
       </div>
       <ReactModal
-        overlayClassName="modal-overlay"
+        overlayClassName={`modal-overlay ${config.themeColor}`}
         isOpen={isModalOpen}
-        className={`close-app-modal-container ${config.themeColor}`}
+        className={`modal-container`}
         shouldCloseOnEsc={true}
         onRequestClose={() => setModalOpen(false)}
       >

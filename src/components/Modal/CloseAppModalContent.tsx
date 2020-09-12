@@ -22,11 +22,12 @@ const CloseAppModalContent: React.FC<{ setModalOpen: (e: boolean) => void }> = (
 
   return (
     <>
-      <div className="close-title">Warning</div>
-      <div className="close-content">
+      <div className="modal-title">Warning</div>
+      <div className="modal-content">
         <div>There are unsaved changes in formations.</div>
       </div>
-      <div className="button-group">
+      <div className="modal-action">
+        <div className="button-group">
         <RButton themeColor={config.themeColor} onClick={() => closeWindow()}>
           Close without saving
         </RButton>
@@ -41,6 +42,7 @@ const CloseAppModalContent: React.FC<{ setModalOpen: (e: boolean) => void }> = (
         <RButton themeColor={config.themeColor} onClick={() => setModalOpen(false)}>
           Cancel
         </RButton>
+        </div>
       </div>
     </>
   );

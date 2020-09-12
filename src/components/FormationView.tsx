@@ -37,9 +37,9 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
     <PageTemplate>
       <section className="page-content">
         <ReactModal
-          overlayClassName="modal-overlay"
+          overlayClassName={`modal-overlay ${config.themeColor}`}
           isOpen={formationModal.isOpen}
-          className={`formation-model-container ${config.themeColor}`}
+          className={`modal-container formation`}
           onRequestClose={() => dispatch(formationModalAction(FormationModalAction.Close))}
         >
           <FormationModalContent shipData={shipData} />

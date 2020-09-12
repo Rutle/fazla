@@ -4,11 +4,10 @@ import { Skill, Ship } from '../util/shipdatatypes';
 
 interface PassiveProps {
   orient?: string;
-  page?: string;
   ship: Ship;
 }
 
-const PassivesList: React.FC<PassiveProps> = ({ orient = 'vertical', page, ship }) => {
+const PassivesList: React.FC<PassiveProps> = ({ orient = 'vertical', ship }) => {
   return (
     <div className="scroll">
       <div className={`passives-container ${orient}`}>
