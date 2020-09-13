@@ -409,6 +409,7 @@ button {
 }
 
 button:disabled {
+  cursor: default!important;
   opacity: 0.2;
 }
 
@@ -432,6 +433,11 @@ button.btn.small {
 button.btn.normal {
   height: 26px;
   font-size: 14px;
+}
+
+button.tab-btn,
+button.tab-btn * {
+  cursor: pointer;
 }
 
 button.tab-btn.normal {
@@ -533,6 +539,7 @@ button.btn.dark.informative {
   display: flex;
   flex-direction: row;
   overflow: hidden;
+  justify-content: center;
 }
 
 .top-container > nav > a {
@@ -542,6 +549,9 @@ button.btn.dark.informative {
   cursor: pointer;
   padding: 7px 16px;
   transition: 0.3s;
+}
+.top-container > div.tab > * {
+  cursor: pointer;
 }
 
 .top-container.fixed > nav.tab {
@@ -927,6 +937,10 @@ div.f-row.wrap {
   flex-wrap: wrap;
 }
 
+div.f-row.action * {
+  cursor: pointer;
+}
+
 div.f-grid div.f-collapsible {
   display: flex;
   flex-direction: column;
@@ -975,11 +989,22 @@ div.content div.hull-type {
   text-align: center;
 }
 
-div.content > div.Aircraft.Carrier {
+div.f-grid.dark div.content > div.Aircraft.Carrier {
   background-color: #352035;
 }
-div.content > div.Battleship {
+div.f-grid.dark div.content > div.Battleship {
   background-color: #3e1c1a;
+}
+div.f-grid.dark div.content > div.Destroyer {
+  background-color: #203844;
+}
+div.f-grid.dark div.content > div.Light.Cruiser,
+div.f-grid.dark div.content > div.Heavy.Cruiser,
+div.f-grid.dark div.content > div.Monitor {
+  background-color: #503c1e;
+}
+div.f-grid.dark div.content > div.Repair.Ship {
+  background-color: #1a4638;
 }
 
 .grid-item div.details {
@@ -1062,14 +1087,11 @@ div.f-grid div.f-icon {
   border-right: 0px!important;
   padding: 3px 12px;
   margin-bottom: 5px;
+  cursor: pointer;
 }
 
 div.f-grid div.f-icon.f-collapse > svg {
   transform: rotate(-90deg);
-}
-
-div.f-grid div.f-icon > svg {
-  transition: 0.3s;
 }
 
 div.f-grid.dark div.f-icon {

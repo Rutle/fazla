@@ -34,9 +34,8 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
   };
 
   return (
-    <div className={`grid-item ${config.themeColor}`}>
+    <div className="grid-item">
       <div
-        // className={`content ${ship !== undefined ? ship.rarity : ''}`}
         className={`content`}
         onClick={() => openShipSelector()}
         onContextMenu={() => dispatch(formationAction(FormationAction.RemoveShip, index))}

@@ -30,7 +30,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formati
       {!isShip('main') ? (
         <>
           <div
-            className={'f-row'}
+            className={'f-row action'}
             onClick={() => {
               setShowMain(!showMain);
             }}
@@ -55,7 +55,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formati
       )}
       {!isShip('vanguard') ? (
         <>
-          <div className={'f-row'} onClick={() => setShowVanguard(!showVanguard)}>
+          <div className={'f-row action'} onClick={() => setShowVanguard(!showVanguard)}>
             <div className={`f-icon ${showVanguard ? '' : 'f-collapse'}`}>
               <FontAwesomeIcon icon={faAngleDown} />
             </div>
