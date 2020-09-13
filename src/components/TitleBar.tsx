@@ -16,7 +16,7 @@ const TitleBar: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const isEdit = () => {
-    return formGrid.isEdit.some((status) => status === true);
+    return config.isEdit || formGrid.isEdit.some((val) => val !== false);
   };
 
   return (

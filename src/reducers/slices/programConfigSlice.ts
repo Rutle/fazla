@@ -54,7 +54,10 @@ const programConfigSlice = createSlice({
 export const { setStateValue, resetState, setConfig, setEditState } = programConfigSlice.actions;
 
 /**
- * Set details of the seleced ship
+ * Thunk to handle different config actions.
+ * @param {AppConfigAction} action Enum of different actions.
+ * @param {string} key Key in slice.
+ * @param {string | boolean} value Value of key in slice.
  */
 export const configAction = (action: AppConfigAction, key?: string, value?: string | boolean): AppThunk => async (
   dispatch: AppDispatch,

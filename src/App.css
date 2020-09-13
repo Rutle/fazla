@@ -1189,6 +1189,9 @@ div.f-grid div.f-row.deepskyblue {
 }
 
 @media only screen and (max-width: 900px) {
+  div.grid-item.action > input[type="url"].dark {
+    max-width: 450px;
+  }
   .searchIcon {
     display: none;
     width: 0;
@@ -1210,7 +1213,5 @@ div.f-grid div.f-row.deepskyblue {
 }
 
 @media only screen and (max-width: 900px) {
-  div.grid-item.action > input[type="url"].dark {
-    max-width: 450px;
-  }
+
  }
