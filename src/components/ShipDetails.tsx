@@ -17,6 +17,7 @@ interface ShipDetails {
 const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship }) => {
   const dispatch = useDispatch();
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
+  const config = useSelector((state: RootState) => state.config);
 
   const isOwned = () => {
     if (ship) {
@@ -81,7 +82,16 @@ const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship })
           </RButton>
         </span>
       </div>
-      <PassivesList orient={orient} /* page={page} */ ship={ship} />
+      <div className="scroll">
+        <div className={`f-grid ${config.themeColor}`}>
+          <div className={`f-collapsible`}>
+            <div className={`f-row`}>
+              <div className={'passive f-header'}>Passives</div>
+            </div>
+            <PassivesList skills={ship.skills} />
+          </div>
+        </div>
+      </div>
     </>
   ) : (
     <div className="info-text">No ship selected or found</div>

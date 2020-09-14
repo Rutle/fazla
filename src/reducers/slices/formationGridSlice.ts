@@ -36,7 +36,15 @@ const formationGridSlice = createSlice({
         }
         return {
           ...item,
-          data: item.data.map((value, index) => (index !== gridIndex ? value : id)),
+          data: item.data.map((value, index) => {
+            if (index !== gridIndex && value !== id) {
+              return value;
+            } else if (index !== gridIndex && value === id) {
+              return '';
+            } else {
+              return id;
+            }
+          }),
         };
       });
       return {

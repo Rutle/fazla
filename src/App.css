@@ -687,7 +687,7 @@ nav.tab.dark > a:hover {
   justify-content: flex-start;
 }
 
-.ship-data-container.dark .ship-title-bar > div {
+.page.dark .ship-data-container .ship-title-bar > div {
   border: 2px solid var(--main-dark-border);
   background-color: var(--main-dark-title-bg);
 }

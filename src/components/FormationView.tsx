@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMouse } from '@fortawesome/free-solid-svg-icons';
 import ReactModal from 'react-modal';
 import { formationModalAction, FormationModalAction } from '../reducers/slices/formationModalSlice';
+import { Ship } from '../util/types';
 interface FormationViewProps {
   shipData: DataStore;
 }
@@ -32,6 +33,32 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const renderContent = (index: number) => {
+    console.log('render');
+    const formationShips = shipData.shipsArr
+      .filter((ship) => fData.formations[index].data.includes(ship.id))
+      .reduce(
+        (accumulator, currentValue) => ((accumulator[currentValue.id] = currentValue), accumulator),
+        {} as { [key: string]: Ship },
+      );
+    return (
+      <>
+        <FormationGrid
+          formationShips={formationShips}
+          formation={fData.formations[index]}
+          themeColor={config.themeColor}
+        />
+        <div className="scroll">
+          <FormationPassives
+            formationShips={formationShips}
+            formation={fData.formations[index]}
+            themeColor={config.themeColor}
+          />
+        </div>
+      </>
+    );
+  };
 
   return (
     <PageTemplate>
@@ -91,20 +118,7 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
             </div>
           </div>
           {fData.formations.length !== 0 ? (
-            <>
-              <FormationGrid
-                shipData={shipData}
-                formation={fData.formations[fData.selectedIndex]}
-                themeColor={config.themeColor}
-              />
-              <div className="scroll">
-                <FormationPassives
-                  shipData={shipData}
-                  formation={fData.formations[fData.selectedIndex]}
-                  themeColor={config.themeColor}
-                />
-              </div>
-            </>
+            <>{renderContent(fData.selectedIndex)}</>
           ) : (
             <div className="info-text">Please create new formation</div>
           )}

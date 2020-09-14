@@ -1,26 +1,28 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Skill, Ship } from '../util/shipdatatypes';
+import { Skill } from '../util/types';
 
 interface PassiveProps {
-  orient?: string;
-  ship: Ship;
+  optionalName?: string;
+  skills?: Skill[];
 }
 
-const PassivesList: React.FC<PassiveProps> = ({ orient = 'vertical', ship }) => {
+const PassivesList: React.FC<PassiveProps> = ({ optionalName, skills }) => {
   return (
-    <div className="scroll">
-      <div className={`passives-container ${orient}`}>
-        {ship.skills?.map((skill: Skill) => {
+    <>
+      {skills !== undefined ? (
+        skills?.map((skill: Skill) => {
           return (
-            <div key={skill.names.en} className={skill.color}>
-              <div>{skill.names.en}</div>
-              <div>{skill.description}</div>
+            <div key={skill.names.en} className={`f-row ${skill.color}`}>
+              <div className="grid-item name">{optionalName !== undefined ? optionalName : skill.names.en}</div>
+              <div className="grid-item passive">{skill.description}</div>
             </div>
           );
-        })}
-      </div>
-    </div>
+        })
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

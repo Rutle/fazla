@@ -1,27 +1,32 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import FormationShipPassives from './FormationShipPassives';
-import DataStore from '../util/dataStore';
 import PropTypes from 'prop-types';
-import { Formation } from '../util/types';
+import { Formation, Ship } from '../util/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import PassivesList from './PassivesList';
 interface FormationPassivesProps {
-  shipData: DataStore;
   formation: Formation;
   themeColor: string;
+  formationShips: { [key: string]: Ship };
 }
-const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formation, themeColor }) => {
+const FormationPassives: React.FC<FormationPassivesProps> = ({ formation, themeColor, formationShips }) => {
   const [showMain, setShowMain] = useState(true);
   const [showVanguard, setShowVanguard] = useState(true);
 
   const isShip = (position: string) => {
     if (position === 'main') {
-      return formation.data.slice(0, 3).every((x) => x === 'NONE');
+      return formation.data.slice(0, 3).every((s) => s === 'NONE');
     } else if (position === 'vanguard') {
-      return formation.data.slice(3, 6).every((x) => x === 'NONE');
+      return formation.data.slice(3, 6).every((s) => s === 'NONE');
     } else {
       return false;
+    }
+  };
+
+  const getData = (id: string) => {
+    if (formationShips[id]) {
+      return { optionalName: formationShips[id].names.en, skills: formationShips[id].skills };
     }
   };
 
@@ -45,9 +50,9 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formati
               <div className={'name f-header'}>Ship</div>
               <div className={'passive f-header'}>Passive</div>
             </div>
-            <FormationShipPassives ship={shipData.getShipById(formation.data[0])} />
-            <FormationShipPassives ship={shipData.getShipById(formation.data[1])} />
-            <FormationShipPassives ship={shipData.getShipById(formation.data[2])} />
+            <PassivesList {...getData(formation.data[0])} />
+            <PassivesList {...getData(formation.data[1])} />
+            <PassivesList {...getData(formation.data[2])} />
           </div>
         </>
       ) : (
@@ -66,9 +71,9 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formati
               <div className={'name f-header'}>Name</div>
               <div className={'passive f-header'}>Passive</div>
             </div>
-            <FormationShipPassives ship={shipData.getShipById(formation.data[3])} />
-            <FormationShipPassives ship={shipData.getShipById(formation.data[4])} />
-            <FormationShipPassives ship={shipData.getShipById(formation.data[5])} />
+            <PassivesList {...getData(formation.data[3])} />
+            <PassivesList {...getData(formation.data[4])} />
+            <PassivesList {...getData(formation.data[5])} />
           </div>
         </>
       ) : (
@@ -81,6 +86,5 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ shipData, formati
 export default FormationPassives;
 
 FormationPassives.propTypes = {
-  shipData: PropTypes.instanceOf(DataStore).isRequired,
   themeColor: PropTypes.string.isRequired,
 };

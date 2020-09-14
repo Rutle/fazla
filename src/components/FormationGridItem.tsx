@@ -60,18 +60,6 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
           </div>
         )}
         <div className={'pos-indicator'}>{getLocation(index)}</div>
-
-        {/*
-        <div className={`details`}>{ship !== undefined ? ship.names.en : 'Add ship'}</div>
-        <div className={'footer-misc'}>
-          <div
-            className={`hull-type ${ship !== undefined && ship.hullType !== undefined ? hullTypes[ship.hullType] : ''}`}
-          >
-            {ship !== undefined && ship.hullType !== undefined ? hullTypesAbb[hullTypes[ship.hullType]] : ''}
-          </div>
-          <div className={'pos-indicator'}>{getLocation(index)}</div>
-        </div>
-        */}
       </div>
     </div>
   );
