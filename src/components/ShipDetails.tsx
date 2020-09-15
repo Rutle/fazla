@@ -4,20 +4,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import PassivesList from './PassivesList';
 import { openWikiUrl, urlValidation } from '../util/appUtilities';
-import { addShip, removeShip } from '../reducers/slices/ownedShipListSlice';
-import { Ship } from '../util/shipdatatypes';
+import { addShip } from '../reducers/slices/ownedShipListSlice';
 import RButton from './RButton/RButton';
+import DataStore from '../util/dataStore';
+import { SearchAction, updateSearch } from '../reducers/slices/searchParametersSlice';
+import { toggleSearchState } from '../reducers/slices/appStateSlice';
 
 interface ShipDetails {
-  orient?: string;
-  page?: string;
-  ship?: Ship;
+  shipData: DataStore;
 }
 
-const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship }) => {
+const ShipDetails: React.FC<ShipDetails> = ({ shipData }) => {
   const dispatch = useDispatch();
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
+  const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const config = useSelector((state: RootState) => state.config);
+  const ship = shipData.getShipByIndex(shipDetails.index);
 
   const isOwned = () => {
     if (ship) {
@@ -28,12 +30,13 @@ const ShipDetails: React.FC<ShipDetails> = ({ orient = 'vertical', page, ship })
   const addShipToOwned = () => {
     if (ship) {
       dispatch(addShip(ship.id));
+      dispatch(toggleSearchState('OWNED'));
     }
   };
 
   const removeFromOwned = () => {
     if (ship) {
-      dispatch(removeShip(ship.id));
+      dispatch(updateSearch(shipData, SearchAction.RemoveShip, { list: 'OWNED', id: ship.id }));
     }
   };
 

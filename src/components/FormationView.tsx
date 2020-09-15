@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React from 'react';
 import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
@@ -7,7 +7,6 @@ import FormationModalContent from './Modal/FormationModalContent';
 import DataStore from '../util/dataStore';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { setCurrentPage } from '../reducers/slices/appStateSlice';
 import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
 import FormationDropDown from './DropDown/FormationDropDown';
 import ReactTooltip from 'react-tooltip';
@@ -22,24 +21,15 @@ interface FormationViewProps {
 ReactModal.setAppElement('#root');
 const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
   const dispatch = useDispatch();
-  const appState = useSelector((state: RootState) => state.appState);
   const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
   const formationModal = useSelector((state: RootState) => state.formationModal);
 
-  useEffect(() => {
-    if (appState.cPage !== 'FORMATION') {
-      dispatch(setCurrentPage({ cPage: 'FORMATION' }));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const renderContent = (index: number) => {
-    console.log('render');
     const formationShips = shipData.shipsArr
       .filter((ship) => fData.formations[index].data.includes(ship.id))
       .reduce(
-        (accumulator, currentValue) => ((accumulator[currentValue.id] = currentValue), accumulator),
+        (accumulator, currentValue) => Object.assign(accumulator, { [currentValue.id]: currentValue }),
         {} as { [key: string]: Ship },
       );
     return (
@@ -108,7 +98,7 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
                   >
                     Save
                   </button>
-                  <button className={`tab-btn normal ${config.themeColor} `} onClick={() => console.log('Save')}>
+                  <button className={`tab-btn normal ${config.themeColor} `} onClick={() => console.log('TODO')}>
                     Rename
                   </button>
                 </>

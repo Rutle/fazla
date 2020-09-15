@@ -1,43 +1,32 @@
+/* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import DataStore from '../util/dataStore';
 import { ShipSimple } from '../util/shipdatatypes';
 import { FixedSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
+import { setSelectedShip } from '../reducers/slices/appStateSlice';
 
 interface ShipListProps {
   shipData: DataStore;
   shipSearchList: ShipSimple[];
   listName: string;
-  onClick(id: string, index: number): void;
 }
 
-const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName, onClick }) => {
+const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName }) => {
+  const dispatch = useDispatch();
   const config = useSelector((state: RootState) => state.config);
   const appState = useSelector((state: RootState) => state.appState);
 
-  /*
-  return listName !== 'test' ? (
-    <div className={`rList ${listName !== appState.cToggle ? 'hidden' : ''}`}>
-      {shipSearchList.map((ship) => {
-        return (
-          <button
-            key={ship.id}
-            className={`rList-item btn ${config.themeColor} ${
-              ship.id === appState[appState.cToggle as string].id ? 'selected' : ''
-            }`}
-            type="button"
-            onClick={() => onClick(ship.id, ship.index)}
-          >
-            {`${shipData.shipsArr[ship.index].names.en}`}
-          </button>
-        );
-      })}
-    </div>
-  ) : (
-    */
+  const selectShip = useCallback(
+    (id: string, index: number) => {
+      dispatch(setSelectedShip(appState.cToggle, id, index));
+    },
+    [appState.cToggle, dispatch],
+  );
+
   return (
     <div className={`rList${listName !== appState.cToggle ? ' hidden' : ''}`}>
       <AutoSizer>
@@ -49,18 +38,17 @@ const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName,
             width={width}
             style={{ overflowY: 'scroll' }}
           >
-            {({ index, style }) => (
+            {React.memo(({ index, style }) => (
               <button
-                type="button"
                 style={style}
                 className={`rList-item btn flat ${config.themeColor} ${
-                  shipSearchList[index].id === appState[appState.cToggle as string].id ? 'selected' : ''
+                  shipSearchList[index].id === appState[appState.cToggle].id ? 'selected' : ''
                 }`}
-                onClick={() => onClick(shipSearchList[index].id, shipSearchList[index].index)}
+                onClick={() => selectShip(shipSearchList[index].id, shipSearchList[index].index)}
               >
                 {shipData.shipsArr[shipSearchList[index].index].names.en}
               </button>
-            )}
+            ))}
           </List>
         )}
       </AutoSizer>
@@ -68,4 +56,4 @@ const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName,
   );
 };
 
-export default React.memo(ShipList);
+export default ShipList;

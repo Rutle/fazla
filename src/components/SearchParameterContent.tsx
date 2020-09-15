@@ -3,12 +3,16 @@ import { nationCategories, rarityCategories, hullTypesAbb } from '../data/catego
 import RButton from './RButton/RButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { toggleParameter, toggleAll } from '../reducers/slices/searchParametersSlice';
+import { updateSearch, SearchAction } from '../reducers/slices/searchParametersSlice';
+import DataStore from '../util/dataStore';
+import PropTypes from 'prop-types';
 
-const SearchParameterContent: React.FC = () => {
+const SearchParameterContent: React.FC<{ shipData: DataStore }> = ({ shipData }) => {
+  const dispatch = useDispatch();
   const sParam = useSelector((state: RootState) => state.searchParameters);
   const config = useSelector((state: RootState) => state.config);
-  const dispatch = useDispatch();
+  const appState = useSelector((state: RootState) => state.appState);
+
   return (
     <div className="popover-content dark">
       <div className="f-grid">
@@ -17,7 +21,16 @@ const SearchParameterContent: React.FC = () => {
             <RButton
               className={`btn small graphic ${sParam['nationality']['All'] ? 'selected' : ''}`}
               themeColor={config.themeColor}
-              onClick={() => dispatch(toggleAll('nationality'))}
+              onClick={() =>
+                dispatch(
+                  updateSearch(shipData, SearchAction.ToggleAll, {
+                    name: '',
+                    cat: 'nationality',
+                    param: '',
+                    list: appState.cToggle,
+                  }),
+                )
+              }
             >
               All
             </RButton>
@@ -28,7 +41,16 @@ const SearchParameterContent: React.FC = () => {
                 <RButton
                   className={`btn small graphic ${sParam['nationality'][key] ? 'selected' : ''}`}
                   themeColor={config.themeColor}
-                  onClick={() => dispatch(toggleParameter({ cat: 'nationality', param: key }))}
+                  onClick={() =>
+                    dispatch(
+                      updateSearch(shipData, SearchAction.ToggleParameter, {
+                        name: '',
+                        cat: 'nationality',
+                        param: key,
+                        list: appState.cToggle,
+                      }),
+                    )
+                  }
                 >
                   {nationCategories[key]}
                 </RButton>
@@ -41,7 +63,16 @@ const SearchParameterContent: React.FC = () => {
             <RButton
               className={`btn small graphic ${sParam['hullType']['All'] ? 'selected' : ''}`}
               themeColor={config.themeColor}
-              onClick={() => dispatch(toggleAll('hullType'))}
+              onClick={() =>
+                dispatch(
+                  updateSearch(shipData, SearchAction.ToggleAll, {
+                    name: '',
+                    cat: 'hullType',
+                    param: '',
+                    list: appState.cToggle,
+                  }),
+                )
+              }
             >
               All
             </RButton>
@@ -52,7 +83,16 @@ const SearchParameterContent: React.FC = () => {
                 <RButton
                   className={`btn small graphic ${sParam['hullType'][key] ? 'selected' : ''}`}
                   themeColor={config.themeColor}
-                  onClick={() => dispatch(toggleParameter({ cat: 'hullType', param: key }))}
+                  onClick={() =>
+                    dispatch(
+                      updateSearch(shipData, SearchAction.ToggleParameter, {
+                        name: '',
+                        cat: 'hullType',
+                        param: key,
+                        list: appState.cToggle,
+                      }),
+                    )
+                  }
                 >
                   {hullTypesAbb[key]}
                 </RButton>
@@ -65,7 +105,16 @@ const SearchParameterContent: React.FC = () => {
             <RButton
               className={`btn small graphic ${sParam['rarity']['All'] ? 'selected' : ''}`}
               themeColor={config.themeColor}
-              onClick={() => dispatch(toggleAll('rarity'))}
+              onClick={() =>
+                dispatch(
+                  updateSearch(shipData, SearchAction.ToggleAll, {
+                    name: '',
+                    cat: 'rarity',
+                    param: '',
+                    list: appState.cToggle,
+                  }),
+                )
+              }
             >
               All
             </RButton>
@@ -76,7 +125,16 @@ const SearchParameterContent: React.FC = () => {
                 <RButton
                   className={`btn small graphic ${sParam['rarity'][value] ? 'selected' : ''}`}
                   themeColor={config.themeColor}
-                  onClick={() => dispatch(toggleParameter({ cat: 'rarity', param: value }))}
+                  onClick={() =>
+                    dispatch(
+                      updateSearch(shipData, SearchAction.ToggleParameter, {
+                        name: '',
+                        cat: 'nationality',
+                        param: value,
+                        list: appState.cToggle,
+                      }),
+                    )
+                  }
                 >
                   {value}
                 </RButton>
@@ -90,3 +148,7 @@ const SearchParameterContent: React.FC = () => {
 };
 
 export default SearchParameterContent;
+
+SearchParameterContent.propTypes = {
+  shipData: PropTypes.instanceOf(DataStore).isRequired,
+};

@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../reducers/rootReducer';
+import { useDispatch } from 'react-redux';
 import { formationModalAction, FormationModalAction } from '../reducers/slices/formationModalSlice';
 import { Ship } from '../util/shipdatatypes';
 import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
@@ -14,7 +13,6 @@ interface GridItemProps {
 // eslint-disable-next-line react/prop-types
 const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
   const dispatch = useDispatch();
-  const config = useSelector((state: RootState) => state.config);
 
   const openShipSelector = () => {
     dispatch(formationModalAction(FormationModalAction.Open, true, index));

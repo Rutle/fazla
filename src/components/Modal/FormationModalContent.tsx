@@ -20,10 +20,10 @@ const FormationModalContent: React.FC<FormationModalProps> = ({ shipData }) => {
 
   const addShip = () => {
     switch (appState.cToggle) {
-      case 'all':
+      case 'ALL':
         dispatch(formationAction(FormationAction.AddShip));
         break;
-      case 'owned':
+      case 'OWNED':
         dispatch(formationAction(FormationAction.AddShip));
         break;
       default:
@@ -35,7 +35,7 @@ const FormationModalContent: React.FC<FormationModalProps> = ({ shipData }) => {
     <>
       <SideBar shipData={shipData} />
       <div className="ship-data-container dark">
-        <ShipDetails ship={shipData.shipsArr[shipDetails.index]} />
+        <ShipDetails shipData={shipData} />
         {shipData.shipsArr[shipDetails.index] ? (
           <RButton themeColor={config.themeColor} onClick={addShip} extraStyle={{ marginTop: '5px', height: '50px' }}>
             Add to formation

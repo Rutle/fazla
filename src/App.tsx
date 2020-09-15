@@ -29,6 +29,7 @@ const RefreshRoute: React.FC<RouteProps> = (props) => {
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [shipData, setShipData] = useState(new DataStore());
   const [isDataReady, setIsDataReady] = useState(false);
   const appState = useSelector((state: RootState) => state.appState);

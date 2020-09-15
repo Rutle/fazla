@@ -60,7 +60,7 @@ export const formationModalAction = (
         break;
     }
   } catch (e) {
-    console.log('updateOwnedSearchList: ', e);
+    console.log('formationModalAction: ', e);
   }
 };
 export default formationModalSlice.reducer;

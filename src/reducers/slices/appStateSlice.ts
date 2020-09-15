@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { setDetails, resetDetails } from './shipDetailsSlice';
+import { setDetails } from './shipDetailsSlice';
 import { AppThunk, AppDispatch } from '../../store';
 import { setSearchList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
@@ -26,35 +26,33 @@ interface CurrentState {
 interface ListState {
   id: string;
   index: number;
-}
-
-interface CurrentPage {
-  cPage: 'HOME' | 'LIST' | 'FORMATION';
+  isSearchChanged: boolean;
 }
 
 type ListStateObject = {
   [key: string]: any;
-  cToggle: string;
-  all: ListState;
-  owned: ListState;
+  cToggle: 'ALL' | 'OWNED';
+  ALL: ListState;
+  OWNED: ListState;
   shipCount: number;
-} & CurrentState &
-  CurrentPage;
+} & CurrentState;
 
 const initialState: ListStateObject = {
-  cToggle: 'all',
-  all: {
+  cToggle: 'ALL',
+  ALL: {
     id: 'NONE',
     index: 0,
+    isSearchChanged: false,
   },
-  owned: {
+  OWNED: {
     id: 'NONE',
     index: 0,
+    isSearchChanged: false,
   },
   cState: 'INIT',
   cMsg: 'Initializing.',
-  cPage: 'LIST',
   shipCount: 0,
+  isSearchChanged: false,
 };
 
 const appStateSlice = createSlice({
@@ -73,7 +71,7 @@ const appStateSlice = createSlice({
         [action.payload.key]: action.payload.value,
       };
     },
-    setCurrentToggle(state, action: PayloadAction<string>) {
+    setCurrentToggle(state, action: PayloadAction<'ALL' | 'OWNED'>) {
       return {
         ...state,
         cToggle: action.payload,
@@ -86,12 +84,19 @@ const appStateSlice = createSlice({
     resetList() {
       return initialState;
     },
-    setCurrentPage(state, action: PayloadAction<CurrentPage>) {
-      const { cPage } = action.payload;
-      return { ...state, cPage: cPage };
-    },
     setShipCount(state, action: PayloadAction<number>) {
       return { ...state, shipCount: action.payload };
+    },
+    toggleSearchState(state, action: PayloadAction<'ALL' | 'OWNED'>) {
+      const key = action.payload;
+      const currentValue = state[key].isSearchChanged;
+      return {
+        ...state,
+        [key]: {
+          ...state[key],
+          isSearchChanged: !currentValue,
+        },
+      };
     },
   },
 });
@@ -102,8 +107,8 @@ export const {
   setCurrentToggle,
   setCurrentState,
   setListValue,
-  setCurrentPage,
   setShipCount,
+  toggleSearchState
 } = appStateSlice.actions;
 
 /**
@@ -143,8 +148,8 @@ export const initShipLists = (
     dispatch(setSearchList(fullSimple));
     dispatch(setOwnedSearchList(ownedSearch));
     dispatch(setOwnedList(ownedShips));
-    dispatch(setListState({ key: 'all', data: { id: searchInitId, index: searchInitIndex } }));
-    dispatch(setListState({ key: 'owned', data: { id: ownedInitId, index: ownedInitIndex } }));
+    dispatch(setListState({ key: 'ALL', data: { id: searchInitId, index: searchInitIndex, isSearchChanged: false } }));
+    dispatch(setListState({ key: 'OWNED', data: { id: ownedInitId, index: ownedInitIndex, isSearchChanged: false } }));
     dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
   });
   dispatch(setConfig(config));
@@ -165,48 +170,7 @@ export const setSelectedShip = (key: string, id: string, index: number): AppThun
   } catch (e) {
     console.log('Set Selected Ship error: ', e);
   }
-  dispatch(setListState({ key: key, data: { id: id, index: index } }));
-};
-
-/**
- * Set the search results.
- * @param {DataStore} shipData Data structure containg full ship data.
- */
-export const setSearchResults = (shipData: DataStore): AppThunk => async (dispatch: AppDispatch, getState) => {
-  try {
-    const { searchParameters, ownedShips, appState } = { ...getState() };
-    const allShipsSearch = await shipData.getShipsByParams(searchParameters);
-    let ownedSearch: ShipSimple[] = [];
-    ownedSearch = DataStore.transformStringList(shipData.shipsArr, ownedShips);
-    ownedSearch = await DataStore.reduceByParams(shipData, ownedSearch, searchParameters);
-    const aLen = allShipsSearch.length;
-    const oLen = ownedSearch.length;
-    batch(() => {
-      if (appState.cToggle === 'all' && aLen > 0) {
-        const { id, index } = allShipsSearch[0];
-        dispatch(setDetails({ id, index }));
-      } else if (appState.cToggle === 'owned' && oLen > 0) {
-        const { id, index } = ownedSearch[0];
-        dispatch(setDetails({ id, index }));
-      } else {
-        dispatch(resetDetails());
-      }
-      if (aLen !== 0) {
-        dispatch(setListState({ key: 'all', data: { id: allShipsSearch[0].id, index: allShipsSearch[0].index } }));
-      } else {
-        dispatch(setListState({ key: 'all', data: { id: 'NONE', index: NaN } }));
-      }
-      if (oLen !== 0) {
-        dispatch(setListState({ key: 'owned', data: { id: ownedSearch[0].id, index: ownedSearch[0].index } }));
-      } else {
-        dispatch(setListState({ key: 'owned', data: { id: 'NONE', index: NaN } }));
-      }
-      dispatch(setSearchList(allShipsSearch));
-      dispatch(setOwnedSearchList(ownedSearch));
-    });
-  } catch (e) {
-    console.log('setSearchResults error: ', e);
-  }
+  dispatch(setListState({ key: key, data: { id: id, index: index, isSearchChanged: false } }));
 };
 
 /**
@@ -233,7 +197,12 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
               const searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
               batch(() => {
                 dispatch(setSearchList(fullSimple));
-                dispatch(setListState({ key: 'all', data: { id: searchInitId, index: searchInitIndex } }));
+                dispatch(
+                  setListState({
+                    key: 'ALL',
+                    data: { id: searchInitId, index: searchInitIndex, isSearchChanged: true },
+                  }),
+                );
                 dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
                 dispatch(setShipCount(shipData.count));
               });
@@ -255,53 +224,6 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
   } catch (e) {
     console.log('Set Selected Ship error: ', e);
     dispatch(setCurrentState({ cState: 'ERROR', cMsg: e.message }));
-  }
-};
-
-/**
- * Updates owned ships search list.
- * @param {DataStore} data Data structure containg full ship data.
- */
-export const updateOwnedSearchList = (data: DataStore): AppThunk => async (dispatch: AppDispatch, getState) => {
-  try {
-    const { ownedShips, searchParameters } = getState();
-    const oLen = ownedShips.length;
-    let ownedSearch: ShipSimple[] = [];
-    ownedSearch = DataStore.transformStringList(data.shipsArr, ownedShips);
-    ownedSearch = await DataStore.reduceByParams(data, ownedSearch, searchParameters);
-    batch(() => {
-      dispatch(setOwnedSearchList(ownedSearch));
-      if (oLen !== 0) {
-        dispatch(setListState({ key: 'owned', data: { id: ownedSearch[0].id, index: ownedSearch[0].index } }));
-      } else {
-        dispatch(setListState({ key: 'owned', data: { id: 'NONE', index: NaN } }));
-      }
-    });
-  } catch (e) {
-    console.log('updateOwnedSearchList: ', e);
-  }
-};
-/**
- * Updates all ships search list.
- * @param {DataStore} data Data structure containg full ship data.
- */
-export const updateSearchList = (data: DataStore): AppThunk => async (dispatch: AppDispatch, getState) => {
-  try {
-    const { ownedShips, searchParameters } = getState();
-    const oLen = ownedShips.length;
-    let ownedSearch: ShipSimple[] = [];
-    ownedSearch = DataStore.transformStringList(data.shipsArr, ownedShips);
-    ownedSearch = await DataStore.reduceByParams(data, ownedSearch, searchParameters);
-    batch(() => {
-      dispatch(setOwnedSearchList(ownedSearch));
-      if (oLen !== 0) {
-        dispatch(setListState({ key: 'owned', data: { id: ownedSearch[0].id, index: ownedSearch[0].index } }));
-      } else {
-        dispatch(setListState({ key: 'owned', data: { id: 'NONE', index: NaN } }));
-      }
-    });
-  } catch (e) {
-    console.log('updateOwnedSearchList: ', e);
   }
 };
 

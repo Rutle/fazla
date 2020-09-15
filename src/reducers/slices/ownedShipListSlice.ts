@@ -35,22 +35,14 @@ export const { resetList, addShipId, setOwnedList, removeShip } = ownedShipListS
 export const addShip = (id: string): AppThunk => async (dispatch: AppDispatch, getState) => {
   let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
-    console.log('[SAVE]: Slice saving owned ship data: current ships:', getState().ownedShips);
     const ownedShips = [...getState().ownedShips, id];
-    console.log('[SAVE]: new ship ID: ', id, ' new list: ', ownedShips);
     result = await saveOwnedShipData(ownedShips);
   } catch (e) {
-    console.log('[SAVE]: Slice owned ship data error: ', e);
     dispatch(setCurrentState({ cState: 'ERROR', cMsg: e.message }));
   }
-  console.log(result);
   if (result.isOk) {
-    console.log('[SAVE]: is OK');
     dispatch(addShipId(id));
-  } else {
-    console.log('[SAVE]: result not ok', result.isOk, result.msg);
   }
-
   // dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
 };
 export default ownedShipListSlice.reducer;

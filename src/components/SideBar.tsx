@@ -1,17 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import {
-  setCurrentToggle,
-  updateOwnedSearchList,
-  setSearchResults,
-  setSelectedShip,
-} from '../reducers/slices/appStateSlice';
-import { setSearchString } from '../reducers/slices/searchParametersSlice';
+import { setCurrentToggle } from '../reducers/slices/appStateSlice';
+import { SearchAction, updateSearch } from '../reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';
 import DataStore from '../util/dataStore';
 import ShipList from './ShipList';
@@ -22,7 +17,6 @@ interface ShipListProps {
 const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
   const dispatch = useDispatch();
   const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
-  const ownedList = useSelector((state: RootState) => state.ownedShips);
   const config = useSelector((state: RootState) => state.config);
   const appState = useSelector((state: RootState) => state.appState);
   const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
@@ -34,44 +28,17 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
   useEffect(() => {
     const { cToggle } = appState;
     if (appState.cState === 'INIT') return;
+    // console.log(appState[cToggle]);
     dispatch(setDetails({ id: appState[cToggle].id, index: appState[cToggle].index }));
+    dispatch(updateSearch(shipData, SearchAction.UpdateList, { list: cToggle }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState.cToggle]);
-
-  // Update lists when search parameter changes.
-  useEffect(() => {
-    if (appState.cState === 'INIT') {
-      // console.log('[INIT] {1}: ship lists are not setup for searching yet. Skipping.');
-    } else if (appState.cPage === 'LIST' || appState.cPage === 'FORMATION') {
-      dispatch(setSearchResults(shipData));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParameters]);
-
-  useEffect(() => {
-    if (appState.cState !== 'INIT' && appState.cPage === 'LIST') {
-      dispatch(updateOwnedSearchList(shipData));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ownedList]);
-
-  const searchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
-
-  const selectShip = useCallback(
-    (id: string, index: number) => {
-      dispatch(setSelectedShip(appState.cToggle, id, index));
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchParameters, appState.cToggle, appState.cPage],
-  );
 
   return (
     <div className="ship-side-container dark">
       <div className="top-container">
-        <CategoryOverlay />
-        <form onSubmit={(e) => searchSubmit(e)}>
+        <CategoryOverlay shipData={shipData} />
+        <form>
           <div id="input-group">
             <div className={`searchIcon ${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
               <FontAwesomeIcon icon={faSearch} />
@@ -83,7 +50,14 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
               value={searchValue}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setSearchValue(e.target.value);
-                dispatch(setSearchString({ str: e.target.value }));
+                dispatch(
+                  updateSearch(shipData, SearchAction.SetName, {
+                    name: e.target.value,
+                    cat: '',
+                    param: '',
+                    list: appState.cToggle,
+                  }),
+                );
               }}
               onFocus={() => setInputFocus(true)}
               onBlur={() => setInputFocus(false)}
@@ -95,11 +69,11 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
             id="all"
             type="radio"
             value="all"
-            checked={appState.cToggle === 'all'}
-            onChange={() => dispatch(setCurrentToggle('all'))}
+            checked={appState.cToggle === 'ALL'}
+            onChange={() => dispatch(setCurrentToggle('ALL'))}
           />
           <label
-            className={`btn graphic ${config.themeColor}${appState.cToggle === 'all' ? ' selected' : ''}`}
+            className={`btn graphic ${config.themeColor}${appState.cToggle === 'ALL' ? ' selected' : ''}`}
             htmlFor="all"
           >
             All
@@ -108,19 +82,19 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
             id="owned"
             type="radio"
             value="false"
-            checked={appState.cToggle === 'owned'}
-            onChange={() => dispatch(setCurrentToggle('owned'))}
+            checked={appState.cToggle === 'OWNED'}
+            onChange={() => dispatch(setCurrentToggle('OWNED'))}
           />
           <label
-            className={`btn graphic ${config.themeColor}${appState.cToggle === 'owned' ? ' selected' : ''}`}
+            className={`btn graphic ${config.themeColor}${appState.cToggle === 'OWNED' ? ' selected' : ''}`}
             htmlFor="owned"
           >
             Owned
           </label>
         </div>
       </div>
-      <ShipList shipData={shipData} shipSearchList={shipSearchList} listName={'all'} onClick={selectShip} />
-      <ShipList shipData={shipData} shipSearchList={ownedSearchList} listName={'owned'} onClick={selectShip} />
+      <ShipList shipData={shipData} shipSearchList={shipSearchList} listName={'ALL'} />
+      <ShipList shipData={shipData} shipSearchList={ownedSearchList} listName={'OWNED'} />
     </div>
   );
 };

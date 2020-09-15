@@ -5,6 +5,7 @@ import { RootState } from '../reducers/rootReducer';
 
 const MainMenu: React.FC = () => {
   const config = useSelector((state: RootState) => state.config);
+
   return (
     <div className={`top-container fixed`}>
       <nav className={`tab ${config.themeColor}`}>

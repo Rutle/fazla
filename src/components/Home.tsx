@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PageTemplate from './PageTemplate';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { updateShipData, setCurrentPage } from '../reducers/slices/appStateSlice';
+import { updateShipData } from '../reducers/slices/appStateSlice';
 import DataStore from '../util/dataStore';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,11 +26,8 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
   const [isSRCFocus, setSRCFocus] = useState(false);
 
   useEffect(() => {
-    if (appState.cPage !== 'HOME') {
-      dispatch(setCurrentPage({ cPage: 'HOME' }));
-      setSRCFocus(false);
-      setSRCInputLen(25);
-    }
+    setSRCFocus(false);
+    setSRCInputLen(25);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -147,7 +144,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
                     onChange={() => dispatch(configAction(AppConfigAction.Update, 'themeColor', 'dark'))}
                   />
                   <label
-                    className={`btn graphic ${config.themeColor}${appState.cToggle === 'all' ? ' selected' : ''}`}
+                    className={`btn graphic ${config.themeColor}${appState.cToggle === 'ALL' ? ' selected' : ''}`}
                     htmlFor="dark-input"
                   >
                     Dark
@@ -159,7 +156,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
                     onChange={() => dispatch(configAction(AppConfigAction.Update, 'themeColor', 'light'))}
                   />
                   <label
-                    className={`btn graphic ${config.themeColor}${appState.cToggle === 'owned' ? ' selected' : ''}`}
+                    className={`btn graphic ${config.themeColor}${appState.cToggle === 'OWNED' ? ' selected' : ''}`}
                     htmlFor="light-input"
                   >
                     Light

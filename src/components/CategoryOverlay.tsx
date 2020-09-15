@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react';
 import Overlay from 'react-overlays/Overlay';
+import DataStore from '../util/dataStore';
 import SearchParameterContent from './SearchParameterContent';
+import PropTypes from 'prop-types';
 
-const CategoryOverlay: React.FC = () => {
+const CategoryOverlay: React.FC<{ shipData: DataStore }> = ({ shipData }) => {
   const triggerRef = useRef(null);
   const containerRef = useRef(null);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
@@ -32,7 +34,7 @@ const CategoryOverlay: React.FC = () => {
         {({ props /* arrowProps, placement */ }) => (
           // eslint-disable-next-line react/prop-types
           <div className="popover-container dark" {...props}>
-            <SearchParameterContent />
+            <SearchParameterContent shipData={shipData} />
           </div>
         )}
       </Overlay>
@@ -41,3 +43,7 @@ const CategoryOverlay: React.FC = () => {
 };
 
 export default CategoryOverlay;
+
+CategoryOverlay.propTypes = {
+  shipData: PropTypes.instanceOf(DataStore).isRequired,
+};

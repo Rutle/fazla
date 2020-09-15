@@ -1,5 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SearchParams } from '../../util/types';
+import { batch } from 'react-redux';
+import { AppThunk, AppDispatch } from '../../store';
+import DataStore from '../../util/dataStore';
+import { SearchParams, ShipSimple } from '../../util/types';
+import { setListState, toggleSearchState } from './appStateSlice';
+import { setOwnedSearchList } from './ownedSearchListSlice';
+import { addShip, removeShip } from './ownedShipListSlice';
+import { setDetails, resetDetails } from './shipDetailsSlice';
+import { setSearchList } from './shipSearchListSlice';
+
+export enum SearchAction {
+  ToggleParameter = 'TOGGLEPARAMETER',
+  ToggleAll = 'TOGGLEALL',
+  SetName = 'SETNAME',
+  UpdateList = 'UPDATE',
+  RemoveShip = 'REMOVE',
+  AddShip = 'ADD',
+}
 
 const initialState: SearchParams = {
   name: '',
@@ -57,6 +74,7 @@ const searchParametersSlice = createSlice({
   initialState,
   reducers: {
     toggleParameter(state, action: PayloadAction<{ cat: string; param: string }>) {
+      console.log('toggle para');
       const { cat, param } = action.payload;
       const oldState = state[cat][param];
       let newArray = [];
@@ -103,6 +121,7 @@ const searchParametersSlice = createSlice({
       return newObj;
     },
     toggleAll(state, action: PayloadAction<string>) {
+      console.log('toggle all');
       const cat = action.payload;
       const newObject = Object.fromEntries(
         Object.entries(state[cat])
@@ -131,10 +150,12 @@ const searchParametersSlice = createSlice({
       }
       return newState;
     },
-    setSearchString(state, action: PayloadAction<{ str: string }>) {
-      return { ...state, name: action.payload.str };
+    setSearchString(state, action: PayloadAction<string>) {
+      console.log('setsearch');
+      return { ...state, name: action.payload };
     },
     setFleet(state, action: PayloadAction<{ fleet: 'ALL' | 'VANGUARD' | 'MAIN' }>) {
+      console.log('fleet');
       return {
         ...state,
         fleet: action.payload.fleet,
@@ -147,5 +168,112 @@ const searchParametersSlice = createSlice({
 });
 
 export const { resetParameters, toggleParameter, toggleAll, setFleet, setSearchString } = searchParametersSlice.actions;
+/**
+ * Set the search results.
+ * @param {DataStore} shipData Data structure containg full ship data.
+ * @param {SearchAction} action Action to perform.
+ * @param args Arguments { name: string, cat: string, param: string }
+ */
+export const updateSearch = (
+  shipData: DataStore,
+  action: SearchAction,
+  args: {
+    name?: string;
+    cat?: string;
+    param?: string;
+    list: 'OWNED' | 'ALL';
+    id?: string;
+  },
+): AppThunk => async (dispatch: AppDispatch, getState) => {
+  try {
+    const name = args.name ? args.name : '';
+    const cat = args.cat ? args.cat : '';
+    const param = args.param ? args.param : '';
+    const list = args.list;
+    const id = args.id ? args.id : '';
 
+    switch (action) {
+      case 'TOGGLEPARAMETER':
+        dispatch(toggleParameter({ cat: cat, param: param }));
+        dispatch(toggleSearchState(list));
+        break;
+      case 'TOGGLEALL':
+        dispatch(toggleAll(cat));
+        dispatch(toggleSearchState(list));
+        break;
+      case 'SETNAME':
+        dispatch(setSearchString(name));
+        dispatch(toggleSearchState(list));
+        break;
+      case 'UPDATE':
+        break;
+      case 'REMOVE':
+        dispatch(removeShip(id));
+        dispatch(toggleSearchState(list));
+        break;
+      case 'ADD':
+        dispatch(addShip(id));
+        dispatch(toggleSearchState(list));
+        break;
+      default:
+        break;
+    }
+
+    const { searchParameters, ownedShips, appState } = getState();
+    if (appState[list].isSearchChanged) {
+      let allShipsSearch: ShipSimple[] = [];
+      let ownedSearch: ShipSimple[] = [];
+      console.log(appState[list]);
+      if (list === 'ALL') {
+        allShipsSearch = await shipData.getShipsByParams(searchParameters);
+      }
+      if (list === 'OWNED') {
+        ownedSearch = DataStore.transformStringList(shipData.shipsArr, ownedShips);
+        ownedSearch = await DataStore.reduceByParams(shipData, ownedSearch, searchParameters);
+      }
+
+      const aLen = allShipsSearch.length;
+      const oLen = ownedSearch.length;
+      batch(() => {
+        if (appState.cToggle === 'ALL' && aLen > 0 && list === 'ALL') {
+          const { id, index } = allShipsSearch[0];
+          dispatch(setDetails({ id, index }));
+          if (aLen !== 0) {
+            dispatch(
+              setListState({
+                key: 'ALL',
+                data: { id: allShipsSearch[0].id, index: allShipsSearch[0].index, isSearchChanged: false },
+              }),
+            );
+          } else {
+            dispatch(setListState({ key: 'ALL', data: { id: 'NONE', index: NaN, isSearchChanged: false } }));
+          }
+        } else if (appState.cToggle === 'OWNED' && oLen > 0 && list === 'OWNED') {
+          const { id, index } = ownedSearch[0];
+          dispatch(setDetails({ id, index }));
+          if (oLen !== 0) {
+            dispatch(
+              setListState({
+                key: 'OWNED',
+                data: { id: ownedSearch[0].id, index: ownedSearch[0].index, isSearchChanged: false },
+              }),
+            );
+          } else {
+            dispatch(setListState({ key: 'OWNED', data: { id: 'NONE', index: NaN, isSearchChanged: false } }));
+          }
+        } else {
+          dispatch(resetDetails());
+        }
+      });
+      if (list === 'ALL') {
+        dispatch(setSearchList(allShipsSearch));
+      }
+      if (list === 'OWNED') {
+        dispatch(setOwnedSearchList(ownedSearch));
+      }
+    }
+  } catch (e) {
+    console.log('setSearchResults error: ', e);
+  }
+};
 export default searchParametersSlice.reducer;
