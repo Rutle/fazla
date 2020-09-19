@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux';
 
 const FooterBar: React.FC = () => {
   const appState = useSelector((state: RootState) => state.appState);
+  const config = useSelector((state: RootState) => state.config);
 
   return (
-    <div id="footer">
+    <div id="footer" className={`${config.themeColor}`}>
       <div id="footer-state-msg">
         <span>{appState.cMsg}</span>
       </div>

@@ -7,7 +7,7 @@ import { updateSearch, SearchAction } from '../reducers/slices/searchParametersS
 import DataStore from '../util/dataStore';
 import PropTypes from 'prop-types';
 
-const SearchParameterContent: React.FC<{ shipData: DataStore }> = ({ shipData }) => {
+const SearchParameterContent: React.FC<{ shipData: DataStore; themeColor: string }> = ({ shipData, themeColor }) => {
   const dispatch = useDispatch();
   const sParam = useSelector((state: RootState) => state.searchParameters);
   const config = useSelector((state: RootState) => state.config);
@@ -20,7 +20,7 @@ const SearchParameterContent: React.FC<{ shipData: DataStore }> = ({ shipData })
           <div className="grid-item toggle">
             <RButton
               className={`btn small graphic ${sParam['nationality']['All'] ? 'selected' : ''}`}
-              themeColor={config.themeColor}
+              themeColor={themeColor}
               onClick={() =>
                 dispatch(
                   updateSearch(shipData, SearchAction.ToggleAll, {
@@ -40,7 +40,7 @@ const SearchParameterContent: React.FC<{ shipData: DataStore }> = ({ shipData })
               <div className="grid-item toggle" key={key}>
                 <RButton
                   className={`btn small graphic ${sParam['nationality'][key] ? 'selected' : ''}`}
-                  themeColor={config.themeColor}
+                  themeColor={themeColor}
                   onClick={() =>
                     dispatch(
                       updateSearch(shipData, SearchAction.ToggleParameter, {
@@ -62,7 +62,7 @@ const SearchParameterContent: React.FC<{ shipData: DataStore }> = ({ shipData })
           <div className="grid-item toggle">
             <RButton
               className={`btn small graphic ${sParam['hullType']['All'] ? 'selected' : ''}`}
-              themeColor={config.themeColor}
+              themeColor={themeColor}
               onClick={() =>
                 dispatch(
                   updateSearch(shipData, SearchAction.ToggleAll, {
@@ -82,7 +82,7 @@ const SearchParameterContent: React.FC<{ shipData: DataStore }> = ({ shipData })
               <div className="grid-item toggle" key={key}>
                 <RButton
                   className={`btn small graphic ${sParam['hullType'][key] ? 'selected' : ''}`}
-                  themeColor={config.themeColor}
+                  themeColor={themeColor}
                   onClick={() =>
                     dispatch(
                       updateSearch(shipData, SearchAction.ToggleParameter, {
@@ -104,7 +104,7 @@ const SearchParameterContent: React.FC<{ shipData: DataStore }> = ({ shipData })
           <div className="grid-item toggle">
             <RButton
               className={`btn small graphic ${sParam['rarity']['All'] ? 'selected' : ''}`}
-              themeColor={config.themeColor}
+              themeColor={themeColor}
               onClick={() =>
                 dispatch(
                   updateSearch(shipData, SearchAction.ToggleAll, {
@@ -124,7 +124,7 @@ const SearchParameterContent: React.FC<{ shipData: DataStore }> = ({ shipData })
               <div className="grid-item toggle" key={value}>
                 <RButton
                   className={`btn small graphic ${sParam['rarity'][value] ? 'selected' : ''}`}
-                  themeColor={config.themeColor}
+                  themeColor={themeColor}
                   onClick={() =>
                     dispatch(
                       updateSearch(shipData, SearchAction.ToggleParameter, {

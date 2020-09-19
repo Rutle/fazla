@@ -17,13 +17,13 @@ const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData }) => {
     <PageTemplate>
       <section className="page-content">
         {appState.cState === 'INIT' ? (
-          <div className="ship-data-container dark">
+          <div className="ship-data-container">
             <div className="info-text">{appState.cMsg}</div>
           </div>
         ) : (
           <>
             <SideBar shipData={shipData} />
-            <div className="ship-data-container dark">
+            <div className="ship-data-container">
               <ShipDetails shipData={shipData} />
             </div>
           </>

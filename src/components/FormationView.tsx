@@ -70,9 +70,9 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
         ) : (
           <></>
         )}
-        <div className={'ship-data-container dark'}>
+        <div className={'ship-data-container'}>
           <div className="top-container">
-            <div className={`tab dark`}>
+            <div className={`tab`}>
               <FormationDropDown />
               <button
                 className={`tab-btn normal ${config.themeColor}`}

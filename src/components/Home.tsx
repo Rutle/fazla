@@ -144,7 +144,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
                     onChange={() => dispatch(configAction(AppConfigAction.Update, 'themeColor', 'dark'))}
                   />
                   <label
-                    className={`btn graphic ${config.themeColor}${appState.cToggle === 'ALL' ? ' selected' : ''}`}
+                    className={`btn graphic ${config.themeColor}${config.themeColor === 'dark' ? ' selected' : ''}`}
                     htmlFor="dark-input"
                   >
                     Dark
@@ -156,7 +156,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
                     onChange={() => dispatch(configAction(AppConfigAction.Update, 'themeColor', 'light'))}
                   />
                   <label
-                    className={`btn graphic ${config.themeColor}${appState.cToggle === 'OWNED' ? ' selected' : ''}`}
+                    className={`btn graphic ${config.themeColor}${config.themeColor === 'light' ? ' selected' : ''}`}
                     htmlFor="light-input"
                   >
                     Light

@@ -20,7 +20,7 @@ const TitleBar: React.FC = () => {
   };
 
   return (
-    <header id="titlebar">
+    <header id="titlebar" className={`${config.themeColor}`}>
       <div id="drag-region">
         <div id="window-title">
           <span>Azur Lane</span>

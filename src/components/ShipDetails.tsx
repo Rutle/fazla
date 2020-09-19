@@ -44,23 +44,23 @@ const ShipDetails: React.FC<ShipDetails> = ({ shipData }) => {
     if (!isOwned()) {
       return (
         <RButton
-          themeColor="dark"
+          themeColor={config.themeColor}
           onClick={addShipToOwned}
-          className="btn dark informative"
+          className="btn informative"
           extraStyle={{ width: '160px', height: '22px', padding: 0 }}
         >
-          <b>Add to docks</b>
+          Add to docks
         </RButton>
       );
     } else {
       return (
         <RButton
-          themeColor="dark"
+          themeColor={config.themeColor}
           onClick={removeFromOwned}
-          className="btn dark informative"
+          className="btn informative"
           extraStyle={{ width: '160px', height: '22px', padding: 0 }}
         >
-          <b>Remove from docks</b>
+          Remove from docks
         </RButton>
       );
     }
@@ -72,16 +72,16 @@ const ShipDetails: React.FC<ShipDetails> = ({ shipData }) => {
           <span className="ship-name">{ship.names.en}</span>
           <span className={ship.rarity}>{` ${ship.stars?.stars}`}</span>
         </div>
-        <span className="end-buttons dark">
+        <span className={`end-buttons ${config.themeColor}`}>
           {renderAddRemoveButton()}
           <RButton
-            themeColor="dark"
+            themeColor={config.themeColor}
             onClick={() => openWikiUrl(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
-            className="btn dark informative"
+            className="btn informative"
             extraStyle={{ width: '160px', height: '22px', padding: 0 }}
             disabled={!urlValidation(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
           >
-            <b>wiki</b>
+            wiki
           </RButton>
         </span>
       </div>

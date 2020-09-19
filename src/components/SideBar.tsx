@@ -35,9 +35,9 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
   }, [appState.cToggle]);
 
   return (
-    <div className="ship-side-container dark">
+    <div className="ship-side-container">
       <div className="top-container">
-        <CategoryOverlay shipData={shipData} />
+        <CategoryOverlay shipData={shipData} themeColor={config.themeColor} />
         <form>
           <div id="input-group">
             <div className={`searchIcon ${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
