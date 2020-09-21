@@ -16,22 +16,22 @@
   --main-light-title-bg: #eaeaea;
   --main-light-selected-bottom-bg: rgb(199, 199, 199);
   --main-light-selected-bg: rgb(199, 199, 199);
-  --main-light-tab-bg: #eaeaea;
-  --main-light-tab-active-bg: #d6d6d6;
-  --main-light-tab-hover-bg: #e0e0e0;
+  --main-light-button-bg: #eaeaea;
+  --main-light-button-active-bg: #d6d6d6;
+  --main-light-button-hover-bg: #e0e0e0;
   --main-light-button-bottom-bg: #ecebeb;
   --main-light-button-top-bg: #ffffff;
   --main-light-inform-bg: #a5a5a5;
   --main-light-input-bg: #eaeaea;
   --main-light-input-focus-bg: #fdfdfd;
   --main-light-input-focus-border: ;
+  --main-light-passive-bg: rgb(246, 247, 255);
 }
 
 /* ##### Scrollbar ##### */
 .page.light ::-webkit-scrollbar {     
   background-color: rgb(255, 255, 255);
   width: 0.5em;
-  
 }
 
 .page.light ::-webkit-scrollbar-track {
@@ -53,7 +53,7 @@
   scrollbar-width: thin;
 }
 
-/* ##### LIGHT ##### */
+/* ##### Page ##### */
 div.page.light {
   background-color: var(--root-light-bg);
   color: var(--main-light-color);
@@ -64,19 +64,32 @@ div.page.light .ship-side-container,
   background-color: ghostwhite;
   border-right: 1px solid var(--main-light-border);
 }
+
 /* #### Titlebar #### */
-#titlebar.light #window-controls .title-button:hover {
-  background: var(--main-light-hover-bg);
-}
-
-#titlebar.light #window-controls .title-button:active {
-  background: var(--main-light-hover-bg);
-}
-
 #titlebar.light {
   background: var(--main-light-titlebar-bg);
   color: var(--main-light-color);
   border-bottom: 1px solid var(--main-light-border);
+}
+
+#titlebar.light #window-controls .title-button:hover,
+#titlebar.light #window-controls .title-button:active {
+  background: var(--main-light-hover-bg);
+}
+
+#titlebar.light #min-button {
+  color: var(--main-light-color);
+  grid-column: 1;
+}
+
+#titlebar.light #max-button, #restore-button {
+  color: var(--main-light-color);
+  grid-column: 2;
+}
+
+#titlebar.light #close-button {
+  color: var(--main-light-color);
+  grid-column: 3;
 }
 
 #footer.light {
@@ -85,23 +98,29 @@ div.page.light .ship-side-container,
   border-top: 1px solid var(--main-light-border);
 }
 
-/* #### Tab #### */
-/*
-div.page.light .top-container.fixed > nav.tab {
-  overflow: hidden;
-  /* border-bottom: 1px solid var(--main-light-border);*/
-  /* border-top: 0px;
-  border-left: 0px;
-  border-right: 0px;
-  background-color: var(--main-light-tab-bg);
+/* #### Modal #### */
+.modal-overlay.light div.modal-title {
+  border: 1px solid var(--main-light-border);
+  background-color: var(--main-light-title-bg);
 }
-*/
+
+.modal-overlay.light .modal-container {
+  background-color: var(--root-light-bg);
+  border: 1px solid #565656;
+  border-radius: 2px;
+  color: var(--main-light-color);
+  -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
+  -moz-box-shadow: 1px 1px 4px 1px #0000008f;
+  box-shadow: 1px 1px 4px 1px #0000008f;
+}
+
+/* #### Tab #### */
 div.page.light .tab {
   overflow: hidden;
   border: 1px solid var(--main-light-border);
   border-left: 0px;
   border-right: 0px;
-  background-color: var(--main-light-tab-bg);
+  background-color: var(--main-light-button-bg);
 }
 
 nav.tab.light > a {
@@ -109,11 +128,11 @@ nav.tab.light > a {
 }
 
 nav.tab.light > a.active {
-  background-color: var(--main-light-tab-active-bg);
+  background-color: var(--main-light-button-active-bg);
 }
 
 nav.tab.light > a:hover {
-  background-color: var(--main-light-tab-hover-bg);
+  background-color: var(--main-light-button-hover-bg);
 }
 
 div.page.light > .top-container:after {
@@ -121,10 +140,97 @@ div.page.light > .top-container:after {
   width: 100%;
   bottom: 1px;
   z-index:-1;
-  -webkit-box-shadow: 0px 0px 8px 1px #0000008f;
-  -moz-box-shadow: 0px 0px 8px 1px #0000008f;
-  box-shadow: 0px 0px 8px 1px #0000008f;
+  -webkit-box-shadow: 0px 0px 8px 1px #0000006b;
+  -moz-box-shadow: 0px 0px 8px 1px #0000006b;
+  box-shadow: 0px 0px 8px 1px #0000006b;
 }
+
+/* ###### Buttons ###### */
+button.light {
+  background-color: var(--main-light-button-bg);
+  color: var(--main-light-color);
+}
+
+.btn.flat.light {
+  background-color: ghostwhite;
+}
+
+.btn.graphic.light:hover {
+  background: linear-gradient(to bottom, var(--main-light-button-bottom-bg) 5%, var(--main-light-button-top-bg) 100%);
+	background-color:#f6f6f6;
+}
+
+.btn.graphic.light.selected {
+  background: linear-gradient(to bottom, rgb(220, 220, 220) 10%, rgb(255, 255, 255) 100%);
+  box-shadow: inset 1px 1px 2px 0px #252525;
+}
+
+.btn.graphic.light {
+  box-shadow: inset 0px 1px 0px 0px #ffffff;
+  background: linear-gradient(to bottom, var(--main-light-button-top-bg) 5%, var(--main-light-button-bottom-bg) 100%);
+}
+
+button.btn.light {
+  border: 1px solid var(--main-light-border);
+}
+
+.btn.graphic.light {
+  border: 1px solid #6f6f6f;
+}
+
+button.btn.light:hover,
+button.tab-btn.light:hover {
+  background-color: var(--main-light-button-hover-bg);
+}
+
+button.light.active {
+  background-color: var(--main-light-button-active-bg);
+}
+
+button.btn.graphic.light:disabled:hover {
+  box-shadow: inset 0px 1px 0px 0px #ffffff;
+  background: linear-gradient(to bottom, var(--main-light-button-top-bg) 5%, var(--main-light-button-bottom-bg) 100%);
+}
+
+button.btn.light:disabled:hover,
+button.tab-btn.light:disabled:hover {
+  background-color: var(--main-light-bg);
+}
+
+button.btn.light.selected,
+button.tab-btn.light.selected {
+  background-color: var(--main-light-button-active-bg);
+}
+
+button.tab-btn.light.inform {
+  background-color: var(--main-light-inform-bg);
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+}
+
+.tab button.light {
+  color: var(--main-light-color);
+}
+
+/* Change background color of buttons on hover */
+.tab button.light:hover {
+  background-color: var(--main-light-button-hover-bg);
+}
+
+/* Create an active/current tablink class */
+.tab button.light.active {
+  background-color: var(--main-light-button-active-bg);
+  color: var(--main-light-color);
+}
+
+.formation-dropdown-menu.light {
+  border: var(--main-light-border);
+}
+
+.formation-dropdown-menu.light .btn.menu-item:first-child {
+  border-top: 1px solid var(--main-light-border);
+}
+
 
 /* ##### GRID ##### */
 div.f-grid.light div.f-header {
@@ -186,35 +292,49 @@ div.f-grid.light div.f-title.bottom-emp  {
 }
 
 div.f-grid.light div.f-row.pink {
-  /* background-color: #2d2224;*/
-  background-color: Pink;
-  border-radius: 5px;
+  background-color: var(--main-light-passive-bg);
+  border: 1px solid Pink;
+  border-radius: 3px;
 }
 
-div.f-grid div.f-row.gold {
-  /* background-color: rgb(51, 49, 42);*/
+div.f-grid.light div.f-row.pink > div.grid-item.name {
+  background-color: pink;
+}
+
+div.f-grid.light div.f-row.gold {
+  background-color: var(--main-light-passive-bg);
+  border: 1px solid gold;
+  border-radius: 3px;
+}
+
+div.f-grid.light div.f-row.gold > div.grid-item.name {
   background-color: gold;
-  border-radius: 5px;
+}
+div.f-grid.light div.f-row.deepskyblue {
+  background-color: var(--main-light-passive-bg);
+  border: 1px solid DeepSkyBlue;
+  border-radius: 3px;
 }
 
-div.f-grid.light div.f-row.deepskyblue {
-  /* background-color: rgb(35, 46, 49);*/
+div.f-grid.light div.f-row.deepskyblue > div.grid-item.name {
   background-color: DeepSkyBlue;
-  border-radius: 5px;
 }
+
 /* ###### ship-title-bar ##### */
 .ship-title-bar > span.end-buttons.light {
-  border-top: 2px solid var(--main-light-border);
+  border-top: 1px solid var(--main-light-border);
+}
+.ship-title-bar > span.end-buttons.light > button {
+  border-bottom: 1px solid var(--main-light-border)!important;
 }
 
 .page.light .ship-data-container .ship-title-bar > div,
 .modal-overlay.light .ship-title-bar > div {
-  border: 2px solid var(--main-light-border);
+  border: 1px solid var(--main-light-border);
   background-color: var(--main-light-title-bg);
 }
 
 .ship-title-bar > div > span.Super.Rare:last-child {
-  /* color: rgba(253, 209, 98, 0.616);*/
   color: PaleGoldenrod;
 }
 
@@ -223,121 +343,11 @@ div.f-grid.light div.f-row.deepskyblue {
 }
 
 .page.light .ship-title-bar > div > span.Elite:last-child {
-  /* color: rgba(144, 98, 253, 0.616);*/
   color: Plum;
 }
 
-/* ###### Buttons ###### */
-button.light {
-  background-color: var(--main-light-tab-bg);
-  color: var(--main-light-color);
-}
 
-.btn.flat.light {
-  background-color: ghostwhite;
-}
 
-.btn.graphic.light:hover {
-  background: linear-gradient(to bottom, var(--main-light-button-bottom-bg) 5%, var(--main-light-button-top-bg) 100%);
-	background-color:#f6f6f6;
-}
-
-.btn.graphic.light.selected {
-  background: linear-gradient(to bottom, rgb(220, 220, 220) 10%, rgb(255, 255, 255) 100%);
-  /* text-shadow: 0px 1px 0px var(--main-light-border);*/
-  box-shadow: inset 1px 1px 2px 0px #252525;
-}
-
-.btn.graphic.light {
-  box-shadow: inset 0px 1px 0px 0px #ffffff;
-  background: linear-gradient(to bottom, var(--main-light-button-top-bg) 5%, var(--main-light-button-bottom-bg) 100%);
-}
-
-button.btn.light {
-  border: 1px solid var(--main-light-border);
-}
-
-.btn.graphic.light {
-  border: 1px solid var(--main-light-border);
-}
-
-button.btn.light:hover,
-button.tab-btn.light:hover {
-  background-color: var(--main-light-tab-hover-bg);
-}
-
-button.light.active {
-  background-color: var(--main-light-tab-active-bg);
-}
-
-button.btn.graphic.light:disabled:hover {
-  box-shadow: inset 0px 1px 0px 0px #ffffff;
-  background: linear-gradient(to bottom, var(--main-light-button-top-bg) 5%, var(--main-light-button-bottom-bg) 100%);
-}
-
-button.btn.light:disabled:hover,
-button.tab-btn.light:disabled:hover {
-  background-color: var(--main-light-bg);
-}
-
-button.btn.light.selected,
-button.tab-btn.light.selected {
-  background-color: var(--main-light-tab-active-bg);
-}
-
-button.tab-btn.light.inform {
-  background-color: var(--main-light-inform-bg);
-  text-decoration-line: underline;
-  text-decoration-style: dotted;
-}
-
-button.btn.light.informative {
-  border: unset;
-  border-bottom: 2px solid var(--main-light-border);
-}
-
-/*
-.tab.light {
-  border-bottom: 1px solid var(--main-light-border);
-}
-*/
-.tab button.light {
-  color: var(--main-light-color);
-}
-
-/* Change background color of buttons on hover */
-.tab button.light:hover {
-  background-color: var(--main-light-tab-hover-bg);
-}
-
-/* Create an active/current tablink class */
-.tab button.light.active {
-  background-color: var(--main-light-tab-active-bg);
-  color: var(--main-light-color);
-}
-
-.formation-dropdown-menu.light {
-  border: var(--main-light-border);
-}
-
-.formation-dropdown-menu.light .btn.menu-item:first-child {
-  border-top: 1px solid var(--main-light-border);
-}
-
-/* #### Modal #### */
-.modal-overlay.light .modal-container {
-  background-color: var(--root-light-bg);
-  border: 1px solid var(--main-light-border);
-  border-radius: 2px;
-  color: var(--main-light-color);
-  -webkit-box-shadow: 0px 0px 8px 1px #0000008f;
-  -moz-box-shadow: 0px 0px 8px 1px #0000008f;
-  box-shadow: 0px 0px 8px 1px #0000008f;
-}
-
-.modal-overlay.light {
-  background-color: rgba(0,0,0,0.1);
-}
 /* #### Popover #### */
 .popover-container.light {
   background-color: ghostwhite;
@@ -347,30 +357,24 @@ button.btn.light.informative {
   box-shadow: 0px 0px 4px 0px #0000004d;
 }
 
+
+/* #### Input #### */
 input[type="text"].light,
-input[type="url"].light  {
-  color: var(--main-light-color);
+input[type="url"].light,
+.searchIcon.light  {
+  color: var(--main-light-border);
   background-color: var(--main-light-input-bg);
   border: 2px solid var(--main-light-border);
 }
 
 input[type="text"].light:focus,
-input[type="url"].light:focus {
+input[type="url"].light:focus,
+.searchIcon.light.input-focus {
+  color: var(--main-light-color);
   background-color: var(--main-light-input-focus-bg);
   border: 2px solid var(--main-light-input-focus-border);
 }
-
-.searchIcon.light {
-  background-color: var(--main-light-input-bg);
-  color: var(--main-light-border);
-  border: 2px solid var(--main-light-border);
-  transition: box-shadow .2s ease-in,border .2s ease-in,background-color .2s ease-in, color .2s ease-in;
-  border-right: 0px;
-}
-
+.searchIcon.light,
 .searchIcon.light.input-focus {
-  background-color: var(--main-light-input-focus-bg);
-  border: 2px solid var(--main-light-focus-border);
-  color: var(--main-light-color);
   border-right: 0px;
 }

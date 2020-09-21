@@ -20,6 +20,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName 
   const config = useSelector((state: RootState) => state.config);
   const appState = useSelector((state: RootState) => state.appState);
 
+  
   const selectShip = useCallback(
     (id: string, index: number) => {
       dispatch(setSelectedShip(appState.cToggle, id, index));
@@ -34,7 +35,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName 
           <List
             height={height}
             itemCount={shipSearchList.length}
-            itemSize={36}
+            itemSize={30}
             width={width}
             style={{ overflowY: 'scroll' }}
           >

@@ -1,0 +1,442 @@
+/* ##### DARK ##### */
+:root {
+  /* --root-dark-bg: rgb(42, 46, 54);*/
+  /*--root-dark-bg: rgb(46, 51, 62); */
+  /* --root-dark-bg: rgb(32, 36, 41);*/
+  --root-dark-bg: rgb(22, 23, 25);
+  --main-dark-bg: #1b1d24;
+  --main-dark-border: #3f4657;
+  --main-dark-color: rgb(184, 184, 184);
+  --main-dark-hover-bg: #272c3b;
+  --main-dark-hover-border: rgb(182, 182, 182);
+  /* --main-dark-selected-bg: #272c3b;*/
+  --main-dark-button-top-bg: #272c3b;
+  --main-dark-button-bottom-bg: #21252f;
+  --main-dark-selected-bg: #363a46;
+  --main-dark-selected-bottom-bg: #2a2e35;
+  --main-dark-active-bg: #343b4e;
+  --main-dark-active-border: #818aa1;
+  --main-dark-input-bg: #323844;
+  --main-dark-input-focus-border: #444b5a;
+  --main-dark-inform-bg: #272c3b;
+  --main-dark-tooltip-bg: #1b1d24e3;
+  --main-dark-tooltip-border: #3f4657a6;
+  --main-dark-title-bg: #1b1d24;
+  --main-dark-item-bg: #21252f;
+  --main-dark-footer-titlebar-bg: #202023;
+
+}
+
+/* ##### Scrollbar ##### */
+.page.dark ::-webkit-scrollbar {     
+  background-color: var(--root-dark-bg);
+  width: 8px;
+}
+
+.page.dark ::-webkit-scrollbar-track {
+  background-color: var(--root-dark-bg);
+  -webkit-box-shadow: inset 0 0 3px rgba(105, 105, 105, 0.22);
+  box-shadow: inset 0 0 3px rgba(105, 105, 105, 0.22);
+  border: 1px solid var(--main-dark-border);
+  border-radius: 5px;
+}
+
+.page.dark ::-webkit-scrollbar-thumb {
+  background-color:var(--main-dark-border);
+  /*border: 1px solid var(--main-dark-border);*/
+  border-radius: 5px;
+}
+
+.dark div.scroll {
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-color: dark;
+  scrollbar-width: thin;
+}
+
+/* ##### Page ##### */
+div.page.dark {
+  background-color: var(--root-dark-bg);
+  color: var(--main-dark-color);
+}
+
+div.page.dark .ship-side-container,
+.modal-overlay.dark .ship-side-container {
+  background-color: var(--main-dark-bg);
+  border-right: 1px solid var(--main-dark-border);
+}
+
+/* ##### Titlebar ##### */
+#titlebar.dark {
+  background: var(--main-dark-footer-titlebar-bg);
+  color: var(--main-dark-color);
+  border-bottom: 1px solid var(--main-dark-border);
+}
+
+#titlebar.dark #window-controls .title-button:hover,
+#titlebar.dark #window-controls .title-button:active {
+  background: var(--main-dark-hover-bg);
+}
+
+#titlebar.dark #min-button {
+  color: var(--main-dark-color);
+  grid-column: 1;
+}
+
+#titlebar.dark #max-button, #restore-button {
+  color: var(--main-dark-color);
+  grid-column: 2;
+}
+
+#titlebar.dark #close-button {
+  color: var(--main-dark-color);
+  grid-column: 3;
+}
+
+#footer.dark {
+  background: var(--main-dark-footer-titlebar-bg);
+  border-top: 1px solid var(--main-dark-border);
+  color: var(--main-dark-color);
+}
+
+/* #### Modal #### */
+.modal-overlay.dark div.modal-title {
+  border: 1px solid var(--main-dark-border);
+  background-color: var(--main-dark-title-bg);
+}
+
+.modal-overlay.dark .modal-container {
+  background-color: var(--root-dark-bg);
+  border: 1px solid var(--main-dark-border);
+  border-radius: 2px;
+  color: var(--main-dark-color);
+  -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
+  -moz-box-shadow: 1px 1px 4px 1px #0000008f;
+  box-shadow: 1px 1px 4px 1px #0000008f;
+}
+
+/* #### Tab #### */
+div.page.dark .tab {
+  overflow: hidden;
+  border: 1px solid var(--main-dark-border);
+  border-left: 0px;
+  border-right: 0px;
+  background-color: var(--main-dark-bg);
+}
+nav.tab.dark > a {
+  color: rgba(184, 184, 184, 0.4);
+  /* color: var(--main-dark-color);*/
+  border: 1px solid transparent;
+}
+
+nav.tab.dark > a.active {
+  color: var(--main-dark-color);
+  box-shadow: 0px -4px 3px #00000099;
+  /* background-color: var(--main-dark-border)!important;*/
+  background-color: var(--root-dark-bg)!important;
+  border-bottom: 1px solid var(--root-dark-bg)!important;
+  border-right: 1px solid var(--main-dark-border);
+  border-left: 1px solid var(--main-dark-border);
+}
+
+nav.tab.dark > a:hover {
+  /*background-color: var(--main-dark-hover-bg);*/
+  color: var(--main-dark-color);
+}
+
+div.page.dark > .top-container:after {
+  content: "";
+  width: 100%;
+  bottom: 1px;
+  z-index:-1;
+  -webkit-box-shadow: 0px 0px 8px 1px #2e2e2e;
+  -moz-box-shadow: 0px 0px 8px 1px #2e2e2e;
+  box-shadow: 0px 0px 8px 1px #2e2e2e;
+}
+
+/* ###### Buttons ###### */
+button.dark {
+  background-color: var(--main-dark-bg);
+  color: var(--main-dark-color);
+}
+
+.btn.graphic.dark:hover {
+	background: linear-gradient(to bottom, var(--main-dark-button-bottom-bg) 5%, var(--main-dark-button-top-bg) 100%);
+  text-shadow: 0px 1px 0px var(--main-dark-border);
+}
+
+.btn.graphic.dark.selected {
+  background: linear-gradient(to bottom, var(--main-dark-selected-bottom-bg) 10%,  var(--main-dark-selected-bg) 100%);
+  text-shadow: 0px 1px 0px var(--main-dark-border);
+  box-shadow: inset 1px 1px 1px #252525;
+}
+
+.btn.graphic.dark {
+  box-shadow: inset 0px 1px 0px 0px var(--main-dark-input-bg);
+	background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 5%, var(--main-dark-button-bottom-bg) 100%);
+}
+
+button.btn.dark {
+  border: 1px solid var(--main-dark-border);
+  /* box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg);*/
+}
+
+.btn.graphic.dark {
+  border: 1px solid #000000;
+}
+
+button.btn.dark:hover,
+button.tab-btn.dark:hover {
+  background-color: var(--main-dark-hover-bg);
+  /*box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg);*/
+}
+
+button.dark.active {
+  background-color: var(--main-dark-active-bg);
+  box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg);
+}
+
+button.btn.graphic.dark:disabled:hover {
+  box-shadow: inset 0px 1px 0px 0px #30333d;
+	background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 5%, var(--main-dark-button-bottom-bg) 100%);
+}
+
+button.btn.dark:disabled:hover,
+button.tab-btn.dark:disabled:hover {
+  background-color: var(--main-dark-bg);
+}
+
+button.btn.dark.selected,
+button.tab-btn.dark.selected {
+  background-color: var(--main-dark-selected-bg);
+  box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg);
+}
+
+button.tab-btn.dark.inform {
+  background-color: var(--main-dark-inform-bg);
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+}
+
+
+
+/* #### Formation menu ##### */
+.formation-dropdown-menu.dark {
+  border: var(--main-dark-border);
+}
+
+.formation-dropdown-menu.dark .btn.menu-item:first-child {
+  border-top: 1px solid var(--main-dark-border);
+}
+
+/* #### Popover #### */
+.popover-container.dark {
+  background-color: var(--main-dark-bg);
+  border: 1px solid var(--main-dark-border);
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+}
+
+/* #### ship title bar #### */
+
+.ship-title-bar > span.end-buttons.dark {
+  border-top: 1px solid var(--main-dark-border);
+}
+.ship-title-bar > span.end-buttons.dark > button {
+  border-bottom: 1px solid var(--main-dark-border)!important;
+}
+.page.dark .ship-data-container .ship-title-bar > div,
+.modal-overlay.dark .ship-title-bar > div {
+  border: 1px solid var(--main-dark-border);
+  background-color: var(--main-dark-title-bg);
+}
+
+/* #### Rarity colors #### */
+.ship-title-bar > div > span.Super.Rare:last-child {
+  /* color: rgba(253, 209, 98, 0.616);*/
+  color: PaleGoldenrod;
+}
+
+.ship-title-bar > div > span.Rare:last-child {
+  color: powderblue;
+}
+
+.ship-title-bar > div > span.Elite:last-child {
+  color: rgba(144, 98, 253, 0.616);
+}
+
+/* #### Input #### */
+input[type="text"].dark,
+input[type="url"].dark,
+.searchIcon.dark  {
+  color: var(--main-dark-color);
+  background-color: var(--main-dark-input-bg);
+  border: 2px solid var(--main-dark-input-bg);
+}
+
+input[type="text"].dark:focus,
+input[type="url"].dark:focus,
+.searchIcon.dark.input-focus {
+  color: var(--main-dark-color);
+  background-color: rgba(0,0,0,0.45);
+  border: 2px solid var(--main-dark-input-focus-border);
+}
+.searchIcon.dark,
+.searchIcon.dark.input-focus {
+  border-right: 0px;
+}
+
+/* #### passives #### */
+/*
+.passives-container > div.pink {
+  border: 2px solid rgb(99, 85, 88);
+  background-color: #2d2224;
+  border-radius: 5px;
+}
+
+.passives-container > div.pink > :first-child {
+  border-bottom: 2px dashed rgb(99, 85, 88);
+}
+
+.passives-container > div.gold > :first-child {
+  border-bottom: 2px dashed rgb(97, 95, 83);
+}
+
+.passives-container > div.deepskyblue > :first-child {
+  border-bottom: 2px dashed rgb(24, 86, 107);
+}
+
+.passives-container > div.gold {
+  border: 2px solid rgb(97, 95, 83);
+  background-color: rgb(51, 49, 42);
+  border-radius: 5px;
+}
+
+.passives-container > div.deepskyblue {
+  border: 2px solid rgb(24, 86, 107);
+  background-color: rgb(31, 41, 43);
+  border-radius: 5px;
+}
+*/
+/* #### Grid #### */
+
+div.f-grid.dark div.f-header {
+  border-bottom: 2px solid var(--main-dark-border);
+}
+div.f-grid.dark div.f-title {
+  background-color: var(--main-dark-title-bg);
+  border: 1px solid var(--main-dark-border);
+}
+
+div.f-grid.dark div.f-icon {
+  background-color: var(--main-dark-title-bg);
+  border: 1px solid var(--main-dark-border);
+}
+
+/* #### hull types #### */
+div.f-grid.dark div.content > div.Aircraft.Carrier {
+  background-color: #352035;
+}
+
+div.f-grid.dark div.content > div.Battleship {
+  background-color: #3e1c1a;
+}
+
+div.f-grid.dark div.content > div.Destroyer {
+  background-color: #203844;
+}
+
+div.f-grid.dark div.content > div.Light.Cruiser,
+div.f-grid.dark div.content > div.Heavy.Cruiser,
+div.f-grid.dark div.content > div.Monitor {
+  background-color: #503c1e;
+}
+
+div.f-grid.dark div.content > div.Repair.Ship {
+  background-color: #1a4638;
+}
+
+/* #### grid icon #### */
+div.f-grid.dark div.f-icon {
+  background-color: var(--main-dark-title-bg);
+  border: 1px solid var(--main-dark-border);
+}
+
+/* #### grid title #### */
+div.f-grid.dark div.f-icon.bottom-emp {
+  background-color: unset;
+  border-bottom: 2px solid var(--main-dark-border);
+}
+div.f-grid.dark div.f-title.bottom-emp {
+  background-color: unset;
+  border-bottom: 2px solid var(--main-dark-border);
+}
+
+/* #### rarity #### */
+div.f-grid.dark div.f-row.pink {
+  background-color: var(--main-dark-bg);
+  border: 1px solid rgba(255, 192, 203, 0.12);
+  border-radius: 3px;
+}
+
+div.f-grid.dark div.f-row.pink > div.grid-item.name {
+  background-color: rgba(255, 192, 203, 0.12);
+  /*color: rgba(255, 192, 203, 0.65);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.411);*/
+}
+
+div.f-grid.dark div.f-row.gold {
+  background-color: var(--main-dark-bg);
+  border: 1px solid rgba(255, 215, 0, 0.12);
+  border-radius: 3px;
+}
+
+div.f-grid.dark div.f-row.gold > div.grid-item.name {
+  background-color: rgba(255, 215, 0, 0.12);
+  /*color: rgba(255, 240, 152, 0.767);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.555);*/
+}
+
+div.f-grid.dark div.f-row.deepskyblue {
+  background-color: var(--main-dark-bg);
+  border: 1px solid rgba(0, 191, 255, 0.12);
+  border-radius: 3px;
+}
+
+div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
+  background-color: rgba(0,191,255, 0.12);
+  /*color: rgba(0, 191, 255, 0.65);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.411);*/
+}
+
+@media only screen and (max-width: 1340px) {
+  .formation-model-container div.ship-side-container div.top-container form div#input-group input[type="text"].dark {
+    background-color: #323844;
+    border: 2px solid var(--main-dark-border);
+  }
+  .formation-model-container div.ship-side-container div.top-container form div#input-group input[type="text"].dark:focus {
+    background-color: rgba(0,0,0,0.45);
+    border: 2px solid var(--main-dark-input-focus-border);
+  } 
+}
+
+@media only screen and (max-width: 900px) {
+  div.grid-item.action > input[type="url"].dark {
+    max-width: 450px;
+  }
+  div.top-container form div#input-group input[type="text"].dark,
+  input[type="url"].dark {
+    background-color: #323844;
+    border: 2px solid var(--main-dark-input-bg);
+  }
+  div.top-container form div#input-group input[type="text"].dark:focus,
+  input[type="url"].dark:focus {
+    background-color: rgba(0,0,0,0.45);
+    border: 2px solid var(--main-dark-input-focus-border);
+    border-left: 2px solid var(--main-dark-input-focus-border);
+  } 
+  div.grid-item.action > input[type="url"].dark {
+    max-width: 550px;
+  }
+}

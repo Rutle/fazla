@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
-import './App.css';
+/* import './App.css';*/
 import ShipDetailView from './components/ShipDetailView';
 import Home from './components/Home';
 import DataStore from './util/dataStore';

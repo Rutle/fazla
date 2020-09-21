@@ -33,7 +33,6 @@ const CategoryOverlay: React.FC<{ shipData: DataStore; themeColor: string }> = (
         target={triggerRef}
       >
         {({ props /* arrowProps, placement */ }) => (
-          // eslint-disable-next-line react/prop-types
           <div className={`popover-container ${themeColor}`} {...props}>
             <SearchParameterContent shipData={shipData} themeColor={themeColor} />
           </div>
@@ -47,4 +46,5 @@ export default CategoryOverlay;
 
 CategoryOverlay.propTypes = {
   shipData: PropTypes.instanceOf(DataStore).isRequired,
+  themeColor: PropTypes.string.isRequired,
 };

@@ -14,7 +14,7 @@ const SearchParameterContent: React.FC<{ shipData: DataStore; themeColor: string
   const appState = useSelector((state: RootState) => state.appState);
 
   return (
-    <div className="popover-content dark">
+    <div className={`popover-content ${themeColor}`}>
       <div className="f-grid">
         <div className="f-row wrap">
           <div className="grid-item toggle">

@@ -6,6 +6,7 @@ import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '../u
 import { RootState } from '../reducers/rootReducer';
 import CloseAppModalContent from './Modal/CloseAppModalContent';
 import ReactModal from 'react-modal';
+import { NavLink } from 'react-router-dom';
 
 ReactModal.setAppElement('#root');
 
@@ -24,6 +25,15 @@ const TitleBar: React.FC = () => {
       <div id="drag-region">
         <div id="window-title">
           <span>Azur Lane</span>
+        </div>
+        <div id="window-menu">
+          <div className={`top-container`}>
+            <nav className={`tab ${config.themeColor}`}>
+              <NavLink to="/shipdetails">Ships</NavLink>
+              <NavLink to="/formations">Formations</NavLink>
+              <NavLink to="/options">Options</NavLink>
+            </nav>
+          </div>
         </div>
         <div id="window-controls">
           <div

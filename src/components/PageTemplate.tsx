@@ -12,7 +12,7 @@ const PageTemplate: React.FC<{ children: JSX.Element }> = ({ children }) => {
     <>
       <TitleBar />
       <div className={`page ${config.themeColor}`}>
-        <MainMenu />
+        {/*<MainMenu />*/}
         {children}
       </div>
       <FooterBar />
