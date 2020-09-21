@@ -20,7 +20,6 @@ const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName 
   const config = useSelector((state: RootState) => state.config);
   const appState = useSelector((state: RootState) => state.appState);
 
-  
   const selectShip = useCallback(
     (id: string, index: number) => {
       dispatch(setSelectedShip(appState.cToggle, id, index));

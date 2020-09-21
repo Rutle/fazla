@@ -54,7 +54,7 @@ const App: React.FC = () => {
       <div className={`App`}>
         {!isDataReady ? (
           <>
-            <TitleBar />
+            <TitleBar showMenu={false} />
             <div className={`page ${config.themeColor}`}>
               <section className="page-content">
                 <div className="ship-data-container dark">

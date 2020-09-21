@@ -151,4 +151,5 @@ export default SearchParameterContent;
 
 SearchParameterContent.propTypes = {
   shipData: PropTypes.instanceOf(DataStore).isRequired,
+  themeColor: PropTypes.string.isRequired,
 };

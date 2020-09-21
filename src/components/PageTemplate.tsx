@@ -1,5 +1,5 @@
 import React from 'react';
-import MainMenu from './MainMenu';
+/* import MainMenu from './MainMenu';*/
 import TitleBar from './TitleBar';
 import FooterBar from './FooterBar';
 import { RootState } from '../reducers/rootReducer';
@@ -10,7 +10,7 @@ const PageTemplate: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const config = useSelector((state: RootState) => state.config);
   return (
     <>
-      <TitleBar />
+      <TitleBar showMenu={true} />
       <div className={`page ${config.themeColor}`}>
         {/*<MainMenu />*/}
         {children}

@@ -70,9 +70,24 @@ div.page.dark .ship-side-container,
 #titlebar.dark {
   background: var(--main-dark-footer-titlebar-bg);
   color: var(--main-dark-color);
+  /* border-bottom: 1px solid var(--main-dark-border);*/
+}
+#titlebar.dark #window-title {
   border-bottom: 1px solid var(--main-dark-border);
+  box-shadow: inset 0px -4px 3px -4px #00000099;
+}
+#titlebar.dark #window-menu {
+  background-color: var(--root-dark-bg);
 }
 
+#titlebar.dark #window-filler {
+  border-bottom: 1px solid var(--main-dark-border);
+  box-shadow: inset 0px -4px 3px -4px #00000099;
+}
+#titlebar.dark #window-controls {
+  border-bottom: 1px solid var(--main-dark-border);
+  box-shadow: inset 0px -4px 3px -4px #00000099;
+}
 #titlebar.dark #window-controls .title-button:hover,
 #titlebar.dark #window-controls .title-button:active {
   background: var(--main-dark-hover-bg);
@@ -123,35 +138,35 @@ div.page.dark .tab {
   border-right: 0px;
   background-color: var(--main-dark-bg);
 }
+
+nav.tab.dark {
+  box-sizing: border-box;
+  background-color: var(--root-dark-bg);
+  border-bottom: 1px solid var(--main-dark-border);
+}
+
 nav.tab.dark > a {
   color: rgba(184, 184, 184, 0.4);
-  /* color: var(--main-dark-color);*/
-  border: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-left: 1px solid transparent;
+  box-shadow: inset 0px -4px 3px -4px #00000099;
+  background-color: var(--main-dark-footer-titlebar-bg);
 }
 
 nav.tab.dark > a.active {
+  margin-top: 1px;
+  /*height: 32.5px;*/
   color: var(--main-dark-color);
   box-shadow: 0px -4px 3px #00000099;
-  /* background-color: var(--main-dark-border)!important;*/
   background-color: var(--root-dark-bg)!important;
-  border-bottom: 1px solid var(--root-dark-bg)!important;
+  border-bottom: 1px solid transparent!important;
+  /* border-top: 2px solid var(--main-dark-border);*/
   border-right: 1px solid var(--main-dark-border);
   border-left: 1px solid var(--main-dark-border);
 }
 
 nav.tab.dark > a:hover {
-  /*background-color: var(--main-dark-hover-bg);*/
   color: var(--main-dark-color);
-}
-
-div.page.dark > .top-container:after {
-  content: "";
-  width: 100%;
-  bottom: 1px;
-  z-index:-1;
-  -webkit-box-shadow: 0px 0px 8px 1px #2e2e2e;
-  -moz-box-shadow: 0px 0px 8px 1px #2e2e2e;
-  box-shadow: 0px 0px 8px 1px #2e2e2e;
 }
 
 /* ###### Buttons ###### */

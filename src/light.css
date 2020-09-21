@@ -11,7 +11,7 @@
   --main-light-focus: rgb(211, 211, 211);
   --main-light-focus-border: #575757;
   --main-light-active-bg: #d6d6d6;
-  --main-light-titlebar-bg: #fff;
+  --main-light-titlebar-bg: #9aa6bd;
   --main-light-footer-bg: #efefef;
   --main-light-title-bg: #eaeaea;
   --main-light-selected-bottom-bg: rgb(199, 199, 199);
@@ -124,15 +124,24 @@ div.page.light .tab {
 }
 
 nav.tab.light > a {
-  color: var(--main-light-color);
+  border-right: 1px solid transparent;
+  border-left: 1px solid transparent;
+  color: rgba(37, 35, 35, 0.4);
 }
 
 nav.tab.light > a.active {
-  background-color: var(--main-light-button-active-bg);
+  margin-top: 1px;
+  color: var(--main-light-color);
+  /* background-color: var(--main-light-button-active-bg);*/
+  background-color: var(--root-light-bg);
+  border-right: 1px solid var(--main-light-border);
+  border-left: 1px solid var(--main-light-border);
+  border-bottom: 1px solid transparent;
 }
 
 nav.tab.light > a:hover {
-  background-color: var(--main-light-button-hover-bg);
+  /* background-color: var(--main-light-button-hover-bg);*/
+  color: var(--main-light-color);
 }
 
 div.page.light > .top-container:after {

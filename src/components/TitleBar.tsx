@@ -7,10 +7,11 @@ import { RootState } from '../reducers/rootReducer';
 import CloseAppModalContent from './Modal/CloseAppModalContent';
 import ReactModal from 'react-modal';
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 ReactModal.setAppElement('#root');
 
-const TitleBar: React.FC = () => {
+const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
   const formGrid = useSelector((state: RootState) => state.formationGrid);
   const config = useSelector((state: RootState) => state.config);
   const [isMax, setIsMax] = useState(false);
@@ -24,17 +25,31 @@ const TitleBar: React.FC = () => {
     <header id="titlebar" className={`${config.themeColor}`}>
       <div id="drag-region">
         <div id="window-title">
-          <span>Azur Lane</span>
+          <span>Formation tool</span>
         </div>
-        <div id="window-menu">
-          <div className={`top-container`}>
-            <nav className={`tab ${config.themeColor}`}>
-              <NavLink to="/shipdetails">Ships</NavLink>
-              <NavLink to="/formations">Formations</NavLink>
-              <NavLink to="/options">Options</NavLink>
-            </nav>
+        {showMenu ? (
+          <div id="window-menu">
+            <div className={`top-container`}>
+              <nav className={`tab ${config.themeColor}`}>
+                <NavLink to="/shipdetails">Ships</NavLink>
+                <NavLink to="/formations">Formations</NavLink>
+                <NavLink to="/options">Options</NavLink>
+              </nav>
+            </div>
           </div>
-        </div>
+        ) : (
+          
+          <>
+            <div
+              style={{
+                borderBottom: `1px solid var(--main-${config.themeColor}-border)`,
+                boxShadow: 'inset 0px -4px 3px -4px #00000099',
+              }}
+            ></div>
+          </>
+        )}
+
+        <div id="window-filler"></div>
         <div id="window-controls">
           <div
             className="title-button"
@@ -45,26 +60,30 @@ const TitleBar: React.FC = () => {
           >
             <FontAwesomeIcon icon={faWindowMinimize} size="xs" />
           </div>
-          <div
-            className={`title-button ${isMax ? 'hidden' : ''}`}
-            id="max-button"
-            onClick={() => {
-              maximizeWindow();
-              setIsMax(true);
-            }}
-          >
-            <FontAwesomeIcon icon={faWindowMaximize} size="xs" />
-          </div>
-          <div
-            className={`title-button ${isMax ? '' : 'hidden'}`}
-            id="restore-button"
-            onClick={() => {
-              restoreWindow();
-              setIsMax(false);
-            }}
-          >
-            <FontAwesomeIcon icon={faWindowRestore} size="xs" />
-          </div>
+          {isMax ? (
+            <div
+              className={`title-button`}
+              id="restore-button"
+              onClick={() => {
+                restoreWindow();
+                setIsMax(false);
+              }}
+            >
+              <FontAwesomeIcon icon={faWindowRestore} size="xs" />
+            </div>
+          ) : (
+            <div
+              className={`title-button`}
+              id="max-button"
+              onClick={() => {
+                maximizeWindow();
+                setIsMax(true);
+              }}
+            >
+              <FontAwesomeIcon icon={faWindowMaximize} size="xs" />
+            </div>
+          )}
+
           <div
             className="button title-button"
             id="close-button"
@@ -94,3 +113,7 @@ const TitleBar: React.FC = () => {
 };
 
 export default TitleBar;
+
+TitleBar.propTypes = {
+  showMenu: PropTypes.bool.isRequired,
+};
