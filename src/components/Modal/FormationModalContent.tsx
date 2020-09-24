@@ -34,7 +34,7 @@ const FormationModalContent: React.FC<FormationModalProps> = ({ shipData }) => {
   return (
     <>
       <SideBar shipData={shipData} />
-      <div className="ship-data-container dark">
+      <div className={`ship-data-container ${config.themeColor}`}>
         <ShipDetails shipData={shipData} />
         {shipData.shipsArr[shipDetails.index] ? (
           <RButton themeColor={config.themeColor} onClick={addShip} extraStyle={{ marginTop: '5px', height: '50px' }}>

@@ -8,10 +8,11 @@ import { hullTypes, hullTypesAbb } from '../data/categories';
 interface GridItemProps {
   index: number;
   ship?: Ship;
+  themeColor: string;
 }
 
 // eslint-disable-next-line react/prop-types
-const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
+const FormationGridItem: React.FC<GridItemProps> = ({ index, ship, themeColor }) => {
   const dispatch = useDispatch();
 
   const openShipSelector = () => {
@@ -40,9 +41,10 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship }) => {
         data-tip
         data-for="click-help"
         data-delay-show="1000"
-        data-background-color="var(--main-dark-tooltip-bg)"
+        data-background-color={`var(--main-${themeColor}-tooltip-bg)`}
         data-border
-        data-border-color="var(--main-dark-tooltip-border)"
+        data-border-color={`var(--main-${themeColor}-tooltip-border)`}
+        data-text-color={`var(--main-${themeColor}-color)`}
       >
         {ship !== undefined ? (
           <div

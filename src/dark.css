@@ -28,12 +28,12 @@
 }
 
 /* ##### Scrollbar ##### */
-.page.dark ::-webkit-scrollbar {     
+.dark ::-webkit-scrollbar {     
   background-color: var(--root-dark-bg);
   width: 8px;
 }
 
-.page.dark ::-webkit-scrollbar-track {
+.dark ::-webkit-scrollbar-track {
   background-color: var(--root-dark-bg);
   -webkit-box-shadow: inset 0 0 3px rgba(105, 105, 105, 0.22);
   box-shadow: inset 0 0 3px rgba(105, 105, 105, 0.22);
@@ -41,7 +41,7 @@
   border-radius: 5px;
 }
 
-.page.dark ::-webkit-scrollbar-thumb {
+.dark ::-webkit-scrollbar-thumb {
   background-color:var(--main-dark-border);
   /*border: 1px solid var(--main-dark-border);*/
   border-radius: 5px;
@@ -50,9 +50,8 @@
 .dark div.scroll {
   height: 100%;
   overflow-y: scroll;
-  scrollbar-color: dark;
-  scrollbar-width: thin;
 }
+
 
 /* ##### Page ##### */
 div.page.dark {
@@ -138,31 +137,34 @@ div.page.dark .tab {
   border-right: 0px;
   background-color: var(--main-dark-bg);
 }
-
+/*
 nav.tab.dark {
   box-sizing: border-box;
   background-color: var(--root-dark-bg);
   border-bottom: 1px solid var(--main-dark-border);
 }
-
+*/
 nav.tab.dark > a {
   color: rgba(184, 184, 184, 0.4);
   border-right: 1px solid transparent;
   border-left: 1px solid transparent;
+  border-bottom: 1px solid var(--main-dark-border);
   box-shadow: inset 0px -4px 3px -4px #00000099;
   background-color: var(--main-dark-footer-titlebar-bg);
 }
 
 nav.tab.dark > a.active {
-  margin-top: 1px;
-  /*height: 32.5px;*/
   color: var(--main-dark-color);
   box-shadow: 0px -4px 3px #00000099;
   background-color: var(--root-dark-bg)!important;
-  border-bottom: 1px solid transparent!important;
-  /* border-top: 2px solid var(--main-dark-border);*/
+  border-bottom: 1px solid transparent;
   border-right: 1px solid var(--main-dark-border);
   border-left: 1px solid var(--main-dark-border);
+}
+
+nav.tab.dark > a.active > span {
+  position: relative;
+  top: -1px;
 }
 
 nav.tab.dark > a:hover {
@@ -190,12 +192,11 @@ button.dark {
   box-shadow: inset 0px 1px 0px 0px var(--main-dark-input-bg);
 	background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 5%, var(--main-dark-button-bottom-bg) 100%);
 }
-
+/*
 button.btn.dark {
   border: 1px solid var(--main-dark-border);
-  /* box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg);*/
 }
-
+*/
 .btn.graphic.dark {
   border: 1px solid #000000;
 }
@@ -203,7 +204,6 @@ button.btn.dark {
 button.btn.dark:hover,
 button.tab-btn.dark:hover {
   background-color: var(--main-dark-hover-bg);
-  /*box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg);*/
 }
 
 button.dark.active {
@@ -224,7 +224,6 @@ button.tab-btn.dark:disabled:hover {
 button.btn.dark.selected,
 button.tab-btn.dark.selected {
   background-color: var(--main-dark-selected-bg);
-  box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg);
 }
 
 button.tab-btn.dark.inform {
@@ -232,8 +231,6 @@ button.tab-btn.dark.inform {
   text-decoration-line: underline;
   text-decoration-style: dotted;
 }
-
-
 
 /* #### Formation menu ##### */
 .formation-dropdown-menu.dark {
@@ -258,9 +255,11 @@ button.tab-btn.dark.inform {
 .ship-title-bar > span.end-buttons.dark {
   border-top: 1px solid var(--main-dark-border);
 }
+
 .ship-title-bar > span.end-buttons.dark > button {
   border-bottom: 1px solid var(--main-dark-border)!important;
 }
+
 .page.dark .ship-data-container .ship-title-bar > div,
 .modal-overlay.dark .ship-title-bar > div {
   border: 1px solid var(--main-dark-border);
@@ -297,45 +296,13 @@ input[type="url"].dark:focus,
   background-color: rgba(0,0,0,0.45);
   border: 2px solid var(--main-dark-input-focus-border);
 }
+
 .searchIcon.dark,
 .searchIcon.dark.input-focus {
   border-right: 0px;
 }
 
-/* #### passives #### */
-/*
-.passives-container > div.pink {
-  border: 2px solid rgb(99, 85, 88);
-  background-color: #2d2224;
-  border-radius: 5px;
-}
-
-.passives-container > div.pink > :first-child {
-  border-bottom: 2px dashed rgb(99, 85, 88);
-}
-
-.passives-container > div.gold > :first-child {
-  border-bottom: 2px dashed rgb(97, 95, 83);
-}
-
-.passives-container > div.deepskyblue > :first-child {
-  border-bottom: 2px dashed rgb(24, 86, 107);
-}
-
-.passives-container > div.gold {
-  border: 2px solid rgb(97, 95, 83);
-  background-color: rgb(51, 49, 42);
-  border-radius: 5px;
-}
-
-.passives-container > div.deepskyblue {
-  border: 2px solid rgb(24, 86, 107);
-  background-color: rgb(31, 41, 43);
-  border-radius: 5px;
-}
-*/
 /* #### Grid #### */
-
 div.f-grid.dark div.f-header {
   border-bottom: 2px solid var(--main-dark-border);
 }
@@ -348,27 +315,64 @@ div.f-grid.dark div.f-icon {
   background-color: var(--main-dark-title-bg);
   border: 1px solid var(--main-dark-border);
 }
+/*
+button.btn.dark.selected::after,
+button.tab-btn.dark.selected::after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border: transparent;
+  border-radius: 3px;
+  box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg);
+} */
+
+.rList .rList-item.btn.flat.dark.selected::after {
+  /* background-color: var(--main-dark-selected-bg);*/
+  content: "";
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border: transparent;
+  border-radius: 3px;
+  box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg);
+}
 
 /* #### hull types #### */
-div.f-grid.dark div.content > div.Aircraft.Carrier {
+div.f-grid.dark div.content > div.Aircraft.Carrier,
+.rList .rList-item.dark > div.hullTypeAbb.Aircraft.Carrier {
   background-color: #352035;
 }
 
-div.f-grid.dark div.content > div.Battleship {
+div.f-grid.dark div.content > div.Battleship,
+.rList .rList-item.dark > div.hullTypeAbb.Battleship, 
+.rList .rList-item.dark > div.hullTypeAbb.Battlecruiser {
   background-color: #3e1c1a;
 }
-
-div.f-grid.dark div.content > div.Destroyer {
+div.f-grid.dark div.content > div.Large.Cruiser,
+.rList .rList-item.dark > div.hullTypeAbb.Large.Cruiser {
+  background-color: #5a3023;
+}
+div.f-grid.dark div.content > div.Destroyer,
+.rList .rList-item.dark > div.hullTypeAbb.Destroyer {
   background-color: #203844;
 }
-
+.rList .rList-item.dark > div.hullTypeAbb.Submarine {
+  background-color: #3a4d21;
+}
 div.f-grid.dark div.content > div.Light.Cruiser,
 div.f-grid.dark div.content > div.Heavy.Cruiser,
-div.f-grid.dark div.content > div.Monitor {
+div.f-grid.dark div.content > div.Monitor,
+.rList .rList-item.dark > div.hullTypeAbb.Heavy.Cruiser,
+.rList .rList-item.dark > div.hullTypeAbb.Monitor,
+.rList .rList-item.dark > div.hullTypeAbb.Light.Cruiser {
   background-color: #503c1e;
 }
 
-div.f-grid.dark div.content > div.Repair.Ship {
+div.f-grid.dark div.content > div.Repair.Ship,
+.rList .rList-item.dark > div.hullTypeAbb.Repair.Ship {
   background-color: #1a4638;
 }
 

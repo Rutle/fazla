@@ -31,24 +31,23 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
           <div id="window-menu">
             <div className={`top-container`}>
               <nav className={`tab ${config.themeColor}`}>
-                <NavLink to="/shipdetails">Ships</NavLink>
-                <NavLink to="/formations">Formations</NavLink>
-                <NavLink to="/options">Options</NavLink>
+                <NavLink to="/shipdetails">
+                  <span>Ships</span>
+                </NavLink>
+                <NavLink to="/formations">
+                  <span>Formations</span>
+                </NavLink>
+                <NavLink to="/options">
+                  <span>Options</span>
+                </NavLink>
               </nav>
             </div>
           </div>
         ) : (
-          
           <>
-            <div
-              style={{
-                borderBottom: `1px solid var(--main-${config.themeColor}-border)`,
-                boxShadow: 'inset 0px -4px 3px -4px #00000099',
-              }}
-            ></div>
+            <div style={{ borderBottom: `1px solid var(--main-${config.themeColor}-border)` }}></div>
           </>
         )}
-
         <div id="window-filler"></div>
         <div id="window-controls">
           <div

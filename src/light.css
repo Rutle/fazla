@@ -3,44 +3,42 @@
   /* --root-light-bg: #fff;*/
   --root-light-bg:#fdfdfd;
   --main-light-color: #252323;
-  --main-light-bg: #eaeaea;
+  /* --main-light-bg:  rgb(246, 247, 255);*/
+  --main-light-bg: #ecf6ff;
   --main-light-border: #a9acb3;
-  --main-light-hover-bg: #e0e0e0;
-  --main-light-hover-border: ;
-  --main-light-selected: #d6d6d6;
   --main-light-focus: rgb(211, 211, 211);
   --main-light-focus-border: #575757;
   --main-light-active-bg: #d6d6d6;
-  --main-light-titlebar-bg: #9aa6bd;
+  --main-light-titlebar-bg: #d3eaff;
   --main-light-footer-bg: #efefef;
-  --main-light-title-bg: #eaeaea;
-  --main-light-selected-bottom-bg: rgb(199, 199, 199);
-  --main-light-selected-bg: rgb(199, 199, 199);
-  --main-light-button-bg: #eaeaea;
-  --main-light-button-active-bg: #d6d6d6;
-  --main-light-button-hover-bg: #e0e0e0;
+  --main-light-title-bg:  #ecf6ff;
+  --main-light-button-bg:  rgb(246, 247, 255);
+  --main-light-button-selected-bg:  #c4dbf1;
+  --main-light-button-hover-bg:  #d8e3ec;
   --main-light-button-bottom-bg: #ecebeb;
   --main-light-button-top-bg: #ffffff;
   --main-light-inform-bg: #a5a5a5;
-  --main-light-input-bg: #eaeaea;
-  --main-light-input-focus-bg: #fdfdfd;
+  --main-light-input-bg: #fdfdfd;
+  --main-light-input-focus-bg: #dfdfdf;
   --main-light-input-focus-border: ;
   --main-light-passive-bg: rgb(246, 247, 255);
+  --main-light-tooltip-bg: #d3eaff;
+  --main-light-tooltip-border: #bcd0ff;
 }
 
 /* ##### Scrollbar ##### */
-.page.light ::-webkit-scrollbar {     
-  background-color: rgb(255, 255, 255);
+.light ::-webkit-scrollbar {     
   width: 0.5em;
 }
 
-.page.light ::-webkit-scrollbar-track {
+.light ::-webkit-scrollbar-track {
+  background-color: var(--root-light-bg);
   -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.22);
   box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.22);
   border-radius: 5px;
 }
 
-.page.light ::-webkit-scrollbar-thumb {
+.light ::-webkit-scrollbar-thumb {
   background-color: var(--main-light-bg);
   border: 1px solid var(--main-light-border);
   border-radius: 5px;
@@ -49,8 +47,6 @@
 .light div.scroll {
   height: 100%;
   overflow-y: scroll;
-  scrollbar-color: dark;
-  scrollbar-width: thin;
 }
 
 /* ##### Page ##### */
@@ -61,7 +57,7 @@ div.page.light {
 
 div.page.light .ship-side-container,
 .modal-overlay.light .ship-side-container {
-  background-color: ghostwhite;
+  background-color: var(--main-light-bg);
   border-right: 1px solid var(--main-light-border);
 }
 
@@ -69,12 +65,28 @@ div.page.light .ship-side-container,
 #titlebar.light {
   background: var(--main-light-titlebar-bg);
   color: var(--main-light-color);
-  border-bottom: 1px solid var(--main-light-border);
+  /* border-bottom: 1px solid var(--main-light-border);*/
 }
-
+#titlebar.light #window-title {
+  border-bottom: 1px solid var(--main-light-border);
+  
+}
+/*
+#titlebar.light #window-menu {
+  background-color: var(--root-light-bg);
+}
+*/
+#titlebar.light #window-filler {
+  border-bottom: 1px solid var(--main-light-border);
+  
+}
+#titlebar.light #window-controls {
+  border-bottom: 1px solid var(--main-light-border);
+  
+}
 #titlebar.light #window-controls .title-button:hover,
 #titlebar.light #window-controls .title-button:active {
-  background: var(--main-light-hover-bg);
+  background: #c4dbf1;
 }
 
 #titlebar.light #min-button {
@@ -101,7 +113,8 @@ div.page.light .ship-side-container,
 /* #### Modal #### */
 .modal-overlay.light div.modal-title {
   border: 1px solid var(--main-light-border);
-  background-color: var(--main-light-title-bg);
+  /* background-color: var(--main-light-title-bg);*/
+  background-color: var(--main-light-bg);
 }
 
 .modal-overlay.light .modal-container {
@@ -120,27 +133,28 @@ div.page.light .tab {
   border: 1px solid var(--main-light-border);
   border-left: 0px;
   border-right: 0px;
-  background-color: var(--main-light-button-bg);
+  background-color: var(--main-light-bg);
 }
 
 nav.tab.light > a {
   border-right: 1px solid transparent;
   border-left: 1px solid transparent;
   color: rgba(37, 35, 35, 0.4);
+  border-bottom: 1px solid var(--main-light-border);
 }
 
 nav.tab.light > a.active {
-  margin-top: 1px;
   color: var(--main-light-color);
-  /* background-color: var(--main-light-button-active-bg);*/
   background-color: var(--root-light-bg);
   border-right: 1px solid var(--main-light-border);
   border-left: 1px solid var(--main-light-border);
   border-bottom: 1px solid transparent;
 }
+nav.tab.light > a.active > span {
+  margin-top: 1px;
+}
 
 nav.tab.light > a:hover {
-  /* background-color: var(--main-light-button-hover-bg);*/
   color: var(--main-light-color);
 }
 
@@ -156,12 +170,12 @@ div.page.light > .top-container:after {
 
 /* ###### Buttons ###### */
 button.light {
-  background-color: var(--main-light-button-bg);
+  background-color: var(--main-light-bg);
   color: var(--main-light-color);
 }
 
 .btn.flat.light {
-  background-color: ghostwhite;
+  background-color: var(--main-light-bg);
 }
 
 .btn.graphic.light:hover {
@@ -178,11 +192,11 @@ button.light {
   box-shadow: inset 0px 1px 0px 0px #ffffff;
   background: linear-gradient(to bottom, var(--main-light-button-top-bg) 5%, var(--main-light-button-bottom-bg) 100%);
 }
-
+/*
 button.btn.light {
   border: 1px solid var(--main-light-border);
 }
-
+*/
 .btn.graphic.light {
   border: 1px solid #6f6f6f;
 }
@@ -193,7 +207,7 @@ button.tab-btn.light:hover {
 }
 
 button.light.active {
-  background-color: var(--main-light-button-active-bg);
+  background-color: var(--main-light-button-selected-bg);
 }
 
 button.btn.graphic.light:disabled:hover {
@@ -208,8 +222,22 @@ button.tab-btn.light:disabled:hover {
 
 button.btn.light.selected,
 button.tab-btn.light.selected {
-  background-color: var(--main-light-button-active-bg);
+  background-color: var(--main-light-button-selected-bg);
 }
+
+/*
+button.btn.light.selected::after,
+button.tab-btn.light.selected::after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border: transparent;
+  border-radius: 3px;
+  box-shadow: inset 0px 0px 4px 0px var(--main-light-passive-bg);
+}
+*/
 
 button.tab-btn.light.inform {
   background-color: var(--main-light-inform-bg);
@@ -219,6 +247,7 @@ button.tab-btn.light.inform {
 
 .tab button.light {
   color: var(--main-light-color);
+  background-color: var(--main-light-bg);
 }
 
 /* Change background color of buttons on hover */
@@ -228,7 +257,7 @@ button.tab-btn.light.inform {
 
 /* Create an active/current tablink class */
 .tab button.light.active {
-  background-color: var(--main-light-button-active-bg);
+  background-color: var(--main-light-button-selected-bg);
   color: var(--main-light-color);
 }
 
@@ -239,7 +268,6 @@ button.tab-btn.light.inform {
 .formation-dropdown-menu.light .btn.menu-item:first-child {
   border-top: 1px solid var(--main-light-border);
 }
-
 
 /* ##### GRID ##### */
 div.f-grid.light div.f-header {
@@ -253,35 +281,48 @@ div.f-grid.light div.f-icon {
 }
 
 /* ##### GRID-ITEM ##### */
-div.f-grid.light div.content > div.Aircraft.Carrier {
-  /* background-color: #352035;*/
+div.f-grid.light div.content > div.Aircraft.Carrier,
+.rList .rList-item.light > div.hullTypeAbb.Aircraft.Carrier {
   background-color: Plum;
 }
 
-div.f-grid.light div.content > div.Battleship {
-  /* background-color: #3e1c1a;*/
+div.f-grid.light div.content > div.Battleship,
+.rList .rList-item.light > div.hullTypeAbb.Battleship,
+.rList .rList-item.light > div.hullTypeAbb.Battlecruiser {
   background-color:Pink;
 }
 
-div.f-grid.light div.content > div.Destroyer {
-  /* background-color: #203844; */
+/* submarine #7ba543 background */ 
+.rList .rList-item.light > div.hullTypeAbb.Submarine {
+  background-color: palegreen;
+}
+
+/* large cruiser  aka zuma #b25c41*/
+.rList .rList-item.light > div.hullTypeAbb.Large.Cruiser {
+  background-color: lightsalmon;
+}
+
+div.f-grid.light div.content > div.Destroyer,
+.rList .rList-item.light > div.hullTypeAbb.Destroyer {
   background-color: PowderBlue;
 }
 
 div.f-grid.light div.content > div.Light.Cruiser,
 div.f-grid.light div.content > div.Heavy.Cruiser,
-div.f-grid.light div.content > div.Monitor {
-  /* background-color: #503c1e;*/
+div.f-grid.light div.content > div.Monitor,
+.rList .rList-item.light > div.hullTypeAbb.Heavy.Cruiser,
+.rList .rList-item.light > div.hullTypeAbb.Monitor,
+.rList .rList-item.light > div.hullTypeAbb.Light.Cruiser {
   background-color: NavajoWhite;
 }
 
-div.f-grid.light div.content > div.Repair.Ship {
-  /* background-color: #1a4638;*/
+div.f-grid.light div.content > div.Repair.Ship,
+.rList .rList-item.light > div.hullTypeAbb.Repair.Ship {
   background-color: Aquamarine;
 }
 
 .f-grid.light .grid-item > div.content:hover {
-  background-color: var(--main-light-hover-bg);
+  background-color: var(--main-light-button-hover-bg);
 }
 
 .f-grid.light div.pos-indicator {
@@ -340,11 +381,18 @@ div.f-grid.light div.f-row.deepskyblue > div.grid-item.name {
 .page.light .ship-data-container .ship-title-bar > div,
 .modal-overlay.light .ship-title-bar > div {
   border: 1px solid var(--main-light-border);
-  background-color: var(--main-light-title-bg);
+  /* background-color: var(--main-light-title-bg);*/
+  background-color: var(--main-light-bg);
 }
 
 .ship-title-bar > div > span.Super.Rare:last-child {
   color: PaleGoldenrod;
+}
+
+.rList .rList-item.light.Super.Rare
+/* .rList .rList-item > div.name.Super.Rare */ {
+  background-color: PaleGoldenrod;
+  border: 1px solid rgb(167, 161, 95);
 }
 
 .ship-title-bar > div > span.Rare:last-child {
@@ -354,19 +402,14 @@ div.f-grid.light div.f-row.deepskyblue > div.grid-item.name {
 .page.light .ship-title-bar > div > span.Elite:last-child {
   color: Plum;
 }
-
-
-
 /* #### Popover #### */
 .popover-container.light {
   background-color: ghostwhite;
   border: 1px solid var(--main-light-border);
-  -webkit-box-shadow: 0px 0px 4px 0px #0000004d;
-  -moz-box-shadow: 0px 0px 4px 0px #0000004d;
-  box-shadow: 0px 0px 4px 0px #0000004d;
+  -webkit-box-shadow: 1px 1px 4px 0px #0000004d;
+  -moz-box-shadow: 1px 1px 4px 0px #0000004d;
+  box-shadow: 1px 1px 4px 0px #0000004d;
 }
-
-
 /* #### Input #### */
 input[type="text"].light,
 input[type="url"].light,

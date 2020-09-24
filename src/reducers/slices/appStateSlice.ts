@@ -15,12 +15,11 @@ const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/m
 
 interface CurrentState {
   cState: 'INIT' | 'RUNNING' | 'ERROR' | 'UPDATING' | 'SAVING' | 'DOWNLOADING';
-  cMsg:
-    | 'Initializing.'
-    | 'Running.'
-    | 'Please wait while updating data.'
-    | 'Please wait while downloading data.'
-    | 'Please wait while saving data.';
+  cMsg: string;
+}
+
+interface InitializingPhases {
+  [key: string]: { text: string; isReady: boolean };
 }
 
 interface ListState {
@@ -35,6 +34,7 @@ type ListStateObject = {
   ALL: ListState;
   OWNED: ListState;
   shipCount: number;
+  initPhases: InitializingPhases;
 } & CurrentState;
 
 const initialState: ListStateObject = {
@@ -53,6 +53,11 @@ const initialState: ListStateObject = {
   cMsg: 'Initializing.',
   shipCount: 0,
   isSearchChanged: false,
+  initPhases: {
+    initData: { text: 'Loading data from disk...', isReady: false },
+    initStructure: { text: 'Initializing data structure...', isReady: false },
+    initLists: { text: 'Initializing lists...', isReady: false },
+  },
 };
 
 const appStateSlice = createSlice({
@@ -98,6 +103,29 @@ const appStateSlice = createSlice({
         },
       };
     },
+    setPhaseState(state, action: PayloadAction<{ key: string; value: boolean }>) {
+      const { key, value } = action.payload;
+      console.log(key, {
+        ...state,
+        initPhases: {
+          ...state['initPhases'],
+          [key]: {
+            ...state['initPhases'][key],
+            isReady: value,
+          },
+        },
+      });
+      return {
+        ...state,
+        initPhases: {
+          ...state['initPhases'],
+          [key]: {
+            ...state['initPhases'][key],
+            isReady: value,
+          },
+        },
+      };
+    },
   },
 });
 
@@ -108,7 +136,8 @@ export const {
   setCurrentState,
   setListValue,
   setShipCount,
-  toggleSearchState
+  toggleSearchState,
+  setPhaseState,
 } = appStateSlice.actions;
 
 /**
@@ -152,6 +181,7 @@ export const initShipLists = (
     dispatch(setListState({ key: 'OWNED', data: { id: ownedInitId, index: ownedInitIndex, isSearchChanged: false } }));
     dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
   });
+  dispatch(setPhaseState({ key: 'initLists', value: true }));
   dispatch(setConfig(config));
   dispatch(setFormationsData(formations));
   dispatch(setShipCount(fullSimple.length));

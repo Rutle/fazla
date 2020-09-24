@@ -129,7 +129,7 @@ const SearchParameterContent: React.FC<{ shipData: DataStore; themeColor: string
                     dispatch(
                       updateSearch(shipData, SearchAction.ToggleParameter, {
                         name: '',
-                        cat: 'nationality',
+                        cat: 'rarity',
                         param: value,
                         list: appState.cToggle,
                       }),

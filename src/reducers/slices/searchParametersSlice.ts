@@ -186,6 +186,7 @@ export const updateSearch = (
   },
 ): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
+    const oldParams = getState().searchParameters;
     const name = args.name ? args.name : '';
     const cat = args.cat ? args.cat : '';
     const param = args.param ? args.param : '';
@@ -194,8 +195,18 @@ export const updateSearch = (
 
     switch (action) {
       case 'TOGGLEPARAMETER':
-        dispatch(toggleParameter({ cat: cat, param: param }));
-        dispatch(toggleSearchState(list));
+        const curParamValue = oldParams[cat][param];
+        const currentValues = Object.values(oldParams[cat]);
+        const trueCount = currentValues.reduce((a: number, v) => (v === true ? a + 1 : a), 0);
+        // Check if you are toggling the only true paramater back to false
+        // -> toggle all parameter to true.
+        if (curParamValue && trueCount === 1) {
+          dispatch(toggleAll(cat));
+          dispatch(toggleSearchState(list));
+        } else {
+          dispatch(toggleParameter({ cat: cat, param: param }));
+          dispatch(toggleSearchState(list));
+        }
         break;
       case 'TOGGLEALL':
         dispatch(toggleAll(cat));
