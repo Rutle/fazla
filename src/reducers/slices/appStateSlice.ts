@@ -105,16 +105,6 @@ const appStateSlice = createSlice({
     },
     setPhaseState(state, action: PayloadAction<{ key: string; value: boolean }>) {
       const { key, value } = action.payload;
-      console.log(key, {
-        ...state,
-        initPhases: {
-          ...state['initPhases'],
-          [key]: {
-            ...state['initPhases'][key],
-            isReady: value,
-          },
-        },
-      });
       return {
         ...state,
         initPhases: {
@@ -160,7 +150,6 @@ export const initShipLists = (
   let ownedInitId = 'NONE';
   let ownedInitIndex = 0;
   try {
-    // console.log('[INIT] {1}: Inside slice setting lists.');
     fullSimple = await DataStore.transformShipList(data.shipsArr);
     if (ownedSearch !== undefined) {
       ownedSearch = await DataStore.transformStringList(data.shipsArr, ownedShips);
@@ -170,7 +159,6 @@ export const initShipLists = (
     ownedInitId = ownedSearch.length > 0 ? ownedSearch[0].id : 'NONE';
     ownedInitIndex = ownedSearch.length > 0 ? ownedSearch[0].index : NaN;
   } catch (e) {
-    console.log('[INIT] {1}: Initializing error: ', e);
     dispatch(setCurrentState({ cState: 'ERROR', cMsg: e.message }));
   }
   batch(() => {
@@ -213,7 +201,7 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
       .then((res) => res.json())
       .then(
         async (result) => {
-          console.log('Fetched: ', Object.keys(result).length);
+          //console.log('Fetched: ', Object.keys(result).length);
           try {
             dispatch(setCurrentState({ cState: 'SAVING', cMsg: 'Please wait while saving data.' }));
             const { isOk } = await saveShipData(result);
@@ -221,7 +209,7 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
               dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating data.' }));
               const dataArr = await [...Object.keys(result).map((key) => result[key])];
               await shipData.setArray(dataArr);
-              console.log(shipData.count);
+              // console.log(shipData.count);
               const fullSimple = await DataStore.transformShipList(shipData.shipsArr);
               const searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
               const searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;

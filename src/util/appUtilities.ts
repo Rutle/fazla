@@ -103,7 +103,6 @@ export const initData = async (): Promise<{
     .then(
       (result: { shipData: Ship[]; config: AppConfig; ownedShips: string[]; formations: Formation[]; msg: string }) => {
         if (result.msg === 'success') {
-          // console.log('initData: ', result.config);
           return { ...result };
         }
       },

@@ -76,7 +76,8 @@ div.page.dark .ship-side-container,
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
 #titlebar.dark #window-menu {
-  background-color: var(--root-dark-bg);
+  background-color: var(--main-dark-footer-titlebar-bg);
+  border-bottom: 1px solid var(--main-dark-border);
 }
 
 #titlebar.dark #window-filler {
@@ -84,25 +85,31 @@ div.page.dark .ship-side-container,
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
 #titlebar.dark #window-controls {
-  border-bottom: 1px solid var(--main-dark-border);
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
+#titlebar.dark #window-controls .title-button {
+  border-bottom: 1px solid var(--main-dark-border);
+}
+
 #titlebar.dark #window-controls .title-button:hover,
 #titlebar.dark #window-controls .title-button:active {
   background: var(--main-dark-hover-bg);
 }
 
 #titlebar.dark #min-button {
+  box-sizing: border-box;
   color: var(--main-dark-color);
   grid-column: 1;
 }
 
 #titlebar.dark #max-button, #restore-button {
+  box-sizing: border-box;
   color: var(--main-dark-color);
   grid-column: 2;
 }
 
 #titlebar.dark #close-button {
+  box-sizing: border-box;
   color: var(--main-dark-color);
   grid-column: 3;
 }
@@ -121,7 +128,7 @@ div.page.dark .ship-side-container,
 
 .modal-overlay.dark .modal-container {
   background-color: var(--root-dark-bg);
-  border: 1px solid var(--main-dark-border);
+  border: 3px double var(--main-dark-border);
   border-radius: 2px;
   color: var(--main-dark-color);
   -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
@@ -137,23 +144,24 @@ div.page.dark .tab {
   border-right: 0px;
   background-color: var(--main-dark-bg);
 }
-/*
+
 nav.tab.dark {
   box-sizing: border-box;
-  background-color: var(--root-dark-bg);
+  justify-content: space-between;
   border-bottom: 1px solid var(--main-dark-border);
 }
-*/
+
 nav.tab.dark > a {
+
   color: rgba(184, 184, 184, 0.4);
-  border-right: 1px solid transparent;
-  border-left: 1px solid transparent;
-  border-bottom: 1px solid var(--main-dark-border);
+  border-right: 1px solid var(--main-dark-footer-titlebar-bg);
+  border-left: 1px solid var(--main-dark-footer-titlebar-bg);
   box-shadow: inset 0px -4px 3px -4px #00000099;
   background-color: var(--main-dark-footer-titlebar-bg);
 }
 
 nav.tab.dark > a.active {
+  height: 32px!important;
   color: var(--main-dark-color);
   box-shadow: 0px -4px 3px #00000099;
   background-color: var(--root-dark-bg)!important;

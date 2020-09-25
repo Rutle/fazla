@@ -101,7 +101,6 @@ ipcMain.handle('save-ship-data', async (event, arg) => {
   try {
     const rawData = JSON.stringify(arg);
     if (process.env.NODE_ENV === 'development') {
-      console.log('DEVELOPMENT');
       await fsPromises.writeFile(path.join(__dirname, '../src/data/ships.json'), rawData, 'utf8');
     } else {
       const userDir = app.getPath('userData');
@@ -111,7 +110,6 @@ ipcMain.handle('save-ship-data', async (event, arg) => {
     console.log('Failure save');
     return { isOk: false, msg: error.message };
   }
-  console.log('Successful save');
   return { isOk: true, msg: 'Ship data saved succesfully.' };
 });
 /**
@@ -197,7 +195,6 @@ ipcMain.handle('initData', async (event, arg) => {
     }
     configData = electronStore.get('config') as AppConfig;
     if (process.env.NODE_ENV === 'development') {
-      console.log('DEVELOPMENT');
       const rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
       jsonData = await JSON.parse(rawData);
       dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];

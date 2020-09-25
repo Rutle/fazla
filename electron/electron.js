@@ -143,7 +143,6 @@ electron_1.ipcMain.handle('save-ship-data', function (event, arg) { return __awa
                 _a.trys.push([0, 5, , 6]);
                 rawData = JSON.stringify(arg);
                 if (!(process.env.NODE_ENV === 'development')) return [3 /*break*/, 2];
-                console.log('DEVELOPMENT');
                 return [4 /*yield*/, fsPromises.writeFile(path.join(__dirname, '../src/data/ships.json'), rawData, 'utf8')];
             case 1:
                 _a.sent();
@@ -159,9 +158,7 @@ electron_1.ipcMain.handle('save-ship-data', function (event, arg) { return __awa
                 error_1 = _a.sent();
                 console.log('Failure save');
                 return [2 /*return*/, { isOk: false, msg: error_1.message }];
-            case 6:
-                console.log('Successful save');
-                return [2 /*return*/, { isOk: true, msg: 'Ship data saved succesfully.' }];
+            case 6: return [2 /*return*/, { isOk: true, msg: 'Ship data saved succesfully.' }];
         }
     });
 }); });
@@ -264,7 +261,6 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                 }
                 configData = electronStore.get('config');
                 if (!(process.env.NODE_ENV === 'development')) return [3 /*break*/, 4];
-                console.log('DEVELOPMENT');
                 return [4 /*yield*/, fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8')];
             case 2:
                 rawData = _a.sent();

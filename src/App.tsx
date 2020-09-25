@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
-/* import './App.css';*/
 import ShipDetailView from './components/ShipDetailView';
 import Home from './components/Home';
 import DataStore from './util/dataStore';
@@ -13,7 +12,6 @@ import { initData } from './util/appUtilities';
 import FooterBar from './components/FooterBar';
 import TitleBar from './components/TitleBar';
 import RButton from './components/RButton/RButton';
-import { app } from 'electron';
 
 const RefreshRoute: React.FC<RouteProps> = (props) => {
   const appState = useSelector((state: RootState) => state.appState);
@@ -30,10 +28,9 @@ const RefreshRoute: React.FC<RouteProps> = (props) => {
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [shipData, setShipData] = useState(new DataStore());
   const [isDataReady, setIsDataReady] = useState(false);
-  const [test, setTest] = useState<string[]>([]);
-  /*const initPhases = ['Loading data from disk.', 'Initializing data structure.', 'Initializing lists.'];*/
   const appState = useSelector((state: RootState) => state.appState);
   const config = useSelector((state: RootState) => state.config);
 
@@ -57,8 +54,8 @@ const App: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderList = () => {
-    console.log(appState.initPhases);
     return (
       <ul
         style={{

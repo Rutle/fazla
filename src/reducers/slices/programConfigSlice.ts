@@ -20,11 +20,6 @@ const programConfigSlice = createSlice({
   initialState,
   reducers: {
     setStateValue(state, action: PayloadAction<{ key: string; value: string | boolean }>) {
-      console.log({
-        ...state,
-        [action.payload.key]: action.payload.value,
-        isEdit: true,
-      });
       return {
         ...state,
         [action.payload.key]: action.payload.value,

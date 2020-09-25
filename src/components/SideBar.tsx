@@ -28,7 +28,6 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
   useEffect(() => {
     const { cToggle } = appState;
     if (appState.cState === 'INIT') return;
-    // console.log(appState[cToggle]);
     dispatch(setDetails({ id: appState[cToggle].id, index: appState[cToggle].index }));
     dispatch(updateSearch(shipData, SearchAction.UpdateList, { list: cToggle }));
     // eslint-disable-next-line react-hooks/exhaustive-deps

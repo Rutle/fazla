@@ -65,24 +65,20 @@ div.page.light .ship-side-container,
 #titlebar.light {
   background: var(--main-light-titlebar-bg);
   color: var(--main-light-color);
-  /* border-bottom: 1px solid var(--main-light-border);*/
 }
+
 #titlebar.light #window-title {
   border-bottom: 1px solid var(--main-light-border);
   
 }
-/*
-#titlebar.light #window-menu {
-  background-color: var(--root-light-bg);
-}
-*/
+
 #titlebar.light #window-filler {
   border-bottom: 1px solid var(--main-light-border);
   
 }
-#titlebar.light #window-controls {
+
+#titlebar.light #window-controls .title-button {
   border-bottom: 1px solid var(--main-light-border);
-  
 }
 #titlebar.light #window-controls .title-button:hover,
 #titlebar.light #window-controls .title-button:active {
@@ -90,16 +86,19 @@ div.page.light .ship-side-container,
 }
 
 #titlebar.light #min-button {
+  box-sizing: border-box;
   color: var(--main-light-color);
   grid-column: 1;
 }
 
 #titlebar.light #max-button, #restore-button {
+  box-sizing: border-box;
   color: var(--main-light-color);
   grid-column: 2;
 }
 
 #titlebar.light #close-button {
+  box-sizing: border-box;
   color: var(--main-light-color);
   grid-column: 3;
 }
@@ -119,14 +118,13 @@ div.page.light .ship-side-container,
 
 .modal-overlay.light .modal-container {
   background-color: var(--root-light-bg);
-  border: 1px solid #565656;
+  border: 3px double #565656;
   border-radius: 2px;
   color: var(--main-light-color);
   -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
   -moz-box-shadow: 1px 1px 4px 1px #0000008f;
-  box-shadow: 1px 1px 4px 1px #0000008f;
+  box-shadow: 1px 1px 2px 0px #0000008f;
 }
-
 /* #### Tab #### */
 div.page.light .tab {
   overflow: hidden;

@@ -74,7 +74,6 @@ const searchParametersSlice = createSlice({
   initialState,
   reducers: {
     toggleParameter(state, action: PayloadAction<{ cat: string; param: string }>) {
-      console.log('toggle para');
       const { cat, param } = action.payload;
       const oldState = state[cat][param];
       let newArray = [];
@@ -121,7 +120,6 @@ const searchParametersSlice = createSlice({
       return newObj;
     },
     toggleAll(state, action: PayloadAction<string>) {
-      console.log('toggle all');
       const cat = action.payload;
       const newObject = Object.fromEntries(
         Object.entries(state[cat])
@@ -151,11 +149,9 @@ const searchParametersSlice = createSlice({
       return newState;
     },
     setSearchString(state, action: PayloadAction<string>) {
-      console.log('setsearch');
       return { ...state, name: action.payload };
     },
     setFleet(state, action: PayloadAction<{ fleet: 'ALL' | 'VANGUARD' | 'MAIN' }>) {
-      console.log('fleet');
       return {
         ...state,
         fleet: action.payload.fleet,
@@ -234,7 +230,6 @@ export const updateSearch = (
     if (appState[list].isSearchChanged) {
       let allShipsSearch: ShipSimple[] = [];
       let ownedSearch: ShipSimple[] = [];
-      console.log(appState[list]);
       if (list === 'ALL') {
         allShipsSearch = await shipData.getShipsByParams(searchParameters);
       }

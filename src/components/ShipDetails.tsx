@@ -69,7 +69,7 @@ const ShipDetails: React.FC<ShipDetails> = ({ shipData }) => {
     <>
       <div className="ship-title-bar">
         <div>
-          <span className="ship-name">{ship.names.en}</span>
+          <span className="ship-name">{ship.names.code}</span>
           <span className={ship.rarity}>{` ${ship.stars?.stars}`}</span>
         </div>
         <span className={`end-buttons ${config.themeColor}`}>
