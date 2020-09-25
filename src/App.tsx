@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import ShipDetailView from './components/ShipDetailView';
 import Home from './components/Home';
 import DataStore from './util/dataStore';
-import { BrowserRouter, Route, Switch, Redirect, RouteProps } from 'react-router-dom';
+import { Route, Switch, Redirect, RouteProps, HashRouter } from 'react-router-dom';
 import FormationView from './components/FormationView';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './reducers/rootReducer';
@@ -30,7 +30,6 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [shipData, setShipData] = useState(new DataStore());
-  const [isDataReady, setIsDataReady] = useState(false);
   const appState = useSelector((state: RootState) => state.appState);
   const config = useSelector((state: RootState) => state.config);
 
@@ -83,61 +82,65 @@ const App: React.FC = () => {
     );
   };
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className={`App`}>
-        {!isDataReady ? (
-          <>
-            <TitleBar showMenu={false} />
-            <div className={`page ${config.themeColor}`}>
-              <section className="page-content">
-                <div className="ship-data-container dark">
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      width: '100%',
-                      height: '100%',
-                      /* margin: 'auto',*/
-                      // padding: '6px',
-                    }}
-                  >
-                    <div className="info-text">Program is ready. Please continue.</div>
-                    {appState.cState === 'RUNNING' ? (
-                      <RButton
-                        themeColor={config.themeColor}
-                        onClick={() => setIsDataReady(!isDataReady)}
-                        extraStyle={{ marginTop: '30px', height: '50px', width: '20%' }}
-                      >
-                        Continue
-                      </RButton>
-                    ) : (
-                      <></>
-                    )}
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={({ history }) => {
+              return (
+                <>
+                  <TitleBar showMenu={false} />
+                  <div className={`page ${config.themeColor}`}>
+                    <section className="page-content">
+                      <div className="ship-data-container dark">
+                        <div
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            width: '100%',
+                            height: '100%',
+                          }}
+                        >
+                          {appState.cState === 'RUNNING' ? (
+                            <>
+                              <div className="info-text">Program is ready. Please continue.</div>
+                              <RButton
+                                themeColor={config.themeColor}
+                                onClick={() => {
+                                  history.push('/shipdetails');
+                                }}
+                                extraStyle={{ marginTop: '30px', height: '50px', width: '20%' }}
+                              >
+                                Continue
+                              </RButton>
+                            </>
+                          ) : (
+                            <>{renderList()}</>
+                          )}
+                        </div>
+                      </div>
+                    </section>
                   </div>
-                </div>
-              </section>
-            </div>
-            <FooterBar />
-          </>
-        ) : (
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/shipdetails" />
-            </Route>
-            <Route path="/shipdetails">
-              <ShipDetailView shipData={shipData} />
-            </Route>
-            <RefreshRoute path="/formations">
-              <FormationView shipData={shipData} />
-            </RefreshRoute>
-            <RefreshRoute path="/options">
-              <Home shipData={shipData} />
-            </RefreshRoute>
-          </Switch>
-        )}
+                  <FooterBar />
+                </>
+              );
+            }}
+          ></Route>
+          <Route path="/shipdetails">
+            <ShipDetailView shipData={shipData} />
+          </Route>
+          <RefreshRoute path="/formations">
+            <FormationView shipData={shipData} />
+          </RefreshRoute>
+          <RefreshRoute path="/options">
+            <Home shipData={shipData} />
+          </RefreshRoute>
+        </Switch>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 

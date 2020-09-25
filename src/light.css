@@ -71,6 +71,10 @@ div.page.light .ship-side-container,
   border-bottom: 1px solid var(--main-light-border);
   
 }
+#titlebar.light #window-menu {
+  background-color: var(--main-light-titlebar-bg);
+  border-bottom: 1px solid var(--main-light-border);
+}
 
 #titlebar.light #window-filler {
   border-bottom: 1px solid var(--main-light-border);
@@ -134,24 +138,32 @@ div.page.light .tab {
   background-color: var(--main-light-bg);
 }
 
-nav.tab.light > a {
-  border-right: 1px solid transparent;
-  border-left: 1px solid transparent;
-  color: rgba(37, 35, 35, 0.4);
+nav.tab.light {
+  box-sizing: border-box;
+  justify-content: space-between;
   border-bottom: 1px solid var(--main-light-border);
 }
 
+nav.tab.light > a {
+  border-right: 1px solid var(--main-light-titlebar-bg);
+  border-left: 1px solid var(--main-light-titlebar-bg);
+  color: rgba(37, 35, 35, 0.4);
+  /*border-bottom: 1px solid var(--main-light-titlebar-bg);*/
+}
+
 nav.tab.light > a.active {
+  height: 32px!important;
   color: var(--main-light-color);
-  background-color: var(--root-light-bg);
+  background-color: var(--root-light-bg)!important;
   border-right: 1px solid var(--main-light-border);
   border-left: 1px solid var(--main-light-border);
   border-bottom: 1px solid transparent;
 }
+/*
 nav.tab.light > a.active > span {
   margin-top: 1px;
 }
-
+*/
 nav.tab.light > a:hover {
   color: var(--main-light-color);
 }

@@ -52,7 +52,6 @@
   overflow-y: scroll;
 }
 
-
 /* ##### Page ##### */
 div.page.dark {
   background-color: var(--root-dark-bg);
@@ -152,7 +151,6 @@ nav.tab.dark {
 }
 
 nav.tab.dark > a {
-
   color: rgba(184, 184, 184, 0.4);
   border-right: 1px solid var(--main-dark-footer-titlebar-bg);
   border-left: 1px solid var(--main-dark-footer-titlebar-bg);

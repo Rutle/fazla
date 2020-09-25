@@ -52,7 +52,9 @@ var isDev = require("electron-is-dev");
 require("electron-reload");
 // import DataStore from '../src/util/dataStore';
 var mainWindow;
-var electronStore = new electron_store_1["default"]();
+var electronStore = new electron_store_1["default"]({
+    cwd: electron_1.app.getPath('userData')
+});
 var fsPromises = fs.promises;
 // const shipData = new DataStore();
 var SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
@@ -136,20 +138,47 @@ electron_1.ipcMain.handle('get-owned-ship-data', function (event) { return __awa
  * Save ship data to json file.
  */
 electron_1.ipcMain.handle('save-ship-data', function (event, arg) { return __awaiter(void 0, void 0, void 0, function () {
-    var rawData, userDir, error_1;
+    var rawData_1, userDir_1, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 5, , 6]);
-                rawData = JSON.stringify(arg);
+                rawData_1 = JSON.stringify(arg);
                 if (!(process.env.NODE_ENV === 'development')) return [3 /*break*/, 2];
-                return [4 /*yield*/, fsPromises.writeFile(path.join(__dirname, '../src/data/ships.json'), rawData, 'utf8')];
+                return [4 /*yield*/, fsPromises.writeFile(path.join(__dirname, '../src/data/ships.json'), rawData_1, 'utf8')];
             case 1:
                 _a.sent();
                 return [3 /*break*/, 4];
             case 2:
-                userDir = electron_1.app.getPath('userData');
-                return [4 /*yield*/, fsPromises.writeFile(userDir + "\\resources\\ships.json", rawData, 'utf8')];
+                userDir_1 = electron_1.app.getPath('userData');
+                return [4 /*yield*/, fsPromises
+                        .access(userDir_1 + "\\resources\\ships.json", fs.constants.F_OK)
+                        .then(function () { return __awaiter(void 0, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    console.log('can access, has been created. do not create directory but just save.');
+                                    return [4 /*yield*/, fsPromises.writeFile(userDir_1 + "\\resources\\ships.json", rawData_1, 'utf8')];
+                                case 1:
+                                    _a.sent();
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); })["catch"](function () { return __awaiter(void 0, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    console.error('cannot access, not created yet. create directory now.');
+                                    return [4 /*yield*/, fsPromises.mkdir(userDir_1 + "\\resources")];
+                                case 1:
+                                    _a.sent();
+                                    return [4 /*yield*/, fsPromises.writeFile(userDir_1 + "\\resources\\ships.json", rawData_1, 'utf8')];
+                                case 2:
+                                    _a.sent();
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); })];
             case 3:
                 _a.sent();
                 _a.label = 4;
@@ -234,7 +263,7 @@ electron_1.ipcMain.handle('remove-formation-by-index', function (event, data) { 
  * Initialize by getting data from .json and config data from config file.
  */
 electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(void 0, void 0, void 0, function () {
-    var jsonData, dataArr, oShips, formationData, configData, rawData, userDir, appDirCont, rawData, error_2;
+    var jsonData, dataArr, oShips, formationData, configData, rawData, userDir_2, resourceDir_1, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -245,7 +274,7 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                 configData = { jsonURL: '', themeColor: 'dark', firstTime: false, formHelpTooltip: true };
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 8, , 9]);
+                _a.trys.push([1, 7, , 8]);
                 if (!electronStore.has('firstRun')) {
                     electronStore.set('firstRun', false);
                     electronStore.set({
@@ -270,27 +299,53 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                 dataArr = __spreadArrays(Object.keys(jsonData).map(function (key) { return jsonData[key]; }));
                 oShips = electronStore.get('ownedShips');
                 formationData = electronStore.get('formations');
-                return [3 /*break*/, 7];
+                return [3 /*break*/, 6];
             case 4:
-                userDir = electron_1.app.getPath('userData');
-                return [4 /*yield*/, fsPromises.readdir(userDir + "\\resources")];
+                userDir_2 = electron_1.app.getPath('userData');
+                resourceDir_1 = process.resourcesPath;
+                return [4 /*yield*/, fsPromises
+                        .access(userDir_2 + "\\resources\\ships.json", fs.constants.F_OK)
+                        .then(function () { return __awaiter(void 0, void 0, void 0, function () {
+                        var rawData;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    console.log('can access, has been created. use file from appdata (updated at least once)');
+                                    return [4 /*yield*/, fsPromises.readFile(userDir_2 + "\\resources\\ships.json", 'utf8')];
+                                case 1:
+                                    rawData = _a.sent();
+                                    jsonData = JSON.parse(rawData);
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); })["catch"](function () { return __awaiter(void 0, void 0, void 0, function () {
+                        var rawData;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    console.error('cannot access, not created yet. use file provided in build');
+                                    return [4 /*yield*/, fsPromises.readFile(resourceDir_1 + "\\ships.json", 'utf8')];
+                                case 1:
+                                    rawData = _a.sent();
+                                    jsonData = JSON.parse(rawData);
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); })];
             case 5:
-                appDirCont = _a.sent();
-                console.log(appDirCont);
-                return [4 /*yield*/, fsPromises.readFile(userDir + "\\resources\\ships.json", 'utf8')];
-            case 6:
-                rawData = _a.sent();
-                jsonData = JSON.parse(rawData);
+                _a.sent();
+                // const appDirCont = await fsPromises.readdir(`${userDir}\\resources`);
+                // console.log(appDirCont);
                 dataArr = __spreadArrays(Object.keys(jsonData).map(function (key) { return jsonData[key]; }));
                 oShips = electronStore.get('ownedShips');
                 formationData = electronStore.get('formations');
-                _a.label = 7;
-            case 7: return [3 /*break*/, 9];
-            case 8:
+                _a.label = 6;
+            case 6: return [3 /*break*/, 8];
+            case 7:
                 error_2 = _a.sent();
                 console.log('error', error_2);
                 return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: error_2.message }];
-            case 9:
+            case 8:
                 console.log('dataArr: ', dataArr.length);
                 return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: 'success' }];
         }
