@@ -1,14 +1,11 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import FormationGridItem from './FormationGridItem';
-import { Formation, Ship } from '../util/types';
 interface FormationGridProps {
-  formation: Formation;
   themeColor: string;
-  formationShips: { [key: string]: Ship };
+  children: React.ReactNode;
 }
 
-const FormationGrid: React.FC<FormationGridProps> = ({ formation, themeColor, formationShips }) => {
+const FormationGrid: React.FC<FormationGridProps> = ({ themeColor, children }) => {
   return (
     <>
       <div className={`f-grid ${themeColor}`}>
@@ -17,21 +14,13 @@ const FormationGrid: React.FC<FormationGridProps> = ({ formation, themeColor, fo
             <div className="f-row">
               <div className="f-title">Main</div>
             </div>
-            <div className="f-row">
-              <FormationGridItem index={0} ship={formationShips[formation.data[0]]} themeColor={themeColor} />
-              <FormationGridItem index={1} ship={formationShips[formation.data[1]]} themeColor={themeColor} />
-              <FormationGridItem index={2} ship={formationShips[formation.data[2]]} themeColor={themeColor} />
-            </div>
+            <div className="f-row">{React.Children.toArray(children).slice(0, 3)}</div>
           </div>
           <div className="f-column">
             <div className="f-row">
               <div className="f-title">Vanguard</div>
             </div>
-            <div className="f-row">
-              <FormationGridItem index={3} ship={formationShips[formation.data[3]]} themeColor={themeColor} />
-              <FormationGridItem index={4} ship={formationShips[formation.data[4]]} themeColor={themeColor} />
-              <FormationGridItem index={5} ship={formationShips[formation.data[5]]} themeColor={themeColor} />
-            </div>
+            <div className="f-row">{React.Children.toArray(children).slice(3)}</div>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { formationModalAction, FormationModalAction } from '../../reducers/slice
 import SideBar from '../SideBar';
 import ShipDetails from '../ShipDetails';
 import RButton from '../RButton/RButton';
+import ShipList from '../ShipList';
 
 interface FormationModalProps {
   shipData: DataStore;
@@ -17,6 +18,8 @@ const FormationModalContent: React.FC<FormationModalProps> = ({ shipData }) => {
   const appState = useSelector((state: RootState) => state.appState);
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const config = useSelector((state: RootState) => state.config);
+  const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
+  const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
 
   const addShip = () => {
     switch (appState.cToggle) {
@@ -29,11 +32,14 @@ const FormationModalContent: React.FC<FormationModalProps> = ({ shipData }) => {
       default:
         break;
     }
-    dispatch(formationModalAction(FormationModalAction.Close));
+    dispatch(formationModalAction(FormationModalAction.Close, appState.cToggle));
   };
   return (
     <>
-      <SideBar shipData={shipData} />
+      <SideBar shipData={shipData}>
+        <ShipList shipData={shipData} shipSearchList={shipSearchList} listName={'ALL'} />
+        <ShipList shipData={shipData} shipSearchList={ownedSearchList} listName={'OWNED'} />
+      </SideBar>
       <div className={`ship-data-container ${config.themeColor}`}>
         <ShipDetails shipData={shipData} />
         {shipData.shipsArr[shipDetails.index] ? (

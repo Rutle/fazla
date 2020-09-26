@@ -73,7 +73,8 @@ function createWindow() {
     mainWindow.loadURL(isDev ? 'http://localhost:3000' : "file://" + path.join(__dirname, '../build/index.html'));
     mainWindow.removeMenu();
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    if (isDev)
+        mainWindow.webContents.openDevTools();
 }
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -345,9 +346,7 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                 error_2 = _a.sent();
                 console.log('error', error_2);
                 return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: error_2.message }];
-            case 8:
-                console.log('dataArr: ', dataArr.length);
-                return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: 'success' }];
+            case 8: return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: 'success' }];
         }
     });
 }); });

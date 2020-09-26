@@ -23,7 +23,7 @@ export type SearchParams = {
 };
 
 export type Formation = {
-  data: string[];
+  data: string[]; // array of IDs.
 } & MiscInformation;
 
 interface MiscInformation {

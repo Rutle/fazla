@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '../../store';
 import { batch } from 'react-redux';
-import { setFleet } from './searchParametersSlice';
+import { SearchAction, setFleet, updateSearch } from './searchParametersSlice';
+import DataStore from '../../util/dataStore';
+import { toggleSearchState } from './appStateSlice';
 
 export enum FormationModalAction {
   Open = 'OPEN',
@@ -23,7 +25,7 @@ const formationModalSlice = createSlice({
     openModal(state, action: PayloadAction<{ isOpen: boolean; gridIndex: number }>) {
       return { ...state, ...action.payload };
     },
-    closeModal(state, action: PayloadAction) {
+    closeModal() {
       return initialState;
     },
   },
@@ -36,25 +38,32 @@ export const { openModal, closeModal } = formationModalSlice.actions;
  */
 export const formationModalAction = (
   action: FormationModalAction,
+  list?: 'ALL' | 'OWNED',
   isOpen?: boolean,
   gridIndex?: number,
+  shipData?: DataStore,
 ): AppThunk => async (dispatch: AppDispatch) => {
   try {
     switch (action) {
       case 'OPEN':
-        if (isOpen !== undefined && gridIndex !== undefined) {
+        if (isOpen !== undefined && gridIndex !== undefined && shipData && list) {
           const fleet = gridIndex !== undefined && gridIndex <= 2 ? 'MAIN' : 'VANGUARD';
           batch(() => {
             dispatch(setFleet({ fleet: fleet }));
-            dispatch(openModal({ isOpen: isOpen, gridIndex: gridIndex }));
+            dispatch(toggleSearchState(list));
+            dispatch(updateSearch(shipData, SearchAction.UpdateList, { list: list }));
           });
+          dispatch(openModal({ isOpen: isOpen, gridIndex: gridIndex }));
         }
         break;
       case 'CLOSE':
-        batch(() => {
-          dispatch(setFleet({ fleet: 'ALL' }));
+        if (list) {
+          batch(() => {
+            dispatch(setFleet({ fleet: 'ALL' }));
+            dispatch(toggleSearchState(list));
+          });
           dispatch(closeModal());
-        });
+        }
         break;
       default:
         break;

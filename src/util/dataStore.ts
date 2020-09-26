@@ -73,7 +73,6 @@ export default class DataStore {
     let isNatMatch = false;
     let isHullMatch = false;
     let isRarityMatch = false;
-
     isNameMatch = ship.names.en.toLowerCase().includes(searchPs.name.toLowerCase());
 
     if (ship.nationality) {
@@ -87,11 +86,9 @@ export default class DataStore {
     } else if (ship.hullType && searchPs.fleet === 'VANGUARD' && fleets.VANGUARD.includes(ship.hullType)) {
       isHullMatch = searchPs.hullType['All'] ? true : searchPs.hullType[ship.hullType];
     }
-
     if (ship.rarity) {
       isRarityMatch = searchPs.rarity['All'] ? true : searchPs.rarity[ship.rarity];
     }
-
     return isNameMatch && isNatMatch && isHullMatch && isRarityMatch;
   }
 
@@ -107,14 +104,14 @@ export default class DataStore {
   }
   static transformStringList(shipData: Ship[], data: string[]): ShipSimple[] {
     let t: ShipSimple[] = [];
-    t = [...data.map((element, index) => ({ id: element, index: shipData.findIndex((ele) => ele.id === element) }))];
+    t = [...data.map((element) => ({ id: element, index: shipData.findIndex((ele) => ele.id === element) }))];
     return t;
   }
 
   static async reduceByParams(shipData: DataStore, list: ShipSimple[], searchPs: SearchParams): Promise<ShipSimple[]> {
     let t: ShipSimple[] = [];
     try {
-      t = list.reduce<ShipSimple[]>((acc, item, index): ShipSimple[] => {
+      t = list.reduce<ShipSimple[]>((acc, item): ShipSimple[] => {
         if (DataStore._filterPredicate(searchPs, shipData.shipsArr[item.index])) {
           acc.push({ id: item.id, index: item.index });
         }

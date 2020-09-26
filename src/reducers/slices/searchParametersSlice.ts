@@ -213,6 +213,7 @@ export const updateSearch = (
         dispatch(toggleSearchState(list));
         break;
       case 'UPDATE':
+        dispatch(toggleSearchState(list));
         break;
       case 'REMOVE':
         dispatch(removeShip(id));

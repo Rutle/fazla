@@ -6,12 +6,15 @@ import { RootState } from '../reducers/rootReducer';
 import { useSelector } from 'react-redux';
 import DataStore from '../util/dataStore';
 import SideBar from './SideBar';
+import ShipList from './ShipList';
 
 interface ShipDetailViewProps {
   shipData: DataStore;
 }
 const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData }) => {
   const appState = useSelector((state: RootState) => state.appState);
+  const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
+  const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
 
   return (
     <PageTemplate>
@@ -22,7 +25,10 @@ const ShipDetailView: React.FC<ShipDetailViewProps> = ({ shipData }) => {
           </div>
         ) : (
           <>
-            <SideBar shipData={shipData} />
+            <SideBar shipData={shipData}>
+              <ShipList shipData={shipData} shipSearchList={shipSearchList} listName={'ALL'} />
+              <ShipList shipData={shipData} shipSearchList={ownedSearchList} listName={'OWNED'} />
+            </SideBar>
             <div className="ship-data-container">
               <ShipDetails shipData={shipData} />
             </div>

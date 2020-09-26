@@ -9,17 +9,15 @@ import { setCurrentToggle } from '../reducers/slices/appStateSlice';
 import { SearchAction, updateSearch } from '../reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';
 import DataStore from '../util/dataStore';
-import ShipList from './ShipList';
 
 interface ShipListProps {
   shipData: DataStore;
+  children: React.ReactNode;
 }
-const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
+const SideBar: React.FC<ShipListProps> = ({ shipData, children }) => {
   const dispatch = useDispatch();
-  const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
   const config = useSelector((state: RootState) => state.config);
   const appState = useSelector((state: RootState) => state.appState);
-  const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
   const searchParameters = useSelector((state: RootState) => state.searchParameters);
   const [searchValue, setSearchValue] = useState(searchParameters.name);
   const [inputFocus, setInputFocus] = useState(false);
@@ -32,7 +30,6 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
     dispatch(updateSearch(shipData, SearchAction.UpdateList, { list: cToggle }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState.cToggle]);
-
   return (
     <div className="ship-side-container">
       <div className="top-container">
@@ -92,8 +89,7 @@ const SideBar: React.FC<ShipListProps> = ({ shipData }) => {
           </label>
         </div>
       </div>
-      <ShipList shipData={shipData} shipSearchList={shipSearchList} listName={'ALL'} />
-      <ShipList shipData={shipData} shipSearchList={ownedSearchList} listName={'OWNED'} />
+      {children}
     </div>
   );
 };

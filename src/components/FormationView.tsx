@@ -15,6 +15,7 @@ import { faMouse } from '@fortawesome/free-solid-svg-icons';
 import ReactModal from 'react-modal';
 import { formationModalAction, FormationModalAction } from '../reducers/slices/formationModalSlice';
 import { Ship } from '../util/types';
+import FormationGridItem from './FormationGridItem';
 interface FormationViewProps {
   shipData: DataStore;
 }
@@ -24,6 +25,7 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
   const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
   const formationModal = useSelector((state: RootState) => state.formationModal);
+  const appState = useSelector((state: RootState) => state.appState);
 
   const renderContent = (index: number) => {
     const formationShips = shipData.shipsArr
@@ -34,11 +36,19 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
       );
     return (
       <>
-        <FormationGrid
-          formationShips={formationShips}
-          formation={fData.formations[index]}
-          themeColor={config.themeColor}
-        />
+        <FormationGrid themeColor={config.themeColor}>
+          {fData.formations[index].data.map((id, index) => (
+            <FormationGridItem
+              key={`${id}-${index}`}
+              index={index}
+              ship={formationShips[id]}
+              themeColor={config.themeColor}
+              onClick={() =>
+                dispatch(formationModalAction(FormationModalAction.Open, appState.cToggle, true, index, shipData))
+              }
+            />
+          ))}
+        </FormationGrid>
         <div className="scroll">
           <FormationPassives
             formationShips={formationShips}

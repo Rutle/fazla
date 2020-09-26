@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { formationModalAction, FormationModalAction } from '../reducers/slices/formationModalSlice';
 import { Ship } from '../util/shipdatatypes';
 import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
 import { hullTypes, hullTypesAbb } from '../data/categories';
@@ -9,16 +8,12 @@ interface GridItemProps {
   index: number;
   ship?: Ship;
   themeColor: string;
+  onClick: () => void;
 }
 
 // eslint-disable-next-line react/prop-types
-const FormationGridItem: React.FC<GridItemProps> = ({ index, ship, themeColor }) => {
+const FormationGridItem: React.FC<GridItemProps> = ({ index, ship, themeColor, onClick }) => {
   const dispatch = useDispatch();
-
-  const openShipSelector = () => {
-    dispatch(formationModalAction(FormationModalAction.Open, true, index));
-  };
-
   const getLocation = (idx: number): string => {
     switch (idx) {
       case 1:
@@ -36,7 +31,7 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship, themeColor })
     <div className="grid-item">
       <div
         className={`content`}
-        onClick={() => openShipSelector()}
+        onClick={() => onClick()}
         onContextMenu={() => dispatch(formationAction(FormationAction.RemoveShip, index))}
         data-tip
         data-for="click-help"
