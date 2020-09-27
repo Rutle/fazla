@@ -1,9 +1,8 @@
-import { Ship, ShipSimple } from './shipdatatypes';
-import { SearchParams } from './types';
+import { SearchParams, Ship, ShipSimple } from './types';
 import { fleets } from '../data/categories';
 
 /**
- * Ship data wrapper.
+ * @class Ship data wrapper.
  */
 export default class DataStore {
   shipsArr: Ship[] = [];
@@ -76,9 +75,9 @@ export default class DataStore {
     isNameMatch = ship.names.en.toLowerCase().includes(searchPs.name.toLowerCase());
 
     if (ship.nationality) {
-      // isNatMatch = searchPs.nationality['All'] ? true : searchPs.nationalityArr.includes(ship.nationality);
       isNatMatch = searchPs.nationality['All'] ? true : searchPs.nationality[ship.nationality];
     }
+    // Fleet check if used in the formation view to limit ships to Main or Vanguard.
     if (ship.hullType && searchPs.fleet === 'ALL') {
       isHullMatch = searchPs.hullType['All'] ? true : searchPs.hullType[ship.hullType];
     } else if (ship.hullType && searchPs.fleet === 'MAIN' && fleets.MAIN.includes(ship.hullType)) {

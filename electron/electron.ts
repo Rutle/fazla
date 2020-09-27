@@ -100,6 +100,8 @@ ipcMain.handle('get-owned-ship-data', async (event) => {
  * Save ship data to json file.
  */
 ipcMain.handle('save-ship-data', async (event, arg) => {
+  const today = new Date();
+  const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
   try {
     const rawData = JSON.stringify(arg);
     if (process.env.NODE_ENV === 'development') {
@@ -118,11 +120,12 @@ ipcMain.handle('save-ship-data', async (event, arg) => {
           await fsPromises.writeFile(`${userDir}\\resources\\ships.json`, rawData, 'utf8');
         });
     }
+    electronStore.set('config.updateDate', date);
   } catch (error) {
     console.log('Failure save');
-    return { isOk: false, msg: error.message };
+    return { updateDate: date, isOk: false, msg: error.message };
   }
-  return { isOk: true, msg: 'Ship data saved succesfully.' };
+  return { updateDate: date, isOk: true, msg: 'Ship data saved succesfully.' };
 });
 /**
  * Save owned ship data to config data file.
@@ -189,7 +192,13 @@ ipcMain.handle('initData', async (event, arg) => {
   let dataArr: Ship[] = [];
   let oShips: string[] = [];
   let formationData: Formation[] = [];
-  let configData: AppConfig = { jsonURL: '', themeColor: 'dark', firstTime: false, formHelpTooltip: true };
+  let configData: AppConfig = {
+    jsonURL: '',
+    themeColor: 'dark',
+    firstTime: false,
+    formHelpTooltip: true,
+    updateDate: '',
+  };
 
   try {
     if (!electronStore.has('firstRun')) {
@@ -200,6 +209,7 @@ ipcMain.handle('initData', async (event, arg) => {
           themeColor: THEMECOLOR,
           formHelpTooltip: true,
           firstTime: true,
+          updateDate: '',
         },
         ownedShips: [],
         formations: [],

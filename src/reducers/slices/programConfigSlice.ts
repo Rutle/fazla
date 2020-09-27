@@ -13,6 +13,7 @@ const initialState: AppConfig = {
   themeColor: 'dark',
   firstTime: true,
   formHelpTooltip: true,
+  updateDate: '',
 };
 
 const programConfigSlice = createSlice({
@@ -24,6 +25,12 @@ const programConfigSlice = createSlice({
         ...state,
         [action.payload.key]: action.payload.value,
         isEdit: true,
+      };
+    },
+    setUpdateDate(state, action: PayloadAction<string>) {
+      return {
+        ...state,
+        updateDate: action.payload,
       };
     },
     setConfig(state, action: PayloadAction<AppConfig>) {
@@ -46,7 +53,7 @@ const programConfigSlice = createSlice({
   },
 });
 
-export const { setStateValue, resetState, setConfig, setEditState } = programConfigSlice.actions;
+export const { setStateValue, setUpdateDate, resetState, setConfig, setEditState } = programConfigSlice.actions;
 
 /**
  * Thunk to handle different config actions.

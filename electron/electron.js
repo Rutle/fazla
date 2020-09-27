@@ -139,18 +139,22 @@ electron_1.ipcMain.handle('get-owned-ship-data', function (event) { return __awa
  * Save ship data to json file.
  */
 electron_1.ipcMain.handle('save-ship-data', function (event, arg) { return __awaiter(void 0, void 0, void 0, function () {
-    var rawData_1, userDir_1, error_1;
+    var today, date, rawData_1, userDir_1, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 5, , 6]);
-                rawData_1 = JSON.stringify(arg);
-                if (!(process.env.NODE_ENV === 'development')) return [3 /*break*/, 2];
-                return [4 /*yield*/, fsPromises.writeFile(path.join(__dirname, '../src/data/ships.json'), rawData_1, 'utf8')];
+                today = new Date();
+                date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+                _a.label = 1;
             case 1:
-                _a.sent();
-                return [3 /*break*/, 4];
+                _a.trys.push([1, 6, , 7]);
+                rawData_1 = JSON.stringify(arg);
+                if (!(process.env.NODE_ENV === 'development')) return [3 /*break*/, 3];
+                return [4 /*yield*/, fsPromises.writeFile(path.join(__dirname, '../src/data/ships.json'), rawData_1, 'utf8')];
             case 2:
+                _a.sent();
+                return [3 /*break*/, 5];
+            case 3:
                 userDir_1 = electron_1.app.getPath('userData');
                 return [4 /*yield*/, fsPromises
                         .access(userDir_1 + "\\resources\\ships.json", fs.constants.F_OK)
@@ -180,15 +184,17 @@ electron_1.ipcMain.handle('save-ship-data', function (event, arg) { return __awa
                             }
                         });
                     }); })];
-            case 3:
+            case 4:
                 _a.sent();
-                _a.label = 4;
-            case 4: return [3 /*break*/, 6];
+                _a.label = 5;
             case 5:
+                electronStore.set('config.updateDate', date);
+                return [3 /*break*/, 7];
+            case 6:
                 error_1 = _a.sent();
                 console.log('Failure save');
-                return [2 /*return*/, { isOk: false, msg: error_1.message }];
-            case 6: return [2 /*return*/, { isOk: true, msg: 'Ship data saved succesfully.' }];
+                return [2 /*return*/, { updateDate: date, isOk: false, msg: error_1.message }];
+            case 7: return [2 /*return*/, { updateDate: date, isOk: true, msg: 'Ship data saved succesfully.' }];
         }
     });
 }); });
@@ -272,7 +278,13 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                 dataArr = [];
                 oShips = [];
                 formationData = [];
-                configData = { jsonURL: '', themeColor: 'dark', firstTime: false, formHelpTooltip: true };
+                configData = {
+                    jsonURL: '',
+                    themeColor: 'dark',
+                    firstTime: false,
+                    formHelpTooltip: true,
+                    updateDate: ''
+                };
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 7, , 8]);
@@ -283,7 +295,8 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                             jsonURL: SHIPAPIURL,
                             themeColor: THEMECOLOR,
                             formHelpTooltip: true,
-                            firstTime: true
+                            firstTime: true,
+                            updateDate: ''
                         },
                         ownedShips: [],
                         formations: []

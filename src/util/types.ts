@@ -4,6 +4,7 @@ export type AppConfig = {
   firstTime: boolean;
   formHelpTooltip: boolean;
   isEdit?: boolean;
+  updateDate: string;
 };
 
 export interface BooleanSearchParam {

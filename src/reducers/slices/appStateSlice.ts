@@ -9,7 +9,7 @@ import { batch } from 'react-redux';
 import { saveShipData } from '../../util/appUtilities';
 import { setOwnedList } from './ownedShipListSlice';
 import { setFormationsData } from './formationGridSlice';
-import { setConfig } from './programConfigSlice';
+import { setConfig, setUpdateDate } from './programConfigSlice';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 
@@ -204,7 +204,7 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
           //console.log('Fetched: ', Object.keys(result).length);
           try {
             dispatch(setCurrentState({ cState: 'SAVING', cMsg: 'Please wait while saving data.' }));
-            const { isOk } = await saveShipData(result);
+            const { isOk, updateDate } = await saveShipData(result);
             if (isOk) {
               dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating data.' }));
               const dataArr = await [...Object.keys(result).map((key) => result[key])];
@@ -223,6 +223,7 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
                 );
                 dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
                 dispatch(setShipCount(shipData.count));
+                dispatch(setUpdateDate(updateDate));
               });
               dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
             }

@@ -46,7 +46,7 @@ const openUrl = (str: string): void => {
  * Function that calls electron along with data to save data to .json file.
  * @param data Data that is saved to .json.
  */
-export const saveShipData = async (data = {}): Promise<BasicResponse> => {
+export const saveShipData = async (data = {}): Promise<BasicResponse & { updateDate: string }> => {
   return await ipcRenderer.invoke('save-ship-data', data).then((result: BasicResponse) => {
     return result;
   });

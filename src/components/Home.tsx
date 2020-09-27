@@ -86,11 +86,11 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
               <div className="f-title bottom-emp">Options</div>
             </div>
             <div className="f-row wrap">
-              <div className="grid-item name">Update Data:</div>
+              <div className="grid-item name">Update ship data</div>
               <div className="grid-item action">{renderUpdate()}</div>
             </div>
             <div className="f-row wrap">
-              <div className="grid-item name">Raw data URL:</div>
+              <div className="grid-item name">Raw data URL</div>
               <div className="grid-item action">
                 <input
                   type="url"
@@ -163,6 +163,10 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
                   </label>
                 </div>
               </div>
+            </div>
+            <div className="f-row wrap">
+              <div className="grid-item name">Ship data update date</div>
+              <div className="grid-item action">{config.updateDate !== '' ? config.updateDate : 'N/A'}</div>
             </div>
             <div className="f-row wrap">
               <div className="grid-item name" style={{ opacity: `${config.isEdit ? '1' : '0.2'}` }}>
