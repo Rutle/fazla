@@ -11,10 +11,7 @@ const PageTemplate: React.FC<{ children: JSX.Element }> = ({ children }) => {
   return (
     <>
       <TitleBar showMenu={true} />
-      <div className={`page ${config.themeColor}`}>
-        {/*<MainMenu />*/}
-        {children}
-      </div>
+      <div className={`page ${config.themeColor}`}>{children}</div>
       <FooterBar />
     </>
   );

@@ -6,18 +6,23 @@ import { setOwnedSearchList } from './ownedSearchListSlice';
 import DataStore from '../../util/dataStore';
 import { ShipSimple, Formation, AppConfig } from '../../util/types';
 import { batch } from 'react-redux';
-import { saveShipData } from '../../util/appUtilities';
+import { fetchWithTimeout, handleHTTPError, saveShipData } from '../../util/appUtilities';
 import { setOwnedList } from './ownedShipListSlice';
 import { setFormationsData } from './formationGridSlice';
 import { setConfig, setUpdateDate } from './programConfigSlice';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
-
+//const SHIPAPIURL =
+//  'http://slowwly.robertomurray.co.uk/delay/10000/url/https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 interface CurrentState {
   cState: 'INIT' | 'RUNNING' | 'ERROR' | 'UPDATING' | 'SAVING' | 'DOWNLOADING';
   cMsg: string;
 }
 
+interface ErrorState {
+  eFlag: boolean;
+  eMsg: string;
+}
 interface InitializingPhases {
   [key: string]: { text: string; isReady: boolean };
 }
@@ -29,13 +34,14 @@ interface ListState {
 }
 
 type ListStateObject = {
-  [key: string]: any;
+  [key: string]: unknown;
   cToggle: 'ALL' | 'OWNED';
   ALL: ListState;
   OWNED: ListState;
   shipCount: number;
   initPhases: InitializingPhases;
-} & CurrentState;
+} & CurrentState &
+  ErrorState;
 
 const initialState: ListStateObject = {
   cToggle: 'ALL',
@@ -51,6 +57,8 @@ const initialState: ListStateObject = {
   },
   cState: 'INIT',
   cMsg: 'Initializing.',
+  eMsg: '',
+  eFlag: false,
   shipCount: 0,
   isSearchChanged: false,
   initPhases: {
@@ -85,6 +93,10 @@ const appStateSlice = createSlice({
     setCurrentState(state, action: PayloadAction<CurrentState>) {
       const { cState, cMsg } = action.payload;
       return { ...state, cState: cState, cMsg: cMsg };
+    },
+    setErrorMessage(state, action: PayloadAction<{ cState: 'RUNNING' | 'ERROR'; eMsg: string }>) {
+      const { cState, eMsg } = action.payload;
+      return { ...state, cState: cState, eMsg: eMsg, eFlag: true };
     },
     resetList() {
       return initialState;
@@ -128,6 +140,7 @@ export const {
   setShipCount,
   toggleSearchState,
   setPhaseState,
+  setErrorMessage,
 } = appStateSlice.actions;
 
 /**
@@ -195,53 +208,51 @@ export const setSelectedShip = (key: string, id: string, index: number): AppThun
  * Update the ship data by downloading raw data from github.
  */
 export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch: AppDispatch) => {
+  dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Please wait while downloading data.' }));
   try {
-    dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Please wait while downloading data.' }));
-    fetch(SHIPAPIURL)
+    fetchWithTimeout(SHIPAPIURL, 20000)
+      .then(handleHTTPError)
       .then((res) => res.json())
-      .then(
-        async (result) => {
-          //console.log('Fetched: ', Object.keys(result).length);
-          try {
-            dispatch(setCurrentState({ cState: 'SAVING', cMsg: 'Please wait while saving data.' }));
-            const { isOk, updateDate } = await saveShipData(result);
-            if (isOk) {
-              dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating data.' }));
-              const dataArr = await [...Object.keys(result).map((key) => result[key])];
-              await shipData.setArray(dataArr);
-              const fullSimple = await DataStore.transformShipList(shipData.shipsArr);
-              const searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
-              const searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
-              batch(() => {
-                dispatch(setSearchList(fullSimple));
-                dispatch(
-                  setListState({
-                    key: 'ALL',
-                    data: { id: searchInitId, index: searchInitIndex, isSearchChanged: true },
-                  }),
-                );
-                dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
-                dispatch(setShipCount(shipData.count));
-                dispatch(setUpdateDate(updateDate));
-              });
-              dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
-            }
-          } catch (error) {
-            console.log(error);
-            return error;
+      .then(async (result) => {
+        try {
+          dispatch(setCurrentState({ cState: 'SAVING', cMsg: 'Please wait while saving data.' }));
+          const { isOk, updateDate } = await saveShipData(result);
+          if (isOk) {
+            dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating app state.' }));
+            const dataArr = [...Object.keys(result).map((key) => result[key])];
+            await shipData.setArray(dataArr);
+            const fullSimple = DataStore.transformShipList(shipData.shipsArr);
+            const searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
+            const searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
+            batch(() => {
+              dispatch(setSearchList(fullSimple));
+              dispatch(
+                setListState({
+                  key: 'ALL',
+                  data: { id: searchInitId, index: searchInitIndex, isSearchChanged: true },
+                }),
+              );
+              dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
+              dispatch(setShipCount(shipData.count));
+              dispatch(setUpdateDate(updateDate));
+            });
           }
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        async (error) => {
-          console.log('fetch error: ', error);
-          return error;
-        },
-      );
+          dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
+        } catch (error) {
+          throw new Error('Something went wrong with ship data update.');
+        }
+      })
+      .catch((error) => {
+        if ((error.name = 'AbortError')) {
+          dispatch(
+            setErrorMessage({ cState: 'RUNNING', eMsg: 'Network connection problem or response took too long.' }),
+          );
+        } else {
+          dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: error.message }));
+        }
+      });
   } catch (e) {
-    console.log('Set Selected Ship error: ', e);
-    dispatch(setCurrentState({ cState: 'ERROR', cMsg: e.message }));
+    dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'Failed to update ship data.' }));
   }
 };
 

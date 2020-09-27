@@ -81,9 +81,13 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
   const getShipCount = () => {
     if (shipDiff.isUpdate && appState.cState === 'RUNNING') {
       const diff = shipDiff.count - shipData.count;
-      return `${shipCount} (${diff})`;
+      return (
+        <>
+          {shipCount} (<span style={{ color: diff >= 0 ? 'LimeGreen' : 'firebrick' }}>{`${diff}`}</span>)
+        </>
+      );
     }
-    if (appState.cState === 'INIT') return '&infin;';
+    if (appState.cState === 'INIT') return '\u221E';
     if (appState.cState === 'UPDATING' || appState.cState === 'SAVING') return shipCount;
     if (!shipDiff.isUpdate && appState.cState === 'RUNNING') return shipCount;
   };

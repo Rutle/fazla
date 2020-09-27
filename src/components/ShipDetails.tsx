@@ -19,6 +19,7 @@ const ShipDetails: React.FC<ShipDetails> = ({ shipData }) => {
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const config = useSelector((state: RootState) => state.config);
+  const appState = useSelector((state: RootState) => state.appState);
   const ship = shipData.getShipByIndex(shipDetails.index);
 
   const isOwned = () => {
@@ -36,7 +37,7 @@ const ShipDetails: React.FC<ShipDetails> = ({ shipData }) => {
 
   const removeFromOwned = () => {
     if (ship) {
-      dispatch(updateSearch(shipData, SearchAction.RemoveShip, { list: 'OWNED', id: ship.id }));
+      dispatch(updateSearch(shipData, SearchAction.RemoveShip, { list: appState.cToggle, id: ship.id }));
     }
   };
 
@@ -46,10 +47,10 @@ const ShipDetails: React.FC<ShipDetails> = ({ shipData }) => {
         <RButton
           themeColor={config.themeColor}
           onClick={addShipToOwned}
-          className="btn informative"
-          extraStyle={{ width: '160px', height: '22px', padding: 0 }}
+          className="btn normal"
+          extraStyle={{ minWidth: '85px' }}
         >
-          Add to docks
+          Add
         </RButton>
       );
     } else {
@@ -57,10 +58,10 @@ const ShipDetails: React.FC<ShipDetails> = ({ shipData }) => {
         <RButton
           themeColor={config.themeColor}
           onClick={removeFromOwned}
-          className="btn informative"
-          extraStyle={{ width: '160px', height: '22px', padding: 0 }}
+          className="btn normal"
+          extraStyle={{ minWidth: '85px' }}
         >
-          Remove from docks
+          Remove
         </RButton>
       );
     }
@@ -72,18 +73,18 @@ const ShipDetails: React.FC<ShipDetails> = ({ shipData }) => {
           <span className="ship-name">{ship.names.code}</span>
           <span className={ship.rarity}>{` ${ship.stars?.stars}`}</span>
         </div>
-        <span className={`end-buttons ${config.themeColor}`}>
-          {renderAddRemoveButton()}
-          <RButton
-            themeColor={config.themeColor}
-            onClick={() => openWikiUrl(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
-            className="btn informative"
-            extraStyle={{ width: '160px', height: '22px', padding: 0 }}
-            disabled={!urlValidation(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
-          >
-            wiki
-          </RButton>
-        </span>
+      </div>
+      <div className={`ship-actions`}>
+        {renderAddRemoveButton()}
+        <RButton
+          themeColor={config.themeColor}
+          onClick={() => openWikiUrl(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
+          className="btn normal"
+          // extraStyle={{ width: '160px', height: '22px', padding: 0 }}
+          disabled={!urlValidation(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
+        >
+          wiki
+        </RButton>
       </div>
       <div className="scroll">
         <div className={`f-grid ${config.themeColor}`}>

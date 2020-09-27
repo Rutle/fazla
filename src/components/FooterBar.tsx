@@ -10,6 +10,7 @@ const FooterBar: React.FC = () => {
     <div id="footer" className={`${config.themeColor}`}>
       <div id="footer-state-msg">
         <span>{appState.cMsg}</span>
+        <span className="footer-error">{appState.eFlag ? appState.eMsg : ''}</span>
       </div>
     </div>
   );

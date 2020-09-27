@@ -134,3 +134,24 @@ export const getDatastore = async (): Promise<DataStore> => {
 export const getShipById = async (): Promise<Ship> => {
   return await ipcRenderer.invoke('get-ship-by-id');
 };
+
+/* https://stackoverflow.com/a/57888548 */
+export const fetchWithTimeout = (url: string, ms: number): Promise<Response> => {
+  const controller = new AbortController();
+  const promise = fetch(url, { signal: controller.signal });
+  const timeout = setTimeout(() => controller.abort(), ms);
+  return promise.finally(() => clearTimeout(timeout));
+};
+
+export const handleHTTPError = (response: Response): Response => {
+  console.log(response.status, response.statusText);
+  if (!response.ok) {
+    switch (response.status) {
+      case 404:
+        throw new Error('Given URL cannot be found. [404]');
+      default:
+        throw new Error('Something went wrong with retriving data. [default]');
+    }
+  }
+  return response;
+};

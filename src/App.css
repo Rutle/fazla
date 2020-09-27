@@ -157,18 +157,16 @@ body {
 #footer-state-msg {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  margin-left: 8px;
+  justify-content: space-between;
+  padding-left: 8px;
+  padding-right: 8px;
   height: 100%;
   overflow: hidden;
   font-size: 14px;
 }
 
 #footer-state-msg span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  line-height: 1.5;
+
 }
 
 /* ##### containers ##### */
@@ -261,11 +259,8 @@ button:disabled {
   cursor: default!important;
   opacity: 0.2;
 }
-/*
-button.btn:active {
-  transform: translateY(1px);
-}
-*/
+
+
 button.btn.small {
   height: 23px;
   line-height: 15px;
@@ -419,22 +414,11 @@ button.btn.flat {
   margin-bottom: 0px;
 }
 
-/* ###### ship-title-bar ##### */
+/* ###### ship details / titlebar / ship-actions ##### */
 .ship-title-bar {
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
-}
-
-.ship-title-bar > span.end-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.ship-title-bar > span.end-buttons button {
-  cursor: pointer;
-  border: unset;
 }
 
 .ship-title-bar > div  {
@@ -451,6 +435,16 @@ button.btn.flat {
   margin-right: 10px;
 }
 
+div.ship-actions {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+div.ship-actions button {
+  cursor: pointer;
+  border: unset;
+}
 /* #####  rList  ##### */
 .rList {
   flex: 1 1 auto;
@@ -469,15 +463,21 @@ div.rList.hidden {
   box-sizing: border-box;
   flex-direction: row;
   justify-content: space-between;
-  /*
-  
-  align-items: center;
-  align-content: center;
-  */
   padding: 0px!important;
   border-radius: 3px;
   cursor: pointer;
   height: 29px;
+}
+.rList .rList-item > div.icon {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  width: 10%;
+  max-width: 10%;
+  height: 29px;
+  padding-left: 5px;
 }
 
 .rList .rList-item > div.hullTypeAbb {
@@ -498,7 +498,7 @@ div.rList.hidden {
   display: flex;
   align-items: center;
   padding-left: 5px;
-  max-width: 80%;
+  max-width: 70%;
   white-space: nowrap;
   height: 29px;
   border-radius: inherit;

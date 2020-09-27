@@ -271,7 +271,9 @@ button.tab-btn.dark.inform {
   border: 1px solid var(--main-dark-border);
   background-color: var(--main-dark-title-bg);
 }
-
+.page.dark div.ship-actions {
+  border: 1px solid var(--main-dark-border);
+}
 /* #### Rarity colors #### */
 .ship-title-bar > div > span.Super.Rare:last-child {
   /* color: rgba(253, 209, 98, 0.616);*/

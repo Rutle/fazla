@@ -40,7 +40,6 @@ const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName 
 
   const getRarity = (ship: Ship | undefined) => {
     if (ship && ship.rarity) return ship.rarity;
-
     return '';
   };
 
