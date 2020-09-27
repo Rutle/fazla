@@ -24,6 +24,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
   const [srcInputLen, setSRCInputLen] = useState(config.jsonURL.length | 25);
   const [jsonSRCValue, setJSONSRCValue] = useState(config.jsonURL);
   const [isSRCFocus, setSRCFocus] = useState(false);
+  const [shipDiff, setShipDiff] = useState({ count: 0, isUpdate: false });
 
   useEffect(() => {
     setSRCFocus(false);
@@ -49,7 +50,10 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
     return (
       <RButton
         themeColor={`${config.themeColor}`}
-        onClick={() => dispatch(updateShipData(shipData))}
+        onClick={() => {
+          setShipDiff({ count: shipData.count, isUpdate: true });
+          dispatch(updateShipData(shipData));
+        }}
         disabled={disabled}
       >
         {text}
@@ -74,6 +78,15 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
     setSRCFocus(!isSRCFocus);
   };
 
+  const getShipCount = () => {
+    if (shipDiff.isUpdate && appState.cState === 'RUNNING') {
+      const diff = shipDiff.count - shipData.count;
+      return `${shipCount} (${diff})`;
+    }
+    if (appState.cState === 'INIT') return '&infin;';
+    if (appState.cState === 'UPDATING' || appState.cState === 'SAVING') return shipCount;
+    if (!shipDiff.isUpdate && appState.cState === 'RUNNING') return shipCount;
+  };
   return (
     <PageTemplate>
       <section className="page-content">
@@ -182,7 +195,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
             </div>
             <div className="f-row wrap">
               <div className="grid-item name">Ship count</div>
-              <div className="grid-item action">{appState.cState === 'INIT' ? '-' : shipCount}</div>
+              <div className="grid-item action">{getShipCount()}</div>
             </div>
             <div className="f-row wrap">
               <div className="grid-item name">Docks count</div>

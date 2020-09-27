@@ -209,7 +209,6 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
               dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating data.' }));
               const dataArr = await [...Object.keys(result).map((key) => result[key])];
               await shipData.setArray(dataArr);
-              // console.log(shipData.count);
               const fullSimple = await DataStore.transformShipList(shipData.shipsArr);
               const searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
               const searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
