@@ -23,9 +23,6 @@ interface ErrorState {
   eFlag: boolean;
   eMsg: string;
 }
-interface InitializingPhases {
-  [key: string]: { text: string; isReady: boolean };
-}
 
 interface ListState {
   id: string;
@@ -39,7 +36,7 @@ type ListStateObject = {
   ALL: ListState;
   OWNED: ListState;
   shipCount: number;
-  initPhases: InitializingPhases;
+  initPhases: string[];
 } & CurrentState &
   ErrorState;
 
@@ -61,11 +58,7 @@ const initialState: ListStateObject = {
   eFlag: false,
   shipCount: 0,
   isSearchChanged: false,
-  initPhases: {
-    initData: { text: 'Loading data from disk...', isReady: false },
-    initStructure: { text: 'Initializing data structure...', isReady: false },
-    initLists: { text: 'Initializing lists...', isReady: false },
-  },
+  initPhases: [],
 };
 
 const appStateSlice = createSlice({
@@ -115,17 +108,10 @@ const appStateSlice = createSlice({
         },
       };
     },
-    setPhaseState(state, action: PayloadAction<{ key: string; value: boolean }>) {
-      const { key, value } = action.payload;
+    addPhaseState(state, action: PayloadAction<string>) {
       return {
         ...state,
-        initPhases: {
-          ...state['initPhases'],
-          [key]: {
-            ...state['initPhases'][key],
-            isReady: value,
-          },
-        },
+        initPhases: [...state.initPhases, action.payload],
       };
     },
   },
@@ -139,7 +125,7 @@ export const {
   setListValue,
   setShipCount,
   toggleSearchState,
-  setPhaseState,
+  addPhaseState,
   setErrorMessage,
 } = appStateSlice.actions;
 
@@ -183,7 +169,6 @@ export const initShipLists = (
       );
       dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
     });
-    dispatch(setPhaseState({ key: 'initLists', value: true }));
     dispatch(setConfig(config));
     dispatch(setFormationsData(formations));
     dispatch(setShipCount(fullSimple.length));

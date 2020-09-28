@@ -42,6 +42,10 @@ const openUrl = (str: string): void => {
   electron.shell.openExternal(str);
 };
 
+export const openLogs = (): void => {
+  ipcRenderer.send('open-logs');
+};
+
 /**
  * Function that calls electron along with data to save data to .json file.
  * @param data Data that is saved to .json.

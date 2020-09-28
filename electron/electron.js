@@ -119,6 +119,10 @@ electron_1.ipcMain.on('maximize-application', function () {
 electron_1.ipcMain.on('restore-application', function () {
     mainWindow.restore();
 });
+electron_1.ipcMain.on('open-logs', function () {
+    var userDir = electron_1.app.getPath('userData');
+    console.log(userDir + "\\logs");
+});
 /**
  * Get owned ship data from config data file.
  */

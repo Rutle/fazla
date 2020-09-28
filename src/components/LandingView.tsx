@@ -1,15 +1,46 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { History, LocationState } from 'history';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import FooterBar from './FooterBar';
 import RButton from './RButton/RButton';
 import TitleBar from './TitleBar';
+import { useHistory } from 'react-router';
+import { initShipLists, setErrorMessage, addPhaseState } from '../reducers/slices/appStateSlice';
+import { initData } from '../util/appUtilities';
+import DataStore from '../util/dataStore';
 
-const LandingView: React.FC<{ history: History<LocationState> }> = ({ history }) => {
+const LandingView: React.FC<{ shipData: DataStore }> = ({ shipData }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const appState = useSelector((state: RootState) => state.appState);
   const config = useSelector((state: RootState) => state.config);
+
+  useEffect(() => {
+    try {
+      if (appState.cState === 'INIT') {
+        (async () => {
+          // Load data from .json using electron.
+          const initDataObj = await initData();
+          dispatch(addPhaseState('Loading ship data from disk... done.'));
+          if (!initDataObj.isOk) {
+            throw new Error('There was a problem with initializing the program.');
+          }
+          // Set current data array to shipData.
+          await shipData.setArray(initDataObj.shipData);
+          dispatch(addPhaseState('Initialization of data structure... done.'));
+          dispatch(initShipLists(initDataObj.ownedShips, shipData, initDataObj.config, initDataObj.formations));
+          dispatch(addPhaseState('Initialization of program state... done.'));
+        })().catch((error: Error) => {
+          dispatch(setErrorMessage({ cState: 'ERROR', eMsg: error.message }));
+          history.push('/error');
+        });
+      }
+    } catch (error) {
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: error.message }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const renderList = () => {
     return (
@@ -21,9 +52,9 @@ const LandingView: React.FC<{ history: History<LocationState> }> = ({ history })
           marginBlockEnd: '6px',
         }}
       >
-        {Object.keys(appState.initPhases).map((key) => (
+        {appState.initPhases.map((value) => (
           <li
-            key={`${key}`}
+            key={`${value}`}
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -31,8 +62,7 @@ const LandingView: React.FC<{ history: History<LocationState> }> = ({ history })
               fontSize: '12px',
             }}
           >
-            <span style={{ marginRight: '15px' }}>{appState.initPhases[key].text}</span>{' '}
-            <span>{appState.initPhases[key].isReady ? 'Done' : '----'}</span>
+            <span style={{ marginRight: '15px' }}>{value}</span>
           </li>
         ))}
       </ul>

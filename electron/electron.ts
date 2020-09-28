@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import Store from 'electron-store';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -82,6 +82,11 @@ ipcMain.on('maximize-application', () => {
 
 ipcMain.on('restore-application', () => {
   mainWindow.restore();
+});
+
+ipcMain.on('open-logs', () => {
+  const userDir = app.getPath('userData');
+  console.log(`${userDir}\\logs`);
 });
 
 /**

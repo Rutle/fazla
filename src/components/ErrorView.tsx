@@ -1,7 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
+import { openLogs } from '../util/appUtilities';
 import FooterBar from './FooterBar';
+import RButton from './RButton/RButton';
 import TitleBar from './TitleBar';
 
 const ErrorView: React.FC = () => {
@@ -23,6 +25,13 @@ const ErrorView: React.FC = () => {
               }}
             >
               <div className="info-text">{appState.eMsg}</div>
+              <RButton
+                themeColor={config.themeColor}
+                onClick={() => openLogs()}
+                extraStyle={{ marginTop: '30px', height: '50px', width: '20%' }}
+              >
+                Open logs
+              </RButton>
             </div>
           </div>
         </section>
