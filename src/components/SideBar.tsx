@@ -30,6 +30,7 @@ const SideBar: React.FC<ShipListProps> = ({ shipData, children }) => {
     dispatch(updateSearch(shipData, SearchAction.UpdateList, { list: cToggle }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState.cToggle]);
+
   return (
     <div className="ship-side-container">
       <div className="top-container">

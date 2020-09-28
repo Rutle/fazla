@@ -34,6 +34,7 @@ const FormationModalContent: React.FC<FormationModalProps> = ({ shipData }) => {
     }
     dispatch(formationModalAction(FormationModalAction.Close, appState.cToggle));
   };
+
   return (
     <>
       <SideBar shipData={shipData}>

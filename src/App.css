@@ -438,13 +438,15 @@ button.btn.flat {
 div.ship-actions {
   display: flex;
   flex-direction: row;
-  flex-grow: 1;
+  align-self: flex-start;
+  margin-bottom: 5px;
 }
 
 div.ship-actions button {
   cursor: pointer;
   border: unset;
 }
+
 /* #####  rList  ##### */
 .rList {
   flex: 1 1 auto;
@@ -468,6 +470,7 @@ div.rList.hidden {
   cursor: pointer;
   height: 29px;
 }
+
 .rList .rList-item > div.icon {
   box-sizing: border-box;
   display: flex;

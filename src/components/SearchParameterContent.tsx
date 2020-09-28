@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 const SearchParameterContent: React.FC<{ shipData: DataStore; themeColor: string }> = ({ shipData, themeColor }) => {
   const dispatch = useDispatch();
   const sParam = useSelector((state: RootState) => state.searchParameters);
-  // const config = useSelector((state: RootState) => state.config);
   const appState = useSelector((state: RootState) => state.appState);
 
   return (

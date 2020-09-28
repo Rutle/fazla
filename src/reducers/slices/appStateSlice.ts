@@ -171,22 +171,26 @@ export const initShipLists = (
     searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
     ownedInitId = ownedSearch.length > 0 ? ownedSearch[0].id : 'NONE';
     ownedInitIndex = ownedSearch.length > 0 ? ownedSearch[0].index : NaN;
+    batch(() => {
+      dispatch(setSearchList(fullSimple));
+      dispatch(setOwnedSearchList(ownedSearch));
+      dispatch(setOwnedList(ownedShips));
+      dispatch(
+        setListState({ key: 'ALL', data: { id: searchInitId, index: searchInitIndex, isSearchChanged: false } }),
+      );
+      dispatch(
+        setListState({ key: 'OWNED', data: { id: ownedInitId, index: ownedInitIndex, isSearchChanged: false } }),
+      );
+      dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
+    });
+    dispatch(setPhaseState({ key: 'initLists', value: true }));
+    dispatch(setConfig(config));
+    dispatch(setFormationsData(formations));
+    dispatch(setShipCount(fullSimple.length));
+    dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
   } catch (e) {
-    dispatch(setCurrentState({ cState: 'ERROR', cMsg: e.message }));
+    dispatch(setCurrentState({ cState: 'ERROR', cMsg: 'Unable to initialize ship lists.' }));
   }
-  batch(() => {
-    dispatch(setSearchList(fullSimple));
-    dispatch(setOwnedSearchList(ownedSearch));
-    dispatch(setOwnedList(ownedShips));
-    dispatch(setListState({ key: 'ALL', data: { id: searchInitId, index: searchInitIndex, isSearchChanged: false } }));
-    dispatch(setListState({ key: 'OWNED', data: { id: ownedInitId, index: ownedInitIndex, isSearchChanged: false } }));
-    dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
-  });
-  dispatch(setPhaseState({ key: 'initLists', value: true }));
-  dispatch(setConfig(config));
-  dispatch(setFormationsData(formations));
-  dispatch(setShipCount(fullSimple.length));
-  dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
 };
 
 /**
@@ -198,10 +202,10 @@ export const initShipLists = (
 export const setSelectedShip = (key: string, id: string, index: number): AppThunk => async (dispatch: AppDispatch) => {
   try {
     dispatch(setDetails({ id: id, index: index }));
+    dispatch(setListState({ key: key, data: { id: id, index: index, isSearchChanged: false } }));
   } catch (e) {
-    console.log('Set Selected Ship error: ', e);
+    dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'There was a problem selecting a ship' }));
   }
-  dispatch(setListState({ key: key, data: { id: id, index: index, isSearchChanged: false } }));
 };
 
 /**
@@ -236,10 +240,17 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
               dispatch(setShipCount(shipData.count));
               dispatch(setUpdateDate(updateDate));
             });
+          } else {
+            throw new Error('There was a problem saving ship data.');
           }
           dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
         } catch (error) {
-          throw new Error('Something went wrong with ship data update.');
+          dispatch(
+            setErrorMessage({
+              cState: 'RUNNING',
+              eMsg: 'There was a problem with saving new ship data. No changes made.',
+            }),
+          );
         }
       })
       .catch((error) => {

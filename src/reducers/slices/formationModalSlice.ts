@@ -3,7 +3,7 @@ import { AppThunk, AppDispatch } from '../../store';
 import { batch } from 'react-redux';
 import { SearchAction, setFleet, updateSearch } from './searchParametersSlice';
 import DataStore from '../../util/dataStore';
-import { toggleSearchState } from './appStateSlice';
+import { setErrorMessage, toggleSearchState } from './appStateSlice';
 
 export enum FormationModalAction {
   Open = 'OPEN',
@@ -69,7 +69,7 @@ export const formationModalAction = (
         break;
     }
   } catch (e) {
-    console.log('formationModalAction: ', e);
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message }));
   }
 };
 export default formationModalSlice.reducer;

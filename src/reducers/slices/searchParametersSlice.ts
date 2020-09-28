@@ -3,7 +3,7 @@ import { batch } from 'react-redux';
 import { AppThunk, AppDispatch } from '../../store';
 import DataStore from '../../util/dataStore';
 import { SearchParams, ShipSimple } from '../../util/types';
-import { setListState, toggleSearchState } from './appStateSlice';
+import { setErrorMessage, setListState, toggleSearchState } from './appStateSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import { addShip, removeShip } from './ownedShipListSlice';
 import { setDetails, resetDetails } from './shipDetailsSlice';
@@ -280,7 +280,7 @@ export const updateSearch = (
       }
     }
   } catch (e) {
-    console.log('setSearchResults error: ', e);
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message }));
   }
 };
 export default searchParametersSlice.reducer;

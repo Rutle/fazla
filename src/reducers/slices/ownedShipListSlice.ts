@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch, AppThunk } from '../../store';
 import { saveOwnedShipData } from '../../util/appUtilities';
-import { setCurrentState } from './appStateSlice';
+import { setErrorMessage } from './appStateSlice';
 
 const initialState: string[] = [];
 
@@ -37,12 +37,11 @@ export const addShip = (id: string): AppThunk => async (dispatch: AppDispatch, g
   try {
     const ownedShips = [...getState().ownedShips, id];
     result = await saveOwnedShipData(ownedShips);
+    if (result.isOk) {
+      dispatch(addShipId(id));
+    }
   } catch (e) {
-    dispatch(setCurrentState({ cState: 'ERROR', cMsg: e.message }));
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message }));
   }
-  if (result.isOk) {
-    dispatch(addShipId(id));
-  }
-  // dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
 };
 export default ownedShipListSlice.reducer;

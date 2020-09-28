@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '../../store';
 import { saveConfig } from '../../util/appUtilities';
 import { AppConfig } from '../../util/types';
+import { setErrorMessage } from './appStateSlice';
 
 export enum AppConfigAction {
   Save = 'SAVE',
@@ -84,7 +85,7 @@ export const configAction = (action: AppConfigAction, key?: string, value?: stri
         break;
     }
   } catch (e) {
-    console.log('Set Selected Ship error: ', e);
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message }));
   }
 };
 

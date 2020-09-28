@@ -91,21 +91,20 @@ export const saveConfig = async (data: AppConfig): Promise<BasicResponse> => {
   });
 };
 
-export const initData = async (): Promise<{
-  shipData: Ship[];
-  config: AppConfig;
-  ownedShips: string[];
-  formations: Formation[];
-  msg: string;
-}> => {
+export const initData = async (): Promise<
+  {
+    shipData: Ship[];
+    config: AppConfig;
+    ownedShips: string[];
+    formations: Formation[];
+  } & BasicResponse
+> => {
   return ipcRenderer
     .invoke('initData')
     .then(
-      (result: { shipData: Ship[]; config: AppConfig; ownedShips: string[]; formations: Formation[]; msg: string }) => {
-        if (result.msg === 'success') {
-          return { ...result };
-        }
-      },
+      (
+        result: { shipData: Ship[]; config: AppConfig; ownedShips: string[]; formations: Formation[] } & BasicResponse,
+      ) => result,
     );
 };
 

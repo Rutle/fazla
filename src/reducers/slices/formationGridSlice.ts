@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '../../store';
 import { saveFormationData, removeAFormation } from '../../util/appUtilities';
 import { Formation } from '../../util/types';
+import { setErrorMessage } from './appStateSlice';
 
 export enum FormationAction {
   New = 'NEW',
@@ -185,7 +186,7 @@ export const formationAction = (action: FormationAction, gridIndex?: number): Ap
         break;
     }
   } catch (e) {
-    console.log('createEmptyFormation: ', e);
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message }));
   }
 };
 

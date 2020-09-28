@@ -348,18 +348,29 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                     }); })];
             case 5:
                 _a.sent();
-                // const appDirCont = await fsPromises.readdir(`${userDir}\\resources`);
-                // console.log(appDirCont);
                 dataArr = __spreadArrays(Object.keys(jsonData).map(function (key) { return jsonData[key]; }));
                 oShips = electronStore.get('ownedShips');
                 formationData = electronStore.get('formations');
                 _a.label = 6;
-            case 6: return [3 /*break*/, 8];
+            case 6: return [2 /*return*/, {
+                    shipData: dataArr,
+                    config: configData,
+                    ownedShips: oShips,
+                    formations: formationData,
+                    isOk: true,
+                    msg: 'success'
+                }];
             case 7:
                 error_2 = _a.sent();
-                console.log('error', error_2);
-                return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: error_2.message }];
-            case 8: return [2 /*return*/, { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: 'success' }];
+                return [2 /*return*/, {
+                        shipData: dataArr,
+                        config: configData,
+                        ownedShips: oShips,
+                        formations: formationData,
+                        isOk: false,
+                        msg: error_2.message
+                    }];
+            case 8: return [2 /*return*/];
         }
     });
 }); });

@@ -236,19 +236,29 @@ ipcMain.handle('initData', async (event, arg) => {
           console.error('cannot access, not created yet. use file provided in build');
           const rawData = await fsPromises.readFile(`${resourceDir}\\ships.json`, 'utf8');
           jsonData = JSON.parse(rawData);
-          // fsPromises.mkdir(`${userDir}\\resources`);
         });
-      // const appDirCont = await fsPromises.readdir(`${userDir}\\resources`);
-      // console.log(appDirCont);
       dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
       oShips = electronStore.get('ownedShips') as string[];
       formationData = electronStore.get('formations') as Formation[];
     }
+    return {
+      shipData: dataArr,
+      config: configData,
+      ownedShips: oShips,
+      formations: formationData,
+      isOk: true,
+      msg: 'success',
+    };
   } catch (error) {
-    console.log('error', error);
-    return { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: error.message };
+    return {
+      shipData: dataArr,
+      config: configData,
+      ownedShips: oShips,
+      formations: formationData,
+      isOk: false,
+      msg: error.message,
+    };
   }
-  return { shipData: dataArr, config: configData, ownedShips: oShips, formations: formationData, msg: 'success' };
 });
 /*
 ipcMain.handle('get-ship-data', async (event, arg) => {
