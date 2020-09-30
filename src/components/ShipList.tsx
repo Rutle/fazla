@@ -1,23 +1,23 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import DataStore from '../util/dataStore';
 import { Ship, ShipSimple } from '../util/shipdatatypes';
 import { FixedSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { setSelectedShip } from '../reducers/slices/appStateSlice';
 import { hullTypes, hullTypesAbb } from '../data/categories';
+import { AppContext } from '../App';
 
 interface ShipListProps {
-  shipData: DataStore;
   shipSearchList: ShipSimple[];
   listName: string;
 }
 
-const ShipList: React.FC<ShipListProps> = ({ shipData, shipSearchList, listName }) => {
+const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
   const dispatch = useDispatch();
+  const { shipData } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
   const appState = useSelector((state: RootState) => state.appState);
 

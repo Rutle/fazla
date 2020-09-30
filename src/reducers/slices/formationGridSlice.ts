@@ -186,7 +186,7 @@ export const formationAction = (action: FormationAction, gridIndex?: number): Ap
         break;
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message }));
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
   }
 };
 

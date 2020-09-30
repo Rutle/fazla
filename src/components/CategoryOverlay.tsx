@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react';
 import Overlay from 'react-overlays/Overlay';
-import DataStore from '../util/dataStore';
 import SearchParameterContent from './SearchParameterContent';
 import PropTypes from 'prop-types';
+import { useToast } from './Toast/useToast';
 
-const CategoryOverlay: React.FC<{ shipData: DataStore; themeColor: string }> = ({ shipData, themeColor }) => {
+const CategoryOverlay: React.FC<{ themeColor: string }> = ({ themeColor }) => {
   const triggerRef = useRef(null);
   const containerRef = useRef(null);
+  const [addToast] = useToast();
 
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
@@ -18,6 +19,7 @@ const CategoryOverlay: React.FC<{ shipData: DataStore; themeColor: string }> = (
         type="button"
         onClick={() => {
           setIsOverlayOpen(!isOverlayOpen);
+          addToast('warning', 'cat', 'testi', () => console.log('add2'));
         }}
       >
         Categories
@@ -34,7 +36,7 @@ const CategoryOverlay: React.FC<{ shipData: DataStore; themeColor: string }> = (
       >
         {({ props /* arrowProps, placement */ }) => (
           <div className={`popover-container ${themeColor}`} {...props}>
-            <SearchParameterContent shipData={shipData} themeColor={themeColor} />
+            <SearchParameterContent themeColor={themeColor} />
           </div>
         )}
       </Overlay>
@@ -45,6 +47,5 @@ const CategoryOverlay: React.FC<{ shipData: DataStore; themeColor: string }> = (
 export default CategoryOverlay;
 
 CategoryOverlay.propTypes = {
-  shipData: PropTypes.instanceOf(DataStore).isRequired,
   themeColor: PropTypes.string.isRequired,
 };

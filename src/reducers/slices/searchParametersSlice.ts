@@ -5,7 +5,7 @@ import DataStore from '../../util/dataStore';
 import { SearchParams, ShipSimple } from '../../util/types';
 import { setErrorMessage, setListState, toggleSearchState } from './appStateSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
-import { addShip, removeShip } from './ownedShipListSlice';
+import { removeShip } from './ownedShipListSlice';
 import { setDetails, resetDetails } from './shipDetailsSlice';
 import { setSearchList } from './shipSearchListSlice';
 
@@ -15,7 +15,6 @@ export enum SearchAction {
   SetName = 'SETNAME',
   UpdateList = 'UPDATE',
   RemoveShip = 'REMOVE',
-  AddShip = 'ADD',
 }
 
 const initialState: SearchParams = {
@@ -217,11 +216,9 @@ export const updateSearch = (
         break;
       case 'REMOVE':
         dispatch(removeShip(id));
-        dispatch(toggleSearchState(list));
-        break;
-      case 'ADD':
-        dispatch(addShip(id));
-        dispatch(toggleSearchState(list));
+        if (list === 'OWNED') {
+          dispatch(toggleSearchState(list));
+        }
         break;
       default:
         break;
@@ -280,7 +277,7 @@ export const updateSearch = (
       }
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message }));
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
   }
 };
 export default searchParametersSlice.reducer;

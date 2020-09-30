@@ -32,7 +32,7 @@ export const { resetList, addShipId, setOwnedList, removeShip } = ownedShipListS
  * Add ship id to owned list and to the config file.
  * @param {string} id Id of the ship.
  */
-export const addShip = (id: string): AppThunk => async (dispatch: AppDispatch, getState) => {
+export const addShip = (id: string, name: string): AppThunk => async (dispatch: AppDispatch, getState) => {
   let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
     const ownedShips = [...getState().ownedShips, id];
@@ -41,7 +41,7 @@ export const addShip = (id: string): AppThunk => async (dispatch: AppDispatch, g
       dispatch(addShipId(id));
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message }));
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
   }
 };
 export default ownedShipListSlice.reducer;

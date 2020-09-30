@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useContext } from 'react';
 import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
 import FormationModalContent from './Modal/FormationModalContent';
-import DataStore from '../util/dataStore';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
@@ -16,12 +15,12 @@ import ReactModal from 'react-modal';
 import { formationModalAction, FormationModalAction } from '../reducers/slices/formationModalSlice';
 import { Ship } from '../util/types';
 import FormationGridItem from './FormationGridItem';
-interface FormationViewProps {
-  shipData: DataStore;
-}
+import { AppContext } from '../App';
+
 ReactModal.setAppElement('#root');
-const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
+const FormationView: React.FC = () => {
   const dispatch = useDispatch();
+  const { shipData } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
   const formationModal = useSelector((state: RootState) => state.formationModal);
@@ -69,7 +68,7 @@ const FormationView: React.FC<FormationViewProps> = ({ shipData }) => {
           className={`modal-container formation`}
           onRequestClose={() => dispatch(formationModalAction(FormationModalAction.Close))}
         >
-          <FormationModalContent shipData={shipData} />
+          <FormationModalContent />
         </ReactModal>
         {config.formHelpTooltip ? (
           <ReactTooltip id="click-help" place="bottom" type="dark" effect="solid" aria-haspopup="true" delayShow={1000}>

@@ -69,7 +69,7 @@ export const formationModalAction = (
         break;
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message }));
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
   }
 };
 export default formationModalSlice.reducer;

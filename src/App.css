@@ -840,6 +840,160 @@ div.f-grid div.f-icon.bottom-emp {
 .switch-input:checked + .switch-label::after {
   left: 24px;
 }
+/*
+
+.modal-container > div.modal-title {
+  display: flex;
+  flex-grow: 1;
+  border-left: 0px!important;
+  border-right: 0px!important;
+  border-top: 0px!important;
+  padding: 5px 16px;
+  justify-content: flex-start;
+}
+
+.modal-container > div.modal-content {
+  text-align: center;
+  padding: 15px;
+}
+
+.modal-container > div.modal-action {
+  padding: 7px;
+}
+
+.modal-container {
+  flex-direction: column;
+  display: flex;
+  align-self: center;
+  margin: auto;
+}
+*/
+.toast-container {
+  position: fixed;
+  font-size: 13px;
+  z-index: 999999;
+  box-sizing: border-box;
+}
+.bottom-center {
+  bottom: 15px;
+  align-self: center;
+  animation-name: toast-in-bottom;
+  animation-duration: 0.4s;
+}
+
+.bottom-right {
+  bottom: 15px;
+  right: 15px;
+  align-self: flex-end;
+  animation-name: toast-in-right;
+  animation-duration: 0.4s;
+}
+
+.from-left {
+  animation-name: toast-in-left;
+  animation-duration: 0.4s;
+}
+.to-right {
+  animation-name: toast-to-right;
+  animation-duration: 0.4s;
+}
+.toast-container > .toast {
+  height: 50px;
+  bottom: unset!important;
+  right: unset!important;
+  margin-bottom: 5px;
+  position: relative;
+  width: 250px;
+  max-height: 100px;
+  background-color: var(--main-dark-title-bg);
+  border-radius: 6px;
+  color: var(--main-dark-color);
+}
+
+.toast.warning {
+  background-color: rgb(109, 109, 0);
+  /* border: 1px solid #9c8b33;*/
+}
+.toast.error {
+  background-color: #380000;
+}
+.toast.info {
+  /* background-color: #e1e7ec;*/
+  border: 1px solid var(--main-dark-border);
+}
+.toast > .toast-title {
+  text-align: left;
+  padding-left: 5px;
+  padding-top: 5px;
+  overflow: hidden;
+  font-size: 16px;
+}
+.toast > .toast-message {
+  text-align: left;
+  padding-left: 5px;
+  height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.toast-container .toast-icon {
+  color: var(--main-dark-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	position: relative;
+  float: left;
+  height: 42px;
+  border: unset!important;
+  border-right: 1px solid var(--main-dark-border)!important;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+	font-weight: 700;
+	opacity: .8;
+	line-height: 1;
+  font-size: 16px;
+  cursor: pointer;
+	padding: 4px;
+	background: 0 0;
+}
+.toast-container .toast-icon * {
+  cursor: pointer;
+}
+.toast-container .toast-icon:hover {
+  box-shadow: inset -1px 0px 2px 0px black;
+  
+}
+
+@keyframes toast-in-bottom {
+	from {
+	  transform: translateY(100%);
+	  
+	}
+	to {
+	  transform: translateY(0);
+	}
+}
+@keyframes toast-in-right {
+	from {
+	  transform: translateX(100%);
+	  
+	}
+	to {
+	  transform: translateX(0);
+	}
+}
+@keyframes toast-in-left {
+	from {
+		transform: translateX(-100%);
+		
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
 @media only screen and (max-width: 1340px) {
   .formation-model-container div.ship-side-container div.top-container form div#input-group div.searchIcon {
     display: none;

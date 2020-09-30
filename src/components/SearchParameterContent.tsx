@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { nationCategories, rarityCategories, hullTypesAbb } from '../data/categories';
 import RButton from './RButton/RButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { updateSearch, SearchAction } from '../reducers/slices/searchParametersSlice';
-import DataStore from '../util/dataStore';
 import PropTypes from 'prop-types';
+import { AppContext } from '../App';
 
-const SearchParameterContent: React.FC<{ shipData: DataStore; themeColor: string }> = ({ shipData, themeColor }) => {
+const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }) => {
   const dispatch = useDispatch();
+  const { shipData } = useContext(AppContext);
   const sParam = useSelector((state: RootState) => state.searchParameters);
   const appState = useSelector((state: RootState) => state.appState);
 
@@ -149,6 +150,5 @@ const SearchParameterContent: React.FC<{ shipData: DataStore; themeColor: string
 export default SearchParameterContent;
 
 SearchParameterContent.propTypes = {
-  shipData: PropTypes.instanceOf(DataStore).isRequired,
   themeColor: PropTypes.string.isRequired,
 };

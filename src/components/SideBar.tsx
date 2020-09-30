@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
@@ -8,14 +8,14 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { setCurrentToggle } from '../reducers/slices/appStateSlice';
 import { SearchAction, updateSearch } from '../reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';
-import DataStore from '../util/dataStore';
+import { AppContext } from '../App';
 
 interface ShipListProps {
-  shipData: DataStore;
   children: React.ReactNode;
 }
-const SideBar: React.FC<ShipListProps> = ({ shipData, children }) => {
+const SideBar: React.FC<ShipListProps> = ({ children }) => {
   const dispatch = useDispatch();
+  const { shipData } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
   const appState = useSelector((state: RootState) => state.appState);
   const searchParameters = useSelector((state: RootState) => state.searchParameters);
@@ -34,7 +34,7 @@ const SideBar: React.FC<ShipListProps> = ({ shipData, children }) => {
   return (
     <div className="ship-side-container">
       <div className="top-container">
-        <CategoryOverlay shipData={shipData} themeColor={config.themeColor} />
+        <CategoryOverlay themeColor={config.themeColor} />
         <form>
           <div id="input-group">
             <div className={`searchIcon ${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
@@ -46,6 +46,7 @@ const SideBar: React.FC<ShipListProps> = ({ shipData, children }) => {
               className={`${config.themeColor}`}
               value={searchValue}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                console.log(e.target.value);
                 setSearchValue(e.target.value);
                 dispatch(
                   updateSearch(shipData, SearchAction.SetName, {

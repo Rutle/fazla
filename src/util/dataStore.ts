@@ -12,9 +12,14 @@ export default class DataStore {
    * Constructor for DataStore
    * @param shipData Ship data json.
    */
-  constructor() {
-    this.shipsArr = [];
-    this.count = 0;
+  constructor(ships?: Ship[]) {
+    if (ships) {
+      this.shipsArr = [...ships.slice()];
+      this.count = ships.length;
+    } else {
+      this.shipsArr = [];
+      this.count = 0;
+    }
     this.state = 'INIT';
   }
 
@@ -37,10 +42,10 @@ export default class DataStore {
       this.shipsArr = [...data.slice()];
       this.count = data.length;
     } catch (error) {
-      return await Promise.reject(new Error(error.message));
+      return Promise.reject(new Error(error.message));
     }
     this.state = 'READY';
-    return await Promise.resolve(data);
+    return Promise.resolve(data);
   }
 
   /**
@@ -57,9 +62,9 @@ export default class DataStore {
         return acc;
       }, []);
     } catch (error) {
-      return await Promise.reject(new Error(error.message));
+      return Promise.reject(new Error(error.message));
     }
-    return await Promise.resolve(t);
+    return Promise.resolve(t);
   }
 
   /**
@@ -117,8 +122,8 @@ export default class DataStore {
         return acc;
       }, []);
     } catch (error) {
-      return await Promise.reject(new Error(error.message));
+      return Promise.reject(new Error(error.message));
     }
-    return await Promise.resolve(t);
+    return Promise.resolve(t);
   }
 }

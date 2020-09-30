@@ -20,7 +20,7 @@ interface CurrentState {
 }
 
 interface ErrorState {
-  eFlag: boolean;
+  eState: '' | 'WARNING' | 'ERROR';
   eMsg: string;
 }
 
@@ -55,7 +55,7 @@ const initialState: ListStateObject = {
   cState: 'INIT',
   cMsg: 'Initializing.',
   eMsg: '',
-  eFlag: false,
+  eState: '',
   shipCount: 0,
   isSearchChanged: false,
   initPhases: [],
@@ -87,9 +87,15 @@ const appStateSlice = createSlice({
       const { cState, cMsg } = action.payload;
       return { ...state, cState: cState, cMsg: cMsg };
     },
-    setErrorMessage(state, action: PayloadAction<{ cState: 'RUNNING' | 'ERROR'; eMsg: string }>) {
-      const { cState, eMsg } = action.payload;
-      return { ...state, cState: cState, eMsg: eMsg, eFlag: true };
+    setErrorMessage(
+      state,
+      action: PayloadAction<{ cState: 'RUNNING' | 'ERROR'; eMsg: string; eState: '' | 'WARNING' | 'ERROR' }>,
+    ) {
+      const { cState, eMsg, eState } = action.payload;
+      return { ...state, cState: cState, eMsg: eMsg, eState: eState };
+    },
+    clearErrorMessage(state) {
+      return { ...state, eMsg: '', eState: '' };
     },
     resetList() {
       return initialState;
@@ -127,6 +133,7 @@ export const {
   toggleSearchState,
   addPhaseState,
   setErrorMessage,
+  clearErrorMessage,
 } = appStateSlice.actions;
 
 /**
@@ -174,7 +181,7 @@ export const initShipLists = (
     dispatch(setShipCount(fullSimple.length));
     dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
   } catch (e) {
-    dispatch(setCurrentState({ cState: 'ERROR', cMsg: 'Unable to initialize ship lists.' }));
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Unable to initialize ship lists.', eState: 'ERROR' }));
   }
 };
 
@@ -189,7 +196,7 @@ export const setSelectedShip = (key: string, id: string, index: number): AppThun
     dispatch(setDetails({ id: id, index: index }));
     dispatch(setListState({ key: key, data: { id: id, index: index, isSearchChanged: false } }));
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'There was a problem selecting a ship' }));
+    dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'There was a problem selecting a ship', eState: 'WARNING' }));
   }
 };
 
@@ -234,6 +241,7 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
             setErrorMessage({
               cState: 'RUNNING',
               eMsg: 'There was a problem with saving new ship data. No changes made.',
+              eState: 'WARNING',
             }),
           );
         }
@@ -241,15 +249,20 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
       .catch((error) => {
         if ((error.name = 'AbortError')) {
           dispatch(
-            setErrorMessage({ cState: 'RUNNING', eMsg: 'Network connection problem or response took too long.' }),
+            setErrorMessage({
+              cState: 'RUNNING',
+              eMsg: 'Network connection problem or response took too long.',
+              eState: 'WARNING',
+            }),
           );
         } else {
-          dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: error.message }));
+          dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: error.message, eState: 'WARNING' }));
         }
       });
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'Failed to update ship data.' }));
+    dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'Failed to update ship data.', eState: 'WARNING' }));
   }
+  return 'testi';
 };
 
 export default appStateSlice.reducer;

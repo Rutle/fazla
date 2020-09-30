@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PageTemplate from './PageTemplate';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { updateShipData } from '../reducers/slices/appStateSlice';
-import DataStore from '../util/dataStore';
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { configAction, AppConfigAction } from '../reducers/slices/programConfigSlice';
 import RButton from './RButton/RButton';
+import { AppContext } from '../App';
 
-interface HomeProps {
-  shipData: DataStore;
-}
-
-const Home: React.FC<HomeProps> = ({ shipData }) => {
+const Home: React.FC = () => {
   const dispatch = useDispatch();
+  const { addToast, shipData } = useContext(AppContext);
   const appState = useSelector((state: RootState) => state.appState);
   const ownedList = useSelector((state: RootState) => state.ownedShips);
   const config = useSelector((state: RootState) => state.config);
@@ -53,6 +49,7 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
         onClick={() => {
           setShipDiff({ count: shipData.count, isUpdate: true });
           dispatch(updateShipData(shipData));
+          addToast('warning', 'test', 'updating');
         }}
         disabled={disabled}
       >
@@ -80,10 +77,11 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
 
   const getShipCount = () => {
     if (shipDiff.isUpdate && appState.cState === 'RUNNING') {
-      const diff = shipDiff.count - shipData.count;
+      const diff = shipData.count - shipDiff.count;
       return (
         <>
-          {shipCount} (<span style={{ color: diff >= 0 ? 'LimeGreen' : 'firebrick' }}>{`${diff}`}</span>)
+          {shipCount} (
+          <span style={{ color: diff >= 0 ? 'LimeGreen' : 'firebrick' }}>{`${diff >= 0 ? '+' : ''}${diff}`}</span>)
         </>
       );
     }
@@ -213,7 +211,3 @@ const Home: React.FC<HomeProps> = ({ shipData }) => {
 };
 
 export default Home;
-
-Home.propTypes = {
-  shipData: PropTypes.instanceOf(DataStore).isRequired,
-};

@@ -1,27 +1,23 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import PassivesList from './PassivesList';
 import { openWikiUrl, urlValidation } from '../util/appUtilities';
 import { addShip } from '../reducers/slices/ownedShipListSlice';
 import RButton from './RButton/RButton';
-import DataStore from '../util/dataStore';
 import { SearchAction, updateSearch } from '../reducers/slices/searchParametersSlice';
 import { toggleSearchState } from '../reducers/slices/appStateSlice';
+import { AppContext } from '../App';
 
-interface ShipDetails {
-  shipData: DataStore;
-}
-
-const ShipDetails: React.FC<ShipDetails> = ({ shipData }) => {
+const ShipDetails: React.FC = () => {
   const dispatch = useDispatch();
+  const { addToast, shipData } = useContext(AppContext);
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const config = useSelector((state: RootState) => state.config);
   const appState = useSelector((state: RootState) => state.appState);
   const ship = shipData.getShipByIndex(shipDetails.index);
-
   const isOwned = () => {
     if (ship) {
       return ownedShips.some((ele) => ele === ship.id);
@@ -30,8 +26,9 @@ const ShipDetails: React.FC<ShipDetails> = ({ shipData }) => {
 
   const addShipToOwned = () => {
     if (ship) {
-      dispatch(addShip(ship.id));
+      dispatch(addShip(ship.id, ship.names.code));
       dispatch(toggleSearchState('OWNED'));
+      addToast('info', 'Addition', `${ship.names.code} was added to docks.`);
     }
   };
 

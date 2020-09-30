@@ -8,6 +8,7 @@ import ownedSearchListSlice from './slices/ownedSearchListSlice';
 import formationGridSlice from './slices/formationGridSlice';
 import formationModalSlice from './slices/formationModalSlice';
 import searchParametersSlice from './slices/searchParametersSlice';
+import toastSlice from './slices/toastSlice';
 
 const rootReducer = combineReducers({
   shipSearchList: shipSearchListSlice,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   formationGrid: formationGridSlice,
   formationModal: formationModalSlice,
   searchParameters: searchParametersSlice,
+  toastList: toastSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -85,7 +85,7 @@ export const configAction = (action: AppConfigAction, key?: string, value?: stri
         break;
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message }));
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
   }
 };
 
