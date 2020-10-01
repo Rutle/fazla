@@ -1,12 +1,10 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { removeToastById } from '../../reducers/slices/toastSlice';
+import React, { useContext } from 'react';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AppContext } from '../../App';
 
 interface ToastProps {
-  index: number;
   position: string;
   type: string;
   label: string;
@@ -14,23 +12,23 @@ interface ToastProps {
   toastId: number;
 }
 
-const Toast: React.FC<ToastProps> = ({ index, position, type, label, msg, toastId }) => {
-  const dispatch = useDispatch();
+const Toast: React.FC<ToastProps> = ({ position, type, label, msg, toastId }) => {
+  const { onToastDismiss } = useContext(AppContext);
   return (
-    <div key={`${msg}-${index}`} className={`toast ${type} ${position}`}>
+    <div className={`toast ${type} ${position}`}>
       <div
         className="toast-icon"
         onClick={() => {
-          (async () => {
-            dispatch(removeToastById(toastId));
-          })();
+          onToastDismiss(toastId);
         }}
         onAnimationEnd={() => console.log('ani end')}
       >
         <FontAwesomeIcon icon={faAngleRight} />
       </div>
-      <div className="toast-title">{label}</div>
-      <div className="toast-message">{msg}</div>
+      <div className="toast-right-content">
+        <div className="toast-title">{label}</div>
+        <div className="toast-message">{msg}</div>
+      </div>
     </div>
   );
 };

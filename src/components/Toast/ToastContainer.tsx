@@ -1,50 +1,19 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { AppContext } from '../../App';
+import { RootState } from '../../reducers/rootReducer';
 import Toast from './Toast';
 
-interface ToastContainerProps {
-  position?: string;
-  timeout?: number;
-  autoDismiss?: true;
-}
-/**
- * Toast container component
- * @param {string} position Position: bottom-center, top-center, bottom-right
- * @param {number} timeout Timeout.
- * @param {boolean} autoDismiss Boolean.
- * @param {callback} onDismiss Function to be called on dismiss.
- * @param {function} dismissToast
- */
-const ToastContainer: React.FC<ToastContainerProps> = ({
-  position = 'bottom-center',
-  timeout = 3000,
-  autoDismiss = true,
-}) => {
-  const { onToastDismiss, popToast, toasts } = useContext(AppContext);
-  const intervalRef = useRef<number>();
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      if (autoDismiss && toasts.length) {
-        if (toasts[0].isCallback) {
-          onToastDismiss(toasts[0].id);
-        }
-        popToast();
-      }
-    }, timeout);
-    intervalRef.current = interval;
-    return () => {
-      clearInterval(intervalRef.current);
-    };
-  }, [toasts, autoDismiss, onToastDismiss, timeout, popToast]);
+const ToastContainer: React.FC<{ position: string }> = ({ position = 'bottom-center' }) => {
+  const { toasts } = useContext(AppContext);
+  const config = useSelector((state: RootState) => state.config);
   return (
-    <div className={`toast-container ${position}`}>
-      {toasts.map((toastMsg, index) => {
+    <div className={`toast-container ${config.themeColor} ${position}`}>
+      {toasts.map((toastMsg) => {
         return (
           <Toast
-            key={`${index}-${toastMsg.msg}`}
-            index={index}
+            key={toastMsg.id}
             position={position}
             type={toastMsg.type}
             label={toastMsg.label}

@@ -409,8 +409,33 @@ div.f-grid.light div.f-row.deepskyblue > div.grid-item.name {
   color: powderblue;
 }
 
-.page.light .ship-title-bar > div > span.Elite:last-child {
+.toast-container.light.ship-title-bar > div > span.Elite:last-child {
   color: Plum;
+}
+
+.toast-container.light.toast-container > .toast {
+  background-color: var(--main-dark-title-bg);
+  color: var(--main-dark-color);
+}
+
+.toast-container.light.toast.warning {
+  background-color: rgb(109, 109, 0);
+}
+.toast-container.light.toast.error {
+  background-color: #380000;
+}
+.toast-container.light.toast.info {
+  border: 1px solid var(--main-light-border);
+}
+
+.toast-container.light .toast-icon {
+  color: var(--main-dark-color);
+  border-right: 1px solid var(--main-light-border)!important;
+}
+
+.toast-container.light .toast-icon:hover {
+  box-shadow: inset -1px 0px 2px 0px black;
+  
 }
 /* #### Popover #### */
 .popover-container.light {

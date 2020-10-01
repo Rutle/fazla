@@ -1,6 +1,4 @@
-import { useReducer } from 'react';
-import { useDispatch } from 'react-redux';
-import { removeToastByIndex } from '../../reducers/slices/toastSlice';
+import { useCallback, useEffect, useReducer, useRef } from 'react';
 
 export type CallbackDismiss = () => void;
 
@@ -13,12 +11,12 @@ type ToastMessage = {
   callback?: CallbackDismiss;
 };
 
-export type DismissFunctionList = ToastMessage[];
+export type ToastList = ToastMessage[];
 
 function reducer(
-  state: DismissFunctionList,
+  state: ToastList,
   action: { type: 'add'; payload: ToastMessage } | { type: 'remove'; index: number } | { type: 'pop' },
-): DismissFunctionList {
+): ToastList {
   switch (action.type) {
     case 'add':
       return [...state, { ...action.payload }];
@@ -34,18 +32,57 @@ function reducer(
   }
 }
 
-export const useToast = (): [
+export const useToast = (
+  autoDismiss: boolean,
+  timeout: number,
+): [
   (type: 'warning' | 'info' | 'error', label: string, msg: string, onDismiss?: CallbackDismiss) => void,
   (id: number) => void,
   () => void,
-  DismissFunctionList,
+  ToastList,
 ] => {
-  const dispatch = useDispatch();
-  const [toasts, dismissFunctionAction] = useReducer(reducer, []);
+  const [toasts, toastAction] = useReducer(reducer, []);
+  const intervalRef = useRef<number>();
+
+  const onToastDismiss = useCallback(
+    (id: number) => {
+      const toastIndex = toasts.findIndex((cb) => cb.id === id);
+      if (toasts[toastIndex].callback) {
+        const func = toasts[toastIndex].callback;
+        if (func) func();
+      }
+      toastAction({ type: 'remove', index: toastIndex });
+    },
+    [toasts],
+  );
+
+  const popToast = useCallback(() => {
+    const toast = toasts[0];
+    if (toast.callback) {
+      const func = toast.callback;
+      if (func) func();
+    }
+    toastAction({ type: 'pop' });
+  }, [toasts]);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      if (autoDismiss && toasts.length) {
+        if (toasts[0].isCallback) {
+          onToastDismiss(toasts[0].id);
+        }
+        popToast();
+      }
+    }, timeout);
+    intervalRef.current = interval;
+    return () => {
+      clearInterval(intervalRef.current);
+    };
+  }, [toasts, autoDismiss, onToastDismiss, timeout, popToast]);
 
   const addToast = (type: 'warning' | 'info' | 'error', label: string, msg: string, onDismiss?: CallbackDismiss) => {
     const id = Date.now();
-    dismissFunctionAction({
+    toastAction({
       type: 'add',
       payload: {
         id: id,
@@ -58,22 +95,5 @@ export const useToast = (): [
     });
   };
 
-  const onToastDismiss = (id: number) => {
-    const toastIndex = toasts.findIndex((cb) => cb.id === id);
-    if (toasts[toastIndex].callback) {
-      const func = toasts[toastIndex].callback;
-      if (func) func();
-    }
-    dispatch(removeToastByIndex(toastIndex));
-  };
-
-  const popToast = () => {
-    const toast = toasts[0];
-    if (toast.callback) {
-      const func = toast.callback;
-      if (func) func();
-    }
-    dismissFunctionAction({ type: 'pop' });
-  };
   return [addToast, onToastDismiss, popToast, toasts];
 };

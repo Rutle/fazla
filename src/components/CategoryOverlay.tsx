@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Overlay from 'react-overlays/Overlay';
 import SearchParameterContent from './SearchParameterContent';
 import PropTypes from 'prop-types';
-import { useToast } from './Toast/useToast';
+import { AppContext } from '../App';
 
 const CategoryOverlay: React.FC<{ themeColor: string }> = ({ themeColor }) => {
   const triggerRef = useRef(null);
   const containerRef = useRef(null);
-  const [addToast] = useToast();
+  const { addToast } = useContext(AppContext);
 
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 

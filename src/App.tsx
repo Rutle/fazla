@@ -10,7 +10,7 @@ import { RootState } from './reducers/rootReducer';
 import LandingView from './components/LandingView';
 import ErrorView from './components/ErrorView';
 import ToastContainer from './components/Toast/ToastContainer';
-import { CallbackDismiss, DismissFunctionList, useToast } from './components/Toast/useToast';
+import { CallbackDismiss, ToastList, useToast } from './components/Toast/useToast';
 
 const RefreshRoute: React.FC<RouteProps> = (props) => {
   const appState = useSelector((state: RootState) => state.appState);
@@ -46,14 +46,13 @@ export const AppContext = React.createContext(
     popToast: () => void;
     shipData: DataStore;
     setShipData: React.Dispatch<React.SetStateAction<DataStore>>;
-    toasts: DismissFunctionList;
+    toasts: ToastList;
   },
 );
 
 const App: React.FC = () => {
-  // const shipData = new DataStore();
   const [shipData, setShipData] = useState(new DataStore());
-  const [addToast, onToastDismiss, popToast, toasts] = useToast();
+  const [addToast, onToastDismiss, popToast, toasts] = useToast(true, 50500);
   return (
     <HashRouter>
       <div className={`App`}>
@@ -73,7 +72,7 @@ const App: React.FC = () => {
               <ErrorView />
             </Route>
           </Switch>
-          <ToastContainer position="bottom-right"></ToastContainer>
+          <ToastContainer position="bottom-right" />
         </AppContext.Provider>
       </div>
     </HashRouter>

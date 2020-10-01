@@ -437,6 +437,33 @@ div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.411);*/
 }
 
+.toast-container.dark > .toast {
+  background-color: var(--main-dark-bg);
+  color: var(--main-dark-color);
+}
+
+.toast-container.dark .toast.warning {
+  background-color: rgb(109, 109, 0);
+  /* border: 1px solid #9c8b33;*/
+}
+.toast-container.dark .toast.error {
+  background-color: #380000;
+}
+.toast-container.dark .toast.info {
+  /* background-color: #e1e7ec;*/
+  border: 1px solid var(--main-dark-border);
+}
+
+.toast-container.dark .toast-icon {
+  color: var(--main-dark-color);
+  border-right: 1px solid var(--main-dark-border)!important;
+}
+
+.toast-container.dark .toast-icon:hover {
+  box-shadow: inset -1px -1px 4px 1px var(--main-dark-hover-bg);
+  /*box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg)*/
+  
+}
 @media only screen and (max-width: 1340px) {
   .formation-model-container div.ship-side-container div.top-container form div#input-group input[type="text"].dark {
     background-color: #323844;
