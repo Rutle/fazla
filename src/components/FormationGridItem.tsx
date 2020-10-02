@@ -1,5 +1,6 @@
+/* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Ship } from '../util/shipdatatypes';
 import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
@@ -12,7 +13,7 @@ interface GridItemProps {
 }
 
 // eslint-disable-next-line react/prop-types
-const FormationGridItem: React.FC<GridItemProps> = ({ index, ship, themeColor, onClick }) => {
+const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, themeColor, onClick }) => {
   const dispatch = useDispatch();
   const getLocation = (idx: number): string => {
     switch (idx) {
@@ -27,12 +28,16 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship, themeColor, o
     }
   };
 
+  const onRightClick = useCallback(() => {
+    dispatch(formationAction(FormationAction.RemoveShip, index));
+  }, [dispatch, index]);
+
   return (
     <div className="grid-item">
       <div
         className={`content`}
-        onClick={() => onClick()}
-        onContextMenu={() => dispatch(formationAction(FormationAction.RemoveShip, index))}
+        onClick={onClick}
+        onContextMenu={onRightClick}
         data-tip
         data-for="click-help"
         data-delay-show="1000"
@@ -58,6 +63,6 @@ const FormationGridItem: React.FC<GridItemProps> = ({ index, ship, themeColor, o
       </div>
     </div>
   );
-};
+});
 
 export default FormationGridItem;

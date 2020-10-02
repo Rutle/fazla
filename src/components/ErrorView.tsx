@@ -27,7 +27,7 @@ const ErrorView: React.FC = () => {
               <div className="info-text">{appState.eMsg}</div>
               <RButton
                 themeColor={config.themeColor}
-                onClick={() => openLogs()}
+                onClick={openLogs}
                 extraStyle={{ marginTop: '30px', height: '50px', width: '20%' }}
               >
                 Open logs

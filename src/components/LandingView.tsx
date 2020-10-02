@@ -87,7 +87,7 @@ const LandingView: React.FC = () => {
             >
               {appState.cState === 'RUNNING' ? (
                 <>
-                  <div className="info-text">Program is ready. Please continue.{shipData.shipsArr.length}</div>
+                  <div className="info-text">Program is ready. Please continue.</div>
                   <RButton
                     themeColor={config.themeColor}
                     onClick={() => {

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { nationCategories, rarityCategories, hullTypesAbb } from '../data/categories';
 import RButton from './RButton/RButton';
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,12 +6,25 @@ import { RootState } from '../reducers/rootReducer';
 import { updateSearch, SearchAction } from '../reducers/slices/searchParametersSlice';
 import PropTypes from 'prop-types';
 import { AppContext } from '../App';
+import DataStore from '../util/dataStore';
 
 const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }) => {
   const dispatch = useDispatch();
   const { shipData } = useContext(AppContext);
   const sParam = useSelector((state: RootState) => state.searchParameters);
   const appState = useSelector((state: RootState) => state.appState);
+
+  const updSearch = useCallback(
+    (
+      data: DataStore,
+      action: SearchAction,
+      options: { name: string; cat: string; param: string; list: 'ALL' | 'OWNED' },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      dispatch(updateSearch(data, action, options));
+    },
+    [dispatch],
+  );
 
   return (
     <div className={`popover-content ${themeColor}`}>
@@ -21,16 +34,12 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
             <RButton
               className={`btn small graphic ${sParam['nationality']['All'] ? 'selected' : ''}`}
               themeColor={themeColor}
-              onClick={() =>
-                dispatch(
-                  updateSearch(shipData, SearchAction.ToggleAll, {
-                    name: '',
-                    cat: 'nationality',
-                    param: '',
-                    list: appState.cToggle,
-                  }),
-                )
-              }
+              onClick={updSearch(shipData, SearchAction.ToggleAll, {
+                name: '',
+                cat: 'nationality',
+                param: '',
+                list: appState.cToggle,
+              })}
             >
               All
             </RButton>
@@ -41,16 +50,12 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
                 <RButton
                   className={`btn small graphic ${sParam['nationality'][key] ? 'selected' : ''}`}
                   themeColor={themeColor}
-                  onClick={() =>
-                    dispatch(
-                      updateSearch(shipData, SearchAction.ToggleParameter, {
-                        name: '',
-                        cat: 'nationality',
-                        param: key,
-                        list: appState.cToggle,
-                      }),
-                    )
-                  }
+                  onClick={updSearch(shipData, SearchAction.ToggleParameter, {
+                    name: '',
+                    cat: 'nationality',
+                    param: key,
+                    list: appState.cToggle,
+                  })}
                 >
                   {nationCategories[key]}
                 </RButton>
@@ -63,16 +68,12 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
             <RButton
               className={`btn small graphic ${sParam['hullType']['All'] ? 'selected' : ''}`}
               themeColor={themeColor}
-              onClick={() =>
-                dispatch(
-                  updateSearch(shipData, SearchAction.ToggleAll, {
-                    name: '',
-                    cat: 'hullType',
-                    param: '',
-                    list: appState.cToggle,
-                  }),
-                )
-              }
+              onClick={updSearch(shipData, SearchAction.ToggleAll, {
+                name: '',
+                cat: 'hullType',
+                param: '',
+                list: appState.cToggle,
+              })}
             >
               All
             </RButton>
@@ -83,16 +84,12 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
                 <RButton
                   className={`btn small graphic ${sParam['hullType'][key] ? 'selected' : ''}`}
                   themeColor={themeColor}
-                  onClick={() =>
-                    dispatch(
-                      updateSearch(shipData, SearchAction.ToggleParameter, {
-                        name: '',
-                        cat: 'hullType',
-                        param: key,
-                        list: appState.cToggle,
-                      }),
-                    )
-                  }
+                  onClick={updSearch(shipData, SearchAction.ToggleParameter, {
+                    name: '',
+                    cat: 'hullType',
+                    param: key,
+                    list: appState.cToggle,
+                  })}
                 >
                   {hullTypesAbb[key]}
                 </RButton>
@@ -105,16 +102,12 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
             <RButton
               className={`btn small graphic ${sParam['rarity']['All'] ? 'selected' : ''}`}
               themeColor={themeColor}
-              onClick={() =>
-                dispatch(
-                  updateSearch(shipData, SearchAction.ToggleAll, {
-                    name: '',
-                    cat: 'rarity',
-                    param: '',
-                    list: appState.cToggle,
-                  }),
-                )
-              }
+              onClick={updSearch(shipData, SearchAction.ToggleAll, {
+                name: '',
+                cat: 'rarity',
+                param: '',
+                list: appState.cToggle,
+              })}
             >
               All
             </RButton>
@@ -125,16 +118,12 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
                 <RButton
                   className={`btn small graphic ${sParam['rarity'][value] ? 'selected' : ''}`}
                   themeColor={themeColor}
-                  onClick={() =>
-                    dispatch(
-                      updateSearch(shipData, SearchAction.ToggleParameter, {
-                        name: '',
-                        cat: 'rarity',
-                        param: value,
-                        list: appState.cToggle,
-                      }),
-                    )
-                  }
+                  onClick={updSearch(shipData, SearchAction.ToggleParameter, {
+                    name: '',
+                    cat: 'rarity',
+                    param: value,
+                    list: appState.cToggle,
+                  })}
                 >
                   {value}
                 </RButton>

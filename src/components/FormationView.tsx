@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
@@ -16,6 +16,7 @@ import { formationModalAction, FormationModalAction } from '../reducers/slices/f
 import { Ship } from '../util/types';
 import FormationGridItem from './FormationGridItem';
 import { AppContext } from '../App';
+import DataStore from '../util/dataStore';
 
 ReactModal.setAppElement('#root');
 const FormationView: React.FC = () => {
@@ -25,6 +26,13 @@ const FormationView: React.FC = () => {
   const fData = useSelector((state: RootState) => state.formationGrid);
   const formationModal = useSelector((state: RootState) => state.formationModal);
   const appState = useSelector((state: RootState) => state.appState);
+
+  const open = useCallback(
+    (action: FormationModalAction, toggle: 'ALL' | 'OWNED', isOpen: boolean, index: number, data: DataStore) => () => {
+      dispatch(formationModalAction(action, toggle, isOpen, index, data));
+    },
+    [dispatch],
+  );
 
   const renderContent = (index: number) => {
     const formationShips = shipData.shipsArr
@@ -42,9 +50,7 @@ const FormationView: React.FC = () => {
               index={index}
               ship={formationShips[id]}
               themeColor={config.themeColor}
-              onClick={() =>
-                dispatch(formationModalAction(FormationModalAction.Open, appState.cToggle, true, index, shipData))
-              }
+              onClick={open(FormationModalAction.Open, appState.cToggle, true, index, shipData)}
             />
           ))}
         </FormationGrid>

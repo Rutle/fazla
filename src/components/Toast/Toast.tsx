@@ -21,7 +21,6 @@ const Toast: React.FC<ToastProps> = ({ position, type, label, msg, toastId }) =>
         onClick={() => {
           onToastDismiss(toastId);
         }}
-        onAnimationEnd={() => console.log('ani end')}
       >
         <FontAwesomeIcon icon={faAngleRight} />
       </div>

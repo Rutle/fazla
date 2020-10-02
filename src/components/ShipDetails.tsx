@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import PassivesList from './PassivesList';
@@ -24,19 +24,20 @@ const ShipDetails: React.FC = () => {
     }
   };
 
-  const addShipToOwned = () => {
+  const addShipToOwned = useCallback(() => {
     if (ship) {
       dispatch(addShip(ship.id, ship.names.code));
       dispatch(toggleSearchState('OWNED'));
-      addToast('info', 'Addition', `${ship.names.code} was added to docks.`);
+      addToast('info', 'Docks', `${ship.names.code} was added to docks.`);
     }
-  };
+  }, [dispatch, addToast, ship]);
 
-  const removeFromOwned = () => {
+  const removeFromOwned = useCallback(() => {
     if (ship) {
       dispatch(updateSearch(shipData, SearchAction.RemoveShip, { list: appState.cToggle, id: ship.id }));
+      addToast('info', 'Docks', `${ship.names.code} removed from docks.`);
     }
-  };
+  }, [dispatch, addToast, appState.cToggle, ship, shipData]);
 
   const renderAddRemoveButton = () => {
     if (!isOwned()) {
