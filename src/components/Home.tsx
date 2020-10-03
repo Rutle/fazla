@@ -48,8 +48,8 @@ const Home: React.FC = () => {
         themeColor={`${config.themeColor}`}
         onClick={() => {
           setShipDiff({ count: shipData.count, isUpdate: true });
-          dispatch(updateShipData(shipData));
-          addToast('warning', 'test', 'updating');
+          addToast('info', 'Update', 'Updating ship information.');
+          dispatch(updateShipData(shipData, addToast));
         }}
         disabled={disabled}
       >

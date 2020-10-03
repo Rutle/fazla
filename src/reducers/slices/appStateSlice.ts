@@ -10,6 +10,7 @@ import { fetchWithTimeout, handleHTTPError, saveShipData } from '../../util/appU
 import { setOwnedList } from './ownedShipListSlice';
 import { setFormationsData } from './formationGridSlice';
 import { setConfig, setUpdateDate } from './programConfigSlice';
+import { CallbackDismiss, ToastMessageType } from '../../components/Toast/useToast';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 //const SHIPAPIURL =
@@ -203,7 +204,10 @@ export const setSelectedShip = (key: string, id: string, index: number): AppThun
 /**
  * Update the ship data by downloading raw data from github.
  */
-export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch: AppDispatch) => {
+export const updateShipData = (
+  shipData: DataStore,
+  addToast: (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss | undefined) => void,
+): AppThunk => async (dispatch: AppDispatch) => {
   dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Please wait while downloading data.' }));
   try {
     fetchWithTimeout(SHIPAPIURL, 20000)
@@ -236,6 +240,7 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
             throw new Error('There was a problem saving ship data.');
           }
           dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
+          addToast('success', 'Update', 'Update finished succesfully.');
         } catch (error) {
           dispatch(
             setErrorMessage({
@@ -244,6 +249,7 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
               eState: 'WARNING',
             }),
           );
+          addToast('warning', 'Update', 'There was a problem with saving new ship data. No changes made.');
         }
       })
       .catch((error) => {
@@ -255,14 +261,16 @@ export const updateShipData = (shipData: DataStore): AppThunk => async (dispatch
               eState: 'WARNING',
             }),
           );
+          addToast('warning', 'Update', 'Network connection problem or response took too long.');
         } else {
           dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: error.message, eState: 'WARNING' }));
+          addToast('warning', 'Update', error.message);
         }
       });
   } catch (e) {
     dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'Failed to update ship data.', eState: 'WARNING' }));
+    addToast('warning', 'Update', 'Failed to update ship data.');
   }
-  return 'testi';
 };
 
 export default appStateSlice.reducer;

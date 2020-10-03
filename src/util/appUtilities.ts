@@ -147,7 +147,6 @@ export const fetchWithTimeout = (url: string, ms: number): Promise<Response> => 
 };
 
 export const handleHTTPError = (response: Response): Response => {
-  console.log(response.status, response.statusText);
   if (!response.ok) {
     switch (response.status) {
       case 404:

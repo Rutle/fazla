@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useReducer, useRef } from 'react';
 
 export type CallbackDismiss = () => void;
+export type ToastMessageType = 'warning' | 'error' | 'info' | 'success';
 
 type ToastMessage = {
-  type: 'warning' | 'error' | 'info';
+  type: ToastMessageType;
   label: string;
   msg: string;
   id: number;
@@ -36,7 +37,7 @@ export const useToast = (
   autoDismiss: boolean,
   timeout: number,
 ): [
-  (type: 'warning' | 'info' | 'error', label: string, msg: string, onDismiss?: CallbackDismiss) => void,
+  (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss) => void,
   (id: number) => void,
   () => void,
   ToastList,
@@ -80,7 +81,7 @@ export const useToast = (
     };
   }, [toasts, autoDismiss, onToastDismiss, timeout, popToast]);
 
-  const addToast = (type: 'warning' | 'info' | 'error', label: string, msg: string, onDismiss?: CallbackDismiss) => {
+  const addToast = (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss) => {
     const id = Date.now();
     toastAction({
       type: 'add',

@@ -10,7 +10,7 @@ import { RootState } from './reducers/rootReducer';
 import LandingView from './components/LandingView';
 import ErrorView from './components/ErrorView';
 import ToastContainer from './components/Toast/ToastContainer';
-import { CallbackDismiss, ToastList, useToast } from './components/Toast/useToast';
+import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './components/Toast/useToast';
 
 const RefreshRoute: React.FC<RouteProps> = (props) => {
   const appState = useSelector((state: RootState) => state.appState);
@@ -36,12 +36,7 @@ const RefreshRoute: React.FC<RouteProps> = (props) => {
 
 export const AppContext = React.createContext(
   {} as {
-    addToast: (
-      type: 'warning' | 'error' | 'info',
-      label: string,
-      msg: string,
-      onDismiss?: CallbackDismiss | undefined,
-    ) => void;
+    addToast: (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss | undefined) => void;
     onToastDismiss: (id: number) => void;
     popToast: () => void;
     shipData: DataStore;
