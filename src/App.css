@@ -881,10 +881,16 @@ div.f-grid div.f-icon.bottom-emp {
   bottom: 15px;
   right: 15px;
   align-self: flex-end;
+}
+
+.from-right {
   animation-name: toast-in-right;
   animation-duration: 0.4s;
 }
-
+.to-right {
+  animation-name: toast-to-right;
+  animation-duration: 0.4s;
+}
 .bottom-left {
   animation-name: toast-in-left;
   animation-duration: 0.4s;
@@ -968,6 +974,17 @@ div.f-grid div.f-icon.bottom-emp {
 	  transform: translateX(0);
 	}
 }
+
+@keyframes toast-to-right {
+	from {
+	  transform: translateX(0%);
+	  
+	}
+	to {
+	  transform: translateX(100%);
+	}
+}
+
 @keyframes toast-in-left {
 	from {
 		transform: translateX(-100%);

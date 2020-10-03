@@ -442,6 +442,10 @@ div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
   color: var(--main-dark-color);
 }
 
+.toast-container.dark > .toast:hover {
+  box-shadow: 0px 0px 3px 0px var(--main-dark-selected-bg);
+}
+
 .toast-container.dark .toast.warning {
   background-color: rgb(109, 109, 0);
   /* border: 1px solid #9c8b33;*/

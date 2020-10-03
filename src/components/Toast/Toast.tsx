@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AppContext } from '../../App';
@@ -12,14 +12,31 @@ interface ToastProps {
   toastId: number;
 }
 
-const Toast: React.FC<ToastProps> = ({ position, type, label, msg, toastId }) => {
+const Toast: React.FC<ToastProps> = React.memo(({ position, type, label, msg, toastId }) => {
   const { onToastDismiss } = useContext(AppContext);
+  const [state, setState] = useState({
+    onEntering: true,
+    onEnter: false,
+    onExiting: false,
+    onExit: false,
+  });
   return (
-    <div className={`toast ${type} ${position}`}>
+    <div
+      className={`toast ${type} ${position} ${state.onEntering ? 'from-right' : ''} ${
+        state.onExiting ? 'to-right' : ''
+      }`}
+      onAnimationEnd={() => {
+        if (state.onEntering) {
+          setState({ ...state, onEntering: false, onEnter: true });
+        } else if (state.onExiting) {
+          onToastDismiss(toastId);
+        }
+      }}
+    >
       <div
         className="toast-icon"
         onClick={() => {
-          onToastDismiss(toastId);
+          setState({ ...state, onExiting: true });
         }}
       >
         <FontAwesomeIcon icon={faAngleRight} />
@@ -30,6 +47,6 @@ const Toast: React.FC<ToastProps> = ({ position, type, label, msg, toastId }) =>
       </div>
     </div>
   );
-};
+});
 
 export default Toast;
