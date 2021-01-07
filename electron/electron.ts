@@ -202,6 +202,7 @@ ipcMain.handle('initData', async (event, arg) => {
     themeColor: 'dark',
     firstTime: false,
     formHelpTooltip: true,
+    isToast: true,
     updateDate: '',
   };
 
@@ -214,6 +215,7 @@ ipcMain.handle('initData', async (event, arg) => {
           themeColor: THEMECOLOR,
           formHelpTooltip: true,
           firstTime: true,
+          isToast: true,
           updateDate: '',
         },
         ownedShips: [],

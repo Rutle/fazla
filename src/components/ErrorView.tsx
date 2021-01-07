@@ -5,7 +5,9 @@ import { openLogs } from '../util/appUtilities';
 import FooterBar from './FooterBar';
 import RButton from './RButton/RButton';
 import TitleBar from './TitleBar';
-
+/**
+ * Error page.
+ */
 const ErrorView: React.FC = () => {
   const appState = useSelector((state: RootState) => state.appState);
   const config = useSelector((state: RootState) => state.config);

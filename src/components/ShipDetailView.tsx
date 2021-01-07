@@ -7,6 +7,9 @@ import { useSelector } from 'react-redux';
 import SideBar from './SideBar';
 import ShipList from './ShipList';
 
+/**
+ * Component for a ship details view.
+ */
 const ShipDetailView: React.FC = () => {
   const appState = useSelector((state: RootState) => state.appState);
   const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);

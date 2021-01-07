@@ -19,6 +19,9 @@ import { AppContext } from '../App';
 import DataStore from '../util/dataStore';
 
 ReactModal.setAppElement('#root');
+/**
+ * View for displaying a formation page.
+ */
 const FormationView: React.FC = () => {
   const dispatch = useDispatch();
   const { shipData } = useContext(AppContext);

@@ -3,6 +3,7 @@ export type AppConfig = {
   themeColor: 'dark' | 'light';
   firstTime: boolean;
   formHelpTooltip: boolean;
+  isToast: boolean;
   isEdit?: boolean;
   updateDate: string;
 };

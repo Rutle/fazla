@@ -8,7 +8,9 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { configAction, AppConfigAction } from '../reducers/slices/programConfigSlice';
 import RButton from './RButton/RButton';
 import { AppContext } from '../App';
-
+/**
+ * Options page.
+ */
 const Home: React.FC = () => {
   const dispatch = useDispatch();
   const { addToast, shipData } = useContext(AppContext);
@@ -48,7 +50,7 @@ const Home: React.FC = () => {
         themeColor={`${config.themeColor}`}
         onClick={() => {
           setShipDiff({ count: shipData.count, isUpdate: true });
-          addToast('info', 'Update', 'Updating ship information.');
+          if (config.isToast) addToast('info', 'Update', 'Updating ship information.');
           dispatch(updateShipData(shipData, addToast));
         }}
         disabled={disabled}
@@ -142,6 +144,27 @@ const Home: React.FC = () => {
                       }}
                     />
                     <label htmlFor="form-tooltip" className="switch-label">
+                      Switch
+                    </label>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div className="f-row wrap">
+              <div className="grid-item name">Toasts</div>
+              <div className="grid-item action">
+                <form action="#" style={{ display: 'flex' }}>
+                  <div className="switch">
+                    <input
+                      id="toasts"
+                      type="checkbox"
+                      className="switch-input"
+                      checked={config.isToast}
+                      onChange={() => {
+                        dispatch(configAction(AppConfigAction.Update, 'isToast', !config.isToast));
+                      }}
+                    />
+                    <label htmlFor="toasts" className="switch-label">
                       Switch
                     </label>
                   </div>

@@ -287,6 +287,7 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                     themeColor: 'dark',
                     firstTime: false,
                     formHelpTooltip: true,
+                    isToast: true,
                     updateDate: ''
                 };
                 _a.label = 1;
@@ -300,6 +301,7 @@ electron_1.ipcMain.handle('initData', function (event, arg) { return __awaiter(v
                             themeColor: THEMECOLOR,
                             formHelpTooltip: true,
                             firstTime: true,
+                            isToast: true,
                             updateDate: ''
                         },
                         ownedShips: [],

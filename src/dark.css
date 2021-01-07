@@ -458,7 +458,8 @@ div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
   border: 1px solid var(--main-dark-border);
 }
 .toast-container.dark .toast.success {
-  background-color: #101627;
+  /* background-color: #171f27; */
+  border: 1px solid var(--main-dark-border);
 }
 
 .toast-container.dark .toast-icon {

@@ -9,7 +9,9 @@ import { useHistory } from 'react-router';
 import { initShipLists, setErrorMessage, addPhaseState } from '../reducers/slices/appStateSlice';
 import { initData } from '../util/appUtilities';
 import { AppContext } from '../App';
-
+/**
+ * Landing page for application that is presented during loading settings.
+ */
 const LandingView: React.FC = () => {
   const dispatch = useDispatch();
   const { shipData } = useContext(AppContext);

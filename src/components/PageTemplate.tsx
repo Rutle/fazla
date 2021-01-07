@@ -3,7 +3,9 @@ import TitleBar from './TitleBar';
 import FooterBar from './FooterBar';
 import { RootState } from '../reducers/rootReducer';
 import { useSelector } from 'react-redux';
-
+/**
+ * Component for unified page template.
+ */
 // eslint-disable-next-line react/prop-types
 const PageTemplate: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const config = useSelector((state: RootState) => state.config);

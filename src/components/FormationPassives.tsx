@@ -10,6 +10,10 @@ interface FormationPassivesProps {
   themeColor: string;
   formationShips: { [key: string]: Ship };
 }
+
+/**
+ * Component for displaying passives of ships in a formation.
+ */
 const FormationPassives: React.FC<FormationPassivesProps> = ({ formation, themeColor, formationShips }) => {
   const [showMain, setShowMain] = useState(true);
   const [showVanguard, setShowVanguard] = useState(true);

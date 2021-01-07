@@ -6,7 +6,9 @@ interface PassiveProps {
   optionalName?: string;
   skills?: Skill[];
 }
-
+/**
+ * Component for listing passives of a ship.
+ */
 const PassivesList: React.FC<PassiveProps> = ({ optionalName, skills }) => {
   return (
     <>

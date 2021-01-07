@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
@@ -6,11 +7,12 @@ import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '../u
 import { RootState } from '../reducers/rootReducer';
 import CloseAppModalContent from './Modal/CloseAppModalContent';
 import ReactModal from 'react-modal';
-import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 ReactModal.setAppElement('#root');
-
+/**
+ * Component for titlebar.
+ */
 const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
   const formGrid = useSelector((state: RootState) => state.formationGrid);
   const config = useSelector((state: RootState) => state.config);

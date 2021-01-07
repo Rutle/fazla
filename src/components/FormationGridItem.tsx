@@ -12,6 +12,9 @@ interface GridItemProps {
   onClick: () => void;
 }
 
+/**
+ * Singular component representing a grid item on a formation.
+ */
 // eslint-disable-next-line react/prop-types
 const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, themeColor, onClick }) => {
   const dispatch = useDispatch();

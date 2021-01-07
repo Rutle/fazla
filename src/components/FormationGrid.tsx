@@ -4,7 +4,9 @@ interface FormationGridProps {
   themeColor: string;
   children: React.ReactNode;
 }
-
+/**
+ * Component presenting ships in a grid.
+ */
 const FormationGrid: React.FC<FormationGridProps> = ({ themeColor, children }) => {
   return (
     <>

@@ -13,6 +13,10 @@ import { AppContext } from '../App';
 interface ShipListProps {
   children: React.ReactNode;
 }
+
+/**
+ * Component for a sidebar.
+ */
 const SideBar: React.FC<ShipListProps> = ({ children }) => {
   const dispatch = useDispatch();
   const { shipData } = useContext(AppContext);

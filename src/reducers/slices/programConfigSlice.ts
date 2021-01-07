@@ -14,6 +14,7 @@ const initialState: AppConfig = {
   themeColor: 'dark',
   firstTime: true,
   formHelpTooltip: true,
+  isToast: true,
   updateDate: '',
 };
 

@@ -10,6 +10,9 @@ import { SearchAction, updateSearch } from '../reducers/slices/searchParametersS
 import { toggleSearchState } from '../reducers/slices/appStateSlice';
 import { AppContext } from '../App';
 
+/**
+ * Component for displaying the details of a ship.
+ */
 const ShipDetails: React.FC = () => {
   const dispatch = useDispatch();
   const { addToast, shipData } = useContext(AppContext);
@@ -28,16 +31,16 @@ const ShipDetails: React.FC = () => {
     if (ship) {
       dispatch(addShip(ship.id, ship.names.code));
       dispatch(toggleSearchState('OWNED'));
-      addToast('info', 'Docks', `${ship.names.code} was added to docks.`);
+      if (config.isToast) addToast('success', 'Docks', `${ship.names.code} was added to docks.`);
     }
-  }, [dispatch, addToast, ship]);
+  }, [dispatch, addToast, ship, config.isToast]);
 
   const removeFromOwned = useCallback(() => {
     if (ship) {
       dispatch(updateSearch(shipData, SearchAction.RemoveShip, { list: appState.cToggle, id: ship.id }));
-      addToast('info', 'Docks', `${ship.names.code} removed from docks.`);
+      if (config.isToast) addToast('info', 'Docks', `${ship.names.code} removed from docks.`);
     }
-  }, [dispatch, addToast, appState.cToggle, ship, shipData]);
+  }, [dispatch, addToast, appState.cToggle, ship, shipData, config.isToast]);
 
   const renderAddRemoveButton = () => {
     if (!isOwned()) {

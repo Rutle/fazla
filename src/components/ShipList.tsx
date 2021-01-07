@@ -14,7 +14,9 @@ interface ShipListProps {
   shipSearchList: ShipSimple[];
   listName: string;
 }
-
+/**
+ * Component for a list of ships.
+ */
 const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
   const dispatch = useDispatch();
   const { shipData } = useContext(AppContext);

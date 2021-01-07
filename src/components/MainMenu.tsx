@@ -2,7 +2,9 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-
+/**
+ * Component for main menu selection of different views.
+ */
 const MainMenu: React.FC = () => {
   const config = useSelector((state: RootState) => state.config);
 

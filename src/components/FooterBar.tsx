@@ -1,7 +1,9 @@
 import React from 'react';
 import { RootState } from '../reducers/rootReducer';
 import { useSelector } from 'react-redux';
-
+/**
+ * Footer component.
+ */
 const FooterBar: React.FC = () => {
   const appState = useSelector((state: RootState) => state.appState);
   const config = useSelector((state: RootState) => state.config);

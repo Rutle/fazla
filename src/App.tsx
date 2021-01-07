@@ -47,7 +47,7 @@ export const AppContext = React.createContext(
 
 const App: React.FC = () => {
   const [shipData, setShipData] = useState(new DataStore());
-  const [addToast, onToastDismiss, popToast, toasts] = useToast(true, 30000);
+  const [addToast, onToastDismiss, popToast, toasts] = useToast(true, 3000);
   return (
     <HashRouter>
       <div className={`App`}>

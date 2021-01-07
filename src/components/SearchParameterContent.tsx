@@ -8,6 +8,9 @@ import PropTypes from 'prop-types';
 import { AppContext } from '../App';
 import DataStore from '../util/dataStore';
 
+/**
+ * Grid displaying search parameter toggles.
+ */
 const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }) => {
   const dispatch = useDispatch();
   const { shipData } = useContext(AppContext);
