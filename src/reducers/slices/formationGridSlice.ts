@@ -41,7 +41,7 @@ const formationGridSlice = createSlice({
             if (index !== gridIndex && value !== id) {
               return value;
             } else if (index !== gridIndex && value === id) {
-              return '';
+              return 'NONE';
             } else {
               return id;
             }
@@ -145,10 +145,12 @@ export const {
  * Updates all ships search list.
  * @param {FormationAction} action Enum action
  */
-export const formationAction = (action: FormationAction, gridIndex?: number): AppThunk => async (
-  dispatch: AppDispatch,
-  getState,
-) => {
+export const formationAction = (
+  action: FormationAction,
+  gridIndex?: number,
+  formationName?: string,
+  formationType?: string,
+): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const { formationGrid, formationModal, shipDetails } = getState();
     const formIdx = formationGrid.selectedIndex;
@@ -157,8 +159,53 @@ export const formationAction = (action: FormationAction, gridIndex?: number): Ap
     switch (action) {
       case 'NEW':
         const formCount = formationGrid.formations.length;
-        const emptyFormation = ['NONE', 'NONE', 'NONE', 'NONE', 'NONE', 'NONE'];
-        dispatch(addNewFormationData({ data: emptyFormation, name: `Formation ${formCount}` }));
+        const name = formationName ? (formationName as string) : `Formation ${formCount}`;
+        const fType = formationType as string;
+        let emptyFormation = [];
+        if (fType === 'normal') {
+          emptyFormation = [
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+          ];
+        } else {
+          emptyFormation = [
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+            'NONE',
+          ];
+        }
+        dispatch(addNewFormationData({ data: emptyFormation, name: name }));
         break;
       case 'REMOVE':
         await removeAFormation(formIdx).then((result) => {

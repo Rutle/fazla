@@ -21,10 +21,19 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
   const getLocation = (idx: number): string => {
     switch (idx) {
       case 1:
+      case 7:
+      case 13:
+      case 19:
         return 'Flagship';
       case 3:
+      case 9:
+      case 15:
+      case 21:
         return 'Front';
       case 5:
+      case 11:
+      case 17:
+      case 23:
         return 'Back';
       default:
         return '';

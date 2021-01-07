@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
@@ -17,6 +17,7 @@ import { Ship } from '../util/types';
 import FormationGridItem from './FormationGridItem';
 import { AppContext } from '../App';
 import DataStore from '../util/dataStore';
+import NewFormationModalContent from './Modal/NewFormationModalContent';
 
 ReactModal.setAppElement('#root');
 /**
@@ -29,14 +30,15 @@ const FormationView: React.FC = () => {
   const fData = useSelector((state: RootState) => state.formationGrid);
   const formationModal = useSelector((state: RootState) => state.formationModal);
   const appState = useSelector((state: RootState) => state.appState);
+  const [showModal, setModalOpen] = useState(false);
 
   const open = useCallback(
     (action: FormationModalAction, toggle: 'ALL' | 'OWNED', isOpen: boolean, index: number, data: DataStore) => () => {
       dispatch(formationModalAction(action, toggle, isOpen, index, data));
+      setModalOpen(true);
     },
     [dispatch],
   );
-
   const renderContent = (index: number) => {
     const formationShips = shipData.shipsArr
       .filter((ship) => fData.formations[index].data.includes(ship.id))
@@ -44,26 +46,40 @@ const FormationView: React.FC = () => {
         (accumulator, currentValue) => Object.assign(accumulator, { [currentValue.id]: currentValue }),
         {} as { [key: string]: Ship },
       );
-    return (
-      <>
-        <FormationGrid themeColor={config.themeColor}>
-          {fData.formations[index].data.map((id, index) => (
+
+    const fleetCount = fData.formations[index].data.length / 6;
+    const grid = [];
+    const passives = [];
+    for (let idx = 0; idx < fleetCount; idx++) {
+      const temp = fData.formations[index].data.slice(idx * 6, idx * 6 + 6);
+      grid.push(
+        <FormationGrid key={idx} themeColor={config.themeColor}>
+          {temp.map((id, idxx) => (
             <FormationGridItem
-              key={`${id}-${index}`}
-              index={index}
+              key={`${id}-${idx * 6 + idxx}`}
+              index={idx * 6 + idxx}
               ship={formationShips[id]}
               themeColor={config.themeColor}
-              onClick={open(FormationModalAction.Open, appState.cToggle, true, index, shipData)}
+              onClick={open(FormationModalAction.Open, appState.cToggle, true, idx * 6 + idxx, shipData)}
             />
           ))}
-        </FormationGrid>
-        <div className="scroll">
-          <FormationPassives
-            formationShips={formationShips}
-            formation={fData.formations[index]}
-            themeColor={config.themeColor}
-          />
-        </div>
+        </FormationGrid>,
+      );
+      passives.push(
+        <FormationPassives
+          key={`${'passive'}-${idx}`}
+          formationShips={formationShips}
+          formation={temp}
+          themeColor={config.themeColor}
+          fleetNumber={idx + 1}
+        />,
+      );
+    }
+
+    return (
+      <>
+        {grid}
+        <div className="scroll">{passives}</div>
       </>
     );
   };
@@ -73,11 +89,16 @@ const FormationView: React.FC = () => {
       <section className="page-content">
         <ReactModal
           overlayClassName={`modal-overlay ${config.themeColor}`}
-          isOpen={formationModal.isOpen}
-          className={`modal-container formation`}
-          onRequestClose={() => dispatch(formationModalAction(FormationModalAction.Close))}
+          // isOpen={formationModal.isOpen}
+          isOpen={showModal}
+          className={`modal-container ${formationModal.isOpen ? 'formation' : 'new-formation'}`}
+          // onRequestClose={() => dispatch(formationModalAction(FormationModalAction.Close))}
         >
-          <FormationModalContent />
+          {formationModal.isOpen ? (
+            <FormationModalContent setModalOpen={setModalOpen} />
+          ) : (
+            <NewFormationModalContent setModalOpen={setModalOpen} />
+          )}
         </ReactModal>
         {config.formHelpTooltip ? (
           <ReactTooltip id="click-help" place="bottom" type="dark" effect="solid" aria-haspopup="true" delayShow={1000}>
@@ -94,7 +115,8 @@ const FormationView: React.FC = () => {
               <FormationDropDown />
               <button
                 className={`tab-btn normal ${config.themeColor}`}
-                onClick={() => dispatch(formationAction(FormationAction.New))}
+                // onClick={() => dispatch(formationAction(FormationAction.New))}
+                onClick={() => setModalOpen(true)}
               >
                 New
               </button>

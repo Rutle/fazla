@@ -125,6 +125,10 @@ div.page.dark .ship-side-container,
   background-color: var(--main-dark-title-bg);
 }
 
+.modal-overlay.dark div.modal-action {
+  border: 1px solid var(--main-dark-border);
+}
+
 .modal-overlay.dark .modal-container {
   background-color: var(--root-dark-bg);
   border: 3px double var(--main-dark-border);
@@ -319,6 +323,10 @@ div.f-grid.dark div.f-title {
   border: 1px solid var(--main-dark-border);
 }
 
+div.f-grid.dark div.f-fleet {
+  background-color: var(--main-dark-title-bg);
+  border: 1px solid var(--main-dark-border);
+}
 div.f-grid.dark div.f-icon {
   background-color: var(--main-dark-title-bg);
   border: 1px solid var(--main-dark-border);

@@ -6,23 +6,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import PassivesList from './PassivesList';
 interface FormationPassivesProps {
-  formation: Formation;
+  formation: string[];
   themeColor: string;
   formationShips: { [key: string]: Ship };
+  fleetNumber: number;
 }
 
 /**
  * Component for displaying passives of ships in a formation.
  */
-const FormationPassives: React.FC<FormationPassivesProps> = ({ formation, themeColor, formationShips }) => {
+const FormationPassives: React.FC<FormationPassivesProps> = ({
+  formation,
+  themeColor,
+  formationShips,
+  fleetNumber,
+}) => {
   const [showMain, setShowMain] = useState(true);
   const [showVanguard, setShowVanguard] = useState(true);
 
   const isShip = (position: string) => {
     if (position === 'main') {
-      return formation.data.slice(0, 3).every((s) => s === 'NONE');
+      return formation.slice(0, 3).every((s) => s === 'NONE');
     } else if (position === 'vanguard') {
-      return formation.data.slice(3, 6).every((s) => s === 'NONE');
+      return formation.slice(3, 6).every((s) => s === 'NONE');
     } else {
       return false;
     }
@@ -47,6 +53,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ formation, themeC
             <div className={`f-icon ${showMain ? '' : 'f-collapse'}`}>
               <FontAwesomeIcon icon={faAngleDown} />
             </div>
+            <div className="f-fleet">{`Fleet ${fleetNumber}`}</div>
             <div className="f-title">Main</div>
           </div>
           <div className={`f-collapsible ${showMain ? '' : 'f-collapsed'}`}>
@@ -54,9 +61,9 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ formation, themeC
               <div className={'name f-header'}>Ship</div>
               <div className={'passive f-header'}>Passive</div>
             </div>
-            <PassivesList {...getData(formation.data[0])} />
-            <PassivesList {...getData(formation.data[1])} />
-            <PassivesList {...getData(formation.data[2])} />
+            <PassivesList {...getData(formation[0])} />
+            <PassivesList {...getData(formation[1])} />
+            <PassivesList {...getData(formation[2])} />
           </div>
         </>
       ) : (
@@ -68,6 +75,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ formation, themeC
             <div className={`f-icon ${showVanguard ? '' : 'f-collapse'}`}>
               <FontAwesomeIcon icon={faAngleDown} />
             </div>
+            <div className="f-fleet">{`Fleet ${fleetNumber}`}</div>
             <div className="f-title">Vanguard</div>
           </div>
           <div className={`f-collapsible ${showVanguard ? '' : 'f-collapsed'}`}>
@@ -75,9 +83,9 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ formation, themeC
               <div className={'name f-header'}>Name</div>
               <div className={'passive f-header'}>Passive</div>
             </div>
-            <PassivesList {...getData(formation.data[3])} />
-            <PassivesList {...getData(formation.data[4])} />
-            <PassivesList {...getData(formation.data[5])} />
+            <PassivesList {...getData(formation[3])} />
+            <PassivesList {...getData(formation[4])} />
+            <PassivesList {...getData(formation[5])} />
           </div>
         </>
       ) : (

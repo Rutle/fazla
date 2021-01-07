@@ -9,8 +9,9 @@ import ShipDetails from '../ShipDetails';
 import RButton from '../RButton/RButton';
 import ShipList from '../ShipList';
 import { AppContext } from '../../App';
+import PropTypes from 'prop-types';
 
-const FormationModalContent: React.FC = () => {
+const FormationModalContent: React.FC<{ setModalOpen: (e: boolean) => void }> = ({ setModalOpen }) => {
   const { shipData } = useContext(AppContext);
   const dispatch = useDispatch();
   const appState = useSelector((state: RootState) => state.appState);
@@ -31,6 +32,7 @@ const FormationModalContent: React.FC = () => {
         break;
     }
     dispatch(formationModalAction(FormationModalAction.Close, appState.cToggle));
+    setModalOpen(false);
   };
 
   return (
@@ -54,3 +56,7 @@ const FormationModalContent: React.FC = () => {
 };
 
 export default FormationModalContent;
+
+FormationModalContent.propTypes = {
+  setModalOpen: PropTypes.func.isRequired,
+};
