@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // import ReactModal from 'react-modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
@@ -36,7 +36,6 @@ const NewFormationModalContent: React.FC<{ setModalOpen: (e: boolean) => void }>
               onChange={() => {
                 console.log(typeVal);
                 setTypeVal('normal');
-
               }}
             />
             <label
