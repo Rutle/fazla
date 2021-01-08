@@ -634,7 +634,7 @@ input[type="url"] {
 .f-grid {
   display: flex;
   flex-direction: column;
-  padding: 5px;
+  padding: 1px;
   border-radius: 2px;
 }
 
@@ -670,7 +670,7 @@ div.f-column {
   flex: 1;
   flex-direction: column;
   border-radius: inherit;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
 }
 
 /* ##### GRID-ITEM ##### */
@@ -681,6 +681,14 @@ div.grid-item {
   height: 100%;
   border-radius: inherit;
   margin-right: 1px;
+  /*
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  */
+  min-width: 0;
+  overflow: hidden;
+  
 }
 
 
@@ -776,7 +784,7 @@ div.f-grid div.f-title {
   flex: 1 0;
   flex-basis: auto;
   padding: 3px 12px;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   border-left: 0px!important;
   border-right: 0px!important;
   justify-content: center;
@@ -786,7 +794,7 @@ div.f-grid div.f-fleet {
   display: flex;
   flex-basis: auto;
   padding: 3px 12px;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   border-left: 0px!important;
   border-right: 0px!important;
   justify-content: center;
@@ -797,7 +805,7 @@ div.f-grid div.f-icon {
   border-left: 0px!important;
   border-right: 0px!important;
   padding: 3px 12px;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   cursor: pointer;
 }
 
@@ -1061,5 +1069,8 @@ div.f-grid div.f-icon.bottom-emp {
   } 
   div.grid-item.action > input[type="url"].dark {
     max-width: 550px;
+  }
+  .modal-container.formation div.radio-group > label.btn {
+    flex-grow: 1;
   }
 }

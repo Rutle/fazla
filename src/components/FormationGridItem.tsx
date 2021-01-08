@@ -24,19 +24,19 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
       case 7:
       case 13:
       case 19:
-        return 'Flagship';
+        return 'flagship';
       case 3:
       case 9:
       case 15:
       case 21:
-        return 'Front';
+        return 'frontmost';
       case 5:
       case 11:
       case 17:
       case 23:
-        return 'Back';
+        return 'backmost';
       default:
-        return '';
+        return 'ship';
     }
   };
 
@@ -68,10 +68,10 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'row', padding: '2px 5px' }}>
-            <div className={`details`}>Add ship</div>
+            <div className={`details`}>{`Add ${getLocation(index)}`}</div>
           </div>
         )}
-        <div className={'pos-indicator'}>{getLocation(index)}</div>
+        { /* <div className={'pos-indicator'}>{getLocation(index)}</div>*/ }
       </div>
     </div>
   );

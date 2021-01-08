@@ -79,7 +79,9 @@ const FormationView: React.FC = () => {
     return (
       <>
         {grid}
-        <div className="scroll">{passives}</div>
+        <div className="scroll" style={{ marginTop: '5px' }}>
+          {passives}
+        </div>
       </>
     );
   };
