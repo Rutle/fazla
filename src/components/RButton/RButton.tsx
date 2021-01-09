@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react'
+import * as PropTypes from 'prop-types';
 
 interface RButtonProps {
   className?: string;

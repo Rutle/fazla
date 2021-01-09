@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, AppDispatch } from '../../store';
-import { saveConfig } from '../../util/appUtilities';
-import { AppConfig } from '../../util/types';
+import { AppThunk, AppDispatch } from '_reducers/store';
+import { saveConfig } from '../../utils/appUtilities';
+import { AppConfig } from '../../utils/types';
 import { setErrorMessage } from './appStateSlice';
 
 export enum AppConfigAction {

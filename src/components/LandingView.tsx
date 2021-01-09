@@ -7,7 +7,7 @@ import RButton from './RButton/RButton';
 import TitleBar from './TitleBar';
 import { useHistory } from 'react-router';
 import { initShipLists, setErrorMessage, addPhaseState } from '../reducers/slices/appStateSlice';
-import { initData } from '../util/appUtilities';
+import { initData } from '../utils/appUtilities';
 import { AppContext } from '../App';
 /**
  * Landing page for application that is presented during loading settings.

@@ -3,7 +3,7 @@
 import React, { useCallback, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { Ship, ShipSimple } from '../util/shipdatatypes';
+import { Ship, ShipSimple } from '../utils/shipdatatypes';
 import { FixedSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { setSelectedShip } from '../reducers/slices/appStateSlice';

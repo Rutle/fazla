@@ -3,7 +3,7 @@ import React, { useCallback, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import PassivesList from './PassivesList';
-import { openWikiUrl, urlValidation } from '../util/appUtilities';
+import { openWikiUrl, urlValidation } from '../utils/appUtilities';
 import { addShip } from '../reducers/slices/ownedShipListSlice';
 import RButton from './RButton/RButton';
 import { SearchAction, updateSearch } from '../reducers/slices/searchParametersSlice';

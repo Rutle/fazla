@@ -13,10 +13,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMouse } from '@fortawesome/free-solid-svg-icons';
 import ReactModal from 'react-modal';
 import { formationModalAction, FormationModalAction } from '../reducers/slices/formationModalSlice';
-import { Ship } from '../util/types';
+import { Ship } from '../utils/types';
 import FormationGridItem from './FormationGridItem';
 import { AppContext } from '../App';
-import DataStore from '../util/dataStore';
+import DataStore from '../utils/dataStore';
 import NewFormationModalContent from './Modal/NewFormationModalContent';
 
 ReactModal.setAppElement('#root');

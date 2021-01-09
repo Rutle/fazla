@@ -1,16 +1,20 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Switch, Redirect, RouteProps, HashRouter } from 'react-router-dom';
-import ShipDetailView from './components/ShipDetailView';
-import Home from './components/Home';
-import DataStore from './util/dataStore';
+import {
+  Route, Switch, Redirect, RouteProps, HashRouter 
+} from 'react-router-dom';
+import ShipDetailView from '_components/ShipDetailView';
+import Home from '_components/Home';
+import DataStore from './utils/dataStore';
 import FormationView from './components/FormationView';
 import { RootState } from './reducers/rootReducer';
 import LandingView from './components/LandingView';
 import ErrorView from './components/ErrorView';
 import ToastContainer from './components/Toast/ToastContainer';
-import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './components/Toast/useToast';
+import {
+ CallbackDismiss, ToastList, ToastMessageType, useToast 
+} from './components/Toast/useToast';
 
 const RefreshRoute: React.FC<RouteProps> = (props) => {
   const appState = useSelector((state: RootState) => state.appState);
@@ -51,7 +55,9 @@ const App: React.FC = () => {
   return (
     <HashRouter>
       <div className={`App`}>
-        <AppContext.Provider value={{ addToast, onToastDismiss, popToast, toasts, shipData, setShipData }}>
+        <AppContext.Provider value={{
+ addToast, onToastDismiss, popToast, toasts, shipData, setShipData 
+}}>
           <Switch>
             <Route exact path="/" render={() => <LandingView />}></Route>
             <RefreshRoute path="/shipdetails">

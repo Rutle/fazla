@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import PageTemplate from './PageTemplate';
-import ShipDetails from './ShipDetails';
-import { RootState } from '../reducers/rootReducer';
+import PageTemplate from '_/components/PageTemplate';
+import ShipDetails from '_/components/ShipDetails';
+import { RootState } from '_/reducers/rootReducer';
 import { useSelector } from 'react-redux';
 import SideBar from './SideBar';
 import ShipList from './ShipList';

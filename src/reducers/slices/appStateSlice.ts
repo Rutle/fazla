@@ -1,19 +1,19 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { AppDispatch, AppThunk } from '_/reducers/store';
+import { batch } from 'react-redux';
 import { setDetails } from './shipDetailsSlice';
-import { AppThunk, AppDispatch } from '../../store';
 import { setSearchList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
-import DataStore from '../../util/dataStore';
-import { ShipSimple, Formation, AppConfig } from '../../util/types';
-import { batch } from 'react-redux';
-import { fetchWithTimeout, handleHTTPError, saveShipData } from '../../util/appUtilities';
+import DataStore from '../../utils/dataStore';
+import { AppConfig, Formation, ShipSimple } from '../../utils/types';
+import { fetchWithTimeout, handleHTTPError, saveShipData } from '../../utils/appUtilities';
 import { setOwnedList } from './ownedShipListSlice';
 import { setFormationsData } from './formationGridSlice';
 import { setConfig, setUpdateDate } from './programConfigSlice';
 import { CallbackDismiss, ToastMessageType } from '../../components/Toast/useToast';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
-//const SHIPAPIURL =
+// const SHIPAPIURL =
 //  'http://slowwly.robertomurray.co.uk/delay/10000/url/https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 interface CurrentState {
   cState: 'INIT' | 'RUNNING' | 'ERROR' | 'UPDATING' | 'SAVING' | 'DOWNLOADING';
@@ -86,14 +86,16 @@ const appStateSlice = createSlice({
     },
     setCurrentState(state, action: PayloadAction<CurrentState>) {
       const { cState, cMsg } = action.payload;
-      return { ...state, cState: cState, cMsg: cMsg };
+      return { ...state, cState, cMsg };
     },
     setErrorMessage(
       state,
       action: PayloadAction<{ cState: 'RUNNING' | 'ERROR'; eMsg: string; eState: '' | 'WARNING' | 'ERROR' }>,
     ) {
       const { cState, eMsg, eState } = action.payload;
-      return { ...state, cState: cState, eMsg: eMsg, eState: eState };
+      return {
+        ...state, cState, eMsg, eState,
+      };
     },
     clearErrorMessage(state) {
       return { ...state, eMsg: '', eState: '' };
@@ -194,8 +196,8 @@ export const initShipLists = (
  */
 export const setSelectedShip = (key: string, id: string, index: number): AppThunk => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setDetails({ id: id, index: index }));
-    dispatch(setListState({ key: key, data: { id: id, index: index, isSearchChanged: false } }));
+    dispatch(setDetails({ id, index }));
+    dispatch(setListState({ key, data: { id, index, isSearchChanged: false } }));
   } catch (e) {
     dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'There was a problem selecting a ship', eState: 'WARNING' }));
   }
@@ -235,7 +237,7 @@ export const updateShipData = (
               );
               dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
               dispatch(setShipCount(shipData.count));
-              dispatch(setUpdateDate(updateDate));
+              dispatch(setUpdateDate(updateDate as string));
             });
           } else {
             throw new Error('There was a problem saving ship data.');
@@ -250,8 +252,7 @@ export const updateShipData = (
               eState: 'WARNING',
             }),
           );
-          if (config.isToast)
-            addToast('warning', 'Update', 'There was a problem with saving new ship data. No changes made.');
+          if (config.isToast) { addToast('warning', 'Update', 'There was a problem with saving new ship data. No changes made.'); }
         }
       })
       .catch((error) => {

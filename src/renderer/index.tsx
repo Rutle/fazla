@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
-import './index.css';
-import './App.css';
-import './light.css';
-import './dark.css';
-import store from './store';
-import App from './App';
+import * as serviceWorker from '../serviceWorker';
+// import './index.css';
+import '_public/index.css';
+import '_public/App.css';
+import '_public/light.css';
+import '_public/dark.css';
+import store from '_/reducers/store';
+import App from '_/App';
 
 ReactDOM.render(
   <React.StrictMode>

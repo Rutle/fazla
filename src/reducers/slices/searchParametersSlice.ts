@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { batch } from 'react-redux';
-import { AppThunk, AppDispatch } from '../../store';
-import DataStore from '../../util/dataStore';
-import { SearchParams, ShipSimple } from '../../util/types';
+import { AppThunk, AppDispatch } from '_reducers/store';
+import DataStore from '../../utils/dataStore';
+import { SearchParams, ShipSimple } from '../../utils/types';
 import { setErrorMessage, setListState, toggleSearchState } from './appStateSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import { removeShip } from './ownedShipListSlice';

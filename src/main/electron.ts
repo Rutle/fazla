@@ -1,14 +1,14 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import Store from 'electron-store';
 import * as fs from 'fs';
+import * as url from 'url';
 import * as path from 'path';
 import * as isDev from 'electron-is-dev';
-import 'electron-reload';
-import { Ship, Formation, AppConfig } from '../src/util/types';
+import { Ship, Formation, AppConfig } from '../utils/types';
 // import DataStore from '../src/util/dataStore';
 
-let mainWindow: BrowserWindow;
+let mainWindow: Electron.BrowserWindow;
 const electronStore = new Store({
   cwd: app.getPath('userData'),
 });
@@ -18,7 +18,7 @@ const fsPromises = fs.promises;
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 const THEMECOLOR = 'dark';
 
-function createWindow() {
+function createWindow(): void {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1350,
@@ -27,10 +27,23 @@ function createWindow() {
     //thickFrame: true,
     webPreferences: {
       nodeIntegration: true,
+      worldSafeExecuteJavaScript: true,
+      // preload: path.join(__dirname, "preload.ts")
     },
   });
 
-  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
+  // mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
+  mainWindow
+    .loadURL(
+      url.format({
+        pathname: path.join(__dirname, './index.html'),
+        protocol: 'file:',
+        slashes: true,
+      }),
+    )
+    .finally(() => {
+      /* no action */
+    });
 
   mainWindow.removeMenu();
   // Open the DevTools.
@@ -92,7 +105,7 @@ ipcMain.on('open-logs', () => {
 /**
  * Get owned ship data from config data file.
  */
-ipcMain.handle('get-owned-ship-data', async (event) => {
+ipcMain.handle('get-owned-ship-data', async () => {
   const ships = electronStore.get('ownedShips');
   if (ships) {
     return { shipData: ships, isConfigShipData: true };
@@ -192,7 +205,7 @@ ipcMain.handle('remove-formation-by-index', async (event, data) => {
 /**
  * Initialize by getting data from .json and config data from config file.
  */
-ipcMain.handle('initData', async (event, arg) => {
+ipcMain.handle('initData', async () => {
   let jsonData: { [key: string]: Ship } = {};
   let dataArr: Ship[] = [];
   let oShips: string[] = [];

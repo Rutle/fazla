@@ -4,9 +4,9 @@ import RButton from './RButton/RButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { updateSearch, SearchAction } from '../reducers/slices/searchParametersSlice';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { AppContext } from '../App';
-import DataStore from '../util/dataStore';
+import DataStore from '../utils/dataStore';
 
 /**
  * Grid displaying search parameter toggles.

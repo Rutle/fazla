@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import PropTypes from 'prop-types';
 import RButton from '../RButton/RButton';
-import { closeWindow } from '../../util/appUtilities';
+import { closeWindow } from '../../utils/appUtilities';
 import { FormationAction, formationAction } from '../../reducers/slices/formationGridSlice';
 import { AppConfigAction, configAction } from '../../reducers/slices/programConfigSlice';
 

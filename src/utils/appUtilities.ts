@@ -1,24 +1,13 @@
-import { Ship, Formation, AppConfig } from './types';
+import { ipcRenderer, shell } from 'electron';
+import { AppConfig, Formation, Ship } from './types';
 import DataStore from './dataStore';
-
-const electron = window.require('electron');
-const ipcRenderer = electron.ipcRenderer;
-
-/*
-const electron = window.require('electron');
-const fs = electron.remote.require('fs');
-const app = electron.remote.app;
-const ipcRenderer  = electron.ipcRenderer;
-// to send and receive answer from main process such as loading config file/data on startup.
-https://www.electronjs.org/docs/api/ipc-renderer#ipcrendererinvokechannel-args
-
-// for config
-https://www.npmjs.com/package/electron-store#how-do-i-get-store-values-in-the-renderer-process-when-my-store-was-initialized-in-the-main-process
-*/
+// const electron = window.require('electron');
+// const ipcRenderer = electron.ipcRenderer;
 
 interface BasicResponse {
   isOk: boolean;
   msg: string;
+  updateDate?: string;
 }
 
 // Renderer to Main
@@ -38,8 +27,8 @@ export const maximizeWindow = (): void => {
   ipcRenderer.send('maximize-application');
 };
 
-const openUrl = (str: string): void => {
-  electron.shell.openExternal(str);
+const openUrl = async (str: string) => {
+  await shell.openExternal(str);
 };
 
 export const openLogs = (): void => {
@@ -50,7 +39,7 @@ export const openLogs = (): void => {
  * Function that calls electron along with data to save data to .json file.
  * @param data Data that is saved to .json.
  */
-export const saveShipData = async (data = {}): Promise<BasicResponse & { updateDate: string }> => {
+export const saveShipData = async (data = {}): Promise<BasicResponse> => {
   return await ipcRenderer.invoke('save-ship-data', data).then((result: BasicResponse) => {
     return result;
   });

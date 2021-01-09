@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
-import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '../util/appUtilities';
+import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '../utils/appUtilities';
 import { RootState } from '../reducers/rootReducer';
 import CloseAppModalContent from './Modal/CloseAppModalContent';
 import ReactModal from 'react-modal';

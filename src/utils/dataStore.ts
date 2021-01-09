@@ -6,8 +6,11 @@ import { fleets } from '../data/categories';
  */
 export default class DataStore {
   shipsArr: Ship[] = [];
+
   count = 0;
+
   state: 'INIT' | 'READY' | 'UPDATING' = 'INIT';
+
   /**
    * Constructor for DataStore
    * @param shipData Ship data json.
@@ -57,7 +60,7 @@ export default class DataStore {
     try {
       t = this.shipsArr.reduce<ShipSimple[]>((acc, item, index): ShipSimple[] => {
         if (DataStore._filterPredicate(searchPs, item)) {
-          acc.push({ id: item.id, index: index });
+          acc.push({ id: item.id, index });
         }
         return acc;
       }, []);
@@ -72,6 +75,7 @@ export default class DataStore {
    * @param searchPs Paraemters to use in filtering.
    * @param ship Current ship.
    */
+  // eslint-disable-next-line no-underscore-dangle
   static _filterPredicate(searchPs: SearchParams, ship: Ship): boolean {
     let isNameMatch = false;
     let isNatMatch = false;
@@ -101,11 +105,12 @@ export default class DataStore {
     t = [
       ...data.map((element, index) => ({
         id: element.id,
-        index: index,
+        index,
       })),
     ];
     return t;
   }
+
   static transformStringList(shipData: Ship[], data: string[]): ShipSimple[] {
     let t: ShipSimple[] = [];
     t = [...data.map((element) => ({ id: element, index: shipData.findIndex((ele) => ele.id === element) }))];

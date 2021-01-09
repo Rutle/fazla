@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppDispatch, AppThunk } from '../../store';
-import { saveOwnedShipData } from '../../util/appUtilities';
+import { AppDispatch, AppThunk } from '_reducers/store';
+import { saveOwnedShipData } from '../../utils/appUtilities';
 import { setErrorMessage } from './appStateSlice';
 
 const initialState: string[] = [];
