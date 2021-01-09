@@ -3,7 +3,7 @@ console.log('preload.js loaded');
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld(
-  "api", {
+  'api', {
     /*
     closeApp: (channel: string, data: any) => {
       // whitelist channels
@@ -16,6 +16,7 @@ contextBridge.exposeInMainWorld(
     electronIpcSend: (channel: string, ...arg: any) => {
       let validChannels = ["close-application"];
       if (validChannels.includes(channel)) {
+        console.log('closing');
         ipcRenderer.send(channel, arg);
       }
     },

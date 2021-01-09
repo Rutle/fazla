@@ -1,19 +1,21 @@
-// import { ipcRenderer, shell } from 'electron';
 import { AppConfig, Formation, Ship } from './types';
 import DataStore from './dataStore';
-// const electron = window.require('electron');
-// const ipcRenderer = electron.ipcRenderer;
 
 interface BasicResponse {
   isOk: boolean;
   msg: string;
   updateDate?: string;
 }
-
+declare global {
+  interface Window {
+      api: {
+        electronIpcSend: (channel: string, ...arg: any) => void;
+      }
+  }
+}
 // Renderer to Main
 export const closeWindow = (): void => {
-  console.log('close');
-  //ipcRenderer.send('close-application');
+  window.api.electronIpcSend('close-application');
 };
 
 
