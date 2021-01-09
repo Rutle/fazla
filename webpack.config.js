@@ -80,6 +80,10 @@ mainConfig.plugins = [
   }),
 ];
 
+const preloadConfig = lodash.cloneDeep(commonConfig);
+preloadConfig.entry = './src/main/preload.ts';
+preloadConfig.target = 'electron-preload';
+preloadConfig.output.filename = 'preload.bundle.js';
 
 const rendererConfig = lodash.cloneDeep(commonConfig);
 rendererConfig.entry = './src/renderer/index.tsx';
@@ -91,4 +95,4 @@ rendererConfig.plugins = [
   }),
 ];
 
-module.exports = [mainConfig, rendererConfig];
+module.exports = [mainConfig, preloadConfig, rendererConfig];

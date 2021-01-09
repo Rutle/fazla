@@ -22,6 +22,7 @@ const LandingView: React.FC = () => {
   useEffect(() => {
     try {
       if (appState.cState === 'INIT') {
+        /*
         (async () => {
           // Load data from .json using electron.
           const initDataObj = await initData();
@@ -38,7 +39,9 @@ const LandingView: React.FC = () => {
         })().catch((error: Error) => {
           dispatch(setErrorMessage({ cState: 'ERROR', eMsg: error.message, eState: 'ERROR' }));
           history.push('/error');
-        });
+        });*/
+        dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'error message', eState: 'ERROR' }));
+          history.push('/error');
       }
     } catch (error) {
       dispatch(setErrorMessage({ cState: 'ERROR', eMsg: error.message, eState: 'ERROR' }));

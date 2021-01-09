@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppDispatch, AppThunk } from '_reducers/store';
+import { AppDispatch, AppThunk } from '_/reducers/store';
 import { saveOwnedShipData } from '../../utils/appUtilities';
 import { setErrorMessage } from './appStateSlice';
 
@@ -36,7 +36,7 @@ export const addShip = (id: string, name: string): AppThunk => async (dispatch: 
   let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
     const ownedShips = [...getState().ownedShips, id];
-    result = await saveOwnedShipData(ownedShips);
+    // result = await saveOwnedShipData(ownedShips);
     if (result.isOk) {
       dispatch(addShipId(id));
     }

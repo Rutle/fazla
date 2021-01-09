@@ -26,9 +26,11 @@ function createWindow(): void {
     frame: false,
     //thickFrame: true,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
       worldSafeExecuteJavaScript: true,
-      // preload: path.join(__dirname, "preload.ts")
+      contextIsolation: true,
+      enableRemoteModule: false,
+      preload: path.join(__dirname, 'preload.bundle.js'),
     },
   });
 
