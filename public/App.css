@@ -642,7 +642,7 @@ input[type="url"] {
 div.f-row {
   display: flex;
   flex-direction: row;
-  border-radius: inherit;
+  /* border-radius: inherit;*/
   margin-bottom: 2px;
 }
 
@@ -671,6 +671,7 @@ div.f-column {
   flex-direction: column;
   border-radius: inherit;
   /* margin-bottom: 5px; */
+  min-width: 0;
 }
 
 /* ##### GRID-ITEM ##### */
@@ -679,7 +680,8 @@ div.grid-item {
   flex: 1;
   flex-direction: column;
   height: 100%;
-  border-radius: inherit;
+  /* border-radius: inherit;*/
+  border-radius: 2px;
   margin-right: 1px;
   /*
   white-space: nowrap;

@@ -60,7 +60,7 @@ const FormationView: React.FC = () => {
     for (let idx = 0; idx < fleetCount; idx++) {
       const temp = fData.formations[index].data.slice(idx * 6, idx * 6 + 6);
       grid.push(
-        <FormationGrid key={idx} themeColor={config.themeColor}>
+        <FormationGrid key={idx} themeColor={config.themeColor} isTitle={idx === 0 ? true : false}>
           {temp.map((id, idxx) => (
             <FormationGridItem
               key={`${id}-${idx * 6 + idxx}`}
