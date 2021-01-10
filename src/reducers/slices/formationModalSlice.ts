@@ -9,7 +9,8 @@ export enum FormationModalAction {
   Open = 'OPEN',
   Close = 'CLOSE',
 }
-
+const MAININDEX = [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20];
+const VANGUARDINDEX = [3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23];
 const initialState: { isOpen: boolean; id: string; shipIndex: number; list: string; gridIndex: number } = {
   isOpen: false,
   id: '',
@@ -47,7 +48,15 @@ export const formationModalAction = (
     switch (action) {
       case 'OPEN':
         if (isOpen !== undefined && gridIndex !== undefined && shipData && list) {
-          const fleet = gridIndex !== undefined && gridIndex <= 2 ? 'MAIN' : 'VANGUARD';
+          let fleet: "ALL" | "VANGUARD" | "MAIN";
+          if (MAININDEX.includes(gridIndex)) {
+            fleet = 'MAIN';
+          } else if (VANGUARDINDEX.includes(gridIndex)) {
+            fleet = 'VANGUARD';
+          } else {
+            throw new Error('Invalid grid index.');
+          }
+          // const fleet = gridIndex !== undefined && gridIndex <= 2 ? 'MAIN' : 'VANGUARD';
           batch(() => {
             dispatch(setFleet({ fleet: fleet }));
             dispatch(toggleSearchState(list));

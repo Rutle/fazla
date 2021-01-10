@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
@@ -31,6 +31,11 @@ const FormationView: React.FC = () => {
   const formationModal = useSelector((state: RootState) => state.formationModal);
   const appState = useSelector((state: RootState) => state.appState);
   const [showModal, setModalOpen] = useState(false);
+  
+  useEffect(() => {
+    // Rebuild tooltip after selecting different formation or existing formation is modified.
+    ReactTooltip.rebuild();
+  }, [fData])
 
   const open = useCallback(
     (action: FormationModalAction, toggle: 'ALL' | 'OWNED', isOpen: boolean, index: number, data: DataStore) => () => {
@@ -40,6 +45,8 @@ const FormationView: React.FC = () => {
     [dispatch],
   );
   const renderContent = (index: number) => {
+    // Filter ship data by taking only ships that are in the formations.
+    // [{ id: shipData }]
     const formationShips = shipData.shipsArr
       .filter((ship) => fData.formations[index].data.includes(ship.id))
       .reduce(

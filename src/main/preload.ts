@@ -1,9 +1,30 @@
-import { ipcRenderer, contextBridge } from 'electron';
-console.log('preload.js loaded');
+import { ipcRenderer, contextBridge, shell } from 'electron';
+console.log('[preload.js LOADED]');
+
+const validSendChannels = ['close-application', 'restore-application', 'minimize-application', 'open-logs'];
+const validSaveChannels = ['save-ship-data', 'save-owned-ships', 'save-formation-data', 'save-config'];
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld(
   'api', {
+    electronShell: async (str: string) => {
+      await shell.openExternal(str);
+    },
+    electronInitData: async (channel: string, ...arg: any): Promise<any> => {
+      if (channel === 'initData') {
+        return ipcRenderer.invoke(channel);
+      }
+    },
+    electronSaveData: async (channel: string, ...arg: any): Promise<any> => {
+      if (validSaveChannels.includes(channel)) {
+        return ipcRenderer.invoke(channel, ...arg);
+      }
+    },
+    electronRemoveAFormation: async (channel: string, ...arg: any): Promise<any> => {
+      if (channel === 'remove-formation-by-index') {
+        return ipcRenderer.invoke(channel, ...arg);
+      }
+    },
     /*
     closeApp: (channel: string, data: any) => {
       // whitelist channels
@@ -14,10 +35,8 @@ contextBridge.exposeInMainWorld(
       ipcRenderer.send('close-application');
   },*/
     electronIpcSend: (channel: string, ...arg: any) => {
-      let validChannels = ["close-application"];
-      if (validChannels.includes(channel)) {
-        console.log('closing');
-        ipcRenderer.send(channel, arg);
+      if (validSendChannels.includes(channel)) {
+        ipcRenderer.send(channel);
       }
     },
       /*

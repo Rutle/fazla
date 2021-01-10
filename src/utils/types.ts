@@ -7,7 +7,11 @@ export type AppConfig = {
   isEdit?: boolean;
   updateDate: string;
 };
-
+export interface BasicResponse {
+  isOk: boolean;
+  msg: string;
+  updateDate?: string;
+}
 export interface BooleanSearchParam {
   [key: string]: boolean;
 }

@@ -101,6 +101,7 @@ ipcMain.on('restore-application', () => {
 
 ipcMain.on('open-logs', () => {
   const userDir = app.getPath('userData');
+  console.log('logs');
   console.log(`${userDir}\\logs`);
 });
 
@@ -208,6 +209,7 @@ ipcMain.handle('remove-formation-by-index', async (event, data) => {
  * Initialize by getting data from .json and config data from config file.
  */
 ipcMain.handle('initData', async () => {
+  console.log('INIT DATA');
   let jsonData: { [key: string]: Ship } = {};
   let dataArr: Ship[] = [];
   let oShips: string[] = [];

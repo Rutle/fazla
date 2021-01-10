@@ -219,7 +219,7 @@ export const updateShipData = (
       .then(async (result) => {
         try {
           dispatch(setCurrentState({ cState: 'SAVING', cMsg: 'Please wait while saving data.' }));
-          // const { isOk, updateDate } = await saveShipData(result);
+          const { isOk, updateDate } = await saveShipData(result);
           // if (isOk) {
           if (false) {
             dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating app state.' }));
