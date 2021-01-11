@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '_reducers/store';
-import { saveFormationData, removeAFormation } from '../../utils/appUtilities';
+import { saveFormationData, removeAFormation, renameAFormation } from '../../utils/appUtilities';
 import { Formation } from '../../utils/types';
 import { setErrorMessage } from './appStateSlice';
 
@@ -56,6 +56,23 @@ const formationGridSlice = createSlice({
     },
     resetFormation() {
       return initialState;
+    },
+    renameFormation(state, action: PayloadAction<{ idx: number, name: string}>) {
+      const { idx, name } = action.payload;
+      const newForms = state.formations.map((item, index) => {
+        if (index !== idx) {
+          return item;
+        }
+        return {
+          ...item,
+          name: name,
+        };
+      });
+      return {
+        ...state,
+        formations: newForms,
+        isEdit: state.isEdit.map((value, index) => (index !== idx ? value : true)),
+      }
     },
     setFormationsData(state, action: PayloadAction<Formation[]>) {
       const count = action.payload.length;
@@ -133,6 +150,7 @@ const formationGridSlice = createSlice({
 export const {
   addShipToFormation,
   resetFormation,
+  renameFormation,
   setFormationsData,
   addNewFormationData,
   removeFormation,
@@ -213,6 +231,9 @@ export const formationAction = (
         });
         break;
       case 'RENAME':
+        await renameAFormation(gridIndex as number, formationName as string).then((result) => {
+          dispatch(renameFormation({ idx: gridIndex as number, name: formationName as string}))
+        });
         break;
       case 'SAVE':
         await saveFormationData(formationGrid.formations).then((result) => {

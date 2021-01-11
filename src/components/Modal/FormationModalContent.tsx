@@ -11,7 +11,7 @@ import ShipList from '../ShipList';
 import { AppContext } from '../../App';
 import PropTypes from 'prop-types';
 
-const FormationModalContent: React.FC<{ setModalOpen: (e: boolean) => void }> = ({ setModalOpen }) => {
+const FormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string, isOpen: boolean }) => void }> = ({ setModalOpen }) => {
   const { shipData } = useContext(AppContext);
   const dispatch = useDispatch();
   const appState = useSelector((state: RootState) => state.appState);
@@ -32,7 +32,7 @@ const FormationModalContent: React.FC<{ setModalOpen: (e: boolean) => void }> = 
         break;
     }
     dispatch(formationModalAction(FormationModalAction.Close, appState.cToggle));
-    setModalOpen(false);
+    setModalOpen({ modal: '', isOpen: false });
   };
 
   return (

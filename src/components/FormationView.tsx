@@ -18,6 +18,7 @@ import FormationGridItem from './FormationGridItem';
 import { AppContext } from '../App';
 import DataStore from '../utils/dataStore';
 import NewFormationModalContent from './Modal/NewFormationModalContent';
+import RenameFormationModalContent from './Modal/RenameFormationModalContent';
 
 ReactModal.setAppElement('#root');
 /**
@@ -30,7 +31,7 @@ const FormationView: React.FC = () => {
   const fData = useSelector((state: RootState) => state.formationGrid);
   const formationModal = useSelector((state: RootState) => state.formationModal);
   const appState = useSelector((state: RootState) => state.appState);
-  const [showModal, setModalOpen] = useState(false);
+  const [showModal, setModalOpen] = useState({ modal: '', isOpen: false});
   
   useEffect(() => {
     // Rebuild tooltip after selecting different formation or existing formation is modified.
@@ -40,7 +41,7 @@ const FormationView: React.FC = () => {
   const open = useCallback(
     (action: FormationModalAction, toggle: 'ALL' | 'OWNED', isOpen: boolean, index: number, data: DataStore) => () => {
       dispatch(formationModalAction(action, toggle, isOpen, index, data));
-      setModalOpen(true);
+      setModalOpen({ modal: '', isOpen: true });
     },
     [dispatch],
   );
@@ -85,7 +86,7 @@ const FormationView: React.FC = () => {
 
     return (
       <>
-        <div style={{ marginBottom: '15px', borderBottom: '1px solid var(--main-dark-border)' }}>
+        <div style={{ marginBottom: '15px', borderBottom: `1px solid var(--main-${config.themeColor}-border)` }}>
           {grid}
         </div>
         <div className="scroll">
@@ -95,21 +96,26 @@ const FormationView: React.FC = () => {
     );
   };
 
+  const renderModal = () => {
+    if (formationModal.isOpen) {
+      return <FormationModalContent setModalOpen={setModalOpen} />;
+    }
+    if (showModal.modal === 'new') {
+      return <NewFormationModalContent setModalOpen={setModalOpen} />;
+    } else if (showModal.modal === 'rename') {
+      return <RenameFormationModalContent setModalOpen={setModalOpen} />
+    }
+  }
+
   return (
     <PageTemplate>
       <section className="page-content">
         <ReactModal
           overlayClassName={`modal-overlay ${config.themeColor}`}
-          // isOpen={formationModal.isOpen}
-          isOpen={showModal}
+          isOpen={showModal.isOpen}
           className={`modal-container ${formationModal.isOpen ? 'formation' : 'new-formation'}`}
-          // onRequestClose={() => dispatch(formationModalAction(FormationModalAction.Close))}
         >
-          {formationModal.isOpen ? (
-            <FormationModalContent setModalOpen={setModalOpen} />
-          ) : (
-            <NewFormationModalContent setModalOpen={setModalOpen} />
-          )}
+          {renderModal()}
         </ReactModal>
         {config.formHelpTooltip ? (
           <ReactTooltip id="click-help" place="bottom" type="dark" effect="solid" aria-haspopup="true" delayShow={1000}>
@@ -126,8 +132,7 @@ const FormationView: React.FC = () => {
               <FormationDropDown />
               <button
                 className={`tab-btn normal ${config.themeColor}`}
-                // onClick={() => dispatch(formationAction(FormationAction.New))}
-                onClick={() => setModalOpen(true)}
+                onClick={() => setModalOpen({ modal: 'new', isOpen: true })}
               >
                 New
               </button>
@@ -149,7 +154,10 @@ const FormationView: React.FC = () => {
                   >
                     Save
                   </button>
-                  <button className={`tab-btn normal ${config.themeColor} `} onClick={() => console.log('TODO')}>
+                  <button 
+                    className={`tab-btn normal ${config.themeColor} `} 
+                    onClick={() => setModalOpen({ modal: 'rename', isOpen: true })}
+                  >
                     Rename
                   </button>
                 </>

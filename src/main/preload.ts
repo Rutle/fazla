@@ -25,6 +25,11 @@ contextBridge.exposeInMainWorld(
         return ipcRenderer.invoke(channel, ...arg);
       }
     },
+    electronRenameFormation: async (channel: string, ...arg: any): Promise<any> => {
+      if (channel === 'rename-formation-by-index') {
+        return ipcRenderer.invoke(channel, ...arg);
+      }
+    },
     /*
     closeApp: (channel: string, data: any) => {
       // whitelist channels

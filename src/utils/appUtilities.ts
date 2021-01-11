@@ -14,6 +14,7 @@ declare global {
         electronShell: (str: string) => Promise<void>;
         electronSaveData: (channel: string, ...arg: any) => Promise<BasicResponse>;
         electronRemoveAFormation: (channel: string, ...arg: any) => Promise<BasicResponse>;
+        electronRenameFormation: (channel: string, ...arg: any) => Promise<BasicResponse>;
         electronInitData: (channel: string, ...arg: any) => Promise< 
         {
           shipData: Ship[];
@@ -100,6 +101,12 @@ export const removeAFormation = async (index = 0): Promise<BasicResponse> => {
     return result;
   })
 };
+
+export const renameAFormation = async (idx: number, name: string): Promise<BasicResponse> => {
+  return await window.api.electronRenameFormation('rename-formation-by-index', { idx, name }).then((result: BasicResponse) => {
+    return result;
+  })
+}
 
 /**
  * Function that calls electron to save config to electron-store .json config file.

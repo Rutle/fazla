@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import RButton from '../RButton/RButton';
 import { FormationAction, formationAction } from '../../reducers/slices/formationGridSlice';
 
-const NewFormationModalContent: React.FC<{ setModalOpen: (e: boolean) => void }> = ({ setModalOpen }) => {
+const NewFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string, isOpen: boolean }) => void }> = ({ setModalOpen }) => {
   const dispatch = useDispatch();
   const config = useSelector((state: RootState) => state.config);
   const [nameVal, setNameVal] = useState('');
@@ -71,12 +71,12 @@ const NewFormationModalContent: React.FC<{ setModalOpen: (e: boolean) => void }>
             onClick={() => {
               console.log(nameVal);
               dispatch(formationAction(FormationAction.New, 0, nameVal, typeVal));
-              setModalOpen(false);
+              setModalOpen({ modal: '', isOpen: false });
             }}
           >
             Create
           </RButton>
-          <RButton themeColor={config.themeColor} onClick={() => setModalOpen(false)}>
+          <RButton themeColor={config.themeColor} onClick={() => setModalOpen({ modal: '', isOpen: false })}>
             Cancel
           </RButton>
         </div>

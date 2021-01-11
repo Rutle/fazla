@@ -205,6 +205,29 @@ ipcMain.handle('remove-formation-by-index', async (event, data) => {
   return { isOk: true, msg: 'Formation data saved succesfully.' };
 });
 
+ipcMain.handle('rename-formation-by-index', async (event, data) => {
+  try {
+    const idx = data.idx;
+    const newName = data.name;
+    const formationData = electronStore.get('formations') as Formation[];
+    const newForms = formationData.map((item, index) => {
+      if (index !== idx) {
+        return item;
+      }
+      return {
+        ...item,
+        name: newName,
+      };
+    });
+    electronStore.set({
+      formations: newForms,
+    });
+  } catch (e) {
+    return { isOk: false, msg: e.message };
+  }
+  return { isOk: true, msg: 'Formation name changed succesfully.'};
+})
+
 /**
  * Initialize by getting data from .json and config data from config file.
  */
