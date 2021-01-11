@@ -289,6 +289,13 @@ button.tab-btn.dark.inform {
   color: powderblue;
 }
 
+.ship-title-bar > div > span.Decisive:last-child {
+  background-image: linear-gradient(to bottom right, #AFA 15%, #AAF, #FAA 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .ship-title-bar > div > span.Elite:last-child {
   color: rgba(144, 98, 253, 0.616);
 }

@@ -76,13 +76,11 @@ export const configAction = (action: AppConfigAction, key?: string, value?: stri
       case 'SAVE':
         const { isEdit, ...newConfig } = config;
         await saveConfig(newConfig).then((result) => {
-          /*
           if (result.isOk) {
             dispatch(setEditState(false));
-          }*/
+          }
         });
         break;
-
       default:
         break;
     }

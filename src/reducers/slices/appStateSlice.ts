@@ -220,8 +220,7 @@ export const updateShipData = (
         try {
           dispatch(setCurrentState({ cState: 'SAVING', cMsg: 'Please wait while saving data.' }));
           const { isOk, updateDate } = await saveShipData(result);
-          // if (isOk) {
-          if (false) {
+          if (isOk) {
             dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating app state.' }));
             const dataArr = [...Object.keys(result).map((key) => result[key])];
             await shipData.setArray(dataArr);
@@ -238,7 +237,7 @@ export const updateShipData = (
               );
               dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
               dispatch(setShipCount(shipData.count));
-              // dispatch(setUpdateDate(updateDate as string));
+              dispatch(setUpdateDate(updateDate as string));
             });
           } else {
             throw new Error('There was a problem saving ship data.');

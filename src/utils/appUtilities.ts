@@ -99,11 +99,6 @@ export const removeAFormation = async (index = 0): Promise<BasicResponse> => {
   return await window.api.electronRemoveAFormation('remove-formation-by-index', index).then((result: BasicResponse) => {
     return result;
   })
-  /*
-  return await ipcRenderer.invoke('remove-formation-by-index', index).then((result: BasicResponse) => {
-    return result;
-  });
-  */
 };
 
 /**
@@ -114,11 +109,6 @@ export const saveConfig = async (data: AppConfig): Promise<BasicResponse> => {
   return await window.api.electronSaveData('save-config', data).then((result: BasicResponse) => {
     return result;
   })
-  /*
-  return await ipcRenderer.invoke('save-config', data).then((result: BasicResponse) => {
-    return result;
-  });
-  */
 };
 
 export const initData = async (): Promise< 
