@@ -5,26 +5,43 @@ import { RootState } from '../../reducers/rootReducer';
 import PropTypes from 'prop-types';
 import RButton from '../RButton/RButton';
 import { FormationAction, formationAction } from '../../reducers/slices/formationGridSlice';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const NewFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string, isOpen: boolean }) => void }> = ({ setModalOpen }) => {
   const dispatch = useDispatch();
   const config = useSelector((state: RootState) => state.config);
   const [nameVal, setNameVal] = useState('');
   const [typeVal, setTypeVal] = useState('normal');
+  const [inputFocus, setInputFocus] = useState(false);
 
   return (
     <>
       <div className="modal-title">Create new formation</div>
       <div className="modal-content">
         <div>
-          <input
-            id="name-input"
-            type="text"
-            className={`${config.themeColor}`}
-            placeholder={'Formation name'}
-            value={nameVal}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNameVal(e.target.value)}
-          />
+        <form>
+          <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
+            <input
+              id="name-input"
+              type="text"
+              className={`${config.themeColor}`}
+              placeholder={'Formation name'}
+              value={nameVal}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setNameVal(e.target.value);
+              }}
+              onFocus={() => setInputFocus(true)}
+              onBlur={() => setInputFocus(false)}
+            />
+            {nameVal.length > 0 ? (
+            <div className={`clearIcon ${config.themeColor}`} onClick={() => {
+              setNameVal('');
+            }}>
+              <FontAwesomeIcon icon={faTimes} />
+            </div> ) : <></>}
+          </div> 
+        </form>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
           <div className={`radio-group ${config.themeColor}`}>

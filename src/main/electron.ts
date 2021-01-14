@@ -171,7 +171,7 @@ ipcMain.handle('save-formation-data', async (event, data) => {
       formations: fData,
     });
   } catch (e) {
-    return { isOk: false, msg: e.message };
+    return { isOk: false, msg: 'Failed to save formation data.' };
   }
   return { isOk: true, msg: 'Formation data saved succesfully.' };
 });
@@ -183,7 +183,7 @@ ipcMain.handle('save-config', async (event, data) => {
   try {
     electronStore.set({ config: data });
   } catch (e) {
-    return { isOk: false, msg: e.message };
+    return { isOk: false, msg: 'Failed to save config data.' };
   }
   return { isOk: true, msg: 'Config data saved succesfully.' };
 });
@@ -200,7 +200,7 @@ ipcMain.handle('remove-formation-by-index', async (event, data) => {
       formations: newForms,
     });
   } catch (e) {
-    return { isOk: false, msg: e.message };
+    return { isOk: false, msg: 'Failed to remove formation.' };
   }
   return { isOk: true, msg: 'Formation data saved succesfully.' };
 });
@@ -223,7 +223,7 @@ ipcMain.handle('rename-formation-by-index', async (event, data) => {
       formations: newForms,
     });
   } catch (e) {
-    return { isOk: false, msg: e.message };
+    return { isOk: false, msg: 'Failed to rename formation.' };
   }
   return { isOk: true, msg: 'Formation name changed succesfully.'};
 })

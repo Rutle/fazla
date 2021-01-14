@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { setCurrentToggle } from '../reducers/slices/appStateSlice';
 import { SearchAction, updateSearch } from '../reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';
@@ -40,8 +40,8 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
       <div className="top-container">
         <CategoryOverlay themeColor={config.themeColor} />
         <form>
-          <div id="input-group">
-            <div className={`searchIcon ${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
+          <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
+            <div className={`searchIcon ${config.themeColor}`}>
               <FontAwesomeIcon icon={faSearch} />
             </div>
             <input
@@ -64,7 +64,21 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
               onFocus={() => setInputFocus(true)}
               onBlur={() => setInputFocus(false)}
             />
-          </div>
+            {searchValue.length > 0 ? (
+            <div className={`clearIcon ${config.themeColor}`} onClick={() => {
+              setSearchValue('');
+              dispatch(
+                updateSearch(shipData, SearchAction.SetName, {
+                  name: '',
+                  cat: '',
+                  param: '',
+                  list: appState.cToggle,
+                })
+              )
+            }}>
+              <FontAwesomeIcon icon={faTimes} />
+            </div> ) : <></>}
+          </div> 
         </form>
         <div className={`radio-group ${config.themeColor}`}>
           <input

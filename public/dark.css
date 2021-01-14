@@ -301,27 +301,30 @@ button.tab-btn.dark.inform {
 }
 
 /* #### Input #### */
-input[type="text"].dark,
+input[type="text"].dark {
+  color: inherit;
+  background-color: inherit;
+  border: 0;
+}
+
 input[type="url"].dark,
-.searchIcon.dark  {
+#input-group.dark {
   color: var(--main-dark-color);
   background-color: var(--main-dark-input-bg);
   border: 2px solid var(--main-dark-input-bg);
 }
 
-input[type="text"].dark:focus,
 input[type="url"].dark:focus,
-.searchIcon.dark.input-focus {
+#input-group.dark.input-focus {
   color: var(--main-dark-color);
   background-color: rgba(0,0,0,0.45);
   border: 2px solid var(--main-dark-input-focus-border);
 }
 
-.searchIcon.dark,
-.searchIcon.dark.input-focus {
-  border-right: 0px;
+.clearIcon.dark:hover,
+.clearIcon.dark.input-focus:hover {
+  background-color: var(--main-dark-hover-bg);
 }
-
 /* #### Grid #### */
 div.f-grid.dark div.f-header {
   border-bottom: 2px solid var(--main-dark-border);
@@ -489,6 +492,7 @@ div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
   
 }
 @media only screen and (max-width: 1340px) {
+  /*
   .formation-model-container div.ship-side-container div.top-container form div#input-group input[type="text"].dark {
     background-color: #323844;
     border: 2px solid var(--main-dark-border);
@@ -496,24 +500,13 @@ div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
   .formation-model-container div.ship-side-container div.top-container form div#input-group input[type="text"].dark:focus {
     background-color: rgba(0,0,0,0.45);
     border: 2px solid var(--main-dark-input-focus-border);
-  } 
+  }*/
 }
 
 @media only screen and (max-width: 900px) {
   div.grid-item.action > input[type="url"].dark {
     max-width: 450px;
   }
-  div.top-container form div#input-group input[type="text"].dark,
-  input[type="url"].dark {
-    background-color: #323844;
-    border: 2px solid var(--main-dark-input-bg);
-  }
-  div.top-container form div#input-group input[type="text"].dark:focus,
-  input[type="url"].dark:focus {
-    background-color: rgba(0,0,0,0.45);
-    border: 2px solid var(--main-dark-input-focus-border);
-    border-left: 2px solid var(--main-dark-input-focus-border);
-  } 
   div.grid-item.action > input[type="url"].dark {
     max-width: 550px;
   }

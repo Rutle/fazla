@@ -277,7 +277,7 @@ export const updateSearch = (
       }
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with performing search update.', eState: 'ERROR' }));
   }
 };
 export default searchParametersSlice.reducer;

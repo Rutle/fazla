@@ -41,7 +41,7 @@ export const addShip = (id: string, name: string): AppThunk => async (dispatch: 
       dispatch(addShipId(id));
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with adding ship to docks.', eState: 'ERROR' }));
   }
 };
 export default ownedShipListSlice.reducer;

@@ -557,7 +557,6 @@ div.rList.hidden {
   font-size: 14px;
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
-  /* flex-grow: 1; */
   margin-right: 1px;
 }
 
@@ -565,38 +564,26 @@ div.rList.hidden {
   margin-right: 0px;
 }
 
-#input-group,
-#input-group:focus {
-  display: flex;
-  box-sizing: border-box;
-  padding: 0px 2px 0px 2px;
-}
-
 input[type="text"],
 input[type="url"] {
   box-sizing: border-box;
+}
+
+#input-group {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  box-sizing: border-box;
+  border-radius: 2px;
+  height: 35px;
   transition: box-shadow .2s ease-in, border .2s ease-in, background-color .2s ease-in, width 0.2s ease-in, color .2s ease-in;
 }
 
-#search-input {
-  margin-top: 10px;
-  padding: 5px;
-  height: 35px;
-  width: 100%;
-  margin-bottom: 1px;
-  border-left: 0px;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-}
-
+#search-input,
 #name-input {
-  margin-top: 10px;
   padding: 5px;
-  height: 35px;
+  height: 31px;
   width: 100%;
-  margin-bottom: 1px;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
 }
 
 .text-input {
@@ -607,28 +594,21 @@ input[type="url"] {
   text-overflow: ellipsis;
   font-size: 14px;
   border-radius: 2px;
+  transition: box-shadow .2s ease-in, border .2s ease-in, background-color .2s ease-in, width 0.2s ease-in, color .2s ease-in;
 }
 
 .text-input:focus {
   flex-grow: 1;
 }
 
-.searchIcon {
+.searchIcon,
+.clearIcon {
   text-align: center;
   box-sizing: border-box;
-  width: 35px;
-  height: 35px;
+  width: 26px;
+  height: 31px;
   padding: 5px;
-  margin: 10px auto;
-  margin-bottom: 10px;
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
   transition: box-shadow .2s ease-in,border .2s ease-in,background-color .2s ease-in, color .2s ease-in;
-  border-right: 0px;
-}
-
-.searchIcon.input-focus {
-  border-right: 0px;
 }
 
 /* ##### GRID ##### */
@@ -638,7 +618,6 @@ input[type="url"] {
   padding: 1px;
   border-radius: 2px;
 }
-
 
 div.f-row {
   display: flex;
@@ -940,7 +919,7 @@ div.f-grid div.f-icon.bottom-emp {
   position: relative;
   width: 300px;
   max-height: 100px;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 
 .toast > .toast-right-content {
@@ -1052,12 +1031,12 @@ div.f-grid div.f-icon.bottom-emp {
     display: none;
     width: 0;
   }
-  div.top-container form div#input-group input[type="text"].dark,
+  /* div.top-container form div#input-group input[type="text"].dark,*/
   input[type="url"].dark {
     background-color: #323844;
     border: 2px solid var(--main-dark-input-bg);
   }
-  div.top-container form div#input-group input[type="text"].dark:focus,
+  /* div.top-container form div#input-group input[type="text"].dark:focus,*/
   input[type="url"].dark:focus {
     background-color: rgba(0,0,0,0.45);
     border: 2px solid var(--main-dark-input-focus-border);

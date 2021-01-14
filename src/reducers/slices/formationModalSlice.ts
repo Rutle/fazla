@@ -78,7 +78,7 @@ export const formationModalAction = (
         break;
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with formation modal action.', eState: 'ERROR' }));
   }
 };
 export default formationModalSlice.reducer;

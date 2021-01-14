@@ -85,7 +85,7 @@ export const configAction = (action: AppConfigAction, key?: string, value?: stri
         break;
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with a config action.', eState: 'ERROR' }));
   }
 };
 

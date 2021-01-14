@@ -254,7 +254,7 @@ export const formationAction = (
         break;
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
+    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with formation action.', eState: 'ERROR' }));
   }
 };
 
