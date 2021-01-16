@@ -374,6 +374,7 @@ div.f-grid.dark div.content > div.Aircraft.Carrier,
 }
 
 div.f-grid.dark div.content > div.Battleship,
+div.f-grid.dark div.content > div.Battlecruiser,
 .rList .rList-item.dark > div.hullTypeAbb.Battleship, 
 .rList .rList-item.dark > div.hullTypeAbb.Battlecruiser {
   background-color: #3e1c1a;
@@ -399,7 +400,8 @@ div.f-grid.dark div.content > div.Monitor,
 }
 
 div.f-grid.dark div.content > div.Repair.Ship,
-.rList .rList-item.dark > div.hullTypeAbb.Repair.Ship {
+.rList .rList-item.dark > div.hullTypeAbb.Repair.Ship,
+.rList .rList-item.dark > div.hullTypeAbb.Repair {
   background-color: #1a4638;
 }
 
