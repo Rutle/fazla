@@ -20,11 +20,11 @@ const NewFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string, is
       <div className="modal-title">Create new formation</div>
       <div className="modal-content">
         <div>
-        <form>
           <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
             <input
               id="name-input"
               type="text"
+              spellCheck="false"
               className={`${config.themeColor}`}
               placeholder={'Formation name'}
               value={nameVal}
@@ -33,6 +33,12 @@ const NewFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string, is
               }}
               onFocus={() => setInputFocus(true)}
               onBlur={() => setInputFocus(false)}
+              onKeyUp={(e) => { 
+                if (e.key === 'Enter') {
+                  dispatch(formationAction(FormationAction.New, 0, nameVal, typeVal));
+                  setModalOpen({ modal: '', isOpen: false });
+                } 
+              }}
             />
             {nameVal.length > 0 ? (
             <div className={`clearIcon ${config.themeColor}`} onClick={() => {
@@ -41,7 +47,6 @@ const NewFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string, is
               <FontAwesomeIcon icon={faTimes} />
             </div> ) : <></>}
           </div> 
-        </form>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
           <div className={`radio-group ${config.themeColor}`}>
@@ -51,7 +56,6 @@ const NewFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string, is
               value="normal"
               checked={typeVal === 'normal'}
               onChange={() => {
-                console.log(typeVal);
                 setTypeVal('normal');
               }}
             />
@@ -68,7 +72,6 @@ const NewFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string, is
               checked={typeVal === 'siren'}
               onChange={() => {
                 setTypeVal('siren');
-                console.log(typeVal);
               }}
             />
             <label
@@ -86,7 +89,6 @@ const NewFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string, is
           <RButton
             themeColor={config.themeColor}
             onClick={() => {
-              console.log(nameVal);
               dispatch(formationAction(FormationAction.New, 0, nameVal, typeVal));
               setModalOpen({ modal: '', isOpen: false });
             }}

@@ -77,6 +77,8 @@
         "@typescript-eslint/no-use-before-define": "warn",
         "react/jsx-filename-extension": "off",
         "linebreak-style": ["error", "windows"],
+        "semi": "off",
+        "@typescript-eslint/semi": ["error"],
         "no-underscore-dangle": [
           "error",
           {

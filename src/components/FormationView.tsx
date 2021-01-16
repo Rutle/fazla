@@ -106,7 +106,12 @@ const FormationView: React.FC = () => {
       return <RenameFormationModalContent setModalOpen={setModalOpen} />
     }
   }
-
+  const requestClose = () => {
+    if (showModal.isOpen) {
+      dispatch(formationModalAction(FormationModalAction.Close, appState.cToggle));
+      setModalOpen({ modal: '', isOpen: false });
+    }
+  }
   return (
     <PageTemplate>
       <section className="page-content">
@@ -114,6 +119,7 @@ const FormationView: React.FC = () => {
           overlayClassName={`modal-overlay ${config.themeColor}`}
           isOpen={showModal.isOpen}
           className={`modal-container ${formationModal.isOpen ? 'formation' : 'new-formation'}`}
+          onRequestClose={requestClose}
         >
           {renderModal()}
         </ReactModal>

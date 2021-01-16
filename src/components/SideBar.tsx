@@ -39,7 +39,6 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
     <div className="ship-side-container">
       <div className="top-container">
         <CategoryOverlay themeColor={config.themeColor} />
-        <form>
           <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
             <div className={`searchIcon ${config.themeColor}`}>
               <FontAwesomeIcon icon={faSearch} />
@@ -50,7 +49,6 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
               className={`${config.themeColor}`}
               value={searchValue}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                console.log(e.target.value);
                 setSearchValue(e.target.value);
                 dispatch(
                   updateSearch(shipData, SearchAction.SetName, {
@@ -79,7 +77,6 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
               <FontAwesomeIcon icon={faTimes} />
             </div> ) : <></>}
           </div> 
-        </form>
         <div className={`radio-group ${config.themeColor}`}>
           <input
             id="all"

@@ -19,11 +19,11 @@ const RenameFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string,
       <div className="modal-title">Rename formation</div>
       <div className="modal-content">
         <div>
-        <form>
           <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
             <input
               id="name-input"
               type="text"
+              spellCheck="false"
               className={`${config.themeColor}`}
               placeholder={'Formation name'}
               value={nameVal}
@@ -32,6 +32,12 @@ const RenameFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string,
               }}
               onFocus={() => setInputFocus(true)}
               onBlur={() => setInputFocus(false)}
+              onKeyUp={(e) => { 
+                if (e.key === 'Enter') {
+                  dispatch(formationAction(FormationAction.Rename, 0, nameVal));
+                  setModalOpen({ modal: '', isOpen: false });
+                } 
+              }}
             />
             {nameVal.length > 0 ? (
             <div className={`clearIcon ${config.themeColor}`} onClick={() => {
@@ -40,7 +46,6 @@ const RenameFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string,
               <FontAwesomeIcon icon={faTimes} />
             </div> ) : <></>}
           </div> 
-        </form>
         </div>
       </div>
 
@@ -49,7 +54,6 @@ const RenameFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string,
           <RButton
             themeColor={config.themeColor}
             onClick={() => {
-              console.log(nameVal);
               dispatch(formationAction(FormationAction.Rename, 0, nameVal));
               setModalOpen({ modal: '', isOpen: false });
             }}

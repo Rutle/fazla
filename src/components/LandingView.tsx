@@ -83,21 +83,22 @@ const LandingView: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                justifyContent: 'center',
                 width: '100%',
                 height: '100%',
               }}
             >
               {appState.cState === 'RUNNING' ? (
                 <>
-                  <div className="info-text">Program is ready. Please continue.</div>
+                  { /* <div className="info-text">Program is ready. Please continue.</div>*/ }
                   <RButton
                     themeColor={config.themeColor}
                     onClick={() => {
                       history.push('/shipdetails');
                     }}
-                    extraStyle={{ marginTop: '30px', height: '50px', width: '20%' }}
+                    extraStyle={{ marginTop: '30px', height: '50px', width: '30%' }}
                   >
-                    Continue
+                    Program is ready. Please continue.
                   </RButton>
                 </>
               ) : (

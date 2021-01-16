@@ -227,17 +227,18 @@ export const formationAction = (
         break;
       case 'REMOVE':
         await removeAFormation(formIdx).then((result) => {
-          dispatch(removeFormation(formIdx));
+          if (result.isOk) dispatch(removeFormation(formIdx));
+          dispatch(setErrorMessage({ cState: "RUNNING", eMsg: result.msg, eState: 'WARNING' }));
         });
         break;
       case 'RENAME':
         await renameAFormation(gridIndex as number, formationName as string).then((result) => {
-          dispatch(renameFormation({ idx: gridIndex as number, name: formationName as string}))
+          if (result.isOk) dispatch(renameFormation({ idx: gridIndex as number, name: formationName as string}));
         });
         break;
       case 'SAVE':
         await saveFormationData(formationGrid.formations).then((result) => {
-          dispatch(toggleIsEdit(formIdx));
+          if (result.isOk) dispatch(toggleIsEdit(formIdx));
         });
         break;
       case 'ADDSHIP':
@@ -248,7 +249,9 @@ export const formationAction = (
         dispatch(removeShipFromFormation({ gridIndex: gridIndex as number, selectedIndex: formIdx }));
         break;
       case 'SAVEALL':
-        await saveFormationData(formationGrid.formations);
+        await saveFormationData(formationGrid.formations).then((result) => {
+          if (!result.isOk) dispatch(setErrorMessage({ cState: "ERROR", eMsg: result.msg, eState: "ERROR" }));
+        });
         break;
       default:
         break;
