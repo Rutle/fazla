@@ -21,7 +21,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
     (
       data: DataStore,
       action: SearchAction,
-      options: { name: string; cat: string; param: string; list: 'ALL' | 'OWNED' }
+      options: { name: string; cat: string; param: string; list: 'ALL' | 'OWNED'; id: string }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       dispatch(updateSearch(data, action, options));
@@ -42,6 +42,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
                 cat: 'nationality',
                 param: '',
                 list: appState.cToggle,
+                id: '',
               })}
             >
               All
@@ -58,6 +59,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
                     cat: 'nationality',
                     param: key,
                     list: appState.cToggle,
+                    id: '',
                   })}
                 >
                   {nationCategories[key]}
@@ -76,6 +78,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
                 cat: 'hullType',
                 param: '',
                 list: appState.cToggle,
+                id: '',
               })}
             >
               All
@@ -92,6 +95,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
                     cat: 'hullType',
                     param: key,
                     list: appState.cToggle,
+                    id: '',
                   })}
                 >
                   {hullTypesAbb[key]}
@@ -110,6 +114,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
                 cat: 'rarity',
                 param: '',
                 list: appState.cToggle,
+                id: '',
               })}
             >
               All
@@ -126,6 +131,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
                     cat: 'rarity',
                     param: value,
                     list: appState.cToggle,
+                    id: '',
                   })}
                 >
                   {value}

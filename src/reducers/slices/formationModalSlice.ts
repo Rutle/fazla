@@ -42,13 +42,15 @@ export const formationModalAction = (
   list?: 'ALL' | 'OWNED',
   isOpen?: boolean,
   gridIndex?: number,
-  shipData?: DataStore,
+  shipData?: DataStore
+  // eslint-disable-next-line @typescript-eslint/require-await
 ): AppThunk => async (dispatch: AppDispatch) => {
   try {
+    console.log('formationModalAction');
     switch (action) {
       case 'OPEN':
         if (isOpen !== undefined && gridIndex !== undefined && shipData && list) {
-          let fleet: "ALL" | "VANGUARD" | "MAIN";
+          let fleet: 'ALL' | 'VANGUARD' | 'MAIN';
           if (MAININDEX.includes(gridIndex)) {
             fleet = 'MAIN';
           } else if (VANGUARDINDEX.includes(gridIndex)) {
@@ -58,11 +60,11 @@ export const formationModalAction = (
           }
           // const fleet = gridIndex !== undefined && gridIndex <= 2 ? 'MAIN' : 'VANGUARD';
           batch(() => {
-            dispatch(setFleet({ fleet: fleet }));
+            dispatch(setFleet({ fleet }));
             dispatch(toggleSearchState(list));
-            dispatch(updateSearch(shipData, SearchAction.UpdateList, { list: list }));
+            dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
           });
-          dispatch(openModal({ isOpen: isOpen, gridIndex: gridIndex }));
+          dispatch(openModal({ isOpen, gridIndex }));
         }
         break;
       case 'CLOSE':
@@ -78,7 +80,9 @@ export const formationModalAction = (
         break;
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with formation modal action.', eState: 'ERROR' }));
+    dispatch(
+      setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with formation modal action.', eState: 'ERROR' })
+    );
   }
 };
 export default formationModalSlice.reducer;

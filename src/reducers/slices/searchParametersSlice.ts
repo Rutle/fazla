@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { batch } from 'react-redux';
 import { AppThunk, AppDispatch } from '_reducers/store';
 import DataStore from '../../utils/dataStore';
-import { SearchParams, ShipSimple } from '../../utils/types';
+import { BooleanSearchParam, SearchParams, ShipSimple } from '../../utils/types';
 import { setErrorMessage, setListState, toggleSearchState } from './appStateSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import { removeShip } from './ownedShipListSlice';
@@ -74,8 +74,13 @@ const searchParametersSlice = createSlice({
   reducers: {
     toggleParameter(state, action: PayloadAction<{ cat: string; param: string }>) {
       const { cat, param } = action.payload;
-      const oldState = state[cat][param];
+      // const oldState = state;
+      // const val = oldState[cat];
+      const od = state[cat] as BooleanSearchParam;
+      const oldVal = od[param];
+      // const oldState = state[cat][param] as boolean;
       let newArray = [];
+      /*
       const newObj = {
         ...state,
         [cat]: {
@@ -84,33 +89,42 @@ const searchParametersSlice = createSlice({
           [param]: !state[cat][param],
         },
       };
+      */
+      const newObj = {
+        ...state,
+        [cat]: {
+          ...(state[cat] as BooleanSearchParam),
+          All: false,
+          [param]: !oldVal,
+        },
+      };
       switch (cat) {
         case 'nationality':
-          if (oldState) {
-            newArray = state['nationalityArr'].slice().filter((item) => item !== param);
-            newObj['nationalityArr'] = newArray;
+          if (oldVal) {
+            newArray = state.nationalityArr.slice().filter((item) => item !== param);
+            newObj.nationalityArr = newArray;
           } else {
-            newArray = state['nationalityArr'].slice();
+            newArray = state.nationalityArr.slice();
             newArray.push(param);
-            newObj['nationalityArr'] = newArray;
+            newObj.nationalityArr = newArray;
           }
           break;
         case 'hullType':
-          if (oldState) {
-            newObj['hullTypeArr'] = state['hullTypeArr'].slice().filter((item) => item !== param);
+          if (oldVal) {
+            newObj.hullTypeArr = state.hullTypeArr.slice().filter((item) => item !== param);
           } else {
-            newArray = state['hullTypeArr'].slice();
+            newArray = state.hullTypeArr.slice();
             newArray.push(param);
-            newObj['hullTypeArr'] = newArray;
+            newObj.hullTypeArr = newArray;
           }
           break;
         case 'rarity':
-          if (oldState) {
-            newObj['rarityArr'] = state.rarityArr.slice().filter((item) => item !== param);
+          if (oldVal) {
+            newObj.rarityArr = state.rarityArr.slice().filter((item) => item !== param);
           } else {
-            newArray = state['rarityArr'].slice();
+            newArray = state.rarityArr.slice();
             newArray.push(param);
-            newObj['rarityArr'] = newArray;
+            newObj.rarityArr = newArray;
           }
           break;
         default:
@@ -120,16 +134,17 @@ const searchParametersSlice = createSlice({
     },
     toggleAll(state, action: PayloadAction<string>) {
       const cat = action.payload;
+      const oldVal = (state[cat] as BooleanSearchParam).All;
       const newObject = Object.fromEntries(
         Object.entries(state[cat])
           .slice()
-          .map(([key, val]) => [key, false]),
+          .map(([key, val]) => [key, false])
       );
       const newState = {
         ...state,
         [cat]: {
           ...newObject,
-          All: !state[cat]['All'],
+          All: !oldVal,
         },
       };
       switch (cat) {
@@ -173,36 +188,43 @@ export const updateSearch = (
   shipData: DataStore,
   action: SearchAction,
   args: {
-    name?: string;
-    cat?: string;
-    param?: string;
+    name: string;
+    cat: string;
+    param: string;
     list: 'OWNED' | 'ALL';
-    id?: string;
-  },
+    id: string;
+  }
 ): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const oldParams = getState().searchParameters;
-    const name = args.name ? args.name : '';
-    const cat = args.cat ? args.cat : '';
-    const param = args.param ? args.param : '';
-    const list = args.list;
-    const id = args.id ? args.id : '';
+    // const name = args.name ? args.name : '';
+    // const cat = args.cat ? args.cat : '';
+    // const param = args.param ? args.param : '';
+    const { name, cat, param, list, id } = args;
+    // const id = args.id ? args.id : '';
+    console.log(action, args);
 
     switch (action) {
-      case 'TOGGLEPARAMETER':
-        const curParamValue = oldParams[cat][param];
-        const currentValues = Object.values(oldParams[cat]);
-        const trueCount = currentValues.reduce((a: number, v) => (v === true ? a + 1 : a), 0);
+      case 'TOGGLEPARAMETER': {
+        let curParamValue = false;
+        let curParamList: { [key: string]: boolean } = {};
+        curParamList = oldParams[cat] as { [key: string]: boolean };
+        curParamValue = curParamList[param];
+        const trueCount = Object.keys(curParamList).reduce<number>(
+          (a: number, v: string) => (curParamList[v] ? a + 1 : a),
+          0
+        );
         // Check if you are toggling the only true paramater back to false
         // -> toggle all parameter to true.
         if (curParamValue && trueCount === 1) {
           dispatch(toggleAll(cat));
           dispatch(toggleSearchState(list));
         } else {
-          dispatch(toggleParameter({ cat: cat, param: param }));
+          dispatch(toggleParameter({ cat, param }));
           dispatch(toggleSearchState(list));
         }
         break;
+      }
       case 'TOGGLEALL':
         dispatch(toggleAll(cat));
         dispatch(toggleSearchState(list));
@@ -240,27 +262,29 @@ export const updateSearch = (
       const oLen = ownedSearch.length;
       batch(() => {
         if (appState.cToggle === 'ALL' && aLen > 0 && list === 'ALL') {
-          const { id, index } = allShipsSearch[0];
-          dispatch(setDetails({ id, index }));
+          const idd = allShipsSearch[0].id;
+          const { index } = allShipsSearch[0];
+          dispatch(setDetails({ id: idd, index }));
           if (aLen !== 0) {
             dispatch(
               setListState({
                 key: 'ALL',
                 data: { id: allShipsSearch[0].id, index: allShipsSearch[0].index, isSearchChanged: false },
-              }),
+              })
             );
           } else {
             dispatch(setListState({ key: 'ALL', data: { id: 'NONE', index: NaN, isSearchChanged: false } }));
           }
         } else if (appState.cToggle === 'OWNED' && oLen > 0 && list === 'OWNED') {
-          const { id, index } = ownedSearch[0];
-          dispatch(setDetails({ id, index }));
+          const idd = ownedSearch[0].id;
+          const { index } = ownedSearch[0];
+          dispatch(setDetails({ id: idd, index }));
           if (oLen !== 0) {
             dispatch(
               setListState({
                 key: 'OWNED',
                 data: { id: ownedSearch[0].id, index: ownedSearch[0].index, isSearchChanged: false },
-              }),
+              })
             );
           } else {
             dispatch(setListState({ key: 'OWNED', data: { id: 'NONE', index: NaN, isSearchChanged: false } }));
@@ -277,7 +301,10 @@ export const updateSearch = (
       }
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with performing search update.', eState: 'ERROR' }));
+    if (e instanceof Error) console.log(e.message);
+    dispatch(
+      setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with performing search update.', eState: 'ERROR' })
+    );
   }
 };
 export default searchParametersSlice.reducer;

@@ -1,13 +1,17 @@
 import { AppConfig, Formation, Ship, BasicResponse } from './types';
+
 declare global {
   interface Window {
-      api: {
-        electronIpcSend: (channel: string, ...arg: any) => void;
-        electronShell: (str: string) => Promise<void>;
-        electronSaveData: (channel: string, ...arg: any) => Promise<BasicResponse>;
-        electronRemoveAFormation: (channel: string, ...arg: any) => Promise<BasicResponse>;
-        electronRenameFormation: (channel: string, ...arg: any) => Promise<BasicResponse>;
-        electronInitData: (channel: string, ...arg: any) => Promise< 
+    api: {
+      electronIpcSend: (channel: string, ...arg: any) => void;
+      electronShell: (str: string) => Promise<void>;
+      electronSaveData: (channel: string, ...arg: any) => Promise<BasicResponse>;
+      electronRemoveAFormation: (channel: string, ...arg: any) => Promise<BasicResponse>;
+      electronRenameFormation: (channel: string, ...arg: any) => Promise<BasicResponse>;
+      electronInitData: (
+        channel: string,
+        ...arg: any
+      ) => Promise<
         {
           shipData: Ship[];
           config: AppConfig;
@@ -15,7 +19,7 @@ declare global {
           formations: Formation[];
         } & BasicResponse
       >;
-      }
+    };
   }
 }
 // Renderer to Main
@@ -35,12 +39,6 @@ export const maximizeWindow = (): void => {
   window.api.electronIpcSend('maximize-application');
 };
 
-const openUrl = async (str: string) => {
-  if (urlValidation(str)) {
-    await window.api.electronShell(str);
-  }
-};
-
 export const openLogs = (): void => {
   window.api.electronIpcSend('open-logs');
 };
@@ -50,7 +48,7 @@ export const openLogs = (): void => {
  * @param data Data that is saved to .json.
  */
 export const saveShipData = async (data = {}): Promise<BasicResponse> => {
-  return await window.api.electronSaveData('save-ship-data', data).then((result: BasicResponse) => {
+  return window.api.electronSaveData('save-ship-data', data).then((result: BasicResponse) => {
     return result;
   });
 };
@@ -60,9 +58,9 @@ export const saveShipData = async (data = {}): Promise<BasicResponse> => {
  * @param {string[]} data Owned ship data to be saved to config.
  */
 export const saveOwnedShipData = async (data: string[] = []): Promise<BasicResponse> => {
-  return await window.api.electronSaveData('save-owned-ships', data).then((result: BasicResponse) => {
+  return window.api.electronSaveData('save-owned-ships', data).then((result: BasicResponse) => {
     return result;
-  })
+  });
   /*
   return await ipcRenderer.invoke('save-owned-ships', data).then((result: BasicResponse) => {
     return result;
@@ -74,9 +72,9 @@ export const saveOwnedShipData = async (data: string[] = []): Promise<BasicRespo
  * @param {Formation[]} data Formation data
  */
 export const saveFormationData = async (data: Formation[] = []): Promise<BasicResponse> => {
-  return await window.api.electronSaveData('save-formation-data', data).then((result: BasicResponse) => {
+  return window.api.electronSaveData('save-formation-data', data).then((result: BasicResponse) => {
     return result;
-  })
+  });
   /*
   return await ipcRenderer.invoke('save-formation-data', data).then((result: BasicResponse) => {
     return result;
@@ -88,28 +86,30 @@ export const saveFormationData = async (data: Formation[] = []): Promise<BasicRe
  * Function that calls electron to remove a formation from electron-store .json config file.
  */
 export const removeAFormation = async (index = 0): Promise<BasicResponse> => {
-  return await window.api.electronRemoveAFormation('remove-formation-by-index', index).then((result: BasicResponse) => {
+  return window.api.electronRemoveAFormation('remove-formation-by-index', index).then((result: BasicResponse) => {
     return result;
-  })
+  });
 };
 
 export const renameAFormation = async (idx: number, name: string): Promise<BasicResponse> => {
-  return await window.api.electronRenameFormation('rename-formation-by-index', { idx, name }).then((result: BasicResponse) => {
-    return result;
-  })
-}
+  return window.api
+    .electronRenameFormation('rename-formation-by-index', { idx, name })
+    .then((result: BasicResponse) => {
+      return result;
+    });
+};
 
 /**
  * Function that calls electron to save config to electron-store .json config file.
  * @param {AppConfig} data Config data
  */
 export const saveConfig = async (data: AppConfig): Promise<BasicResponse> => {
-  return await window.api.electronSaveData('save-config', data).then((result: BasicResponse) => {
+  return window.api.electronSaveData('save-config', data).then((result: BasicResponse) => {
     return result;
-  })
+  });
 };
 
-export const initData = async (): Promise< 
+export const initData = async (): Promise<
   {
     shipData: Ship[];
     config: AppConfig;
@@ -117,11 +117,12 @@ export const initData = async (): Promise<
     formations: Formation[];
   } & BasicResponse
 > => {
-  return window.api.electronInitData('initData')
+  return window.api
+    .electronInitData('initData')
     .then(
       (
-        result: { shipData: Ship[]; config: AppConfig; ownedShips: string[]; formations: Formation[] } & BasicResponse,
-      ) => result,
+        result: { shipData: Ship[]; config: AppConfig; ownedShips: string[]; formations: Formation[] } & BasicResponse
+      ) => result
     );
 };
 
@@ -137,6 +138,11 @@ export const urlValidation = (str: string): boolean => {
   return re.test(str);
 };
 
+const openUrl = async (str: string) => {
+  if (urlValidation(str)) {
+    await window.api.electronShell(str);
+  }
+};
 /* https://stackoverflow.com/a/57888548 */
 export const fetchWithTimeout = (url: string, ms: number): Promise<Response> => {
   const controller = new AbortController();

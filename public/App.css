@@ -510,6 +510,7 @@ div.rList.hidden {
   white-space: nowrap;
   overflow: hidden;
   height: 29px;
+  width: 100%;
   border-radius: inherit;
   border-top-right-radius: 0px!important;
   border-bottom-right-radius: 0px!important;

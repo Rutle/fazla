@@ -202,11 +202,7 @@ button.dark {
   box-shadow: inset 0px 1px 0px 0px var(--main-dark-input-bg);
 	background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 5%, var(--main-dark-button-bottom-bg) 100%);
 }
-/*
-button.btn.dark {
-  border: 1px solid var(--main-dark-border);
-}
-*/
+
 .btn.graphic.dark {
   border: 1px solid #000000;
 }
@@ -241,7 +237,12 @@ button.tab-btn.dark.inform {
   text-decoration-line: underline;
   text-decoration-style: dotted;
 }
-
+.rList button.rList-item.btn.flat.dark {
+  background-color: var(--main-dark-item-bg);
+}
+.rList button.rList-item.btn.flat.dark.selected {
+  background-color: var(--main-dark-selected-bg);
+}
 /* #### Formation menu ##### */
 .formation-dropdown-menu.dark {
   border: var(--main-dark-border);
@@ -342,30 +343,6 @@ div.f-grid.dark div.f-icon {
   background-color: var(--main-dark-title-bg);
   border: 1px solid var(--main-dark-border);
 }
-/*
-button.btn.dark.selected::after,
-button.tab-btn.dark.selected::after {
-  content: "";
-  display: block;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  border: transparent;
-  border-radius: 3px;
-  box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg);
-} */
-
-.rList .rList-item.btn.flat.dark.selected::after {
-  /* background-color: var(--main-dark-selected-bg);*/
-  content: "";
-  display: block;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  border: transparent;
-  border-radius: 3px;
-  box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg);
-}
 
 /* #### hull types #### */
 div.f-grid.dark div.content > div.Aircraft.Carrier,
@@ -430,8 +407,6 @@ div.f-grid.dark div.f-row.pink {
 
 div.f-grid.dark div.f-row.pink > div.grid-item.name {
   background-color: rgba(255, 192, 203, 0.12);
-  /*color: rgba(255, 192, 203, 0.65);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.411);*/
 }
 
 div.f-grid.dark div.f-row.gold {
@@ -442,8 +417,6 @@ div.f-grid.dark div.f-row.gold {
 
 div.f-grid.dark div.f-row.gold > div.grid-item.name {
   background-color: rgba(255, 215, 0, 0.12);
-  /*color: rgba(255, 240, 152, 0.767);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.555);*/
 }
 
 div.f-grid.dark div.f-row.deepskyblue {
@@ -454,8 +427,6 @@ div.f-grid.dark div.f-row.deepskyblue {
 
 div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
   background-color: rgba(0,191,255, 0.12);
-  /*color: rgba(0, 191, 255, 0.65);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.411);*/
 }
 
 .toast-container.dark > .toast {

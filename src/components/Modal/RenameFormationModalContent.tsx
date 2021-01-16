@@ -1,14 +1,19 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../reducers/rootReducer';
 import PropTypes from 'prop-types';
-import RButton from '../RButton/RButton';
-import { FormationAction, formationAction } from '../../reducers/slices/formationGridSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { updateSearch, SearchAction } from '_/reducers/slices/searchParametersSlice';
+import RButton from '../RButton/RButton';
+import { FormationAction, formationAction } from '../../reducers/slices/formationGridSlice';
+import { RootState } from '../../reducers/rootReducer';
 
-const RenameFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string, isOpen: boolean }) => void }> = ({ setModalOpen }) => {
+// eslint-disable-next-line no-empty-pattern
+const RenameFormationModalContent: React.FC<{ setModalOpen: ({}: { modal: string; isOpen: boolean }) => void }> = ({
+  setModalOpen,
+}) => {
   const dispatch = useDispatch();
   const config = useSelector((state: RootState) => state.config);
   const [nameVal, setNameVal] = useState('');
@@ -25,27 +30,33 @@ const RenameFormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string,
               type="text"
               spellCheck="false"
               className={`${config.themeColor}`}
-              placeholder={'Formation name'}
+              placeholder="Formation name"
               value={nameVal}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setNameVal(e.target.value);
               }}
               onFocus={() => setInputFocus(true)}
               onBlur={() => setInputFocus(false)}
-              onKeyUp={(e) => { 
+              onKeyUp={(e) => {
                 if (e.key === 'Enter') {
                   dispatch(formationAction(FormationAction.Rename, 0, nameVal));
                   setModalOpen({ modal: '', isOpen: false });
-                } 
+                }
               }}
             />
             {nameVal.length > 0 ? (
-            <div className={`clearIcon ${config.themeColor}`} onClick={() => {
-              setNameVal('');
-            }}>
-              <FontAwesomeIcon icon={faTimes} />
-            </div> ) : <></>}
-          </div> 
+              <div
+                className={`clearIcon ${config.themeColor}`}
+                onClick={() => {
+                  setNameVal('');
+                }}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </div>
 

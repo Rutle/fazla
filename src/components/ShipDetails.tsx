@@ -38,7 +38,15 @@ const ShipDetails: React.FC = () => {
 
   const removeFromOwned = useCallback(() => {
     if (ship) {
-      dispatch(updateSearch(shipData, SearchAction.RemoveShip, { list: appState.cToggle, id: ship.id }));
+      dispatch(
+        updateSearch(shipData, SearchAction.RemoveShip, {
+          name: '',
+          cat: '',
+          param: '',
+          list: appState.cToggle,
+          id: ship.id,
+        })
+      );
       if (config.isToast) addToast('info', 'Docks', `${ship.names.code} removed from docks.`);
     }
   }, [dispatch, addToast, appState.cToggle, ship, shipData, config.isToast]);

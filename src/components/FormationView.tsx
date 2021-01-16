@@ -1,17 +1,17 @@
 /* eslint-disable react/prop-types */
 import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ReactTooltip from 'react-tooltip';
+import { faMouse } from '@fortawesome/free-solid-svg-icons';
+import ReactModal from 'react-modal';
 import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
 import FormationModalContent from './Modal/FormationModalContent';
-import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
 import FormationDropDown from './DropDown/FormationDropDown';
-import ReactTooltip from 'react-tooltip';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMouse } from '@fortawesome/free-solid-svg-icons';
-import ReactModal from 'react-modal';
 import { formationModalAction, FormationModalAction } from '../reducers/slices/formationModalSlice';
 import { Ship } from '../utils/types';
 import FormationGridItem from './FormationGridItem';
@@ -31,19 +31,19 @@ const FormationView: React.FC = () => {
   const fData = useSelector((state: RootState) => state.formationGrid);
   const formationModal = useSelector((state: RootState) => state.formationModal);
   const appState = useSelector((state: RootState) => state.appState);
-  const [showModal, setModalOpen] = useState({ modal: '', isOpen: false});
-  
+  const [showModal, setModalOpen] = useState({ modal: '', isOpen: false });
+
   useEffect(() => {
     // Rebuild tooltip after selecting different formation or existing formation is modified.
     ReactTooltip.rebuild();
-  }, [fData])
+  }, [fData]);
 
   const open = useCallback(
     (action: FormationModalAction, toggle: 'ALL' | 'OWNED', isOpen: boolean, index: number, data: DataStore) => () => {
       dispatch(formationModalAction(action, toggle, isOpen, index, data));
       setModalOpen({ modal: '', isOpen: true });
     },
-    [dispatch],
+    [dispatch]
   );
   const renderContent = (index: number) => {
     // Filter ship data by taking only ships that are in the formations.
@@ -52,16 +52,15 @@ const FormationView: React.FC = () => {
       .filter((ship) => fData.formations[index].data.includes(ship.id))
       .reduce(
         (accumulator, currentValue) => Object.assign(accumulator, { [currentValue.id]: currentValue }),
-        {} as { [key: string]: Ship },
+        {} as { [key: string]: Ship }
       );
-
     const fleetCount = fData.formations[index].data.length / 6;
     const grid = [];
     const passives = [];
-    for (let idx = 0; idx < fleetCount; idx++) {
+    for (let idx = 0; idx < fleetCount; idx += 1) {
       const temp = fData.formations[index].data.slice(idx * 6, idx * 6 + 6);
       grid.push(
-        <FormationGrid key={idx} themeColor={config.themeColor} isTitle={idx === 0 ? true : false}>
+        <FormationGrid key={idx} themeColor={config.themeColor} isTitle={idx === 0}>
           {temp.map((id, idxx) => (
             <FormationGridItem
               key={`${id}-${idx * 6 + idxx}`}
@@ -71,7 +70,7 @@ const FormationView: React.FC = () => {
               onClick={open(FormationModalAction.Open, appState.cToggle, true, idx * 6 + idxx, shipData)}
             />
           ))}
-        </FormationGrid>,
+        </FormationGrid>
       );
       passives.push(
         <FormationPassives
@@ -80,38 +79,37 @@ const FormationView: React.FC = () => {
           formation={temp}
           themeColor={config.themeColor}
           fleetNumber={idx + 1}
-        />,
+        />
       );
     }
-
     return (
       <>
         <div style={{ marginBottom: '15px', borderBottom: `1px solid var(--main-${config.themeColor}-border)` }}>
           {grid}
         </div>
-        <div className="scroll">
-          {passives}
-        </div>
+        <div className="scroll">{passives}</div>
       </>
     );
   };
 
-  const renderModal = () => {
+  const renderModal = (): JSX.Element => {
     if (formationModal.isOpen) {
       return <FormationModalContent setModalOpen={setModalOpen} />;
     }
     if (showModal.modal === 'new') {
       return <NewFormationModalContent setModalOpen={setModalOpen} />;
-    } else if (showModal.modal === 'rename') {
-      return <RenameFormationModalContent setModalOpen={setModalOpen} />
     }
-  }
+    if (showModal.modal === 'rename') {
+      return <RenameFormationModalContent setModalOpen={setModalOpen} />;
+    }
+    return <></>;
+  };
   const requestClose = () => {
     if (showModal.isOpen) {
       dispatch(formationModalAction(FormationModalAction.Close, appState.cToggle));
       setModalOpen({ modal: '', isOpen: false });
     }
-  }
+  };
   return (
     <PageTemplate>
       <section className="page-content">
@@ -132,11 +130,12 @@ const FormationView: React.FC = () => {
         ) : (
           <></>
         )}
-        <div className={'ship-data-container'}>
+        <div className="ship-data-container">
           <div className="top-container">
-            <div className={`tab`}>
+            <div className="tab">
               <FormationDropDown />
               <button
+                type="button"
                 className={`tab-btn normal ${config.themeColor}`}
                 onClick={() => setModalOpen({ modal: 'new', isOpen: true })}
               >
@@ -145,6 +144,7 @@ const FormationView: React.FC = () => {
               {fData.formations.length !== 0 ? (
                 <>
                   <button
+                    type="button"
                     className={`tab-btn normal ${config.themeColor}`}
                     onClick={() => dispatch(formationAction(FormationAction.Remove))}
                     disabled={fData.formations.length === 0}
@@ -152,6 +152,7 @@ const FormationView: React.FC = () => {
                     Remove
                   </button>
                   <button
+                    type="button"
                     className={`tab-btn normal ${config.themeColor} ${
                       fData.isEdit[fData.selectedIndex] ? 'inform' : ''
                     }`}
@@ -160,8 +161,9 @@ const FormationView: React.FC = () => {
                   >
                     Save
                   </button>
-                  <button 
-                    className={`tab-btn normal ${config.themeColor} `} 
+                  <button
+                    type="button"
+                    className={`tab-btn normal ${config.themeColor} `}
                     onClick={() => setModalOpen({ modal: 'rename', isOpen: true })}
                   >
                     Rename

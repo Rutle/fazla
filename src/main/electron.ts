@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 // Modules to control application life and create native browser window
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { app, BrowserWindow, ipcMain } from 'electron';
 import Store from 'electron-store';
 import * as fs from 'fs';
@@ -22,7 +24,6 @@ function createWindow(): void {
     width: 1350,
     height: 900,
     frame: false,
-    //thickFrame: true,
     webPreferences: {
       nodeIntegration: false,
       worldSafeExecuteJavaScript: true,
@@ -38,7 +39,7 @@ function createWindow(): void {
         pathname: path.join(__dirname, './index.html'),
         protocol: 'file:',
         slashes: true,
-      }),
+      })
     )
     .finally(() => {
       /* no action */
@@ -52,23 +53,22 @@ function createWindow(): void {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
-  createWindow();
-
-  app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
-});
+app.on('ready', createWindow);
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('window-all-closed', function () {
+app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
+app.on('activate', () => {
+  // On OS X it"s common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow();
+  }
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 /*
@@ -106,12 +106,11 @@ ipcMain.on('open-logs', () => {
  * Get owned ship data from config data file.
  */
 ipcMain.handle('get-owned-ship-data', async () => {
-  const ships = electronStore.get('ownedShips');
+  const ships = await electronStore.get('ownedShips');
   if (ships) {
     return { shipData: ships, isConfigShipData: true };
-  } else {
-    return { shipData: [], isConfigShipData: false };
   }
+  return { shipData: [], isConfigShipData: false };
 });
 
 /**
@@ -147,7 +146,7 @@ ipcMain.handle('save-ship-data', async (event, arg) => {
 /**
  * Save owned ship data to config data file.
  */
-ipcMain.handle('save-owned-ships', async (event, data) => {
+ipcMain.handle('save-owned-ships', (event, data: string[]) => {
   try {
     electronStore.set({
       ownedShips: data,
@@ -160,11 +159,10 @@ ipcMain.handle('save-owned-ships', async (event, data) => {
 /**
  * Function that saves given formation data.
  */
-ipcMain.handle('save-formation-data', async (event, data) => {
+ipcMain.handle('save-formation-data', (event, data: Formation[]) => {
   try {
-    const fData = data as Formation[];
     electronStore.set({
-      formations: fData,
+      formations: data,
     });
   } catch (e) {
     return { isOk: false, msg: 'Failed to save formation data.' };
@@ -175,7 +173,7 @@ ipcMain.handle('save-formation-data', async (event, data) => {
 /**
  * Function that saves given config data.
  */
-ipcMain.handle('save-config', async (event, data) => {
+ipcMain.handle('save-config', (event, data: AppConfig) => {
   try {
     electronStore.set({ config: data });
   } catch (e) {
@@ -187,7 +185,7 @@ ipcMain.handle('save-config', async (event, data) => {
 /**
  * Function removes formation from .json config file.
  */
-ipcMain.handle('remove-formation-by-index', async (event, data) => {
+ipcMain.handle('remove-formation-by-index', (event, data) => {
   try {
     const idx = data as number;
     const formationData = electronStore.get('formations') as Formation[];
@@ -201,7 +199,7 @@ ipcMain.handle('remove-formation-by-index', async (event, data) => {
   return { isOk: true, msg: 'Formation data saved succesfully.' };
 });
 
-ipcMain.handle('rename-formation-by-index', async (event, data) => {
+ipcMain.handle('rename-formation-by-index', (event, data: { idx: number; name: string }) => {
   try {
     const { idx, name } = data;
     const formationData = electronStore.get('formations') as Formation[];
@@ -211,7 +209,7 @@ ipcMain.handle('rename-formation-by-index', async (event, data) => {
       }
       return {
         ...item,
-        name: name,
+        name,
       };
     });
     electronStore.set({
@@ -220,8 +218,8 @@ ipcMain.handle('rename-formation-by-index', async (event, data) => {
   } catch (e) {
     return { isOk: false, msg: 'Failed to rename formation.' };
   }
-  return { isOk: true, msg: 'Formation name changed succesfully.'};
-})
+  return { isOk: true, msg: 'Formation name changed succesfully.' };
+});
 
 /**
  * Initialize by getting data from .json and config data from config file.
@@ -259,7 +257,7 @@ ipcMain.handle('initData', async () => {
     configData = electronStore.get('config') as AppConfig;
     if (process.env.NODE_ENV === 'development') {
       const rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
-      jsonData = await JSON.parse(rawData);
+      jsonData = JSON.parse(rawData) as { [key: string]: Ship };
       dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
       oShips = electronStore.get('ownedShips') as string[];
       formationData = electronStore.get('formations') as Formation[];
@@ -271,12 +269,12 @@ ipcMain.handle('initData', async () => {
         .then(async () => {
           console.log('can access, has been created. use file from appdata (updated at least once)');
           const rawData = await fsPromises.readFile(`${userDir}\\resources\\ships.json`, 'utf8');
-          jsonData = JSON.parse(rawData);
+          jsonData = JSON.parse(rawData) as { [key: string]: Ship };
         })
         .catch(async () => {
           console.error('cannot access, not created yet. use file provided in build');
           const rawData = await fsPromises.readFile(`${resourceDir}\\ships.json`, 'utf8');
-          jsonData = JSON.parse(rawData);
+          jsonData = JSON.parse(rawData) as { [key: string]: Ship };
         });
       dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
       oShips = electronStore.get('ownedShips') as string[];

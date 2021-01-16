@@ -37,14 +37,14 @@ const formationGridSlice = createSlice({
         }
         return {
           ...item,
-          data: item.data.map((value, index) => {
+          data: item.data.map((value, index2) => {
             if (index !== gridIndex && value !== id) {
               return value;
-            } else if (index !== gridIndex && value === id) {
-              return 'NONE';
-            } else {
-              return id;
             }
+            if (index2 !== gridIndex && value === id) {
+              return 'NONE';
+            }
+            return id;
           }),
         };
       });
@@ -57,7 +57,7 @@ const formationGridSlice = createSlice({
     resetFormation() {
       return initialState;
     },
-    renameFormation(state, action: PayloadAction<{ idx: number, name: string}>) {
+    renameFormation(state, action: PayloadAction<{ idx: number; name: string }>) {
       const { idx, name } = action.payload;
       const newForms = state.formations.map((item, index) => {
         if (index !== idx) {
@@ -65,14 +65,14 @@ const formationGridSlice = createSlice({
         }
         return {
           ...item,
-          name: name,
+          name,
         };
       });
       return {
         ...state,
         formations: newForms,
         isEdit: state.isEdit.map((value, index) => (index !== idx ? value : true)),
-      }
+      };
     },
     setFormationsData(state, action: PayloadAction<Formation[]>) {
       const count = action.payload.length;
@@ -135,13 +135,13 @@ const formationGridSlice = createSlice({
         }
         return {
           ...item,
-          data: item.data.map((value, index) => (index !== gridIndex ? value : 'NONE')),
+          data: item.data.map((value, index2) => (index2 !== gridIndex ? value : 'NONE')),
         };
       });
       return {
         ...state,
         formations: newForms,
-        isEdit: state.isEdit.map((value, index) => (index !== selectedIndex ? value : true)),
+        isEdit: state.isEdit.map((value, index3) => (index3 !== selectedIndex ? value : true)),
       };
     },
   },
@@ -167,19 +167,19 @@ export const formationAction = (
   action: FormationAction,
   gridIndex?: number,
   formationName?: string,
-  formationType?: string,
+  formationType?: string
 ): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const { formationGrid, formationModal, shipDetails } = getState();
     const formIdx = formationGrid.selectedIndex;
     const { id } = shipDetails;
-
+    const gIndex = formationModal.gridIndex;
+    const formCount = formationGrid.formations.length;
+    const name = formationName || `Formation ${formCount}`;
+    const fType = formationType as string;
+    let emptyFormation = [];
     switch (action) {
       case 'NEW':
-        const formCount = formationGrid.formations.length;
-        const name = formationName ? (formationName as string) : `Formation ${formCount}`;
-        const fType = formationType as string;
-        let emptyFormation = [];
         if (fType === 'normal') {
           emptyFormation = [
             'NONE',
@@ -223,17 +223,17 @@ export const formationAction = (
             'NONE',
           ];
         }
-        dispatch(addNewFormationData({ data: emptyFormation, name: name }));
+        dispatch(addNewFormationData({ data: emptyFormation, name }));
         break;
       case 'REMOVE':
         await removeAFormation(formIdx).then((result) => {
           if (result.isOk) dispatch(removeFormation(formIdx));
-          dispatch(setErrorMessage({ cState: "RUNNING", eMsg: result.msg, eState: 'WARNING' }));
+          dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: result.msg, eState: 'WARNING' }));
         });
         break;
       case 'RENAME':
         await renameAFormation(gridIndex as number, formationName as string).then((result) => {
-          if (result.isOk) dispatch(renameFormation({ idx: gridIndex as number, name: formationName as string}));
+          if (result.isOk) dispatch(renameFormation({ idx: gridIndex as number, name: formationName as string }));
         });
         break;
       case 'SAVE':
@@ -242,7 +242,6 @@ export const formationAction = (
         });
         break;
       case 'ADDSHIP':
-        const gIndex = formationModal.gridIndex;
         dispatch(addShipToFormation({ id, gridIndex: gIndex, selectedIndex: formIdx }));
         break;
       case 'REMOVESHIP':
@@ -250,7 +249,7 @@ export const formationAction = (
         break;
       case 'SAVEALL':
         await saveFormationData(formationGrid.formations).then((result) => {
-          if (!result.isOk) dispatch(setErrorMessage({ cState: "ERROR", eMsg: result.msg, eState: "ERROR" }));
+          if (!result.isOk) dispatch(setErrorMessage({ cState: 'ERROR', eMsg: result.msg, eState: 'ERROR' }));
         });
         break;
       default:

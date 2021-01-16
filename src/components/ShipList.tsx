@@ -2,10 +2,10 @@
 /* eslint-disable react/prop-types */
 import React, { useCallback, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { FixedSizeList as List } from 'react-window';
 import { RootState } from '../reducers/rootReducer';
 import { Ship, ShipSimple } from '../utils/shipdatatypes';
-import { FixedSizeList as List } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
 import { setSelectedShip } from '../reducers/slices/appStateSlice';
 import { hullTypes, hullTypesAbb } from '../data/categories';
 import { AppContext } from '../App';
@@ -60,6 +60,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
               const ship = shipData.shipsArr[shipSearchList[index].index];
               return (
                 <button
+                  type="button"
                   style={{ ...style, top: (style.top as number) + 1, height: 29, width: 'calc(100% - 1px)' }}
                   className={`rList-item btn flat ${config.themeColor} ${
                     shipSearchList[index].id === appState[appState.cToggle].id ? 'selected' : ''

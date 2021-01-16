@@ -1,10 +1,13 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../reducers/rootReducer';
-import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { RootState } from '../reducers/rootReducer';
+import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { setCurrentToggle } from '../reducers/slices/appStateSlice';
 import { SearchAction, updateSearch } from '../reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';
@@ -31,7 +34,7 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
     const { cToggle } = appState;
     if (appState.cState === 'INIT') return;
     dispatch(setDetails({ id: appState[cToggle].id, index: appState[cToggle].index }));
-    dispatch(updateSearch(shipData, SearchAction.UpdateList, { list: cToggle }));
+    dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list: cToggle }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState.cToggle]);
 
@@ -39,44 +42,52 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
     <div className="ship-side-container">
       <div className="top-container">
         <CategoryOverlay themeColor={config.themeColor} />
-          <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
-            <div className={`searchIcon ${config.themeColor}`}>
-              <FontAwesomeIcon icon={faSearch} />
-            </div>
-            <input
-              id="search-input"
-              type="text"
-              className={`${config.themeColor}`}
-              value={searchValue}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setSearchValue(e.target.value);
-                dispatch(
-                  updateSearch(shipData, SearchAction.SetName, {
-                    name: e.target.value,
-                    cat: '',
-                    param: '',
-                    list: appState.cToggle,
-                  }),
-                );
-              }}
-              onFocus={() => setInputFocus(true)}
-              onBlur={() => setInputFocus(false)}
-            />
-            {searchValue.length > 0 ? (
-            <div className={`clearIcon ${config.themeColor}`} onClick={() => {
-              setSearchValue('');
+        <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
+          <div className={`searchIcon ${config.themeColor}`}>
+            <FontAwesomeIcon icon={faSearch} />
+          </div>
+          <input
+            id="search-input"
+            type="text"
+            className={`${config.themeColor}`}
+            value={searchValue}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setSearchValue(e.target.value);
               dispatch(
                 updateSearch(shipData, SearchAction.SetName, {
-                  name: '',
+                  name: e.target.value,
                   cat: '',
                   param: '',
                   list: appState.cToggle,
+                  id: '',
                 })
-              )
-            }}>
+              );
+            }}
+            onFocus={() => setInputFocus(true)}
+            onBlur={() => setInputFocus(false)}
+          />
+          {searchValue.length > 0 ? (
+            <div
+              className={`clearIcon ${config.themeColor}`}
+              onClick={() => {
+                setSearchValue('');
+                dispatch(
+                  updateSearch(shipData, SearchAction.SetName, {
+                    name: '',
+                    cat: '',
+                    param: '',
+                    list: appState.cToggle,
+                    id: '',
+                  })
+                );
+              }}
+            >
               <FontAwesomeIcon icon={faTimes} />
-            </div> ) : <></>}
-          </div> 
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
         <div className={`radio-group ${config.themeColor}`}>
           <input
             id="all"
