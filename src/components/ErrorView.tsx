@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
-import { openLogs } from '../utils/appUtilities';
+import { openLogs, closeWindow } from '../utils/appUtilities';
 import FooterBar from './FooterBar';
 import RButton from './RButton/RButton';
 import TitleBar from './TitleBar';
 /**
- * Error page.
+ * A view for displaying error messages.
  */
 const ErrorView: React.FC = () => {
   const appState = useSelector((state: RootState) => state.appState);
@@ -29,10 +29,10 @@ const ErrorView: React.FC = () => {
               <div className="info-text">{appState.eMsg}</div>
               <RButton
                 themeColor={config.themeColor}
-                onClick={openLogs}
+                onClick={() => { openLogs(); closeWindow(); }}
                 extraStyle={{ marginTop: '30px', height: '50px', width: '20%' }}
               >
-                Open logs
+                Close program
               </RButton>
             </div>
           </div>

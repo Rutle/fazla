@@ -459,6 +459,9 @@ div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
 .toast-container.dark > .toast {
   background-color: var(--main-dark-bg);
   color: var(--main-dark-color);
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
 }
 
 .toast-container.dark > .toast:hover {

@@ -6,14 +6,12 @@ import * as url from 'url';
 import * as path from 'path';
 import * as isDev from 'electron-is-dev';
 import { Ship, Formation, AppConfig } from '../utils/types';
-// import DataStore from '../src/util/dataStore';
 
 let mainWindow: Electron.BrowserWindow;
 const electronStore = new Store({
   cwd: app.getPath('userData'),
 });
 const fsPromises = fs.promises;
-// const shipData = new DataStore();
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 const THEMECOLOR = 'dark';
@@ -34,7 +32,6 @@ function createWindow(): void {
     },
   });
 
-  // mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
   mainWindow
     .loadURL(
       url.format({
@@ -143,8 +140,7 @@ ipcMain.handle('save-ship-data', async (event, arg) => {
     }
     electronStore.set('config.updateDate', date);
   } catch (error) {
-    console.log('Failure save');
-    return { updateDate: date, isOk: false, msg: error.message };
+    return { updateDate: date, isOk: false, msg: 'Failed to save ship data.' };
   }
   return { updateDate: date, isOk: true, msg: 'Ship data saved succesfully.' };
 });
@@ -157,7 +153,7 @@ ipcMain.handle('save-owned-ships', async (event, data) => {
       ownedShips: data,
     });
   } catch (error) {
-    return { isOk: false, msg: error.message };
+    return { isOk: false, msg: 'Failed to save owned ships.' };
   }
   return { isOk: true, msg: 'Owned ships saved succesfully.' };
 });
@@ -207,8 +203,7 @@ ipcMain.handle('remove-formation-by-index', async (event, data) => {
 
 ipcMain.handle('rename-formation-by-index', async (event, data) => {
   try {
-    const idx = data.idx;
-    const newName = data.name;
+    const { idx, name } = data;
     const formationData = electronStore.get('formations') as Formation[];
     const newForms = formationData.map((item, index) => {
       if (index !== idx) {
@@ -216,7 +211,7 @@ ipcMain.handle('rename-formation-by-index', async (event, data) => {
       }
       return {
         ...item,
-        name: newName,
+        name: name,
       };
     });
     electronStore.set({
@@ -232,7 +227,6 @@ ipcMain.handle('rename-formation-by-index', async (event, data) => {
  * Initialize by getting data from .json and config data from config file.
  */
 ipcMain.handle('initData', async () => {
-  console.log('INIT DATA');
   let jsonData: { [key: string]: Ship } = {};
   let dataArr: Ship[] = [];
   let oShips: string[] = [];
@@ -288,14 +282,6 @@ ipcMain.handle('initData', async () => {
       oShips = electronStore.get('ownedShips') as string[];
       formationData = electronStore.get('formations') as Formation[];
     }
-    return {
-      shipData: dataArr,
-      config: configData,
-      ownedShips: oShips,
-      formations: formationData,
-      isOk: true,
-      msg: 'success',
-    };
   } catch (error) {
     return {
       shipData: dataArr,
@@ -303,16 +289,15 @@ ipcMain.handle('initData', async () => {
       ownedShips: oShips,
       formations: formationData,
       isOk: false,
-      msg: error.message,
+      msg: 'Data initialization failed.',
     };
   }
+  return {
+    shipData: dataArr,
+    config: configData,
+    ownedShips: oShips,
+    formations: formationData,
+    isOk: true,
+    msg: 'success',
+  };
 });
-/*
-ipcMain.handle('get-ship-data', async (event, arg) => {
-  return shipData;
-});
-
-ipcMain.handle('get-ship-by-id', async (event, id) => {
-  return shipData.getShipById(id);
-});
-*/

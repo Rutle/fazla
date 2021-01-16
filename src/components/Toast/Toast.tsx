@@ -32,7 +32,11 @@ const Toast: React.FC<ToastProps> = React.memo(({ position, type, label, msg, to
           onToastDismiss(toastId);
         }
       }}
+      onClick={() => {
+        setState({ ...state, onExiting: true });
+      }}
     >
+      {/* 
       <div
         className="toast-icon"
         onClick={() => {
@@ -41,6 +45,7 @@ const Toast: React.FC<ToastProps> = React.memo(({ position, type, label, msg, to
       >
         <FontAwesomeIcon icon={faAngleRight} />
       </div>
+      */}
       <div className="toast-right-content">
         <div className="toast-title">{label}</div>
         <div className="toast-message">{msg}</div>

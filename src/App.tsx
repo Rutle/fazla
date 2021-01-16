@@ -51,13 +51,13 @@ export const AppContext = React.createContext(
 
 const App: React.FC = () => {
   const [shipData, setShipData] = useState(new DataStore());
-  const [addToast, onToastDismiss, popToast, toasts] = useToast(true, 3000);
+  const [addToast, onToastDismiss, popToast, toasts] = useToast(true, 300000);
   return (
     <HashRouter>
       <div className={`App`}>
         <AppContext.Provider value={{
- addToast, onToastDismiss, popToast, toasts, shipData, setShipData 
-}}>
+          addToast, onToastDismiss, popToast, toasts, shipData, setShipData 
+        }}>
           <Switch>
             <Route exact path="/" render={() => <LandingView />}></Route>
             <RefreshRoute path="/shipdetails">
