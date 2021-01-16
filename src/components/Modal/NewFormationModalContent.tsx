@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import ReactModal from 'react-modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../reducers/rootReducer';
 import PropTypes from 'prop-types';

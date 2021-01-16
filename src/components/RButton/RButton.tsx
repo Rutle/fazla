@@ -1,6 +1,5 @@
-/* eslint-disable react/display-name */
-import * as React from 'react'
-import * as PropTypes from 'prop-types';
+/* eslint-disable react/prop-types */
+import * as React from 'react';
 
 interface RButtonProps {
   className?: string;
@@ -14,20 +13,17 @@ interface RButtonProps {
 const RButton: React.FC<RButtonProps> = React.memo(
   ({ className = 'btn normal graphic', children, themeColor, onClick, disabled, extraStyle }) => {
     return (
-      <button className={`${className} ${themeColor}`} onClick={onClick} disabled={disabled} style={extraStyle}>
+      <button
+        type="button"
+        className={`${className} ${themeColor}`}
+        onClick={onClick}
+        disabled={disabled}
+        style={extraStyle}
+      >
         {children}
       </button>
     );
-  },
+  }
 );
 
 export default RButton;
-
-RButton.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node,
-  themeColor: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  disabled: PropTypes.bool,
-  extraStyle: PropTypes.object,
-};

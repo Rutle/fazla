@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 import * as React from 'react';
@@ -6,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { Ship } from '../utils/shipdatatypes';
 import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
 import { hullTypes, hullTypesAbb } from '../data/categories';
+
 interface GridItemProps {
   index: number;
   ship?: Ship;
@@ -48,7 +51,7 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
   return (
     <div className="grid-item">
       <div
-        className={`content`}
+        className="content"
         onClick={onClick}
         onContextMenu={onRightClick}
         data-tip
@@ -65,14 +68,14 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
             style={{ display: 'flex', flexDirection: 'row', padding: '2px 5px' }}
           >
             <div className="hull-type">{ship.hullType !== undefined ? hullTypesAbb[hullTypes[ship.hullType]] : ''}</div>
-            <div className={`details`}>{ship.names.en}</div>
+            <div className="details">{ship.names.en}</div>
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'row', padding: '2px 5px' }}>
-            <div className={`details`}>{`Add ${getLocation(index)}`}</div>
+            <div className="details">{`Add ${getLocation(index)}`}</div>
           </div>
         )}
-        {/* <div className={'pos-indicator'}>{getLocation(index)}</div>*/}
+        {/* <div className={'pos-indicator'}>{getLocation(index)}</div> */}
       </div>
     </div>
   );

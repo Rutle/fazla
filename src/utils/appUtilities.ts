@@ -1,12 +1,4 @@
 import { AppConfig, Formation, Ship, BasicResponse } from './types';
-import DataStore from './dataStore';
-/*
-interface BasicResponse {
-  isOk: boolean;
-  msg: string;
-  updateDate?: string;
-}
-*/
 declare global {
   interface Window {
       api: {
@@ -94,7 +86,6 @@ export const saveFormationData = async (data: Formation[] = []): Promise<BasicRe
 
 /**
  * Function that calls electron to remove a formation from electron-store .json config file.
- * @param {number} index Formation index
  */
 export const removeAFormation = async (index = 0): Promise<BasicResponse> => {
   return await window.api.electronRemoveAFormation('remove-formation-by-index', index).then((result: BasicResponse) => {

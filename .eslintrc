@@ -23,8 +23,7 @@
       {
         "ignoreUrls": true
       }
-    ],
-    "sort-imports": "warn"
+    ]
   },
   "settings": {
     "import/resolver": {
@@ -73,19 +72,14 @@
         "import/default": "off",
         // This rule is already covered by the TypeScript compiler.
         "import/no-unresolved": "off",
+        "import/extensions": "off",
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": "warn",
         "react/jsx-filename-extension": "off",
         "linebreak-style": ["error", "windows"],
         "semi": "off",
         "@typescript-eslint/semi": ["error"],
-        "no-underscore-dangle": [
-          "error",
-          {
-            "enforceInMethodNames": false,
-            "allowFunctionParams": false
-          }
-        ]
+        "react/jsx-props-no-spreading": "off"
       }
     }
   ]

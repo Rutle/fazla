@@ -16,7 +16,7 @@ export type ToastList = ToastMessage[];
 
 function reducer(
   state: ToastList,
-  action: { type: 'add'; payload: ToastMessage } | { type: 'remove'; index: number } | { type: 'pop' },
+  action: { type: 'add'; payload: ToastMessage } | { type: 'remove'; index: number } | { type: 'pop' }
 ): ToastList {
   switch (action.type) {
     case 'add':
@@ -35,12 +35,12 @@ function reducer(
 
 export const useToast = (
   autoDismiss: boolean,
-  timeout: number,
+  timeout: number
 ): [
   (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss) => void,
   (id: number) => void,
   () => void,
-  ToastList,
+  ToastList
 ] => {
   const [toasts, toastAction] = useReducer(reducer, []);
   const intervalRef = useRef<number>();
@@ -54,7 +54,7 @@ export const useToast = (
       }
       toastAction({ type: 'remove', index: toastIndex });
     },
-    [toasts],
+    [toasts]
   );
 
   const popToast = useCallback(() => {
@@ -86,12 +86,12 @@ export const useToast = (
     toastAction({
       type: 'add',
       payload: {
-        id: id,
-        type: type,
-        label: label,
-        msg: msg,
-        isCallback: onDismiss ? true : false,
-        callback: onDismiss ? onDismiss : undefined,
+        id,
+        type,
+        label,
+        msg,
+        isCallback: !!onDismiss,
+        callback: onDismiss || undefined,
       },
     });
   };

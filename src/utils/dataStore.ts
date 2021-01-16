@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { SearchParams, Ship, ShipSimple } from './types';
 import { fleets } from '../data/categories';
 
@@ -45,7 +46,7 @@ export default class DataStore {
       this.shipsArr = [...data.slice()];
       this.count = data.length;
     } catch (error) {
-      return Promise.reject(new Error(error.message));
+      return Promise.reject(new Error('Failed to set array in DataStore.'));
     }
     this.state = 'READY';
     return Promise.resolve(data);
@@ -65,7 +66,7 @@ export default class DataStore {
         return acc;
       }, []);
     } catch (error) {
-      return Promise.reject(new Error(error.message));
+      return Promise.reject(new Error('Failed to get ships by params in DataStore.'));
     }
     return Promise.resolve(t);
   }
@@ -84,18 +85,18 @@ export default class DataStore {
     isNameMatch = ship.names.en.toLowerCase().includes(searchPs.name.toLowerCase());
 
     if (ship.nationality) {
-      isNatMatch = searchPs.nationality['All'] ? true : searchPs.nationality[ship.nationality];
+      isNatMatch = searchPs.nationality.All ? true : searchPs.nationality[ship.nationality];
     }
     // Fleet check if used in the formation view to limit ships to Main or Vanguard.
     if (ship.hullType && searchPs.fleet === 'ALL') {
-      isHullMatch = searchPs.hullType['All'] ? true : searchPs.hullType[ship.hullType];
+      isHullMatch = searchPs.hullType.All ? true : searchPs.hullType[ship.hullType];
     } else if (ship.hullType && searchPs.fleet === 'MAIN' && fleets.MAIN.includes(ship.hullType)) {
-      isHullMatch = searchPs.hullType['All'] ? true : searchPs.hullType[ship.hullType];
+      isHullMatch = searchPs.hullType.All ? true : searchPs.hullType[ship.hullType];
     } else if (ship.hullType && searchPs.fleet === 'VANGUARD' && fleets.VANGUARD.includes(ship.hullType)) {
-      isHullMatch = searchPs.hullType['All'] ? true : searchPs.hullType[ship.hullType];
+      isHullMatch = searchPs.hullType.All ? true : searchPs.hullType[ship.hullType];
     }
     if (ship.rarity) {
-      isRarityMatch = searchPs.rarity['All'] ? true : searchPs.rarity[ship.rarity];
+      isRarityMatch = searchPs.rarity.All ? true : searchPs.rarity[ship.rarity];
     }
     return isNameMatch && isNatMatch && isHullMatch && isRarityMatch;
   }
@@ -127,7 +128,7 @@ export default class DataStore {
         return acc;
       }, []);
     } catch (error) {
-      return Promise.reject(new Error(error.message));
+      return Promise.reject(new Error('Failed to reduce by params in DataStore.'));
     }
     return Promise.resolve(t);
   }

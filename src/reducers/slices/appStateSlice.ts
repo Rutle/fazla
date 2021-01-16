@@ -5,7 +5,7 @@ import { setDetails } from './shipDetailsSlice';
 import { setSearchList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import DataStore from '../../utils/dataStore';
-import { AppConfig, Formation, ShipSimple } from '../../utils/types';
+import { AppConfig, Formation, Ship, ShipSimple } from '../../utils/types';
 import { fetchWithTimeout, handleHTTPError, saveShipData } from '../../utils/appUtilities';
 import { setOwnedList } from './ownedShipListSlice';
 import { setFormationsData } from './formationGridSlice';
@@ -90,11 +90,14 @@ const appStateSlice = createSlice({
     },
     setErrorMessage(
       state,
-      action: PayloadAction<{ cState: 'RUNNING' | 'ERROR'; eMsg: string; eState: '' | 'WARNING' | 'ERROR' }>,
+      action: PayloadAction<{ cState: 'RUNNING' | 'ERROR'; eMsg: string; eState: '' | 'WARNING' | 'ERROR' }>
     ) {
       const { cState, eMsg, eState } = action.payload;
       return {
-        ...state, cState, eMsg, eState,
+        ...state,
+        cState,
+        eMsg,
+        eState,
       };
     },
     clearErrorMessage(state) {
@@ -150,7 +153,8 @@ export const initShipLists = (
   ownedShips: string[],
   data: DataStore,
   config: AppConfig,
-  formations: Formation[],
+  formations: Formation[]
+  // eslint-disable-next-line @typescript-eslint/require-await
 ): AppThunk => async (dispatch: AppDispatch) => {
   let fullSimple: ShipSimple[] = [];
   let ownedSearch: ShipSimple[] = [];
@@ -159,9 +163,9 @@ export const initShipLists = (
   let ownedInitId = 'NONE';
   let ownedInitIndex = 0;
   try {
-    fullSimple = await DataStore.transformShipList(data.shipsArr);
+    fullSimple = DataStore.transformShipList(data.shipsArr);
     if (ownedSearch !== undefined) {
-      ownedSearch = await DataStore.transformStringList(data.shipsArr, ownedShips);
+      ownedSearch = DataStore.transformStringList(data.shipsArr, ownedShips);
     }
     searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
     searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
@@ -172,10 +176,10 @@ export const initShipLists = (
       dispatch(setOwnedSearchList(ownedSearch));
       dispatch(setOwnedList(ownedShips));
       dispatch(
-        setListState({ key: 'ALL', data: { id: searchInitId, index: searchInitIndex, isSearchChanged: false } }),
+        setListState({ key: 'ALL', data: { id: searchInitId, index: searchInitIndex, isSearchChanged: false } })
       );
       dispatch(
-        setListState({ key: 'OWNED', data: { id: ownedInitId, index: ownedInitIndex, isSearchChanged: false } }),
+        setListState({ key: 'OWNED', data: { id: ownedInitId, index: ownedInitIndex, isSearchChanged: false } })
       );
       dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
     });
@@ -194,6 +198,7 @@ export const initShipLists = (
  * @param {string} id ID of the ship.
  * @param {number} index Index of the ship in the main DataStore array.
  */
+// eslint-disable-next-line @typescript-eslint/require-await
 export const setSelectedShip = (key: string, id: string, index: number): AppThunk => async (dispatch: AppDispatch) => {
   try {
     dispatch(setDetails({ id, index }));
@@ -208,21 +213,21 @@ export const setSelectedShip = (key: string, id: string, index: number): AppThun
  */
 export const updateShipData = (
   shipData: DataStore,
-  addToast: (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss | undefined) => void,
+  addToast: (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss | undefined) => void
 ): AppThunk => async (dispatch: AppDispatch, getState) => {
   dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Please wait while downloading data.' }));
   const { config } = getState();
   try {
-    fetchWithTimeout(SHIPAPIURL, 20000)
+    await fetchWithTimeout(SHIPAPIURL, 20000)
       .then(handleHTTPError)
       .then((res) => res.json())
-      .then(async (result) => {
+      .then(async (result: { [key: string]: Ship }) => {
         try {
           dispatch(setCurrentState({ cState: 'SAVING', cMsg: 'Please wait while saving data.' }));
           const { isOk, updateDate } = await saveShipData(result);
           if (isOk) {
             dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating app state.' }));
-            const dataArr = [...Object.keys(result).map((key) => result[key])];
+            const dataArr: Ship[] = [...Object.keys(result).map((key) => result[key])];
             await shipData.setArray(dataArr);
             const fullSimple = DataStore.transformShipList(shipData.shipsArr);
             const searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
@@ -233,7 +238,7 @@ export const updateShipData = (
                 setListState({
                   key: 'ALL',
                   data: { id: searchInitId, index: searchInitIndex, isSearchChanged: true },
-                }),
+                })
               );
               dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
               dispatch(setShipCount(shipData.count));
@@ -250,24 +255,28 @@ export const updateShipData = (
               cState: 'RUNNING',
               eMsg: 'There was a problem with saving new ship data. No changes made.',
               eState: 'WARNING',
-            }),
+            })
           );
-          if (config.isToast) { addToast('warning', 'Update', 'There was a problem with saving new ship data. No changes made.'); }
+          if (config.isToast) {
+            addToast('warning', 'Update', 'There was a problem with saving new ship data. No changes made.');
+          }
         }
       })
       .catch((error) => {
-        if ((error.name = 'AbortError')) {
-          dispatch(
-            setErrorMessage({
-              cState: 'RUNNING',
-              eMsg: 'Network connection problem or response took too long.',
-              eState: 'WARNING',
-            }),
-          );
-          if (config.isToast) addToast('warning', 'Update', 'Network connection problem or response took too long.');
-        } else {
-          dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: error.message, eState: 'WARNING' }));
-          if (config.isToast) addToast('warning', 'Update', error.message);
+        if (error instanceof Error) {
+          if (error.name === 'AbortError') {
+            dispatch(
+              setErrorMessage({
+                cState: 'RUNNING',
+                eMsg: 'Network connection problem or response took too long.',
+                eState: 'WARNING',
+              })
+            );
+            if (config.isToast) addToast('warning', 'Update', 'Network connection problem or response took too long.');
+          } else {
+            dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: error.message, eState: 'WARNING' }));
+            if (config.isToast) addToast('warning', 'Update', error.message);
+          }
         }
       });
   } catch (e) {

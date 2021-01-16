@@ -25,11 +25,12 @@ const ShipDetails: React.FC = () => {
     if (ship) {
       return ownedShips.some((ele) => ele === ship.id);
     }
+    return false;
   };
 
   const addShipToOwned = useCallback(() => {
     if (ship) {
-      dispatch(addShip(ship.id, ship.names.code));
+      dispatch(addShip(ship.id /* , ship.names.code */));
       dispatch(toggleSearchState('OWNED'));
       if (config.isToast) addToast('success', 'Docks', `${ship.names.code} was added to docks.`);
     }
@@ -54,28 +55,27 @@ const ShipDetails: React.FC = () => {
           Add
         </RButton>
       );
-    } else {
-      return (
-        <RButton
-          themeColor={config.themeColor}
-          onClick={removeFromOwned}
-          className="btn normal"
-          extraStyle={{ minWidth: '85px' }}
-        >
-          Remove
-        </RButton>
-      );
     }
+    return (
+      <RButton
+        themeColor={config.themeColor}
+        onClick={removeFromOwned}
+        className="btn normal"
+        extraStyle={{ minWidth: '85px' }}
+      >
+        Remove
+      </RButton>
+    );
   };
   return ship ? (
     <>
       <div className="ship-title-bar">
         <div>
           <span className="ship-name">{ship.names.code}</span>
-          <span className={ship.rarity}>{` ${ship.stars?.stars}`}</span>
+          <span className={ship.rarity}>{` ${ship.stars?.stars as string}`}</span>
         </div>
       </div>
-      <div className={`ship-actions`}>
+      <div className="ship-actions">
         {renderAddRemoveButton()}
         <RButton
           themeColor={config.themeColor}
@@ -89,9 +89,9 @@ const ShipDetails: React.FC = () => {
       </div>
       <div className="scroll">
         <div className={`f-grid ${config.themeColor}`}>
-          <div className={`f-collapsible`}>
-            <div className={`f-row`}>
-              <div className={'passive f-header'}>Passives</div>
+          <div className="f-collapsible">
+            <div className="f-row">
+              <div className="passive f-header">Passives</div>
             </div>
             <PassivesList skills={ship.skills} />
           </div>

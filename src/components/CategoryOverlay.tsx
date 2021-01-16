@@ -1,7 +1,8 @@
-import React, { /*useContext,*/ useRef, useState } from 'react';
+import React, { /* useContext, */ useRef, useState } from 'react';
 import Overlay from 'react-overlays/Overlay';
-import SearchParameterContent from './SearchParameterContent';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
+import SearchParameterContent from './SearchParameterContent';
 // import { AppContext } from '../App';
 /**
  * Category overlay container for category parameter toggles.
@@ -29,14 +30,15 @@ const CategoryOverlay: React.FC<{ themeColor: string }> = ({ themeColor }) => {
       <Overlay
         show={isOverlayOpen}
         rootClose
-        /* containerPadding={20}*/
+        /* containerPadding={20} */
         offset={[0, 10]}
         onHide={() => setIsOverlayOpen(false)}
-        placement={'bottom'}
+        placement="bottom"
         container={containerRef}
         target={triggerRef}
       >
         {({ props /* arrowProps, placement */ }) => (
+          // eslint-disable-next-line react/jsx-props-no-spreading
           <div className={`popover-container ${themeColor}`} {...props}>
             <SearchParameterContent themeColor={themeColor} />
           </div>

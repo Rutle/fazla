@@ -49,7 +49,7 @@ const programConfigSlice = createSlice({
         isEdit: action.payload,
       };
     },
-    resetState(state, action) {
+    resetState() {
       return initialState;
     },
   },
@@ -65,16 +65,17 @@ export const { setStateValue, setUpdateDate, resetState, setConfig, setEditState
  */
 export const configAction = (action: AppConfigAction, key?: string, value?: string | boolean): AppThunk => async (
   dispatch: AppDispatch,
-  getState,
+  getState
 ) => {
   try {
     const { config } = getState();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { isEdit, ...newConfig } = config;
     switch (action) {
       case 'UPDATE':
         dispatch(setStateValue({ key: key as string, value: value as string | boolean }));
         break;
       case 'SAVE':
-        const { isEdit, ...newConfig } = config;
         await saveConfig(newConfig).then((result) => {
           if (result.isOk) {
             dispatch(setEditState(false));

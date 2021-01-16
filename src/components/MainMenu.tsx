@@ -9,7 +9,7 @@ const MainMenu: React.FC = () => {
   const config = useSelector((state: RootState) => state.config);
 
   return (
-    <div className={`top-container fixed`}>
+    <div className="top-container fixed">
       <nav className={`tab ${config.themeColor}`}>
         <NavLink to="/shipdetails">
           <span>Ships</span>

@@ -25,8 +25,8 @@ const ShipDetailView: React.FC = () => {
         ) : (
           <>
             <SideBar>
-              <ShipList shipSearchList={shipSearchList} listName={'ALL'} />
-              <ShipList shipSearchList={ownedSearchList} listName={'OWNED'} />
+              <ShipList shipSearchList={shipSearchList} listName="ALL" />
+              <ShipList shipSearchList={ownedSearchList} listName="OWNED" />
             </SideBar>
             <div className="ship-data-container">
               <ShipDetails />

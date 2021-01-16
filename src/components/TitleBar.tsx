@@ -1,13 +1,15 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
+import ReactModal from 'react-modal';
+import PropTypes from 'prop-types';
 import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '../utils/appUtilities';
 import { RootState } from '../reducers/rootReducer';
 import CloseAppModalContent from './Modal/CloseAppModalContent';
-import ReactModal from 'react-modal';
-import PropTypes from 'prop-types';
 
 ReactModal.setAppElement('#root');
 /**
@@ -31,7 +33,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
         </div>
         {showMenu ? (
           <div id="window-menu">
-            <div className={`top-container`}>
+            <div className="top-container">
               <nav className={`tab ${config.themeColor}`}>
                 <NavLink to="/shipdetails">
                   <span>Ships</span>
@@ -47,10 +49,10 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
           </div>
         ) : (
           <>
-            <div style={{ borderBottom: `1px solid var(--main-${config.themeColor}-border)` }}></div>
+            <div style={{ borderBottom: `1px solid var(--main-${config.themeColor}-border)` }} />
           </>
         )}
-        <div id="window-filler"></div>
+        <div id="window-filler" />
         <div id="window-controls">
           <div
             className="title-button"
@@ -63,7 +65,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
           </div>
           {isMax ? (
             <div
-              className={`title-button`}
+              className="title-button"
               id="restore-button"
               onClick={() => {
                 restoreWindow();
@@ -74,7 +76,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
             </div>
           ) : (
             <div
-              className={`title-button`}
+              className="title-button"
               id="max-button"
               onClick={() => {
                 maximizeWindow();
@@ -103,8 +105,8 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
       <ReactModal
         overlayClassName={`modal-overlay ${config.themeColor}`}
         isOpen={isModalOpen}
-        className={`modal-container`}
-        shouldCloseOnEsc={true}
+        className="modal-container"
+        shouldCloseOnEsc
         onRequestClose={() => setModalOpen(false)}
       >
         <CloseAppModalContent setModalOpen={setModalOpen} />

@@ -1,10 +1,11 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect, useContext } from 'react';
-import PageTemplate from './PageTemplate';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../reducers/rootReducer';
-import { updateShipData } from '../reducers/slices/appStateSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import PageTemplate from './PageTemplate';
+import { RootState } from '../reducers/rootReducer';
+import { updateShipData } from '../reducers/slices/appStateSlice';
 import { configAction, AppConfigAction } from '../reducers/slices/programConfigSlice';
 import RButton from './RButton/RButton';
 import { AppContext } from '../App';
@@ -19,7 +20,7 @@ const Home: React.FC = () => {
   const config = useSelector((state: RootState) => state.config);
   const [shipCount, setShipCount] = useState(appState.shipCount);
   const [docksCount, setDocksCount] = useState(ownedList.length);
-  const [srcInputLen, setSRCInputLen] = useState(config.jsonURL.length | 25);
+  const [srcInputLen, setSRCInputLen] = useState(config.jsonURL.length || 25);
   const [jsonSRCValue, setJSONSRCValue] = useState(config.jsonURL);
   const [isSRCFocus, setSRCFocus] = useState(false);
   const [shipDiff, setShipDiff] = useState({ count: 0, isUpdate: false });
@@ -90,6 +91,7 @@ const Home: React.FC = () => {
     if (appState.cState === 'INIT') return '\u221E';
     if (appState.cState === 'UPDATING' || appState.cState === 'SAVING') return shipCount;
     if (!shipDiff.isUpdate && appState.cState === 'RUNNING') return shipCount;
+    return 'Unavailable';
   };
   return (
     <PageTemplate>

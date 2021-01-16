@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import DropDownButton from './DropDownButton';
 import { useSelector, useDispatch } from 'react-redux';
+import DropDownButton from './DropDownButton';
 import { RootState } from '../../reducers/rootReducer';
 import { selectFormation } from '../../reducers/slices/formationGridSlice';
 
@@ -19,7 +19,7 @@ const FormationDropDown: React.FC = () => {
       show={show}
       onToggle={(nextShow) => setShow(nextShow)}
       drop="down"
-      alignEnd={true}
+      alignEnd
       selectedIdx={fData.selectedIndex}
       listData={fData.formations.map((item) => item.name)}
       themeColor={config.themeColor}

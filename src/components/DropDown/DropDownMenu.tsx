@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { useDropdownMenu } from 'react-overlays';
@@ -35,13 +36,13 @@ const DropDownMenu: React.FC<FormationDropDownProps> = ({
         listData.map((value, index) => {
           return (
             <button
-              key={`${value}${index}`}
+              key={`${value}-${index}-data`}
               type="button"
               style={{
                 display: `${show ? 'flex' : 'none'}`,
               }}
               className={`btn normal menu-item ${themeColor} ${index === selectedIdx ? 'selected' : ''}`}
-              onClick={(e) => {
+              onClick={() => {
                 selectIndex(index);
                 onSelect(!show);
               }}

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import ReactModal from 'react-modal';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../reducers/rootReducer';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { RootState } from '../../reducers/rootReducer';
 import RButton from '../RButton/RButton';
 import { closeWindow } from '../../utils/appUtilities';
 import { FormationAction, formationAction } from '../../reducers/slices/formationGridSlice';

@@ -34,7 +34,7 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({
           id="dropdown-toggle"
           text={selectedIdx === undefined || listData.length === 0 ? 'Formations' : listData[selectedIdx]}
           themeColor={themeColor}
-        ></DropDownToggle>
+        />
         <DropDownMenu
           listData={listData}
           themeColor={themeColor}

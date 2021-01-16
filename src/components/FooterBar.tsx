@@ -1,6 +1,6 @@
 import React from 'react';
-import { RootState } from '../reducers/rootReducer';
 import { useSelector } from 'react-redux';
+import { RootState } from '../reducers/rootReducer';
 /**
  * Footer component.
  */

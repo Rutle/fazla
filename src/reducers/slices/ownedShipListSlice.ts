@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppDispatch, AppThunk } from '_/reducers/store';
 import { saveOwnedShipData } from '../../utils/appUtilities';
 import { setErrorMessage } from './appStateSlice';
@@ -32,16 +32,18 @@ export const { resetList, addShipId, setOwnedList, removeShip } = ownedShipListS
  * Add ship id to owned list and to the config file.
  * @param {string} id Id of the ship.
  */
-export const addShip = (id: string, name: string): AppThunk => async (dispatch: AppDispatch, getState) => {
+export const addShip = (id: string): AppThunk => async (dispatch: AppDispatch, getState) => {
   let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
     const ownedShips = [...getState().ownedShips, id];
-    // result = await saveOwnedShipData(ownedShips);
+    result = await saveOwnedShipData(ownedShips);
     if (result.isOk) {
       dispatch(addShipId(id));
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with adding ship to docks.', eState: 'ERROR' }));
+    dispatch(
+      setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with adding ship to docks.', eState: 'ERROR' })
+    );
   }
 };
 export default ownedShipListSlice.reducer;

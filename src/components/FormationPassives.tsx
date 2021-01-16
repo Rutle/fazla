@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
-import * as PropTypes from 'prop-types';
-import { Ship } from '../utils/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { Ship } from '../utils/types';
 import PassivesList from './PassivesList';
+
 interface FormationPassivesProps {
   formation: string[];
   themeColor: string;
@@ -27,17 +29,18 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({
   const isShip = (position: string) => {
     if (position === 'main') {
       return formation.slice(0, 3).every((s) => s === 'NONE');
-    } else if (position === 'vanguard') {
-      return formation.slice(3, 6).every((s) => s === 'NONE');
-    } else {
-      return false;
     }
+    if (position === 'vanguard') {
+      return formation.slice(3, 6).every((s) => s === 'NONE');
+    }
+    return false;
   };
 
   const getData = (id: string) => {
     if (formationShips[id]) {
       return { optionalName: formationShips[id].names.en, skills: formationShips[id].skills };
     }
+    return { optionalName: '', skills: undefined };
   };
 
   return (
@@ -45,7 +48,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({
       {!isShip('main') ? (
         <>
           <div
-            className={'f-row action'}
+            className="f-row action"
             onClick={() => {
               setShowMain(!showMain);
             }}
@@ -57,9 +60,9 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({
             <div className="f-title">Main</div>
           </div>
           <div className={`f-collapsible ${showMain ? '' : 'f-collapsed'}`}>
-            <div className={`f-row`}>
-              <div className={'name f-header'}>Ship</div>
-              <div className={'passive f-header'}>Passive</div>
+            <div className="f-row">
+              <div className="name f-header">Ship</div>
+              <div className="passive f-header">Passive</div>
             </div>
             <PassivesList {...getData(formation[0])} />
             <PassivesList {...getData(formation[1])} />
@@ -71,7 +74,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({
       )}
       {!isShip('vanguard') ? (
         <>
-          <div className={'f-row action'} onClick={() => setShowVanguard(!showVanguard)}>
+          <div className="f-row action" onClick={() => setShowVanguard(!showVanguard)}>
             <div className={`f-icon ${showVanguard ? '' : 'f-collapse'}`}>
               <FontAwesomeIcon icon={faAngleDown} />
             </div>
@@ -79,9 +82,9 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({
             <div className="f-title">Vanguard</div>
           </div>
           <div className={`f-collapsible ${showVanguard ? '' : 'f-collapsed'}`}>
-            <div className={'f-row'}>
-              <div className={'name f-header'}>Name</div>
-              <div className={'passive f-header'}>Passive</div>
+            <div className="f-row">
+              <div className="name f-header">Name</div>
+              <div className="passive f-header">Passive</div>
             </div>
             <PassivesList {...getData(formation[3])} />
             <PassivesList {...getData(formation[4])} />
@@ -96,7 +99,3 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({
 };
 
 export default FormationPassives;
-
-FormationPassives.propTypes = {
-  themeColor: PropTypes.string.isRequired,
-};

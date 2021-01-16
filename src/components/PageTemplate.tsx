@@ -1,8 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import TitleBar from './TitleBar';
 import FooterBar from './FooterBar';
 import { RootState } from '../reducers/rootReducer';
-import { useSelector } from 'react-redux';
 /**
  * Component for unified page template.
  */
@@ -12,7 +12,7 @@ const PageTemplate: React.FC<{ children: JSX.Element }> = ({ children }) => {
 
   return (
     <>
-      <TitleBar showMenu={true} />
+      <TitleBar showMenu />
       <div className={`page ${config.themeColor}`}>{children}</div>
       <FooterBar />
     </>
