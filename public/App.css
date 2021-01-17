@@ -36,7 +36,11 @@ body, nav, header {
 body {
   flex-direction: column;
 }
-
+div.scroll {
+  height: 100%;
+  overflow-y: scroll;
+  padding-right: 5px;
+}
 /* ##### Titlebar and Footer ##### */
 #titlebar {
   display: block;

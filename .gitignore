@@ -22,10 +22,11 @@ pids
 /build
 
 # Distribution directories
-dist/
+/dist
 
 # Release
 /release
+/out
 
 # misc
 .DS_Store

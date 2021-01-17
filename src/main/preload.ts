@@ -42,27 +42,9 @@ contextBridge.exposeInMainWorld('api', {
     }
     return Promise.resolve();
   },
-  /*
-    closeApp: (channel: string, data: any) => {
-      // whitelist channels
-      let validChannels = ["close-application"];
-      if (validChannels.includes(channel)) {
-          ipcRenderer.send(channel, data);
-      }
-      ipcRenderer.send('close-application');
-  }, */
   electronIpcSend: (channel: string) => {
     if (validSendChannels.includes(channel)) {
       ipcRenderer.send(channel);
     }
   },
-  /*
-      receive: (channel: string, func: (arg0: any) => void) => {
-          let validChannels = ["close-application"];
-          if (validChannels.includes(channel)) {
-              // Deliberately strip event as it includes `sender` 
-              ipcRenderer.on(channel, (event, ...args) => func(...args));
-          }
-      }
-      */
 });

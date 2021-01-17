@@ -47,11 +47,6 @@
   border-radius: 5px;
 }
 
-.dark div.scroll {
-  height: 100%;
-  overflow-y: scroll;
-}
-
 /* ##### Page ##### */
 div.page.dark {
   background-color: var(--root-dark-bg);
@@ -400,35 +395,35 @@ div.f-grid.dark div.f-title.bottom-emp {
 
 /* #### rarity #### */
 div.f-grid.dark div.f-row.pink {
-  background-color: var(--main-dark-bg);
-  border: 1px solid rgba(255, 192, 203, 0.12);
-  border-radius: 3px;
+  background-color: var(--main-dark-title-bg);
+  border: 2px solid rgba(255, 192, 203, 0.30);
+  border-radius: 4px;
 }
-
+/*
 div.f-grid.dark div.f-row.pink > div.grid-item.name {
-  background-color: rgba(255, 192, 203, 0.12);
+  background-color: rgba(255, 192, 203, 0.30);
 }
-
+*/
 div.f-grid.dark div.f-row.gold {
-  background-color: var(--main-dark-bg);
-  border: 1px solid rgba(255, 215, 0, 0.12);
-  border-radius: 3px;
+  background-color: var(--main-dark-title-bg);
+  border: 2px solid rgba(255, 215, 0, 0.30);
+  border-radius: 4px;
 }
-
+/*
 div.f-grid.dark div.f-row.gold > div.grid-item.name {
   background-color: rgba(255, 215, 0, 0.12);
 }
-
+*/
 div.f-grid.dark div.f-row.deepskyblue {
-  background-color: var(--main-dark-bg);
-  border: 1px solid rgba(0, 191, 255, 0.12);
-  border-radius: 3px;
+  background-color: var(--main-dark-title-bg);
+  border: 2px solid rgba(0, 191, 255, 0.30);
+  border-radius: 4px;
 }
-
+/*
 div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
   background-color: rgba(0,191,255, 0.12);
 }
-
+*/
 .toast-container.dark > .toast {
   background-color: var(--main-dark-bg);
   color: var(--main-dark-color);

@@ -6,7 +6,7 @@
   "license": "MIT",
   "description": "Azur Lane formation utility application",
   "main": "./dist/main.bundle.js",
-  "author": "RuTle",
+  "author": "Jussi Ristimäki",
   "email": "rutle4@gmail.com",
   "keywords": [
     "ReactJS",
@@ -14,8 +14,9 @@
     "Typescript"
   ],
   "build": {
-    "productName": "FormationsAL",
-    "appId": "com.FormAL",
+    "productName": "formationsal",
+    "appId": "com.formationsal",
+    "extends": null,
     "extraResources": [
       {
         "from": "src/data/ships.json",
@@ -72,7 +73,7 @@
     "dev": "rimraf dist && cross-env NODE_ENV=development webpack --watch --progress --color",
     "prod": "rimraf dist && cross-env NODE_ENV=production webpack --progress --color",
     "test": "mocha -r ts-node/register -r tsconfig-paths/register \"test/**/*.ts\"",
-    "build:win": "electron-builder build --win --x64",
+    "build:win": "electron-builder build --win",
     "build:mac": "electron-builder build --mac --x64"
   },
   "eslintConfig": {

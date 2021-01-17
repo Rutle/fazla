@@ -11,7 +11,7 @@ const FooterBar: React.FC = () => {
   return (
     <div id="footer" className={`${config.themeColor}`}>
       <div id="footer-state-msg">
-        <span>{`${appState.cMsg} ${appState.eMsg}`}</span>
+        <span>{`${appState.cMsg}`}</span>
       </div>
     </div>
   );

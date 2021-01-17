@@ -122,7 +122,7 @@ const FormationView: React.FC = () => {
         >
           {renderModal()}
         </ReactModal>
-        {config.formHelpTooltip ? (
+        {config.formHelpTooltip && fData.formations.length > 0 ? (
           <ReactTooltip id="click-help" place="bottom" type="dark" effect="solid" aria-haspopup="true" delayShow={1000}>
             <span>
               Add <FontAwesomeIcon icon={faMouse} /> Clear
@@ -134,7 +134,8 @@ const FormationView: React.FC = () => {
         <div className="ship-data-container">
           <div className="top-container">
             <div className="tab">
-              <FormationDropDown />
+              {fData.formations.length !== 0 ? <FormationDropDown /> : <></>}
+
               <button
                 type="button"
                 className={`tab-btn normal ${config.themeColor}`}

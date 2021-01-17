@@ -60,11 +60,6 @@ export const saveOwnedShipData = async (data: string[] = []): Promise<BasicRespo
   return window.api.electronSaveData('save-owned-ships', data).then((result: BasicResponse) => {
     return result;
   });
-  /*
-  return await ipcRenderer.invoke('save-owned-ships', data).then((result: BasicResponse) => {
-    return result;
-  });
-  */
 };
 /**
  * Function that calls electron to save given data to electron-store .json config file.
@@ -74,11 +69,6 @@ export const saveFormationData = async (data: Formation[] = []): Promise<BasicRe
   return window.api.electronSaveData('save-formation-data', data).then((result: BasicResponse) => {
     return result;
   });
-  /*
-  return await ipcRenderer.invoke('save-formation-data', data).then((result: BasicResponse) => {
-    return result;
-  });
-  */
 };
 
 /**

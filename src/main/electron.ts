@@ -6,7 +6,7 @@ import Store from 'electron-store';
 import * as fs from 'fs';
 import * as url from 'url';
 import * as path from 'path';
-import * as isDev from 'electron-is-dev';
+import isDev from 'electron-is-dev';
 import { Ship, Formation, AppConfig } from '../utils/types';
 
 let mainWindow: Electron.BrowserWindow;
