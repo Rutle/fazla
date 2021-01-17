@@ -27,7 +27,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
     (id: string, index: number) => {
       dispatch(setSelectedShip(appState.cToggle, id, index));
     },
-    [appState.cToggle, dispatch],
+    [appState.cToggle, dispatch]
   );
 
   const getHullTypeAbb = (hullType: string | undefined) => {

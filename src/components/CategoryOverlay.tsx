@@ -1,16 +1,14 @@
-import React, { /* useContext, */ useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Overlay from 'react-overlays/Overlay';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 import SearchParameterContent from './SearchParameterContent';
-// import { AppContext } from '../App';
+
 /**
  * Category overlay container for category parameter toggles.
  */
 const CategoryOverlay: React.FC<{ themeColor: string }> = ({ themeColor }) => {
   const triggerRef = useRef(null);
   const containerRef = useRef(null);
-  // const { addToast } = useContext(AppContext);
 
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
@@ -22,7 +20,6 @@ const CategoryOverlay: React.FC<{ themeColor: string }> = ({ themeColor }) => {
         type="button"
         onClick={() => {
           setIsOverlayOpen(!isOverlayOpen);
-          // if (config.isToast) addToast('warning', 'cat', 'testi', () => console.log('add2'));
         }}
       >
         Categories
@@ -30,7 +27,6 @@ const CategoryOverlay: React.FC<{ themeColor: string }> = ({ themeColor }) => {
       <Overlay
         show={isOverlayOpen}
         rootClose
-        /* containerPadding={20} */
         offset={[0, 10]}
         onHide={() => setIsOverlayOpen(false)}
         placement="bottom"

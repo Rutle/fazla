@@ -1,11 +1,10 @@
-/* eslint-disable react/prop-types */
 import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { RootState } from '../reducers/rootReducer';
 import FooterBar from './FooterBar';
 import RButton from './RButton/RButton';
 import TitleBar from './TitleBar';
-import { useHistory } from 'react-router';
 import { initShipLists, setErrorMessage, addPhaseState } from '../reducers/slices/appStateSlice';
 import { initData } from '../utils/appUtilities';
 import { AppContext } from '../App';
@@ -41,7 +40,7 @@ const LandingView: React.FC = () => {
         });
       }
     } catch (error) {
-      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: error.message, eState: 'ERROR' }));
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Initialization failed.', eState: 'ERROR' }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -90,13 +89,12 @@ const LandingView: React.FC = () => {
             >
               {appState.cState === 'RUNNING' ? (
                 <>
-                  { /* <div className="info-text">Program is ready. Please continue.</div>*/ }
                   <RButton
                     themeColor={config.themeColor}
                     onClick={() => {
                       history.push('/shipdetails');
                     }}
-                    extraStyle={{ marginTop: '30px', height: '50px', width: '30%' }}
+                    extraStyle={{ marginTop: '30px', height: '50px', width: '300px' }}
                   >
                     Program is ready. Please continue.
                   </RButton>

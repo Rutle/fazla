@@ -38,7 +38,7 @@ const formationGridSlice = createSlice({
         return {
           ...item,
           data: item.data.map((value, index2) => {
-            if (index !== gridIndex && value !== id) {
+            if (index2 !== gridIndex && value !== id) {
               return value;
             }
             if (index2 !== gridIndex && value === id) {

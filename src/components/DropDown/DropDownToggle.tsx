@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useDropdownToggle } from 'react-overlays';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +10,6 @@ interface DropDownToggleProps {
   themeColor: string;
 }
 
-// eslint-disable-next-line react/prop-types
 const DropDownToggle: React.FC<DropDownToggleProps> = ({ id, text, themeColor }) => {
   const ctrl = useDropdownToggle();
   return (
@@ -31,3 +31,9 @@ const DropDownToggle: React.FC<DropDownToggleProps> = ({ id, text, themeColor })
 };
 
 export default DropDownToggle;
+
+DropDownToggle.propTypes = {
+  id: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  themeColor: PropTypes.string.isRequired,
+};

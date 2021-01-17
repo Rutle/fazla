@@ -1,16 +1,15 @@
-import { AppConfig, Formation, Ship, BasicResponse } from './types';
+import { AppConfig, Formation, Ship, BasicResponse, BooleanSearchParam } from './types';
 
 declare global {
   interface Window {
     api: {
-      electronIpcSend: (channel: string, ...arg: any) => void;
+      electronIpcSend: (channel: string) => void;
       electronShell: (str: string) => Promise<void>;
-      electronSaveData: (channel: string, ...arg: any) => Promise<BasicResponse>;
-      electronRemoveAFormation: (channel: string, ...arg: any) => Promise<BasicResponse>;
-      electronRenameFormation: (channel: string, ...arg: any) => Promise<BasicResponse>;
+      electronSaveData: (channel: string, ...arg: unknown[]) => Promise<BasicResponse>;
+      electronRemoveAFormation: (channel: string, ...arg: unknown[]) => Promise<BasicResponse>;
+      electronRenameFormation: (channel: string, ...arg: unknown[]) => Promise<BasicResponse>;
       electronInitData: (
-        channel: string,
-        ...arg: any
+        channel: string
       ) => Promise<
         {
           shipData: Ship[];
@@ -126,10 +125,6 @@ export const initData = async (): Promise<
     );
 };
 
-export const openWikiUrl = (str: string): void => {
-  openUrl(str);
-};
-
 export const urlValidation = (str: string): boolean => {
   if (str === undefined || str === '') return false;
   const urlVal = 'https?://(www.)?azurlane.koumakan.jp.*';
@@ -143,6 +138,15 @@ const openUrl = async (str: string) => {
     await window.api.electronShell(str);
   }
 };
+export const openWikiUrl = (str: string): Promise<void> => {
+  return openUrl(str);
+};
+
+// TYPE guards
+export const isBooleanObj = <T extends { All?: unknown }>(obj: T): obj is T & BooleanSearchParam => {
+  return typeof obj.All === 'boolean';
+};
+//
 /* https://stackoverflow.com/a/57888548 */
 export const fetchWithTimeout = (url: string, ms: number): Promise<Response> => {
   const controller = new AbortController();

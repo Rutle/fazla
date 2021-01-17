@@ -75,7 +75,6 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
             <div className="details">{`Add ${getLocation(index)}`}</div>
           </div>
         )}
-        {/* <div className={'pos-indicator'}>{getLocation(index)}</div> */}
       </div>
     </div>
   );

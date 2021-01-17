@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,7 +28,7 @@ const FormationView: React.FC = () => {
   const { shipData } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
-  const formationModal = useSelector((state: RootState) => state.formationModal);
+  // const formationModal = useSelector((state: RootState) => state.formationModal);
   const appState = useSelector((state: RootState) => state.appState);
   const [showModal, setModalOpen] = useState({ modal: '', isOpen: false });
 
@@ -39,9 +38,9 @@ const FormationView: React.FC = () => {
   }, [fData]);
 
   const open = useCallback(
-    (action: FormationModalAction, toggle: 'ALL' | 'OWNED', isOpen: boolean, index: number, data: DataStore) => () => {
-      dispatch(formationModalAction(action, toggle, isOpen, index, data));
-      setModalOpen({ modal: '', isOpen: true });
+    (action: FormationModalAction, toggle: 'ALL' | 'OWNED', index: number, data: DataStore) => () => {
+      dispatch(formationModalAction(action, toggle, index, data));
+      setModalOpen({ modal: 'shiplist', isOpen: true });
     },
     [dispatch]
   );
@@ -67,7 +66,7 @@ const FormationView: React.FC = () => {
               index={idx * 6 + idxx}
               ship={formationShips[id]}
               themeColor={config.themeColor}
-              onClick={open(FormationModalAction.Open, appState.cToggle, true, idx * 6 + idxx, shipData)}
+              onClick={open(FormationModalAction.Open, appState.cToggle, idx * 6 + idxx, shipData)}
             />
           ))}
         </FormationGrid>
@@ -93,7 +92,7 @@ const FormationView: React.FC = () => {
   };
 
   const renderModal = (): JSX.Element => {
-    if (formationModal.isOpen) {
+    if (showModal.modal === 'shiplist') {
       return <FormationModalContent setModalOpen={setModalOpen} />;
     }
     if (showModal.modal === 'new') {
@@ -104,19 +103,21 @@ const FormationView: React.FC = () => {
     }
     return <></>;
   };
+
   const requestClose = () => {
     if (showModal.isOpen) {
-      dispatch(formationModalAction(FormationModalAction.Close, appState.cToggle));
+      dispatch(formationModalAction(FormationModalAction.Close, appState.cToggle, 0, shipData));
       setModalOpen({ modal: '', isOpen: false });
     }
   };
+
   return (
     <PageTemplate>
       <section className="page-content">
         <ReactModal
           overlayClassName={`modal-overlay ${config.themeColor}`}
           isOpen={showModal.isOpen}
-          className={`modal-container ${formationModal.isOpen ? 'formation' : 'new-formation'}`}
+          className={`modal-container ${showModal.modal === 'shiplist' ? 'formation' : 'new-formation'}`}
           onRequestClose={requestClose}
         >
           {renderModal()}

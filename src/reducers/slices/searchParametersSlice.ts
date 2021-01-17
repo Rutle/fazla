@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { batch } from 'react-redux';
+import { isBooleanObj } from '_/utils/appUtilities';
 import { AppThunk, AppDispatch } from '_reducers/store';
 import DataStore from '../../utils/dataStore';
 import { BooleanSearchParam, SearchParams, ShipSimple } from '../../utils/types';
@@ -138,7 +139,7 @@ const searchParametersSlice = createSlice({
       const newObject = Object.fromEntries(
         Object.entries(state[cat])
           .slice()
-          .map(([key, val]) => [key, false])
+          .map(([key]) => [key, false])
       );
       const newState = {
         ...state,
@@ -197,19 +198,25 @@ export const updateSearch = (
 ): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const oldParams = getState().searchParameters;
-    // const name = args.name ? args.name : '';
-    // const cat = args.cat ? args.cat : '';
-    // const param = args.param ? args.param : '';
     const { name, cat, param, list, id } = args;
-    // const id = args.id ? args.id : '';
-    console.log(action, args);
 
     switch (action) {
       case 'TOGGLEPARAMETER': {
         let curParamValue = false;
-        let curParamList: { [key: string]: boolean } = {};
-        curParamList = oldParams[cat] as { [key: string]: boolean };
-        curParamValue = curParamList[param];
+        let curParamList: BooleanSearchParam = {};
+        if (isBooleanObj(oldParams[cat])) {
+          curParamList = oldParams[cat] as BooleanSearchParam;
+          curParamValue = curParamList[param];
+        } else {
+          dispatch(
+            setErrorMessage({
+              cState: 'RUNNING',
+              eMsg: 'Failed to toggle parameter. Problem with parameter object.',
+              eState: 'WARNING',
+            })
+          );
+          return;
+        }
         const trueCount = Object.keys(curParamList).reduce<number>(
           (a: number, v: string) => (curParamList[v] ? a + 1 : a),
           0
@@ -301,7 +308,7 @@ export const updateSearch = (
       }
     }
   } catch (e) {
-    if (e instanceof Error) console.log(e.message);
+    // if (e instanceof Error) console.log(e.message);
     dispatch(
       setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with performing search update.', eState: 'ERROR' })
     );

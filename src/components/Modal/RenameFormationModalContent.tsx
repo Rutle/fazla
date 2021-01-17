@@ -1,19 +1,17 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { updateSearch, SearchAction } from '_/reducers/slices/searchParametersSlice';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import RButton from '../RButton/RButton';
 import { FormationAction, formationAction } from '../../reducers/slices/formationGridSlice';
 import { RootState } from '../../reducers/rootReducer';
 
-// eslint-disable-next-line no-empty-pattern
-const RenameFormationModalContent: React.FC<{ setModalOpen: ({}: { modal: string; isOpen: boolean }) => void }> = ({
-  setModalOpen,
-}) => {
+interface FormModalProps {
+  setModalOpen: (openProp: { modal: string; isOpen: boolean }) => void;
+}
+
+const RenameFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) => {
   const dispatch = useDispatch();
   const config = useSelector((state: RootState) => state.config);
   const [nameVal, setNameVal] = useState('');
@@ -45,14 +43,15 @@ const RenameFormationModalContent: React.FC<{ setModalOpen: ({}: { modal: string
               }}
             />
             {nameVal.length > 0 ? (
-              <div
+              <button
+                type="button"
                 className={`clearIcon ${config.themeColor}`}
                 onClick={() => {
                   setNameVal('');
                 }}
               >
                 <FontAwesomeIcon icon={faTimes} />
-              </div>
+              </button>
             ) : (
               <></>
             )}

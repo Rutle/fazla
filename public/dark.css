@@ -324,7 +324,7 @@ input[type="url"].dark:focus,
 
 .clearIcon.dark:hover,
 .clearIcon.dark.input-focus:hover {
-  background-color: var(--main-dark-hover-bg);
+  background-color: var(--main-dark-hover-bg)!important;
 }
 /* #### Grid #### */
 div.f-grid.dark div.f-header {

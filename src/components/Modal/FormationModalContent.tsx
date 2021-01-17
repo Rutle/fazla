@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { RootState } from '../../reducers/rootReducer';
 import { formationAction, FormationAction } from '../../reducers/slices/formationGridSlice';
 import { formationModalAction, FormationModalAction } from '../../reducers/slices/formationModalSlice';
@@ -9,9 +9,12 @@ import ShipDetails from '../ShipDetails';
 import RButton from '../RButton/RButton';
 import ShipList from '../ShipList';
 import { AppContext } from '../../App';
-import PropTypes from 'prop-types';
 
-const FormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string, isOpen: boolean }) => void }> = ({ setModalOpen }) => {
+interface FormModalProps {
+  setModalOpen: (openProp: { modal: string; isOpen: boolean }) => void;
+}
+
+const FormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) => {
   const { shipData } = useContext(AppContext);
   const dispatch = useDispatch();
   const appState = useSelector((state: RootState) => state.appState);
@@ -31,15 +34,15 @@ const FormationModalContent: React.FC<{ setModalOpen: ({}:{ modal: string, isOpe
       default:
         break;
     }
-    dispatch(formationModalAction(FormationModalAction.Close, appState.cToggle));
+    dispatch(formationModalAction(FormationModalAction.Close, appState.cToggle, 0, shipData));
     setModalOpen({ modal: '', isOpen: false });
   };
 
   return (
     <>
       <SideBar>
-        <ShipList shipSearchList={shipSearchList} listName={'ALL'} />
-        <ShipList shipSearchList={ownedSearchList} listName={'OWNED'} />
+        <ShipList shipSearchList={shipSearchList} listName="ALL" />
+        <ShipList shipSearchList={ownedSearchList} listName="OWNED" />
       </SideBar>
       <div className={`ship-data-container ${config.themeColor}`}>
         <ShipDetails />

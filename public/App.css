@@ -609,7 +609,9 @@ input[type="url"] {
   width: 26px;
   height: 31px;
   padding: 5px;
-  transition: box-shadow .2s ease-in,border .2s ease-in,background-color .2s ease-in, color .2s ease-in;
+  border: 0;
+  background-color: inherit!important;
+  /*transition: box-shadow .2s ease-in,border .2s ease-in,background-color .2s ease-in, color .2s ease-in;*/
 }
 
 /* ##### GRID ##### */

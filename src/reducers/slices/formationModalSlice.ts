@@ -11,8 +11,7 @@ export enum FormationModalAction {
 }
 const MAININDEX = [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20];
 const VANGUARDINDEX = [3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23];
-const initialState: { isOpen: boolean; id: string; shipIndex: number; list: string; gridIndex: number } = {
-  isOpen: false,
+const initialState: { id: string; shipIndex: number; list: string; gridIndex: number } = {
   id: '',
   shipIndex: NaN,
   list: '',
@@ -23,7 +22,7 @@ const formationModalSlice = createSlice({
   name: 'formationModalSlice',
   initialState,
   reducers: {
-    openModal(state, action: PayloadAction<{ isOpen: boolean; gridIndex: number }>) {
+    openModal(state, action: PayloadAction<{ gridIndex: number }>) {
       return { ...state, ...action.payload };
     },
     closeModal() {
@@ -40,16 +39,14 @@ export const { openModal, closeModal } = formationModalSlice.actions;
 export const formationModalAction = (
   action: FormationModalAction,
   list?: 'ALL' | 'OWNED',
-  isOpen?: boolean,
   gridIndex?: number,
   shipData?: DataStore
   // eslint-disable-next-line @typescript-eslint/require-await
 ): AppThunk => async (dispatch: AppDispatch) => {
   try {
-    console.log('formationModalAction');
     switch (action) {
       case 'OPEN':
-        if (isOpen !== undefined && gridIndex !== undefined && shipData && list) {
+        if (gridIndex !== undefined && shipData && list) {
           let fleet: 'ALL' | 'VANGUARD' | 'MAIN';
           if (MAININDEX.includes(gridIndex)) {
             fleet = 'MAIN';
@@ -58,20 +55,20 @@ export const formationModalAction = (
           } else {
             throw new Error('Invalid grid index.');
           }
-          // const fleet = gridIndex !== undefined && gridIndex <= 2 ? 'MAIN' : 'VANGUARD';
           batch(() => {
             dispatch(setFleet({ fleet }));
             dispatch(toggleSearchState(list));
             dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
           });
-          dispatch(openModal({ isOpen, gridIndex }));
+          dispatch(openModal({ gridIndex }));
         }
         break;
       case 'CLOSE':
-        if (list) {
+        if (list && shipData) {
           batch(() => {
             dispatch(setFleet({ fleet: 'ALL' }));
             dispatch(toggleSearchState(list));
+            dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
           });
           dispatch(closeModal());
         }
