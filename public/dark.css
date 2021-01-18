@@ -180,7 +180,7 @@ button.dark {
 
 .btn.graphic.dark:hover {
 	background: linear-gradient(to bottom, var(--main-dark-button-bottom-bg) 5%, var(--main-dark-button-top-bg) 100%);
-  text-shadow: 0px 1px 0px var(--main-dark-border);
+  /* text-shadow: 0px 1px 0px var(--main-dark-border);*/
 }
 
 .btn.graphic.dark.selected {
@@ -201,8 +201,9 @@ button.tab-btn.dark:hover {
 }
 
 button.btn.graphic.dark:disabled:hover {
-  box-shadow: inset 0px 1px 0px 0px #30333d;
-	background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 5%, var(--main-dark-button-bottom-bg) 100%);
+  box-shadow: inset 0px 1px 0px 0px var(--main-dark-active-bg);
+  background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 5%, var(--main-dark-button-bottom-bg) 100%);
+  border: 1px solid #000000;
 }
 
 button.btn.dark:disabled:hover,

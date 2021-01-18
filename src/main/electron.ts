@@ -80,6 +80,7 @@ if (process.env.NODE_ENV === 'development') {
   shipData.setArray(dataArr);
 }
 */
+
 ipcMain.on('close-application', () => {
   if (process.platform !== 'darwin') app.quit();
 });
@@ -125,6 +126,7 @@ ipcMain.handle('save-ship-data', async (event, arg) => {
       await fsPromises.writeFile(path.join(__dirname, '../src/data/ships.json'), rawData, 'utf8');
     } else {
       const userDir = app.getPath('userData');
+      console.log(userDir);
       await fsPromises
         .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
         .then(async () => {
@@ -143,6 +145,7 @@ ipcMain.handle('save-ship-data', async (event, arg) => {
   }
   return { updateDate: date, isOk: true, msg: 'Ship data saved succesfully.' };
 });
+
 /**
  * Save owned ship data to config data file.
  */
@@ -229,6 +232,8 @@ ipcMain.handle('initData', async () => {
   let dataArr: Ship[] = [];
   let oShips: string[] = [];
   let formationData: Formation[] = [];
+  let isOk = false;
+  let msg = '';
   let configData: AppConfig = {
     jsonURL: '',
     themeColor: 'dark',
@@ -239,22 +244,56 @@ ipcMain.handle('initData', async () => {
   };
 
   try {
-    if (!electronStore.has('firstRun')) {
-      electronStore.set('firstRun', false);
-      electronStore.set({
-        config: {
-          jsonURL: SHIPAPIURL,
-          themeColor: THEMECOLOR,
-          formHelpTooltip: true,
-          firstTime: true,
-          isToast: true,
-          updateDate: '',
-        },
-        ownedShips: [],
-        formations: [],
+    const userDir = app.getPath('userData');
+    // const resourceDir = process.resourcesPath;
+    await fsPromises
+      .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
+      .then(async () => {
+        console.log('can access, has been created. use file from appdata (updated at least once)');
+        const rawData = await fsPromises.readFile(`${userDir}\\resources\\ships.json`, 'utf8');
+        jsonData = JSON.parse(rawData) as { [key: string]: Ship };
+        isOk = true;
+        dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
+        oShips = electronStore.get('ownedShips') as string[];
+        formationData = electronStore.get('formations') as Formation[];
+      })
+      .catch(async () => {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('Load development ship data.');
+          const rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
+          jsonData = JSON.parse(rawData) as { [key: string]: Ship };
+          dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
+          oShips = electronStore.get('ownedShips') as string[];
+          formationData = electronStore.get('formations') as Formation[];
+          isOk = true;
+          msg = 'success';
+        } else {
+          isOk = false;
+          msg = 'accessFail';
+        }
+        // console.error('cannot access, not created yet. use file provided in build');
+        // const rawData = await fsPromises.readFile(`${resourceDir}\\ships.json`, 'utf8');
+        // jsonData = JSON.parse(rawData) as { [key: string]: Ship };
       });
+    if (isOk) {
+      if (!electronStore.has('firstRun')) {
+        electronStore.set('firstRun', false);
+        electronStore.set({
+          config: {
+            jsonURL: SHIPAPIURL,
+            themeColor: THEMECOLOR,
+            formHelpTooltip: true,
+            firstTime: true,
+            isToast: true,
+            updateDate: '',
+          },
+          ownedShips: [],
+          formations: [],
+        });
+      }
+      configData = electronStore.get('config') as AppConfig;
     }
-    configData = electronStore.get('config') as AppConfig;
+    /*
     if (process.env.NODE_ENV === 'development') {
       const rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
       jsonData = JSON.parse(rawData) as { [key: string]: Ship };
@@ -262,8 +301,8 @@ ipcMain.handle('initData', async () => {
       oShips = electronStore.get('ownedShips') as string[];
       formationData = electronStore.get('formations') as Formation[];
     } else {
-      const userDir = app.getPath('userData');
-      const resourceDir = process.resourcesPath;
+      // const userDir = app.getPath('userData');
+      // const resourceDir = process.resourcesPath;
       await fsPromises
         .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
         .then(async () => {
@@ -280,6 +319,7 @@ ipcMain.handle('initData', async () => {
       oShips = electronStore.get('ownedShips') as string[];
       formationData = electronStore.get('formations') as Formation[];
     }
+    */
   } catch (error) {
     return {
       shipData: dataArr,
@@ -295,7 +335,7 @@ ipcMain.handle('initData', async () => {
     config: configData,
     ownedShips: oShips,
     formations: formationData,
-    isOk: true,
-    msg: 'success',
+    isOk,
+    msg,
   };
 });

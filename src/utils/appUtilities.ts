@@ -1,9 +1,11 @@
 import { AppConfig, Formation, Ship, BasicResponse, BooleanSearchParam } from './types';
 
+const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 declare global {
   interface Window {
     api: {
       electronIpcSend: (channel: string) => void;
+      electronDownloadShipData: (channel: string) => Promise<BasicResponse>;
       electronShell: (str: string) => Promise<void>;
       electronSaveData: (channel: string, ...arg: unknown[]) => Promise<BasicResponse>;
       electronRemoveAFormation: (channel: string, ...arg: unknown[]) => Promise<BasicResponse>;
@@ -137,6 +139,7 @@ export const isBooleanObj = <T extends { All?: unknown }>(obj: T): obj is T & Bo
   return typeof obj.All === 'boolean';
 };
 //
+
 /* https://stackoverflow.com/a/57888548 */
 export const fetchWithTimeout = (url: string, ms: number): Promise<Response> => {
   const controller = new AbortController();
@@ -155,4 +158,27 @@ export const handleHTTPError = (response: Response): Response => {
     }
   }
   return response;
+};
+
+export const downloadShipData = async (): Promise<BasicResponse> => {
+  let isOk = false;
+  let msg = '';
+  try {
+    await fetchWithTimeout(SHIPAPIURL, 20000)
+      .then(handleHTTPError)
+      .then((res) => res.json())
+      .then(async (result: { [key: string]: Ship }) => {
+        const res = await saveShipData(result);
+        isOk = res.isOk;
+        msg = res.msg;
+      })
+      .catch((e: Error) => {
+        isOk = false;
+        msg = e.message;
+      });
+  } catch (e) {
+    // if (e instanceof Error) console.log('k', e.message);
+    return { isOk: false, msg: 'Failed to download and save ship data.' };
+  }
+  return { isOk, msg };
 };
