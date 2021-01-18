@@ -62,7 +62,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
                 <button
                   type="button"
                   style={{ ...style, top: (style.top as number) + 1, height: 29, width: 'calc(100% - 1px)' }}
-                  className={`rList-item btn flat ${config.themeColor} ${
+                  className={`rList-item btn ${config.themeColor} ${
                     shipSearchList[index].id === appState[appState.cToggle].id ? 'selected' : ''
                   }`}
                   onClick={() => selectShip(shipSearchList[index].id, shipSearchList[index].index)}

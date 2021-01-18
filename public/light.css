@@ -17,7 +17,6 @@
   --main-light-button-hover-bg:  #d8e3ec;
   --main-light-button-bottom-bg: #ecebeb;
   --main-light-button-top-bg: #ffffff;
-  --main-light-inform-bg: #a5a5a5;
   --main-light-input-bg: #fdfdfd;
   --main-light-input-focus-bg: #dfdfdf;
   --main-light-input-focus-border: ;
@@ -184,10 +183,6 @@ button.light {
   color: var(--main-light-color);
 }
 
-.btn.flat.light {
-  background-color: var(--main-light-bg);
-}
-
 .btn.graphic.light:hover {
   background: linear-gradient(to bottom, var(--main-light-button-bottom-bg) 5%, var(--main-light-button-top-bg) 100%);
 	background-color:#f6f6f6;
@@ -248,12 +243,6 @@ button.tab-btn.light.selected::after {
   box-shadow: inset 0px 0px 4px 0px var(--main-light-passive-bg);
 }
 */
-
-button.tab-btn.light.inform {
-  background-color: var(--main-light-inform-bg);
-  text-decoration-line: underline;
-  text-decoration-style: dotted;
-}
 
 .tab button.light {
   color: var(--main-light-color);
@@ -414,8 +403,8 @@ div.f-grid.light div.f-row.deepskyblue > div.grid-item.name {
 }
 
 .toast-container.light.toast-container > .toast {
-  background-color: var(--main-dark-title-bg);
-  color: var(--main-dark-color);
+  background-color: var(--main-light-bg);
+  color: var(--main-light-color);
 }
 
 .toast-container.light.toast.warning {

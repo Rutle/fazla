@@ -156,7 +156,7 @@ const FormationView: React.FC = () => {
                   <button
                     type="button"
                     className={`tab-btn normal ${config.themeColor} ${
-                      fData.isEdit[fData.selectedIndex] ? 'inform' : ''
+                      fData.isEdit[fData.selectedIndex] ? 'selected' : ''
                     }`}
                     onClick={() => dispatch(formationAction(FormationAction.Save))}
                     disabled={!fData.isEdit[fData.selectedIndex]}

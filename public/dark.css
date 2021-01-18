@@ -1,30 +1,18 @@
 /* ##### DARK ##### */
 :root {
-  /* --root-dark-bg: rgb(42, 46, 54);*/
-  /*--root-dark-bg: rgb(46, 51, 62); */
-  /* --root-dark-bg: rgb(32, 36, 41);*/
   --root-dark-bg: rgb(22, 23, 25);
   --main-dark-bg: #1b1d24;
   --main-dark-border: #3f4657;
   --main-dark-color: rgb(184, 184, 184);
   --main-dark-hover-bg: #272c3b;
-  --main-dark-hover-border: rgb(182, 182, 182);
-  /* --main-dark-selected-bg: #272c3b;*/
   --main-dark-button-top-bg: #272c3b;
   --main-dark-button-bottom-bg: #21252f;
-  --main-dark-selected-bg: #363a46;
   --main-dark-selected-bottom-bg: #2a2e35;
-  --main-dark-active-bg: #343b4e;
-  --main-dark-active-border: #818aa1;
-  --main-dark-input-bg: #323844;
-  --main-dark-input-focus-border: #444b5a;
-  --main-dark-inform-bg: #272c3b;
+  --main-dark-active-bg: #363a46;
   --main-dark-tooltip-bg: #1b1d24e3;
   --main-dark-tooltip-border: #3f4657a6;
-  --main-dark-title-bg: #1b1d24;
   --main-dark-item-bg: #21252f;
   --main-dark-footer-titlebar-bg: #202023;
-
 }
 
 /* ##### Scrollbar ##### */
@@ -55,7 +43,6 @@ div.page.dark {
 
 div.page.dark .ship-side-container,
 .modal-overlay.dark .ship-side-container {
-  background-color: var(--main-dark-bg);
   border-right: 1px solid var(--main-dark-border);
 }
 
@@ -63,7 +50,7 @@ div.page.dark .ship-side-container,
 #titlebar.dark {
   background: var(--main-dark-footer-titlebar-bg);
   color: var(--main-dark-color);
-  /* border-bottom: 1px solid var(--main-dark-border);*/
+
 }
 #titlebar.dark #window-title {
   border-bottom: 1px solid var(--main-dark-border);
@@ -117,7 +104,7 @@ div.page.dark .ship-side-container,
 /* #### Modal #### */
 .modal-overlay.dark div.modal-title {
   border: 1px solid var(--main-dark-border);
-  background-color: var(--main-dark-title-bg);
+  background-color: var(--main-dark-bg);
 }
 
 .modal-overlay.dark div.modal-action {
@@ -188,28 +175,20 @@ button.dark {
 }
 
 .btn.graphic.dark.selected {
-  background: linear-gradient(to bottom, var(--main-dark-selected-bottom-bg) 10%,  var(--main-dark-selected-bg) 100%);
+  background: linear-gradient(to bottom, var(--main-dark-selected-bottom-bg) 10%,  var(--main-dark-active-bg) 100%);
   text-shadow: 0px 1px 0px var(--main-dark-border);
   box-shadow: inset 1px 1px 1px #252525;
 }
 
 .btn.graphic.dark {
-  box-shadow: inset 0px 1px 0px 0px var(--main-dark-input-bg);
-	background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 5%, var(--main-dark-button-bottom-bg) 100%);
-}
-
-.btn.graphic.dark {
+  box-shadow: inset 0px 1px 0px 0px var(--main-dark-active-bg);
+  background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 5%, var(--main-dark-button-bottom-bg) 100%);
   border: 1px solid #000000;
 }
 
 button.btn.dark:hover,
 button.tab-btn.dark:hover {
   background-color: var(--main-dark-hover-bg);
-}
-
-button.dark.active {
-  background-color: var(--main-dark-active-bg);
-  box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg);
 }
 
 button.btn.graphic.dark:disabled:hover {
@@ -224,20 +203,9 @@ button.tab-btn.dark:disabled:hover {
 
 button.btn.dark.selected,
 button.tab-btn.dark.selected {
-  background-color: var(--main-dark-selected-bg);
+  background-color: var(--main-dark-active-bg);
 }
 
-button.tab-btn.dark.inform {
-  background-color: var(--main-dark-inform-bg);
-  text-decoration-line: underline;
-  text-decoration-style: dotted;
-}
-.rList button.rList-item.btn.flat.dark {
-  background-color: var(--main-dark-item-bg);
-}
-.rList button.rList-item.btn.flat.dark.selected {
-  background-color: var(--main-dark-selected-bg);
-}
 /* #### Formation menu ##### */
 .formation-dropdown-menu.dark {
   border: var(--main-dark-border);
@@ -269,7 +237,7 @@ button.tab-btn.dark.inform {
 .page.dark .ship-data-container .ship-title-bar > div,
 .modal-overlay.dark .ship-title-bar > div {
   border: 1px solid var(--main-dark-border);
-  background-color: var(--main-dark-title-bg);
+  background-color: var(--main-dark-bg);
 }
 .page.dark div.ship-actions,
 .modal-overlay.dark div.ship-actions {
@@ -306,15 +274,15 @@ input[type="text"].dark {
 input[type="url"].dark,
 #input-group.dark {
   color: var(--main-dark-color);
-  background-color: var(--main-dark-input-bg);
-  border: 2px solid var(--main-dark-input-bg);
+  background-color: var(--main-dark-bg);
+  border: 2px solid var(--main-dark-border);
 }
 
 input[type="url"].dark:focus,
 #input-group.dark.input-focus {
   color: var(--main-dark-color);
   background-color: rgba(0,0,0,0.45);
-  border: 2px solid var(--main-dark-input-focus-border);
+  border: 2px solid var(--main-dark-border);
 }
 
 .clearIcon.dark:hover,
@@ -326,16 +294,16 @@ div.f-grid.dark div.f-header {
   border-bottom: 2px solid var(--main-dark-border);
 }
 div.f-grid.dark div.f-title {
-  background-color: var(--main-dark-title-bg);
+  background-color: var(--main-dark-bg);
   border: 1px solid var(--main-dark-border);
 }
 
 div.f-grid.dark div.f-fleet {
-  background-color: var(--main-dark-title-bg);
+  background-color: var(--main-dark-bg);
   border: 1px solid var(--main-dark-border);
 }
 div.f-grid.dark div.f-icon {
-  background-color: var(--main-dark-title-bg);
+  background-color: var(--main-dark-bg);
   border: 1px solid var(--main-dark-border);
 }
 
@@ -379,7 +347,7 @@ div.f-grid.dark div.content > div.Repair.Ship,
 
 /* #### grid icon #### */
 div.f-grid.dark div.f-icon {
-  background-color: var(--main-dark-title-bg);
+  background-color: var(--main-dark-bg);
   border: 1px solid var(--main-dark-border);
 }
 
@@ -395,7 +363,7 @@ div.f-grid.dark div.f-title.bottom-emp {
 
 /* #### rarity #### */
 div.f-grid.dark div.f-row.pink {
-  background-color: var(--main-dark-title-bg);
+  background-color: var(--main-dark-bg);
   border: 2px solid rgba(255, 192, 203, 0.30);
   border-radius: 4px;
 }
@@ -405,7 +373,7 @@ div.f-grid.dark div.f-row.pink > div.grid-item.name {
 }
 */
 div.f-grid.dark div.f-row.gold {
-  background-color: var(--main-dark-title-bg);
+  background-color: var(--main-dark-bg);
   border: 2px solid rgba(255, 215, 0, 0.30);
   border-radius: 4px;
 }
@@ -415,7 +383,7 @@ div.f-grid.dark div.f-row.gold > div.grid-item.name {
 }
 */
 div.f-grid.dark div.f-row.deepskyblue {
-  background-color: var(--main-dark-title-bg);
+  background-color: var(--main-dark-bg);
   border: 2px solid rgba(0, 191, 255, 0.30);
   border-radius: 4px;
 }
@@ -433,7 +401,7 @@ div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
 }
 
 .toast-container.dark > .toast:hover {
-  box-shadow: 0px 0px 3px 0px var(--main-dark-selected-bg);
+  box-shadow: 0px 0px 3px 0px var(--main-dark-active-bg);
 }
 
 .toast-container.dark .toast.warning {
@@ -463,21 +431,24 @@ div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
   
 }
 @media only screen and (max-width: 1340px) {
-  /*
-  .formation-model-container div.ship-side-container div.top-container form div#input-group input[type="text"].dark {
-    background-color: #323844;
-    border: 2px solid var(--main-dark-border);
-  }
-  .formation-model-container div.ship-side-container div.top-container form div#input-group input[type="text"].dark:focus {
-    background-color: rgba(0,0,0,0.45);
-    border: 2px solid var(--main-dark-input-focus-border);
-  }*/
 }
 
 @media only screen and (max-width: 900px) {
   div.grid-item.action > input[type="url"].dark {
     max-width: 450px;
   }
+  /*
+  
+  input[type="url"].dark:focus {
+    background-color: rgba(0,0,0,0.45);
+    border: 2px solid var(--main-dark-border);
+    border-left: 2px solid var(--main-dark-border);
+  } 
+  input[type="url"].dark {
+    background-color: #323844;
+    border: 2px solid var(--main-dark-bg);
+  }
+  */
   div.grid-item.action > input[type="url"].dark {
     max-width: 550px;
   }

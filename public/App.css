@@ -1,5 +1,3 @@
-/* Global colors */
-
 html {
   margin: 0px;
   height: 100vh;
@@ -10,6 +8,7 @@ body {
   padding: 0px;
   height: 100vh;
   width: 100%;
+  flex-direction: column;
 }
 
 :not(input):not(textarea),
@@ -33,14 +32,12 @@ body, nav, header {
   display: flex;
 }
 
-body {
-  flex-direction: column;
-}
 div.scroll {
   height: 100%;
   overflow-y: scroll;
   padding-right: 5px;
 }
+
 /* ##### Titlebar and Footer ##### */
 #titlebar {
   display: block;
@@ -48,7 +45,6 @@ div.scroll {
   height: 32px;
   width: 100%;
 }
-
 
 #footer {
   display: block;
@@ -210,7 +206,6 @@ div.scroll {
   border-left: 0px!important;
   border-right: 0px!important;
   border-bottom: 0px!important;
-  
   padding: 7px;
 }
 
@@ -268,7 +263,6 @@ button:disabled {
   opacity: 0.2;
 }
 
-
 button.btn.small {
   height: 23px;
   line-height: 15px;
@@ -300,12 +294,7 @@ button.btn.hidden {
 
 .btn.graphic {
 	border-radius: 3px;
-	text-decoration:none;
-}
-
-button.btn.flat {
-  border: transparent;
-  border-radius: 3px;
+	text-decoration: none;
 }
 
 /* ###### top-container + tab ##### */
@@ -475,9 +464,10 @@ div.rList.hidden {
   flex-direction: row;
   justify-content: space-between;
   padding: 0px!important;
-  border-radius: 3px;
   cursor: pointer;
   height: 29px;
+  border: transparent;
+  border-radius: 3px;
 }
 
 .rList .rList-item > div.icon {
@@ -672,7 +662,6 @@ div.grid-item {
   margin-right: 1px;
   min-width: 0;
   overflow: hidden;
-  
 }
 
 
@@ -959,27 +948,7 @@ div.f-grid div.f-icon.bottom-emp {
   cursor: pointer;
   padding-bottom: 2px;
 }
-/*
-.toast-container .toast-icon {
-  display: flex;
-  align-items: center;
-  height: 42px;
-  border: unset!important;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-	font-weight: 700;
-	opacity: .8;
-	line-height: 1;
-  font-size: 16px;
-  cursor: pointer;
-	padding: 4px;
-	background: 0 0;
-}
 
-.toast-container .toast-icon * {
-  cursor: pointer;
-}
-*/
 @keyframes toast-in-bottom {
 	from {
 	  transform: translateY(100%);
@@ -1024,37 +993,13 @@ div.f-grid div.f-icon.bottom-emp {
     display: none;
     width: 0;
   }
-  .formation-model-container div.ship-side-container div.top-container form div#input-group input[type="text"].dark {
-    background-color: #323844;
-    border: 2px solid var(--main-dark-border);
-  }
-  .formation-model-container div.ship-side-container div.top-container form div#input-group input[type="text"].dark:focus {
-    background-color: rgba(0,0,0,0.45);
-    border: 2px solid var(--main-dark-input-focus-border);
-  } 
+
 }
 
 @media only screen and (max-width: 900px) {
-  div.grid-item.action > input[type="url"].dark {
-    max-width: 450px;
-  }
   .searchIcon {
     display: none;
     width: 0;
-  }
-  /* div.top-container form div#input-group input[type="text"].dark,*/
-  input[type="url"].dark {
-    background-color: #323844;
-    border: 2px solid var(--main-dark-input-bg);
-  }
-  /* div.top-container form div#input-group input[type="text"].dark:focus,*/
-  input[type="url"].dark:focus {
-    background-color: rgba(0,0,0,0.45);
-    border: 2px solid var(--main-dark-input-focus-border);
-    border-left: 2px solid var(--main-dark-input-focus-border);
-  } 
-  div.grid-item.action > input[type="url"].dark {
-    max-width: 550px;
   }
   .modal-container.formation div.radio-group > label.btn {
     flex-grow: 1;
