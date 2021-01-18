@@ -1,14 +1,23 @@
 /* ##### DARK ##### */
 :root {
-  --root-dark-bg: rgb(22, 23, 25);
-  --main-dark-bg: #1b1d24;
-  --main-dark-border: #3f4657;
+  /* --root-dark-bg: rgb(22, 23, 25);*/
+  --root-dark-bg: #1f1f1f;
+  /* --main-dark-bg: #1b1d24;*/
+  --main-dark-bg: #2b2b2b;
+  /* --main-dark-border: #3f4657;*/
+  --main-dark-border: #40556b;
   --main-dark-color: rgb(184, 184, 184);
-  --main-dark-hover-bg: #272c3b;
+  /* --main-dark-hover-bg: #272c3b;*/
+  --main-dark-hover-bg: #40556b;
+  /*
   --main-dark-button-top-bg: #272c3b;
   --main-dark-button-bottom-bg: #21252f;
+  */
+  --main-dark-button-top-bg: #242d35;
+  --main-dark-button-bottom-bg: #1b2127;
   --main-dark-selected-bottom-bg: #2a2e35;
-  --main-dark-active-bg: #363a46;
+  /* --main-dark-active-bg: #363a46;*/
+  --main-dark-active-bg: #40556b;
   --main-dark-tooltip-bg: #1b1d24e3;
   --main-dark-tooltip-border: #3f4657a6;
   --main-dark-item-bg: #21252f;
