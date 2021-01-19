@@ -277,6 +277,11 @@ button.btn.normal {
   justify-content: center;
 }
 
+button.btn.flat {
+  cursor: pointer;
+  border: unset;
+}
+
 button.tab-btn,
 button.tab-btn * {
   cursor: pointer;
@@ -327,6 +332,24 @@ button.btn.hidden {
 .top-container > div.tab > *,
 .top-container > nav *  {
   cursor: pointer;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: row;
+  border-radius: 2px;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.message-container > span.message {
+  display: flex;
+  font-size: 14px;
+  height: inherit;
+  padding: 4px 4px 4px 10px;
+  flex-grow: 1;
+  box-sizing: border-box;
+  align-items: center;
 }
 
 /* ###### FORMATION DROPDOWN ###### */
@@ -438,11 +461,6 @@ div.ship-actions {
   flex-direction: row;
   align-self: flex-start;
   margin-bottom: 5px;
-}
-
-div.ship-actions button {
-  cursor: pointer;
-  border: unset;
 }
 
 /* #####  rList  ##### */

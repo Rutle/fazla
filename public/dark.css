@@ -13,7 +13,7 @@
   --main-dark-button-top-bg: #272c3b;
   --main-dark-button-bottom-bg: #21252f;
   */
-  --main-dark-button-top-bg: #242d35;
+  --main-dark-button-top-bg: #26313a;
   --main-dark-button-bottom-bg: #1b2127;
   --main-dark-selected-bottom-bg: #2a2e35;
   /* --main-dark-active-bg: #363a46;*/
@@ -179,7 +179,7 @@ button.dark {
 }
 
 .btn.graphic.dark:hover {
-	background: linear-gradient(to bottom, var(--main-dark-button-bottom-bg) 5%, var(--main-dark-button-top-bg) 100%);
+	background: linear-gradient(to bottom, var(--main-dark-button-bottom-bg) 10%, var(--main-dark-button-top-bg) 100%);
   /* text-shadow: 0px 1px 0px var(--main-dark-border);*/
 }
 
@@ -191,10 +191,14 @@ button.dark {
 
 .btn.graphic.dark {
   box-shadow: inset 0px 1px 0px 0px var(--main-dark-active-bg);
-  background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 5%, var(--main-dark-button-bottom-bg) 100%);
+  background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 10%, var(--main-dark-button-bottom-bg) 100%);
   border: 1px solid #000000;
 }
-
+/*
+button.btn.dark.flat:hover {
+  background: linear-gradient(to bottom, #333333 5%, var(--main-dark-bg) 20%);
+}
+*/
 button.btn.dark:hover,
 button.tab-btn.dark:hover {
   background-color: var(--main-dark-hover-bg);
@@ -215,6 +219,14 @@ button.btn.dark.selected,
 button.tab-btn.dark.selected {
   background-color: var(--main-dark-active-bg);
 }
+
+.message-container.dark {
+  border: 1px solid var(--main-dark-border);
+  background-color: var(--main-dark-bg);
+  box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;
+  /* background: linear-gradient(to bottom, #333333 5%, var(--main-dark-bg) 20%);*/
+}
+
 
 /* #### Formation menu ##### */
 .formation-dropdown-menu.dark {
@@ -422,11 +434,9 @@ div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
   background-color: #380000;
 }
 .toast-container.dark .toast.info {
-  /* background-color: #e1e7ec;*/
   border: 1px solid var(--main-dark-border);
 }
 .toast-container.dark .toast.success {
-  /* background-color: #171f27; */
   border: 1px solid var(--main-dark-border);
 }
 
@@ -437,7 +447,6 @@ div.f-grid.dark div.f-row.deepskyblue > div.grid-item.name {
 
 .toast-container.dark .toast-icon:hover {
   box-shadow: inset -1px -1px 4px 1px var(--main-dark-hover-bg);
-  /*box-shadow: inset 0px 0px 4px 0px var(--main-dark-bg)*/
   
 }
 @media only screen and (max-width: 1340px) {

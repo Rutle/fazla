@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 // Modules to control application life and create native browser window
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, ipcRenderer } from 'electron';
 import Store from 'electron-store';
 import * as fs from 'fs';
 import * as url from 'url';
@@ -71,15 +71,6 @@ app.on('activate', () => {
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-/*
-if (process.env.NODE_ENV === 'development') {
-  console.log('DEVELOPMENT', ' load .json');
-  const rawData = fs.readFileSync(path.join(__dirname, '../src/data/ships.json'), 'utf8');
-  const jsonData = JSON.parse(rawData);
-  const dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
-  shipData.setArray(dataArr);
-}
-*/
 
 ipcMain.on('close-application', () => {
   if (process.platform !== 'darwin') app.quit();
@@ -101,6 +92,33 @@ ipcMain.on('open-logs', () => {
   const userDir = app.getPath('userData');
   console.log('logs');
   console.log(`${userDir}\\logs`);
+});
+
+ipcMain.handle('resource-check', async () => {
+  try {
+    let isOk = true;
+    let msg = '';
+    // userData is the appData path
+    const userDir = app.getPath('userData');
+    if (process.env.NODE_ENV !== 'development') {
+      await fsPromises
+        .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
+        .then(() => {
+          // console.log('can access, has been created. use file from appdata (updated at least once)');
+          isOk = true;
+          msg = 'resFound';
+        })
+        .catch(() => {
+          // console.error('cannot access, not created yet. use file provided in build');
+          isOk = true;
+          msg = 'resNotFound';
+        });
+    }
+    console.log(isOk, msg, userDir);
+    return { isOk, msg };
+  } catch (e) {
+    return { isOk: false, msg: 'Resource check failed.' };
+  }
 });
 
 /**
@@ -135,7 +153,7 @@ ipcMain.handle('save-ship-data', async (event, arg) => {
         })
         .catch(async () => {
           console.error('cannot access, not created yet. create directory now.');
-          await fsPromises.mkdir(`${userDir}\\resources`);
+          await fsPromises.mkdir(`${userDir}\\resources`, { recursive: true });
           await fsPromises.writeFile(`${userDir}\\resources\\ships.json`, rawData, 'utf8');
         });
     }
@@ -244,56 +262,29 @@ ipcMain.handle('initData', async () => {
   };
 
   try {
+    // userData is the appData path
     const userDir = app.getPath('userData');
-    // const resourceDir = process.resourcesPath;
-    await fsPromises
-      .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
-      .then(async () => {
-        console.log('can access, has been created. use file from appdata (updated at least once)');
-        const rawData = await fsPromises.readFile(`${userDir}\\resources\\ships.json`, 'utf8');
-        jsonData = JSON.parse(rawData) as { [key: string]: Ship };
-        isOk = true;
-        dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
-        oShips = electronStore.get('ownedShips') as string[];
-        formationData = electronStore.get('formations') as Formation[];
-      })
-      .catch(async () => {
-        if (process.env.NODE_ENV === 'development') {
-          console.log('Load development ship data.');
-          const rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
-          jsonData = JSON.parse(rawData) as { [key: string]: Ship };
-          dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
-          oShips = electronStore.get('ownedShips') as string[];
-          formationData = electronStore.get('formations') as Formation[];
-          isOk = true;
-          msg = 'success';
-        } else {
-          isOk = false;
-          msg = 'accessFail';
-        }
-        // console.error('cannot access, not created yet. use file provided in build');
-        // const rawData = await fsPromises.readFile(`${resourceDir}\\ships.json`, 'utf8');
-        // jsonData = JSON.parse(rawData) as { [key: string]: Ship };
+    // resourcesPath is the installation path
+    const resourceDir = process.resourcesPath;
+    console.log(userDir);
+    console.log(resourceDir);
+    if (!electronStore.has('firstRun')) {
+      electronStore.set('firstRun', false);
+      electronStore.set({
+        config: {
+          jsonURL: SHIPAPIURL,
+          themeColor: THEMECOLOR,
+          formHelpTooltip: true,
+          firstTime: true,
+          isToast: true,
+          updateDate: '',
+        },
+        ownedShips: [],
+        formations: [],
       });
-    if (isOk) {
-      if (!electronStore.has('firstRun')) {
-        electronStore.set('firstRun', false);
-        electronStore.set({
-          config: {
-            jsonURL: SHIPAPIURL,
-            themeColor: THEMECOLOR,
-            formHelpTooltip: true,
-            firstTime: true,
-            isToast: true,
-            updateDate: '',
-          },
-          ownedShips: [],
-          formations: [],
-        });
-      }
-      configData = electronStore.get('config') as AppConfig;
     }
-    /*
+    configData = electronStore.get('config') as AppConfig;
+
     if (process.env.NODE_ENV === 'development') {
       const rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
       jsonData = JSON.parse(rawData) as { [key: string]: Ship };
@@ -301,25 +292,27 @@ ipcMain.handle('initData', async () => {
       oShips = electronStore.get('ownedShips') as string[];
       formationData = electronStore.get('formations') as Formation[];
     } else {
-      // const userDir = app.getPath('userData');
-      // const resourceDir = process.resourcesPath;
       await fsPromises
         .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
         .then(async () => {
-          console.log('can access, has been created. use file from appdata (updated at least once)');
+          // console.log('can access, has been created. use file from appdata (updated at least once)');
           const rawData = await fsPromises.readFile(`${userDir}\\resources\\ships.json`, 'utf8');
           jsonData = JSON.parse(rawData) as { [key: string]: Ship };
+          isOk = true;
+          msg = 'resFound';
         })
         .catch(async () => {
-          console.error('cannot access, not created yet. use file provided in build');
+          // console.error('cannot access, not created yet. use file provided in build');
           const rawData = await fsPromises.readFile(`${resourceDir}\\ships.json`, 'utf8');
+          // const rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
           jsonData = JSON.parse(rawData) as { [key: string]: Ship };
+          isOk = true;
+          msg = 'resNotFoundInit';
         });
       dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
       oShips = electronStore.get('ownedShips') as string[];
       formationData = electronStore.get('formations') as Formation[];
     }
-    */
   } catch (error) {
     return {
       shipData: dataArr,

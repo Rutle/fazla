@@ -5,6 +5,7 @@ declare global {
   interface Window {
     api: {
       electronIpcSend: (channel: string) => void;
+      electronCheckResources: (channel: string) => Promise<BasicResponse>;
       electronDownloadShipData: (channel: string) => Promise<BasicResponse>;
       electronShell: (str: string) => Promise<void>;
       electronSaveData: (channel: string, ...arg: unknown[]) => Promise<BasicResponse>;
@@ -42,6 +43,10 @@ export const maximizeWindow = (): void => {
 
 export const openLogs = (): void => {
   window.api.electronIpcSend('open-logs');
+};
+
+export const checkResource = async (): Promise<BasicResponse> => {
+  return window.api.electronCheckResources('resource-check');
 };
 
 /**

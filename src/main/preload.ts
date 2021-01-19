@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ipcRenderer, contextBridge, shell } from 'electron';
-import { AppConfig, BasicResponse, Formation, Ship } from '_/utils/types';
+import { AppConfig, BasicResponse, Formation, Ship } from '_utils/types';
 
 const validSendChannels = ['close-application', 'restore-application', 'minimize-application', 'open-logs'];
 const validSaveChannels = ['save-ship-data', 'save-owned-ships', 'save-formation-data', 'save-config'];
@@ -23,8 +23,13 @@ contextBridge.exposeInMainWorld('api', {
     }
     return Promise.resolve();
   },
+  electronCheckResources: async (channel: string): Promise<unknown> => {
+    if (channel === 'resource-check') {
+      return ipcRenderer.invoke(channel) as Promise<BasicResponse>;
+    }
+  },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  electronSaveData: async (channel: string, ...arg: any): Promise<unknown> => {
+  electronSaveData: async (channel: string, ...arg: unknown[]): Promise<unknown> => {
     if (validSaveChannels.includes(channel)) {
       return ipcRenderer.invoke(channel, ...arg) as Promise<BasicResponse>;
     }

@@ -57,7 +57,7 @@ const ShipDetails: React.FC = () => {
         <RButton
           themeColor={config.themeColor}
           onClick={addShipToOwned}
-          className="btn normal"
+          className="btn normal flat"
           extraStyle={{ minWidth: '85px' }}
         >
           Add
@@ -68,7 +68,7 @@ const ShipDetails: React.FC = () => {
       <RButton
         themeColor={config.themeColor}
         onClick={removeFromOwned}
-        className="btn normal"
+        className="btn normal flat"
         extraStyle={{ minWidth: '85px' }}
       >
         Remove
@@ -88,7 +88,7 @@ const ShipDetails: React.FC = () => {
         <RButton
           themeColor={config.themeColor}
           onClick={() => openWikiUrl(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
-          className="btn normal"
+          className="btn normal flat"
           // extraStyle={{ width: '160px', height: '22px', padding: 0 }}
           disabled={!urlValidation(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
         >
