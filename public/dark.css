@@ -179,26 +179,35 @@ button.dark {
 }
 
 .btn.graphic.dark:hover {
-	background: linear-gradient(to bottom, var(--main-dark-button-bottom-bg) 10%, var(--main-dark-button-top-bg) 100%);
+  background-color: var(--root-dark-bg);
+  background: linear-gradient(to bottom, var(--root-dark-bg) 10%, var(--main-dark-bg) 90%)!important;
+	/* background: linear-gradient(to bottom, var(--main-dark-button-bottom-bg) 10%, var(--main-dark-button-top-bg) 100%);*/
   /* text-shadow: 0px 1px 0px var(--main-dark-border);*/
 }
 
 .btn.graphic.dark.selected {
-  background: linear-gradient(to bottom, var(--main-dark-selected-bottom-bg) 10%,  var(--main-dark-active-bg) 100%);
+  background: linear-gradient(to bottom, var(--main-dark-selected-bottom-bg) 10%,  var(--main-dark-active-bg) 100%)!important;
   text-shadow: 0px 1px 0px var(--main-dark-border);
   box-shadow: inset 1px 1px 1px #252525;
 }
 
 .btn.graphic.dark {
+  border: 1px solid #000000;
+  /* box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px; */
+  box-shadow: inset 0px 1px 0px 0px var(--main-dark-active-bg);
+  background: linear-gradient(to bottom, var(--main-dark-bg) 10%, var(--root-dark-bg) 90%);
+  /*
   box-shadow: inset 0px 1px 0px 0px var(--main-dark-active-bg);
   background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 10%, var(--main-dark-button-bottom-bg) 100%);
   border: 1px solid #000000;
+  */
 }
-/*
+
 button.btn.dark.flat:hover {
-  background: linear-gradient(to bottom, #333333 5%, var(--main-dark-bg) 20%);
+  background-color: var(--root-dark-bg);
+  background: linear-gradient(to bottom, var(--root-dark-bg) 10%, var(--main-dark-bg) 100%);
 }
-*/
+
 button.btn.dark:hover,
 button.tab-btn.dark:hover {
   background-color: var(--main-dark-hover-bg);
@@ -206,7 +215,7 @@ button.tab-btn.dark:hover {
 
 button.btn.graphic.dark:disabled:hover {
   box-shadow: inset 0px 1px 0px 0px var(--main-dark-active-bg);
-  background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 5%, var(--main-dark-button-bottom-bg) 100%);
+  background: linear-gradient(to bottom, var(--main-dark-bg) 10%, var(--root-dark-bg) 90%)!important;
   border: 1px solid #000000;
 }
 
@@ -224,7 +233,6 @@ button.tab-btn.dark.selected {
   border: 1px solid var(--main-dark-border);
   background-color: var(--main-dark-bg);
   box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;
-  /* background: linear-gradient(to bottom, #333333 5%, var(--main-dark-bg) 20%);*/
 }
 
 
