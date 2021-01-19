@@ -27,6 +27,7 @@ contextBridge.exposeInMainWorld('api', {
     if (channel === 'resource-check') {
       return ipcRenderer.invoke(channel) as Promise<BasicResponse>;
     }
+    return Promise.resolve();
   },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   electronSaveData: async (channel: string, ...arg: unknown[]): Promise<unknown> => {

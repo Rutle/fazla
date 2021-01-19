@@ -17,12 +17,6 @@
     "productName": "Fazla",
     "appId": "com.Fazla",
     "extends": null,
-    "extraResources": [
-      {
-        "from": "src/data/ships.json",
-        "to": "."
-      }
-    ],
     "directories": {
       "app": "./dist/",
       "output": "./out/"
