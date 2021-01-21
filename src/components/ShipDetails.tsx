@@ -6,8 +6,6 @@ import PassivesList from './PassivesList';
 import { openWikiUrl, urlValidation } from '../utils/appUtilities';
 import { addShip, removeShip } from '../reducers/slices/ownedShipListSlice';
 import RButton from './RButton/RButton';
-import { SearchAction, updateSearch } from '../reducers/slices/searchParametersSlice';
-import { setIsUpdated } from '../reducers/slices/appStateSlice';
 import { AppContext } from '../App';
 
 /**

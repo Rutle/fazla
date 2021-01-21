@@ -188,6 +188,7 @@ export const initShipLists = (
 export const setSelectedShip = (key: 'ALL' | 'OWNED', id: string, index: number): AppThunk => async (
   dispatch: AppDispatch,
   getState
+  // eslint-disable-next-line @typescript-eslint/require-await
 ) => {
   const { appState } = getState();
   try {

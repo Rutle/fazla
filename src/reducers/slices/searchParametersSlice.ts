@@ -1,4 +1,4 @@
-import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { batch } from 'react-redux';
 import { isBooleanObj } from '_/utils/appUtilities';
 import { AppThunk, AppDispatch } from '_reducers/store';
@@ -6,7 +6,6 @@ import DataStore from '../../utils/dataStore';
 import { BooleanSearchParam, SearchParams, ShipSimple } from '../../utils/types';
 import { setErrorMessage, setListState, setIsUpdated } from './appStateSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
-import { removeShip } from './ownedShipListSlice';
 import { setDetails, resetDetails } from './shipDetailsSlice';
 import { setSearchList } from './shipSearchListSlice';
 
@@ -198,7 +197,7 @@ export const updateSearch = (
 ): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const oldParams = getState().searchParameters;
-    const { name, cat, param, list, id } = args;
+    const { name, cat, param, list } = args;
     switch (action) {
       case 'TOGGLEPARAMETER': {
         let curParamValue = false;
@@ -255,7 +254,6 @@ export const updateSearch = (
 
     const { searchParameters, ownedShips, appState } = getState();
     const oldListState = appState[list];
-    console.log('o', ownedShips);
     if (searchParameters.isChanged || !appState[list].isUpdated) {
       let allShipsSearch: ShipSimple[] = [];
       let ownedSearch: ShipSimple[] = [];
@@ -263,10 +261,8 @@ export const updateSearch = (
         allShipsSearch = await shipData.getShipsByParams(searchParameters);
       }
       if (list === 'OWNED') {
-        console.log('l', ownedSearch);
         ownedSearch = DataStore.transformStringList(shipData.shipsArr, ownedShips);
         ownedSearch = await DataStore.reduceByParams(shipData, ownedSearch, searchParameters);
-        console.log('d', ownedSearch);
       }
 
       const aLen = allShipsSearch.length;
@@ -287,7 +283,6 @@ export const updateSearch = (
           }
         } else if (appState.cToggle === 'OWNED' && oLen > 0 && list === 'OWNED') {
           const newShip = ownedSearch.find((ship) => ship.id === oldListState.id) || ownedSearch[0];
-          console.log('isUpdated', ownedShips);
           dispatch(setDetails({ id: newShip.id, index: newShip.index }));
           if (oLen !== 0) {
             dispatch(
