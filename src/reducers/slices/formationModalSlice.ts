@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '_reducers/store';
 import { batch } from 'react-redux';
-import { SearchAction, setFleet, updateSearch } from './searchParametersSlice';
+import { resetParameters, SearchAction, setFleet, updateSearch } from './searchParametersSlice';
 import DataStore from '../../utils/dataStore';
-import { setErrorMessage, toggleSearchState } from './appStateSlice';
+import { setErrorMessage, setIsUpdated } from './appStateSlice';
 
 export enum FormationModalAction {
   Open = 'OPEN',
@@ -56,8 +56,9 @@ export const formationModalAction = (
             throw new Error('Invalid grid index.');
           }
           batch(() => {
+            dispatch(resetParameters());
             dispatch(setFleet({ fleet }));
-            dispatch(toggleSearchState(list));
+            dispatch(setIsUpdated({ key: list, value: false }));
             dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
           });
           dispatch(openModal({ gridIndex }));
@@ -67,8 +68,9 @@ export const formationModalAction = (
         if (list && shipData) {
           batch(() => {
             dispatch(setFleet({ fleet: 'ALL' }));
-            dispatch(toggleSearchState(list));
+            dispatch(setIsUpdated({ key: list, value: false }));
             dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
+            dispatch(resetParameters());
           });
           dispatch(closeModal());
         }

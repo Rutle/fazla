@@ -165,7 +165,6 @@ const LandingView: React.FC = () => {
               <RButton
                 disabled={!(appState.cState === 'RUNNING')}
                 themeColor={config.themeColor}
-                className="btn normal graphic"
                 onClick={() => {
                   history.push('/shipdetails');
                 }}
@@ -173,8 +172,6 @@ const LandingView: React.FC = () => {
                   marginTop: '5px',
                   height: '30px',
                   width: '200px',
-                  // border: `1px solid var(--main-${config.themeColor}-border)`,
-                  // boxShadow: 'rgba(0, 0, 0, 0.39) 0px 2px 4px 1px',
                 }}
               >
                 Continue

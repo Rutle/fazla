@@ -1,10 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 import { batch } from 'react-redux';
 import { isBooleanObj } from '_/utils/appUtilities';
 import { AppThunk, AppDispatch } from '_reducers/store';
 import DataStore from '../../utils/dataStore';
 import { BooleanSearchParam, SearchParams, ShipSimple } from '../../utils/types';
-import { setErrorMessage, setListState, toggleSearchState } from './appStateSlice';
+import { setErrorMessage, setListState, setIsUpdated } from './appStateSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import { removeShip } from './ownedShipListSlice';
 import { setDetails, resetDetails } from './shipDetailsSlice';
@@ -67,6 +67,7 @@ const initialState: SearchParams = {
     Decisive: false,
   },
   fleet: 'ALL',
+  isChanged: false,
 };
 
 const searchParametersSlice = createSlice({
@@ -75,24 +76,12 @@ const searchParametersSlice = createSlice({
   reducers: {
     toggleParameter(state, action: PayloadAction<{ cat: string; param: string }>) {
       const { cat, param } = action.payload;
-      // const oldState = state;
-      // const val = oldState[cat];
       const od = state[cat] as BooleanSearchParam;
       const oldVal = od[param];
-      // const oldState = state[cat][param] as boolean;
       let newArray = [];
-      /*
       const newObj = {
         ...state,
-        [cat]: {
-          ...state[cat],
-          All: false,
-          [param]: !state[cat][param],
-        },
-      };
-      */
-      const newObj = {
-        ...state,
+        isChanged: true,
         [cat]: {
           ...(state[cat] as BooleanSearchParam),
           All: false,
@@ -143,6 +132,7 @@ const searchParametersSlice = createSlice({
       );
       const newState = {
         ...state,
+        isChanged: true,
         [cat]: {
           ...newObject,
           All: !oldVal,
@@ -164,7 +154,7 @@ const searchParametersSlice = createSlice({
       return newState;
     },
     setSearchString(state, action: PayloadAction<string>) {
-      return { ...state, name: action.payload };
+      return { ...state, name: action.payload, isChanged: true };
     },
     setFleet(state, action: PayloadAction<{ fleet: 'ALL' | 'VANGUARD' | 'MAIN' }>) {
       return {
@@ -172,13 +162,23 @@ const searchParametersSlice = createSlice({
         fleet: action.payload.fleet,
       };
     },
+    setChangeState(state, action: PayloadAction<boolean>) {
+      return { ...state, isChanged: action.payload };
+    },
     resetParameters() {
       return initialState;
     },
   },
 });
 
-export const { resetParameters, toggleParameter, toggleAll, setFleet, setSearchString } = searchParametersSlice.actions;
+export const {
+  resetParameters,
+  toggleParameter,
+  toggleAll,
+  setFleet,
+  setSearchString,
+  setChangeState,
+} = searchParametersSlice.actions;
 /**
  * Set the search results.
  * @param {DataStore} shipData Data structure containg full ship data.
@@ -199,7 +199,6 @@ export const updateSearch = (
   try {
     const oldParams = getState().searchParameters;
     const { name, cat, param, list, id } = args;
-
     switch (action) {
       case 'TOGGLEPARAMETER': {
         let curParamValue = false;
@@ -225,76 +224,80 @@ export const updateSearch = (
         // -> toggle all parameter to true.
         if (curParamValue && trueCount === 1) {
           dispatch(toggleAll(cat));
-          dispatch(toggleSearchState(list));
         } else {
           dispatch(toggleParameter({ cat, param }));
-          dispatch(toggleSearchState(list));
         }
         break;
       }
       case 'TOGGLEALL':
         dispatch(toggleAll(cat));
-        dispatch(toggleSearchState(list));
         break;
       case 'SETNAME':
         dispatch(setSearchString(name));
-        dispatch(toggleSearchState(list));
         break;
       case 'UPDATE':
-        dispatch(toggleSearchState(list));
+        // dispatch(toggleSearchState(list));
         break;
       case 'REMOVE':
-        dispatch(removeShip(id));
-        if (list === 'OWNED') {
-          dispatch(toggleSearchState(list));
-        }
+        // dispatch(removeShip(id));
+        // dispatch(setIsUpdated({ key: 'OWNED', value: false }));
         break;
       default:
         break;
     }
+    if (action !== 'UPDATE' && action !== 'REMOVE') {
+      if (list === 'ALL') {
+        dispatch(setIsUpdated({ key: 'OWNED', value: false }));
+      } else {
+        dispatch(setIsUpdated({ key: 'ALL', value: false }));
+      }
+    }
 
     const { searchParameters, ownedShips, appState } = getState();
-    if (appState[list].isSearchChanged) {
+    const oldListState = appState[list];
+    console.log('o', ownedShips);
+    if (searchParameters.isChanged || !appState[list].isUpdated) {
       let allShipsSearch: ShipSimple[] = [];
       let ownedSearch: ShipSimple[] = [];
       if (list === 'ALL') {
         allShipsSearch = await shipData.getShipsByParams(searchParameters);
       }
       if (list === 'OWNED') {
+        console.log('l', ownedSearch);
         ownedSearch = DataStore.transformStringList(shipData.shipsArr, ownedShips);
         ownedSearch = await DataStore.reduceByParams(shipData, ownedSearch, searchParameters);
+        console.log('d', ownedSearch);
       }
 
       const aLen = allShipsSearch.length;
       const oLen = ownedSearch.length;
       batch(() => {
         if (appState.cToggle === 'ALL' && aLen > 0 && list === 'ALL') {
-          const idd = allShipsSearch[0].id;
-          const { index } = allShipsSearch[0];
-          dispatch(setDetails({ id: idd, index }));
+          const newShip = allShipsSearch.find((ship) => ship.id === oldListState.id) || allShipsSearch[0];
+          dispatch(setDetails({ id: newShip.id, index: newShip.index }));
           if (aLen !== 0) {
             dispatch(
               setListState({
                 key: 'ALL',
-                data: { id: allShipsSearch[0].id, index: allShipsSearch[0].index, isSearchChanged: false },
+                data: { id: newShip.id, index: newShip.index, isUpdated: true },
               })
             );
           } else {
-            dispatch(setListState({ key: 'ALL', data: { id: 'NONE', index: NaN, isSearchChanged: false } }));
+            dispatch(setListState({ key: 'ALL', data: { id: 'NONE', index: NaN, isUpdated: true } }));
           }
         } else if (appState.cToggle === 'OWNED' && oLen > 0 && list === 'OWNED') {
-          const idd = ownedSearch[0].id;
-          const { index } = ownedSearch[0];
-          dispatch(setDetails({ id: idd, index }));
+          const newShip = ownedSearch.find((ship) => ship.id === oldListState.id) || ownedSearch[0];
+          console.log('isUpdated', ownedShips);
+          dispatch(setDetails({ id: newShip.id, index: newShip.index }));
           if (oLen !== 0) {
             dispatch(
               setListState({
                 key: 'OWNED',
-                data: { id: ownedSearch[0].id, index: ownedSearch[0].index, isSearchChanged: false },
+                data: { id: newShip.id, index: newShip.index, isUpdated: true },
               })
             );
           } else {
-            dispatch(setListState({ key: 'OWNED', data: { id: 'NONE', index: NaN, isSearchChanged: false } }));
+            dispatch(setListState({ key: 'OWNED', data: { id: 'NONE', index: NaN, isUpdated: true } }));
           }
         } else {
           dispatch(resetDetails());
@@ -306,6 +309,7 @@ export const updateSearch = (
       if (list === 'OWNED') {
         dispatch(setOwnedSearchList(ownedSearch));
       }
+      dispatch(setChangeState(false));
     }
   } catch (e) {
     // if (e instanceof Error) console.log(e.message);

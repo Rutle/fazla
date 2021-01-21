@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice, current } from '@reduxjs/toolkit';
 import { AppDispatch, AppThunk } from '_/reducers/store';
 import { batch } from 'react-redux';
 import { setDetails } from './shipDetailsSlice';
@@ -28,7 +28,7 @@ interface ErrorState {
 interface ListState {
   id: string;
   index: number;
-  isSearchChanged: boolean;
+  isUpdated: boolean;
 }
 
 type ListStateObject = {
@@ -37,7 +37,6 @@ type ListStateObject = {
   ALL: ListState;
   OWNED: ListState;
   shipCount: number;
-  initPhases: string[];
 } & CurrentState &
   ErrorState;
 
@@ -46,12 +45,12 @@ const initialState: ListStateObject = {
   ALL: {
     id: 'NONE',
     index: 0,
-    isSearchChanged: false,
+    isUpdated: false,
   },
   OWNED: {
     id: 'NONE',
     index: 0,
-    isSearchChanged: false,
+    isUpdated: false,
   },
   cState: 'INIT',
   cMsg: 'Initializing.',
@@ -59,7 +58,6 @@ const initialState: ListStateObject = {
   eState: '',
   shipCount: 0,
   isSearchChanged: false,
-  initPhases: [],
 };
 
 const appStateSlice = createSlice({
@@ -109,21 +107,14 @@ const appStateSlice = createSlice({
     setShipCount(state, action: PayloadAction<number>) {
       return { ...state, shipCount: action.payload };
     },
-    toggleSearchState(state, action: PayloadAction<'ALL' | 'OWNED'>) {
-      const key = action.payload;
-      const currentValue = state[key].isSearchChanged;
+    setIsUpdated(state, action: PayloadAction<{ key: 'ALL' | 'OWNED'; value: boolean }>) {
+      const { key, value } = action.payload;
       return {
         ...state,
         [key]: {
           ...state[key],
-          isSearchChanged: !currentValue,
+          isUpdated: value,
         },
-      };
-    },
-    addPhaseState(state, action: PayloadAction<string>) {
-      return {
-        ...state,
-        initPhases: [...state.initPhases, action.payload],
       };
     },
   },
@@ -136,8 +127,7 @@ export const {
   setCurrentState,
   setListValue,
   setShipCount,
-  toggleSearchState,
-  addPhaseState,
+  setIsUpdated,
   setErrorMessage,
   clearErrorMessage,
 } = appStateSlice.actions;
@@ -175,12 +165,8 @@ export const initShipLists = (
       dispatch(setSearchList(fullSimple));
       dispatch(setOwnedSearchList(ownedSearch));
       dispatch(setOwnedList(ownedShips));
-      dispatch(
-        setListState({ key: 'ALL', data: { id: searchInitId, index: searchInitIndex, isSearchChanged: false } })
-      );
-      dispatch(
-        setListState({ key: 'OWNED', data: { id: ownedInitId, index: ownedInitIndex, isSearchChanged: false } })
-      );
+      dispatch(setListState({ key: 'ALL', data: { id: searchInitId, index: searchInitIndex, isUpdated: true } }));
+      dispatch(setListState({ key: 'OWNED', data: { id: ownedInitId, index: ownedInitIndex, isUpdated: true } }));
       dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
     });
     dispatch(setConfig(config));
@@ -199,10 +185,14 @@ export const initShipLists = (
  * @param {number} index Index of the ship in the main DataStore array.
  */
 // eslint-disable-next-line @typescript-eslint/require-await
-export const setSelectedShip = (key: string, id: string, index: number): AppThunk => async (dispatch: AppDispatch) => {
+export const setSelectedShip = (key: 'ALL' | 'OWNED', id: string, index: number): AppThunk => async (
+  dispatch: AppDispatch,
+  getState
+) => {
+  const { appState } = getState();
   try {
     dispatch(setDetails({ id, index }));
-    dispatch(setListState({ key, data: { id, index, isSearchChanged: false } }));
+    dispatch(setListState({ key, data: { id, index, isUpdated: appState[key].isUpdated } }));
   } catch (e) {
     dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'There was a problem selecting a ship', eState: 'WARNING' }));
   }
@@ -237,7 +227,7 @@ export const updateShipData = (
               dispatch(
                 setListState({
                   key: 'ALL',
-                  data: { id: searchInitId, index: searchInitIndex, isSearchChanged: true },
+                  data: { id: searchInitId, index: searchInitIndex, isUpdated: false },
                 })
               );
               dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));

@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers/rootReducer';
 import PassivesList from './PassivesList';
 import { openWikiUrl, urlValidation } from '../utils/appUtilities';
-import { addShip } from '../reducers/slices/ownedShipListSlice';
+import { addShip, removeShip } from '../reducers/slices/ownedShipListSlice';
 import RButton from './RButton/RButton';
 import { SearchAction, updateSearch } from '../reducers/slices/searchParametersSlice';
-import { toggleSearchState } from '../reducers/slices/appStateSlice';
+import { setIsUpdated } from '../reducers/slices/appStateSlice';
 import { AppContext } from '../App';
 
 /**
@@ -19,7 +19,6 @@ const ShipDetails: React.FC = () => {
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const config = useSelector((state: RootState) => state.config);
-  const appState = useSelector((state: RootState) => state.appState);
   const ship = shipData.getShipByIndex(shipDetails.index);
   const isOwned = () => {
     if (ship) {
@@ -30,26 +29,17 @@ const ShipDetails: React.FC = () => {
 
   const addShipToOwned = useCallback(() => {
     if (ship) {
-      dispatch(addShip(ship.id /* , ship.names.code */));
-      dispatch(toggleSearchState('OWNED'));
+      dispatch(addShip(ship.id));
       if (config.isToast) addToast('success', 'Docks', `${ship.names.code} was added to docks.`);
     }
   }, [dispatch, addToast, ship, config.isToast]);
 
   const removeFromOwned = useCallback(() => {
     if (ship) {
-      dispatch(
-        updateSearch(shipData, SearchAction.RemoveShip, {
-          name: '',
-          cat: '',
-          param: '',
-          list: appState.cToggle,
-          id: ship.id,
-        })
-      );
+      dispatch(removeShip(shipData, ship.id));
       if (config.isToast) addToast('info', 'Docks', `${ship.names.code} removed from docks.`);
     }
-  }, [dispatch, addToast, appState.cToggle, ship, shipData, config.isToast]);
+  }, [ship, dispatch, shipData, config.isToast, addToast]);
 
   const renderAddRemoveButton = () => {
     if (!isOwned()) {
@@ -89,7 +79,6 @@ const ShipDetails: React.FC = () => {
           themeColor={config.themeColor}
           onClick={() => openWikiUrl(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
           className="btn normal"
-          // extraStyle={{ width: '160px', height: '22px', padding: 0 }}
           disabled={!urlValidation(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
         >
           wiki
