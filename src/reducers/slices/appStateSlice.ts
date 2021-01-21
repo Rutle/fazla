@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice, current } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppDispatch, AppThunk } from '_/reducers/store';
 import { batch } from 'react-redux';
 import { setDetails } from './shipDetailsSlice';
