@@ -117,7 +117,7 @@ const LandingView: React.FC = () => {
                     </span>
                     <RButton
                       themeColor={config.themeColor}
-                      className={`btn normal flat ${downloadState.isReady && downloadState.isDataOk ? '' : 'selected'}`}
+                      className={`btn normal ${downloadState.isReady && downloadState.isDataOk ? '' : 'selected'}`}
                       disabled={downloadState.isDl || (downloadState.isReady && downloadState.isDataOk)}
                       onClick={async () => {
                         setDownloadState({ ...downloadState, isDl: true, text: 'Downloading' });
@@ -129,7 +129,12 @@ const LandingView: React.FC = () => {
                         setDownloadState({ isReady: true, isDl: false, isDataOk: true, text: 'Done' });
                         dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));
                       }}
-                      extraStyle={{ height: 'inherit', width: '105px', padding: '5px 10px' }}
+                      extraStyle={{
+                        height: 'inherit',
+                        width: '105px',
+                        padding: '5px 10px',
+                        border: `1px solid var(--main-${config.themeColor}-bg)`,
+                      }}
                     >
                       {downloadState.text}
                     </RButton>
@@ -160,7 +165,7 @@ const LandingView: React.FC = () => {
               <RButton
                 disabled={!(appState.cState === 'RUNNING')}
                 themeColor={config.themeColor}
-                className="btn normal flat graphic"
+                className="btn normal graphic"
                 onClick={() => {
                   history.push('/shipdetails');
                 }}

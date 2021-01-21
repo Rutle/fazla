@@ -114,7 +114,6 @@ ipcMain.handle('resource-check', async () => {
           msg = 'resNotFound';
         });
     }
-    console.log(isOk, msg, userDir);
     return { isOk, msg };
   } catch (e) {
     return { isOk: false, msg: 'Resource check failed.' };
@@ -144,15 +143,15 @@ ipcMain.handle('save-ship-data', async (event, arg) => {
       await fsPromises.writeFile(path.join(__dirname, '../src/data/ships.json'), rawData, 'utf8');
     } else {
       const userDir = app.getPath('userData');
-      console.log(userDir);
+      // console.log(userDir);
       await fsPromises
         .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
         .then(async () => {
-          console.log('can access, has been created. do not create directory but just save.');
+          // console.log('can access, has been created. do not create directory but just save.');
           await fsPromises.writeFile(`${userDir}\\resources\\ships.json`, rawData, 'utf8');
         })
         .catch(async () => {
-          console.error('cannot access, not created yet. create directory now.');
+          // console.error('cannot access, not created yet. create directory now.');
           await fsPromises.mkdir(`${userDir}\\resources`, { recursive: true });
           await fsPromises.writeFile(`${userDir}\\resources\\ships.json`, rawData, 'utf8');
         });
@@ -266,8 +265,6 @@ ipcMain.handle('initData', async () => {
     const userDir = app.getPath('userData');
     // resourcesPath is the installation path
     const resourceDir = process.resourcesPath;
-    console.log(userDir);
-    console.log(resourceDir);
     if (!electronStore.has('firstRun')) {
       electronStore.set('firstRun', false);
       electronStore.set({

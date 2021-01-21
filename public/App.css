@@ -252,10 +252,11 @@ div.scroll {
 }
 
 /* ###### Buttons ###### */
-button {
-  cursor: default;
+button.btn {
+  cursor: pointer;
   padding: 5px 16px;
   text-align: center;
+  justify-content: center;
 }
 
 button:disabled {
@@ -271,35 +272,21 @@ button.btn.small {
   min-width: 45px;
 }
 
-button.btn.normal {
-  height: 26px;
-  font-size: 14px;
-  justify-content: center;
-}
-
-button.btn.flat {
-  cursor: pointer;
-  border: unset;
-}
-
-button.tab-btn,
-button.tab-btn * {
-  cursor: pointer;
-}
-
+button.btn.normal,
 button.tab-btn.normal {
-  border: none;
   height: 26px;
   font-size: 14px;
+  align-items: center;
 }
 
 button.btn.hidden {
   display: none!important;
 }
 
-.btn.graphic {
+label.btn.graphic,
+button.btn.graphic {
+  cursor: default;
 	border-radius: 3px;
-	text-decoration: none;
 }
 
 /* ###### top-container + tab ##### */
@@ -484,7 +471,7 @@ div.rList.hidden {
   padding: 0px!important;
   cursor: pointer;
   height: 29px;
-  border: transparent;
+  border: unset!important;
   border-radius: 3px;
 }
 
@@ -623,7 +610,6 @@ input[type="url"] {
   padding: 5px;
   border: 0;
   background-color: inherit!important;
-  /*transition: box-shadow .2s ease-in,border .2s ease-in,background-color .2s ease-in, color .2s ease-in;*/
 }
 
 /* ##### GRID ##### */
@@ -637,7 +623,6 @@ input[type="url"] {
 div.f-row {
   display: flex;
   flex-direction: row;
-  /* border-radius: inherit;*/
   margin-bottom: 2px;
 }
 
@@ -665,7 +650,6 @@ div.f-column {
   flex: 1;
   flex-direction: column;
   border-radius: inherit;
-  /* margin-bottom: 5px; */
   min-width: 0;
 }
 
@@ -675,13 +659,11 @@ div.grid-item {
   flex: 1;
   flex-direction: column;
   height: 100%;
-  /* border-radius: inherit;*/
   border-radius: 2px;
   margin-right: 1px;
   min-width: 0;
   overflow: hidden;
 }
-
 
 .grid-item > div.content {
   display: flex;
@@ -707,16 +689,6 @@ div.content div.hull-type {
 
 .grid-item > div.content:hover {
   background-color: var(--main-dark-hover-bg);
-}
-
-.grid-item div.pos-indicator {
-  border-top: 1px solid var(--main-dark-border);
-  cursor: pointer;
-  min-height: 17px;
-  padding: 2px 5px;
-  border-radius: inherit;
-  text-align: start;
-  font-size: 12px;
 }
 
 div.f-grid div.grid-item.toggle {
@@ -788,6 +760,7 @@ div.f-grid div.f-fleet {
   border-right: 0px!important;
   justify-content: center;
 }
+
 div.f-grid div.f-icon {
   display: flex;
   align-items: center;
@@ -795,9 +768,10 @@ div.f-grid div.f-icon {
   border-right: 0px!important;
   padding: 3px 12px;
   margin-bottom: 2px;
+}
+div.f-row.action div.f-icon {
   cursor: pointer;
 }
-
 div.f-grid div.f-icon.f-collapse > svg {
   transform: rotate(-90deg);
 }
@@ -926,14 +900,13 @@ div.f-grid div.f-icon.bottom-emp {
 .toast-container .toast {
   display: flex;
   flex-direction: row;
-  /* height: 50px;*/
   bottom: unset!important;
   right: unset!important;
   margin-bottom: 5px;
   position: relative;
   width: 300px;
   max-height: 100px;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .toast > .toast-right-content {
