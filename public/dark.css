@@ -270,7 +270,7 @@ button.tab-btn.dark.selected {
 .ship-title-bar > div > span.Rare:last-child {
   color: powderblue;
 }
-
+.ship-title-bar > div > span.Ultra.Rare:last-child,
 .ship-title-bar > div > span.Decisive:last-child {
   background-image: linear-gradient(to bottom right, #AFA 15%, #AAF, #FAA 85%);
   -webkit-background-clip: text;

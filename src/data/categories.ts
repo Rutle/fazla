@@ -53,6 +53,7 @@ export const rarityCategories: string[] = [
   'Rare',
   'Elite',
   'Super Rare',
+  'Ultra Rare',
   'Unreleased',
   'Priority',
   'Decisive',
