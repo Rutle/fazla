@@ -262,6 +262,7 @@ button.tab-btn.dark.selected {
 .modal-overlay.dark div.ship-actions {
   border: 1px solid var(--main-dark-border);
 }
+
 /* #### Rarity colors #### */
 .ship-title-bar > div > span.Super.Rare:last-child {
   color: PaleGoldenrod;

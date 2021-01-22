@@ -132,8 +132,6 @@ const LandingView: React.FC = () => {
                       extraStyle={{
                         height: 'inherit',
                         width: '105px',
-                        padding: '5px 10px',
-                        border: `1px solid var(--main-${config.themeColor}-bg)`,
                       }}
                     >
                       {downloadState.text}

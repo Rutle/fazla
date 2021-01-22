@@ -252,9 +252,10 @@ div.scroll {
 }
 
 /* ###### Buttons ###### */
+button.tab-btn,
 button.btn {
   cursor: pointer;
-  padding: 5px 16px;
+  padding: 5px 10px;
   text-align: center;
   justify-content: center;
 }
@@ -344,7 +345,7 @@ button.btn.graphic {
   min-width: 200px;
   max-width: 200px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between!important;
 }
 
 .dropdown-toggle > span {
