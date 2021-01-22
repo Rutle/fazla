@@ -3,7 +3,15 @@ export interface Pair {
 }
 
 export const fleets: { MAIN: string[]; VANGUARD: string[] } = {
-  MAIN: ['Battlecruiser', 'Battleship', 'Light Aircraft Carrier', 'Aircraft Carrier', 'Monitor', 'Repair Ship'],
+  MAIN: [
+    'Battlecruiser',
+    'Battleship',
+    'Light Aircraft Carrier',
+    'Aircraft Carrier',
+    'Monitor',
+    'Repair Ship',
+    'Light Carrier',
+  ],
   VANGUARD: [
     'Destroyer',
     'Light Cruiser',
@@ -68,7 +76,7 @@ export const hullTypes: Pair = {
   'Ayanami subclass': 'Destroyer',
   'Akatsuki subclass': 'Destroyer',
   'Repair Ship': 'Repair Ship',
-  'Repair': 'Repair Ship',
+  Repair: 'Repair Ship',
   'St. Louis subclass': 'Light Cruiser',
   Submarine: 'Submarine',
   'Submarine Carrier': 'Submarine Carrier',
@@ -88,7 +96,7 @@ export const hullTypesAbb: Pair = {
   'Aircraft Carrier': 'CV',
   Monitor: 'BM',
   'Repair Ship': 'AR',
-  'Repair': 'AR',
+  Repair: 'AR',
   Submarine: 'SS',
   'Submarine Carrier': 'SSV',
   'Large Cruiser': 'CB',
