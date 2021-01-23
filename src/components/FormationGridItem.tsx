@@ -48,6 +48,16 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
     dispatch(formationAction(FormationAction.RemoveShip, index));
   }, [dispatch, index]);
 
+  const getHullTypeAbb = (hullType: string | undefined) => {
+    if (!hullType) return '-';
+    return hullTypesAbb[hullTypes[hullType]];
+  };
+
+  const getHullType = (shipItem: Ship | undefined) => {
+    if (shipItem && shipItem.hullType) return hullTypes[shipItem.hullType];
+    return '';
+  };
+
   return (
     <div className="grid-item">
       <div
@@ -63,17 +73,11 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
         data-text-color={`var(--main-${themeColor}-color)`}
       >
         {ship !== undefined ? (
-          <div
-            className={`${ship.hullType !== undefined ? hullTypes[ship.hullType] : ''}`}
-            style={{ display: 'flex', flexDirection: 'row', padding: '2px 5px' }}
-          >
-            <div className="hull-type">{ship.hullType !== undefined ? hullTypesAbb[hullTypes[ship.hullType]] : ''}</div>
-            <div className="details">{ship.names.en}</div>
-          </div>
+          <div className={`hullTypeAbb ${getHullType(ship)}`}>{`${getHullTypeAbb(ship.hullType)} ${
+            ship.names.en
+          }`}</div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'row', padding: '2px 5px' }}>
-            <div className="details">{`Add ${getLocation(index)}`}</div>
-          </div>
+          <div className="details">{`Add ${getLocation(index)}`}</div>
         )}
       </div>
     </div>

@@ -28,7 +28,6 @@ const FormationView: React.FC = () => {
   const { shipData } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
-  // const formationModal = useSelector((state: RootState) => state.formationModal);
   const appState = useSelector((state: RootState) => state.appState);
   const [showModal, setModalOpen] = useState({ modal: '', isOpen: false });
 
@@ -117,7 +116,7 @@ const FormationView: React.FC = () => {
         <ReactModal
           overlayClassName={`modal-overlay ${config.themeColor}`}
           isOpen={showModal.isOpen}
-          className={`modal-container ${showModal.modal === 'shiplist' ? 'formation' : 'new-formation'}`}
+          className={`modal-container ${showModal.modal === 'shiplist' ? 'ship-select' : 'formation-action'}`}
           onRequestClose={requestClose}
         >
           {renderModal()}

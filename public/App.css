@@ -172,7 +172,6 @@ div.scroll {
   min-height: 92vh;
   flex-direction: column;
   margin-top: 32px;
-  /* border-top: 1px solid black;*/
 }
 
 .page-content {
@@ -216,13 +215,13 @@ div.scroll {
   margin: auto;
 }
 
-.modal-container.formation {
+.modal-container.ship-select {
   height: 80%;
   width: 80%;
   flex-direction: row!important;
 }
 
-.modal-container.new-formation {
+.modal-container.formation-action {
   width: 30%;
 }
 
@@ -275,7 +274,6 @@ button.btn.small {
 
 button.btn.normal,
 button.tab-btn.normal {
-  height: 26px;
   font-size: 14px;
   align-items: center;
 }
@@ -317,6 +315,8 @@ button.btn.graphic {
   outline: none;
 }
 
+div.f-row.action *,
+.grid-item > div.content *,
 .top-container > div.tab > *,
 .top-container > nav *  {
   cursor: pointer;
@@ -625,15 +625,14 @@ div.f-row {
   display: flex;
   flex-direction: row;
   margin-bottom: 2px;
+  /* border-radius: 4px;*/
 }
 
 div.f-row.wrap {
   flex-wrap: wrap;
 }
 
-div.f-row.action * {
-  cursor: pointer;
-}
+
 
 div.f-grid div.f-collapsible {
   display: flex;
@@ -659,33 +658,28 @@ div.grid-item {
   display: flex;
   flex: 1;
   flex-direction: column;
-  height: 100%;
-  border-radius: 2px;
-  margin-right: 1px;
+  height: inherit;
+  border-radius: 4px;
   min-width: 0;
   overflow: hidden;
+  margin-right: 1px;
 }
 
 .grid-item > div.content {
   display: flex;
   height: 100%;
-  cursor: pointer;
   flex-direction: column;
   border-radius: inherit;
   font-size: 15px;
   white-space: nowrap;
 }
 
-div.content div.hull-type {
-  margin-right: 7px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.grid-item div.details {
-  cursor: pointer;
-  width: 100%;
-  text-align: start;
+div.grid-item > div.content > div.details,
+div.grid-item > div.content > div.hullTypeAbb {
+  border-radius: inherit;
+  padding: 3px 5px;
+  height: 100%;
+  justify-content: center;
 }
 
 .grid-item > div.content:hover {
@@ -701,17 +695,16 @@ div.f-row div.f-header {
   flex: 1;
   flex-direction: column;
   border-radius: inherit;
-  margin-right: 1px;
 }
 
 div.f-row div.name {
   min-width: 160px;
   max-width: 160px;
   height: inherit;
-  padding: 1px 5px 1px 5px;
   justify-content: center;
   margin-top: 0px;
   font-size: 15px;
+  padding: 3px 5px;
 }
 
 div.f-grid .grid-item.action {
@@ -728,7 +721,7 @@ div.f-grid .grid-item.action {
 }
 
 div.f-grid div.f-row div.passive {
-  padding: 1px 5px 1px 5px;
+  padding: 3px 5px;
   justify-content: center;
   font-size: 15px;
 }
@@ -740,6 +733,12 @@ div.f-grid div.f-row.deepskyblue > :first-child {
   border-bottom-right-radius: 0px;
 }
 
+div.f-grid div.f-row.pink > :last-child,
+div.f-grid div.f-row.gold > :last-child,
+div.f-grid div.f-row.deepskyblue > :last-child {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
 /* ##### f-title ##### */
 div.f-grid div.f-title {
   display: flex;
@@ -838,34 +837,7 @@ div.f-grid div.f-icon.bottom-emp {
 .switch-input:checked + .switch-label::after {
   left: 24px;
 }
-/*
 
-.modal-container > div.modal-title {
-  display: flex;
-  flex-grow: 1;
-  border-left: 0px!important;
-  border-right: 0px!important;
-  border-top: 0px!important;
-  padding: 5px 16px;
-  justify-content: flex-start;
-}
-
-.modal-container > div.modal-content {
-  text-align: center;
-  padding: 15px;
-}
-
-.modal-container > div.modal-action {
-  padding: 7px;
-}
-
-.modal-container {
-  flex-direction: column;
-  display: flex;
-  align-self: center;
-  margin: auto;
-}
-*/
 .toast-container {
   position: fixed;
   font-size: 13px;
@@ -921,11 +893,8 @@ div.f-grid div.f-icon.bottom-emp {
   display: flex;
   align-items: center;
   padding-left: 5px;
-  /*padding-top: 5px;*/
-  /* overflow: hidden;*/
   font-size: 14px;
   height: 100%;
-  /* border-top-right-radius: 6px;*/
   cursor: pointer;
 }
 .toast-right-content > .toast-message {
@@ -935,7 +904,6 @@ div.f-grid div.f-icon.bottom-emp {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  /* border-bottom-right-radius: 6px;*/
   height: 100%;
   cursor: pointer;
   padding-bottom: 2px;
@@ -981,7 +949,7 @@ div.f-grid div.f-icon.bottom-emp {
 }
 
 @media only screen and (max-width: 1340px) {
-  .formation-model-container div.ship-side-container div.top-container form div#input-group div.searchIcon {
+  .formation-model-container div.searchIcon {
     display: none;
     width: 0;
   }
@@ -995,5 +963,11 @@ div.f-grid div.f-icon.bottom-emp {
   }
   .modal-container.formation div.radio-group > label.btn {
     flex-grow: 1;
+  }
+  div.grid-item.action > input[type="url"] {
+    max-width: 450px;
+  }
+  div.grid-item.action > input[type="url"] {
+    max-width: 550px;
   }
 }
