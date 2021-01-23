@@ -32,6 +32,12 @@ const commonConfig = {
   module: {
     rules: [
       {
+        test: /\.(woff|woff2)$/,
+        use: {
+          loader: 'url-loader',
+        },
+      },
+      {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         loader: 'ts-loader',

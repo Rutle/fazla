@@ -5,6 +5,7 @@ import '_public/index.css';
 import '_public/App.css';
 import '_public/light.css';
 import '_public/dark.css';
+import '@fontsource/open-sans';
 import store from '_/reducers/store';
 import App from '_/App';
 import * as serviceWorker from '../serviceWorker';
