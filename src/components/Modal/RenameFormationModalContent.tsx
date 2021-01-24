@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -25,6 +26,7 @@ const RenameFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen })
           <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
             <input
               id="name-input"
+              autoFocus
               type="text"
               spellCheck="false"
               className={`${config.themeColor}`}
@@ -33,7 +35,10 @@ const RenameFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen })
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setNameVal(e.target.value);
               }}
-              onFocus={() => setInputFocus(true)}
+              onFocus={(e) => {
+                setInputFocus(true);
+                e.target.select();
+              }}
               onBlur={() => setInputFocus(false)}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') {

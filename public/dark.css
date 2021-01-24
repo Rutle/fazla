@@ -38,7 +38,9 @@
   border: 1px solid var(--main-dark-border);
   border-radius: 5px;
 }
-
+.dark ::selection {
+  background-color: #3c9efb;
+}
 .dark ::-webkit-scrollbar-thumb {
   background-color:var(--main-dark-border);
   border-radius: 5px;
@@ -239,7 +241,7 @@ button.tab-btn.dark.selected {
 /* #### Popover #### */
 .popover-container.dark {
   background-color: var(--main-dark-bg);
-  border: 1px solid var(--main-dark-border);
+  border: 3px double var(--main-dark-border);
   -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
@@ -304,10 +306,15 @@ input[type="url"].dark:focus,
   background-color: rgba(0,0,0,0.45);
   border: 2px solid var(--main-dark-border);
 }
-
-.clearIcon.dark:hover,
-.clearIcon.dark.input-focus:hover {
+button.clearIcon.dark:hover,
+div.clearIcon.dark:hover {
+  border: 1px solid var(--main-dark-bg)!important;
   background-color: var(--main-dark-hover-bg)!important;
+}
+#input-group.dark.input-focus > button.clearIcon.dark:hover,
+#input-group.dark.input-focus > div.clearIcon.dark:hover {
+  background-color: var(--main-dark-hover-bg)!important;
+  border: 1px solid black!important;
 }
 /* #### Grid #### */
 div.f-grid.dark div.f-header {

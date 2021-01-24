@@ -78,6 +78,7 @@ const ShipDetails: React.FC = () => {
           onClick={() => openWikiUrl(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
           className="btn normal"
           disabled={!urlValidation(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
+          extraStyle={{ minWidth: '85px' }}
         >
           wiki
         </RButton>

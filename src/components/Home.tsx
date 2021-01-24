@@ -121,7 +121,10 @@ const Home: React.FC = () => {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setJSONSRCValue(e.target.value);
                   }}
-                  onFocus={(e) => setSRCInputFocus(e, config.jsonURL.length)}
+                  onFocus={(e) => {
+                    setSRCInputFocus(e, config.jsonURL.length);
+                    e.target.select();
+                  }}
                   onBlur={(e) => {
                     setSRCInputFocus(e, 25);
                     if (e.target.value !== config.jsonURL) {

@@ -58,20 +58,23 @@ export const removeShip = (shipData: DataStore, id: string): AppThunk => async (
   let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
     const ownedShips = [...getState().ownedShips];
+    const { appState } = getState();
     const newList = ownedShips.filter((cId) => cId !== id);
     result = await saveOwnedShipData(newList);
     if (result.isOk) {
       dispatch(setOwnedList(newList));
       dispatch(setIsUpdated({ key: 'OWNED', value: false }));
-      dispatch(
-        updateSearch(shipData, SearchAction.UpdateList, {
-          name: '',
-          cat: '',
-          param: '',
-          list: 'OWNED',
-          id: '',
-        })
-      );
+      if (appState.cToggle === 'OWNED') {
+        dispatch(
+          updateSearch(shipData, SearchAction.UpdateList, {
+            name: '',
+            cat: '',
+            param: '',
+            list: 'OWNED',
+            id: '',
+          })
+        );
+      }
     }
   } catch (e) {
     dispatch(

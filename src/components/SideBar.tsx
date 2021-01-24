@@ -49,6 +49,7 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
           <input
             id="search-input"
             type="text"
+            spellCheck="false"
             className={`${config.themeColor}`}
             value={searchValue}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +64,10 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
                 })
               );
             }}
-            onFocus={() => setInputFocus(true)}
+            onFocus={(e) => {
+              e.target.select();
+              setInputFocus(true);
+            }}
             onBlur={() => setInputFocus(false)}
           />
           {searchValue.length > 0 ? (

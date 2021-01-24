@@ -33,7 +33,10 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setNameVal(e.target.value);
               }}
-              onFocus={() => setInputFocus(true)}
+              onFocus={(e) => {
+                setInputFocus(true);
+                e.target.select();
+              }}
               onBlur={() => setInputFocus(false)}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') {

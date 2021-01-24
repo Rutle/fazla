@@ -373,7 +373,7 @@ div.f-row.action *,
 }
 
 .formation-dropdown-menu > .btn.menu-item {
-  border: unset;
+  border: unset!important;
   justify-content: flex-start;
   text-align: left;
   min-width: 200px;
@@ -415,6 +415,7 @@ div.f-row.action *,
   z-index: 100;
   max-width: 19%;
   width: 19%;
+  border-radius: 2px;
 }
 
 .popover-content > .f-grid > .f-row > .grid-item {
@@ -607,13 +608,13 @@ input[type="url"] {
 }
 
 .searchIcon,
-.clearIcon {
+div.clearIcon,
+button.clearIcon {
   text-align: center;
   box-sizing: border-box;
   width: 26px;
-  height: 31px;
   padding: 5px;
-  border: 0;
+  border: 1px solid transparent!important;
   background-color: inherit!important;
 }
 
@@ -726,7 +727,7 @@ div.f-grid .grid-item.action {
 div.f-grid div.f-row div.passive {
   padding: 3px 5px;
   justify-content: center;
-  /*font-size: 15px;*/
+  font-size: 13px;
 }
 
 div.f-grid div.f-row.pink > :first-child,
