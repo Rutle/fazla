@@ -22,6 +22,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
   const { shipData } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
   const appState = useSelector((state: RootState) => state.appState);
+  const ownedShips = useSelector((state: RootState) => state.ownedShips);
 
   const selectShip = useCallback(
     (id: string, index: number) => {
@@ -43,6 +44,11 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
   const getRarity = (ship: Ship | undefined) => {
     if (ship && ship.rarity) return ship.rarity;
     return '';
+  };
+
+  const isOwned = (id: string): boolean => {
+    if (listName === 'OWNED') return false;
+    return ownedShips.includes(id);
   };
 
   return (
@@ -68,6 +74,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
                   onClick={() => selectShip(shipSearchList[index].id, shipSearchList[index].index)}
                 >
                   <div className={`name ${getRarity(ship)}`}>{ship.names.en}</div>
+                  {isOwned(ship.id) ? <div className="owned-yes">docks</div> : <div className="owned-no" />}
                   <div className={`hullTypeAbb ${getHullType(ship)}`}>{getHullTypeAbb(ship.hullType)}</div>
                 </button>
               );

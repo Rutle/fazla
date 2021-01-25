@@ -471,6 +471,21 @@ div.rList.hidden {
   display: none;
 }
 
+.owned-no {
+  width: 14px;
+  min-width: 14px;
+  height: inherit;
+}
+
+.owned-yes {
+  writing-mode: vertical-rl;
+  font-size: 10px;
+  width: 14px;
+  min-width: 14px;
+  transform: scale(-1);
+  height: inherit;
+}
+
 .rList .rList-item {
   display: flex;
   box-sizing: border-box;
@@ -730,26 +745,13 @@ div.f-grid div.f-row div.passive {
   font-size: 13px;
 }
 
-div.f-grid div.f-row.pink > :first-child,
-div.f-grid div.f-row.gold > :first-child,
-div.f-grid div.f-row.deepskyblue > :first-child {
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-
-div.f-grid div.f-row.pink > :last-child,
-div.f-grid div.f-row.gold > :last-child,
-div.f-grid div.f-row.deepskyblue > :last-child {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
 /* ##### f-title ##### */
 div.f-grid div.f-title {
   display: flex;
   flex: 1 0;
   flex-basis: auto;
   font-size: 14px;
-  padding: 3px 12px;
+  padding: 2px 12px;
   margin-bottom: 2px;
   border-left: 0px!important;
   border-right: 0px!important;
@@ -843,6 +845,7 @@ div.f-grid div.f-icon.bottom-emp {
 .switch-input:checked + .switch-label::after {
   left: 24px;
 }
+
 
 .toast-container {
   position: fixed;

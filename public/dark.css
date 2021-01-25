@@ -381,21 +381,19 @@ div.f-grid.dark div.f-title.bottom-emp {
 }
 
 /* #### rarity #### */
-div.f-grid.dark div.f-row.pink > .grid-item.name {
-  background-color: rgba(255, 192, 203, 0.40);
-}
-/* #### rarity #### */
-div.f-grid.dark div.f-row.pink > .grid-item.passive,
-div.f-grid.dark div.f-row.gold > .grid-item.passive,
-div.f-grid.dark div.f-row.deepskyblue > .grid-item.passive {
+div.f-grid.dark div.f-row.pink {
+  border-bottom: 2px solid rgba(255, 192, 203, 0.50);
   background-color: var(--main-dark-bg);
 }
-div.f-grid.dark div.f-row.gold > .grid-item.name {
-  background-color: rgba(255, 215, 0, 0.40);
+/* #### rarity #### */
+div.f-grid.dark div.f-row.gold {
+  background-color: var(--main-dark-bg);
+  border-bottom: 2px solid rgba(255, 215, 0, 0.50);
 }
 
-div.f-grid.dark div.f-row.deepskyblue > .grid-item.name {
-  background-color: rgba(0, 191, 255, 0.40);
+div.f-grid.dark div.f-row.deepskyblue {
+  background-color: var(--main-dark-bg);
+  border-bottom: 2px solid rgba(0, 191, 255, 0.50);
 }
 
 .toast-container.dark > .toast,
