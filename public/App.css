@@ -19,9 +19,7 @@ body {
     cursor: default;
 }
 
-input {
-    outline: none;
-}
+
 
 #root, #root > div {
   height: 100%;
@@ -317,7 +315,6 @@ button.btn.graphic {
 .top-container > nav > a {
   text-decoration: none;
   border: none;
-  outline: none;
   font-variant-caps: all-petite-caps;
   font-size: 18px;
 }

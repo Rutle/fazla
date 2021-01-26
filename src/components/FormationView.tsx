@@ -145,31 +145,29 @@ const FormationView: React.FC = () => {
               </RButton>
               {fData.formations.length !== 0 ? (
                 <>
-                  <button
-                    type="button"
-                    className={`tab-btn normal ${config.themeColor}`}
+                  <RButton
+                    themeColor={config.themeColor}
+                    className="tab-btn normal"
                     onClick={() => dispatch(formationAction(FormationAction.Remove))}
                     disabled={fData.formations.length === 0}
                   >
                     Remove
-                  </button>
-                  <button
-                    type="button"
-                    className={`tab-btn normal ${config.themeColor} ${
-                      fData.isEdit[fData.selectedIndex] ? 'selected' : ''
-                    }`}
+                  </RButton>
+                  <RButton
+                    themeColor={config.themeColor}
+                    className={`tab-btn normal ${fData.isEdit[fData.selectedIndex] ? 'selected' : ''}`}
                     onClick={() => dispatch(formationAction(FormationAction.Save))}
                     disabled={!fData.isEdit[fData.selectedIndex]}
                   >
                     Save
-                  </button>
-                  <button
-                    type="button"
-                    className={`tab-btn normal ${config.themeColor} `}
+                  </RButton>
+                  <RButton
+                    themeColor={config.themeColor}
+                    className="tab-btn normal"
                     onClick={() => setModalOpen({ modal: 'rename', isOpen: true })}
                   >
                     Rename
-                  </button>
+                  </RButton>
                 </>
               ) : (
                 <></>

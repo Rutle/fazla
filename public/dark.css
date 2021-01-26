@@ -46,6 +46,18 @@
   border-radius: 5px;
 }
 
+.dark :not(button):focus {
+  outline: none;
+  background-color: var(--main-dark-border);
+}
+.dark button:focus {
+  outline: none;
+  background-color: var(--main-dark-border);
+}
+.dark button.graphic:focus {
+  outline: 1px solid var(--main-dark-border);
+}
+
 /* ##### Page ##### */
 div.page.dark {
   background-color: var(--root-dark-bg);
@@ -152,7 +164,6 @@ nav.tab.dark > a {
   border-right: 1px solid var(--main-dark-bg);
   border-left: 1px solid var(--main-dark-bg);
   box-shadow: inset 0px -4px 3px -4px #00000099;
-  background-color: var(--main-dark-bg);
 }
 
 nav.tab.dark > a.active {
@@ -293,6 +304,11 @@ input[type="text"].dark {
   border: 0;
 }
 
+input[type="text"].dark:focus {
+  background-color: inherit!important;
+  border: unset!important;
+}
+
 input[type="url"].dark,
 #input-group.dark {
   color: var(--main-dark-color);
@@ -302,9 +318,9 @@ input[type="url"].dark,
 
 input[type="url"].dark:focus,
 #input-group.dark.input-focus {
-  color: var(--main-dark-color);
-  background-color: rgba(0,0,0,0.45);
-  border: 2px solid var(--main-dark-border);
+  color: var(--main-dark-color)!important;
+  background-color: rgba(0,0,0,0.45)!important;
+  border: 2px solid var(--main-dark-border)!important;
 }
 button.clearIcon.dark:hover,
 div.clearIcon.dark:hover {

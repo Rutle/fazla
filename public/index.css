@@ -15,6 +15,10 @@ body {
 }
 
 .no-focus-outline:focus {
+  outline: none!important;
+}
+
+input {
   outline: none;
 }
 
