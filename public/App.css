@@ -18,7 +18,8 @@ body {
     user-select: none;
     cursor: default;
 }
-input, button, textarea, :focus, label {
+
+input {
     outline: none;
 }
 
@@ -322,6 +323,7 @@ button.btn.graphic {
 }
 
 div.f-row.action *,
+.rList .rList-item *,
 .grid-item > div.content *,
 .top-container > div.tab > *,
 .top-container > nav *  {
@@ -430,7 +432,7 @@ div.f-row.action *,
   margin-bottom: 0px;
 }
 
-/* ###### ship details / titlebar / ship-actions ##### */
+/* ###### ship details / titlebar ##### */
 .ship-title-bar {
   display: flex;
   flex-direction: row;
@@ -451,13 +453,6 @@ div.f-row.action *,
   margin-right: 10px;
 }
 
-div.ship-actions {
-  display: flex;
-  flex-direction: row;
-  align-self: flex-start;
-  margin-bottom: 5px;
-}
-
 /* #####  rList  ##### */
 .rList {
   flex: 1 1 auto;
@@ -471,43 +466,20 @@ div.rList.hidden {
   display: none;
 }
 
-.owned-no {
-  width: 14px;
-  min-width: 14px;
+.owned-indicator {
   height: inherit;
-}
-
-.owned-yes {
-  writing-mode: vertical-rl;
-  font-size: 10px;
-  width: 14px;
-  min-width: 14px;
-  transform: scale(-1);
-  height: inherit;
+  width: 5px;
+  background-color: var(--main-dark-border);
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 
 .rList .rList-item {
   display: flex;
   box-sizing: border-box;
-  flex-direction: row;
-  justify-content: space-between;
   padding: 0px!important;
-  cursor: pointer;
-  height: 29px;
   border: unset!important;
   border-radius: 3px;
-}
-
-.rList .rList-item > div.icon {
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 3px;
-  width: 10%;
-  max-width: 10%;
-  height: 29px;
-  padding-left: 5px;
 }
 
 .rList .rList-item > div.hullTypeAbb {
@@ -533,30 +505,22 @@ div.rList.hidden {
   overflow: hidden;
   height: 29px;
   width: 100%;
-  border-radius: inherit;
-  border-top-right-radius: 0px!important;
-  border-bottom-right-radius: 0px!important;
-  border-right: 0px!important;
-}
-
-.rList .rList-item * {
-  cursor: pointer;
+  border-left: 1px solid transparent;
 }
 
 .button-group {
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-self: flex-start;
+}
+
+.button-group.borderless {
+  border: unset!important;
 }
 
 .button-group button {
-  display: flex;
   flex: 1 1;
-  flex-basis: auto;
-  margin-right: 1px;
-}
-.button-group button:last-child {
-  margin-right: 0px;
 }
 
 .radio-group {

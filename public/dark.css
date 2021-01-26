@@ -261,8 +261,8 @@ button.tab-btn.dark.selected {
   border: 1px solid var(--main-dark-border);
   background-color: var(--main-dark-bg);
 }
-.page.dark div.ship-actions,
-.modal-overlay.dark div.ship-actions {
+.page.dark div.button-group,
+.modal-overlay.dark div.button-group {
   border: 1px solid var(--main-dark-border);
 }
 

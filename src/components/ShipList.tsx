@@ -64,6 +64,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
           >
             {React.memo(({ index, style }) => {
               const ship = shipData.shipsArr[shipSearchList[index].index];
+              const isShipOwned = isOwned(ship.id);
               return (
                 <button
                   type="button"
@@ -73,8 +74,16 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
                   }`}
                   onClick={() => selectShip(shipSearchList[index].id, shipSearchList[index].index)}
                 >
-                  <div className={`name ${getRarity(ship)}`}>{ship.names.en}</div>
-                  {isOwned(ship.id) ? <div className="owned-yes">docks</div> : <div className="owned-no" />}
+                  <div
+                    className="owned-indicator"
+                    style={{ backgroundColor: `${isShipOwned ? 'var(--main-dark-border)' : 'inherit'}` }}
+                  />
+                  <div
+                    className={`name ${getRarity(ship)}`}
+                    style={{ borderLeft: `${isShipOwned ? '1px solid var(--main-dark-bg)' : '1px solid transparent'}` }}
+                  >
+                    {ship.names.en}
+                  </div>
                   <div className={`hullTypeAbb ${getHullType(ship)}`}>{getHullTypeAbb(ship.hullType)}</div>
                 </button>
               );

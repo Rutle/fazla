@@ -71,7 +71,7 @@ const ShipDetails: React.FC = () => {
           <span className={ship.rarity}>{` ${ship.stars?.stars as string}`}</span>
         </div>
       </div>
-      <div className="ship-actions">
+      <div className="button-group" style={{ width: 'unset', marginBottom: '5px' }}>
         {renderAddRemoveButton()}
         <RButton
           themeColor={config.themeColor}

@@ -18,6 +18,7 @@ import { AppContext } from '../App';
 import DataStore from '../utils/dataStore';
 import NewFormationModalContent from './Modal/NewFormationModalContent';
 import RenameFormationModalContent from './Modal/RenameFormationModalContent';
+import RButton from './RButton/RButton';
 
 ReactModal.setAppElement('#root');
 /**
@@ -135,13 +136,13 @@ const FormationView: React.FC = () => {
             <div className="tab">
               {fData.formations.length !== 0 ? <FormationDropDown /> : <></>}
 
-              <button
-                type="button"
-                className={`tab-btn normal ${config.themeColor}`}
+              <RButton
+                themeColor={config.themeColor}
+                className="tab-btn normal"
                 onClick={() => setModalOpen({ modal: 'new', isOpen: true })}
               >
                 New
-              </button>
+              </RButton>
               {fData.formations.length !== 0 ? (
                 <>
                   <button

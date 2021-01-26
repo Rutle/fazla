@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react';
+import { useState } from 'react';
 
 interface RButtonProps {
   className?: string;
@@ -12,10 +13,16 @@ interface RButtonProps {
 
 const RButton: React.FC<RButtonProps> = React.memo(
   ({ className = 'btn normal graphic', children, themeColor, onClick, disabled, extraStyle }) => {
+    const [isFocusOutline, setFocusOutline] = useState(false);
     return (
       <button
+        onKeyDown={(e) => {
+          if (e.key === 'Tab') {
+            setFocusOutline(true);
+          }
+        }}
         type="button"
-        className={`${className} ${themeColor}`}
+        className={`${className} ${themeColor} ${!isFocusOutline ? 'no-focus-outline' : ''}`}
         onClick={onClick}
         disabled={disabled}
         style={extraStyle}
