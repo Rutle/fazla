@@ -21,6 +21,9 @@ const RButton: React.FC<RButtonProps> = React.memo(
             setFocusOutline(true);
           }
         }}
+        onMouseUp={() => {
+          if (isFocusOutline) setFocusOutline(false);
+        }}
         type="button"
         className={`${className} ${themeColor} ${!isFocusOutline ? 'no-focus-outline' : ''}`}
         onClick={onClick}
@@ -32,5 +35,4 @@ const RButton: React.FC<RButtonProps> = React.memo(
     );
   }
 );
-
 export default RButton;

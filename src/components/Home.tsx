@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,8 @@ import { updateShipData } from '../reducers/slices/appStateSlice';
 import { configAction, AppConfigAction } from '../reducers/slices/programConfigSlice';
 import RButton from './RButton/RButton';
 import { AppContext } from '../App';
+import RToggle from './RToggle/RToggle';
+import RSwitch from './RSwitch/RSwitch';
 /**
  * Options page.
  */
@@ -38,6 +40,12 @@ const Home: React.FC = () => {
     setShipCount(appState.shipCount);
   }, [appState.shipCount]);
 
+  const updateConfig = useCallback(
+    (key: string, value: string | boolean) => {
+      dispatch(configAction(AppConfigAction.Update, key, value));
+    },
+    [dispatch]
+  );
   const renderUpdate = () => {
     let text = 'Update';
     let disabled = false;
@@ -136,74 +144,47 @@ const Home: React.FC = () => {
             <div className="f-row wrap">
               <div className="grid-item name">Formation tooltips</div>
               <div className="grid-item action">
-                <form action="#" style={{ display: 'flex' }}>
-                  <div className="switch">
-                    <label htmlFor="form-tooltip" className="switch-label">
-                      <input
-                        id="form-tooltip"
-                        type="checkbox"
-                        className="switch-input"
-                        checked={config.formHelpTooltip}
-                        onChange={() => {
-                          dispatch(configAction(AppConfigAction.Update, 'formHelpTooltip', !config.formHelpTooltip));
-                        }}
-                      />
-                      <span className="switch-toggle" />
-                    </label>
-                  </div>
-                </form>
+                <RSwitch
+                  id="form-tooltip"
+                  themeColor={config.themeColor}
+                  onChange={() => updateConfig('formHelpTooltip', !config.formHelpTooltip)}
+                  checked={config.formHelpTooltip}
+                />
               </div>
             </div>
             <div className="f-row wrap">
               <div className="grid-item name">Toasts</div>
               <div className="grid-item action">
-                <form action="#" style={{ display: 'flex' }}>
-                  <div className="switch">
-                    <label htmlFor="toasts" className="switch-label">
-                      <input
-                        id="toasts"
-                        type="checkbox"
-                        className="switch-input"
-                        checked={config.isToast}
-                        onChange={() => {
-                          dispatch(configAction(AppConfigAction.Update, 'isToast', !config.isToast));
-                        }}
-                      />
-                      <span className="switch-toggle" />
-                    </label>
-                  </div>
-                </form>
+                <RSwitch
+                  id="toasts"
+                  themeColor={config.themeColor}
+                  onChange={() => updateConfig('isToast', !config.isToast)}
+                  checked={config.isToast}
+                />
               </div>
             </div>
             <div className="f-row wrap">
               <div className="grid-item name">Theme color</div>
               <div className="grid-item action">
                 <div className={`radio-group ${config.themeColor}`}>
-                  <label
-                    className={`btn graphic ${config.themeColor}${config.themeColor === 'dark' ? ' selected' : ''}`}
-                    htmlFor="dark-input"
+                  <RToggle
+                    id="dark"
+                    value="dark"
+                    themeColor={config.themeColor}
+                    onChange={() => updateConfig('themeColor', 'dark')}
+                    selected={config.themeColor === 'dark'}
                   >
                     Dark
-                    <input
-                      id="dark-input"
-                      type="radio"
-                      checked={config.themeColor === 'dark'}
-                      onChange={() => dispatch(configAction(AppConfigAction.Update, 'themeColor', 'dark'))}
-                    />
-                  </label>
-
-                  <label
-                    className={`btn graphic ${config.themeColor}${config.themeColor === 'light' ? ' selected' : ''}`}
-                    htmlFor="light-input"
+                  </RToggle>
+                  <RToggle
+                    id="light"
+                    value="light"
+                    themeColor={config.themeColor}
+                    onChange={() => updateConfig('themeColor', 'light')}
+                    selected={config.themeColor === 'light'}
                   >
                     Light
-                    <input
-                      id="light-input"
-                      type="radio"
-                      checked={config.themeColor === 'light'}
-                      onChange={() => dispatch(configAction(AppConfigAction.Update, 'themeColor', 'light'))}
-                    />
-                  </label>
+                  </RToggle>
                 </div>
               </div>
             </div>

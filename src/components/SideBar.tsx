@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +9,7 @@ import { setCurrentToggle } from '../reducers/slices/appStateSlice';
 import { SearchAction, updateSearch } from '../reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';
 import { AppContext } from '../App';
+import RToggle from './RToggle/RToggle';
 
 interface ShipListProps {
   children: React.ReactNode;
@@ -34,6 +35,13 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
     dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list: cToggle }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState.cToggle]);
+
+  const changeList = useCallback(
+    (value: 'ALL' | 'OWNED') => {
+      dispatch(setCurrentToggle(value));
+    },
+    [dispatch]
+  );
 
   return (
     <div className="ship-side-container">
@@ -91,33 +99,26 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
           )}
         </div>
         <div className={`radio-group ${config.themeColor}`}>
-          <label
-            className={`btn graphic ${config.themeColor}${appState.cToggle === 'ALL' ? ' selected' : ''}`}
-            htmlFor="all"
+          <RToggle
+            id="all-toggle"
+            value="ALL"
+            className={`btn graphic ${config.themeColor}`}
+            themeColor={config.themeColor}
+            onChange={() => changeList('ALL')}
+            selected={appState.cToggle === 'ALL'}
           >
             All
-            <input
-              id="all"
-              type="radio"
-              value="all"
-              checked={appState.cToggle === 'ALL'}
-              onChange={() => dispatch(setCurrentToggle('ALL'))}
-            />
-          </label>
-
-          <label
-            className={`btn graphic ${config.themeColor}${appState.cToggle === 'OWNED' ? ' selected' : ''}`}
-            htmlFor="owned"
+          </RToggle>
+          <RToggle
+            id="owned-toggle"
+            value="OWNED"
+            className={`btn graphic ${config.themeColor}`}
+            themeColor={config.themeColor}
+            onChange={() => changeList('OWNED')}
+            selected={appState.cToggle === 'OWNED'}
           >
-            Owned
-            <input
-              id="owned"
-              type="radio"
-              value="false"
-              checked={appState.cToggle === 'OWNED'}
-              onChange={() => dispatch(setCurrentToggle('OWNED'))}
-            />
-          </label>
+            All
+          </RToggle>
         </div>
       </div>
       {children}

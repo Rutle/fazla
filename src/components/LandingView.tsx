@@ -74,7 +74,6 @@ const LandingView: React.FC = () => {
   }, [appState.cState, dispatch, downloadState, history, shipData]);
 
   const getInitMsg = () => {
-    // {appState.cState === 'RUNNING' ? 'Initialization ready.' : 'Initializing.'}
     if (appState.cState === 'INIT') {
       if (shipResource === 'resNotFound') return 'Initialization waiting ship data.';
       return 'Initializing.';

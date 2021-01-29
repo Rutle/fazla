@@ -51,7 +51,7 @@
   background-color: var(--main-dark-border);
 }
 
-.dark button:focus {
+.dark button:not(.no-focus-outline):focus {
   outline: none;
   background-color: var(--main-dark-border);
 }
