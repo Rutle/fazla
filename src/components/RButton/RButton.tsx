@@ -19,7 +19,6 @@ const RButton: React.FC<RButtonProps> = React.memo(
         onKeyDown={(e) => {
           if (e.key === 'Tab') {
             setFocusOutline(true);
-            console.log('tab');
           }
         }}
         type="button"

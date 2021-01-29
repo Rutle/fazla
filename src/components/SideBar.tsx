@@ -1,11 +1,8 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 import { RootState } from '../reducers/rootReducer';
 import { setDetails } from '../reducers/slices/shipDetailsSlice';
 import { setCurrentToggle } from '../reducers/slices/appStateSlice';
@@ -71,7 +68,8 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
             onBlur={() => setInputFocus(false)}
           />
           {searchValue.length > 0 ? (
-            <div
+            <button
+              type="button"
               className={`clearIcon ${config.themeColor}`}
               onClick={() => {
                 setSearchValue('');
@@ -87,37 +85,38 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
               }}
             >
               <FontAwesomeIcon icon={faTimes} />
-            </div>
+            </button>
           ) : (
             <></>
           )}
         </div>
         <div className={`radio-group ${config.themeColor}`}>
-          <input
-            id="all"
-            type="radio"
-            value="all"
-            checked={appState.cToggle === 'ALL'}
-            onChange={() => dispatch(setCurrentToggle('ALL'))}
-          />
           <label
             className={`btn graphic ${config.themeColor}${appState.cToggle === 'ALL' ? ' selected' : ''}`}
             htmlFor="all"
           >
             All
+            <input
+              id="all"
+              type="radio"
+              value="all"
+              checked={appState.cToggle === 'ALL'}
+              onChange={() => dispatch(setCurrentToggle('ALL'))}
+            />
           </label>
-          <input
-            id="owned"
-            type="radio"
-            value="false"
-            checked={appState.cToggle === 'OWNED'}
-            onChange={() => dispatch(setCurrentToggle('OWNED'))}
-          />
+
           <label
             className={`btn graphic ${config.themeColor}${appState.cToggle === 'OWNED' ? ' selected' : ''}`}
             htmlFor="owned"
           >
             Owned
+            <input
+              id="owned"
+              type="radio"
+              value="false"
+              checked={appState.cToggle === 'OWNED'}
+              onChange={() => dispatch(setCurrentToggle('OWNED'))}
+            />
           </label>
         </div>
       </div>
@@ -127,3 +126,7 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
 };
 
 export default SideBar;
+
+SideBar.propTypes = {
+  children: PropTypes.node.isRequired,
+};

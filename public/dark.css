@@ -46,14 +46,17 @@
   border-radius: 5px;
 }
 
-.dark :not(button):focus {
+.dark :not(button):not(label):focus {
   outline: none;
   background-color: var(--main-dark-border);
 }
+
 .dark button:focus {
   outline: none;
   background-color: var(--main-dark-border);
 }
+
+.dark label.graphic:focus-within,
 .dark button.graphic:focus {
   outline: 1px solid var(--main-dark-border);
 }

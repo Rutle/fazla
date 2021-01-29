@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -139,17 +138,17 @@ const Home: React.FC = () => {
               <div className="grid-item action">
                 <form action="#" style={{ display: 'flex' }}>
                   <div className="switch">
-                    <input
-                      id="form-tooltip"
-                      type="checkbox"
-                      className="switch-input"
-                      checked={config.formHelpTooltip}
-                      onChange={() => {
-                        dispatch(configAction(AppConfigAction.Update, 'formHelpTooltip', !config.formHelpTooltip));
-                      }}
-                    />
                     <label htmlFor="form-tooltip" className="switch-label">
-                      Switch
+                      <input
+                        id="form-tooltip"
+                        type="checkbox"
+                        className="switch-input"
+                        checked={config.formHelpTooltip}
+                        onChange={() => {
+                          dispatch(configAction(AppConfigAction.Update, 'formHelpTooltip', !config.formHelpTooltip));
+                        }}
+                      />
+                      <span className="switch-toggle" />
                     </label>
                   </div>
                 </form>
@@ -160,17 +159,17 @@ const Home: React.FC = () => {
               <div className="grid-item action">
                 <form action="#" style={{ display: 'flex' }}>
                   <div className="switch">
-                    <input
-                      id="toasts"
-                      type="checkbox"
-                      className="switch-input"
-                      checked={config.isToast}
-                      onChange={() => {
-                        dispatch(configAction(AppConfigAction.Update, 'isToast', !config.isToast));
-                      }}
-                    />
                     <label htmlFor="toasts" className="switch-label">
-                      Switch
+                      <input
+                        id="toasts"
+                        type="checkbox"
+                        className="switch-input"
+                        checked={config.isToast}
+                        onChange={() => {
+                          dispatch(configAction(AppConfigAction.Update, 'isToast', !config.isToast));
+                        }}
+                      />
+                      <span className="switch-toggle" />
                     </label>
                   </div>
                 </form>
@@ -180,29 +179,30 @@ const Home: React.FC = () => {
               <div className="grid-item name">Theme color</div>
               <div className="grid-item action">
                 <div className={`radio-group ${config.themeColor}`}>
-                  <input
-                    id="dark-input"
-                    type="radio"
-                    checked={config.themeColor === 'dark'}
-                    onChange={() => dispatch(configAction(AppConfigAction.Update, 'themeColor', 'dark'))}
-                  />
                   <label
                     className={`btn graphic ${config.themeColor}${config.themeColor === 'dark' ? ' selected' : ''}`}
                     htmlFor="dark-input"
                   >
                     Dark
+                    <input
+                      id="dark-input"
+                      type="radio"
+                      checked={config.themeColor === 'dark'}
+                      onChange={() => dispatch(configAction(AppConfigAction.Update, 'themeColor', 'dark'))}
+                    />
                   </label>
-                  <input
-                    id="light-input"
-                    type="radio"
-                    checked={config.themeColor === 'light'}
-                    onChange={() => dispatch(configAction(AppConfigAction.Update, 'themeColor', 'light'))}
-                  />
+
                   <label
                     className={`btn graphic ${config.themeColor}${config.themeColor === 'light' ? ' selected' : ''}`}
                     htmlFor="light-input"
                   >
                     Light
+                    <input
+                      id="light-input"
+                      type="radio"
+                      checked={config.themeColor === 'light'}
+                      onChange={() => dispatch(configAction(AppConfigAction.Update, 'themeColor', 'light'))}
+                    />
                   </label>
                 </div>
               </div>

@@ -20,6 +20,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
   const config = useSelector((state: RootState) => state.config);
   const [isMax, setIsMax] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isFocusOutline, setFocusOutline] = useState(false);
 
   const isEdit = () => {
     return config.isEdit || formGrid.isEdit.some((val) => val !== false);
@@ -35,13 +36,37 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
           <div id="window-menu">
             <div className="top-container">
               <nav className={`tab ${config.themeColor}`}>
-                <NavLink to="/shipdetails">
+                <NavLink
+                  className={`${!isFocusOutline ? 'no-focus-outline' : ''}`}
+                  to="/shipdetails"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Tab') {
+                      setFocusOutline(true);
+                    }
+                  }}
+                >
                   <span>Ships</span>
                 </NavLink>
-                <NavLink to="/formations">
+                <NavLink
+                  className={`${!isFocusOutline ? 'no-focus-outline' : ''}`}
+                  to="/formations"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Tab') {
+                      setFocusOutline(true);
+                    }
+                  }}
+                >
                   <span>Formations</span>
                 </NavLink>
-                <NavLink to="/options">
+                <NavLink
+                  className={`${!isFocusOutline ? 'no-focus-outline' : ''}`}
+                  to="/options"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Tab') {
+                      setFocusOutline(true);
+                    }
+                  }}
+                >
                   <span>Options</span>
                 </NavLink>
               </nav>

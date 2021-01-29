@@ -1,9 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  Route, Switch, Redirect, RouteProps, HashRouter 
-} from 'react-router-dom';
+import { Route, Switch, Redirect, RouteProps, HashRouter } from 'react-router-dom';
 import ShipDetailView from '_components/ShipDetailView';
 import Home from '_components/Home';
 import DataStore from './utils/dataStore';
@@ -12,11 +10,10 @@ import { RootState } from './reducers/rootReducer';
 import LandingView from './components/LandingView';
 import ErrorView from './components/ErrorView';
 import ToastContainer from './components/Toast/ToastContainer';
-import {
- CallbackDismiss, ToastList, ToastMessageType, useToast 
-} from './components/Toast/useToast';
+import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './components/Toast/useToast';
 
 const RefreshRoute: React.FC<RouteProps> = (props) => {
+  const { component } = props;
   const appState = useSelector((state: RootState) => state.appState);
   if (appState.cState === 'ERROR') {
     return (
@@ -34,7 +31,7 @@ const RefreshRoute: React.FC<RouteProps> = (props) => {
       }}
     />
   ) : (
-    <Route {...props} component={props.component} />
+    <Route {...props} component={component} />
   );
 };
 
@@ -46,7 +43,7 @@ export const AppContext = React.createContext(
     shipData: DataStore;
     setShipData: React.Dispatch<React.SetStateAction<DataStore>>;
     toasts: ToastList;
-  },
+  }
 );
 
 const App: React.FC = () => {
@@ -54,12 +51,19 @@ const App: React.FC = () => {
   const [addToast, onToastDismiss, popToast, toasts] = useToast(true, 3000);
   return (
     <HashRouter>
-      <div className={`App`}>
-        <AppContext.Provider value={{
-          addToast, onToastDismiss, popToast, toasts, shipData, setShipData 
-        }}>
+      <div className="App">
+        <AppContext.Provider
+          value={{
+            addToast,
+            onToastDismiss,
+            popToast,
+            toasts,
+            shipData,
+            setShipData,
+          }}
+        >
           <Switch>
-            <Route exact path="/" render={() => <LandingView />}></Route>
+            <Route exact path="/" render={() => <LandingView />} />
             <RefreshRoute path="/shipdetails">
               <ShipDetailView />
             </RefreshRoute>
