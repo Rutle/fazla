@@ -46,15 +46,15 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
               }}
             />
             {nameVal.length > 0 ? (
-              <button
-                type="button"
-                className={`clearIcon ${config.themeColor}`}
+              <RButton
+                themeColor={config.themeColor}
+                className="btn icon"
                 onClick={() => {
                   setNameVal('');
                 }}
               >
                 <FontAwesomeIcon icon={faTimes} />
-              </button>
+              </RButton>
             ) : (
               <></>
             )}

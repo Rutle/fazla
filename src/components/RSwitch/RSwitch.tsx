@@ -23,13 +23,18 @@ const RSwitch: React.FC<RSwitchProps> = React.memo(
             className={`switch-input ${!isFocusOutline ? 'no-focus-outline' : ''}`}
             checked={checked}
             onChange={onChange}
-            onKeyDown={(e) => {
-              if (e.key === 'Tab') {
+            onClick={(e) => {
+              const { clientX, clientY } = e;
+              if (clientX !== 0 && clientY !== 0) {
+                setFocusOutline(false);
+              } else {
                 setFocusOutline(true);
               }
             }}
-            onMouseUp={() => {
-              if (isFocusOutline) setFocusOutline(false);
+            onKeyUp={(e) => {
+              if (e.key === 'Tab') {
+                setFocusOutline(true);
+              }
             }}
           />
           <span className="switch-toggle" />

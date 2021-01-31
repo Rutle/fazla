@@ -61,8 +61,13 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
   return (
     <div className="grid-item">
       <div
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        tabIndex={0}
         className="content"
         onClick={onClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') onClick();
+        }}
         onContextMenu={onRightClick}
         data-tip
         data-for="click-help"

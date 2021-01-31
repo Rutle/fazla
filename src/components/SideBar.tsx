@@ -10,6 +10,7 @@ import { SearchAction, updateSearch } from '../reducers/slices/searchParametersS
 import CategoryOverlay from './CategoryOverlay';
 import { AppContext } from '../App';
 import RToggle from './RToggle/RToggle';
+import RButton from './RButton/RButton';
 
 interface ShipListProps {
   children: React.ReactNode;
@@ -76,9 +77,9 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
             onBlur={() => setInputFocus(false)}
           />
           {searchValue.length > 0 ? (
-            <button
-              type="button"
-              className={`clearIcon ${config.themeColor}`}
+            <RButton
+              className="btn icon"
+              themeColor={config.themeColor}
               onClick={() => {
                 setSearchValue('');
                 dispatch(
@@ -93,7 +94,7 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
               }}
             >
               <FontAwesomeIcon icon={faTimes} />
-            </button>
+            </RButton>
           ) : (
             <></>
           )}

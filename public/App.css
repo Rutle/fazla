@@ -210,6 +210,7 @@ div.scroll {
   display: flex;
   align-self: center;
   margin: auto;
+  min-width: 40%;
 }
 
 .modal-container.ship-select {
@@ -466,7 +467,6 @@ div.rList.hidden {
 .owned-indicator {
   height: inherit;
   width: 5px;
-  background-color: var(--main-dark-border);
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
 }
@@ -584,14 +584,12 @@ input[type="url"] {
 }
 
 .searchIcon,
-div.clearIcon,
-button.clearIcon {
+button.icon {
   text-align: center;
   box-sizing: border-box;
   width: 26px;
   padding: 5px;
-  border: 1px solid transparent!important;
-  background-color: inherit!important;
+  transition: inherit;
 }
 
 /* ##### GRID ##### */
@@ -795,6 +793,7 @@ div.f-grid div.f-icon.bottom-emp {
   height: 23px;
   border-radius: 9999em;
   box-shadow: 0 0 8px rgba(0,0,0,0.2), 0 0 2px rgba(0,0,0,0.4);
+  cursor: pointer;
 }
 .switch [type=checkbox]:checked+.switch-toggle::before,
 .switch [type=checkbox]:checked+.switch-toggle::after {
@@ -805,10 +804,6 @@ div.f-grid div.f-icon.bottom-emp {
   transform: translate(calc(3em - 100%), -50%);
 }
 
-.switch [type=checkbox]:focus+.switch-toggle {
-  outline: #5d9dd5 solid 1px;
-  box-shadow: 0 0 8px #5e9ed6;
-}
 
 .switch [type=checkbox] {
   position: absolute;

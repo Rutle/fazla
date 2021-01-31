@@ -46,10 +46,13 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
     return '';
   };
 
-  const isOwned = (id: string): boolean => {
-    if (listName === 'OWNED') return false;
-    return ownedShips.includes(id);
-  };
+  const isOwned = useCallback(
+    (id: string): boolean => {
+      if (listName === 'OWNED') return false;
+      return ownedShips.includes(id);
+    },
+    [listName, ownedShips]
+  );
 
   return (
     <div className={`rList${listName !== appState.cToggle ? ' hidden' : ''}`}>
@@ -69,21 +72,13 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
                 <button
                   type="button"
                   style={{ ...style, top: (style.top as number) + 1, height: 29, width: 'calc(100% - 1px)' }}
-                  className={`rList-item btn ${config.themeColor} ${
+                  className={`rList-item btn ${config.themeColor} ${isShipOwned ? 'owned' : ''} ${
                     shipSearchList[index].id === appState[appState.cToggle].id ? 'selected' : ''
                   }`}
                   onClick={() => selectShip(shipSearchList[index].id, shipSearchList[index].index)}
                 >
-                  <div
-                    className="owned-indicator"
-                    style={{ backgroundColor: `${isShipOwned ? 'var(--main-dark-border)' : 'inherit'}` }}
-                  />
-                  <div
-                    className={`name ${getRarity(ship)}`}
-                    style={{ borderLeft: `${isShipOwned ? '1px solid var(--main-dark-bg)' : '1px solid transparent'}` }}
-                  >
-                    {ship.names.en}
-                  </div>
+                  <div className="owned-indicator" />
+                  <div className={`name ${getRarity(ship)}`}>{ship.names.en}</div>
                   <div className={`hullTypeAbb ${getHullType(ship)}`}>{getHullTypeAbb(ship.hullType)}</div>
                 </button>
               );

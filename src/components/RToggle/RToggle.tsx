@@ -39,7 +39,7 @@ const RToggle: React.FC<RToggleProps> = React.memo(
               setFocusOutline(true);
             }
           }}
-          onKeyDown={(e) => {
+          onKeyUp={(e) => {
             if (e.key === 'Tab' || e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
               setFocusOutline(true);
             }

@@ -30,7 +30,7 @@ const CloseAppModalContent: React.FC<{ setModalOpen: (e: boolean) => void }> = (
       <div className="modal-action">
         <div className="button-group borderless">
           <RButton themeColor={config.themeColor} onClick={() => closeWindow()}>
-            Exit without saving
+            Exit w/o saving
           </RButton>
           <RButton
             themeColor={config.themeColor}

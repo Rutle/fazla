@@ -1,23 +1,13 @@
 /* ##### DARK ##### */
 :root {
-  /* --root-dark-bg: rgb(22, 23, 25);*/
   --root-dark-bg: #1f1f1f;
-  /* --main-dark-bg: #1b1d24;*/
-  /* --main-dark-bg: #2b2b2b;*/
   --main-dark-bg: #2f2f2f;
-  /* --main-dark-border: #3f4657;*/
   --main-dark-border: #40556b;
   --main-dark-color: rgb(184, 184, 184);
-  /* --main-dark-hover-bg: #272c3b;*/
   --main-dark-hover-bg: #40556b;
-  /*
-  --main-dark-button-top-bg: #272c3b;
-  --main-dark-button-bottom-bg: #21252f;
-  */
   --main-dark-button-top-bg: #26313a;
   --main-dark-button-bottom-bg: #1b2127;
   --main-dark-selected-bottom-bg: #2a2e35;
-  /* --main-dark-active-bg: #363a46;*/
   --main-dark-active-bg: #40556b;
   --main-dark-tooltip-bg: #1b1d24e3;
   --main-dark-tooltip-border: #3f4657a6;
@@ -46,16 +36,22 @@
   border-radius: 5px;
 }
 
-.dark :not(button):not(label):focus {
+.dark :not(button):not(label):not(.switch-input):not(.modal-container):focus {
   outline: none;
   background-color: var(--main-dark-border);
+}
+
+.switch [type=checkbox]:not(.no-focus-outline):focus + span.switch-toggle::after {
+  outline: 1px solid var(--main-dark-active-bg);
 }
 
 .dark button:not(.no-focus-outline):focus {
   outline: none;
   background-color: var(--main-dark-border);
 }
-
+.dark .modal-container:focus {
+  outline: none;
+}
 .dark label.graphic:focus-within,
 .dark button.graphic:focus {
   outline: 1px solid var(--main-dark-border);
@@ -243,6 +239,20 @@ button.tab-btn.dark.selected {
   background-color: var(--main-dark-active-bg);
 }
 
+.rList-item.dark.owned > .owned-indicator {
+  background-color: var(--main-dark-active-bg);
+}
+.rList-item.dark:hover .owned-indicator {
+  background-color: var(--main-dark-active-bg);
+}
+
+.rList-item.dark.owned > .owned-indicator + .name {
+  border-left: 1px solid var(--main-dark-bg);
+}
+.rList-item.dark > .owned-indicator + .name {
+  border-left: 1px solid transparent;
+}
+
 /* #### Formation menu ##### */
 .formation-dropdown-menu.dark {
   border: var(--main-dark-border);
@@ -321,19 +331,18 @@ input[type="url"].dark,
 
 input[type="url"].dark:focus,
 #input-group.dark.input-focus {
-  color: var(--main-dark-color)!important;
-  background-color: rgba(0,0,0,0.45)!important;
-  border: 2px solid var(--main-dark-border)!important;
+  color: var(--main-dark-color);
+  background-color: rgba(0,0,0,0.45);
+  border: 2px solid var(--main-dark-border);
 }
-button.clearIcon.dark:hover,
-div.clearIcon.dark:hover {
-  border: 1px solid var(--main-dark-bg)!important;
-  background-color: var(--main-dark-hover-bg)!important;
+
+#input-group.dark.input-focus > button.btn.icon.dark {
+  background-color: rgba(0,0,0,0.45);
+  border: 1px solid rgba(0,0,0,0.45);
 }
-#input-group.dark.input-focus > button.clearIcon.dark:hover,
-#input-group.dark.input-focus > div.clearIcon.dark:hover {
-  background-color: var(--main-dark-hover-bg)!important;
-  border: 1px solid black!important;
+#input-group.dark.input-focus > button.icon.dark:hover {
+  background-color: var(--main-dark-hover-bg);
+  border: 1px solid black;
 }
 /* #### Grid #### */
 div.f-grid.dark div.f-header {
