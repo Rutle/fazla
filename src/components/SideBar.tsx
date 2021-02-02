@@ -47,7 +47,6 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
   return (
     <div className="ship-side-container">
       <div className="top-container">
-        <CategoryOverlay themeColor={config.themeColor} />
         <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
           <div className={`searchIcon ${config.themeColor}`}>
             <FontAwesomeIcon icon={faSearch} />
@@ -99,11 +98,12 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
             <></>
           )}
         </div>
+        <CategoryOverlay themeColor={config.themeColor} />
         <div className={`radio-group ${config.themeColor}`}>
           <RToggle
             id="all-toggle"
             value="ALL"
-            className={`btn graphic ${config.themeColor}`}
+            className={`btn normal ${config.themeColor}`}
             themeColor={config.themeColor}
             onChange={() => changeList('ALL')}
             selected={appState.cToggle === 'ALL'}
@@ -113,12 +113,12 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
           <RToggle
             id="owned-toggle"
             value="OWNED"
-            className={`btn graphic ${config.themeColor}`}
+            className={`btn normal ${config.themeColor}`}
             themeColor={config.themeColor}
             onChange={() => changeList('OWNED')}
             selected={appState.cToggle === 'OWNED'}
           >
-            All
+            Owned
           </RToggle>
         </div>
       </div>

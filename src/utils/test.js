@@ -1,7 +1,7 @@
-const shipData = require('../data/ships.json');
 const fs = require('fs');
+const shipData = require('../data/ships.json');
 
-function checkSkills() {
+function checkHullType() {
   const jsonObject = {};
   Object.keys(shipData).forEach((ele, idx) => {
     const ship = shipData[ele];
@@ -12,7 +12,7 @@ function checkSkills() {
     }
   });
   const jsonStr = JSON.stringify(jsonObject);
-  fs.writeFile('output.json', jsonStr, 'utf8', function (err) {
+  fs.writeFile('hulltype.json', jsonStr, 'utf8', (err) => {
     if (err) {
       console.log('An error occured while writing JSON Object to File.');
       return console.log(err);
@@ -21,7 +21,7 @@ function checkSkills() {
     console.log('JSON file has been saved.');
   });
 }
-// checkSkills();
+
 function checkNationality() {
   const jsonObject = {};
   Object.keys(shipData).forEach((ele, idx) => {
@@ -33,7 +33,7 @@ function checkNationality() {
     }
   });
   const jsonStr = JSON.stringify(jsonObject);
-  fs.writeFile('nationality.json', jsonStr, 'utf8', function (err) {
+  fs.writeFile('nationality.json', jsonStr, 'utf8', (err) => {
     if (err) {
       console.log('An error occured while writing JSON Object to File.');
       return console.log(err);
@@ -41,8 +41,8 @@ function checkNationality() {
 
     console.log('JSON file has been saved.');
   });
-};
-// checkSkills();
+}
+
 function checkRarity() {
   const jsonObject = {};
   Object.keys(shipData).forEach((ele, idx) => {
@@ -54,7 +54,7 @@ function checkRarity() {
     }
   });
   const jsonStr = JSON.stringify(jsonObject);
-  fs.writeFile('rarity.json', jsonStr, 'utf8', function (err) {
+  fs.writeFile('rarity.json', jsonStr, 'utf8', (err) => {
     if (err) {
       console.log('An error occured while writing JSON Object to File.');
       return console.log(err);
@@ -62,5 +62,5 @@ function checkRarity() {
 
     console.log('JSON file has been saved.');
   });
-};
-checkRarity();
+}
+checkNationality();

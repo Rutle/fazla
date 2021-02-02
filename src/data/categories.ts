@@ -35,7 +35,7 @@ export const nationCategories: Pair = {
   'Sakura Empire': 'IJN',
   Ironblood: 'KMS',
   'Eastern Radiance': 'ROC',
-  'North Union': 'SN',
+  'Northern Parliament': 'SN',
   'Eagle Union': 'USS',
   'Iris Libre': 'FFNF',
   'Vichya Dominion': 'MNF',

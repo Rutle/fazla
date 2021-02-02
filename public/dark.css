@@ -49,12 +49,9 @@
   outline: none;
   background-color: var(--main-dark-border);
 }
+
 .dark .modal-container:focus {
   outline: none;
-}
-.dark label.graphic:focus-within,
-.dark button.graphic:focus {
-  outline: 1px solid var(--main-dark-border);
 }
 
 /* ##### Page ##### */
@@ -64,7 +61,7 @@ div.page.dark {
 }
 
 div.page.dark .ship-side-container,
-.modal-overlay.dark .ship-side-container {
+div.modal-overlay.dark .ship-side-container {
   border-right: 1px solid var(--main-dark-border);
 }
 
@@ -152,6 +149,14 @@ div.page.dark .tab {
   background-color: var(--main-dark-bg);
 }
 
+div.page.dark > button.tab-btn {
+  border: 1px solid var(--main-dark-bg);
+}
+
+div.page.dark > button.tab-btn:hover {
+  border: 1px solid var(--main-dark-bg);
+}
+
 nav.tab.dark {
   box-sizing: border-box;
   justify-content: space-between;
@@ -185,48 +190,15 @@ nav.tab.dark > a:hover {
 }
 
 /* ###### Buttons ###### */
+label.dark,
 button.dark {
   background-color: var(--main-dark-bg);
   color: var(--main-dark-color);
-  border: 1px solid var(--main-dark-bg);
+  border: 1px solid transparent;
 }
-
-.btn.graphic.dark:hover {
-  background-color: var(--root-dark-bg);
-  border: 1px solid #000000;
-  background: linear-gradient(to bottom, var(--root-dark-bg) 10%, var(--main-dark-bg) 90%)!important;
-	/* background: linear-gradient(to bottom, var(--main-dark-button-bottom-bg) 10%, var(--main-dark-button-top-bg) 100%);*/
-  /* text-shadow: 0px 1px 0px var(--main-dark-border);*/
-}
-
-.btn.graphic.dark.selected {
-  background: linear-gradient(to bottom, var(--main-dark-selected-bottom-bg) 10%,  var(--main-dark-active-bg) 100%)!important;
-  text-shadow: 0px 1px 0px var(--main-dark-border);
-  box-shadow: inset 1px 1px 1px #252525;
-}
-
-.btn.graphic.dark {
-  border: 1px solid #000000;
-  /* box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px; */
-  box-shadow: inset 0px 1px 0px 0px var(--main-dark-active-bg);
-  background: linear-gradient(to bottom, var(--main-dark-bg) 40%, var(--root-dark-bg) 90%);
-  /*
-  box-shadow: inset 0px 1px 0px 0px var(--main-dark-active-bg);
-  background: linear-gradient(to bottom, var(--main-dark-button-top-bg) 10%, var(--main-dark-button-bottom-bg) 100%);
-  border: 1px solid #000000;
-  */
-}
-
-button.btn.dark:hover,
-button.tab-btn.dark:hover {
+.dark .tab-btn:hover,
+.dark .btn:hover {
   background-color: var(--main-dark-hover-bg);
-  border: 1px solid var(--main-dark-bg);
-}
-
-button.btn.graphic.dark:disabled:hover {
-  box-shadow: inset 0px 1px 0px 0px var(--main-dark-active-bg);
-  background: linear-gradient(to bottom, var(--main-dark-bg) 10%, var(--root-dark-bg) 90%)!important;
-  border: 1px solid #000000;
 }
 
 button.btn.dark:disabled:hover,
@@ -234,6 +206,7 @@ button.tab-btn.dark:disabled:hover {
   background-color: var(--main-dark-bg);
 }
 
+label.btn.dark.selected,
 button.btn.dark.selected,
 button.tab-btn.dark.selected {
   background-color: var(--main-dark-active-bg);
@@ -264,7 +237,7 @@ button.tab-btn.dark.selected {
 
 /* #### Popover #### */
 .popover-container.dark {
-  background-color: var(--main-dark-bg);
+  background-color: var(--root-dark-bg);
   border: 3px double var(--main-dark-border);
   -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
@@ -272,24 +245,22 @@ button.tab-btn.dark.selected {
 }
 
 /* #### ship title bar #### */
-.ship-title-bar > span.end-buttons.dark {
-  border-top: 1px solid var(--main-dark-border);
-}
-
-.ship-title-bar > span.end-buttons.dark > button {
-  border-bottom: 1px solid var(--main-dark-border)!important;
-}
-
 .page.dark .ship-data-container .ship-title-bar > div,
 .modal-overlay.dark .ship-title-bar > div {
   border: 1px solid var(--main-dark-border);
   background-color: var(--main-dark-bg);
 }
+
+.page.dark div.radio-group,
 .page.dark div.button-group,
 .modal-overlay.dark div.button-group {
   border: 1px solid var(--main-dark-border);
 }
-
+.page.dark .radio-group label,
+.page.dark .button-group button,
+.page.dark .tab button {
+  border: 1px solid var(--main-dark-bg);
+}
 /* #### Rarity colors #### */
 .ship-title-bar > div > span.Super.Rare:last-child {
   color: PaleGoldenrod;

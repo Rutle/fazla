@@ -35,7 +35,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
         <div className="f-row wrap">
           <div className="grid-item toggle">
             <RButton
-              className={`btn small graphic ${sParam.nationality.All ? 'selected' : ''}`}
+              className={`btn small ${sParam.nationality.All ? 'selected' : ''}`}
               themeColor={themeColor}
               onClick={updSearch(shipData, SearchAction.ToggleAll, {
                 name: '',
@@ -52,7 +52,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
             return (
               <div className="grid-item toggle" key={key}>
                 <RButton
-                  className={`btn small graphic ${sParam.nationality[key] ? 'selected' : ''}`}
+                  className={`btn small ${sParam.nationality[key] ? 'selected' : ''}`}
                   themeColor={themeColor}
                   onClick={updSearch(shipData, SearchAction.ToggleParameter, {
                     name: '',
@@ -71,7 +71,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
         <div className="f-row wrap">
           <div className="grid-item toggle">
             <RButton
-              className={`btn small graphic ${sParam.hullType.All ? 'selected' : ''}`}
+              className={`btn small ${sParam.hullType.All ? 'selected' : ''}`}
               themeColor={themeColor}
               onClick={updSearch(shipData, SearchAction.ToggleAll, {
                 name: '',
@@ -88,7 +88,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
             return (
               <div className="grid-item toggle" key={key}>
                 <RButton
-                  className={`btn small graphic ${sParam.hullType[key] ? 'selected' : ''}`}
+                  className={`btn small ${sParam.hullType[key] ? 'selected' : ''}`}
                   themeColor={themeColor}
                   onClick={updSearch(shipData, SearchAction.ToggleParameter, {
                     name: '',
@@ -107,7 +107,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
         <div className="f-row wrap">
           <div className="grid-item toggle">
             <RButton
-              className={`btn small graphic ${sParam.rarity.All ? 'selected' : ''}`}
+              className={`btn small ${sParam.rarity.All ? 'selected' : ''}`}
               themeColor={themeColor}
               onClick={updSearch(shipData, SearchAction.ToggleAll, {
                 name: '',
@@ -124,7 +124,7 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
             return (
               <div className="grid-item toggle" key={value}>
                 <RButton
-                  className={`btn small graphic ${sParam.rarity[value] ? 'selected' : ''}`}
+                  className={`btn small ${sParam.rarity[value] ? 'selected' : ''}`}
                   themeColor={themeColor}
                   onClick={updSearch(shipData, SearchAction.ToggleParameter, {
                     name: '',

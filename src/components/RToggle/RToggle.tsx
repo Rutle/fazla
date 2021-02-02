@@ -14,7 +14,7 @@ interface RToggleProps {
 }
 
 const RToggle: React.FC<RToggleProps> = React.memo(
-  ({ id, value, className = 'btn graphic', children, themeColor, onChange, selected, extraStyle }) => {
+  ({ id, value, className = 'btn normal', children, themeColor, onChange, selected, extraStyle }) => {
     const [isFocusOutline, setFocusOutline] = useState(false);
     return (
       <label

@@ -12,7 +12,7 @@ interface RButtonProps {
 }
 
 const RButton: React.FC<RButtonProps> = React.memo(
-  ({ className = 'btn normal graphic', children, themeColor = '', onClick, disabled, extraStyle }) => {
+  ({ className = 'btn normal', children, themeColor = '', onClick, disabled, extraStyle }) => {
     const [isFocusOutline, setFocusOutline] = useState(false);
     return (
       <button

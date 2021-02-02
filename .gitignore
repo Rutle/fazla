@@ -45,3 +45,4 @@ yarn-error.log*
 # custom
 /src/data/ships.json
 /src/utils/test.js
+/src/utils/*.json

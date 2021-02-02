@@ -16,7 +16,7 @@ const CategoryOverlay: React.FC<{ themeColor: string }> = ({ themeColor }) => {
     <div style={{ display: 'flex', flexDirection: 'column' }} ref={containerRef}>
       <button
         ref={triggerRef}
-        className={`btn small graphic ${themeColor}`}
+        className={`btn normal ${themeColor}`}
         type="button"
         onClick={() => {
           setIsOverlayOpen(!isOverlayOpen);

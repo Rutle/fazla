@@ -257,27 +257,31 @@ button:disabled {
 }
 
 button.btn.small {
-  height: 23px;
-  line-height: 15px;
+  line-height: 1.2em;
   font-size: 14px;
   padding: 0px 5px 2px 5px;
-  min-width: 45px;
+  min-width: 35px;
   font-variant-caps: all-petite-caps;
+  border-radius: 0px;
 }
 
+label.btn,
 button.tab-btn,
 button.btn {
   cursor: pointer;
-  padding: 1px 10px;
-  justify-content: center;
 }
 
-.radio-group label,
+label.btn,
+button.btn {
+  border-radius: 4px;
+}
+
+label.btn.normal,
 button.btn.normal,
 button.tab-btn.normal {
   font-size: 16px;
   font-variant-caps: all-petite-caps;
-  padding: 0px 10px 2px 10px;
+  padding: 2px 10px 4px 10px;
   justify-content: center;
   line-height: 1.2em;
 }
@@ -289,7 +293,7 @@ button.btn.hidden {
 label.btn.graphic,
 button.btn.graphic {
   cursor: default;
-	border-radius: 3px;
+	border-radius: 4px;
 }
 
 /* ###### top-container + tab ##### */
@@ -300,6 +304,10 @@ button.btn.graphic {
   padding: 0px;
   width: 100%;
   margin-bottom: 10px;
+}
+
+.top-container > div {
+  margin-top: 5px;
 }
 
 .top-container.fixed {
@@ -331,7 +339,7 @@ div.f-row.action *,
 .message-container {
   display: flex;
   flex-direction: row;
-  border-radius: 2px;
+  border-radius: 4px;
   justify-content: space-between;
   margin-bottom: 5px;
 }
@@ -420,6 +428,7 @@ div.f-row.action *,
 
 .popover-content > .f-grid > .f-row > .grid-item {
   margin-bottom: 1px;
+  border-radius: 0px;
 }
 
 .popover-content > .f-grid > .f-row {
@@ -510,14 +519,27 @@ div.rList.hidden {
   display: flex;
   flex-direction: row;
   align-self: flex-start;
+  border-radius: 4px;
+}
+
+.radio-group label,
+.button-group button {
+  border-radius: 0px;
+}
+.radio-group label:first-child,
+.button-group button:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.radio-group label:last-child,
+.button-group button:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .button-group.borderless {
   border: unset!important;
-}
-
-.button-group button {
-  flex: 1 1;
 }
 
 .radio-group {
@@ -527,6 +549,7 @@ div.rList.hidden {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
+  border-radius: 4px;
 }
 
 .radio-group input[type="radio"] {
@@ -539,11 +562,6 @@ div.rList.hidden {
   box-sizing: border-box;
   display: flex;
   flex: 1;
-  margin-right: 1px;
-}
-
-.radio-group label:last-child {
-  margin-right: 0px;
 }
 
 input[type="text"],
@@ -552,11 +570,9 @@ input[type="url"] {
 }
 
 #input-group {
-  margin-top: 5px;
-  margin-bottom: 5px;
   display: flex;
   box-sizing: border-box;
-  border-radius: 2px;
+  border-radius: 4px;
   height: 35px;
   transition: box-shadow .2s ease-in, border .2s ease-in, background-color .2s ease-in, width 0.2s ease-in, color .2s ease-in;
 }
@@ -590,6 +606,7 @@ button.icon {
   width: 26px;
   padding: 5px;
   transition: inherit;
+  border-radius: 0px;
 }
 
 /* ##### GRID ##### */
