@@ -245,39 +245,38 @@ button.tab-btn.dark.selected {
 }
 
 /* #### ship title bar #### */
-.page.dark .ship-data-container .ship-title-bar > div,
-.modal-overlay.dark .ship-title-bar > div {
+.page.dark .ship-data-container .ship-title-bar,
+.modal-overlay.dark .ship-title-bar {
   border: 1px solid var(--main-dark-border);
   background-color: var(--main-dark-bg);
 }
 
-.page.dark div.radio-group,
-.page.dark div.button-group,
-.modal-overlay.dark div.button-group {
+div.radio-group.dark,
+div.button-group.dark {
   border: 1px solid var(--main-dark-border);
 }
-.page.dark .radio-group label,
-.page.dark .button-group button,
+.radio-group.dark label,
+.button-group.dark button,
 .page.dark .tab button {
   border: 1px solid var(--main-dark-bg);
 }
 /* #### Rarity colors #### */
-.ship-title-bar > div > span.Super.Rare:last-child {
+.ship-title-bar > span.Super.Rare:last-child {
   color: PaleGoldenrod;
 }
 
-.ship-title-bar > div > span.Rare:last-child {
+.ship-title-bar > span.Rare:last-child {
   color: powderblue;
 }
-.ship-title-bar > div > span.Ultra.Rare:last-child,
-.ship-title-bar > div > span.Decisive:last-child {
+.ship-title-bar > span.Ultra.Rare:last-child,
+.ship-title-bar > span.Decisive:last-child {
   background-image: linear-gradient(to bottom right, #AFA 15%, #AAF, #FAA 85%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.ship-title-bar > div > span.Elite:last-child {
+.ship-title-bar > span.Elite:last-child {
   color: rgba(144, 98, 253, 0.616);
 }
 
@@ -307,14 +306,16 @@ input[type="url"].dark:focus,
   border: 2px solid var(--main-dark-border);
 }
 
-#input-group.dark.input-focus > button.btn.icon.dark {
+#input-group.dark.input-focus > button.btn.icon {
   background-color: rgba(0,0,0,0.45);
   border: 1px solid rgba(0,0,0,0.45);
 }
-#input-group.dark.input-focus > button.icon.dark:hover {
+#input-group.dark > button.icon:hover,
+#input-group.dark.input-focus > button.icon:hover {
   background-color: var(--main-dark-hover-bg);
   border: 1px solid black;
 }
+
 /* #### Grid #### */
 div.f-grid.dark div.f-header {
   border-bottom: 2px solid var(--main-dark-border);
@@ -400,9 +401,11 @@ div.f-grid.dark div.f-row.deepskyblue {
   color: var(--main-dark-color);
   border: 1px solid var(--main-dark-border);
   background-color: var(--main-dark-bg);
+  /* box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;*/
+}
+.toast-container.dark > .toast {
   box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;
 }
-
 .toast-container.dark > .toast:hover {
   box-shadow: 0px 0px 3px 0px var(--main-dark-active-bg);
 }

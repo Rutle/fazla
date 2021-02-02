@@ -103,7 +103,7 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
           <RToggle
             id="all-toggle"
             value="ALL"
-            className={`btn normal ${config.themeColor}`}
+            className="btn normal"
             themeColor={config.themeColor}
             onChange={() => changeList('ALL')}
             selected={appState.cToggle === 'ALL'}
@@ -113,7 +113,7 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
           <RToggle
             id="owned-toggle"
             value="OWNED"
-            className={`btn normal ${config.themeColor}`}
+            className="btn normal"
             themeColor={config.themeColor}
             onChange={() => changeList('OWNED')}
             selected={appState.cToggle === 'OWNED'}

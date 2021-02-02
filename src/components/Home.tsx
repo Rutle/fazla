@@ -75,7 +75,7 @@ const Home: React.FC = () => {
         onClick={() => dispatch(configAction(AppConfigAction.Save))}
         disabled={!config.isEdit}
       >
-        Save
+        Save changes
       </RButton>
     );
   };
@@ -193,9 +193,7 @@ const Home: React.FC = () => {
               <div className="grid-item action">{config.updateDate !== '' ? config.updateDate : 'N/A'}</div>
             </div>
             <div className="f-row wrap">
-              <div className="grid-item name" style={{ opacity: `${config.isEdit ? '1' : '0.2'}` }}>
-                Save changes
-              </div>
+              <div className="grid-item name" style={{ opacity: `${config.isEdit ? '1' : '0.2'}` }} />
               <div className="grid-item action">{renderSave()}</div>
             </div>
             <div className="f-row">

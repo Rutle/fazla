@@ -446,7 +446,7 @@ div.f-row.action *,
   margin-bottom: 10px;
 }
 
-.ship-title-bar > div  {
+.ship-title-bar {
   display: flex;
   flex-grow: 1;
   border-left: 0px!important;
@@ -456,7 +456,7 @@ div.f-row.action *,
   align-items: center;
 }
 
-.ship-title-bar > div > span.ship-name { 
+.ship-title-bar > span.ship-name { 
   margin-right: 10px;
 }
 
@@ -525,6 +525,7 @@ div.rList.hidden {
 .radio-group label,
 .button-group button {
   border-radius: 0px;
+  flex: 1 1;
 }
 .radio-group label:first-child,
 .button-group button:first-child {
@@ -538,7 +539,8 @@ div.rList.hidden {
   border-bottom-right-radius: 4px;
 }
 
-.button-group.borderless {
+.button-group.borderless,
+.radio-group.borderless {
   border: unset!important;
 }
 
@@ -606,7 +608,8 @@ button.icon {
   width: 26px;
   padding: 5px;
   transition: inherit;
-  border-radius: 0px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 
 /* ##### GRID ##### */

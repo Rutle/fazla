@@ -66,12 +66,10 @@ const ShipDetails: React.FC = () => {
   return ship ? (
     <>
       <div className="ship-title-bar">
-        <div>
-          <span className="ship-name">{ship.names.code}</span>
-          <span className={ship.rarity}>{` ${ship.stars?.stars as string}`}</span>
-        </div>
+        <span className="ship-name">{ship.names.code}</span>
+        <span className={ship.rarity}>{` ${ship.stars?.stars as string}`}</span>
       </div>
-      <div className="button-group" style={{ width: 'unset', marginBottom: '5px' }}>
+      <div className={`button-group ${config.themeColor}`} style={{ width: 'unset', marginBottom: '5px' }}>
         {renderAddRemoveButton()}
         <RButton
           themeColor={config.themeColor}

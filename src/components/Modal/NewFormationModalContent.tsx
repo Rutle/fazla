@@ -6,6 +6,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { RootState } from '../../reducers/rootReducer';
 import RButton from '../RButton/RButton';
 import { FormationAction, formationAction } from '../../reducers/slices/formationGridSlice';
+import RToggle from '../RToggle/RToggle';
 
 interface FormModalProps {
   setModalOpen: (openProp: { modal: string; isOpen: boolean }) => void;
@@ -62,43 +63,32 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
           <div className={`radio-group ${config.themeColor}`}>
-            <label
-              className={`btn graphic ${config.themeColor}${typeVal === 'normal' ? ' selected' : ''}`}
-              htmlFor="normal-toggle"
+            <RToggle
+              id="normal-toggle"
+              value="normal"
+              className="btn normal"
+              themeColor={config.themeColor}
+              onChange={() => setTypeVal('normal')}
+              selected={typeVal === 'normal'}
             >
               Normal
-              <input
-                id="normal-toggle"
-                type="radio"
-                value="normal"
-                checked={typeVal === 'normal'}
-                onChange={() => {
-                  setTypeVal('normal');
-                }}
-              />
-            </label>
-
-            <label
-              className={`btn graphic ${config.themeColor}${typeVal === 'siren' ? ' selected' : ''}`}
-              htmlFor="siren-toggle"
+            </RToggle>
+            <RToggle
+              id="siren-toggle"
+              value="siren"
+              className="btn normal"
+              themeColor={config.themeColor}
+              onChange={() => setTypeVal('siren')}
+              selected={typeVal === 'siren'}
             >
               Siren
-              <input
-                id="siren-toggle"
-                type="radio"
-                value="siren"
-                checked={typeVal === 'siren'}
-                onChange={() => {
-                  setTypeVal('siren');
-                }}
-              />
-            </label>
+            </RToggle>
           </div>
         </div>
       </div>
 
       <div className="modal-action">
-        <div className="button-group borderless">
+        <div className={`button-group ${config.themeColor}`}>
           <RButton
             themeColor={config.themeColor}
             onClick={() => {

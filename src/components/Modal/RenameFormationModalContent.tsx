@@ -65,7 +65,7 @@ const RenameFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen })
       </div>
 
       <div className="modal-action">
-        <div className="button-group borderless">
+        <div className={`button-group ${config.themeColor}`}>
           <RButton
             themeColor={config.themeColor}
             onClick={() => {
