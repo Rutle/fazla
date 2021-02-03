@@ -47,43 +47,23 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
   return (
     <div className="ship-side-container">
       <div className="top-container">
-        <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
-          <div className={`searchIcon ${config.themeColor}`}>
-            <FontAwesomeIcon icon={faSearch} />
-          </div>
-          <input
-            id="search-input"
-            type="text"
-            spellCheck="false"
-            className={`${config.themeColor}`}
-            value={searchValue}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setSearchValue(e.target.value);
-              dispatch(
-                updateSearch(shipData, SearchAction.SetName, {
-                  name: e.target.value,
-                  cat: '',
-                  param: '',
-                  list: appState.cToggle,
-                  id: '',
-                })
-              );
-            }}
-            onFocus={(e) => {
-              e.target.select();
-              setInputFocus(true);
-            }}
-            onBlur={() => setInputFocus(false)}
-          />
-          {searchValue.length > 0 ? (
-            <RButton
-              className="btn icon"
-              themeColor={config.themeColor}
-              onClick={() => {
-                setSearchValue('');
+        <form role="search">
+          <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
+            <div className={`searchIcon ${config.themeColor}`}>
+              <FontAwesomeIcon icon={faSearch} />
+            </div>
+            <input
+              id="search-input"
+              aria-label="search"
+              type="text"
+              spellCheck="false"
+              className={`${config.themeColor}`}
+              value={searchValue}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setSearchValue(e.target.value);
                 dispatch(
                   updateSearch(shipData, SearchAction.SetName, {
-                    name: '',
+                    name: e.target.value,
                     cat: '',
                     param: '',
                     list: appState.cToggle,
@@ -91,13 +71,36 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
                   })
                 );
               }}
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </RButton>
-          ) : (
-            <></>
-          )}
-        </div>
+              onFocus={(e) => {
+                e.target.select();
+                setInputFocus(true);
+              }}
+              onBlur={() => setInputFocus(false)}
+            />
+            {searchValue.length > 0 ? (
+              <RButton
+                className="btn icon"
+                themeColor={config.themeColor}
+                onClick={() => {
+                  setSearchValue('');
+                  dispatch(
+                    updateSearch(shipData, SearchAction.SetName, {
+                      name: '',
+                      cat: '',
+                      param: '',
+                      list: appState.cToggle,
+                      id: '',
+                    })
+                  );
+                }}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </RButton>
+            ) : (
+              <></>
+            )}
+          </div>
+        </form>
         <CategoryOverlay themeColor={config.themeColor} />
         <div className={`radio-group ${config.themeColor}`}>
           <RToggle

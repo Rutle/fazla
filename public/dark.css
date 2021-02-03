@@ -36,15 +36,23 @@
   border-radius: 5px;
 }
 
-.dark :not(button):not(label):not(.switch-input):not(.modal-container):focus {
+.dark .no-focus-outline:focus,
+.dark .no-focus-outline:focus-within {
+  outline: none!important;
+  background-color: var(--main-dark-bg);
+}
+
+.dark :not(button):not(label):not(.switch-input):not(.modal-container):not(a):focus {
   outline: none;
   background-color: var(--main-dark-border);
 }
 
-.switch [type=checkbox]:not(.no-focus-outline):focus + span.switch-toggle::after {
+.dark .switch [type=checkbox]:not(.no-focus-outline):focus + span.switch-toggle::after {
   outline: 1px solid var(--main-dark-active-bg);
 }
 
+.dark a:not(.no-focus-outline):focus,
+.dark a:not(.no-focus-outline):focus-within,
 .dark button:not(.no-focus-outline):focus {
   outline: none;
   background-color: var(--main-dark-border);

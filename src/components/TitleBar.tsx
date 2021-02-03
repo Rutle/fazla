@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
+/* eslint-disable jsx-a11y/interactive-supports-focus */
+/* eslint-disable react/prop-types */
+import React, { ReactNode, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +12,35 @@ import PropTypes from 'prop-types';
 import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '../utils/appUtilities';
 import { RootState } from '../reducers/rootReducer';
 import CloseAppModalContent from './Modal/CloseAppModalContent';
+import RButton from './RButton/RButton';
+
+const NavItem: React.FC<{ children: ReactNode; pathTo: string }> = ({ children, pathTo }) => {
+  const [isFocusOutline, setFocusOutline] = useState(false);
+  return (
+    <NavLink
+      className={`${!isFocusOutline ? 'no-focus-outline' : ''}`}
+      to={pathTo}
+      onKeyUp={(e) => {
+        if (e.key === 'Tab') {
+          setFocusOutline(true);
+        }
+      }}
+      onMouseDown={() => {
+        if (isFocusOutline) setFocusOutline(false);
+      }}
+      onClick={(e) => {
+        const { clientX, clientY } = e;
+        if (clientX !== 0 && clientY !== 0) {
+          setFocusOutline(false);
+        } else {
+          setFocusOutline(true);
+        }
+      }}
+    >
+      {children}
+    </NavLink>
+  );
+};
 
 ReactModal.setAppElement('#root');
 /**
@@ -20,7 +51,6 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
   const config = useSelector((state: RootState) => state.config);
   const [isMax, setIsMax] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isFocusOutline, setFocusOutline] = useState(false);
 
   const isEdit = () => {
     return config.isEdit || formGrid.isEdit.some((val) => val !== false);
@@ -35,40 +65,16 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
         {showMenu ? (
           <div id="window-menu">
             <div className="top-container">
-              <nav className={`tab ${config.themeColor}`}>
-                <NavLink
-                  className={`${!isFocusOutline ? 'no-focus-outline' : ''}`}
-                  to="/shipdetails"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Tab') {
-                      setFocusOutline(true);
-                    }
-                  }}
-                >
+              <nav className={`tab ${config.themeColor}`} aria-label="primary">
+                <NavItem pathTo="/shipdetails">
                   <span>Ships</span>
-                </NavLink>
-                <NavLink
-                  className={`${!isFocusOutline ? 'no-focus-outline' : ''}`}
-                  to="/formations"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Tab') {
-                      setFocusOutline(true);
-                    }
-                  }}
-                >
+                </NavItem>
+                <NavItem pathTo="/formations">
                   <span>Formations</span>
-                </NavLink>
-                <NavLink
-                  className={`${!isFocusOutline ? 'no-focus-outline' : ''}`}
-                  to="/options"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Tab') {
-                      setFocusOutline(true);
-                    }
-                  }}
-                >
+                </NavItem>
+                <NavItem pathTo="/options">
                   <span>Options</span>
-                </NavLink>
+                </NavItem>
               </nav>
             </div>
           </div>
@@ -79,17 +85,11 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
         )}
         <div id="window-filler" />
         <div id="window-controls">
-          <div
-            className="title-button"
-            id="min-button"
-            onClick={() => {
-              minimizeWindow();
-            }}
-          >
+          <RButton className="title-button" id="min-button" onClick={() => minimizeWindow()}>
             <FontAwesomeIcon icon={faWindowMinimize} size="xs" />
-          </div>
+          </RButton>
           {isMax ? (
-            <div
+            <RButton
               className="title-button"
               id="restore-button"
               onClick={() => {
@@ -98,9 +98,9 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
               }}
             >
               <FontAwesomeIcon icon={faWindowRestore} size="xs" />
-            </div>
+            </RButton>
           ) : (
-            <div
+            <RButton
               className="title-button"
               id="max-button"
               onClick={() => {
@@ -109,11 +109,10 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
               }}
             >
               <FontAwesomeIcon icon={faWindowMaximize} size="xs" />
-            </div>
+            </RButton>
           )}
-
-          <div
-            className="button title-button"
+          <RButton
+            className="title-button"
             id="close-button"
             onClick={() => {
               if (isEdit()) {
@@ -124,7 +123,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
             }}
           >
             <FontAwesomeIcon icon={faTimes} size="xs" />
-          </div>
+          </RButton>
         </div>
       </div>
       <ReactModal

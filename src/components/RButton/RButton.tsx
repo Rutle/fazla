@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 interface RButtonProps {
   className?: string;
+  id?: string;
   children: React.ReactNode;
   themeColor?: string;
   onClick(event: React.MouseEvent<HTMLButtonElement>): void;
@@ -12,10 +13,11 @@ interface RButtonProps {
 }
 
 const RButton: React.FC<RButtonProps> = React.memo(
-  ({ className = 'btn normal', children, themeColor = '', onClick, disabled, extraStyle }) => {
+  ({ className = 'btn normal', children, themeColor = '', onClick, disabled, extraStyle, id }) => {
     const [isFocusOutline, setFocusOutline] = useState(false);
     return (
       <button
+        id={id}
         onKeyUp={(e) => {
           if (e.key === 'Tab') {
             setFocusOutline(true);
