@@ -41,7 +41,7 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
               onBlur={() => setInputFocus(false)}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') {
-                  dispatch(formationAction(FormationAction.New, 0, nameVal, typeVal));
+                  dispatch(formationAction(FormationAction.New, { formationName: nameVal, formationType: typeVal }));
                   setModalOpen({ modal: '', isOpen: false });
                 }
               }}
@@ -92,7 +92,7 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
           <RButton
             themeColor={config.themeColor}
             onClick={() => {
-              dispatch(formationAction(FormationAction.New, 0, nameVal, typeVal));
+              dispatch(formationAction(FormationAction.New, { formationName: nameVal, formationType: typeVal }));
               setModalOpen({ modal: '', isOpen: false });
             }}
           >

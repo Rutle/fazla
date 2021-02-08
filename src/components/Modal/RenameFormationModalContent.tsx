@@ -42,7 +42,7 @@ const RenameFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen })
               onBlur={() => setInputFocus(false)}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') {
-                  dispatch(formationAction(FormationAction.Rename, 0, nameVal));
+                  dispatch(formationAction(FormationAction.Rename, { formationName: nameVal }));
                   setModalOpen({ modal: '', isOpen: false });
                 }
               }}
@@ -69,7 +69,7 @@ const RenameFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen })
           <RButton
             themeColor={config.themeColor}
             onClick={() => {
-              dispatch(formationAction(FormationAction.Rename, 0, nameVal));
+              dispatch(formationAction(FormationAction.Rename, { formationName: nameVal }));
               setModalOpen({ modal: '', isOpen: false });
             }}
           >

@@ -36,7 +36,7 @@ const CloseAppModalContent: React.FC<{ setModalOpen: (e: boolean) => void }> = (
             themeColor={config.themeColor}
             onClick={() => {
               if (formationGrid.isEdit.some((val) => val !== false)) {
-                dispatch(formationAction(FormationAction.Save));
+                dispatch(formationAction(FormationAction.Save, {}));
               }
               if (config.isEdit) {
                 dispatch(configAction(AppConfigAction.Save));

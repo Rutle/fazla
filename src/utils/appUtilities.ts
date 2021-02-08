@@ -1,6 +1,8 @@
 import { AppConfig, Formation, Ship, BasicResponse, BooleanSearchParam } from './types';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
+
+// expose electron api from preload.ts
 declare global {
   interface Window {
     api: {

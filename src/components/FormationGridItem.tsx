@@ -45,7 +45,7 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
   };
 
   const onRightClick = useCallback(() => {
-    dispatch(formationAction(FormationAction.RemoveShip, index));
+    dispatch(formationAction(FormationAction.RemoveShip, { gridIndex: index }));
   }, [dispatch, index]);
 
   const getHullTypeAbb = (hullType: string | undefined) => {

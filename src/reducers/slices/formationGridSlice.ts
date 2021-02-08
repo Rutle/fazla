@@ -12,6 +12,8 @@ export enum FormationAction {
   AddShip = 'ADDSHIP',
   RemoveShip = 'REMOVESHIP',
   SaveAll = 'SAVEALL',
+  Export = 'EXPORT',
+  Import = 'IMPORT',
 }
 
 interface Formations {
@@ -159,24 +161,34 @@ export const {
   removeShipFromFormation,
 } = formationGridSlice.actions;
 
+interface FormActionData {
+  gridIndex?: number;
+  formationName?: string;
+  formationType?: string;
+  encodedString?: string;
+}
+
 /**
  * Updates all ships search list.
  * @param {FormationAction} action Enum action
  */
 export const formationAction = (
   action: FormationAction,
+  data: FormActionData
+  /*
   gridIndex?: number,
   formationName?: string,
   formationType?: string
+  */
 ): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const { formationGrid, formationModal, shipDetails } = getState();
-    const formIdx = formationGrid.selectedIndex;
-    const { id } = shipDetails;
-    const gIndex = formationModal.gridIndex;
+    const formIdx = formationGrid.selectedIndex; // Which formation is selected.
+    const { id } = shipDetails; // ID of selected ship when adding ship to a fleet.
+    const gIndex = formationModal.gridIndex; // Ship selected on the grid of ships.
     const formCount = formationGrid.formations.length;
-    const name = formationName || `Formation ${formCount}`;
-    const fType = formationType as string;
+    const name = data.formationName || `Formation ${formCount}`;
+    const fType = data.formationType;
     let emptyFormation = [];
     switch (action) {
       case 'NEW':
@@ -232,8 +244,8 @@ export const formationAction = (
         });
         break;
       case 'RENAME':
-        await renameAFormation(gridIndex as number, formationName as string).then((result) => {
-          if (result.isOk) dispatch(renameFormation({ idx: gridIndex as number, name: formationName as string }));
+        await renameAFormation(formIdx, name).then((result) => {
+          if (result.isOk) dispatch(renameFormation({ idx: formIdx, name }));
         });
         break;
       case 'SAVE':
@@ -245,13 +257,27 @@ export const formationAction = (
         dispatch(addShipToFormation({ id, gridIndex: gIndex, selectedIndex: formIdx }));
         break;
       case 'REMOVESHIP':
-        dispatch(removeShipFromFormation({ gridIndex: gridIndex as number, selectedIndex: formIdx }));
+        dispatch(removeShipFromFormation({ gridIndex: data.gridIndex as number, selectedIndex: formIdx }));
         break;
       case 'SAVEALL':
         await saveFormationData(formationGrid.formations).then((result) => {
           if (!result.isOk) dispatch(setErrorMessage({ cState: 'ERROR', eMsg: result.msg, eState: 'ERROR' }));
         });
         break;
+      case 'IMPORT': {
+        // console.log(formationGrid.selectedIndex);
+        const d = JSON.stringify(formationGrid.formations[formIdx].data);
+        const h = atob(d);
+        console.log(h);
+        break;
+      }
+      case 'EXPORT': {
+        // console.log(formationGrid.selectedIndex);
+        const d = JSON.stringify(formationGrid.formations[formIdx].data);
+        const h = btoa(d);
+        console.log(h);
+        break;
+      }
       default:
         break;
     }
