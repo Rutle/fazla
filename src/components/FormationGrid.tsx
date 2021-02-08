@@ -11,7 +11,6 @@ interface FormationGridProps {
  * Component presenting ships in a grid.
  */
 const FormationGrid: React.FC<FormationGridProps> = ({ themeColor, children, isTitle }) => {
-  const middleStyle: CSSProperties = { borderTop: `1px solid var(--main-${themeColor}-border)`, paddingTop: '5px' };
   return (
     <>
       <div className={`f-grid ${themeColor}`}>
@@ -24,9 +23,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({ themeColor, children, isT
             ) : (
               <></>
             )}
-            <div className="f-row" style={!isTitle ? middleStyle : {}}>
-              {React.Children.toArray(children).slice(0, 3)}
-            </div>
+            <div className="f-row">{React.Children.toArray(children).slice(0, 3)}</div>
           </div>
           <div className="f-column">
             {isTitle ? (
@@ -36,9 +33,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({ themeColor, children, isT
             ) : (
               <></>
             )}
-            <div className="f-row" style={!isTitle ? middleStyle : {}}>
-              {React.Children.toArray(children).slice(3)}
-            </div>
+            <div className="f-row">{React.Children.toArray(children).slice(3)}</div>
           </div>
         </div>
       </div>

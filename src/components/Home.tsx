@@ -98,7 +98,7 @@ const Home: React.FC = () => {
     if (appState.cState === 'INIT') return '\u221E';
     if (appState.cState === 'UPDATING' || appState.cState === 'SAVING') return shipCount;
     if (!shipDiff.isUpdate && appState.cState === 'RUNNING') return shipCount;
-    return '';
+    return shipCount;
   };
   return (
     <PageTemplate>

@@ -168,9 +168,22 @@ const FormationView: React.FC = () => {
                   >
                     Rename
                   </RButton>
+                  <RButton
+                    themeColor={config.themeColor}
+                    className="tab-btn normal"
+                    onClick={() => setModalOpen({ modal: 'rename', isOpen: true })}
+                  >
+                    Export
+                  </RButton>
                 </>
               ) : (
-                <></>
+                <RButton
+                  themeColor={config.themeColor}
+                  className="tab-btn normal"
+                  onClick={() => console.log('EXPORT')}
+                >
+                  Import
+                </RButton>
               )}
             </div>
           </div>

@@ -42,7 +42,7 @@
   background-color: var(--main-dark-bg);
 }
 
-.dark :not(button):not(label):not(.switch-input):not(.modal-container):not(a):focus {
+.dark :not(button):not(label):not(.switch-input):not(.modal-container):not(a):not(input):focus {
   outline: none;
   background-color: var(--main-dark-border);
 }
@@ -53,7 +53,8 @@
 
 .dark a:not(.no-focus-outline):focus,
 .dark a:not(.no-focus-outline):focus-within,
-.dark button:not(.no-focus-outline):focus {
+.dark button:not(.no-focus-outline):focus,
+#titlebar.dark button.title-button:not(.no-focus-outline):focus {
   outline: none;
   background-color: var(--main-dark-border);
 }
@@ -95,8 +96,9 @@ div.modal-overlay.dark .ship-side-container {
 #titlebar.dark #window-controls {
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
-#titlebar.dark #window-controls .title-button {
+#titlebar.dark .title-button {
   border-bottom: 1px solid var(--main-dark-border);
+  background-color: var(--main-dark-bg);
 }
 
 #titlebar.dark #window-controls .title-button:hover,
@@ -204,6 +206,7 @@ button.dark {
   color: var(--main-dark-color);
   border: 1px solid transparent;
 }
+
 .dark .tab-btn:hover,
 .dark .btn:hover {
   background-color: var(--main-dark-hover-bg);
@@ -220,9 +223,7 @@ button.tab-btn.dark.selected {
   background-color: var(--main-dark-active-bg);
 }
 
-.rList-item.dark.owned > .owned-indicator {
-  background-color: var(--main-dark-active-bg);
-}
+.rList-item.dark.owned > .owned-indicator,
 .rList-item.dark:hover .owned-indicator {
   background-color: var(--main-dark-active-bg);
 }
@@ -236,11 +237,11 @@ button.tab-btn.dark.selected {
 
 /* #### Formation menu ##### */
 .formation-dropdown-menu.dark {
-  border: var(--main-dark-border);
+  border: 1px solid var(--main-dark-border);
 }
 
-.formation-dropdown-menu.dark .btn.menu-item:first-child {
-  border-top: 1px solid var(--main-dark-border);
+.formation-dropdown-menu.dark .btn.menu-item:last-child {
+  border-bottom: 1px solid var(--main-dark-bg)!important;
 }
 
 /* #### Popover #### */
@@ -253,8 +254,7 @@ button.tab-btn.dark.selected {
 }
 
 /* #### ship title bar #### */
-.page.dark .ship-data-container .ship-title-bar,
-.modal-overlay.dark .ship-title-bar {
+.dark .ship-title-bar {
   border: 1px solid var(--main-dark-border);
   background-color: var(--main-dark-bg);
 }
@@ -263,6 +263,7 @@ div.radio-group.dark,
 div.button-group.dark {
   border: 1px solid var(--main-dark-border);
 }
+#input-group.dark .icon,
 .radio-group.dark label,
 .button-group.dark button,
 .page.dark .tab button {
@@ -318,11 +319,12 @@ input[type="url"].dark:focus,
   background-color: rgba(0,0,0,0.45);
   border: 1px solid rgba(0,0,0,0.45);
 }
-#input-group.dark > button.icon:hover,
+
 #input-group.dark.input-focus > button.icon:hover {
   background-color: var(--main-dark-hover-bg);
   border: 1px solid black;
 }
+
 
 /* #### Grid #### */
 div.f-grid.dark div.f-header {

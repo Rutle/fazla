@@ -10,13 +10,15 @@ interface RButtonProps {
   onClick(event: React.MouseEvent<HTMLButtonElement>): void;
   disabled?: boolean;
   extraStyle?: React.CSSProperties;
+  role?: string;
 }
 
 const RButton: React.FC<RButtonProps> = React.memo(
-  ({ className = 'btn normal', children, themeColor = '', onClick, disabled, extraStyle, id }) => {
+  ({ className = 'btn normal', children, themeColor = '', onClick, disabled, extraStyle, id, role }) => {
     const [isFocusOutline, setFocusOutline] = useState(false);
     return (
       <button
+        role={role}
         id={id}
         onKeyUp={(e) => {
           if (e.key === 'Tab') {
