@@ -2,7 +2,13 @@
 import { ipcRenderer, contextBridge, shell } from 'electron';
 import { AppConfig, BasicResponse, Formation, Ship } from '_utils/types';
 
-const validSendChannels = ['close-application', 'restore-application', 'minimize-application', 'open-logs'];
+const validSendChannels = [
+  'close-application',
+  'restore-application',
+  'minimize-application',
+  'open-logs',
+  'maximize-application',
+];
 const validSaveChannels = ['save-ship-data', 'save-owned-ships', 'save-formation-data', 'save-config'];
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object

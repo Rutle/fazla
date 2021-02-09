@@ -1,7 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/interactive-supports-focus */
-/* eslint-disable react/prop-types */
 import React, { ReactNode, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -40,6 +36,11 @@ const NavItem: React.FC<{ children: ReactNode; pathTo: string }> = ({ children, 
       {children}
     </NavLink>
   );
+};
+
+NavItem.propTypes = {
+  children: PropTypes.node.isRequired,
+  pathTo: PropTypes.string.isRequired,
 };
 
 ReactModal.setAppElement('#root');

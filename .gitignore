@@ -42,6 +42,8 @@ yarn-error.log*
 # dotenv environment variables file
 .env
 
+.eslintignore
+
 # custom
 /src/data/ships.json
 /src/utils/test.js

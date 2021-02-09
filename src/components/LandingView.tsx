@@ -37,6 +37,7 @@ const LandingView: React.FC = () => {
               return;
             }
             const dataObj = await initData();
+            if (!dataObj.isOk) throw new Error(dataObj.msg);
             if (dataObj.isOk && dataObj.msg === 'resNotFoundInit') {
               setShipResource(dataObj.msg);
               return;
@@ -52,9 +53,9 @@ const LandingView: React.FC = () => {
     } catch (e) {
       dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Initialization failed.', eState: 'ERROR' }));
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   useEffect(() => {
     try {
       if (appState.cState === 'INIT' && downloadState.isDataOk && downloadState.isReady) {

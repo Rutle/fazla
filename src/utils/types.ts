@@ -55,7 +55,7 @@ export interface Ship {
   id: string;
   names: ShipNames;
   class: string;
-  nationality?: string;
+  nationality: string;
   hullType?: string;
   thumbnail?: string;
   rarity?: string;

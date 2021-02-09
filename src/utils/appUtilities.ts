@@ -147,12 +147,20 @@ export const isBooleanObj = <T extends { All?: unknown }>(obj: T): obj is T & Bo
 };
 //
 
+export const isShipJson = <
+  T extends { [key: string]: { names?: unknown; id?: unknown; class?: unknown; nationality?: unknown } }
+>(
+  o: T
+): o is T & { [key: string]: Ship } => {
+  return !Object.values(o).some((ele) => typeof ele.id !== 'string');
+};
+
 const isArrayJson = (o: unknown): o is string[] => {
   return o instanceof Array;
 };
 
 // https://stackoverflow.com/a/62438143
-const safeJsonParse = <T>(guard: (o: unknown) => o is T) => (text: string): T | boolean => {
+export const safeJsonParse = <T>(guard: (o: unknown) => o is T) => (text: string): T | boolean => {
   try {
     const parsed = JSON.parse(text) as T;
     return guard(parsed) ? parsed : false;

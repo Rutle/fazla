@@ -5,7 +5,7 @@
 import * as React from 'react';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Ship } from '../utils/shipdatatypes';
+import { Ship } from '../utils/types';
 import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
 import { hullTypes, hullTypesAbb } from '../data/categories';
 
