@@ -228,13 +228,6 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
         // WyJOT05FIiwiMjI0IiwiNDE5IiwiMDgyIiwiTk9ORSIsIk5PTkUiLCJOT05FIiwiTk9ORSIsIk5PTkUiLCJOT05FIiwiTk9ORSIsIk5PTkUiXQ==
         break;
       }
-      case 'EXPORT': {
-        // console.log(formationGrid.selectedIndex);
-        const d = JSON.stringify(formationGrid.formations[formIdx].data);
-        const h = btoa(d);
-        console.log(h);
-        break;
-      }
       default:
         break;
     }
@@ -243,7 +236,6 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
     if (e instanceof SyntaxError) {
       msg = e.message;
     }
-    console.log(msg);
     dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: msg, eState: 'WARNING' }));
   }
 };

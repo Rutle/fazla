@@ -103,7 +103,7 @@ const FormationView: React.FC = () => {
       return <RenameFormationModalContent setModalOpen={setModalOpen} />;
     }
     if (showModal.modal === 'import' || showModal.modal === 'export') {
-      return <ImportExportModalContent setModalOpen={setModalOpen} isType={showModal.modal}/>;
+      return <ImportExportModalContent setModalOpen={setModalOpen} isType={showModal.modal} />;
     }
     return <></>;
   };

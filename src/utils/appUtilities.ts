@@ -157,7 +157,6 @@ const safeJsonParse = <T>(guard: (o: unknown) => o is T) => (text: string): T | 
     const parsed = JSON.parse(text) as T;
     return guard(parsed) ? parsed : false;
   } catch (e) {
-    console.log('error');
     return false;
   }
 };
