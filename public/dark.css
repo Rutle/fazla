@@ -293,14 +293,15 @@ div.button-group.dark {
 input[type="text"].dark {
   color: inherit;
   background-color: inherit;
-  border: 0;
+  border: unset;
 }
 
+/*
 input[type="text"].dark:focus {
-  background-color: inherit!important;
-  border: unset!important;
+  background-color: inherit;
+  border: unset;
 }
-
+*/
 input[type="url"].dark,
 #input-group.dark {
   color: var(--main-dark-color);
@@ -313,6 +314,11 @@ input[type="url"].dark:focus,
   color: var(--main-dark-color);
   background-color: rgba(0,0,0,0.45);
   border: 2px solid var(--main-dark-border);
+}
+
+input[type="url"].dark.is-invalid,
+#input-group.dark.is-invalid {
+  border-color: rgb(110, 19, 19);
 }
 
 #input-group.dark.input-focus > button.btn.icon {

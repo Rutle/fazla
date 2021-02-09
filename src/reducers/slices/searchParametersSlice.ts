@@ -269,6 +269,7 @@ export const updateSearch = (
       const oLen = ownedSearch.length;
       batch(() => {
         if (appState.cToggle === 'ALL' && aLen > 0 && list === 'ALL') {
+          // Check if currently selected ship is still in the results and keep it selected.
           const newShip = allShipsSearch.find((ship) => ship.id === oldListState.id) || allShipsSearch[0];
           dispatch(setDetails({ id: newShip.id, index: newShip.index }));
           if (aLen !== 0) {
@@ -282,6 +283,7 @@ export const updateSearch = (
             dispatch(setListState({ key: 'ALL', data: { id: 'NONE', index: NaN, isUpdated: true } }));
           }
         } else if (appState.cToggle === 'OWNED' && oLen > 0 && list === 'OWNED') {
+          // Check if currently selected ship is still in the results and keep it selected.
           const newShip = ownedSearch.find((ship) => ship.id === oldListState.id) || ownedSearch[0];
           dispatch(setDetails({ id: newShip.id, index: newShip.index }));
           if (oLen !== 0) {

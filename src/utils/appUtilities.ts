@@ -147,6 +147,37 @@ export const isBooleanObj = <T extends { All?: unknown }>(obj: T): obj is T & Bo
 };
 //
 
+const isArrayJson = (o: unknown): o is string[] => {
+  return o instanceof Array;
+};
+
+// https://stackoverflow.com/a/62438143
+const safeJsonParse = <T>(guard: (o: unknown) => o is T) => (text: string): T | boolean => {
+  try {
+    const parsed = JSON.parse(text) as T;
+    return guard(parsed) ? parsed : false;
+  } catch (e) {
+    console.log('error');
+    return false;
+  }
+};
+
+export const parseImportCode = (codeString: string): string[] | boolean => {
+  try {
+    const jsonString = atob(codeString);
+    const result = safeJsonParse(isArrayJson)(jsonString);
+    if (result) return result;
+    return false;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const encodeFormation = (formation: string[]): string => {
+  const d = JSON.stringify(formation);
+  return btoa(d);
+};
+
 /* https://stackoverflow.com/a/57888548 */
 export const fetchWithTimeout = (url: string, ms: number): Promise<Response> => {
   const controller = new AbortController();

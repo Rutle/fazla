@@ -585,7 +585,7 @@ input[type="url"] {
   height: 35px;
   transition: box-shadow .2s ease-in, border .2s ease-in, background-color .2s ease-in, width 0.2s ease-in, color .2s ease-in;
 }
-
+#code-input,
 #search-input,
 #name-input {
   padding: 5px;

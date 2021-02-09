@@ -19,6 +19,7 @@ import DataStore from '../utils/dataStore';
 import NewFormationModalContent from './Modal/NewFormationModalContent';
 import RenameFormationModalContent from './Modal/RenameFormationModalContent';
 import RButton from './RButton/RButton';
+import ImportExportModalContent from './Modal/ImportExportModalContent';
 
 ReactModal.setAppElement('#root');
 /**
@@ -101,6 +102,9 @@ const FormationView: React.FC = () => {
     if (showModal.modal === 'rename') {
       return <RenameFormationModalContent setModalOpen={setModalOpen} />;
     }
+    if (showModal.modal === 'import' || showModal.modal === 'export') {
+      return <ImportExportModalContent setModalOpen={setModalOpen} isType={showModal.modal}/>;
+    }
     return <></>;
   };
 
@@ -171,20 +175,20 @@ const FormationView: React.FC = () => {
                   <RButton
                     themeColor={config.themeColor}
                     className="tab-btn normal"
-                    onClick={() => dispatch(formationAction(FormationAction.Export, {}))}
+                    onClick={() => setModalOpen({ modal: 'export', isOpen: true })}
                   >
                     Export
                   </RButton>
+                  <RButton
+                    themeColor={config.themeColor}
+                    className="tab-btn normal"
+                    onClick={() => setModalOpen({ modal: 'import', isOpen: true })}
+                  >
+                    Import
+                  </RButton>
                 </>
               ) : (
-                <RButton
-                  themeColor={config.themeColor}
-                  className="tab-btn normal"
-                  onClick={() => dispatch(formationAction(FormationAction.Import, {}))}
-                  disabled
-                >
-                  Import
-                </RButton>
+                <></>
               )}
             </div>
           </div>

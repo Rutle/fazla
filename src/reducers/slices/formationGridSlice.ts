@@ -165,75 +165,34 @@ interface FormActionData {
   gridIndex?: number;
   formationName?: string;
   formationType?: string;
-  encodedString?: string;
+  importedFormation?: string[];
 }
 
 /**
  * Updates all ships search list.
  * @param {FormationAction} action Enum action
  */
-export const formationAction = (
-  action: FormationAction,
-  data: FormActionData
-  /*
-  gridIndex?: number,
-  formationName?: string,
-  formationType?: string
-  */
-): AppThunk => async (dispatch: AppDispatch, getState) => {
+export const formationAction = (action: FormationAction, data: FormActionData): AppThunk => async (
+  dispatch: AppDispatch,
+  getState
+) => {
   try {
     const { formationGrid, formationModal, shipDetails } = getState();
     const formIdx = formationGrid.selectedIndex; // Which formation is selected.
+    const formCount = formationGrid.formations.length;
     const { id } = shipDetails; // ID of selected ship when adding ship to a fleet.
     const gIndex = formationModal.gridIndex; // Ship selected on the grid of ships.
-    const formCount = formationGrid.formations.length;
     const name = data.formationName || `Formation ${formCount}`;
-    const fType = data.formationType;
+    const fType = data.formationType || 'normal';
+    const iFormation = data.importedFormation || [];
+    const shipGridIndex = data.gridIndex || 0;
     let emptyFormation = [];
     switch (action) {
       case 'NEW':
         if (fType === 'normal') {
-          emptyFormation = [
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-          ];
+          emptyFormation = Array.from({ length: 12 }, (v, i) => 'NONE');
         } else {
-          emptyFormation = [
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-            'NONE',
-          ];
+          emptyFormation = Array.from({ length: 24 }, (v, i) => 'NONE');
         }
         dispatch(addNewFormationData({ data: emptyFormation, name }));
         break;
@@ -257,7 +216,7 @@ export const formationAction = (
         dispatch(addShipToFormation({ id, gridIndex: gIndex, selectedIndex: formIdx }));
         break;
       case 'REMOVESHIP':
-        dispatch(removeShipFromFormation({ gridIndex: data.gridIndex as number, selectedIndex: formIdx }));
+        dispatch(removeShipFromFormation({ gridIndex: shipGridIndex, selectedIndex: formIdx }));
         break;
       case 'SAVEALL':
         await saveFormationData(formationGrid.formations).then((result) => {
@@ -265,10 +224,8 @@ export const formationAction = (
         });
         break;
       case 'IMPORT': {
-        // console.log(formationGrid.selectedIndex);
-        const d = JSON.stringify(formationGrid.formations[formIdx].data);
-        const h = atob(d);
-        console.log(h);
+        dispatch(addNewFormationData({ data: iFormation, name }));
+        // WyJOT05FIiwiMjI0IiwiNDE5IiwiMDgyIiwiTk9ORSIsIk5PTkUiLCJOT05FIiwiTk9ORSIsIk5PTkUiLCJOT05FIiwiTk9ORSIsIk5PTkUiXQ==
         break;
       }
       case 'EXPORT': {
@@ -282,7 +239,12 @@ export const formationAction = (
         break;
     }
   } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with formation action.', eState: 'ERROR' }));
+    let msg = 'There was an error with formation action.';
+    if (e instanceof SyntaxError) {
+      msg = e.message;
+    }
+    console.log(msg);
+    dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: msg, eState: 'WARNING' }));
   }
 };
 
