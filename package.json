@@ -41,7 +41,7 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@reduxjs/toolkit": "^1.5.0",
     "electron-is-dev": "^1.2.0",
-    "electron-store": "^6.0.1",
+    "electron-store": "^7.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
