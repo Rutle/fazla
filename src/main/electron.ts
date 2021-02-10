@@ -102,26 +102,29 @@ ipcMain.on('open-logs', () => {
 ipcMain.handle('resource-check', async () => {
   try {
     let isOk = true;
-    let msg = '';
+    const msg = '';
+    let code = '';
     // userData is the appData path
     const userDir = app.getPath('userData');
     if (process.env.NODE_ENV !== 'development') {
       await fsPromises
         .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
         .then(() => {
-          // console.log('can access, has been created. use file from appdata (updated at least once)');
+          // console.log('can access, has been created.');
           isOk = true;
-          msg = 'resFound';
+          code = 'ResFound';
         })
         .catch(() => {
-          // console.error('cannot access, not created yet. use file provided in build');
+          // console.log('cannot access, not created yet.');
           isOk = true;
-          msg = 'resNotFound';
+          code = 'ResNotFound';
         });
     }
-    return { isOk, msg };
+    console.log('check', isOk, msg, code);
+    return { isOk, msg, code };
   } catch (e) {
-    return { isOk: false, msg: 'Resource check failed.' };
+    console.log('Resource check failed.');
+    return { isOk: false, msg: 'Resource check failed.', code: 'Error' };
   }
 });
 
@@ -148,7 +151,6 @@ ipcMain.handle('save-ship-data', async (event, arg) => {
       await fsPromises.writeFile(path.join(__dirname, '../src/data/ships.json'), rawData, 'utf8');
     } else {
       const userDir = app.getPath('userData');
-      // console.log(userDir);
       await fsPromises
         .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
         .then(async () => {
@@ -162,10 +164,10 @@ ipcMain.handle('save-ship-data', async (event, arg) => {
         });
     }
     electronStore.set('config.updateDate', date);
+    return { updateDate: date, isOk: true, msg: 'Ship data saved succesfully.' };
   } catch (error) {
-    return { updateDate: date, isOk: false, msg: 'Failed to save ship data.' };
+    return { updateDate: date, isOk: false, msg: 'Failed to save ship data.', code: 'Failure' };
   }
-  return { updateDate: date, isOk: true, msg: 'Ship data saved succesfully.' };
 });
 
 /**
@@ -176,10 +178,10 @@ ipcMain.handle('save-owned-ships', (event, data: string[]) => {
     electronStore.set({
       ownedShips: data,
     });
+    return { isOk: true, msg: 'Owned ships saved succesfully.' };
   } catch (error) {
-    return { isOk: false, msg: 'Failed to save owned ships.' };
+    return { isOk: false, msg: 'Failed to save owned ships.', code: 'Failure' };
   }
-  return { isOk: true, msg: 'Owned ships saved succesfully.' };
 });
 /**
  * Function that saves given formation data.
@@ -189,10 +191,10 @@ ipcMain.handle('save-formation-data', (event, data: Formation[]) => {
     electronStore.set({
       formations: data,
     });
+    return { isOk: true, msg: 'Formation data saved succesfully.' };
   } catch (e) {
-    return { isOk: false, msg: 'Failed to save formation data.' };
+    return { isOk: false, msg: 'Failed to save formation data.', code: 'Failure' };
   }
-  return { isOk: true, msg: 'Formation data saved succesfully.' };
 });
 
 /**
@@ -201,10 +203,10 @@ ipcMain.handle('save-formation-data', (event, data: Formation[]) => {
 ipcMain.handle('save-config', (event, data: AppConfig) => {
   try {
     electronStore.set({ config: data });
+    return { isOk: true, msg: 'Config data saved succesfully.' };
   } catch (e) {
-    return { isOk: false, msg: 'Failed to save config data.' };
+    return { isOk: false, msg: 'Failed to save config data.', code: 'Failure' };
   }
-  return { isOk: true, msg: 'Config data saved succesfully.' };
 });
 
 /**
@@ -218,10 +220,10 @@ ipcMain.handle('remove-formation-by-index', (event, data) => {
     electronStore.set({
       formations: newForms,
     });
+    return { isOk: true, msg: 'Formation data saved succesfully.' };
   } catch (e) {
-    return { isOk: false, msg: 'Failed to remove formation.' };
+    return { isOk: false, msg: 'Failed to remove formation.', code: 'Failure' };
   }
-  return { isOk: true, msg: 'Formation data saved succesfully.' };
 });
 
 ipcMain.handle('rename-formation-by-index', (event, data: { idx: number; name: string }) => {
@@ -240,10 +242,10 @@ ipcMain.handle('rename-formation-by-index', (event, data: { idx: number; name: s
     electronStore.set({
       formations: newForms,
     });
+    return { isOk: true, msg: 'Formation name changed succesfully.' };
   } catch (e) {
-    return { isOk: false, msg: 'Failed to rename formation.' };
+    return { isOk: false, msg: 'Failed to rename formation.', code: 'Failure' };
   }
-  return { isOk: true, msg: 'Formation name changed succesfully.' };
 });
 
 /**
@@ -255,7 +257,8 @@ ipcMain.handle('initData', async () => {
   let oShips: string[] = [];
   let formationData: Formation[] = [];
   let isOk = false;
-  let msg = '';
+  let msg = 'testi';
+  let code = 'ResFound';
   let configData: AppConfig = {
     jsonURL: '',
     themeColor: 'dark',
@@ -269,7 +272,8 @@ ipcMain.handle('initData', async () => {
     // userData is the appData path
     const userDir = app.getPath('userData');
     // resourcesPath is the installation path
-    const resourceDir = process.resourcesPath;
+    // const resourceDir = process.resourcesPath;
+    // console.log(userDir, resourceDir);
     if (!electronStore.has('firstRun')) {
       electronStore.set('firstRun', false);
       electronStore.set({
@@ -293,28 +297,33 @@ ipcMain.handle('initData', async () => {
       await fsPromises
         .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
         .then(async () => {
-          // console.log('can access, has been created. use file from appdata (updated at least once)');
+          // console.log('can access, has been created. use file from appdata (updated/downloaded at least once)');
           rawData = await fsPromises.readFile(`${userDir}\\resources\\ships.json`, 'utf8');
-          msg = 'resFound';
+          code = 'ResFound';
+          msg = 'Json data found and loaded.';
         })
-        .catch(async () => {
-          // console.error('cannot access, not created yet. use file provided in build');
-          rawData = await fsPromises.readFile(`${resourceDir}\\ships.json`, 'utf8');
+        .catch(() => {
+          // console.log('Cannot access .json data even in appData.');
+          // rawData = await fsPromises.readFile(`${resourceDir}\\ships.json`, 'utf8');
           // const rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
-          msg = 'resNotFoundInit';
+          msg = 'Cannot access and load .json data.';
+          code = 'ResNotFound';
         });
     }
-    // Parse and check JSON data (at least partially)
-    const result = safeJsonParse(isShipJson)(rawData);
-    if (result) {
-      jsonData = result as { [key: string]: Ship };
-      dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
-      oShips = electronStore.get('ownedShips') as string[];
-      formationData = electronStore.get('formations') as Formation[];
-      isOk = true;
-    } else {
-      msg = "JSON data parsing failed. JSON didn't pass checks.";
-      isOk = false;
+    if (code === 'ResFound') {
+      // Parse and check JSON data (at least partially)
+      const result = safeJsonParse(isShipJson)(rawData);
+      if (result) {
+        jsonData = result as { [key: string]: Ship };
+        dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
+        oShips = electronStore.get('ownedShips') as string[];
+        formationData = electronStore.get('formations') as Formation[];
+        isOk = true;
+      } else {
+        msg = "JSON data parsing failed. JSON didn't pass checks.";
+        code = 'JSONParseFail';
+        isOk = true;
+      }
     }
     return {
       shipData: dataArr,
@@ -323,9 +332,9 @@ ipcMain.handle('initData', async () => {
       formations: formationData,
       isOk,
       msg,
+      code,
     };
   } catch (error) {
-    console.log(error);
     return {
       shipData: dataArr,
       config: configData,
@@ -333,6 +342,7 @@ ipcMain.handle('initData', async () => {
       formations: formationData,
       isOk: false,
       msg: 'Data initialization failed.',
+      code: 'InitError',
     };
   }
 });

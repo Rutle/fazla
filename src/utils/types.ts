@@ -11,6 +11,7 @@ export interface BasicResponse {
   isOk: boolean;
   msg: string;
   updateDate?: string;
+  code?: string;
 }
 export interface BooleanSearchParam {
   [key: string]: boolean;

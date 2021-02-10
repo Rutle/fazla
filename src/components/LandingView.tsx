@@ -6,7 +6,7 @@ import FooterBar from './FooterBar';
 import RButton from './RButton/RButton';
 import TitleBar from './TitleBar';
 import { initShipLists, setCurrentState, setErrorMessage } from '../reducers/slices/appStateSlice';
-import { checkResource, downloadShipData, initData } from '../utils/appUtilities';
+import { checkResource, closeWindow, downloadShipData, initData } from '../utils/appUtilities';
 import { AppContext } from '../App';
 /**
  * Landing page for application that is presented during loading settings.
@@ -17,7 +17,10 @@ const LandingView: React.FC = () => {
   const history = useHistory();
   const appState = useSelector((state: RootState) => state.appState);
   const config = useSelector((state: RootState) => state.config);
-  const [shipResource, setShipResource] = useState('');
+  const [shipResource, setShipResource] = useState({
+    code: '',
+    msg: '',
+  });
   const [downloadState, setDownloadState] = useState({
     isDl: false,
     isReady: false,
@@ -29,18 +32,20 @@ const LandingView: React.FC = () => {
     try {
       if (appState.cState === 'INIT') {
         (async () => {
-          return checkResource();
+          return checkResource(); // Check that .json data exists.
         })()
           .then(async (result) => {
-            setShipResource(result.msg);
-            if (result.isOk && result.msg === 'resNotFound') {
+            setShipResource({ code: result.code as string, msg: result.msg });
+            if (result.isOk && result.code === 'ResNotFound') {
               return;
             }
             const dataObj = await initData();
-            if (!dataObj.isOk) throw new Error(dataObj.msg);
-            if (dataObj.isOk && dataObj.msg === 'resNotFoundInit') {
-              setShipResource(dataObj.msg);
+            if (dataObj.code === 'ResNotFound' || dataObj.code === 'JSONParseFail') {
+              setShipResource({ code: dataObj.code, msg: dataObj.msg });
               return;
+            }
+            if (dataObj.code === 'InitError') {
+              throw new Error(dataObj.msg);
             }
             await shipData.setArray(dataObj.shipData);
             dispatch(initShipLists(dataObj.ownedShips, shipData, dataObj.config, dataObj.formations));
@@ -61,7 +66,15 @@ const LandingView: React.FC = () => {
       if (appState.cState === 'INIT' && downloadState.isDataOk && downloadState.isReady) {
         (async () => {
           const dataObj = await initData();
-          if (dataObj.isOk && dataObj.msg === 'resNotFound') setShipResource(dataObj.msg);
+          if (dataObj.code === 'ResNotFound' || dataObj.code === 'JSONParseFail') {
+            setShipResource({ code: dataObj.code, msg: dataObj.msg });
+            setDownloadState({ isReady: false, isDl: false, isDataOk: false, text: 'Download' });
+            return;
+          }
+          if (dataObj.code === 'InitError') {
+            setDownloadState({ isReady: false, isDl: false, isDataOk: false, text: 'Download' });
+            throw new Error(dataObj.msg);
+          }
           await shipData.setArray(dataObj.shipData);
           dispatch(initShipLists(dataObj.ownedShips, shipData, dataObj.config, dataObj.formations));
         })().catch((error: Error) => {
@@ -76,13 +89,28 @@ const LandingView: React.FC = () => {
 
   const getInitMsg = () => {
     if (appState.cState === 'INIT') {
-      if (shipResource === 'resNotFound') return 'Initialization waiting ship data.';
+      if (shipResource.code === 'ResNotFound') return 'Initialization waiting ship data.';
+      if (shipResource.code === 'JSONParseFail') return shipResource.msg;
       return 'Initializing.';
     }
     if (appState.cState === 'RUNNING') {
-      return 'Initialization ready.';
+      return 'Initialization is ready.';
+    }
+    if (appState.cState === 'DOWNLOADING') {
+      return 'Waiting for download to finish.';
     }
     return 'Waiting for initialization';
+  };
+
+  const getMessage = () => {
+    if (shipResource.code === 'ResNotFound') {
+      if (downloadState.isReady && downloadState.isDataOk) return 'Ship data is ready.';
+      return 'Ship data needs to be downloaded';
+    }
+    if (shipResource.code === 'JSONParseFail') {
+      return 'Try downloading data again.';
+    }
+    return '';
   };
 
   return (
@@ -101,51 +129,47 @@ const LandingView: React.FC = () => {
                 alignItems: 'center',
               }}
             >
-              {shipResource === 'resNotFound' ? (
-                <>
-                  <div
-                    className={`message-container ${config.themeColor}`}
-                    style={{
-                      height: '48px',
-                      width: '300px',
+              {shipResource.code === 'ResNotFound' || shipResource.code === 'JSONParseFail' ? (
+                <div
+                  className={`message-container ${config.themeColor}`}
+                  style={{
+                    minWidth: '50%',
+                  }}
+                >
+                  <span className="message">{getMessage()}</span>
+                  <RButton
+                    themeColor={config.themeColor}
+                    className={`btn normal ${downloadState.isReady && downloadState.isDataOk ? '' : 'selected'}`}
+                    disabled={downloadState.isDl || (downloadState.isReady && downloadState.isDataOk)}
+                    onClick={async () => {
+                      setDownloadState({ ...downloadState, isDl: true, text: 'Downloading' });
+                      dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Downloading' }));
+                      const res = await downloadShipData();
+                      if (!res.isOk) {
+                        setDownloadState({ isReady: true, isDl: false, isDataOk: false, text: 'Download failed.' });
+                        dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));
+                      } else {
+                        setDownloadState({ isReady: true, isDl: false, isDataOk: true, text: 'Download finished.' });
+                        dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));
+                      }
+                    }}
+                    extraStyle={{
+                      height: 'inherit',
+                      border: `1px solid var(--main-${config.themeColor}-bg)`,
+                      borderTopLeftRadius: '0px',
+                      borderBottomLeftRadius: '0px',
                     }}
                   >
-                    <span className="message">
-                      {downloadState.isReady && downloadState.isDataOk
-                        ? 'Ship data is ready.'
-                        : 'Ship data needs to be downloaded'}
-                    </span>
-                    <RButton
-                      themeColor={config.themeColor}
-                      className={`btn normal ${downloadState.isReady && downloadState.isDataOk ? '' : 'selected'}`}
-                      disabled={downloadState.isDl || (downloadState.isReady && downloadState.isDataOk)}
-                      onClick={async () => {
-                        setDownloadState({ ...downloadState, isDl: true, text: 'Downloading' });
-                        dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Downloading data' }));
-                        const res = await downloadShipData();
-                        if (!res.isOk) {
-                          setDownloadState({ isReady: true, isDl: false, isDataOk: false, text: 'Failed' });
-                        }
-                        setDownloadState({ isReady: true, isDl: false, isDataOk: true, text: 'Done' });
-                        dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));
-                      }}
-                      extraStyle={{
-                        height: 'inherit',
-                        width: '105px',
-                      }}
-                    >
-                      {downloadState.text}
-                    </RButton>
-                  </div>
-                </>
+                    {downloadState.text}
+                  </RButton>
+                </div>
               ) : (
                 <></>
               )}
               <div
                 className={`message-container ${config.themeColor}`}
                 style={{
-                  height: '30px',
-                  width: '300px',
+                  minWidth: '50%',
                 }}
               >
                 <span className="message">{getInitMsg()}</span>
@@ -160,20 +184,26 @@ const LandingView: React.FC = () => {
                 alignItems: 'flex-start',
               }}
             >
-              <RButton
-                disabled={!(appState.cState === 'RUNNING')}
-                themeColor={config.themeColor}
-                onClick={() => {
-                  history.push('/shipdetails');
-                }}
-                extraStyle={{
-                  marginTop: '5px',
-                  height: '30px',
-                  width: '200px',
-                }}
-              >
-                Continue
-              </RButton>
+              <div className={`button-group ${config.themeColor}`} style={{ minWidth: '50%', width: 'unset' }}>
+                <RButton
+                  disabled={!(appState.cState === 'RUNNING')}
+                  themeColor={config.themeColor}
+                  onClick={() => {
+                    history.push('/shipdetails');
+                  }}
+                >
+                  Continue
+                </RButton>
+                <RButton
+                  disabled={!(appState.cState === 'RUNNING')}
+                  themeColor={config.themeColor}
+                  onClick={() => {
+                    closeWindow();
+                  }}
+                >
+                  Exit
+                </RButton>
+              </div>
             </div>
           </div>
         </section>
