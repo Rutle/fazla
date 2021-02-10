@@ -57,6 +57,7 @@ const LandingView: React.FC = () => {
       }
     } catch (e) {
       dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Initialization failed.', eState: 'ERROR' }));
+      history.push('/error');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -84,6 +85,7 @@ const LandingView: React.FC = () => {
       }
     } catch (e) {
       dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Initialization failed.', eState: 'ERROR' }));
+      history.push('/error');
     }
   }, [appState.cState, dispatch, downloadState, history, shipData]);
 
