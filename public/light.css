@@ -1,51 +1,82 @@
 /* ##### Light theme ##### */
 :root {
-  /* --root-light-bg: #fff;*/
-  --root-light-bg:#fdfdfd;
-  --main-light-color: #252323;
-  /* --main-light-bg:  rgb(246, 247, 255);*/
-  --main-light-bg: #ecf6ff;
-  --main-light-border: #a9acb3;
-  --main-light-focus: rgb(211, 211, 211);
-  --main-light-focus-border: #575757;
-  --main-light-active-bg: #d6d6d6;
-  --main-light-titlebar-bg: #d3eaff;
+  --root-light-bg: #f2f6ff;
+  --main-light-color: #2f2f2f;
+  /*--main-light-bg: #55aeff;*/
+  --main-light-bg: #cce7ff;
+  --main-light-hover-bg: #81bdf5;
+  --main-light-border: #55aeff;
+  --main-light-active-bg: #81bdf5;;
   --main-light-footer-bg: #efefef;
-  --main-light-title-bg:  #ecf6ff;
-  --main-light-button-bg:  rgb(246, 247, 255);
-  --main-light-button-selected-bg:  #c4dbf1;
-  --main-light-button-hover-bg:  #d8e3ec;
-  --main-light-button-bottom-bg: #ecebeb;
-  --main-light-button-top-bg: #ffffff;
-  --main-light-input-bg: #fdfdfd;
-  --main-light-input-focus-bg: #dfdfdf;
-  --main-light-input-focus-border: ;
-  --main-light-passive-bg: rgb(246, 247, 255);
   --main-light-tooltip-bg: #d3eaff;
   --main-light-tooltip-border: #bcd0ff;
+  --main-light-titlebar-bg: #55aeff;
 }
+
+/*
+:root {
+  --root-dark-bg: #1f1f1f;
+  --main-dark-bg: #2f2f2f;
+  --main-dark-border: #40556b;
+  --main-dark-color: rgb(184, 184, 184);
+  --main-dark-hover-bg: #40556b;
+  --main-dark-button-top-bg: #26313a;
+  --main-dark-button-bottom-bg: #1b2127;
+  --main-dark-selected-bottom-bg: #2a2e35;
+  --main-dark-active-bg: #40556b;
+  --main-dark-tooltip-bg: #1b1d24e3;
+  --main-dark-tooltip-border: #3f4657a6;
+  --main-dark-item-bg: #21252f;
+  --main-dark-footer-titlebar-bg: #202023;
+}
+*/
 
 /* ##### Scrollbar ##### */
 .light ::-webkit-scrollbar {     
-  width: 0.5em;
+  background-color: var(--root-light-bg);
+  width: 8px;
 }
 
 .light ::-webkit-scrollbar-track {
   background-color: var(--root-light-bg);
-  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.22);
-  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.22);
-  border-radius: 5px;
-}
-
-.light ::-webkit-scrollbar-thumb {
-  background-color: var(--main-light-bg);
+  -webkit-box-shadow: inset 0 0 3px rgba(105, 105, 105, 0.22);
+  box-shadow: inset 0 0 3px rgba(105, 105, 105, 0.22);
   border: 1px solid var(--main-light-border);
   border-radius: 5px;
 }
+.light ::selection {
+  background-color: #3c9efb;
+}
+.light ::-webkit-scrollbar-thumb {
+  background-color:var(--main-light-border);
+  border-radius: 5px;
+}
 
-.light div.scroll {
-  height: 100%;
-  overflow-y: scroll;
+.light .no-focus-outline:focus,
+.light .no-focus-outline:focus-within {
+  outline: none!important;
+  background-color: var(--main-light-bg);
+}
+
+.light :not(button):not(label):not(.switch-input):not(.modal-container):not(a):not(input):focus {
+  outline: none;
+  background-color: var(--main-light-border);
+}
+
+.light .switch [type=checkbox]:not(.no-focus-outline):focus + span.switch-toggle::after {
+  outline: 1px solid var(--main-light-active-bg);
+}
+
+.light a:not(.no-focus-outline):focus,
+.light a:not(.no-focus-outline):focus-within,
+.light button:not(.no-focus-outline):focus,
+#titlebar.light button.title-button:not(.no-focus-outline):focus {
+  outline: none;
+  background-color: var(--main-light-border);
+}
+
+.light .modal-container:focus {
+  outline: none;
 }
 
 /* ##### Page ##### */
@@ -55,79 +86,88 @@ div.page.light {
 }
 
 div.page.light .ship-side-container,
-.modal-overlay.light .ship-side-container {
-  background-color: var(--main-light-bg);
+div.modal-overlay.light .ship-side-container {
   border-right: 1px solid var(--main-light-border);
 }
 
-/* #### Titlebar #### */
+/* ##### Titlebar ##### */
 #titlebar.light {
   background: var(--main-light-titlebar-bg);
   color: var(--main-light-color);
-}
 
-#titlebar.light #window-title {
-  border-bottom: 1px solid var(--main-light-border);
-  
 }
+#titlebar.light #window-title {
+  /* border-bottom: 1px solid var(--main-light-border);
+  box-shadow: inset 0px -4px 3px -4px #00000099; */
+  color: white;
+}
+/*
 #titlebar.light #window-menu {
-  background-color: var(--main-light-titlebar-bg);
+  background-color: var(--main-light-bg);
   border-bottom: 1px solid var(--main-light-border);
 }
 
 #titlebar.light #window-filler {
   border-bottom: 1px solid var(--main-light-border);
-  
+  box-shadow: inset 0px -4px 3px -4px #00000099;
+}
+*/
+#titlebar.light .title-button {
+  background-color: var(--main-light-titlebar-bg);
+  /*
+  border-bottom: 1px solid var(--main-light-border);
+  box-shadow: inset 0px -4px 3px -4px #00000099;*/
 }
 
-#titlebar.light #window-controls .title-button {
-  border-bottom: 1px solid var(--main-light-border);
-}
 #titlebar.light #window-controls .title-button:hover,
 #titlebar.light #window-controls .title-button:active {
-  background: #c4dbf1;
+  background: var(--main-light-hover-bg);
 }
 
 #titlebar.light #min-button {
   box-sizing: border-box;
-  color: var(--main-light-color);
+  color: white;
   grid-column: 1;
 }
 
 #titlebar.light #max-button, #restore-button {
   box-sizing: border-box;
-  color: var(--main-light-color);
+  color: white;
   grid-column: 2;
 }
 
 #titlebar.light #close-button {
   box-sizing: border-box;
-  color: var(--main-light-color);
+  color: white;
   grid-column: 3;
 }
 
 #footer.light {
-  background: var(--main-light-footer-bg);
-  color: var(--main-light-color);
+  background-color: var(--main-light-bg);
   border-top: 1px solid var(--main-light-border);
+  color: white;
 }
 
 /* #### Modal #### */
 .modal-overlay.light div.modal-title {
   border: 1px solid var(--main-light-border);
-  /* background-color: var(--main-light-title-bg);*/
   background-color: var(--main-light-bg);
+}
+
+.modal-overlay.light div.modal-action {
+  border: 1px solid var(--main-light-border);
 }
 
 .modal-overlay.light .modal-container {
   background-color: var(--root-light-bg);
-  border: 3px double #565656;
+  border: 3px double var(--main-light-border);
   border-radius: 2px;
   color: var(--main-light-color);
   -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
   -moz-box-shadow: 1px 1px 4px 1px #0000008f;
-  box-shadow: 1px 1px 2px 0px #0000008f;
+  box-shadow: 1px 1px 4px 1px #0000008f;
 }
+
 /* #### Tab #### */
 div.page.light .tab {
   overflow: hidden;
@@ -137,87 +177,62 @@ div.page.light .tab {
   background-color: var(--main-light-bg);
 }
 
+div.page.light > button.tab-btn {
+  border: 1px solid var(--main-light-bg);
+}
+
+div.page.light > button.tab-btn:hover {
+  border: 1px solid var(--main-light-bg);
+}
+
 nav.tab.light {
   box-sizing: border-box;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--main-light-border);
+  /* justify-content: space-between;*/
+  /* border-bottom: 1px solid var(--main-light-border);*/
 }
 
 nav.tab.light > a {
-  border-right: 1px solid var(--main-light-titlebar-bg);
-  border-left: 1px solid var(--main-light-titlebar-bg);
-  color: rgba(37, 35, 35, 0.4);
-  /*border-bottom: 1px solid var(--main-light-titlebar-bg);*/
+  color: white;
+  /*
+  border-right: 1px solid var(--main-light-bg);
+  border-left: 1px solid var(--main-light-bg);
+  box-shadow: inset 0px -4px 3px -4px #00000099;*/
 }
 
 nav.tab.light > a.active {
   height: 32px!important;
   color: var(--main-light-color);
   background-color: var(--root-light-bg)!important;
+  /*
+  box-shadow: 0px -4px 3px #00000099;
+  
+  border-bottom: 1px solid transparent;
   border-right: 1px solid var(--main-light-border);
   border-left: 1px solid var(--main-light-border);
-  border-bottom: 1px solid transparent;
+  */
 }
 /*
 nav.tab.light > a.active > span {
-  margin-top: 1px;
+  position: relative;
+  top: -1px;
 }
 */
 nav.tab.light > a:hover {
-  color: var(--main-light-color);
-}
-
-div.page.light > .top-container:after {
-  content: "";
-  width: 100%;
-  bottom: 1px;
-  z-index:-1;
-  -webkit-box-shadow: 0px 0px 8px 1px #0000006b;
-  -moz-box-shadow: 0px 0px 8px 1px #0000006b;
-  box-shadow: 0px 0px 8px 1px #0000006b;
+  /* color: var(--main-light-color);*/
+  background-color: var(--main-light-hover-bg);
 }
 
 /* ###### Buttons ###### */
+label.light,
 button.light {
   background-color: var(--main-light-bg);
   color: var(--main-light-color);
+  border: 1px solid transparent;
 }
 
-.btn.graphic.light:hover {
-  background: linear-gradient(to bottom, var(--main-light-button-bottom-bg) 5%, var(--main-light-button-top-bg) 100%);
-	background-color:#f6f6f6;
-}
-
-.btn.graphic.light.selected {
-  background: linear-gradient(to bottom, rgb(220, 220, 220) 10%, rgb(255, 255, 255) 100%);
-  box-shadow: inset 1px 1px 2px 0px #252525;
-}
-
-.btn.graphic.light {
-  box-shadow: inset 0px 1px 0px 0px #ffffff;
-  background: linear-gradient(to bottom, var(--main-light-button-top-bg) 5%, var(--main-light-button-bottom-bg) 100%);
-}
-/*
-button.btn.light {
-  border: 1px solid var(--main-light-border);
-}
-*/
-.btn.graphic.light {
-  border: 1px solid #6f6f6f;
-}
-
-button.btn.light:hover,
-button.tab-btn.light:hover {
-  background-color: var(--main-light-button-hover-bg);
-}
-
-button.light.active {
-  background-color: var(--main-light-button-selected-bg);
-}
-
-button.btn.graphic.light:disabled:hover {
-  box-shadow: inset 0px 1px 0px 0px #ffffff;
-  background: linear-gradient(to bottom, var(--main-light-button-top-bg) 5%, var(--main-light-button-bottom-bg) 100%);
+.light .tab-btn:hover,
+.light .btn:hover {
+  background-color: var(--main-light-hover-bg);
 }
 
 button.btn.light:disabled:hover,
@@ -225,232 +240,228 @@ button.tab-btn.light:disabled:hover {
   background-color: var(--main-light-bg);
 }
 
+label.btn.light.selected,
 button.btn.light.selected,
 button.tab-btn.light.selected {
-  background-color: var(--main-light-button-selected-bg);
+  background-color: var(--main-light-active-bg);
 }
 
-/*
-button.btn.light.selected::after,
-button.tab-btn.light.selected::after {
-  content: "";
-  display: block;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  border: transparent;
-  border-radius: 3px;
-  box-shadow: inset 0px 0px 4px 0px var(--main-light-passive-bg);
+.rList-item.light.owned > .owned-indicator,
+.rList-item.light:hover .owned-indicator {
+  background-color: var(--main-light-active-bg);
 }
-*/
 
-.tab button.light {
-  color: var(--main-light-color);
+.rList-item.light.owned > .owned-indicator + .name {
+  border-left: 1px solid var(--main-light-bg);
+}
+.rList-item.light > .owned-indicator + .name {
+  border-left: 1px solid transparent;
+}
+
+/* #### Formation menu ##### */
+.formation-dropdown-menu.light {
+  border: 1px solid var(--main-light-border);
+}
+
+.formation-dropdown-menu.light .btn.menu-item:last-child {
+  border-bottom: 1px solid var(--main-light-bg)!important;
+}
+
+/* #### Popover #### */
+.popover-container.light {
+  background-color: var(--root-light-bg);
+  border: 3px double var(--main-light-border);
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+}
+
+/* #### ship title bar #### */
+.light .ship-title-bar {
+  border: 1px solid var(--main-light-border);
   background-color: var(--main-light-bg);
 }
 
-/* Change background color of buttons on hover */
-.tab button.light:hover {
-  background-color: var(--main-light-button-hover-bg);
+div.radio-group.light,
+div.button-group.light {
+  border: 1px solid var(--main-light-border);
+}
+#input-group.light .icon,
+.radio-group.light label,
+.button-group.light button,
+.page.light .tab button {
+  border: 1px solid var(--main-light-bg);
+}
+/* #### Rarity colors #### */
+.ship-title-bar > span.Super.Rare:last-child {
+  color: PaleGoldenrod;
 }
 
-/* Create an active/current tablink class */
-.tab button.light.active {
-  background-color: var(--main-light-button-selected-bg);
+.ship-title-bar > span.Rare:last-child {
+  color: powderblue;
+}
+.ship-title-bar > span.Ultra.Rare:last-child,
+.ship-title-bar > span.Decisive:last-child {
+  background-image: linear-gradient(to bottom right, #AFA 15%, #AAF, #FAA 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ship-title-bar > span.Elite:last-child {
+  color: rgba(144, 98, 253, 0.616);
+}
+
+/* #### Input #### */
+input[type="text"].light {
+  color: inherit;
+  background-color: inherit;
+  border: unset;
+}
+
+/*
+input[type="text"].light:focus {
+  background-color: inherit;
+  border: unset;
+}
+*/
+input[type="url"].light,
+#input-group.light {
   color: var(--main-light-color);
+  background-color: var(--main-light-bg);
+  border: 2px solid var(--main-light-border);
 }
 
-.formation-dropdown-menu.light {
-  border: var(--main-light-border);
+input[type="url"].light:focus,
+#input-group.light.input-focus {
+  color: var(--main-light-color);
+  background-color: rgba(0,0,0,0.45);
+  border: 2px solid var(--main-light-border);
 }
 
-.formation-dropdown-menu.light .btn.menu-item:first-child {
-  border-top: 1px solid var(--main-light-border);
+input[type="url"].light.is-invalid,
+#input-group.light.is-invalid {
+  border-color: rgb(110, 19, 19);
 }
 
-/* ##### GRID ##### */
+#input-group.light.input-focus > button.btn.icon {
+  background-color: rgba(0,0,0,0.45);
+  border: 1px solid rgba(0,0,0,0.45);
+}
+
+#input-group.light.input-focus > button.icon:hover {
+  background-color: var(--main-light-hover-bg);
+  border: 1px solid black;
+}
+
+
+/* #### Grid #### */
 div.f-grid.light div.f-header {
   border-bottom: 2px solid var(--main-light-border);
 }
-
-div.f-grid.light div.f-title,
-div.f-grid.light div.f-icon {
-  background-color: var(--main-light-title-bg);
+div.f-grid.light div.f-title {
+  background-color: var(--main-light-bg);
   border: 1px solid var(--main-light-border);
 }
 
-/* ##### GRID-ITEM ##### */
-div.f-grid.light div.content > div.Aircraft.Carrier,
-.rList .rList-item.light > div.hullTypeAbb.Aircraft.Carrier {
-  background-color: Plum;
+div.f-grid.light div.f-fleet {
+  background-color: var(--main-light-bg);
+  border: 1px solid var(--main-light-border);
 }
-
-div.f-grid.light div.content > div.Battleship,
-.rList .rList-item.light > div.hullTypeAbb.Battleship,
-.rList .rList-item.light > div.hullTypeAbb.Battlecruiser {
-  background-color:Pink;
-}
-
-/* submarine #7ba543 background */ 
-.rList .rList-item.light > div.hullTypeAbb.Submarine {
-  background-color: palegreen;
-}
-
-/* large cruiser  aka zuma #b25c41*/
-.rList .rList-item.light > div.hullTypeAbb.Large.Cruiser {
-  background-color: lightsalmon;
-}
-
-div.f-grid.light div.content > div.Destroyer,
-.rList .rList-item.light > div.hullTypeAbb.Destroyer {
-  background-color: PowderBlue;
-}
-
-div.f-grid.light div.content > div.Light.Cruiser,
-div.f-grid.light div.content > div.Heavy.Cruiser,
-div.f-grid.light div.content > div.Monitor,
-.rList .rList-item.light > div.hullTypeAbb.Heavy.Cruiser,
-.rList .rList-item.light > div.hullTypeAbb.Monitor,
-.rList .rList-item.light > div.hullTypeAbb.Light.Cruiser {
-  background-color: NavajoWhite;
-}
-
-div.f-grid.light div.content > div.Repair.Ship,
-.rList .rList-item.light > div.hullTypeAbb.Repair.Ship {
-  background-color: Aquamarine;
-}
-
-.f-grid.light .grid-item > div.content:hover {
-  background-color: var(--main-light-button-hover-bg);
-}
-
-.f-grid.light div.pos-indicator {
-  border-top: 1px solid var(--main-light-border);
-}
-
-/* ##### f-title ##### */
 div.f-grid.light div.f-icon {
-  background-color: var(--main-light-title-bg);
+  background-color: var(--main-light-bg);
   border: 1px solid var(--main-light-border);
 }
 
-div.f-grid.light div.f-icon.bottom-emp,
-div.f-grid.light div.f-title.bottom-emp  {
+.light .grid-item > div.content:hover {
+  background-color: var(--main-light-hover-bg);
+}
+/* #### hull types #### */
+div.hullTypeAbb.Aircraft.Carrier {
+  background-color: #352035;
+}
+
+div.hullTypeAbb.Battleship, 
+div.hullTypeAbb.Battlecruiser {
+  background-color: #3e1c1a;
+}
+
+div.hullTypeAbb.Large.Cruiser {
+  background-color: #5a3023;
+}
+div.hullTypeAbb.Destroyer {
+  background-color: #203844;
+}
+div.hullTypeAbb.Submarine {
+  background-color: #3a4d21;
+}
+div.hullTypeAbb.Heavy.Cruiser,
+div.hullTypeAbb.Monitor,
+div.hullTypeAbb.Light.Cruiser {
+  background-color: #503c1e;
+}
+
+div.hullTypeAbb.Repair.Ship,
+div.hullTypeAbb.Repair {
+  background-color: #1a4638;
+}
+
+/* #### grid icon #### */
+div.f-grid.light div.f-icon {
+  background-color: var(--main-light-bg);
+  border: 1px solid var(--main-light-border);
+}
+
+/* #### grid title #### */
+div.f-grid.light div.f-icon.bottom-emp {
+  background-color: unset;
+  border-bottom: 2px solid var(--main-light-border);
+}
+div.f-grid.light div.f-title.bottom-emp {
   background-color: unset;
   border-bottom: 2px solid var(--main-light-border);
 }
 
+/* #### rarity #### */
 div.f-grid.light div.f-row.pink {
-  background-color: var(--main-light-passive-bg);
-  border: 1px solid Pink;
-  border-radius: 3px;
+  border-bottom: 2px solid rgba(255, 192, 203, 1);
+  background-color: var(--main-light-bg);
 }
-
-div.f-grid.light div.f-row.pink > div.grid-item.name {
-  background-color: pink;
-}
-
+/* #### rarity #### */
 div.f-grid.light div.f-row.gold {
-  background-color: var(--main-light-passive-bg);
-  border: 1px solid gold;
-  border-radius: 3px;
+  background-color: var(--main-light-bg);
+  border-bottom: 2px solid rgba(255, 215, 0, 1);
 }
 
-div.f-grid.light div.f-row.gold > div.grid-item.name {
-  background-color: gold;
-}
 div.f-grid.light div.f-row.deepskyblue {
-  background-color: var(--main-light-passive-bg);
-  border: 1px solid DeepSkyBlue;
-  border-radius: 3px;
+  background-color: var(--main-light-bg);
+  border-bottom: 2px solid rgba(0, 191, 255, 1);
 }
 
-div.f-grid.light div.f-row.deepskyblue > div.grid-item.name {
-  background-color: DeepSkyBlue;
-}
-
-/* ###### ship-title-bar ##### */
-.ship-title-bar > span.end-buttons.light {
-  border-top: 1px solid var(--main-light-border);
-}
-.ship-title-bar > span.end-buttons.light > button {
-  border-bottom: 1px solid var(--main-light-border)!important;
-}
-
-.page.light .ship-data-container .ship-title-bar > div,
-.modal-overlay.light .ship-title-bar > div {
+.toast-container.light > .toast,
+.message-container.light {
+  color: white;
   border: 1px solid var(--main-light-border);
-  /* background-color: var(--main-light-title-bg);*/
   background-color: var(--main-light-bg);
+  /* box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;*/
+}
+.toast-container.light > .toast {
+  box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;
+}
+.toast-container.light > .toast:hover {
+  box-shadow: 0px 0px 3px 0px var(--main-light-active-bg);
 }
 
-.ship-title-bar > div > span.Super.Rare:last-child {
-  color: PaleGoldenrod;
-}
-
-.rList .rList-item.light.Super.Rare
-/* .rList .rList-item > div.name.Super.Rare */ {
-  background-color: PaleGoldenrod;
-  border: 1px solid rgb(167, 161, 95);
-}
-
-.ship-title-bar > div > span.Rare:last-child {
-  color: powderblue;
-}
-
-.toast-container.light.ship-title-bar > div > span.Elite:last-child {
-  color: Plum;
-}
-
-.toast-container.light.toast-container > .toast {
-  background-color: var(--main-light-bg);
-  color: var(--main-light-color);
-}
-
-.toast-container.light.toast.warning {
+.toast-container.light .toast.warning {
   background-color: rgb(109, 109, 0);
 }
-.toast-container.light.toast.error {
+.toast-container.light .toast.error {
   background-color: #380000;
 }
-.toast-container.light.toast.info {
-  border: 1px solid var(--main-light-border);
+
+@media only screen and (max-width: 1340px) {
 }
 
-.toast-container.light .toast-icon {
-  color: var(--main-dark-color);
-  border-right: 1px solid var(--main-light-border)!important;
-}
+@media only screen and (max-width: 900px) {
 
-.toast-container.light .toast-icon:hover {
-  box-shadow: inset -1px 0px 2px 0px black;
-  
-}
-/* #### Popover #### */
-.popover-container.light {
-  background-color: ghostwhite;
-  border: 1px solid var(--main-light-border);
-  -webkit-box-shadow: 1px 1px 4px 0px #0000004d;
-  -moz-box-shadow: 1px 1px 4px 0px #0000004d;
-  box-shadow: 1px 1px 4px 0px #0000004d;
-}
-/* #### Input #### */
-input[type="text"].light,
-input[type="url"].light,
-.searchIcon.light  {
-  color: var(--main-light-border);
-  background-color: var(--main-light-input-bg);
-  border: 2px solid var(--main-light-border);
-}
-
-input[type="text"].light:focus,
-input[type="url"].light:focus,
-.searchIcon.light.input-focus {
-  color: var(--main-light-color);
-  background-color: var(--main-light-input-focus-bg);
-  border: 2px solid var(--main-light-input-focus-border);
-}
-.searchIcon.light,
-.searchIcon.light.input-focus {
-  border-right: 0px;
 }

@@ -57,6 +57,16 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
     return config.isEdit || formGrid.isEdit.some((val) => val !== false);
   };
 
+  const getStyle = () => {
+    if (config.themeColor === 'light') {
+      return {};
+    }
+    return {
+      borderBottom: `1px solid var(--main-${config.themeColor}-border)`,
+      boxShadow: 'inset 0px -4px 3px -4px #00000099',
+    };
+  };
+
   return (
     <header id="titlebar" className={`${config.themeColor}`}>
       <div id="drag-region">
@@ -81,7 +91,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
           </div>
         ) : (
           <>
-            <div style={{ borderBottom: `1px solid var(--main-${config.themeColor}-border)` }} />
+            <div style={getStyle()} />
           </>
         )}
         <div id="window-filler" />
@@ -123,7 +133,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
               }
             }}
           >
-            <FontAwesomeIcon icon={faTimes} size="xs" />
+            <FontAwesomeIcon icon={faTimes} />
           </RButton>
         </div>
       </div>

@@ -85,7 +85,6 @@ ipcMain.on('minimize-application', () => {
 });
 
 ipcMain.on('maximize-application', () => {
-  console.log('max');
   mainWindow.maximize();
 });
 
@@ -120,10 +119,8 @@ ipcMain.handle('resource-check', async () => {
           code = 'ResNotFound';
         });
     }
-    console.log('check', isOk, msg, code);
     return { isOk, msg, code };
   } catch (e) {
-    console.log('Resource check failed.');
     return { isOk: false, msg: 'Resource check failed.', code: 'Error' };
   }
 });

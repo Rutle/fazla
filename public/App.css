@@ -140,6 +140,8 @@ div.scroll {
   padding-left: 8px;
   overflow: hidden;
   font-size: 15px;
+  font-variant-caps: all-petite-caps;
+  padding-bottom: 1px;
 }
 
 #window-title span {
@@ -302,7 +304,6 @@ button.btn.graphic {
 .top-container {
   display: flex;
   flex-direction: column;
-  margin-top: 0px;
   padding: 0px;
   width: 100%;
   margin-bottom: 10px;
@@ -689,9 +690,7 @@ div.grid-item > div.content > div.hullTypeAbb {
   justify-content: center;
 }
 
-.grid-item > div.content:hover {
-  background-color: var(--main-dark-hover-bg);
-}
+
 
 div.f-grid div.grid-item.toggle {
   flex-basis: auto;

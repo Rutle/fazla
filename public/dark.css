@@ -93,12 +93,11 @@ div.modal-overlay.dark .ship-side-container {
   border-bottom: 1px solid var(--main-dark-border);
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
-#titlebar.dark #window-controls {
-  box-shadow: inset 0px -4px 3px -4px #00000099;
-}
+
 #titlebar.dark .title-button {
   border-bottom: 1px solid var(--main-dark-border);
   background-color: var(--main-dark-bg);
+  box-shadow: inset 0px -4px 3px -4px #00000099;
 }
 
 #titlebar.dark #window-controls .title-button:hover,
@@ -169,7 +168,7 @@ div.page.dark > button.tab-btn:hover {
 
 nav.tab.dark {
   box-sizing: border-box;
-  justify-content: space-between;
+  /* justify-content: space-between;*/
   border-bottom: 1px solid var(--main-dark-border);
 }
 
@@ -348,6 +347,10 @@ div.f-grid.dark div.f-fleet {
 div.f-grid.dark div.f-icon {
   background-color: var(--main-dark-bg);
   border: 1px solid var(--main-dark-border);
+}
+
+.dark .grid-item > div.content:hover {
+  background-color: var(--main-dark-hover-bg);
 }
 
 /* #### hull types #### */

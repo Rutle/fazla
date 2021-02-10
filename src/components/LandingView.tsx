@@ -188,7 +188,7 @@ const LandingView: React.FC = () => {
             >
               <div className={`button-group ${config.themeColor}`} style={{ minWidth: '50%', width: 'unset' }}>
                 <RButton
-                  disabled={!(appState.cState === 'RUNNING')}
+                  disabled={appState.cState !== 'RUNNING'}
                   themeColor={config.themeColor}
                   onClick={() => {
                     history.push('/shipdetails');
@@ -197,7 +197,7 @@ const LandingView: React.FC = () => {
                   Continue
                 </RButton>
                 <RButton
-                  disabled={!(appState.cState === 'RUNNING')}
+                  disabled={appState.cState !== 'RUNNING'}
                   themeColor={config.themeColor}
                   onClick={() => {
                     closeWindow();
