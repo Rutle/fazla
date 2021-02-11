@@ -75,19 +75,17 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
         </div>
         {showMenu ? (
           <div id="window-menu">
-            <div className="top-container">
-              <nav className={`tab ${config.themeColor}`} aria-label="primary">
-                <NavItem pathTo="/shipdetails">
-                  <span>Ships</span>
-                </NavItem>
-                <NavItem pathTo="/formations">
-                  <span>Formations</span>
-                </NavItem>
-                <NavItem pathTo="/options">
-                  <span>Options</span>
-                </NavItem>
-              </nav>
-            </div>
+            <nav className={`tab ${config.themeColor}`} aria-label="primary">
+              <NavItem pathTo="/shipdetails">
+                <span>Ships</span>
+              </NavItem>
+              <NavItem pathTo="/formations">
+                <span>Formations</span>
+              </NavItem>
+              <NavItem pathTo="/options">
+                <span>Options</span>
+              </NavItem>
+            </nav>
           </div>
         ) : (
           <>

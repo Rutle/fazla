@@ -151,11 +151,12 @@ div.modal-overlay.dark .ship-side-container {
 
 /* #### Tab #### */
 div.page.dark .tab {
-  overflow: hidden;
+  /* overflow: hidden;*/
   border: 1px solid var(--main-dark-border);
   border-left: 0px;
   border-right: 0px;
   background-color: var(--main-dark-bg);
+  box-sizing: border-box;
 }
 
 div.page.dark > button.tab-btn {

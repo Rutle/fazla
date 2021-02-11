@@ -170,11 +170,12 @@ div.modal-overlay.light .ship-side-container {
 
 /* #### Tab #### */
 div.page.light .tab {
-  overflow: hidden;
+  /*overflow: hidden;*/
   border: 1px solid var(--main-light-border);
   border-left: 0px;
   border-right: 0px;
   background-color: var(--main-light-bg);
+  box-sizing: border-box;
 }
 
 div.page.light > button.tab-btn {

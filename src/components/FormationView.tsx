@@ -32,6 +32,7 @@ const FormationView: React.FC = () => {
   const fData = useSelector((state: RootState) => state.formationGrid);
   const appState = useSelector((state: RootState) => state.appState);
   const [showModal, setModalOpen] = useState({ modal: '', isOpen: false });
+  const [fleetTabIndex, setFleetTabIndex] = useState(0);
 
   useEffect(() => {
     // Rebuild tooltip after selecting different formation or existing formation is modified.
@@ -45,6 +46,7 @@ const FormationView: React.FC = () => {
     },
     [dispatch]
   );
+
   const renderContent = (index: number) => {
     // Filter ship data by taking only ships that are in the formations.
     // [{ id: shipData }]
@@ -57,6 +59,7 @@ const FormationView: React.FC = () => {
     const fleetCount = fData.formations[index].data.length / 6;
     const grid = [];
     const passives = [];
+    const tabs = [];
     for (let idx = 0; idx < fleetCount; idx += 1) {
       const temp = fData.formations[index].data.slice(idx * 6, idx * 6 + 6);
       grid.push(
@@ -81,13 +84,25 @@ const FormationView: React.FC = () => {
           fleetNumber={idx + 1}
         />
       );
+      tabs.push(
+        <RButton
+          key={`${'button'}-${idx}`}
+          themeColor={config.themeColor}
+          className={`tab-btn normal${fleetTabIndex === idx ? ' selected' : ''}`}
+          onClick={() => setFleetTabIndex(idx)}
+          disabled={fData.formations.length === 0}
+        >
+          {`Fleet ${idx + 1}`}
+        </RButton>
+      );
     }
     return (
       <>
         <div style={{ marginBottom: '15px', borderBottom: `1px solid var(--main-${config.themeColor}-border)` }}>
           {grid}
         </div>
-        <div className="scroll">{passives}</div>
+        <div className="tab">{tabs}</div>
+        <div className="scroll">{passives[fleetTabIndex]}</div>
       </>
     );
   };
@@ -136,61 +151,58 @@ const FormationView: React.FC = () => {
           <></>
         )}
         <div className="ship-data-container">
-          <div className="top-container">
-            <div className="tab">
-              {fData.formations.length !== 0 ? <FormationDropDown /> : <></>}
-
-              <RButton
-                themeColor={config.themeColor}
-                className="tab-btn normal"
-                onClick={() => setModalOpen({ modal: 'new', isOpen: true })}
-              >
-                New
-              </RButton>
-              {fData.formations.length !== 0 ? (
-                <>
-                  <RButton
-                    themeColor={config.themeColor}
-                    className="tab-btn normal"
-                    onClick={() => dispatch(formationAction(FormationAction.Remove, {}))}
-                    disabled={fData.formations.length === 0}
-                  >
-                    Remove
-                  </RButton>
-                  <RButton
-                    themeColor={config.themeColor}
-                    className={`tab-btn normal ${fData.isEdit[fData.selectedIndex] ? 'selected' : ''}`}
-                    onClick={() => dispatch(formationAction(FormationAction.Save, {}))}
-                    disabled={!fData.isEdit[fData.selectedIndex]}
-                  >
-                    Save
-                  </RButton>
-                  <RButton
-                    themeColor={config.themeColor}
-                    className="tab-btn normal"
-                    onClick={() => setModalOpen({ modal: 'rename', isOpen: true })}
-                  >
-                    Rename
-                  </RButton>
-                  <RButton
-                    themeColor={config.themeColor}
-                    className="tab-btn normal"
-                    onClick={() => setModalOpen({ modal: 'export', isOpen: true })}
-                  >
-                    Export
-                  </RButton>
-                  <RButton
-                    themeColor={config.themeColor}
-                    className="tab-btn normal"
-                    onClick={() => setModalOpen({ modal: 'import', isOpen: true })}
-                  >
-                    Import
-                  </RButton>
-                </>
-              ) : (
-                <></>
-              )}
-            </div>
+          <div className="tab">
+            {fData.formations.length !== 0 ? <FormationDropDown /> : <></>}
+            <RButton
+              themeColor={config.themeColor}
+              className="tab-btn normal"
+              onClick={() => setModalOpen({ modal: 'new', isOpen: true })}
+            >
+              New
+            </RButton>
+            {fData.formations.length !== 0 ? (
+              <>
+                <RButton
+                  themeColor={config.themeColor}
+                  className="tab-btn normal"
+                  onClick={() => dispatch(formationAction(FormationAction.Remove, {}))}
+                  disabled={fData.formations.length === 0}
+                >
+                  Remove
+                </RButton>
+                <RButton
+                  themeColor={config.themeColor}
+                  className={`tab-btn normal ${fData.isEdit[fData.selectedIndex] ? 'selected' : ''}`}
+                  onClick={() => dispatch(formationAction(FormationAction.Save, {}))}
+                  disabled={!fData.isEdit[fData.selectedIndex]}
+                >
+                  Save
+                </RButton>
+                <RButton
+                  themeColor={config.themeColor}
+                  className="tab-btn normal"
+                  onClick={() => setModalOpen({ modal: 'rename', isOpen: true })}
+                >
+                  Rename
+                </RButton>
+                <RButton
+                  themeColor={config.themeColor}
+                  className="tab-btn normal"
+                  onClick={() => setModalOpen({ modal: 'export', isOpen: true })}
+                >
+                  Export
+                </RButton>
+                <RButton
+                  themeColor={config.themeColor}
+                  className="tab-btn normal"
+                  onClick={() => setModalOpen({ modal: 'import', isOpen: true })}
+                >
+                  Import
+                </RButton>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
           {fData.formations.length !== 0 ? (
             <>{renderContent(fData.selectedIndex)}</>

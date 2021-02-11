@@ -63,7 +63,6 @@ div.scroll {
 }
 
 #window-menu {
-  height: 100%;
   width: 100%;
   grid-column: 2;
   box-sizing: border-box;
@@ -72,20 +71,18 @@ div.scroll {
 }
 
 #window-filler {
-  height: 100%;
   width: 100%;
   grid-column: 3;
   height: 32px;
   box-sizing: border-box;
 }
 
-#window-menu .top-container,
 #window-menu nav {
-  height: 100%;
   width: 100%;
   height: 32px;
   margin-bottom: 0px!important;
 }
+
 #window-menu a {
   box-sizing: border-box;
   display: flex;
@@ -123,14 +120,6 @@ div.scroll {
 
 #close-button:active svg {
   filter: invert(30%);
-}
-
-#restore-button.hidden {
-  display: none !important;
-}
-
-#max-button.hidden {
-  display: none !important;
 }
 
 #window-title {
@@ -285,13 +274,9 @@ button.btn.normal,
 button.tab-btn.normal {
   font-size: 16px;
   font-variant-caps: all-petite-caps;
-  padding: 2px 10px 4px 10px;
+  padding: 0px 10px 2px 10px;
   justify-content: center;
   line-height: 1.2em;
-}
-
-button.btn.hidden {
-  display: none!important;
 }
 
 label.btn.graphic,
@@ -322,9 +307,14 @@ button.btn.graphic {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  height: 24px;
+  margin-bottom: 5px;
 }
 
-.top-container > nav > a {
+.tab > button.tab-btn {
+  border-right: 0px!important;
+}
+nav > a {
   text-decoration: none;
   border: none;
   font-variant-caps: all-petite-caps;
@@ -335,8 +325,7 @@ button.icon *,
 div.f-row.action *,
 .rList .rList-item *,
 .grid-item > div.content *,
-.top-container > div.tab > *,
-.top-container > nav *  {
+.tab * {
   cursor: pointer;
 }
 
@@ -385,7 +374,6 @@ div.f-row.action *,
 }
 
 .formation-dropdown-menu > .btn.menu-item {
-  /* border: unset!important;*/
   justify-content: flex-start;
   text-align: left;
   min-width: 200px;
@@ -477,7 +465,7 @@ div.f-row.action *,
   height: 100%;
 }
 
-div.rList.hidden {
+.hidden {
   display: none;
 }
 
@@ -491,8 +479,8 @@ div.rList.hidden {
 .rList .rList-item {
   display: flex;
   box-sizing: border-box;
-  padding: 0px!important;
-  border: unset!important;
+  padding: 0px;
+  border: unset;
   border-radius: 3px;
 }
 
@@ -547,8 +535,7 @@ div.rList.hidden {
   border-bottom-right-radius: 4px;
 }
 
-.button-group.borderless,
-.radio-group.borderless {
+.borderless {
   border: unset!important;
 }
 
@@ -742,6 +729,11 @@ div.f-grid div.f-title {
   border-left: 0px!important;
   border-right: 0px!important;
   justify-content: center;
+}
+div.f-grid div.f-icon.plain,
+div.f-grid div.f-title.plain {
+  background-color: unset!important;
+  border: 0!important;
 }
 
 div.f-grid div.f-fleet {
@@ -969,5 +961,28 @@ div.f-grid div.f-icon.bottom-emp {
   }
   div.grid-item.action > input[type="url"] {
     max-width: 550px;
+  }
+}
+
+@media only screen and (max-width: 733px) {
+  .modal-container .radio-group label:first-child {
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 0px;
+  }
+  .modal-container .radio-group label:last-child {
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 0px;
+  }
+}
+@media only screen and (max-width: 586px) {
+  .page .radio-group label:first-child {
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 0px;
+  }
+  .page .radio-group label:last-child {
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 0px;
   }
 }

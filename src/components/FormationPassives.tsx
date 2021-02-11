@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { Ship } from '../utils/types';
@@ -53,11 +53,11 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({
               setShowMain(!showMain);
             }}
           >
-            <div className={`f-icon ${showMain ? '' : 'f-collapse'}`}>
+            <div className={`f-icon plain ${showMain ? '' : 'f-collapse'}`}>
               <FontAwesomeIcon icon={faAngleDown} />
             </div>
-            <div className="f-fleet">{`Fleet ${fleetNumber}`}</div>
-            <div className="f-title">Main</div>
+            {/* <div className="f-fleet">{`Fleet ${fleetNumber}`}</div> */}
+            <div className="f-title plain">Main</div>
           </div>
           <div className={`f-collapsible ${showMain ? '' : 'f-collapsed'}`}>
             <div className="f-row">
@@ -75,11 +75,11 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({
       {!isShip('vanguard') ? (
         <>
           <div className="f-row action" onClick={() => setShowVanguard(!showVanguard)}>
-            <div className={`f-icon ${showVanguard ? '' : 'f-collapse'}`}>
+            <div className={`f-icon plain ${showVanguard ? '' : 'f-collapse'}`}>
               <FontAwesomeIcon icon={faAngleDown} />
             </div>
-            <div className="f-fleet">{`Fleet ${fleetNumber}`}</div>
-            <div className="f-title">Vanguard</div>
+            {/* <div className="f-fleet">{`Fleet ${fleetNumber}`}</div> */}
+            <div className="f-title plain">Vanguard</div>
           </div>
           <div className={`f-collapsible ${showVanguard ? '' : 'f-collapsed'}`}>
             <div className="f-row">
