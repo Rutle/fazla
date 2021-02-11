@@ -603,11 +603,12 @@ button.icon {
   box-sizing: border-box;
   width: 26px;
   padding: 5px;
-  transition: inherit;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
-
+button.icon {
+  transition: inherit;
+}
 /* ##### GRID ##### */
 .f-grid {
   display: flex;

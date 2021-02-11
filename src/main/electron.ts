@@ -1,6 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
 // Modules to control application life and create native browser window
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { app, BrowserWindow, ipcMain } from 'electron';
 import Store from 'electron-store';
 import * as fs from 'fs';
