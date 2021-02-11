@@ -1,7 +1,5 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-console */
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import Store from 'electron-store';
 import * as fs from 'fs';
 import * as url from 'url';
@@ -94,8 +92,9 @@ ipcMain.on('restore-application', () => {
 
 ipcMain.on('open-logs', () => {
   const userDir = app.getPath('userData');
-  console.log('logs');
-  console.log(`${userDir}\\logs`);
+  shell.showItemInFolder(userDir);
+  // console.log('logs');
+  // console.log(`${userDir}\\logs`);
 });
 
 ipcMain.handle('resource-check', async () => {

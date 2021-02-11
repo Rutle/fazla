@@ -1,6 +1,4 @@
-/* eslint-disable react/prop-types */
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 interface RToggleProps {
   id: string;

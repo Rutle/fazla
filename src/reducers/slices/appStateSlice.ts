@@ -1,16 +1,17 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppDispatch, AppThunk } from '_/reducers/store';
 import { batch } from 'react-redux';
+import { saveShipData } from '_/utils/ipcAPI';
+import { fetchWithTimeout, handleHTTPError } from '_/utils/appUtilities';
+import { CallbackDismiss, ToastMessageType } from '_/components/Toast/useToast';
+import DataStore from '_/utils/dataStore';
+import { AppConfig, Formation, Ship, ShipSimple } from '_/utils/types';
 import { setDetails } from './shipDetailsSlice';
 import { setSearchList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
-import DataStore from '../../utils/dataStore';
-import { AppConfig, Formation, Ship, ShipSimple } from '../../utils/types';
-import { fetchWithTimeout, handleHTTPError, saveShipData } from '../../utils/appUtilities';
 import { setOwnedList } from './ownedShipListSlice';
 import { setFormationsData } from './formationGridSlice';
 import { setConfig, setUpdateDate } from './programConfigSlice';
-import { CallbackDismiss, ToastMessageType } from '../../components/Toast/useToast';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 // const SHIPAPIURL =

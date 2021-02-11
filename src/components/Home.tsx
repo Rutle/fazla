@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { updateShipData } from '_/reducers/slices/appStateSlice';
+import { RootState } from '_/reducers/rootReducer';
+import { configAction, AppConfigAction } from '_/reducers/slices/programConfigSlice';
+import { AppContext } from '_/App';
 import PageTemplate from './PageTemplate';
-import { RootState } from '../reducers/rootReducer';
-import { updateShipData } from '../reducers/slices/appStateSlice';
-import { configAction, AppConfigAction } from '../reducers/slices/programConfigSlice';
 import RButton from './RButton/RButton';
-import { AppContext } from '../App';
 import RToggle from './RToggle/RToggle';
 import RSwitch from './RSwitch/RSwitch';
 /**

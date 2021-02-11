@@ -1,12 +1,12 @@
-/* eslint-disable react/prop-types */
 import React, { useCallback, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../reducers/rootReducer';
+import { RootState } from '_/reducers/rootReducer';
+import { openWikiUrl } from '_/utils/ipcAPI';
+import { urlValidation } from '_utils/appUtilities';
+import { addShip, removeShip } from '_/reducers/slices/ownedShipListSlice';
+import { AppContext } from '_/App';
 import PassivesList from './PassivesList';
-import { openWikiUrl, urlValidation } from '../utils/appUtilities';
-import { addShip, removeShip } from '../reducers/slices/ownedShipListSlice';
 import RButton from './RButton/RButton';
-import { AppContext } from '../App';
 
 /**
  * Component for displaying the details of a ship.

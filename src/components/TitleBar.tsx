@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
-import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '../utils/appUtilities';
-import { RootState } from '../reducers/rootReducer';
+import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '_/utils/ipcAPI';
+import { RootState } from '_/reducers/rootReducer';
 import CloseAppModalContent from './Modal/CloseAppModalContent';
 import RButton from './RButton/RButton';
 

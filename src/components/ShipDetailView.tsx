@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import PageTemplate from '_/components/PageTemplate';
 import ShipDetails from '_/components/ShipDetails';

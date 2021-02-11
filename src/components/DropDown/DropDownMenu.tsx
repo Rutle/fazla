@@ -1,5 +1,4 @@
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { useDropdownMenu } from 'react-overlays';
 

@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-import React, { CSSProperties } from 'react';
+import React from 'react';
 
 interface FormationGridProps {
   themeColor: string;

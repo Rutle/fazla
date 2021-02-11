@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../reducers/rootReducer';
-import { openLogs, closeWindow } from '../utils/appUtilities';
+import { openLogs, closeWindow } from '_/utils/ipcAPI';
+import { RootState } from '_/reducers/rootReducer';
 import FooterBar from './FooterBar';
 import RButton from './RButton/RButton';
 import TitleBar from './TitleBar';

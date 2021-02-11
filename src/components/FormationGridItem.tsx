@@ -1,12 +1,11 @@
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable react/display-name */
-/* eslint-disable react/prop-types */
 import * as React from 'react';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Ship } from '../utils/types';
-import { formationAction, FormationAction } from '../reducers/slices/formationGridSlice';
+import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
+import { Ship } from '_/utils/types';
 import { hullTypes, hullTypesAbb } from '../data/categories';
 
 interface GridItemProps {
@@ -61,7 +60,6 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
   return (
     <div className="grid-item">
       <div
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
         className="content"
         onClick={onClick}

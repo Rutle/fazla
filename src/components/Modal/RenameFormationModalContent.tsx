@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FormationAction, formationAction } from '_/reducers/slices/formationGridSlice';
+import { RootState } from '_/reducers/rootReducer';
 import RButton from '../RButton/RButton';
-import { FormationAction, formationAction } from '../../reducers/slices/formationGridSlice';
-import { RootState } from '../../reducers/rootReducer';
 
 interface FormModalProps {
   setModalOpen: (openProp: { modal: string; isOpen: boolean }) => void;

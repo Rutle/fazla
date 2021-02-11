@@ -1,12 +1,12 @@
 import React, { useCallback, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as PropTypes from 'prop-types';
-import { nationCategories, rarityCategories, hullTypesAbb } from '../data/categories';
+import { nationCategories, rarityCategories, hullTypesAbb } from '_/data/categories';
+import { RootState } from '_/reducers/rootReducer';
+import { updateSearch, SearchAction } from '_/reducers/slices/searchParametersSlice';
+import { AppContext } from '_/App';
+import DataStore from '_/utils/dataStore';
 import RButton from './RButton/RButton';
-import { RootState } from '../reducers/rootReducer';
-import { updateSearch, SearchAction } from '../reducers/slices/searchParametersSlice';
-import { AppContext } from '../App';
-import DataStore from '../utils/dataStore';
 
 /**
  * Grid displaying search parameter toggles.

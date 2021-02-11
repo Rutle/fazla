@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '_reducers/store';
-import { saveFormationData, removeAFormation, renameAFormation } from '../../utils/appUtilities';
-import { Formation } from '../../utils/types';
+import { saveFormationData, removeAFormation, renameAFormation } from '_/utils/ipcAPI';
+import { Formation } from '_/utils/types';
 import { setErrorMessage } from './appStateSlice';
 
 export enum FormationAction {

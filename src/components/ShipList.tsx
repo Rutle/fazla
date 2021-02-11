@@ -1,14 +1,12 @@
-/* eslint-disable react/display-name */
-/* eslint-disable react/prop-types */
 import React, { useCallback, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList as List } from 'react-window';
-import { RootState } from '../reducers/rootReducer';
-import { Ship, ShipSimple } from '../utils/types';
-import { setSelectedShip } from '../reducers/slices/appStateSlice';
+import { RootState } from '_/reducers/rootReducer';
+import { Ship, ShipSimple } from '_/utils/types';
+import { setSelectedShip } from '_/reducers/slices/appStateSlice';
+import { AppContext } from '_/App';
 import { hullTypes, hullTypesAbb } from '../data/categories';
-import { AppContext } from '../App';
 
 interface ShipListProps {
   shipSearchList: ShipSimple[];

@@ -26,13 +26,11 @@
     ]
   },
   "settings": {
+    "import/core-modules": [
+      "electron"
+    ],
     "import/resolver": {
-      "alias" : {
-        "map" : [
-          ["_reducers", "./src/reducers"]
-        ],
-        "extensions": [".ts", ".js", ".tsx", ".json"]
-      },
+
       "node": {
         "extensions": [
           ".js",
@@ -73,13 +71,16 @@
         // This rule is already covered by the TypeScript compiler.
         "import/no-unresolved": "off",
         "import/extensions": "off",
+        "react/prop-types": "off",
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": "warn",
         "react/jsx-filename-extension": "off",
         "linebreak-style": ["error", "windows"],
         "semi": "off",
         "@typescript-eslint/semi": ["error"],
-        "react/jsx-props-no-spreading": "off"
+        "react/jsx-props-no-spreading": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"]
       }
     }
   ]

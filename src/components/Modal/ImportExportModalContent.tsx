@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { encodeFormation, parseImportCode } from '_/utils/appUtilities';
-import { RootState } from '../../reducers/rootReducer';
+import { RootState } from '_/reducers/rootReducer';
+import { FormationAction, formationAction } from '_/reducers/slices/formationGridSlice';
 import RButton from '../RButton/RButton';
-import { FormationAction, formationAction } from '../../reducers/slices/formationGridSlice';
 
 interface FormModalProps {
   setModalOpen: (openProp: { modal: string; isOpen: boolean }) => void;

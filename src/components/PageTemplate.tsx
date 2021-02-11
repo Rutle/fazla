@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { RootState } from '_/reducers/rootReducer';
 import TitleBar from './TitleBar';
 import FooterBar from './FooterBar';
-import { RootState } from '../reducers/rootReducer';
 /**
  * Component for unified page template.
  */

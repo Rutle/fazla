@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppDispatch, AppThunk } from '_/reducers/store';
 import DataStore from '_/utils/dataStore';
-import { saveOwnedShipData } from '../../utils/appUtilities';
+import { saveOwnedShipData } from '_/utils/ipcAPI';
 import { setErrorMessage, setIsUpdated } from './appStateSlice';
 import { SearchAction, updateSearch } from './searchParametersSlice';
 

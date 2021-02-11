@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { RootState } from '../reducers/rootReducer';
+import { checkResource, closeWindow, initData } from '_/utils/ipcAPI';
+import { downloadShipData } from '_/utils/appUtilities';
+import { initShipLists, setCurrentState, setErrorMessage } from '_/reducers/slices/appStateSlice';
+import { RootState } from '_/reducers/rootReducer';
 import FooterBar from './FooterBar';
 import RButton from './RButton/RButton';
 import TitleBar from './TitleBar';
-import { initShipLists, setCurrentState, setErrorMessage } from '../reducers/slices/appStateSlice';
-import { checkResource, closeWindow, downloadShipData, initData } from '../utils/appUtilities';
 import { AppContext } from '../App';
 /**
  * Landing page for application that is presented during loading settings.

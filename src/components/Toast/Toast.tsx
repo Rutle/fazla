@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/prop-types */
 import React, { useContext, useState } from 'react';
-import { AppContext } from '../../App';
+import { AppContext } from '_/App';
 
 interface ToastProps {
   position: string;

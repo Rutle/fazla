@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { AppContext } from '../../App';
-import { RootState } from '../../reducers/rootReducer';
+import { AppContext } from '_/App';
+import { RootState } from '_/reducers/rootReducer';
 import Toast from './Toast';
 
 const ToastContainer: React.FC<{ position: string }> = ({ position = 'bottom-center' }) => {

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { RootState } from '../../reducers/rootReducer';
-import { formationAction, FormationAction } from '../../reducers/slices/formationGridSlice';
-import { formationModalAction, FormationModalAction } from '../../reducers/slices/formationModalSlice';
+import { RootState } from '_/reducers/rootReducer';
+import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
+import { formationModalAction, FormationModalAction } from '_/reducers/slices/formationModalSlice';
 import SideBar from '../SideBar';
 import ShipDetails from '../ShipDetails';
 import RButton from '../RButton/RButton';

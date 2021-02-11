@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { ipcRenderer, contextBridge, shell } from 'electron';
 import { AppConfig, BasicResponse, Formation, Ship } from '_utils/types';
 
@@ -35,7 +34,6 @@ contextBridge.exposeInMainWorld('api', {
     }
     return Promise.resolve();
   },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   electronSaveData: async (channel: string, ...arg: unknown[]): Promise<unknown> => {
     if (validSaveChannels.includes(channel)) {
       return ipcRenderer.invoke(channel, ...arg) as Promise<BasicResponse>;

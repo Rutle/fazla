@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { RootState } from '../../reducers/rootReducer';
+import { RootState } from '_/reducers/rootReducer';
+import { closeWindow } from '_/utils/ipcAPI';
+import { FormationAction, formationAction } from '_/reducers/slices/formationGridSlice';
+import { AppConfigAction, configAction } from '_/reducers/slices/programConfigSlice';
 import RButton from '../RButton/RButton';
-import { closeWindow } from '../../utils/appUtilities';
-import { FormationAction, formationAction } from '../../reducers/slices/formationGridSlice';
-import { AppConfigAction, configAction } from '../../reducers/slices/programConfigSlice';
 
 ReactModal.setAppElement('#root');
 

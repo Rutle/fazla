@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '_/reducers/rootReducer';
+import { selectFormation } from '_/reducers/slices/formationGridSlice';
 import DropDownButton from './DropDownButton';
-import { RootState } from '../../reducers/rootReducer';
-import { selectFormation } from '../../reducers/slices/formationGridSlice';
 
 const FormationDropDown: React.FC = () => {
   const dispatch = useDispatch();

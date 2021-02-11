@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Skill } from '../utils/types';
+import { Skill } from '_/utils/types';
 
 interface PassiveProps {
   optionalName?: string;

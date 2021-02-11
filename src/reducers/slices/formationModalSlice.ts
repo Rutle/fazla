@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '_reducers/store';
 import { batch } from 'react-redux';
+import DataStore from '_/utils/dataStore';
 import { resetParameters, SearchAction, setFleet, updateSearch } from './searchParametersSlice';
-import DataStore from '../../utils/dataStore';
 import { setErrorMessage, setIsUpdated } from './appStateSlice';
 
 export enum FormationModalAction {
