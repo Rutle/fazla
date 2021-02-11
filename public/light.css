@@ -1,6 +1,6 @@
 /* ##### Light theme ##### */
 :root {
-  --root-light-bg: #f2f6ff;
+  --root-light-bg: #fdfdff;
   --main-light-color: #2f2f2f;
   /*--main-light-bg: #55aeff;*/
   --main-light-bg: #cce7ff;
@@ -380,31 +380,38 @@ div.f-grid.light div.f-icon {
 /* #### hull types #### */
 div.hullTypeAbb.Aircraft.Carrier {
   background-color: #352035;
+  color: white;
 }
 
 div.hullTypeAbb.Battleship, 
 div.hullTypeAbb.Battlecruiser {
   background-color: #3e1c1a;
+  color: white;
 }
 
 div.hullTypeAbb.Large.Cruiser {
   background-color: #5a3023;
+  color: white;
 }
 div.hullTypeAbb.Destroyer {
   background-color: #203844;
+  color: white;
 }
 div.hullTypeAbb.Submarine {
   background-color: #3a4d21;
+  color: white;
 }
 div.hullTypeAbb.Heavy.Cruiser,
 div.hullTypeAbb.Monitor,
 div.hullTypeAbb.Light.Cruiser {
   background-color: #503c1e;
+  color: white;
 }
 
 div.hullTypeAbb.Repair.Ship,
 div.hullTypeAbb.Repair {
   background-color: #1a4638;
+  color: white;
 }
 
 /* #### grid icon #### */
@@ -441,7 +448,7 @@ div.f-grid.light div.f-row.deepskyblue {
 
 .toast-container.light > .toast,
 .message-container.light {
-  color: white;
+  color: var(--main-light-color);
   border: 1px solid var(--main-light-border);
   background-color: var(--main-light-bg);
   /* box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;*/

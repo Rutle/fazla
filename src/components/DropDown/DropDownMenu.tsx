@@ -31,6 +31,7 @@ const DropDownMenu: React.FC<FormationDropDownProps> = ({
       style={{
         opacity: `${show ? '1' : '0'}`,
         height: `${show ? 'auto' : '0'}`,
+        top: '24px',
       }}
     >
       {listData !== undefined ? (
