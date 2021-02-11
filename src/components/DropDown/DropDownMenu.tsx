@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { useDropdownMenu } from 'react-overlays';
-import RButton from '../RButton/RButton';
 
 interface FormationDropDownProps {
   listData: string[] | undefined;

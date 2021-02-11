@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { Ship } from '../utils/types';
@@ -21,6 +21,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({
   formation,
   themeColor,
   formationShips,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fleetNumber,
 }) => {
   const [showMain, setShowMain] = useState(true);
