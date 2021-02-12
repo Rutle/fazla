@@ -83,9 +83,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
                 onBlur={() => setInputFocus(false)}
                 onKeyUp={(e) => {
                   if (e.key === 'Enter') {
-                    dispatch(
-                      formationAction(FormationAction.Import, process.env.PLAT_ENV as string, { importedFormation })
-                    );
+                    dispatch(formationAction(FormationAction.Import, { importedFormation }));
                     setModalOpen({ modal: '', isOpen: false });
                   }
                 }}
@@ -134,9 +132,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
                 disabled={!isValidCode || value.length === 0}
                 themeColor={config.themeColor}
                 onClick={() => {
-                  dispatch(
-                    formationAction(FormationAction.Import, process.env.PLAT_ENV as string, { importedFormation })
-                  );
+                  dispatch(formationAction(FormationAction.Import, { importedFormation }));
                   setModalOpen({ modal: '', isOpen: false });
                 }}
               >

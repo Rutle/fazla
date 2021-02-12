@@ -172,11 +172,13 @@ interface FormActionData {
  * Updates all ships search list.
  * @param {FormationAction} action Enum action
  */
-export const formationAction = (action: FormationAction, platform: string, data: FormActionData): AppThunk => async (
-  dispatch: AppDispatch,
-  getState
-) => {
+export const formationAction = (
+  action: FormationAction,
+  data: FormActionData,
+  storage?: LocalForage
+): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
+    const platform = process.env.PLAT_ENV;
     const { formationGrid, formationModal, shipDetails } = getState();
     const formIdx = formationGrid.selectedIndex; // Which formation is selected.
     const formCount = formationGrid.formations.length;
@@ -198,27 +200,29 @@ export const formationAction = (action: FormationAction, platform: string, data:
         break;
       case 'REMOVE':
         if (platform === 'electron') {
-          await removeAFormation(formIdx).then((result) => {
-            if (result.isOk) dispatch(removeFormation(formIdx));
-          });
+          removeAFormation(formIdx)
+            .then((result) => {
+              if (result.isOk) dispatch(removeFormation(formIdx));
+              if (!result.isOk) throw new Error(result.msg);
+            })
+            .catch(() => {
+              throw new Error('Something went really badly wrong.');
+            });
         }
-        if (platform === 'web') {
+        if (platform === 'web' && storage) {
           const newForms = formationGrid.formations.filter((item, index) => index !== formIdx);
-          localStorage.setItem('formations', JSON.stringify(newForms));
-          dispatch(removeFormation(formIdx));
+          storage
+            .setItem('formations', newForms)
+            .then(() => {
+              dispatch(removeFormation(formIdx));
+            })
+            .catch(() => {
+              throw new Error('Failed to remove a formation.');
+            });
         }
         break;
       case 'RENAME':
         dispatch(renameFormation({ idx: formIdx, name }));
-        /*
-        if (platform === 'electron') {
-          await renameAFormation(formIdx, name).then((result) => {
-            if (result.isOk) dispatch(renameFormation({ idx: formIdx, name }));
-          });
-        }
-        if (platform === 'web') {
-          dispatch(renameFormation({ idx: formIdx, name }));
-        } */
         break;
       case 'SAVE':
         if (platform === 'electron') {
@@ -226,8 +230,9 @@ export const formationAction = (action: FormationAction, platform: string, data:
             if (result.isOk) dispatch(toggleIsEdit(formIdx));
           });
         }
-        if (platform === 'web') {
-          localStorage.setItem('formations', JSON.stringify(formationGrid.formations));
+        if (platform === 'web' && storage) {
+          // localStorage.setItem('formations', JSON.stringify(formationGrid.formations));
+          await storage.setItem('formations', formationGrid.formations);
           dispatch(toggleIsEdit(formIdx));
         }
         break;
@@ -243,8 +248,9 @@ export const formationAction = (action: FormationAction, platform: string, data:
             if (!result.isOk) dispatch(setErrorMessage({ cState: 'ERROR', eMsg: result.msg, eState: 'ERROR' }));
           });
         }
-        if (platform === 'web') {
-          localStorage.setItem('formations', JSON.stringify(formationGrid.formations));
+        if (platform === 'web' && storage) {
+          // localStorage.setItem('formations', JSON.stringify(formationGrid.formations));
+          await storage.setItem('formations', formationGrid.formations);
         }
         break;
       case 'IMPORT': {
@@ -255,8 +261,9 @@ export const formationAction = (action: FormationAction, platform: string, data:
         break;
     }
   } catch (e) {
-    let msg = 'There was an error with formation action.';
-    if (e instanceof SyntaxError) {
+    let msg = '';
+    // let msg = 'There was an error with formation action.';
+    if (e instanceof Error) {
       msg = e.message;
     }
     dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: msg, eState: 'WARNING' }));

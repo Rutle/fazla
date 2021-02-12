@@ -15,7 +15,7 @@ import RSwitch from './RSwitch/RSwitch';
  */
 const Home: React.FC = () => {
   const dispatch = useDispatch();
-  const { addToast, shipData } = useContext(AppContext);
+  const { addToast, shipData, storage } = useContext(AppContext);
   const appState = useSelector((state: RootState) => state.appState);
   const ownedList = useSelector((state: RootState) => state.ownedShips);
   const config = useSelector((state: RootState) => state.config);
@@ -42,7 +42,7 @@ const Home: React.FC = () => {
 
   const updateConfig = useCallback(
     (key: string, value: string | boolean) => {
-      dispatch(configAction(AppConfigAction.Update, process.env.PLAT_ENV as string, key, value));
+      dispatch(configAction(AppConfigAction.Update, key, value));
     },
     [dispatch]
   );
@@ -59,7 +59,7 @@ const Home: React.FC = () => {
         onClick={() => {
           setShipDiff({ count: shipData.count, isUpdate: true });
           if (config.isToast) addToast('info', 'Update', 'Updating ship information.');
-          dispatch(updateShipData(shipData, process.env.PLAT_ENV as string, addToast));
+          dispatch(updateShipData(shipData, storage, addToast));
         }}
         disabled={disabled}
       >
@@ -72,7 +72,7 @@ const Home: React.FC = () => {
     return (
       <RButton
         themeColor={`${config.themeColor}`}
-        onClick={() => dispatch(configAction(AppConfigAction.Save, process.env.PLAT_ENV as string))}
+        onClick={() => dispatch(configAction(AppConfigAction.Save))}
         disabled={!config.isEdit}
       >
         Save changes

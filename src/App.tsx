@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, Redirect, RouteProps, HashRouter } from 'react-router-dom';
 import ShipDetailView from '_components/ShipDetailView';
 import Home from '_components/Home';
+import localForage from 'localforage';
 import DataStore from './utils/dataStore';
 import FormationView from './components/FormationView';
 import { RootState } from './reducers/rootReducer';
@@ -10,6 +11,8 @@ import LandingView from './components/LandingView';
 import ErrorView from './components/ErrorView';
 import ToastContainer from './components/Toast/ToastContainer';
 import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './components/Toast/useToast';
+import { setConfig } from './reducers/slices/programConfigSlice';
+import { AppConfig } from './types/types';
 
 export const AppContext = React.createContext(
   {} as {
@@ -19,6 +22,7 @@ export const AppContext = React.createContext(
     shipData: DataStore;
     setShipData: React.Dispatch<React.SetStateAction<DataStore>>;
     toasts: ToastList;
+    storage: LocalForage | undefined;
   }
 );
 
@@ -47,8 +51,33 @@ const RefreshRoute: React.FC<RouteProps> = (props) => {
 };
 
 const App: React.FC = () => {
+  const dispatch = useDispatch();
   const [shipData, setShipData] = useState(new DataStore());
   const [addToast, onToastDismiss, popToast, toasts] = useToast(true, 3000);
+  const storage =
+    process.env.PLAT_ENV === 'web' ? localForage.createInstance({ name: 'Fazla-storage', version: 1.0 }) : undefined;
+
+  useEffect(() => {
+    if (process.env.PLAT_ENV === 'web' && storage) {
+      try {
+        (async () => {
+          console.log('App -useEffect');
+          // return checkResource(); // Check that .json data exists.
+          const configA = (await storage.getItem('config')) as AppConfig;
+          if (configA !== null) {
+            console.log('not null configA');
+            dispatch(setConfig(configA));
+          } else {
+            await storage.setItem('config', configA);
+          }
+        })().catch((e) => console.log(e));
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <HashRouter>
       <div className="App">
@@ -60,6 +89,7 @@ const App: React.FC = () => {
             toasts,
             shipData,
             setShipData,
+            storage,
           }}
         >
           <Switch>

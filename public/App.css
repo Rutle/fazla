@@ -600,6 +600,8 @@ input[type="url"] {
 .searchIcon,
 button.icon {
   text-align: center;
+  display: inline-flex;
+  align-items: center;
   box-sizing: border-box;
   width: 26px;
   padding: 5px;

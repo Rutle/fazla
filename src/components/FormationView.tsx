@@ -165,7 +165,7 @@ const FormationView: React.FC = () => {
                 <RButton
                   themeColor={config.themeColor}
                   className="tab-btn normal"
-                  onClick={() => dispatch(formationAction(FormationAction.Remove, process.env.PLAT_ENV as string, {}))}
+                  onClick={() => dispatch(formationAction(FormationAction.Remove, {}))}
                   disabled={fData.formations.length === 0}
                 >
                   Remove
@@ -173,7 +173,7 @@ const FormationView: React.FC = () => {
                 <RButton
                   themeColor={config.themeColor}
                   className={`tab-btn normal ${fData.isEdit[fData.selectedIndex] ? 'selected' : ''}`}
-                  onClick={() => dispatch(formationAction(FormationAction.Save, process.env.PLAT_ENV as string, {}))}
+                  onClick={() => dispatch(formationAction(FormationAction.Save, {}))}
                   disabled={!fData.isEdit[fData.selectedIndex]}
                 >
                   Save

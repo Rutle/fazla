@@ -74,9 +74,10 @@ export const handleHTTPError = (response: Response): Response => {
   return response;
 };
 
-export const downloadShipData = async (platform: string): Promise<BasicResponse> => {
+export const downloadShipData = async (storage?: LocalForage): Promise<BasicResponse> => {
   let isOk = false;
   let msg = '';
+  const platform = process.env.PLAT_ENV;
   try {
     await fetchWithTimeout(SHIPAPIURL, 20000)
       .then(handleHTTPError)
@@ -87,20 +88,27 @@ export const downloadShipData = async (platform: string): Promise<BasicResponse>
           isOk = res.isOk;
           msg = res.msg;
         }
-        if (platform === 'web') {
+        if (platform === 'web' && storage) {
           const dataArr = [...Object.keys(result).map((key) => result[key])];
-          localStorage.setItem('shipData', JSON.stringify(dataArr));
-          isOk = true;
-          msg = '';
+          // localStorage.setItem('shipData', JSON.stringify(dataArr));
+          storage
+            .setItem('shipData', dataArr)
+            .then(() => {
+              isOk = true;
+            })
+            .catch(() => {
+              isOk = false;
+              msg = 'Failed to save ship data to storage.';
+            });
         }
       })
       .catch((e: Error) => {
         isOk = false;
         msg = e.message;
       });
+    return { isOk, msg };
   } catch (e) {
     // if (e instanceof Error) console.log('k', e.message);
     return { isOk: false, msg: 'Failed to download and save ship data.' };
   }
-  return { isOk, msg };
 };

@@ -218,7 +218,7 @@ ipcMain.handle('remove-formation-by-index', (event, data) => {
     });
     return { isOk: true, msg: 'Formation data saved succesfully.' };
   } catch (e) {
-    return { isOk: false, msg: 'Failed to remove formation.', code: 'Failure' };
+    return { isOk: false, msg: 'Failed to remove a formation. [Electron]', code: 'Failure' };
   }
 });
 

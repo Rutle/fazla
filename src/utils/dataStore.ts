@@ -8,10 +8,6 @@ import { fleets } from '../data/categories';
 export default class DataStore {
   shipsArr: Ship[] = [];
 
-  private database: string;
-
-  private db: any; // IDBPDatabase
-
   count = 0;
 
   state: 'INIT' | 'READY' | 'UPDATING' = 'INIT';

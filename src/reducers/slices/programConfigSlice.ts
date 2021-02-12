@@ -3,13 +3,13 @@ import { AppThunk, AppDispatch } from '_/reducers/store';
 import { saveConfig } from '_/utils/ipcAPI';
 import { AppConfig } from '_/types/types';
 import { setErrorMessage } from './appStateSlice';
-
+/*
 const configApp = localStorage.getItem('config') as string;
 let themeColor: 'dark' | 'light' = 'dark';
 if (configApp !== null) {
   themeColor = (JSON.parse(configApp) as AppConfig).themeColor;
 }
-
+*/
 export enum AppConfigAction {
   Save = 'SAVE',
   Update = 'UPDATE',
@@ -17,7 +17,7 @@ export enum AppConfigAction {
 
 const initialState: AppConfig = {
   jsonURL: 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json',
-  themeColor: themeColor === null ? 'dark' : themeColor,
+  themeColor: 'dark',
   firstTime: true,
   formHelpTooltip: true,
   isToast: true,
@@ -66,17 +66,15 @@ export const { setStateValue, setUpdateDate, resetState, setConfig, setEditState
 /**
  * Thunk to handle different config actions.
  * @param {AppConfigAction} action Enum of different actions.
- * @param {string} platform web or electron
  * @param {string} key Key in slice.
  * @param {string | boolean} value Value of key in slice.
  */
-export const configAction = (
-  action: AppConfigAction,
-  platform: string,
-  key?: string,
-  value?: string | boolean
-): AppThunk => async (dispatch: AppDispatch, getState) => {
+export const configAction = (action: AppConfigAction, key?: string, value?: string | boolean): AppThunk => async (
+  dispatch: AppDispatch,
+  getState
+) => {
   try {
+    const platform = process.env.PLAT_ENV;
     const { config } = getState();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { isEdit, ...newConfig } = config;

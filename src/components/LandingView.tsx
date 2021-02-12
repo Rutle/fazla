@@ -5,6 +5,7 @@ import { checkResource, closeWindow, initData } from '_/utils/ipcAPI';
 import { downloadShipData } from '_/utils/appUtilities';
 import { initShipLists, setCurrentState, setErrorMessage } from '_/reducers/slices/appStateSlice';
 import { RootState } from '_/reducers/rootReducer';
+import { Ship } from '_/types/types';
 import FooterBar from './FooterBar';
 import RButton from './RButton/RButton';
 import TitleBar from './TitleBar';
@@ -15,7 +16,7 @@ import { AppContext } from '../App';
 const LandingView: React.FC = () => {
   const dispatch = useDispatch();
   const platform = process.env.PLAT_ENV;
-  const { shipData } = useContext(AppContext);
+  const { shipData, storage } = useContext(AppContext);
   const history = useHistory();
   const appState = useSelector((state: RootState) => state.appState);
   const config = useSelector((state: RootState) => state.config);
@@ -41,7 +42,7 @@ const LandingView: React.FC = () => {
             if (result.isOk && result.code === 'ResNotFound') {
               return;
             }
-            const dataObj = await initData(process.env.PLAT_ENV as string);
+            const dataObj = await initData();
             if (dataObj.code === 'ResNotFound' || dataObj.code === 'JSONParseFail') {
               setShipResource({ code: dataObj.code, msg: dataObj.msg });
               return;
@@ -50,7 +51,6 @@ const LandingView: React.FC = () => {
               throw new Error(dataObj.msg);
             }
             await shipData.setArray(dataObj.shipData);
-            localStorage.setItem('shipData', JSON.stringify(dataObj.shipData));
             dispatch(initShipLists(dataObj.ownedShips, shipData, dataObj.config, dataObj.formations));
           })
           .catch((error: Error) => {
@@ -61,17 +61,15 @@ const LandingView: React.FC = () => {
       if (appState.cState === 'INIT' && platform === 'web') {
         // eslint-disable-next-line @typescript-eslint/require-await
         (async () => {
-          return localStorage.getItem('shipData');
-          // return checkResource(); // Check that .json data exists.
+          if (!storage) return null;
+          return (await storage.getItem('shipData')) as Ship[];
         })()
-          .then(async (result: string | null) => {
-            // setShipResource({ code: result.code as string, msg: result.msg });
+          .then(async (result: Ship[] | null) => {
             if (result === null) {
               setShipResource({ code: 'ResNotFound', msg: 'Ship data missing.' });
               return;
             }
-            const dataObj = await initData(process.env.PLAT_ENV as string);
-
+            const dataObj = await initData(storage);
             if (dataObj.code === 'ResNotFound' || dataObj.code === 'JSONParseFail') {
               setShipResource({ code: dataObj.code, msg: dataObj.msg });
               return;
@@ -80,7 +78,6 @@ const LandingView: React.FC = () => {
               throw new Error(dataObj.msg);
             }
             await shipData.setArray(dataObj.shipData);
-            localStorage.setItem('shipData', JSON.stringify(dataObj.shipData));
             dispatch(initShipLists(dataObj.ownedShips, shipData, dataObj.config, dataObj.formations));
           })
           .catch((error: Error) => {
@@ -99,7 +96,7 @@ const LandingView: React.FC = () => {
     try {
       if (appState.cState === 'INIT' && downloadState.isDataOk && downloadState.isReady) {
         (async () => {
-          const dataObj = await initData(process.env.PLAT_ENV as string);
+          const dataObj = await initData();
           if (dataObj.code === 'ResNotFound' || dataObj.code === 'JSONParseFail') {
             setShipResource({ code: dataObj.code, msg: dataObj.msg });
             setDownloadState({ isReady: false, isDl: false, isDataOk: false, text: 'Download' });
@@ -179,7 +176,7 @@ const LandingView: React.FC = () => {
                     onClick={async () => {
                       setDownloadState({ ...downloadState, isDl: true, text: 'Downloading' });
                       dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Downloading' }));
-                      const res = await downloadShipData(process.env.PLAT_ENV as string);
+                      const res = await downloadShipData(storage);
                       if (!res.isOk) {
                         setDownloadState({ isReady: true, isDl: false, isDataOk: false, text: 'Download failed.' });
                         dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));

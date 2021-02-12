@@ -42,7 +42,7 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
               onKeyUp={(e) => {
                 if (e.key === 'Enter') {
                   dispatch(
-                    formationAction(FormationAction.New, process.env.PLAT_ENV as string, {
+                    formationAction(FormationAction.New, {
                       formationName: nameVal,
                       formationType: typeVal,
                     })
@@ -98,7 +98,7 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
             themeColor={config.themeColor}
             onClick={() => {
               dispatch(
-                formationAction(FormationAction.New, process.env.PLAT_ENV as string, {
+                formationAction(FormationAction.New, {
                   formationName: nameVal,
                   formationType: typeVal,
                 })

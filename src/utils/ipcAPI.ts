@@ -90,7 +90,7 @@ export const openWikiUrl = async (str: string): Promise<void> => {
 };
 
 export const initData = async (
-  platform: string
+  storage?: LocalForage
 ): Promise<
   {
     shipData: Ship[];
@@ -99,6 +99,7 @@ export const initData = async (
     formations: Formation[];
   } & BasicResponse
 > => {
+  const platform = process.env.PLAT_ENV;
   if (platform === 'electron') {
     return window.api
       .electronInitData('initData')
@@ -108,11 +109,14 @@ export const initData = async (
         ) => result
       );
   }
-  if (platform === 'web') {
-    const shipData = JSON.parse(localStorage.getItem('shipData') as string) as Ship[];
-    const config = JSON.parse(localStorage.getItem('config') as string) as AppConfig;
-    const ownedShips = (JSON.parse(localStorage.getItem('ownedShips') as string) as string[]) || [];
-    const formations = (JSON.parse(localStorage.getItem('formations') as string) as Formation[]) || [];
+  if (platform === 'web' && storage) {
+    // const shipData = [];
+    // const shipData = JSON.parse(localStorage.getItem('shipData') as string) as Ship[];
+    const shipData = (await storage.getItem('shipData')) as Ship[];
+    const config = (await storage.getItem('config')) as AppConfig;
+    const ownedShips = ((await storage.getItem('ownedShips')) as string[]) || [];
+    const formations = ((await storage.getItem('formations')) as Formation[]) || [];
+    console.log('initData', shipData.length, config, ownedShips, formations);
     let isOk = false;
     let msg = '';
     let code = '';
@@ -122,7 +126,6 @@ export const initData = async (
       msg = 'Could not find ship data.';
       code = 'ResNotFound';
     }
-
     return { shipData, config, ownedShips, formations, isOk, msg, code };
   }
   return {
