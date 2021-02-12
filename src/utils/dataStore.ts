@@ -1,16 +1,22 @@
 /* eslint-disable no-underscore-dangle */
-import { SearchParams, Ship, ShipSimple } from './types';
+import { SearchParams, Ship, ShipSimple } from '_/types/types';
 import { fleets } from '../data/categories';
 
 /**
- * @class Ship data wrapper.
+ * @class Ship data store wrapper.
  */
 export default class DataStore {
   shipsArr: Ship[] = [];
 
+  private database: string;
+
+  private db: any; // IDBPDatabase
+
   count = 0;
 
   state: 'INIT' | 'READY' | 'UPDATING' = 'INIT';
+
+  platform: 'electron' | 'web';
 
   /**
    * Constructor for DataStore
@@ -29,16 +35,6 @@ export default class DataStore {
 
   getShipByIndex(index: number): Ship | undefined {
     return this.shipsArr[index];
-  }
-
-  /**
-   * Function returns a ship by given id.
-   * @param {string} id Ship id.
-   * @returns {Ship | undefined} Ship details.
-   */
-  getShipById(id: string): Ship | undefined {
-    if (id === '') return undefined;
-    return this.shipsArr.find((ship) => ship.id === id);
   }
 
   async setArray(data: Ship[]): Promise<Ship[]> {

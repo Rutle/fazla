@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '_/reducers/store';
 import { saveConfig } from '_/utils/ipcAPI';
-import { AppConfig } from '_/utils/types';
+import { AppConfig } from '_/types/types';
 import { setErrorMessage } from './appStateSlice';
 
 export enum AppConfigAction {
@@ -10,7 +10,7 @@ export enum AppConfigAction {
 }
 
 const initialState: AppConfig = {
-  jsonURL: '',
+  jsonURL: 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json',
   themeColor: 'dark',
   firstTime: true,
   formHelpTooltip: true,
@@ -60,13 +60,16 @@ export const { setStateValue, setUpdateDate, resetState, setConfig, setEditState
 /**
  * Thunk to handle different config actions.
  * @param {AppConfigAction} action Enum of different actions.
+ * @param {string} platform web or electron
  * @param {string} key Key in slice.
  * @param {string | boolean} value Value of key in slice.
  */
-export const configAction = (action: AppConfigAction, key?: string, value?: string | boolean): AppThunk => async (
-  dispatch: AppDispatch,
-  getState
-) => {
+export const configAction = (
+  action: AppConfigAction,
+  platform: string,
+  key?: string,
+  value?: string | boolean
+): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const { config } = getState();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -76,11 +79,17 @@ export const configAction = (action: AppConfigAction, key?: string, value?: stri
         dispatch(setStateValue({ key: key as string, value: value as string | boolean }));
         break;
       case 'SAVE':
-        await saveConfig(newConfig).then((result) => {
-          if (result.isOk) {
-            dispatch(setEditState(false));
-          }
-        });
+        if (platform === 'electron') {
+          await saveConfig(newConfig).then((result) => {
+            if (result.isOk) {
+              dispatch(setEditState(false));
+            }
+          });
+        }
+        if (platform === 'web') {
+          localStorage.setItem('config', JSON.stringify(newConfig));
+          dispatch(setEditState(false));
+        }
         break;
       default:
         break;

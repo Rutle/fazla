@@ -26,10 +26,10 @@ const FormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) => {
   const addShip = () => {
     switch (appState.cToggle) {
       case 'ALL':
-        dispatch(formationAction(FormationAction.AddShip, {}));
+        dispatch(formationAction(FormationAction.AddShip, process.env.PLAT_ENV as string, {}));
         break;
       case 'OWNED':
-        dispatch(formationAction(FormationAction.AddShip, {}));
+        dispatch(formationAction(FormationAction.AddShip, process.env.PLAT_ENV as string, {}));
         break;
       default:
         break;

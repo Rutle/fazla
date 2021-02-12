@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
-import { Ship } from '../utils/types';
+import { Ship } from '../types/types';
 import PassivesList from './PassivesList';
 
 interface FormationPassivesProps {

@@ -3,7 +3,7 @@ import { batch } from 'react-redux';
 import { isBooleanObj } from '_/utils/appUtilities';
 import { AppThunk, AppDispatch } from '_reducers/store';
 import DataStore from '_/utils/dataStore';
-import { BooleanSearchParam, SearchParams, ShipSimple } from '_/utils/types';
+import { BooleanSearchParam, SearchParams, ShipSimple } from '_/types/types';
 import { setErrorMessage, setListState, setIsUpdated } from './appStateSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import { setDetails, resetDetails } from './shipDetailsSlice';

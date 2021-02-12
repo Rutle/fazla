@@ -42,7 +42,7 @@ const Home: React.FC = () => {
 
   const updateConfig = useCallback(
     (key: string, value: string | boolean) => {
-      dispatch(configAction(AppConfigAction.Update, key, value));
+      dispatch(configAction(AppConfigAction.Update, process.env.PLAT_ENV as string, key, value));
     },
     [dispatch]
   );
@@ -59,7 +59,7 @@ const Home: React.FC = () => {
         onClick={() => {
           setShipDiff({ count: shipData.count, isUpdate: true });
           if (config.isToast) addToast('info', 'Update', 'Updating ship information.');
-          dispatch(updateShipData(shipData, addToast));
+          dispatch(updateShipData(shipData, process.env.PLAT_ENV as string, addToast));
         }}
         disabled={disabled}
       >
@@ -72,7 +72,7 @@ const Home: React.FC = () => {
     return (
       <RButton
         themeColor={`${config.themeColor}`}
-        onClick={() => dispatch(configAction(AppConfigAction.Save))}
+        onClick={() => dispatch(configAction(AppConfigAction.Save, process.env.PLAT_ENV as string))}
         disabled={!config.isEdit}
       >
         Save changes
@@ -115,54 +115,60 @@ const Home: React.FC = () => {
               <div className="grid-item name">Update ship data</div>
               <div className="grid-item action">{renderUpdate()}</div>
             </div>
-            <div className="f-row wrap">
-              <div className="grid-item name">Raw data URL</div>
-              <div className="grid-item action">
-                <input
-                  type="url"
-                  placeholder={config.jsonURL ? config.jsonURL : ''}
-                  spellCheck="false"
-                  className={`text-input ${config.themeColor}`}
-                  style={{ width: `${srcInputLen}ch` }}
-                  value={jsonSRCValue}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setJSONSRCValue(e.target.value);
-                  }}
-                  onFocus={(e) => {
-                    setSRCInputFocus(e, config.jsonURL.length);
-                    e.target.select();
-                  }}
-                  onBlur={(e) => {
-                    setSRCInputFocus(e, 25);
-                    if (e.target.value !== config.jsonURL) {
-                      dispatch(configAction(AppConfigAction.Update, 'jsonURL', jsonSRCValue));
-                    }
-                  }}
-                />
-              </div>
-            </div>
-            <div className="f-row wrap">
-              <div className="grid-item name">Formation tooltips</div>
-              <div className="grid-item action">
-                <RSwitch
-                  id="form-tooltip"
-                  themeColor={config.themeColor}
-                  onChange={() => updateConfig('formHelpTooltip', !config.formHelpTooltip)}
-                  checked={config.formHelpTooltip}
-                />
-              </div>
-            </div>
-            <div className="f-row wrap">
-              <div className="grid-item name">Toasts</div>
-              <div className="grid-item action">
-                <RSwitch
-                  id="toasts"
-                  themeColor={config.themeColor}
-                  onChange={() => updateConfig('isToast', !config.isToast)}
-                  checked={config.isToast}
-                />
-              </div>
-            </div>
+            {process.env.PLAT_ENV === 'electron' ? (
+              <>
+                <div className="f-row wrap">
+                  <div className="grid-item name">Raw data URL</div>
+                  <div className="grid-item action">
+                    <input
+                      type="url"
+                      placeholder={config.jsonURL ? config.jsonURL : ''}
+                      spellCheck="false"
+                      className={`text-input ${config.themeColor}`}
+                      style={{ width: `${srcInputLen}ch` }}
+                      value={jsonSRCValue}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setJSONSRCValue(e.target.value);
+                      }}
+                      onFocus={(e) => {
+                        setSRCInputFocus(e, config.jsonURL.length);
+                        e.target.select();
+                      }}
+                      onBlur={(e) => {
+                        setSRCInputFocus(e, 25);
+                        if (e.target.value !== config.jsonURL) {
+                          dispatch(configAction(AppConfigAction.Update, 'jsonURL', jsonSRCValue));
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="f-row wrap">
+                  <div className="grid-item name">Formation tooltips</div>
+                  <div className="grid-item action">
+                    <RSwitch
+                      id="form-tooltip"
+                      themeColor={config.themeColor}
+                      onChange={() => updateConfig('formHelpTooltip', !config.formHelpTooltip)}
+                      checked={config.formHelpTooltip}
+                    />
+                  </div>
+                </div>
+                <div className="f-row wrap">
+                  <div className="grid-item name">Toasts</div>
+                  <div className="grid-item action">
+                    <RSwitch
+                      id="toasts"
+                      themeColor={config.themeColor}
+                      onChange={() => updateConfig('isToast', !config.isToast)}
+                      checked={config.isToast}
+                    />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
             <div className="f-row wrap">
               <div className="grid-item name">Theme color</div>
               <div className="grid-item action">

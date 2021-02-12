@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
-import { Ship } from '_/utils/types';
+import { Ship } from '_/types/types';
 import { hullTypes, hullTypesAbb } from '../data/categories';
 
 interface GridItemProps {
@@ -44,7 +44,7 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
   };
 
   const onRightClick = useCallback(() => {
-    dispatch(formationAction(FormationAction.RemoveShip, { gridIndex: index }));
+    dispatch(formationAction(FormationAction.RemoveShip, process.env.PLAT_ENV as string, { gridIndex: index }));
   }, [dispatch, index]);
 
   const getHullTypeAbb = (hullType: string | undefined) => {

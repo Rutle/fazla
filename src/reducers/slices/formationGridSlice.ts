@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '_reducers/store';
 import { saveFormationData, removeAFormation, renameAFormation } from '_/utils/ipcAPI';
-import { Formation } from '_/utils/types';
+import { Formation } from '_/types/types';
 import { setErrorMessage } from './appStateSlice';
 
 export enum FormationAction {
@@ -172,7 +172,7 @@ interface FormActionData {
  * Updates all ships search list.
  * @param {FormationAction} action Enum action
  */
-export const formationAction = (action: FormationAction, data: FormActionData): AppThunk => async (
+export const formationAction = (action: FormationAction, platform: string, data: FormActionData): AppThunk => async (
   dispatch: AppDispatch,
   getState
 ) => {
@@ -197,20 +197,40 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
         dispatch(addNewFormationData({ data: emptyFormation, name }));
         break;
       case 'REMOVE':
-        await removeAFormation(formIdx).then((result) => {
-          if (result.isOk) dispatch(removeFormation(formIdx));
-          dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: result.msg, eState: 'WARNING' }));
-        });
+        if (platform === 'electron') {
+          await removeAFormation(formIdx).then((result) => {
+            if (result.isOk) dispatch(removeFormation(formIdx));
+            // dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: result.msg, eState: 'WARNING' }));
+          });
+        }
+        if (platform === 'web') {
+          const newForms = formationGrid.formations.filter((item, index) => index !== formIdx);
+          localStorage.setItem('formations', JSON.stringify(newForms));
+          dispatch(removeFormation(formIdx));
+        }
         break;
       case 'RENAME':
-        await renameAFormation(formIdx, name).then((result) => {
-          if (result.isOk) dispatch(renameFormation({ idx: formIdx, name }));
-        });
+        dispatch(renameFormation({ idx: formIdx, name }));
+        /*
+        if (platform === 'electron') {
+          await renameAFormation(formIdx, name).then((result) => {
+            if (result.isOk) dispatch(renameFormation({ idx: formIdx, name }));
+          });
+        }
+        if (platform === 'web') {
+          dispatch(renameFormation({ idx: formIdx, name }));
+        } */
         break;
       case 'SAVE':
-        await saveFormationData(formationGrid.formations).then((result) => {
-          if (result.isOk) dispatch(toggleIsEdit(formIdx));
-        });
+        if (platform === 'electron') {
+          await saveFormationData(formationGrid.formations).then((result) => {
+            if (result.isOk) dispatch(toggleIsEdit(formIdx));
+          });
+        }
+        if (platform === 'web') {
+          localStorage.setItem('formations', JSON.stringify(formationGrid.formations));
+          dispatch(toggleIsEdit(formIdx));
+        }
         break;
       case 'ADDSHIP':
         dispatch(addShipToFormation({ id, gridIndex: gIndex, selectedIndex: formIdx }));
@@ -219,13 +239,17 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
         dispatch(removeShipFromFormation({ gridIndex: shipGridIndex, selectedIndex: formIdx }));
         break;
       case 'SAVEALL':
-        await saveFormationData(formationGrid.formations).then((result) => {
-          if (!result.isOk) dispatch(setErrorMessage({ cState: 'ERROR', eMsg: result.msg, eState: 'ERROR' }));
-        });
+        if (platform === 'electron') {
+          await saveFormationData(formationGrid.formations).then((result) => {
+            if (!result.isOk) dispatch(setErrorMessage({ cState: 'ERROR', eMsg: result.msg, eState: 'ERROR' }));
+          });
+        }
+        if (platform === 'web') {
+          localStorage.setItem('formations', JSON.stringify(formationGrid.formations));
+        }
         break;
       case 'IMPORT': {
         dispatch(addNewFormationData({ data: iFormation, name }));
-        // WyJOT05FIiwiMjI0IiwiNDE5IiwiMDgyIiwiTk9ORSIsIk5PTkUiLCJOT05FIiwiTk9ORSIsIk5PTkUiLCJOT05FIiwiTk9ORSIsIk5PTkUiXQ==
         break;
       }
       default:

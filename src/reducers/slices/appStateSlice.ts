@@ -5,7 +5,7 @@ import { saveShipData } from '_/utils/ipcAPI';
 import { fetchWithTimeout, handleHTTPError } from '_/utils/appUtilities';
 import { CallbackDismiss, ToastMessageType } from '_/components/Toast/useToast';
 import DataStore from '_/utils/dataStore';
-import { AppConfig, Formation, Ship, ShipSimple } from '_/utils/types';
+import { AppConfig, Formation, Ship, ShipSimple } from '_/types/types';
 import { setDetails } from './shipDetailsSlice';
 import { setSearchList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
@@ -170,7 +170,9 @@ export const initShipLists = (
       dispatch(setListState({ key: 'OWNED', data: { id: ownedInitId, index: ownedInitIndex, isUpdated: true } }));
       dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
     });
-    dispatch(setConfig(config));
+    if (config !== null) {
+      dispatch(setConfig(config));
+    }
     dispatch(setFormationsData(formations));
     dispatch(setShipCount(fullSimple.length));
     dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
@@ -205,6 +207,7 @@ export const setSelectedShip = (key: 'ALL' | 'OWNED', id: string, index: number)
  */
 export const updateShipData = (
   shipData: DataStore,
+  platform: string,
   addToast?: (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss | undefined) => void
 ): AppThunk => async (dispatch: AppDispatch, getState) => {
   dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Please wait while downloading data.' }));
@@ -216,10 +219,30 @@ export const updateShipData = (
       .then(async (result: { [key: string]: Ship }) => {
         try {
           dispatch(setCurrentState({ cState: 'SAVING', cMsg: 'Please wait while saving data.' }));
-          const { isOk, updateDate } = await saveShipData(result);
+          let isOk = false;
+          let updateDate = '';
+          if (platform === 'electron') {
+            const response = await saveShipData(result);
+            isOk = response.isOk;
+            updateDate = response.updateDate as string;
+          }
+          if (platform === 'web') {
+            const today = new Date();
+            updateDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+            // const dataArr = [...Object.keys(result).map((key) => result[key])];
+            // localStorage.setItem('shipData', JSON.stringify(dataArr));
+            isOk = true;
+            // msg = '';
+          }
+
           if (isOk) {
             dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating app state.' }));
             const dataArr: Ship[] = [...Object.keys(result).map((key) => result[key])];
+            if (platform === 'web') {
+              localStorage.setItem('shipData', JSON.stringify(dataArr));
+              const newConfig = { ...config, updateDate };
+              localStorage.setItem('config', JSON.stringify(newConfig));
+            }
             await shipData.setArray(dataArr);
             const fullSimple = DataStore.transformShipList(shipData.shipsArr);
             const searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
@@ -234,7 +257,7 @@ export const updateShipData = (
               );
               dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
               dispatch(setShipCount(shipData.count));
-              dispatch(setUpdateDate(updateDate as string));
+              dispatch(setUpdateDate(updateDate));
             });
           } else {
             throw new Error('There was a problem saving ship data.');

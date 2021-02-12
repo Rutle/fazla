@@ -41,7 +41,7 @@ const ErrorView: React.FC = () => {
           </div>
         </section>
       </div>
-      <FooterBar />
+      {process.env.PLAT_ENV === 'electron' ? <FooterBar /> : <></>}
     </>
   );
 };

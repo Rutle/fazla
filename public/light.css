@@ -55,12 +55,12 @@
 .light .no-focus-outline:focus,
 .light .no-focus-outline:focus-within {
   outline: none!important;
-  background-color: var(--main-light-bg);
+  background-color: var(--main-light-hover-bg);
 }
 
 .light :not(button):not(label):not(.switch-input):not(.modal-container):not(a):not(input):focus {
   outline: none;
-  background-color: var(--main-light-border);
+  background-color: var(--main-light-hover-bg);
 }
 
 .light .switch [type=checkbox]:not(.no-focus-outline):focus + span.switch-toggle::after {
@@ -72,7 +72,7 @@
 .light button:not(.no-focus-outline):focus,
 #titlebar.light button.title-button:not(.no-focus-outline):focus {
   outline: none;
-  background-color: var(--main-light-border);
+  background-color: var(--main-light-hover-bg);
 }
 
 .light .modal-container:focus {

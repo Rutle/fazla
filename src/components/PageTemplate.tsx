@@ -14,7 +14,7 @@ const PageTemplate: React.FC<{ children: JSX.Element }> = ({ children }) => {
     <>
       <TitleBar showMenu />
       <div className={`page ${config.themeColor}`}>{children}</div>
-      <FooterBar />
+      {process.env.PLAT_ENV === 'electron' ? <FooterBar /> : <></>}
     </>
   );
 };

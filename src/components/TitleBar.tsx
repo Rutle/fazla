@@ -94,45 +94,51 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
         )}
         <div id="window-filler" />
         <div id="window-controls">
-          <RButton className="title-button" id="min-button" onClick={() => minimizeWindow()}>
-            <FontAwesomeIcon icon={faWindowMinimize} size="xs" />
-          </RButton>
-          {isMax ? (
-            <RButton
-              className="title-button"
-              id="restore-button"
-              onClick={() => {
-                restoreWindow();
-                setIsMax(false);
-              }}
-            >
-              <FontAwesomeIcon icon={faWindowRestore} size="xs" />
-            </RButton>
+          {process.env.PLAT_ENV === 'electron' ? (
+            <>
+              <RButton className="title-button" id="min-button" onClick={() => minimizeWindow()}>
+                <FontAwesomeIcon icon={faWindowMinimize} size="xs" />
+              </RButton>
+              {isMax ? (
+                <RButton
+                  className="title-button"
+                  id="restore-button"
+                  onClick={() => {
+                    restoreWindow();
+                    setIsMax(false);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faWindowRestore} size="xs" />
+                </RButton>
+              ) : (
+                <RButton
+                  className="title-button"
+                  id="max-button"
+                  onClick={() => {
+                    maximizeWindow();
+                    setIsMax(true);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faWindowMaximize} size="xs" />
+                </RButton>
+              )}
+              <RButton
+                className="title-button"
+                id="close-button"
+                onClick={() => {
+                  if (isEdit()) {
+                    setModalOpen(!isModalOpen);
+                  } else {
+                    closeWindow();
+                  }
+                }}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </RButton>
+            </>
           ) : (
-            <RButton
-              className="title-button"
-              id="max-button"
-              onClick={() => {
-                maximizeWindow();
-                setIsMax(true);
-              }}
-            >
-              <FontAwesomeIcon icon={faWindowMaximize} size="xs" />
-            </RButton>
+            <></>
           )}
-          <RButton
-            className="title-button"
-            id="close-button"
-            onClick={() => {
-              if (isEdit()) {
-                setModalOpen(!isModalOpen);
-              } else {
-                closeWindow();
-              }
-            }}
-          >
-            <FontAwesomeIcon icon={faTimes} />
-          </RButton>
         </div>
       </div>
       <ReactModal

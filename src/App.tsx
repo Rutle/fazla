@@ -1,7 +1,6 @@
-/* eslint-disable react/prop-types */
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Route, Switch, Redirect, RouteProps, HashRouter } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Switch, Redirect, RouteProps, HashRouter, useHistory } from 'react-router-dom';
 import ShipDetailView from '_components/ShipDetailView';
 import Home from '_components/Home';
 import DataStore from './utils/dataStore';
@@ -11,10 +10,24 @@ import LandingView from './components/LandingView';
 import ErrorView from './components/ErrorView';
 import ToastContainer from './components/Toast/ToastContainer';
 import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './components/Toast/useToast';
+import { AppConfig, Formation, Ship } from './types/types';
+import { initShipLists, setErrorMessage } from './reducers/slices/appStateSlice';
+
+export const AppContext = React.createContext(
+  {} as {
+    addToast: (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss | undefined) => void;
+    onToastDismiss: (id: number) => void;
+    popToast: () => void;
+    shipData: DataStore;
+    setShipData: React.Dispatch<React.SetStateAction<DataStore>>;
+    toasts: ToastList;
+  }
+);
 
 const RefreshRoute: React.FC<RouteProps> = (props) => {
   const { component } = props;
   const appState = useSelector((state: RootState) => state.appState);
+
   if (appState.cState === 'ERROR') {
     return (
       <Redirect
@@ -34,17 +47,6 @@ const RefreshRoute: React.FC<RouteProps> = (props) => {
     <Route {...props} component={component} />
   );
 };
-
-export const AppContext = React.createContext(
-  {} as {
-    addToast: (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss | undefined) => void;
-    onToastDismiss: (id: number) => void;
-    popToast: () => void;
-    shipData: DataStore;
-    setShipData: React.Dispatch<React.SetStateAction<DataStore>>;
-    toasts: ToastList;
-  }
-);
 
 const App: React.FC = () => {
   const [shipData, setShipData] = useState(new DataStore());

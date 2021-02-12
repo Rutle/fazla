@@ -105,6 +105,12 @@ div.modal-overlay.dark .ship-side-container {
   background: var(--main-dark-hover-bg);
 }
 
+#titlebar.dark #window-controls {
+  border-bottom: 1px solid var(--main-dark-border);
+  background-color: var(--main-dark-bg);
+  box-shadow: inset 0px -4px 3px -4px #00000099;
+}
+
 #titlebar.dark #min-button {
   box-sizing: border-box;
   color: var(--main-dark-color);

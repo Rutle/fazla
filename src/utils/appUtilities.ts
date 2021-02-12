@@ -1,5 +1,5 @@
 import { saveShipData } from './ipcAPI';
-import { Ship, BasicResponse, BooleanSearchParam } from './types';
+import { Ship, BasicResponse, BooleanSearchParam } from '../types/types';
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 
@@ -74,7 +74,7 @@ export const handleHTTPError = (response: Response): Response => {
   return response;
 };
 
-export const downloadShipData = async (): Promise<BasicResponse> => {
+export const downloadShipData = async (platform: string): Promise<BasicResponse> => {
   let isOk = false;
   let msg = '';
   try {
@@ -82,9 +82,17 @@ export const downloadShipData = async (): Promise<BasicResponse> => {
       .then(handleHTTPError)
       .then((res) => res.json())
       .then(async (result: { [key: string]: Ship }) => {
-        const res = await saveShipData(result);
-        isOk = res.isOk;
-        msg = res.msg;
+        if (platform === 'electron') {
+          const res = await saveShipData(result);
+          isOk = res.isOk;
+          msg = res.msg;
+        }
+        if (platform === 'web') {
+          const dataArr = [...Object.keys(result).map((key) => result[key])];
+          localStorage.setItem('shipData', JSON.stringify(dataArr));
+          isOk = true;
+          msg = '';
+        }
       })
       .catch((e: Error) => {
         isOk = false;

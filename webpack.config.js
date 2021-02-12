@@ -2,6 +2,7 @@ const lodash = require('lodash');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 function srcPaths(src) {
   return path.join(__dirname, src);
@@ -9,6 +10,8 @@ function srcPaths(src) {
 
 const isEnvProduction = process.env.NODE_ENV === 'production';
 const isEnvDevelopment = process.env.NODE_ENV === 'development';
+const isWeb = process.env.PLAT_ENV === 'web';
+const isElectron = process.env.PLAT_ENV === 'electron';
 
 // #region Common settings
 const commonConfig = {
@@ -57,48 +60,66 @@ const commonConfig = {
   },
 };
 // #endregion
+if (isElectron) {
+  const mainConfig = lodash.cloneDeep(commonConfig);
 
-const mainConfig = lodash.cloneDeep(commonConfig);
-mainConfig.entry = './src/main/electron.ts';
-mainConfig.target = 'electron-main';
-mainConfig.output.filename = 'main.bundle.js';
-mainConfig.plugins = [
-  new CopyPlugin({
-    patterns: [
-      {
-        from: 'package.json',
-        to: 'package.json',
-        transform: (content, _path) => { // eslint-disable-line no-unused-vars
-          const jsonContent = JSON.parse(content);
+  mainConfig.entry = './src/main/electron.ts';
+  mainConfig.target = 'electron-main';
+  mainConfig.output.filename = 'main.bundle.js';
+  mainConfig.plugins = [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'package.json',
+          to: 'package.json',
+          transform: (content, _path) => { // eslint-disable-line no-unused-vars
+            const jsonContent = JSON.parse(content);
 
-          delete jsonContent.devDependencies;
-          delete jsonContent.scripts;
-          delete jsonContent.build;
+            delete jsonContent.devDependencies;
+            delete jsonContent.scripts;
+            delete jsonContent.build;
 
-          jsonContent.main = './main.bundle.js';
-          jsonContent.scripts = { start: 'electron ./main.bundle.js' };
-          jsonContent.postinstall = 'electron-builder install-app-deps';
+            jsonContent.main = './main.bundle.js';
+            jsonContent.scripts = { start: 'electron ./main.bundle.js' };
+            jsonContent.postinstall = 'electron-builder install-app-deps';
 
-          return JSON.stringify(jsonContent, undefined, 2);
+            return JSON.stringify(jsonContent, undefined, 2);
+          },
         },
-      },
-    ],
-  }),
-];
+      ],
+    }),
+  ];
 
-const preloadConfig = lodash.cloneDeep(commonConfig);
-preloadConfig.entry = './src/main/preload.ts';
-preloadConfig.target = 'electron-preload';
-preloadConfig.output.filename = 'preload.bundle.js';
+  const preloadConfig = lodash.cloneDeep(commonConfig);
+  preloadConfig.entry = './src/main/preload.ts';
+  preloadConfig.target = 'electron-preload';
+  preloadConfig.output.filename = 'preload.bundle.js';
 
-const rendererConfig = lodash.cloneDeep(commonConfig);
-rendererConfig.entry = './src/renderer/index.tsx';
-rendererConfig.target = 'electron-renderer';
-rendererConfig.output.filename = 'renderer.bundle.js';
-rendererConfig.plugins = [
-  new HtmlWebpackPlugin({
-    template: path.resolve(__dirname, './public/index.html'),
-  }),
-];
-
-module.exports = [mainConfig, preloadConfig, rendererConfig];
+  const rendererConfig = lodash.cloneDeep(commonConfig);
+  rendererConfig.entry = './src/renderer/index.tsx';
+  rendererConfig.target = 'electron-renderer';
+  rendererConfig.output.filename = 'renderer.bundle.js';
+  rendererConfig.plugins = [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './public/index.html'),
+    }),
+    new webpack.DefinePlugin({
+      'process.env.PLAT_ENV': JSON.stringify(process.env.PLAT_ENV),
+    }),
+  ];
+  module.exports = [mainConfig, preloadConfig, rendererConfig];
+}
+if (isWeb) {
+  const webConfig = lodash.cloneDeep(commonConfig);
+  webConfig.entry = './src/renderer/index.tsx';
+  webConfig.output.filename = 'renderer.bundle.js';
+  webConfig.plugins = [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './public/index.html'),
+    }),
+    new webpack.DefinePlugin({
+      'process.env.PLAT_ENV': JSON.stringify(process.env.PLAT_ENV),
+    }),
+  ];
+  module.exports = [webConfig];
+}

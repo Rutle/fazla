@@ -8,7 +8,7 @@ import { AppContext } from '_/App';
 import { formationModalAction, FormationModalAction } from '_/reducers/slices/formationModalSlice';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
 import DataStore from '_/utils/dataStore';
-import { Ship } from '_/utils/types';
+import { Ship } from '_/types/types';
 import { RootState } from '_/reducers/rootReducer';
 import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
@@ -165,7 +165,7 @@ const FormationView: React.FC = () => {
                 <RButton
                   themeColor={config.themeColor}
                   className="tab-btn normal"
-                  onClick={() => dispatch(formationAction(FormationAction.Remove, {}))}
+                  onClick={() => dispatch(formationAction(FormationAction.Remove, process.env.PLAT_ENV as string, {}))}
                   disabled={fData.formations.length === 0}
                 >
                   Remove
@@ -173,7 +173,7 @@ const FormationView: React.FC = () => {
                 <RButton
                   themeColor={config.themeColor}
                   className={`tab-btn normal ${fData.isEdit[fData.selectedIndex] ? 'selected' : ''}`}
-                  onClick={() => dispatch(formationAction(FormationAction.Save, {}))}
+                  onClick={() => dispatch(formationAction(FormationAction.Save, process.env.PLAT_ENV as string, {}))}
                   disabled={!fData.isEdit[fData.selectedIndex]}
                 >
                   Save

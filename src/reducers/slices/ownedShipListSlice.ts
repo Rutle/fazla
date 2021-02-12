@@ -37,9 +37,17 @@ export const { resetList, addShipId, setOwnedList, removeShipId } = ownedShipLis
 export const addShip = (id: string): AppThunk => async (dispatch: AppDispatch, getState) => {
   let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
+    const platform = process.env.PLAT_ENV as string;
     const ownedShips = [...getState().ownedShips, id];
-    result = await saveOwnedShipData(ownedShips);
-    if (result.isOk) {
+    if (platform === 'electron') {
+      result = await saveOwnedShipData(ownedShips);
+      if (result.isOk) {
+        dispatch(addShipId(id));
+        dispatch(setIsUpdated({ key: 'OWNED', value: false }));
+      }
+    }
+    if (platform === 'web') {
+      localStorage.setItem('ownedShips', JSON.stringify(ownedShips));
       dispatch(addShipId(id));
       dispatch(setIsUpdated({ key: 'OWNED', value: false }));
     }
@@ -57,10 +65,17 @@ export const addShip = (id: string): AppThunk => async (dispatch: AppDispatch, g
 export const removeShip = (shipData: DataStore, id: string): AppThunk => async (dispatch: AppDispatch, getState) => {
   let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
+    const platform = process.env.PLAT_ENV as string;
     const ownedShips = [...getState().ownedShips];
     const { appState } = getState();
     const newList = ownedShips.filter((cId) => cId !== id);
-    result = await saveOwnedShipData(newList);
+    if (platform === 'electron') {
+      result = await saveOwnedShipData(newList);
+    }
+    if (platform === 'web') {
+      localStorage.setItem('ownedShips', JSON.stringify(ownedShips));
+      result.isOk = true;
+    }
     if (result.isOk) {
       dispatch(setOwnedList(newList));
       dispatch(setIsUpdated({ key: 'OWNED', value: false }));

@@ -40,6 +40,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@reduxjs/toolkit": "^1.5.0",
+    "@types/node": "^14.14.27",
     "electron-is-dev": "^1.2.0",
     "electron-store": "^7.0.1",
     "prop-types": "^15.7.2",
@@ -57,9 +58,11 @@
   },
   "scripts": {
     "start": "electron ./dist/main.bundle.js",
-    "dev": "rimraf dist && cross-env NODE_ENV=development webpack --watch --progress --color",
-    "prod": "rimraf dist && cross-env NODE_ENV=production webpack --progress --color",
+    "dev": "rimraf dist && cross-env NODE_ENV=development PLAT_ENV=electron webpack --watch --progress --color",
+    "prod": "rimraf dist && cross-env NODE_ENV=production PLAT_ENV=electron webpack --progress --color",
     "test": "mocha -r ts-node/register -r tsconfig-paths/register \"test/**/*.ts\"",
+    "web-dev": "rimraf dist && cross-env NODE_ENV=development PLAT_ENV=web webpack --watch --progress --color",
+    "web-prod": "rimraf dist && cross-env NODE_ENV=production PLAT_ENV=web webpack --progress --color",
     "build:win": "electron-builder build --win --x64",
     "build:mac": "electron-builder build --mac --x64"
   },

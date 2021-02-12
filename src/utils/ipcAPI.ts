@@ -1,30 +1,6 @@
+import { BasicResponse, Ship, Formation, AppConfig } from '_/types/types';
 import { urlValidation } from './appUtilities';
-import { BasicResponse, Ship, AppConfig, Formation } from './types';
 
-// expose electron api from preload.ts
-declare global {
-  interface Window {
-    api: {
-      electronIpcSend: (channel: string) => void;
-      electronCheckResources: (channel: string) => Promise<BasicResponse>;
-      electronDownloadShipData: (channel: string) => Promise<BasicResponse>;
-      electronShell: (str: string) => Promise<void>;
-      electronSaveData: (channel: string, ...arg: unknown[]) => Promise<BasicResponse>;
-      electronRemoveAFormation: (channel: string, ...arg: unknown[]) => Promise<BasicResponse>;
-      electronRenameFormation: (channel: string, ...arg: unknown[]) => Promise<BasicResponse>;
-      electronInitData: (
-        channel: string
-      ) => Promise<
-        {
-          shipData: Ship[];
-          config: AppConfig;
-          ownedShips: string[];
-          formations: Formation[];
-        } & BasicResponse
-      >;
-    };
-  }
-}
 // Renderer to Main
 export const closeWindow = (): void => {
   window.api.electronIpcSend('close-application');
@@ -113,7 +89,9 @@ export const openWikiUrl = async (str: string): Promise<void> => {
   return Promise.resolve();
 };
 
-export const initData = async (): Promise<
+export const initData = async (
+  platform: string
+): Promise<
   {
     shipData: Ship[];
     config: AppConfig;
@@ -121,11 +99,39 @@ export const initData = async (): Promise<
     formations: Formation[];
   } & BasicResponse
 > => {
-  return window.api
-    .electronInitData('initData')
-    .then(
-      (
-        result: { shipData: Ship[]; config: AppConfig; ownedShips: string[]; formations: Formation[] } & BasicResponse
-      ) => result
-    );
+  if (platform === 'electron') {
+    return window.api
+      .electronInitData('initData')
+      .then(
+        (
+          result: { shipData: Ship[]; config: AppConfig; ownedShips: string[]; formations: Formation[] } & BasicResponse
+        ) => result
+      );
+  }
+  if (platform === 'web') {
+    const shipData = JSON.parse(localStorage.getItem('shipData') as string) as Ship[];
+    const config = JSON.parse(localStorage.getItem('config') as string) as AppConfig;
+    const ownedShips = (JSON.parse(localStorage.getItem('ownedShips') as string) as string[]) || [];
+    const formations = (JSON.parse(localStorage.getItem('formations') as string) as Formation[]) || [];
+    let isOk = false;
+    let msg = '';
+    let code = '';
+    if (shipData) {
+      isOk = true;
+    } else {
+      msg = 'Could not find ship data.';
+      code = 'ResNotFound';
+    }
+
+    return { shipData, config, ownedShips, formations, isOk, msg, code };
+  }
+  return {
+    shipData: [],
+    config: { jsonURL: '', themeColor: 'dark', firstTime: true, formHelpTooltip: false, isToast: true, updateDate: '' },
+    ownedShips: [],
+    formations: [],
+    isOk: false,
+    msg: '',
+    code: '',
+  };
 };

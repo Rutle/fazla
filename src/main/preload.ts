@@ -1,5 +1,5 @@
 import { ipcRenderer, contextBridge, shell } from 'electron';
-import { AppConfig, BasicResponse, Formation, Ship } from '_utils/types';
+import { AppConfig, BasicResponse, Formation, Ship } from '_/types/types';
 
 const validSendChannels = [
   'close-application',

@@ -11,7 +11,8 @@
       "_renderer/*": ["src/renderer/*"],
       "_utils/*": ["src/utils/*"],
       "_reducers/*": ["src/reducers/*"],
-      "_components/*": ["src/components/*"]
+      "_components/*": ["src/components/*"],
+      "_types/*": ["src/types/*"]
     },
     "module": "commonjs",
     "esModuleInterop": true,
@@ -22,5 +23,5 @@
     "sourceMap": true,
     "target": "esnext"
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

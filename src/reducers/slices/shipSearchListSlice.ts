@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ShipSimple } from '_/utils/types';
+import { ShipSimple } from '_/types/types';
 
 const initialState: ShipSimple[] = [];
 
