@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '_reducers/store';
-import { saveFormationData, removeAFormation, renameAFormation } from '_/utils/ipcAPI';
+import { saveFormationData, removeAFormation } from '_/utils/ipcAPI';
 import { Formation } from '_/types/types';
 import { setErrorMessage } from './appStateSlice';
 
@@ -200,7 +200,6 @@ export const formationAction = (action: FormationAction, platform: string, data:
         if (platform === 'electron') {
           await removeAFormation(formIdx).then((result) => {
             if (result.isOk) dispatch(removeFormation(formIdx));
-            // dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: result.msg, eState: 'WARNING' }));
           });
         }
         if (platform === 'web') {
