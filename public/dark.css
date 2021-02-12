@@ -32,10 +32,13 @@
   background-color: #3c9efb;
 }
 .dark ::-webkit-scrollbar-thumb {
-  background-color:var(--main-dark-border);
+  background-color: var(--main-dark-border);
   border-radius: 5px;
 }
-
+.dark * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--main-dark-border) var(--root-dark-bg);
+}
 .dark .no-focus-outline:focus,
 .dark .no-focus-outline:focus-within {
   outline: none!important;

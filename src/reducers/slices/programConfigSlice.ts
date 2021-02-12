@@ -4,6 +4,12 @@ import { saveConfig } from '_/utils/ipcAPI';
 import { AppConfig } from '_/types/types';
 import { setErrorMessage } from './appStateSlice';
 
+const configApp = localStorage.getItem('config') as string;
+let themeColor: 'dark' | 'light' = 'dark';
+if (configApp !== null) {
+  themeColor = (JSON.parse(configApp) as AppConfig).themeColor;
+}
+
 export enum AppConfigAction {
   Save = 'SAVE',
   Update = 'UPDATE',
@@ -11,7 +17,7 @@ export enum AppConfigAction {
 
 const initialState: AppConfig = {
   jsonURL: 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json',
-  themeColor: 'dark',
+  themeColor: themeColor === null ? 'dark' : themeColor,
   firstTime: true,
   formHelpTooltip: true,
   isToast: true,

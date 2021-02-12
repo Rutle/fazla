@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch, Redirect, RouteProps, HashRouter, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Route, Switch, Redirect, RouteProps, HashRouter } from 'react-router-dom';
 import ShipDetailView from '_components/ShipDetailView';
 import Home from '_components/Home';
 import DataStore from './utils/dataStore';
@@ -10,8 +10,6 @@ import LandingView from './components/LandingView';
 import ErrorView from './components/ErrorView';
 import ToastContainer from './components/Toast/ToastContainer';
 import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './components/Toast/useToast';
-import { AppConfig, Formation, Ship } from './types/types';
-import { initShipLists, setErrorMessage } from './reducers/slices/appStateSlice';
 
 export const AppContext = React.createContext(
   {} as {
