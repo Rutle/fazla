@@ -63,7 +63,7 @@ function checkRarity() {
     console.log('JSON file has been saved.');
   });
 }
-// checkNationality();
+checkNationality();
 
 function checkSkills() {
   const jsonObject = {};
@@ -100,4 +100,4 @@ function checkSkills() {
     console.log('JSON file has been saved.');
   });
 }
-checkSkills();
+// checkSkills();

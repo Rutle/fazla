@@ -110,13 +110,10 @@ export const initData = async (
       );
   }
   if (platform === 'web' && storage) {
-    // const shipData = [];
-    // const shipData = JSON.parse(localStorage.getItem('shipData') as string) as Ship[];
     const shipData = (await storage.getItem('shipData')) as Ship[];
     const config = (await storage.getItem('config')) as AppConfig;
     const ownedShips = ((await storage.getItem('ownedShips')) as string[]) || [];
     const formations = ((await storage.getItem('formations')) as Formation[]) || [];
-    console.log('initData', shipData.length, config, ownedShips, formations);
     let isOk = false;
     let msg = '';
     let code = '';
