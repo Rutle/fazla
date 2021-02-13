@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '_/reducers/store';
 import { saveConfig } from '_/utils/ipcAPI';
-import { AppConfig, BasicResponse } from '_/types/types';
+import { AppConfig } from '_/types/types';
 import { setErrorMessage } from './appStateSlice';
 /*
 const configApp = localStorage.getItem('config') as string;
@@ -90,7 +90,6 @@ export const configAction = (action: AppConfigAction, data: ConfigActionData): A
       case 'UPDATE':
         if (doSave && platform === 'web' && storage) {
           if (key === 'themeColor') {
-            console.log(key);
             newConfig.themeColor = value as 'dark' | 'light';
             await storage.setItem('config', newConfig);
           }
@@ -103,9 +102,7 @@ export const configAction = (action: AppConfigAction, data: ConfigActionData): A
           result = await saveConfig(newConfig);
         }
         if (platform === 'web' && storage) {
-          // localStorage.setItem('config', JSON.stringify(newConfig));
           const res = await storage.setItem('config', newConfig);
-          // await dispatch(setEditState(false));
           result.isOk = Object.is(res, newConfig);
         }
         if (result.isOk) {

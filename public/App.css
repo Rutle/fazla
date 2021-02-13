@@ -388,6 +388,7 @@ div.f-row.action *,
   flex-grow: 1;
   box-sizing: border-box;
   align-items: center;
+  justify-content: center;
 }
 
 /* ###### FORMATION DROPDOWN ###### */
@@ -408,7 +409,7 @@ div.f-row.action *,
 .toggle-icon {
   padding: 0;
   margin-left: 10px;
-  align-self: end;
+  /* align-self: end;*/
   transition: 0.3s;
   width: 7px;
 }

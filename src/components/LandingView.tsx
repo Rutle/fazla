@@ -202,6 +202,7 @@ const LandingView: React.FC = () => {
                 className={`message-container ${config.themeColor}`}
                 style={{
                   minWidth: '50%',
+                  minHeight: '40px',
                 }}
               >
                 <span className="message">{getInitMsg()}</span>
@@ -220,6 +221,7 @@ const LandingView: React.FC = () => {
                 <RButton
                   disabled={appState.cState !== 'RUNNING'}
                   themeColor={config.themeColor}
+                  extraStyle={{ height: '40px' }}
                   onClick={() => {
                     history.push('/shipdetails');
                   }}
@@ -230,6 +232,7 @@ const LandingView: React.FC = () => {
                   <RButton
                     disabled={appState.cState !== 'RUNNING'}
                     themeColor={config.themeColor}
+                    extraStyle={{ height: '40px' }}
                     onClick={() => {
                       closeWindow();
                     }}

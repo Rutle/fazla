@@ -193,9 +193,9 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
     switch (action) {
       case 'NEW':
         if (fType === 'normal') {
-          emptyFormation = Array.from({ length: 12 }, (v, i) => 'NONE');
+          emptyFormation = Array.from({ length: 12 }, () => 'NONE');
         } else {
-          emptyFormation = Array.from({ length: 24 }, (v, i) => 'NONE');
+          emptyFormation = Array.from({ length: 24 }, () => 'NONE');
         }
         dispatch(addNewFormationData({ data: emptyFormation, name }));
         break;

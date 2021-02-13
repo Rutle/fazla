@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { RootState } from '_/reducers/rootReducer';
-import { setDetails } from '_/reducers/slices/shipDetailsSlice';
+// import { setDetails } from '_/reducers/slices/shipDetailsSlice';
 import { setCurrentToggle } from '_/reducers/slices/appStateSlice';
 import { SearchAction, updateSearch } from '_/reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';
@@ -32,10 +32,8 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
   useEffect(() => {
     const { cToggle } = appState;
     if (appState.cState === 'INIT') return;
-    dispatch(setDetails({ id: appState[cToggle].id, index: appState[cToggle].index }));
     dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list: cToggle }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appState.cToggle]);
+  }, [appState, appState.cToggle, dispatch, shipData]);
 
   const changeList = useCallback(
     (value: 'ALL' | 'OWNED') => {

@@ -67,6 +67,7 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
           if (e.key === 'Enter') onClick();
         }}
         onContextMenu={onRightClick}
+        /*
         data-tip
         data-for="click-help"
         data-delay-show="1000"
@@ -74,6 +75,7 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
         data-border
         data-border-color={`var(--main-${themeColor}-tooltip-border)`}
         data-text-color={`var(--main-${themeColor}-color)`}
+        */
       >
         {ship !== undefined ? (
           <div className={`hullTypeAbb ${getHullType(ship)}`}>{`${getHullTypeAbb(ship.hullType)} ${

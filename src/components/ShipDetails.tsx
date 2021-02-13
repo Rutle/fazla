@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '_/reducers/rootReducer';
 import { openWikiUrl } from '_/utils/ipcAPI';
@@ -7,6 +7,7 @@ import { addShip, removeShip } from '_/reducers/slices/ownedShipListSlice';
 import { AppContext } from '_/App';
 import PassivesList from './PassivesList';
 import RButton from './RButton/RButton';
+import { Ship } from '../types/types';
 
 /**
  * Component for displaying the details of a ship.
@@ -17,13 +18,18 @@ const ShipDetails: React.FC = () => {
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const config = useSelector((state: RootState) => state.config);
-  const ship = shipData.getShipByIndex(shipDetails.index);
+  const [ship, setShip] = useState<Ship | undefined>();
+
   const isOwned = () => {
     if (ship) {
       return ownedShips.some((ele) => ele === ship.id);
     }
     return false;
   };
+
+  useEffect(() => {
+    setShip(shipData.getShipByIndex(shipDetails.index));
+  }, [ship, shipData, shipDetails.index]);
 
   const addShipToOwned = useCallback(() => {
     if (ship) {
@@ -96,16 +102,19 @@ const ShipDetails: React.FC = () => {
     /*
     <div className="info-text">No ship selected or found</div>
     */
-    <div
-      className={`message-container ${config.themeColor}`}
-      style={{
-        alignSelf: 'center',
-        width: '50%',
-      }}
-    >
-      <span className="message" style={{ fontSize: '24px', justifyContent: 'center' }}>
-        No ship selected or found
-      </span>
+    <div style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
+      <div
+        className={`message-container ${config.themeColor}`}
+        style={{
+          alignSelf: 'center',
+          width: '50%',
+          minHeight: '40px',
+        }}
+      >
+        <span className="message" style={{ fontSize: '24px', justifyContent: 'center' }}>
+          No ship selected or found.
+        </span>
+      </div>
     </div>
   );
 };
