@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '_/reducers/store';
 import { saveConfig } from '_/utils/ipcAPI';
-import { AppConfig } from '_/types/types';
+import { AppConfig, BasicResponse } from '_/types/types';
 import { setErrorMessage } from './appStateSlice';
 /*
 const configApp = localStorage.getItem('config') as string;
@@ -63,35 +63,52 @@ const programConfigSlice = createSlice({
 
 export const { setStateValue, setUpdateDate, resetState, setConfig, setEditState } = programConfigSlice.actions;
 
+interface ConfigActionData {
+  key?: string;
+  value?: string | boolean;
+  doSave?: boolean;
+  storage?: LocalForage;
+}
+
 /**
  * Thunk to handle different config actions.
  * @param {AppConfigAction} action Enum of different actions.
- * @param {string} key Key in slice.
- * @param {string | boolean} value Value of key in slice.
+ * @param {ConfigActionData} data Key in slice.
  */
-export const configAction = (action: AppConfigAction, key?: string, value?: string | boolean): AppThunk => async (
+export const configAction = (action: AppConfigAction, data: ConfigActionData): AppThunk => async (
   dispatch: AppDispatch,
   getState
 ) => {
+  let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
     const platform = process.env.PLAT_ENV;
     const { config } = getState();
+    const { storage, key, value, doSave } = data;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { isEdit, ...newConfig } = config;
+    const { isEdit, ...newConfig } = { ...config };
     switch (action) {
       case 'UPDATE':
+        if (doSave && platform === 'web' && storage) {
+          if (key === 'themeColor') {
+            console.log(key);
+            newConfig.themeColor = value as 'dark' | 'light';
+            await storage.setItem('config', newConfig);
+          }
+        }
         dispatch(setStateValue({ key: key as string, value: value as string | boolean }));
+
         break;
       case 'SAVE':
         if (platform === 'electron') {
-          await saveConfig(newConfig).then((result) => {
-            if (result.isOk) {
-              dispatch(setEditState(false));
-            }
-          });
+          result = await saveConfig(newConfig);
         }
-        if (platform === 'web') {
-          localStorage.setItem('config', JSON.stringify(newConfig));
+        if (platform === 'web' && storage) {
+          // localStorage.setItem('config', JSON.stringify(newConfig));
+          const res = await storage.setItem('config', newConfig);
+          // await dispatch(setEditState(false));
+          result.isOk = Object.is(res, newConfig);
+        }
+        if (result.isOk) {
           dispatch(setEditState(false));
         }
         break;

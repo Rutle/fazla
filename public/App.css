@@ -90,7 +90,7 @@ div.scroll {
   padding: 2px 16px 2px 16px;
 }
 
-#window-controls {
+#window-controls.electron {
   display: grid;
   grid-column: 4;
   grid-template-columns: repeat(3, 32px);
@@ -98,6 +98,48 @@ div.scroll {
   box-sizing: border-box;
 }
 
+#window-controls.web {
+  display: grid;
+  grid-column: 4;
+  grid-template-columns: repeat(2, 48px);
+  height: 32px;
+  box-sizing: border-box;
+  align-content: center;
+  justify-items: end;
+}
+
+#window-controls > .radio-group {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  height: 18px;
+  border: 0;
+  border-radius: 0;
+}
+#window-controls label.btn {
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 12px;
+  height: 18px;
+  border: 0;
+  font-size: 12px;
+  border-radius: 0;
+  /* background-color: inherit;*/
+  padding: 0;
+}
+
+#window-controls #light-toggle {
+  grid-row: 1 / span 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  /* background-color: inherit;*/
+  padding: 0;
+}
 #window-controls .title-button {
   grid-row: 1 / span 1;
   display: flex;
@@ -255,6 +297,7 @@ button.btn.small {
 }
 
 label.btn,
+label.btn *,
 button.tab-btn,
 button.btn {
   cursor: pointer;
@@ -265,7 +308,7 @@ button.btn {
   border-radius: 4px;
 }
 
-button.btn.btn.menu-item {
+button.btn.menu-item {
   border-radius: 0px;
 }
 
@@ -341,7 +384,7 @@ div.f-row.action *,
   display: flex;
   font-size: 14px;
   height: inherit;
-  padding: 4px 4px 4px 10px;
+  padding: 4px 4px 4px 4px;
   flex-grow: 1;
   box-sizing: border-box;
   align-items: center;
@@ -365,7 +408,8 @@ div.f-row.action *,
 .toggle-icon {
   padding: 0;
   margin-left: 10px;
-  /* transition: 0.3s;*/
+  align-self: end;
+  transition: 0.3s;
   width: 7px;
 }
 
@@ -427,8 +471,9 @@ div.f-row.action *,
   border-radius: 0px;
 }
 
-.popover-content > .f-grid > .f-row {
-  margin-bottom: 5px;
+.popover-content > .f-grid  {
+  margin-top: 1px;
+  margin-left: 1px;
 }
 
 .popover-content > .f-grid > .f-row:last-child {
@@ -564,6 +609,13 @@ div.f-row.action *,
 input[type="text"],
 input[type="url"] {
   box-sizing: border-box;
+  padding: 2px 0px 2px 6px;
+  height: 31px;
+  width: 100%;
+  border-radius: 4px;
+  font-size: 14px;
+  min-width: 0;
+  text-overflow: ellipsis;
 }
 
 #input-group {
@@ -571,25 +623,10 @@ input[type="url"] {
   box-sizing: border-box;
   border-radius: 4px;
   height: 35px;
-  transition: box-shadow .2s ease-in, border .2s ease-in, background-color .2s ease-in, width 0.2s ease-in, color .2s ease-in;
-}
-#code-input,
-#search-input,
-#name-input {
-  padding: 5px;
-  height: 31px;
-  width: 100%;
-  border-radius: 4px;
+  transition: background-color .2s ease-in, width 0.2s ease-in, color .2s ease-in;
 }
 
-.text-input {
-  padding: 2px;
-  height: 27px;
-  min-width: 0;
-  margin-right: 2px;
-  text-overflow: ellipsis;
-  font-size: 14px;
-  border-radius: 2px;
+.url-input {
   transition: box-shadow .2s ease-in, border .2s ease-in, background-color .2s ease-in, width 0.2s ease-in, color .2s ease-in;
 }
 
@@ -601,15 +638,19 @@ input[type="url"] {
 button.icon {
   text-align: center;
   display: inline-flex;
+  justify-content: center;
   align-items: center;
   box-sizing: border-box;
   width: 26px;
   padding: 5px;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
+  border-radius: 4px;
 }
+
 button.icon {
-  transition: inherit;
+  border-radius: 0px 4px 4px 0px;
+}
+button.icon:hover {
+  border-radius: 0px;
 }
 /* ##### GRID ##### */
 .f-grid {

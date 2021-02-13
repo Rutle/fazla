@@ -61,11 +61,9 @@ const App: React.FC = () => {
     if (process.env.PLAT_ENV === 'web' && storage) {
       try {
         (async () => {
-          console.log('App -useEffect');
-          // return checkResource(); // Check that .json data exists.
+          // Get config immediately.
           const configA = (await storage.getItem('config')) as AppConfig;
           if (configA !== null) {
-            console.log('not null configA');
             dispatch(setConfig(configA));
           } else {
             await storage.setItem('config', configA);

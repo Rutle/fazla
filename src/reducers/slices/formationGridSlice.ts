@@ -11,7 +11,6 @@ export enum FormationAction {
   Save = 'SAVE',
   AddShip = 'ADDSHIP',
   RemoveShip = 'REMOVESHIP',
-  SaveAll = 'SAVEALL',
   Export = 'EXPORT',
   Import = 'IMPORT',
 }
@@ -166,17 +165,18 @@ interface FormActionData {
   formationName?: string;
   formationType?: string;
   importedFormation?: string[];
+  storage?: LocalForage;
 }
 
 /**
  * Updates all ships search list.
  * @param {FormationAction} action Enum action
  */
-export const formationAction = (
-  action: FormationAction,
-  data: FormActionData,
-  storage?: LocalForage
-): AppThunk => async (dispatch: AppDispatch, getState) => {
+export const formationAction = (action: FormationAction, data: FormActionData): AppThunk => async (
+  dispatch: AppDispatch,
+  getState
+) => {
+  let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
     const platform = process.env.PLAT_ENV;
     const { formationGrid, formationModal, shipDetails } = getState();
@@ -188,6 +188,7 @@ export const formationAction = (
     const fType = data.formationType || 'normal';
     const iFormation = data.importedFormation || [];
     const shipGridIndex = data.gridIndex || 0;
+    const { storage } = data;
     let emptyFormation = [];
     switch (action) {
       case 'NEW':
@@ -200,58 +201,35 @@ export const formationAction = (
         break;
       case 'REMOVE':
         if (platform === 'electron') {
-          removeAFormation(formIdx)
-            .then((result) => {
-              if (result.isOk) dispatch(removeFormation(formIdx));
-              if (!result.isOk) throw new Error(result.msg);
-            })
-            .catch(() => {
-              throw new Error('Something went really badly wrong.');
-            });
+          result = await removeAFormation(formIdx);
         }
         if (platform === 'web' && storage) {
           const newForms = formationGrid.formations.filter((item, index) => index !== formIdx);
-          storage
-            .setItem('formations', newForms)
-            .then(() => {
-              dispatch(removeFormation(formIdx));
-            })
-            .catch(() => {
-              throw new Error('Failed to remove a formation.');
-            });
+          const res = await storage.setItem('formations', newForms);
+          result.isOk = newForms.length === res.length;
+          if (!result.isOk) result.msg = 'Failed to remove formation.';
         }
+        if (result.isOk) dispatch(removeFormation(formIdx));
+        if (!result.isOk) throw new Error(result.msg);
         break;
       case 'RENAME':
         dispatch(renameFormation({ idx: formIdx, name }));
         break;
       case 'SAVE':
         if (platform === 'electron') {
-          await saveFormationData(formationGrid.formations).then((result) => {
-            if (result.isOk) dispatch(toggleIsEdit(formIdx));
-          });
+          result = await saveFormationData(formationGrid.formations);
         }
         if (platform === 'web' && storage) {
-          // localStorage.setItem('formations', JSON.stringify(formationGrid.formations));
-          await storage.setItem('formations', formationGrid.formations);
-          dispatch(toggleIsEdit(formIdx));
+          const res = await storage.setItem('formations', formationGrid.formations);
+          result.isOk = res.length === formationGrid.formations.length;
         }
+        if (result.isOk) dispatch(toggleIsEdit(formIdx));
         break;
       case 'ADDSHIP':
         dispatch(addShipToFormation({ id, gridIndex: gIndex, selectedIndex: formIdx }));
         break;
       case 'REMOVESHIP':
         dispatch(removeShipFromFormation({ gridIndex: shipGridIndex, selectedIndex: formIdx }));
-        break;
-      case 'SAVEALL':
-        if (platform === 'electron') {
-          await saveFormationData(formationGrid.formations).then((result) => {
-            if (!result.isOk) dispatch(setErrorMessage({ cState: 'ERROR', eMsg: result.msg, eState: 'ERROR' }));
-          });
-        }
-        if (platform === 'web' && storage) {
-          // localStorage.setItem('formations', JSON.stringify(formationGrid.formations));
-          await storage.setItem('formations', formationGrid.formations);
-        }
         break;
       case 'IMPORT': {
         dispatch(addNewFormationData({ data: iFormation, name }));

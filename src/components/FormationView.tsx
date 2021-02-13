@@ -27,7 +27,7 @@ ReactModal.setAppElement('#root');
  */
 const FormationView: React.FC = () => {
   const dispatch = useDispatch();
-  const { shipData } = useContext(AppContext);
+  const { shipData, storage } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
   const appState = useSelector((state: RootState) => state.appState);
@@ -165,7 +165,7 @@ const FormationView: React.FC = () => {
                 <RButton
                   themeColor={config.themeColor}
                   className="tab-btn normal"
-                  onClick={() => dispatch(formationAction(FormationAction.Remove, {}))}
+                  onClick={() => dispatch(formationAction(FormationAction.Remove, { storage }))}
                   disabled={fData.formations.length === 0}
                 >
                   Remove
@@ -173,7 +173,7 @@ const FormationView: React.FC = () => {
                 <RButton
                   themeColor={config.themeColor}
                   className={`tab-btn normal ${fData.isEdit[fData.selectedIndex] ? 'selected' : ''}`}
-                  onClick={() => dispatch(formationAction(FormationAction.Save, {}))}
+                  onClick={() => dispatch(formationAction(FormationAction.Save, { storage }))}
                   disabled={!fData.isEdit[fData.selectedIndex]}
                 >
                   Save
@@ -207,7 +207,17 @@ const FormationView: React.FC = () => {
           {fData.formations.length !== 0 ? (
             <>{renderContent(fData.selectedIndex)}</>
           ) : (
-            <div className="info-text">Please create new formation</div>
+            <div
+              className={`message-container ${config.themeColor}`}
+              style={{
+                alignSelf: 'center',
+                width: '50%',
+              }}
+            >
+              <span className="message" style={{ fontSize: '24px', justifyContent: 'center' }}>
+                Please create new formation
+              </span>
+            </div>
           )}
         </div>
       </section>

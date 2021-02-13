@@ -21,17 +21,19 @@ const Home: React.FC = () => {
   const config = useSelector((state: RootState) => state.config);
   const [shipCount, setShipCount] = useState(appState.shipCount);
   const [docksCount, setDocksCount] = useState(ownedList.length);
+  /*
   const [srcInputLen, setSRCInputLen] = useState(config.jsonURL.length || 25);
   const [jsonSRCValue, setJSONSRCValue] = useState(config.jsonURL);
   const [isSRCFocus, setSRCFocus] = useState(false);
+  */
   const [shipDiff, setShipDiff] = useState({ count: 0, isUpdate: false });
-
+  /*
   useEffect(() => {
     setSRCFocus(false);
     setSRCInputLen(25);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  */
   useEffect(() => {
     setDocksCount(ownedList.length);
   }, [ownedList]);
@@ -42,7 +44,7 @@ const Home: React.FC = () => {
 
   const updateConfig = useCallback(
     (key: string, value: string | boolean) => {
-      dispatch(configAction(AppConfigAction.Update, key, value));
+      dispatch(configAction(AppConfigAction.Update, { key, value }));
     },
     [dispatch]
   );
@@ -72,19 +74,19 @@ const Home: React.FC = () => {
     return (
       <RButton
         themeColor={`${config.themeColor}`}
-        onClick={() => dispatch(configAction(AppConfigAction.Save))}
+        onClick={() => dispatch(configAction(AppConfigAction.Save, {}))}
         disabled={!config.isEdit}
       >
         Save changes
       </RButton>
     );
   };
-
+  /*
   const setSRCInputFocus = (e: React.FocusEvent<HTMLInputElement>, len: number) => {
     setSRCInputLen(len);
     setSRCFocus(!isSRCFocus);
   };
-
+  */
   const getShipCount = () => {
     if (shipDiff.isUpdate && appState.cState === 'RUNNING') {
       const diff = shipData.count - shipDiff.count;
@@ -117,6 +119,7 @@ const Home: React.FC = () => {
             </div>
             {process.env.PLAT_ENV === 'electron' ? (
               <>
+                {/* 
                 <div className="f-row wrap">
                   <div className="grid-item name">Raw data URL</div>
                   <div className="grid-item action">
@@ -124,7 +127,7 @@ const Home: React.FC = () => {
                       type="url"
                       placeholder={config.jsonURL ? config.jsonURL : ''}
                       spellCheck="false"
-                      className={`text-input ${config.themeColor}`}
+                      className={`url-input ${config.themeColor}`}
                       style={{ width: `${srcInputLen}ch` }}
                       value={jsonSRCValue}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,6 +146,7 @@ const Home: React.FC = () => {
                     />
                   </div>
                 </div>
+                */}
                 <div className="f-row wrap">
                   <div className="grid-item name">Formation tooltips</div>
                   <div className="grid-item action">

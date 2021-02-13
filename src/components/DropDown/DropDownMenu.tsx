@@ -28,7 +28,7 @@ const DropDownMenu: React.FC<FormationDropDownProps> = ({
       className={`formation-dropdown-menu ${themeColor}`}
       style={{
         opacity: `${show ? '1' : '0'}`,
-        height: `${show ? 'auto' : '0'}`,
+        // height: `${show ? 'auto' : '0'}`,
         top: '24px',
       }}
     >

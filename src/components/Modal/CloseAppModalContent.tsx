@@ -39,7 +39,7 @@ const CloseAppModalContent: React.FC<{ setModalOpen: (e: boolean) => void }> = (
                 dispatch(formationAction(FormationAction.Save, {}));
               }
               if (config.isEdit) {
-                dispatch(configAction(AppConfigAction.Save));
+                dispatch(configAction(AppConfigAction.Save, {}));
               }
             }}
           >

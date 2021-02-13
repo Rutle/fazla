@@ -33,21 +33,21 @@ export const { resetList, addShipId, setOwnedList, removeShipId } = ownedShipLis
 /**
  * Add ship id to owned list.
  * @param {string} id Id of the ship.
+ * @param {LocalForage} storage LocalForage store holding ship data.
  */
-export const addShip = (id: string): AppThunk => async (dispatch: AppDispatch, getState) => {
+export const addShip = (id: string, storage?: LocalForage): AppThunk => async (dispatch: AppDispatch, getState) => {
   let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
     const platform = process.env.PLAT_ENV as string;
     const ownedShips = [...getState().ownedShips, id];
     if (platform === 'electron') {
       result = await saveOwnedShipData(ownedShips);
-      if (result.isOk) {
-        dispatch(addShipId(id));
-        dispatch(setIsUpdated({ key: 'OWNED', value: false }));
-      }
     }
-    if (platform === 'web') {
-      localStorage.setItem('ownedShips', JSON.stringify(ownedShips));
+    if (platform === 'web' && storage) {
+      const res = await storage.setItem('ownedShips', ownedShips);
+      result.isOk = res.length === ownedShips.length;
+    }
+    if (result.isOk) {
       dispatch(addShipId(id));
       dispatch(setIsUpdated({ key: 'OWNED', value: false }));
     }
@@ -60,9 +60,14 @@ export const addShip = (id: string): AppThunk => async (dispatch: AppDispatch, g
 
 /**
  * Remove ship id from owned list.
+ * @param {DataStore} shipData Datastore holding ship data.
  * @param {string} id Id of the ship.
+ * @param {LocalForage} storage Holding data in IndexedDB.
  */
-export const removeShip = (shipData: DataStore, id: string): AppThunk => async (dispatch: AppDispatch, getState) => {
+export const removeShip = (shipData: DataStore, id: string, storage?: LocalForage): AppThunk => async (
+  dispatch: AppDispatch,
+  getState
+) => {
   let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
     const platform = process.env.PLAT_ENV as string;
@@ -72,9 +77,9 @@ export const removeShip = (shipData: DataStore, id: string): AppThunk => async (
     if (platform === 'electron') {
       result = await saveOwnedShipData(newList);
     }
-    if (platform === 'web') {
-      localStorage.setItem('ownedShips', JSON.stringify(ownedShips));
-      result.isOk = true;
+    if (platform === 'web' && storage) {
+      const res = await storage.setItem('ownedShips', newList);
+      result.isOk = res.length === newList.length;
     }
     if (result.isOk) {
       dispatch(setOwnedList(newList));

@@ -33,8 +33,7 @@ export const fleets: { MAIN: string[]; VANGUARD: string[] } = {
 export const nationCategories: Pair = {
   'Royal Navy': 'HMS',
   'Sakura Empire': 'IJN',
-  Ironblood: 'KMS',
-  'Eastern Radiance': 'ROC',
+  'Iron Blood': 'KMS',
   'Northern Parliament': 'SN',
   'Eagle Union': 'USS',
   'Iris Libre': 'FFNF',
@@ -44,7 +43,7 @@ export const nationCategories: Pair = {
   Neptunia: 'NEP',
   Bilibili: 'BIL',
   Utawarerumono: 'UTA',
-  KizunaAI: 'KA',
+  'Kizuna AI': 'KA',
   Hololive: 'HOL',
 };
 

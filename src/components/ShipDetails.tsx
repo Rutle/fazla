@@ -13,7 +13,7 @@ import RButton from './RButton/RButton';
  */
 const ShipDetails: React.FC = () => {
   const dispatch = useDispatch();
-  const { addToast, shipData } = useContext(AppContext);
+  const { addToast, shipData, storage } = useContext(AppContext);
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
   const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const config = useSelector((state: RootState) => state.config);
@@ -27,17 +27,17 @@ const ShipDetails: React.FC = () => {
 
   const addShipToOwned = useCallback(() => {
     if (ship) {
-      dispatch(addShip(ship.id));
+      dispatch(addShip(ship.id, storage));
       if (config.isToast) addToast('success', 'Docks', `${ship.names.code} was added to docks.`);
     }
-  }, [dispatch, addToast, ship, config.isToast]);
+  }, [ship, dispatch, storage, config.isToast, addToast]);
 
   const removeFromOwned = useCallback(() => {
     if (ship) {
-      dispatch(removeShip(shipData, ship.id));
+      dispatch(removeShip(shipData, ship.id, storage));
       if (config.isToast) addToast('info', 'Docks', `${ship.names.code} removed from docks.`);
     }
-  }, [ship, dispatch, shipData, config.isToast, addToast]);
+  }, [ship, dispatch, shipData, storage, config.isToast, addToast]);
 
   const renderAddRemoveButton = () => {
     if (!isOwned()) {
@@ -93,7 +93,20 @@ const ShipDetails: React.FC = () => {
       </div>
     </>
   ) : (
+    /*
     <div className="info-text">No ship selected or found</div>
+    */
+    <div
+      className={`message-container ${config.themeColor}`}
+      style={{
+        alignSelf: 'center',
+        width: '50%',
+      }}
+    >
+      <span className="message" style={{ fontSize: '24px', justifyContent: 'center' }}>
+        No ship selected or found
+      </span>
+    </div>
   );
 };
 

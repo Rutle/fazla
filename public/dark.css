@@ -272,12 +272,13 @@ div.radio-group.dark,
 div.button-group.dark {
   border: 1px solid var(--main-dark-border);
 }
-#input-group.dark .icon,
+
 .radio-group.dark label,
 .button-group.dark button,
 .page.dark .tab button {
   border: 1px solid var(--main-dark-bg);
 }
+
 /* #### Rarity colors #### */
 .ship-title-bar > span.Super.Rare:last-child {
   color: PaleGoldenrod;
@@ -299,18 +300,14 @@ div.button-group.dark {
 }
 
 /* #### Input #### */
-input[type="text"].dark {
+input[type="text"].dark,
+.searchIcon.dark,
+button.icon.dark {
   color: inherit;
   background-color: inherit;
   border: unset;
 }
 
-/*
-input[type="text"].dark:focus {
-  background-color: inherit;
-  border: unset;
-}
-*/
 input[type="url"].dark,
 #input-group.dark {
   color: var(--main-dark-color);
@@ -329,17 +326,6 @@ input[type="url"].dark.is-invalid,
 #input-group.dark.is-invalid {
   border-color: rgb(110, 19, 19);
 }
-
-#input-group.dark.input-focus > button.btn.icon {
-  background-color: rgba(0,0,0,0.45);
-  border: 1px solid rgba(0,0,0,0.45);
-}
-
-#input-group.dark.input-focus > button.icon:hover {
-  background-color: var(--main-dark-hover-bg);
-  border: 1px solid black;
-}
-
 
 /* #### Grid #### */
 div.f-grid.dark div.f-header {
