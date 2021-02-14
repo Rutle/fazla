@@ -1,6 +1,8 @@
 const lodash = require('lodash');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -47,7 +49,10 @@ const commonConfig = {
       },
       {
         test: /\.(scss|css)$/,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          isEnvDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
       },
       {
         test: /\.(jpg|png|svg|ico|icns)$/,
@@ -59,6 +64,7 @@ const commonConfig = {
     ],
   },
 };
+
 // #endregion
 if (isElectron) {
   const mainConfig = lodash.cloneDeep(commonConfig);
@@ -102,24 +108,89 @@ if (isElectron) {
   rendererConfig.plugins = [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './public/index.html'),
+      inject: true,
     }),
     new webpack.DefinePlugin({
       'process.env.PLAT_ENV': JSON.stringify(process.env.PLAT_ENV),
     }),
   ];
+  if (!isEnvDevelopment) {
+    // enable in production only
+    rendererConfig.plugins.push(new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: 'static/css/[name].[contenthash:8].css',
+      chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+    }));
+  }
   module.exports = [mainConfig, preloadConfig, rendererConfig];
 }
 if (isWeb) {
   const webConfig = lodash.cloneDeep(commonConfig);
-  webConfig.entry = './src/renderer/index.tsx';
-  webConfig.output.filename = 'renderer.bundle.js';
+  webConfig.entry = {
+    renderer: ['./src/renderer/index.tsx'],
+  };
+  webConfig.output = {
+    filename: 'static/js/[name].[contenthash:8].js',
+  };
+
+  webConfig.performance = {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  };
+
+  webConfig.optimization = {
+    minimize: isEnvProduction,
+    moduleIds: 'deterministic',
+    splitChunks: {
+      chunks: 'all',
+      /*
+      cacheGroups: {
+        vendor: {
+          name: 'node_vendors', // part of the bundle name and
+          // can be used in chunks array of HtmlWebpackPlugin
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'all',
+        },
+      },
+      */
+    },
+    // Keep the runtime chunk separated to enable long term caching
+    // https://twitter.com/wSokra/status/969679223278505985
+    // https://github.com/facebook/create-react-app/issues/5358
+    runtimeChunk: {
+      name: (entrypoint) => `runtime-${entrypoint.name}`,
+    },
+
+  };
   webConfig.plugins = [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './public/index.html'),
+      favicon: path.resolve(__dirname, './public/favicon.ico'),
+      inject: true,
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: 'public/manifest.json' },
+        { from: 'public/robots.txt' },
+        { from: 'public/logo192.png' },
+        { from: 'public/logo512.png' },
+      ],
     }),
     new webpack.DefinePlugin({
       'process.env.PLAT_ENV': JSON.stringify(process.env.PLAT_ENV),
     }),
+    // new BundleAnalyzerPlugin(),
   ];
+  if (!isEnvDevelopment) {
+    // enable in production only
+    webConfig.plugins.push(new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: 'static/css/[name].[contenthash:8].css',
+      chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+    }));
+  }
   module.exports = [webConfig];
 }

@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { RootState } from '_/reducers/rootReducer';
 // import { setDetails } from '_/reducers/slices/shipDetailsSlice';
@@ -47,9 +47,7 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
       <div className="top-container">
         <form role="search">
           <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
-            <div className={`searchIcon ${config.themeColor}`}>
-              <FontAwesomeIcon icon={faSearch} />
-            </div>
+            <div className={`searchIcon ${config.themeColor}`}>{/* <FontAwesomeIcon icon={faSearch} /> */}</div>
             <input
               id="search-input"
               aria-label="search"
@@ -92,7 +90,7 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
                   );
                 }}
               >
-                <FontAwesomeIcon icon={faTimes} />
+                {/* <FontAwesomeIcon icon={faTimes} /> */}
               </RButton>
             ) : (
               <></>

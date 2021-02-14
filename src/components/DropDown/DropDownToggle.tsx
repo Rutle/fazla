@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDropdownToggle } from 'react-overlays';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 
 interface DropDownToggleProps {
   id: string;
@@ -32,9 +32,7 @@ const DropDownToggle: React.FC<DropDownToggleProps> = ({ id, text, themeColor })
       }}
     >
       <span>{text}</span>
-      <div className={`toggle-icon ${ctrl[1].show ? 'open' : ''}`}>
-        <FontAwesomeIcon icon={faAngleLeft} />
-      </div>
+      <div className={`toggle-icon ${ctrl[1].show ? 'open' : ''}`}>{/* <FontAwesomeIcon icon={faAngleLeft} /> */}</div>
     </button>
   );
 };

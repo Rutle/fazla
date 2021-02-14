@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { updateShipData } from '_/reducers/slices/appStateSlice';
 import { RootState } from '_/reducers/rootReducer';
 import { configAction, AppConfigAction } from '_/reducers/slices/programConfigSlice';
@@ -36,6 +36,7 @@ const Home: React.FC = () => {
   */
   useEffect(() => {
     setDocksCount(ownedList.length);
+    console.log(process.env.PUBLIC_URL);
   }, [ownedList]);
 
   useEffect(() => {
@@ -108,9 +109,7 @@ const Home: React.FC = () => {
         <div className="home-container">
           <div className={`f-grid ${config.themeColor}`}>
             <div className="f-row">
-              <div className="f-icon bottom-emp">
-                <FontAwesomeIcon icon={faCaretRight} />
-              </div>
+              <div className="f-icon bottom-emp">{/* <FontAwesomeIcon icon={faCaretRight} /> */}</div>
               <div className="f-title bottom-emp">Options</div>
             </div>
             <div className="f-row wrap">
@@ -207,9 +206,7 @@ const Home: React.FC = () => {
               <div className="grid-item action">{renderSave()}</div>
             </div>
             <div className="f-row">
-              <div className="f-icon bottom-emp">
-                <FontAwesomeIcon icon={faCaretRight} />
-              </div>
+              <div className="f-icon bottom-emp">{/* <FontAwesomeIcon icon={faCaretRight} /> */}</div>
               <div className="f-title bottom-emp">Stats</div>
             </div>
             <div className="f-row wrap">

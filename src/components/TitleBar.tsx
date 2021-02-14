@@ -1,8 +1,9 @@
 import React, { ReactNode, useCallback, useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
+// import { FaTimes, FaWindowMinimize, FaWindowMaximize, FaWindowRestore } from 'react-icons/fa';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '_/utils/ipcAPI';
@@ -111,7 +112,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
         {process.env.PLAT_ENV === 'electron' ? (
           <div id="window-controls" className="electron">
             <RButton className="title-button" id="min-button" onClick={() => minimizeWindow()}>
-              <FontAwesomeIcon icon={faWindowMinimize} size="xs" />
+              {/* <FaWindowMinimize /> */}
             </RButton>
             {isMax ? (
               <RButton
@@ -122,7 +123,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                   setIsMax(false);
                 }}
               >
-                <FontAwesomeIcon icon={faWindowRestore} size="xs" />
+                {/* <FaWindowRestore /> */}
               </RButton>
             ) : (
               <RButton
@@ -133,7 +134,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                   setIsMax(true);
                 }}
               >
-                <FontAwesomeIcon icon={faWindowMaximize} size="xs" />
+                {/* <FaWindowMaximize /> */}
               </RButton>
             )}
             <RButton
@@ -147,7 +148,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                 }
               }}
             >
-              <FontAwesomeIcon icon={faTimes} />
+              {/* <FaTimes /> */}
             </RButton>
           </div>
         ) : (
@@ -168,7 +169,10 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                 value="light"
                 className="btn normal"
                 themeColor={config.themeColor}
-                onChange={() => updateConfig('themeColor', 'light')}
+                onChange={() => {
+                  updateConfig('themeColor', 'light');
+                  console.log(process.env.PUBLIC_URL);
+                }}
                 selected={config.themeColor === 'light'}
               >
                 L

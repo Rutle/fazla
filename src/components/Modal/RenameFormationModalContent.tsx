@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { FaTimes } from 'react-icons/fa';
+// import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FormationAction, formationAction } from '_/reducers/slices/formationGridSlice';
 import { RootState } from '_/reducers/rootReducer';
 import RButton from '../RButton/RButton';
@@ -55,7 +56,7 @@ const RenameFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen })
                   setNameVal('');
                 }}
               >
-                <FontAwesomeIcon icon={faTimes} />
+                {/* <FaTimes /> */}
               </RButton>
             ) : (
               <></>
