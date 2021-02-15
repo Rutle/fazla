@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { FormationAction, formationAction } from '_/reducers/slices/formationGridSlice';
 import { RootState } from '_/reducers/rootReducer';
 import RButton from '../RButton/RButton';
+import { CloseIcon } from '../Icons';
 
 interface FormModalProps {
   setModalOpen: (openProp: { modal: string; isOpen: boolean }) => void;
@@ -56,7 +57,7 @@ const RenameFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen })
                   setNameVal('');
                 }}
               >
-                {/* <FaTimes /> */}
+                <CloseIcon themeColor={config.themeColor} />
               </RButton>
             ) : (
               <></>
@@ -66,7 +67,7 @@ const RenameFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen })
       </div>
 
       <div className="modal-action">
-        <div className={`button-group ${config.themeColor}`}>
+        <div className={`button-group ${config.themeColor}`} style={{ flexGrow: 1 }}>
           <RButton
             themeColor={config.themeColor}
             onClick={() => {

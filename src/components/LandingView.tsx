@@ -217,7 +217,7 @@ const LandingView: React.FC = () => {
                 alignItems: 'flex-start',
               }}
             >
-              <div className={`button-group ${config.themeColor}`} style={{ minWidth: '50%', width: 'unset' }}>
+              <div className={`button-group ${config.themeColor}`} style={{ minWidth: '50%' }}>
                 <RButton
                   disabled={appState.cState !== 'RUNNING'}
                   themeColor={config.themeColor}

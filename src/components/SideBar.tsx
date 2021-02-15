@@ -8,6 +8,7 @@ import CategoryOverlay from './CategoryOverlay';
 import { AppContext } from '../App';
 import RToggle from './RToggle/RToggle';
 import RButton from './RButton/RButton';
+import { CloseIcon } from './Icons';
 
 interface ShipListProps {
   children: React.ReactNode;
@@ -44,7 +45,6 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
       <div className="top-container">
         <form role="search">
           <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
-            <div className={`searchIcon ${config.themeColor}`}>{/* <FontAwesomeIcon icon={faSearch} /> */}</div>
             <input
               id="search-input"
               aria-label="search"
@@ -87,7 +87,7 @@ const SideBar: React.FC<ShipListProps> = ({ children }) => {
                   );
                 }}
               >
-                {/* <FontAwesomeIcon icon={faTimes} /> */}
+                <CloseIcon themeColor={config.themeColor} />
               </RButton>
             ) : (
               <></>

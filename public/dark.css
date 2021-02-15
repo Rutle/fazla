@@ -71,12 +71,12 @@ div.page.dark {
   background-color: var(--root-dark-bg);
   color: var(--main-dark-color);
 }
-
+/*
 div.page.dark .ship-side-container,
 div.modal-overlay.dark .ship-side-container {
   border-right: 1px solid var(--main-dark-border);
 }
-
+*/
 /* ##### Titlebar ##### */
 #titlebar.dark {
   background: var(--main-dark-bg);

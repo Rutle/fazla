@@ -124,7 +124,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
       </div>
 
       <div className="modal-action">
-        <div className={`button-group ${config.themeColor}`}>
+        <div className={`button-group ${config.themeColor}`} style={{ flexGrow: 1 }}>
           {isType === 'import' ? (
             <>
               <RButton
