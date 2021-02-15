@@ -18,7 +18,6 @@ const FormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) => {
   const { shipData } = useContext(AppContext);
   const dispatch = useDispatch();
   const appState = useSelector((state: RootState) => state.appState);
-  const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const config = useSelector((state: RootState) => state.config);
   const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
   const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
@@ -46,7 +45,7 @@ const FormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) => {
       </SideBar>
       <div className={`ship-data-container ${config.themeColor}`}>
         <ShipDetails />
-        {shipData.shipsArr[shipDetails.index] ? (
+        {shipData.shipsArr[appState[appState.cToggle].index] ? (
           <RButton themeColor={config.themeColor} onClick={addShip} extraStyle={{ marginTop: '5px', height: '50px' }}>
             Add to formation
           </RButton>

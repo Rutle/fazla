@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { FaTimes } from 'react-icons/fa';
 import PropTypes from 'prop-types';
-// import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { encodeFormation, parseImportCode } from '_/utils/appUtilities';
 import { RootState } from '_/reducers/rootReducer';
 import { FormationAction, formationAction } from '_/reducers/slices/formationGridSlice';
+import { CloseIcon } from '_components/Icons';
 import RButton from '../RButton/RButton';
 
 interface FormModalProps {
@@ -116,7 +114,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
                   setValue('');
                 }}
               >
-                {/* <FaTimes /> */}
+                <CloseIcon themeColor={config.themeColor} />
               </RButton>
             ) : (
               <></>

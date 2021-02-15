@@ -5,6 +5,7 @@ import { openWikiUrl } from '_/utils/ipcAPI';
 import { urlValidation } from '_utils/appUtilities';
 import { addShip, removeShip } from '_/reducers/slices/ownedShipListSlice';
 import { AppContext } from '_/App';
+import { SearchAction, updateSearch } from '_/reducers/slices/searchParametersSlice';
 import PassivesList from './PassivesList';
 import RButton from './RButton/RButton';
 import { Ship } from '../types/types';
@@ -15,8 +16,8 @@ import { Ship } from '../types/types';
 const ShipDetails: React.FC = () => {
   const dispatch = useDispatch();
   const { addToast, shipData, storage } = useContext(AppContext);
+  const appState = useSelector((state: RootState) => state.appState);
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
-  const shipDetails = useSelector((state: RootState) => state.shipDetails);
   const config = useSelector((state: RootState) => state.config);
   const [ship, setShip] = useState<Ship | undefined>();
 
@@ -28,8 +29,26 @@ const ShipDetails: React.FC = () => {
   };
 
   useEffect(() => {
-    setShip(shipData.getShipByIndex(shipDetails.index));
-  }, [ship, shipData, shipDetails.index]);
+    if (!appState[appState.cToggle].isUpdated) {
+      dispatch(
+        updateSearch(shipData, SearchAction.UpdateList, {
+          name: '',
+          cat: '',
+          param: '',
+          id: '',
+          list: appState.cToggle,
+        })
+      );
+    } else {
+      setShip(shipData.getShipByIndex(appState[appState.cToggle].index));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appState.cToggle, dispatch, shipData]);
+
+  useEffect(() => {
+    setShip(shipData.getShipByIndex(appState[appState.cToggle].index));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appState.ALL, appState.OWNED, shipData]);
 
   const addShipToOwned = useCallback(() => {
     if (ship) {
@@ -75,7 +94,7 @@ const ShipDetails: React.FC = () => {
         <span className="ship-name">{ship.names.code}</span>
         <span className={ship.rarity}>{` ${ship.stars?.stars as string}`}</span>
       </div>
-      <div className={`button-group ${config.themeColor}`} style={{ width: 'unset', marginBottom: '5px' }}>
+      <div className={`button-group ${config.themeColor}`} style={{ marginBottom: '5px' }}>
         {renderAddRemoveButton()}
         <RButton
           themeColor={config.themeColor}
@@ -89,19 +108,14 @@ const ShipDetails: React.FC = () => {
       </div>
       <div className="scroll">
         <div className={`f-grid ${config.themeColor}`}>
-          <div className="f-collapsible">
-            <div className="f-row">
-              <div className="passive f-header">Passives</div>
-            </div>
-            <PassivesList skills={ship.skills} />
+          <div className="f-row">
+            <div className="passive f-header">Passives</div>
           </div>
+          <PassivesList skills={ship.skills} />
         </div>
       </div>
     </>
   ) : (
-    /*
-    <div className="info-text">No ship selected or found</div>
-    */
     <div style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
       <div
         className={`message-container ${config.themeColor}`}

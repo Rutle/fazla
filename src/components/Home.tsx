@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+
 import { updateShipData } from '_/reducers/slices/appStateSlice';
 import { RootState } from '_/reducers/rootReducer';
 import { configAction, AppConfigAction } from '_/reducers/slices/programConfigSlice';
@@ -36,7 +37,6 @@ const Home: React.FC = () => {
   */
   useEffect(() => {
     setDocksCount(ownedList.length);
-    console.log(process.env.PUBLIC_URL);
   }, [ownedList]);
 
   useEffect(() => {
@@ -145,8 +145,9 @@ const Home: React.FC = () => {
                     />
                   </div>
                 </div>
-                */}
+                
                 <div className="f-row wrap">
+                  {}
                   <div className="grid-item name">Formation tooltips</div>
                   <div className="grid-item action">
                     <RSwitch
@@ -167,7 +168,7 @@ const Home: React.FC = () => {
                       checked={config.isToast}
                     />
                   </div>
-                </div>
+                </div> */}
               </>
             ) : (
               <></>

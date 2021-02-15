@@ -11,7 +11,7 @@ const FooterBar: React.FC = () => {
   return (
     <div id="footer" className={`${config.themeColor}`}>
       <div id="footer-state-msg" style={process.env.PLAT_ENV === 'web' ? { justifyContent: 'flex-end' } : {}}>
-        {process.env.PLAT_ENV === 'electron' ? <span>{`${appState.cMsg}`}</span> : <span>Code by RuTle</span>}
+        {process.env.PLAT_ENV === 'electron' ? <span>{`${appState.cMsg}`}</span> : <span>Code by Rutle</span>}
       </div>
     </div>
   );

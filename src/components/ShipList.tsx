@@ -72,12 +72,12 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
                   style={{ ...style, top: (style.top as number) + 1, height: 29, width: 'calc(100% - 1px)' }}
                   className={`rList-item btn ${config.themeColor} ${isShipOwned ? 'owned' : ''} ${
                     shipSearchList[index].id === appState[appState.cToggle].id ? 'selected' : ''
-                  }`}
+                  } ${getHullType(ship)}`}
                   onClick={() => selectShip(shipSearchList[index].id, shipSearchList[index].index)}
                 >
                   <div className="owned-indicator" />
                   <div className={`name ${getRarity(ship)}`}>{ship.names.en}</div>
-                  <div className={`hullTypeAbb ${getHullType(ship)}`}>{getHullTypeAbb(ship.hullType)}</div>
+                  <div className="hullTypeAbb">{getHullTypeAbb(ship.hullType)}</div>
                 </button>
               );
             })}

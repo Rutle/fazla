@@ -30,6 +30,7 @@ export default class DataStore {
   }
 
   getShipByIndex(index: number): Ship | undefined {
+    if (Number.isNaN(index)) console.log('nan');
     return this.shipsArr[index];
   }
 

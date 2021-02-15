@@ -1,25 +1,17 @@
 html {
-  margin: 0px;
-  height: 100vh;
+  height: 100%;
+  overflow: hidden;
   padding: 0px;
+  margin: 0px;
 }
 body {
   margin: 0px;
   padding: 0px;
-  height: 100vh;
+  /*height: 100vh;*/
+  height: 100%;
   width: 100%;
   flex-direction: column;
 }
-
-:not(input):not(textarea),
-:not(input):not(textarea)::after,
-:not(input):not(textarea)::before {
-    -webkit-user-select: none;
-    user-select: none;
-    cursor: default;
-}
-
-
 
 #root, #root > div {
   height: 100%;
@@ -31,18 +23,47 @@ body, nav, header {
   display: flex;
 }
 
+.page {
+  height: 100%;
+  display: flex;
+  /* min-height: 93vh;*/
+  flex-direction: column;
+  margin-top: 40px;
+  margin-bottom: 25px;
+  max-height: calc(100% - 65px);
+}
+
+.page-content {
+  /* margin: 0px 0px 25px 0px;*/
+  height: 100%;
+  /*max-height: calc(100% - 62px);*/
+  /* max-height: calc(100% - 40px);*/
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
 div.scroll {
   height: 100%;
   overflow-y: scroll;
   padding-right: 5px;
 }
 
+:not(input):not(textarea),
+:not(input):not(textarea)::after,
+:not(input):not(textarea)::before {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
 /* ##### Titlebar and Footer ##### */
 #titlebar {
   display: block;
   position: fixed;
-  height: 32px;
+  height: 40px;
   width: 100%;
+  z-index: 20;
+  
 }
 
 #footer {
@@ -58,28 +79,31 @@ div.scroll {
   width: 100%;
   height: 100%;
   -webkit-app-region: drag;
-  display: grid;
-  grid-template-columns: auto 277px auto 96px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* grid-template-columns: auto 277px auto 96px; */
 }
 
 #window-menu {
-  width: 100%;
-  grid-column: 2;
+  /* width: 100%;*/
+  /* grid-column: 2;*/
   box-sizing: border-box;
-  height: 32px;
+  height: 40px;
   -webkit-app-region: no-drag;
 }
 
 #window-filler {
   width: 100%;
   grid-column: 3;
-  height: 32px;
+  height: 40px;
   box-sizing: border-box;
 }
 
 #window-menu nav {
-  width: 100%;
-  height: 32px;
+  /* width: 100%;*/
+  width: max-content;
+  height: 40px;
   margin-bottom: 0px!important;
 }
 
@@ -87,6 +111,7 @@ div.scroll {
   box-sizing: border-box;
   display: flex;
   height: 100%;
+  align-items: center;
   padding: 2px 16px 2px 16px;
 }
 
@@ -94,7 +119,7 @@ div.scroll {
   display: grid;
   grid-column: 4;
   grid-template-columns: repeat(3, 32px);
-  height: 32px;
+  height: 40px;
   box-sizing: border-box;
 }
 
@@ -102,7 +127,7 @@ div.scroll {
   display: grid;
   grid-column: 4;
   grid-template-columns: repeat(2, 48px);
-  height: 32px;
+  height: 40px;
   box-sizing: border-box;
   align-content: center;
   justify-items: end;
@@ -134,8 +159,8 @@ div.scroll {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border: 0;
   /* background-color: inherit;*/
   padding: 0;
@@ -145,8 +170,8 @@ div.scroll {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border: 0;
   /* background-color: inherit;*/
   padding: 0;
@@ -165,7 +190,7 @@ div.scroll {
 }
 
 #window-title {
-  grid-column: 1;
+  /* grid-column: 1;*/
   display: flex;
   align-items: center;
   padding-left: 8px;
@@ -173,6 +198,7 @@ div.scroll {
   font-size: 15px;
   font-variant-caps: all-petite-caps;
   padding-bottom: 1px;
+  width: 100%;
 }
 
 #window-title span {
@@ -193,24 +219,7 @@ div.scroll {
   font-size: 14px;
 }
 
-/* ##### containers ##### */
-.page {
-  height: 100%;
-  display: flex;
-  min-height: 92vh;
-  flex-direction: column;
-  margin-top: 32px;
-}
 
-.page-content {
-  margin: 0px 0px 25px 0px;
-  height: 100%;
-  /*max-height: calc(100% - 62px);*/
-  max-height: calc(100% - 25px);
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-}
 
 /* ###### Modal ###### */
 .modal-container > div.modal-title {
@@ -348,9 +357,10 @@ button.btn.graphic {
 
 .tab {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  height: 24px;
+  /* height: 24px;*/
   margin-bottom: 5px;
 }
 
@@ -407,11 +417,10 @@ div.f-row.action *,
 }
 
 .toggle-icon {
-  padding: 0;
+  padding-top: 1px;
   margin-left: 10px;
-  /* align-self: end;*/
+  align-self: center;
   transition: 0.3s;
-  width: 7px;
 }
 
 .toggle-icon.open {
@@ -440,7 +449,7 @@ div.f-row.action *,
 .formation-dropdown-menu {
   display: flex;
   position: absolute;
-  z-index: 1000;
+  z-index: 15;
   flex-direction: column;
   transition: opacity 0.3s linear;
   -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
@@ -484,18 +493,13 @@ div.f-row.action *,
 /* ###### ship details / titlebar ##### */
 .ship-title-bar {
   display: flex;
-  flex-direction: row;
-  margin-bottom: 10px;
-}
-
-.ship-title-bar {
-  display: flex;
-  flex-grow: 1;
   border-left: 0px!important;
   border-right: 0px!important;
   padding: 5px 16px;
   font-size: 1.5em;
   align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 .ship-title-bar > span.ship-name { 
@@ -665,13 +669,11 @@ div.f-row {
   display: flex;
   flex-direction: row;
   margin-bottom: 2px;
-  /* border-radius: 4px;*/
 }
 
 div.f-row.wrap {
   flex-wrap: wrap;
 }
-
 
 
 div.f-grid div.f-collapsible {
@@ -779,6 +781,7 @@ div.f-grid div.f-icon.plain,
 div.f-grid div.f-title.plain {
   background-color: unset!important;
   border: 0!important;
+  justify-content: unset!important;
 }
 
 div.f-grid div.f-fleet {
@@ -799,12 +802,15 @@ div.f-grid div.f-icon {
   border-right: 0px!important;
   padding: 3px 12px;
   margin-bottom: 2px;
+  transition: 0.3s;
 }
 div.f-row.action div.f-icon {
   cursor: pointer;
+  transform: rotate(270deg);
+  
 }
-div.f-grid div.f-icon.f-collapse > svg {
-  transform: rotate(-90deg);
+div.f-grid div.f-icon.open {
+  transform: rotate(180deg);
 }
 
 div.f-grid div.f-title.bottom-emp {
@@ -1029,5 +1035,44 @@ div.f-grid div.f-icon.bottom-emp {
   .page .radio-group label:last-child {
     border-bottom-left-radius: 4px;
     border-top-right-radius: 0px;
+  }
+}
+
+@media only screen and (max-width: 586px) {
+  #window-title {
+    display: none;
+  }
+  div.f-grid div.f-row {
+    flex-direction: column;
+  }
+  .tab {
+    justify-content: flex-start;
+  }
+  .button-group {
+    flex-grow: 1;
+  }
+  .message-container {
+    width: 100%;
+  }
+  .message-container > .message {
+    flex-grow: 1;
+  }
+  .radio-group label.btn.normal {
+    padding: 0px 2px 2px 2px;
+  }
+  .rList .rList-item.btn > .hullTypeAbb {
+    display: none;
+  }
+
+  .f-row > div.name.f-header,
+  .f-row > div.passive.f-header {
+    min-width: unset;
+    max-width: unset;
+  }
+  .ship-data-container {
+    overflow-y: scroll;
+  }
+  div.scroll {
+    overflow-y: unset;
   }
 }

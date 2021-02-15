@@ -88,12 +88,12 @@ div.page.light {
   background-color: var(--root-light-bg);
   color: var(--main-light-color);
 }
-
+/*
 div.page.light .ship-side-container,
 div.modal-overlay.light .ship-side-container {
   border-right: 1px solid var(--main-light-border);
 }
-
+*/
 /* ##### Titlebar ##### */
 #titlebar.light {
   background: var(--main-light-titlebar-bg);
@@ -134,7 +134,7 @@ div.modal-overlay.light .ship-side-container {
 #footer.light {
   background-color: var(--main-light-bg);
   border-top: 1px solid var(--main-light-border);
-  color: white;
+  color: black;
 }
 
 /* #### Modal #### */
@@ -184,7 +184,7 @@ nav.tab.light > a {
 }
 
 nav.tab.light > a.active {
-  height: 32px!important;
+  height: 40px!important;
   color: var(--main-light-color);
   background-color: var(--root-light-bg)!important;
 }
@@ -202,7 +202,8 @@ button.light {
 }
 
 .light .tab-btn:hover,
-.light .btn:hover {
+.light .btn:hover,
+.light button.rList-item.btn:hover {
   background-color: var(--main-light-hover-bg);
 }
 
@@ -310,12 +311,6 @@ input[type="url"].light.is-invalid,
 #input-group.light.is-invalid {
   border-color: rgb(110, 19, 19);
 }
-/*
-#input-group.light.input-focus > button.icon:hover {
-  background-color: var(--main-light-hover-bg);
-  border: 1px solid rgba(255, 255, 255, 0.712);
-}
-*/
 
 /* #### Grid #### */
 div.f-grid.light div.f-header {
@@ -339,33 +334,33 @@ div.f-grid.light div.f-icon {
   background-color: var(--main-light-hover-bg);
 }
 /* #### hull types #### */
-.light div.hullTypeAbb.Aircraft.Carrier {
+.light .Aircraft.Carrier /* .hullTypeAbb */ {
   background-color: Plum;
 }
 
-.light div.hullTypeAbb.Battleship, 
-.light div.hullTypeAbb.Battlecruiser {
+.light .Battleship, 
+.light .Battlecruiser {
   background-color: Pink;
 }
 
-.light div.hullTypeAbb.Large.Cruiser {
+.light .Large.Cruiser {
   background-color: LightSalmon;
 }
-.light div.hullTypeAbb.Destroyer {
+.light .Destroyer {
   background-color: powderblue;
 }
-.light div.hullTypeAbb.Submarine {
+.light .Submarine {
   background-color: PaleGreen;
 }
 
-.light div.hullTypeAbb.Heavy.Cruiser,
-.light div.hullTypeAbb.Monitor,
-.light div.hullTypeAbb.Light.Cruiser {
+.light .Heavy.Cruiser,
+.light .Monitor,
+.light .Light.Cruiser {
   background-color: NavajoWhite;
 }
 
-.light div.hullTypeAbb.Repair.Ship,
-.light div.hullTypeAbb.Repair {
+.light .Repair.Ship,
+.light .Repair {
   background-color: Aquamarine;
 }
 

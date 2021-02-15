@@ -247,7 +247,7 @@ const LandingView: React.FC = () => {
           </div>
         </section>
       </div>
-      {process.env.PLAT_ENV === 'electron' ? <FooterBar /> : <></>}
+      <FooterBar />
     </>
   );
 };

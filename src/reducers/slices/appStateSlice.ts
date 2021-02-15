@@ -6,7 +6,6 @@ import { fetchWithTimeout, handleHTTPError } from '_/utils/appUtilities';
 import { CallbackDismiss, ToastMessageType } from '_/components/Toast/useToast';
 import DataStore from '_/utils/dataStore';
 import { AppConfig, Formation, Ship, ShipSimple } from '_/types/types';
-import { setDetails } from './shipDetailsSlice';
 import { setSearchList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import { setOwnedList } from './ownedShipListSlice';
@@ -168,7 +167,6 @@ export const initShipLists = (
       dispatch(setOwnedList(ownedShips));
       dispatch(setListState({ key: 'ALL', data: { id: searchInitId, index: searchInitIndex, isUpdated: true } }));
       dispatch(setListState({ key: 'OWNED', data: { id: ownedInitId, index: ownedInitIndex, isUpdated: true } }));
-      dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
     });
     if (config !== null) {
       dispatch(setConfig(config));
@@ -195,7 +193,6 @@ export const setSelectedShip = (key: 'ALL' | 'OWNED', id: string, index: number)
 ) => {
   const { appState } = getState();
   try {
-    dispatch(setDetails({ id, index }));
     dispatch(setListState({ key, data: { id, index, isUpdated: appState[key].isUpdated } }));
   } catch (e) {
     dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'There was a problem selecting a ship', eState: 'WARNING' }));
@@ -250,7 +247,6 @@ export const updateShipData = (
                   data: { id: searchInitId, index: searchInitIndex, isUpdated: false },
                 })
               );
-              dispatch(setDetails({ id: searchInitId, index: searchInitIndex }));
               dispatch(setShipCount(dataArr.length));
               dispatch(setUpdateDate(updateDate));
             });

@@ -1,15 +1,13 @@
 import React, { ReactNode, useCallback, useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
-// import { FaTimes, FaWindowMinimize, FaWindowMaximize, FaWindowRestore } from 'react-icons/fa';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '_/utils/ipcAPI';
 import { RootState } from '_/reducers/rootReducer';
 import { configAction, AppConfigAction } from '_/reducers/slices/programConfigSlice';
 import { AppContext } from '_/App';
+import { MinIcon, MaxIcon, RestoreIcon, CloseIcon } from './Icons';
 import CloseAppModalContent from './Modal/CloseAppModalContent';
 import RButton from './RButton/RButton';
 import RToggle from './RToggle/RToggle';
@@ -112,7 +110,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
         {process.env.PLAT_ENV === 'electron' ? (
           <div id="window-controls" className="electron">
             <RButton className="title-button" id="min-button" onClick={() => minimizeWindow()}>
-              {/* <FaWindowMinimize /> */}
+              <MinIcon themeColor={config.themeColor} />
             </RButton>
             {isMax ? (
               <RButton
@@ -123,7 +121,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                   setIsMax(false);
                 }}
               >
-                {/* <FaWindowRestore /> */}
+                <RestoreIcon themeColor={config.themeColor} />
               </RButton>
             ) : (
               <RButton
@@ -134,7 +132,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                   setIsMax(true);
                 }}
               >
-                {/* <FaWindowMaximize /> */}
+                <MaxIcon themeColor={config.themeColor} />
               </RButton>
             )}
             <RButton
@@ -148,7 +146,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                 }
               }}
             >
-              {/* <FaTimes /> */}
+              <CloseIcon themeColor={config.themeColor} />
             </RButton>
           </div>
         ) : (
@@ -171,7 +169,6 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                 themeColor={config.themeColor}
                 onChange={() => {
                   updateConfig('themeColor', 'light');
-                  console.log(process.env.PUBLIC_URL);
                 }}
                 selected={config.themeColor === 'light'}
               >

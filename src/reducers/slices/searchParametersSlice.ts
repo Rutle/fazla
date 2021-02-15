@@ -6,7 +6,6 @@ import DataStore from '_/utils/dataStore';
 import { BooleanSearchParam, SearchParams, ShipSimple } from '_/types/types';
 import { setErrorMessage, setListState, setIsUpdated } from './appStateSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
-import { setDetails, resetDetails } from './shipDetailsSlice';
 import { setSearchList } from './shipSearchListSlice';
 
 export enum SearchAction {
@@ -244,13 +243,6 @@ export const updateSearch = (
       default:
         break;
     }
-    if (action !== 'UPDATE' && action !== 'REMOVE') {
-      if (list === 'ALL') {
-        dispatch(setIsUpdated({ key: 'OWNED', value: false }));
-      } else {
-        dispatch(setIsUpdated({ key: 'ALL', value: false }));
-      }
-    }
 
     const { searchParameters, ownedShips, appState } = getState();
     const oldListState = appState[list];
@@ -268,10 +260,9 @@ export const updateSearch = (
       const aLen = allShipsSearch.length;
       const oLen = ownedSearch.length;
       batch(() => {
-        if (appState.cToggle === 'ALL' && aLen > 0 && list === 'ALL') {
+        if (appState.cToggle === 'ALL' && list === 'ALL') {
           // Check if currently selected ship is still in the results and keep it selected.
           const newShip = allShipsSearch.find((ship) => ship.id === oldListState.id) || allShipsSearch[0];
-          dispatch(setDetails({ id: newShip.id, index: newShip.index }));
           if (aLen !== 0) {
             dispatch(
               setListState({
@@ -282,10 +273,9 @@ export const updateSearch = (
           } else {
             dispatch(setListState({ key: 'ALL', data: { id: 'NONE', index: NaN, isUpdated: true } }));
           }
-        } else if (appState.cToggle === 'OWNED' && oLen > 0 && list === 'OWNED') {
+        } else if (appState.cToggle === 'OWNED' && list === 'OWNED') {
           // Check if currently selected ship is still in the results and keep it selected.
           const newShip = ownedSearch.find((ship) => ship.id === oldListState.id) || ownedSearch[0];
-          dispatch(setDetails({ id: newShip.id, index: newShip.index }));
           if (oLen !== 0) {
             dispatch(
               setListState({
@@ -296,16 +286,21 @@ export const updateSearch = (
           } else {
             dispatch(setListState({ key: 'OWNED', data: { id: 'NONE', index: NaN, isUpdated: true } }));
           }
-        } else {
-          dispatch(resetDetails());
+        }
+        if (action !== 'UPDATE' && action !== 'REMOVE') {
+          if (list === 'ALL') {
+            dispatch(setIsUpdated({ key: 'OWNED', value: false }));
+          } else {
+            dispatch(setIsUpdated({ key: 'ALL', value: false }));
+          }
+        }
+        if (list === 'ALL') {
+          dispatch(setSearchList(allShipsSearch));
+        }
+        if (list === 'OWNED') {
+          dispatch(setOwnedSearchList(ownedSearch));
         }
       });
-      if (list === 'ALL') {
-        dispatch(setSearchList(allShipsSearch));
-      }
-      if (list === 'OWNED') {
-        dispatch(setOwnedSearchList(ownedSearch));
-      }
       dispatch(setChangeState(false));
     }
   } catch (e) {

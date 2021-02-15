@@ -179,10 +179,10 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
   let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
     const platform = process.env.PLAT_ENV;
-    const { formationGrid, formationModal, shipDetails } = getState();
+    const { formationGrid, formationModal, appState } = getState();
     const formIdx = formationGrid.selectedIndex; // Which formation is selected.
     const formCount = formationGrid.formations.length;
-    const { id } = shipDetails; // ID of selected ship when adding ship to a fleet.
+    const { id } = appState[appState.cToggle]; // ID of selected ship when adding ship to a fleet.
     const gIndex = formationModal.gridIndex; // Ship selected on the grid of ships.
     const name = data.formationName || `Formation ${formCount}`;
     const fType = data.formationType || 'normal';

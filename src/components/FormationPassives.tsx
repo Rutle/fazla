@@ -1,30 +1,19 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { Ship } from '../types/types';
 import PassivesList from './PassivesList';
+import { CaretLeft } from './Icons';
 
 interface FormationPassivesProps {
-  // formation: string[];
   fleet: Ship[];
   themeColor: string;
-  // formationShips: { [key: string]: Ship };
-  // fleetNumber: number;
 }
 
 /**
  * Component for displaying passives of ships in a formation.
  */
-const FormationPassives: React.FC<FormationPassivesProps> = ({
-  // formation,
-  themeColor,
-  // formationShips,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  fleet,
-  // fleetNumber,
-}) => {
+const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet }) => {
   const [showMain, setShowMain] = useState(true);
   const [showVanguard, setShowVanguard] = useState(true);
 
@@ -55,10 +44,9 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({
               setShowMain(!showMain);
             }}
           >
-            <div className={`f-icon plain ${showMain ? '' : 'f-collapse'}`}>
-              {/* <FontAwesomeIcon icon={faAngleDown} /> */}
+            <div className={`f-icon plain ${showMain ? '' : 'open'}`}>
+              <CaretLeft themeColor={themeColor} />
             </div>
-            {/* <div className="f-fleet">{`Fleet ${fleetNumber}`}</div> */}
             <div className="f-title plain">Main</div>
           </div>
           <div className={`f-collapsible ${showMain ? '' : 'f-collapsed'}`}>
@@ -78,9 +66,8 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({
         <>
           <div className="f-row action" onClick={() => setShowVanguard(!showVanguard)}>
             <div className={`f-icon plain ${showVanguard ? '' : 'f-collapse'}`}>
-              {/* <FontAwesomeIcon icon={faAngleDown} /> */}
+              <CaretLeft themeColor={themeColor} />
             </div>
-            {/* <div className="f-fleet">{`Fleet ${fleetNumber}`}</div> */}
             <div className="f-title plain">Vanguard</div>
           </div>
           <div className={`f-collapsible ${showVanguard ? '' : 'f-collapsed'}`}>

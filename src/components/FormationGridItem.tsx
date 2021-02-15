@@ -43,9 +43,13 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
     }
   };
 
-  const onRightClick = useCallback(() => {
-    dispatch(formationAction(FormationAction.RemoveShip, { gridIndex: index }));
-  }, [dispatch, index]);
+  const onRightClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if (e.button === 2) e.preventDefault();
+      dispatch(formationAction(FormationAction.RemoveShip, { gridIndex: index }));
+    },
+    [dispatch, index]
+  );
 
   const getHullTypeAbb = (hullType: string | undefined) => {
     if (!hullType) return '-';
@@ -66,7 +70,7 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
         onKeyDown={(e) => {
           if (e.key === 'Enter') onClick();
         }}
-        onContextMenu={onRightClick}
+        onContextMenu={(e) => onRightClick(e)}
         /*
         data-tip
         data-for="click-help"
