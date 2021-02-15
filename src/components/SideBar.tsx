@@ -1,10 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { RootState } from '_/reducers/rootReducer';
-// import { setDetails } from '_/reducers/slices/shipDetailsSlice';
 import { setCurrentToggle } from '_/reducers/slices/appStateSlice';
 import { SearchAction, updateSearch } from '_/reducers/slices/searchParametersSlice';
 import CategoryOverlay from './CategoryOverlay';

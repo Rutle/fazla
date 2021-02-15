@@ -39,7 +39,6 @@ const DropDownMenu: React.FC<FormationDropDownProps> = ({
               type="button"
               style={{
                 display: `${show ? 'flex' : 'none'}`,
-                
               }}
               className={`btn normal menu-item ${themeColor} ${index === selectedIdx ? 'selected' : ''}`}
               onClick={() => {
