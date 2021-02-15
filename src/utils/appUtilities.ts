@@ -90,16 +90,13 @@ export const downloadShipData = async (storage?: LocalForage): Promise<BasicResp
         }
         if (platform === 'web' && storage) {
           const dataArr = [...Object.keys(result).map((key) => result[key])];
-          // localStorage.setItem('shipData', JSON.stringify(dataArr));
-          storage
-            .setItem('shipData', dataArr)
-            .then(() => {
-              isOk = true;
-            })
-            .catch(() => {
-              isOk = false;
-              msg = 'Failed to save ship data to storage.';
-            });
+          const res = await storage.setItem('shipData', dataArr);
+          if (res.length === dataArr.length) {
+            isOk = true;
+          } else {
+            isOk = false;
+            msg = 'There was a problem with saving data.';
+          }
         }
       })
       .catch((e: Error) => {

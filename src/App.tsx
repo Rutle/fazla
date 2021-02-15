@@ -11,7 +11,7 @@ import LandingView from './components/LandingView';
 import ErrorView from './components/ErrorView';
 import ToastContainer from './components/Toast/ToastContainer';
 import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './components/Toast/useToast';
-import { setConfig } from './reducers/slices/programConfigSlice';
+import { AppConfigAction, configAction, setConfig } from './reducers/slices/programConfigSlice';
 import { AppConfig } from './types/types';
 
 export const AppContext = React.createContext(
@@ -66,7 +66,7 @@ const App: React.FC = () => {
           if (configA !== null) {
             dispatch(setConfig(configA));
           } else {
-            await storage.setItem('config', configA);
+            dispatch(configAction(AppConfigAction.Save, { storage }));
           }
         })().catch((e) => console.log(e));
       } catch (e) {

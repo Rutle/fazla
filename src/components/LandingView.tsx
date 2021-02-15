@@ -96,7 +96,7 @@ const LandingView: React.FC = () => {
     try {
       if (appState.cState === 'INIT' && downloadState.isDataOk && downloadState.isReady) {
         (async () => {
-          const dataObj = await initData();
+          const dataObj = await initData(storage);
           if (dataObj.code === 'ResNotFound' || dataObj.code === 'JSONParseFail') {
             setShipResource({ code: dataObj.code, msg: dataObj.msg });
             setDownloadState({ isReady: false, isDl: false, isDataOk: false, text: 'Download' });
@@ -117,7 +117,7 @@ const LandingView: React.FC = () => {
       dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Initialization failed.', eState: 'ERROR' }));
       history.push('/error');
     }
-  }, [appState.cState, dispatch, downloadState, history, shipData]);
+  }, [appState.cState, dispatch, downloadState, history, shipData, storage]);
 
   const getInitMsg = () => {
     if (appState.cState === 'INIT') {

@@ -133,13 +133,11 @@ if (isWeb) {
   webConfig.output = {
     filename: 'static/js/[name].[contenthash:8].js',
   };
-
   webConfig.performance = {
     hints: false,
     maxEntrypointSize: 512000,
     maxAssetSize: 512000,
   };
-
   webConfig.optimization = {
     minimize: isEnvProduction,
     moduleIds: 'deterministic',
@@ -192,11 +190,6 @@ if (isWeb) {
       chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
     }));
   }
-  webConfig.devServer = {
-    contentBase: srcPaths('dist'),
-    compress: true,
-    port: 9000,
-  };
 
   module.exports = [webConfig];
 }
