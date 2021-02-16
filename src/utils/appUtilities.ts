@@ -74,10 +74,9 @@ export const handleHTTPError = (response: Response): Response => {
   return response;
 };
 
-export const downloadShipData = async (storage?: LocalForage): Promise<BasicResponse> => {
+export const downloadShipData = async (platform: string, storage?: LocalForage): Promise<BasicResponse> => {
   let isOk = false;
   let msg = '';
-  const platform = process.env.PLAT_ENV;
   try {
     await fetchWithTimeout(SHIPAPIURL, 20000)
       .then(handleHTTPError)

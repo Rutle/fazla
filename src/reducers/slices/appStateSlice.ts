@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppDispatch, AppThunk } from '_/reducers/store';
 import { batch } from 'react-redux';
-import { saveShipData } from '_/utils/ipcAPI';
-import { fetchWithTimeout, handleHTTPError } from '_/utils/appUtilities';
+import { checkResource, initData, saveShipData } from '_/utils/ipcAPI';
+import { downloadShipData, fetchWithTimeout, handleHTTPError } from '_/utils/appUtilities';
 import { CallbackDismiss, ToastMessageType } from '_/components/Toast/useToast';
 import DataStore from '_/utils/dataStore';
-import { AppConfig, Formation, Ship, ShipSimple } from '_/types/types';
+import { AppConfig, BasicResponse, Formation, Ship, ShipSimple } from '_/types/types';
 import { setSearchList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import { setOwnedList } from './ownedShipListSlice';
@@ -145,17 +145,18 @@ export const initShipLists = (
   config: AppConfig,
   formations: Formation[]
   // eslint-disable-next-line @typescript-eslint/require-await
-): AppThunk => async (dispatch: AppDispatch) => {
+): AppThunk => async (dispatch: AppDispatch, getState) => {
   let fullSimple: ShipSimple[] = [];
   let ownedSearch: ShipSimple[] = [];
   let searchInitId = 'NONE';
   let searchInitIndex = 0;
   let ownedInitId = 'NONE';
   let ownedInitIndex = 0;
+  const initialConfig = getState().config;
   try {
-    fullSimple = DataStore.transformShipList(data.shipsArr);
+    fullSimple = DataStore.transformShipList(data.getShips());
     if (ownedSearch !== undefined) {
-      ownedSearch = DataStore.transformStringList(data.shipsArr, ownedShips);
+      ownedSearch = DataStore.transformStringList(data.getShips(), ownedShips);
     }
     searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
     searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
@@ -170,12 +171,59 @@ export const initShipLists = (
     });
     if (config !== null) {
       dispatch(setConfig(config));
+    } else {
+      dispatch(setConfig(initialConfig));
     }
     dispatch(setFormationsData(formations));
     dispatch(setShipCount(fullSimple.length));
     dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
   } catch (e) {
     dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Unable to initialize ship lists.', eState: 'ERROR' }));
+  }
+};
+
+export const initShipData = (
+  data: DataStore,
+  platform: string,
+  storage?: LocalForage
+  // eslint-disable-next-line @typescript-eslint/require-await
+): AppThunk => async (dispatch: AppDispatch, getState) => {
+  const { cState } = getState().appState;
+  try {
+    let res: BasicResponse = { isOk: false, msg: '', code: '' };
+    if (cState === 'INIT' && platform === 'electron') {
+      // Check if .json data exists on disk
+      // and download if necessary.
+      res = await checkResource();
+      if (res.isOk && res.code === 'ResNotFound') {
+        dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Downloading' }));
+        res = await downloadShipData(platform);
+        dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));
+      }
+    }
+    if (cState === 'INIT' && platform === 'web') {
+      if (!storage) {
+        throw new Error('Storage was not found.');
+      }
+      // Check if data exists in IndexedDB (LocalForage)
+      // and download if necessary.
+      const dataCheck = (await storage.getItem('shipData')) as Ship[];
+      if (dataCheck === null) {
+        dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Downloading' }));
+        res = await downloadShipData(platform, storage);
+        dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));
+      }
+    }
+    const dataObj = await initData(platform, storage);
+    if (dataObj.code === 'ResNotFound') throw new Error('Was not able to retrieve ship data.');
+    if (dataObj.code === 'JSONParseFail') throw new Error("JSON data form didn't match.");
+    if (dataObj.code === 'InitError') throw new Error("Couldn't initialize application");
+    await data.setArray(dataObj.shipData);
+    dispatch(initShipLists(dataObj.ownedShips, data, dataObj.config, dataObj.formations));
+  } catch (e) {
+    if (e instanceof Error) {
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
+    }
   }
 };
 

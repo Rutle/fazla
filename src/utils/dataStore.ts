@@ -6,13 +6,11 @@ import { fleets } from '../data/categories';
  * @class Ship data store wrapper.
  */
 export default class DataStore {
-  shipsArr: Ship[] = [];
+  private shipsArr: Ship[] = [];
 
-  count = 0;
+  private count = 0;
 
-  state: 'INIT' | 'READY' | 'UPDATING' = 'INIT';
-
-  platform: 'electron' | 'web';
+  private state: 'INIT' | 'READY' | 'UPDATING' = 'INIT';
 
   /**
    * Constructor for DataStore
@@ -27,6 +25,10 @@ export default class DataStore {
       this.count = 0;
     }
     this.state = 'INIT';
+  }
+
+  getShips(): Ship[] {
+    return this.shipsArr;
   }
 
   getShipByIndex(index: number): Ship | undefined {

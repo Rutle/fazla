@@ -57,7 +57,7 @@ const Home: React.FC = () => {
       <RButton
         themeColor={`${config.themeColor}`}
         onClick={() => {
-          setShipDiff({ count: shipData.count, isUpdate: true });
+          setShipDiff({ count: shipData.getShips().length, isUpdate: true });
           if (config.isToast) addToast('info', 'Update', 'Updating ship information.');
           dispatch(updateShipData(shipData, storage, addToast));
         }}
@@ -87,7 +87,7 @@ const Home: React.FC = () => {
   */
   const getShipCount = () => {
     if (shipDiff.isUpdate && appState.cState === 'RUNNING') {
-      const diff = shipData.count - shipDiff.count;
+      const diff = shipData.getShips().length - shipDiff.count;
       return (
         <>
           {shipCount} (

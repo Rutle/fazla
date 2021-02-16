@@ -64,7 +64,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
             style={{ overflowY: 'scroll' }}
           >
             {React.memo(({ index, style }) => {
-              const ship = shipData.shipsArr[shipSearchList[index].index];
+              const ship = shipData.getShips()[shipSearchList[index].index];
               const isShipOwned = isOwned(ship.id);
               return (
                 <button

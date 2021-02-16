@@ -253,7 +253,7 @@ export const updateSearch = (
         allShipsSearch = await shipData.getShipsByParams(searchParameters);
       }
       if (list === 'OWNED') {
-        ownedSearch = DataStore.transformStringList(shipData.shipsArr, ownedShips);
+        ownedSearch = DataStore.transformStringList(shipData.getShips(), ownedShips);
         ownedSearch = await DataStore.reduceByParams(shipData, ownedSearch, searchParameters);
       }
 

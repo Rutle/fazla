@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch, Redirect, RouteProps, HashRouter } from 'react-router-dom';
+import { Route, Switch, Redirect, RouteProps, HashRouter, useHistory } from 'react-router-dom';
 import ShipDetailView from '_components/ShipDetailView';
 import Home from '_components/Home';
 import localForage from 'localforage';
@@ -13,6 +13,7 @@ import ToastContainer from './components/Toast/ToastContainer';
 import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './components/Toast/useToast';
 import { AppConfigAction, configAction, setConfig } from './reducers/slices/programConfigSlice';
 import { AppConfig } from './types/types';
+import { initShipData, setErrorMessage } from './reducers/slices/appStateSlice';
 
 export const AppContext = React.createContext(
   {} as {
@@ -52,16 +53,36 @@ const RefreshRoute: React.FC<RouteProps> = (props) => {
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const platform = process.env.PLAT_ENV || 'NOSET';
+  // const appState = useSelector((state: RootState) => state.appState);
   const [shipData, setShipData] = useState(new DataStore());
   const [addToast, onToastDismiss, popToast, toasts] = useToast(true, 3000);
   const storage =
     process.env.PLAT_ENV === 'web' ? localForage.createInstance({ name: 'Fazla-storage', version: 1.0 }) : undefined;
 
   useEffect(() => {
+    console.log('App[]', platform);
+    if (platform === 'NOSET') {
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Platform is has not been defined', eState: 'ERROR' }));
+      history.push('/error');
+    } else {
+      dispatch(initShipData(shipData, platform, storage));
+    }
+    /*
+    if (appState.cState === 'INIT' && platform === 'electron') {
+                if (!storage) return null;
+          return (await storage.getItem('shipData')) as Ship[];
+
+    }
+    if (appState.cState === 'INIT' && platform === 'web') {
+
+     }
+     */
+    /*
     if (process.env.PLAT_ENV === 'web' && storage) {
       try {
         (async () => {
-          // Get config immediately.
           const configA = (await storage.getItem('config')) as AppConfig;
           if (configA !== null) {
             dispatch(setConfig(configA));
@@ -72,7 +93,7 @@ const App: React.FC = () => {
       } catch (e) {
         console.log(e);
       }
-    }
+    } */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

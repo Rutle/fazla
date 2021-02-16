@@ -27,21 +27,25 @@ const ErrorView: React.FC = () => {
               }}
             >
               <div className="info-text">{appState.eMsg}</div>
-              <RButton
-                themeColor={config.themeColor}
-                onClick={() => {
-                  openLogs();
-                  closeWindow();
-                }}
-                extraStyle={{ marginTop: '30px', height: '50px', width: '20%' }}
-              >
-                Close program
-              </RButton>
+              {process.env.PLAT_ENV === 'electron' ? (
+                <RButton
+                  themeColor={config.themeColor}
+                  onClick={() => {
+                    openLogs();
+                    closeWindow();
+                  }}
+                  extraStyle={{ marginTop: '30px', height: '50px', width: '20%' }}
+                >
+                  Close program
+                </RButton>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </section>
       </div>
-      {process.env.PLAT_ENV === 'electron' ? <FooterBar /> : <></>}
+      <FooterBar />
     </>
   );
 };

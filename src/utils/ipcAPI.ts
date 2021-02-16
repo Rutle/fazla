@@ -90,6 +90,7 @@ export const openWikiUrl = async (str: string): Promise<void> => {
 };
 
 export const initData = async (
+  platform: string,
   storage?: LocalForage
 ): Promise<
   {
@@ -99,7 +100,6 @@ export const initData = async (
     formations: Formation[];
   } & BasicResponse
 > => {
-  const platform = process.env.PLAT_ENV;
   if (platform === 'electron') {
     return window.api
       .electronInitData('initData')
@@ -117,7 +117,7 @@ export const initData = async (
     let isOk = false;
     let msg = '';
     let code = '';
-    if (shipData) {
+    if (shipData !== null) {
       isOk = true;
     } else {
       msg = 'Could not find ship data.';

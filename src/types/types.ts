@@ -11,6 +11,9 @@ declare global {
       electronSaveData: (channel: string, ...arg: unknown[]) => Promise<BasicResponse>;
       electronRemoveAFormation: (channel: string, ...arg: unknown[]) => Promise<BasicResponse>;
       electronRenameFormation: (channel: string, ...arg: unknown[]) => Promise<BasicResponse>;
+      /**
+       * Fetch app data from harddrive.
+       */
       electronInitData: (
         channel: string
       ) => Promise<

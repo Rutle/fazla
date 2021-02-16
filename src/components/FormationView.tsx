@@ -43,7 +43,8 @@ const FormationView: React.FC = () => {
 
   useEffect(() => {
     if (fData.formations.length !== 0) {
-      const formationShips = shipData.shipsArr
+      const formationShips = shipData
+        .getShips()
         .filter((ship) => fData.formations[fData.selectedIndex].data.includes(ship.id))
         .reduce(
           (accumulator, currentValue) => Object.assign(accumulator, { [currentValue.id]: currentValue }),
