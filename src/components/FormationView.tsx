@@ -83,7 +83,12 @@ const FormationView: React.FC = () => {
       setModalOpen({ modal: '', isOpen: false });
     }
   };
-
+  useEffect(() => {
+    if (fData.isEdit.some((val) => val !== false)) {
+      dispatch(formationAction(FormationAction.Save, { storage }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, fData.isEdit]);
   return (
     <PageTemplate>
       <section className="page-content">
@@ -115,6 +120,7 @@ const FormationView: React.FC = () => {
                 >
                   Remove
                 </RButton>
+                {/* 
                 <RButton
                   themeColor={config.themeColor}
                   className={`tab-btn normal ${fData.isEdit[fData.selectedIndex] ? 'selected' : ''}`}
@@ -123,6 +129,7 @@ const FormationView: React.FC = () => {
                 >
                   Save
                 </RButton>
+                */}
                 <RButton
                   themeColor={config.themeColor}
                   className="tab-btn normal"

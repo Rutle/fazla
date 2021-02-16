@@ -48,11 +48,23 @@ export const saveOwnedShipData = async (data: string[] = []): Promise<BasicRespo
 /**
  * Function that calls electron to save given data to electron-store .json config file.
  * @param {Formation[]} data Formation data
+ * @param {string} platform Which platform: web or electron.
+ * @param {LocalForage} storage LocalForage storage.
  */
-export const saveFormationData = async (data: Formation[] = []): Promise<BasicResponse> => {
-  return window.api.electronSaveData('save-formation-data', data).then((result: BasicResponse) => {
-    return result;
-  });
+export const saveFormationData = async (
+  data: Formation[] = [],
+  platform: string,
+  storage?: LocalForage
+): Promise<BasicResponse> => {
+  let result: BasicResponse = { isOk: false, msg: '', code: '' };
+  if (platform === 'electron') {
+    result = await window.api.electronSaveData('save-formation-data', data);
+  }
+  if (platform === 'web' && storage) {
+    const res = await storage.setItem('formations', data);
+    result.isOk = res.length === data.length;
+  }
+  return result;
 };
 
 /**

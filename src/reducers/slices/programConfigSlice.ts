@@ -28,11 +28,10 @@ const programConfigSlice = createSlice({
   name: 'programConfigSlice',
   initialState,
   reducers: {
-    setStateValue(state, action: PayloadAction<{ key: string; value: string | boolean }>) {
+    setStateValue(state, action: PayloadAction<{ key: string; value: string | boolean | 'dark' | 'light' }>) {
       return {
         ...state,
         [action.payload.key]: action.payload.value,
-        isEdit: true,
       };
     },
     setUpdateDate(state, action: PayloadAction<string>) {
@@ -83,19 +82,21 @@ export const configAction = (action: AppConfigAction, data: ConfigActionData): A
   try {
     const platform = process.env.PLAT_ENV;
     const { config } = getState();
-    const { storage, key, value, doSave } = data;
+    const { storage, key, value } = data;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { isEdit, ...newConfig } = { ...config };
+    // eslint-disable-next-line prefer-const
+    let { isEdit, ...newConfig } = { ...config };
     switch (action) {
       case 'UPDATE':
-        if (doSave && platform === 'web' && storage) {
-          if (key === 'themeColor') {
-            newConfig.themeColor = value as 'dark' | 'light';
-            await storage.setItem('config', newConfig);
-          }
+        if (key && value) newConfig = { ...newConfig, ...{ [key]: value } };
+        if (platform === 'web' && storage) {
+          const res = await storage.setItem('config', newConfig);
+          result.isOk = Object.is(res, newConfig);
         }
-        dispatch(setStateValue({ key: key as string, value: value as string | boolean }));
-
+        if (platform === 'electron') {
+          result = await saveConfig(newConfig);
+        }
+        dispatch(setStateValue({ key: key as string, value: value as string | boolean | 'dark' | 'light' }));
         break;
       case 'SAVE':
         if (platform === 'electron') {
@@ -104,9 +105,6 @@ export const configAction = (action: AppConfigAction, data: ConfigActionData): A
         if (platform === 'web' && storage) {
           const res = await storage.setItem('config', newConfig);
           result.isOk = Object.is(res, newConfig);
-        }
-        if (result.isOk) {
-          dispatch(setEditState(false));
         }
         break;
       default:

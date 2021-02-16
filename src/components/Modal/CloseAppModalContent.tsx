@@ -14,13 +14,13 @@ const CloseAppModalContent: React.FC<{ setModalOpen: (e: boolean) => void }> = (
   const dispatch = useDispatch();
   const config = useSelector((state: RootState) => state.config);
   const formationGrid = useSelector((state: RootState) => state.formationGrid);
-
+  /*
   useEffect(() => {
-    if (!(config.isEdit || formationGrid.isEdit.some((val) => val !== false))) {
+    if (!formationGrid.isEdit.some((val) => val !== false)) {
       closeWindow();
     }
   }, [config.isEdit, formationGrid.isEdit]);
-
+  */
   return (
     <>
       <div className="modal-title">Warning</div>
@@ -35,12 +35,14 @@ const CloseAppModalContent: React.FC<{ setModalOpen: (e: boolean) => void }> = (
           <RButton
             themeColor={config.themeColor}
             onClick={() => {
+              /*
               if (formationGrid.isEdit.some((val) => val !== false)) {
                 dispatch(formationAction(FormationAction.Save, {}));
               }
               if (config.isEdit) {
                 dispatch(configAction(AppConfigAction.Save, {}));
               }
+              */
             }}
           >
             Save and exit

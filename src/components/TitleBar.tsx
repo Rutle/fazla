@@ -63,10 +63,11 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
     },
     [dispatch, storage]
   );
+  /*
   const isEdit = () => {
     return config.isEdit || formGrid.isEdit.some((val) => val !== false);
   };
-
+  */
   const getStyle = () => {
     if (config.themeColor === 'light') {
       return {};
@@ -139,11 +140,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
               className="title-button"
               id="close-button"
               onClick={() => {
-                if (isEdit()) {
-                  setModalOpen(!isModalOpen);
-                } else {
-                  closeWindow();
-                }
+                closeWindow();
               }}
             >
               <CloseIcon themeColor={config.themeColor} />
@@ -178,6 +175,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
           </div>
         )}
       </div>
+      {/*
       <ReactModal
         overlayClassName={`modal-overlay ${config.themeColor}`}
         isOpen={isModalOpen}
@@ -187,6 +185,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
       >
         <CloseAppModalContent setModalOpen={setModalOpen} />
       </ReactModal>
+      */}
     </header>
   );
 };

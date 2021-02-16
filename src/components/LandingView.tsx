@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { closeWindow } from '_/utils/ipcAPI';
 import { RootState } from '_/reducers/rootReducer';
 import FooterBar from './FooterBar';
-import RButton from './RButton/RButton';
 import TitleBar from './TitleBar';
 
 /**
@@ -36,7 +34,7 @@ const LandingView: React.FC = () => {
                 alignItems: 'center',
               }}
             >
-              {appState.cState}
+              {appState.cState !== 'RUNNING' ? appState.cMsg : 'Launching.'}
             </div>
           </div>
         </section>

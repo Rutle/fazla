@@ -67,7 +67,7 @@ const Home: React.FC = () => {
       </RButton>
     );
   };
-
+  /*
   const renderSave = () => {
     return (
       <RButton
@@ -79,6 +79,7 @@ const Home: React.FC = () => {
       </RButton>
     );
   };
+  */
   /*
   const setSRCInputFocus = (e: React.FocusEvent<HTMLInputElement>, len: number) => {
     setSRCInputLen(len);
@@ -199,10 +200,12 @@ const Home: React.FC = () => {
               <div className="grid-item name">Ship data update date</div>
               <div className="grid-item action">{config.updateDate !== '' ? config.updateDate : 'N/A'}</div>
             </div>
+            {/* 
             <div className="f-row wrap">
               <div className="grid-item name" style={{ opacity: `${config.isEdit ? '1' : '0.2'}` }} />
               <div className="grid-item action">{renderSave()}</div>
             </div>
+            */}
             <div className="f-row">
               <div className="f-icon bottom-emp">{/* <FontAwesomeIcon icon={faCaretRight} /> */}</div>
               <div className="f-title bottom-emp">Stats</div>

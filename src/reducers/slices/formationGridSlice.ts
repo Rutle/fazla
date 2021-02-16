@@ -121,11 +121,12 @@ const formationGridSlice = createSlice({
         selectedIndex: action.payload,
       };
     },
-    toggleIsEdit(state, action: PayloadAction<number>) {
-      const selectedIdx = action.payload;
+    toggleIsEdit(state) {
+      const arrLen = state.isEdit.length;
+      const newArr = Array.from({ length: arrLen }, () => false);
       return {
         ...state,
-        isEdit: state.isEdit.map((value, index) => (index !== selectedIdx ? value : !value)),
+        isEdit: newArr,
       };
     },
     removeShipFromFormation(state, action: PayloadAction<{ gridIndex: number; selectedIndex: number }>) {
@@ -190,6 +191,7 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
     const shipGridIndex = data.gridIndex || 0;
     const { storage } = data;
     let emptyFormation = [];
+    console.log(action, data);
     switch (action) {
       case 'NEW':
         if (fType === 'normal') {
@@ -199,31 +201,16 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
         }
         dispatch(addNewFormationData({ data: emptyFormation, name }));
         break;
-      case 'REMOVE':
-        if (platform === 'electron') {
-          result = await removeAFormation(formIdx);
-        }
-        if (platform === 'web' && storage) {
-          const newForms = formationGrid.formations.filter((item, index) => index !== formIdx);
-          const res = await storage.setItem('formations', newForms);
-          result.isOk = newForms.length === res.length;
-          if (!result.isOk) result.msg = 'Failed to remove formation.';
-        }
-        if (result.isOk) dispatch(removeFormation(formIdx));
-        if (!result.isOk) throw new Error(result.msg);
+      case 'REMOVE': {
+        dispatch(removeFormation(formIdx));
         break;
+      }
       case 'RENAME':
         dispatch(renameFormation({ idx: formIdx, name }));
         break;
       case 'SAVE':
-        if (platform === 'electron') {
-          result = await saveFormationData(formationGrid.formations);
-        }
-        if (platform === 'web' && storage) {
-          const res = await storage.setItem('formations', formationGrid.formations);
-          result.isOk = res.length === formationGrid.formations.length;
-        }
-        if (result.isOk) dispatch(toggleIsEdit(formIdx));
+        result = await saveFormationData(formationGrid.formations, platform as string, storage);
+        if (result.isOk) dispatch(toggleIsEdit());
         break;
       case 'ADDSHIP':
         dispatch(addShipToFormation({ id, gridIndex: gIndex, selectedIndex: formIdx }));
@@ -231,13 +218,21 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
       case 'REMOVESHIP':
         dispatch(removeShipFromFormation({ gridIndex: shipGridIndex, selectedIndex: formIdx }));
         break;
-      case 'IMPORT': {
+      case 'IMPORT':
         dispatch(addNewFormationData({ data: iFormation, name }));
         break;
-      }
       default:
         break;
     }
+    /*
+    if (platform === 'electron') {
+      result = await saveFormationData(formationGrid.formations, platform);
+    }
+    if (platform === 'web' && storage) {
+      const res = await storage.setItem('formations', formationGrid.formations);
+      result.isOk = res.length === formationGrid.formations.length;
+    } */
+    // if (!result.isOk)
   } catch (e) {
     let msg = '';
     // let msg = 'There was an error with formation action.';
