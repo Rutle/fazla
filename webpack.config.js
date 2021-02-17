@@ -140,23 +140,10 @@ if (isWeb) {
   };
   webConfig.optimization = {
     minimize: isEnvProduction,
-    moduleIds: 'deterministic',
     splitChunks: {
       chunks: 'all',
-      /*
-      cacheGroups: {
-        vendor: {
-          name: 'node_vendors', // part of the bundle name and
-          // can be used in chunks array of HtmlWebpackPlugin
-          test: /[\\/]node_modules[\\/]/,
-          chunks: 'all',
-        },
-      },
-      */
+	  name: isEnvDevelopment,
     },
-    // Keep the runtime chunk separated to enable long term caching
-    // https://twitter.com/wSokra/status/969679223278505985
-    // https://github.com/facebook/create-react-app/issues/5358
     runtimeChunk: {
       name: (entrypoint) => `runtime-${entrypoint.name}`,
     },
