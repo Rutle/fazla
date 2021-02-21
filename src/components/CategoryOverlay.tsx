@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import Overlay from 'react-overlays/Overlay';
-import PropTypes from 'prop-types';
 import SearchParameterContent from './SearchParameterContent';
 
 /**
@@ -46,7 +45,3 @@ const CategoryOverlay: React.FC<{ themeColor: string }> = ({ themeColor }) => {
 };
 
 export default CategoryOverlay;
-
-CategoryOverlay.propTypes = {
-  themeColor: PropTypes.string.isRequired,
-};

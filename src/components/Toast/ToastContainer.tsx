@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { AppContext } from '_/App';

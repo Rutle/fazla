@@ -1,6 +1,5 @@
 import React, { useCallback, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import * as PropTypes from 'prop-types';
 import { nationCategories, rarityCategories, hullTypesAbb } from '_/data/categories';
 import { RootState } from '_/reducers/rootReducer';
 import { updateSearch, SearchAction } from '_/reducers/slices/searchParametersSlice';
@@ -146,7 +145,3 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
 };
 
 export default SearchParameterContent;
-
-SearchParameterContent.propTypes = {
-  themeColor: PropTypes.string.isRequired,
-};

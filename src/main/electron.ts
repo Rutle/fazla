@@ -4,7 +4,6 @@ import Store from 'electron-store';
 import * as fs from 'fs';
 import * as url from 'url';
 import * as path from 'path';
-import isDev from 'electron-is-dev';
 import { isShipJson, safeJsonParse } from '_/utils/appUtilities';
 import { Ship, Formation, AppConfig } from '_/types/types';
 
@@ -49,7 +48,7 @@ function createWindow(): void {
 
   mainWindow.removeMenu();
   // Open the DevTools.
-  if (isDev) mainWindow.webContents.openDevTools();
+  if (process.env.NODE_ENV === 'development') mainWindow.webContents.openDevTools();
 }
 
 // This method will be called when Electron has finished

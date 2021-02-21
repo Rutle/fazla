@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PageTemplate from '_/components/PageTemplate';
 import ShipDetails from '_/components/ShipDetails';
 import { RootState } from '_/reducers/rootReducer';

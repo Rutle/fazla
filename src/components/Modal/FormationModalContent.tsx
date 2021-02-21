@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, { useContext, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { RootState } from '_/reducers/rootReducer';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
 import { formationModalAction, FormationModalAction } from '_/reducers/slices/formationModalSlice';
@@ -75,7 +74,3 @@ const FormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) => {
 };
 
 export default FormationModalContent;
-
-FormationModalContent.propTypes = {
-  setModalOpen: PropTypes.func.isRequired,
-};

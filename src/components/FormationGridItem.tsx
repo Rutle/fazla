@@ -18,7 +18,6 @@ interface GridItemProps {
 /**
  * Singular component representing a grid item on a formation.
  */
-// eslint-disable-next-line react/prop-types
 const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, themeColor, onClick }) => {
   const dispatch = useDispatch();
   const getLocation = (idx: number): string => {
@@ -71,15 +70,6 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
           if (e.key === 'Enter') onClick();
         }}
         onContextMenu={(e) => onRightClick(e)}
-        /*
-        data-tip
-        data-for="click-help"
-        data-delay-show="1000"
-        data-background-color={`var(--main-${themeColor}-tooltip-bg)`}
-        data-border
-        data-border-color={`var(--main-${themeColor}-tooltip-border)`}
-        data-text-color={`var(--main-${themeColor}-color)`}
-        */
       >
         {ship !== undefined ? (
           <div className={`hullTypeAbb ${getHullType(ship)}`}>{`${getHullTypeAbb(ship.hullType)} ${

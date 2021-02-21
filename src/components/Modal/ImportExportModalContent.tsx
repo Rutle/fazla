@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import { encodeFormation, parseImportCode } from '_/utils/appUtilities';
 import { RootState } from '_/reducers/rootReducer';
 import { FormationAction, formationAction } from '_/reducers/slices/formationGridSlice';
@@ -159,8 +158,3 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
 };
 
 export default ImportExportModalContent;
-
-ImportExportModalContent.propTypes = {
-  setModalOpen: PropTypes.func.isRequired,
-  isType: PropTypes.string.isRequired,
-};

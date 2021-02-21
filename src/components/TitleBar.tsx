@@ -1,14 +1,11 @@
 import React, { ReactNode, useCallback, useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import ReactModal from 'react-modal';
-import PropTypes from 'prop-types';
 import { closeWindow, minimizeWindow, maximizeWindow, restoreWindow } from '_/utils/ipcAPI';
 import { RootState } from '_/reducers/rootReducer';
 import { configAction, AppConfigAction } from '_/reducers/slices/programConfigSlice';
 import { AppContext } from '_/App';
 import { MinIcon, MaxIcon, RestoreIcon, CloseIcon } from './Icons';
-import CloseAppModalContent from './Modal/CloseAppModalContent';
 import RButton from './RButton/RButton';
 import RToggle from './RToggle/RToggle';
 
@@ -41,33 +38,21 @@ const NavItem: React.FC<{ children: ReactNode; pathTo: string }> = ({ children, 
   );
 };
 
-NavItem.propTypes = {
-  children: PropTypes.node.isRequired,
-  pathTo: PropTypes.string.isRequired,
-};
-
-ReactModal.setAppElement('#root');
 /**
  * Component for titlebar.
  */
 const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
   const dispatch = useDispatch();
   const { storage } = useContext(AppContext);
-  const formGrid = useSelector((state: RootState) => state.formationGrid);
   const config = useSelector((state: RootState) => state.config);
   const [isMax, setIsMax] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false);
   const updateConfig = useCallback(
     (key: string, value: string | boolean) => {
       dispatch(configAction(AppConfigAction.Update, { key, value, storage, doSave: true }));
     },
     [dispatch, storage]
   );
-  /*
-  const isEdit = () => {
-    return config.isEdit || formGrid.isEdit.some((val) => val !== false);
-  };
-  */
+
   const getStyle = () => {
     if (config.themeColor === 'light') {
       return {};
@@ -175,23 +160,8 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
           </div>
         )}
       </div>
-      {/*
-      <ReactModal
-        overlayClassName={`modal-overlay ${config.themeColor}`}
-        isOpen={isModalOpen}
-        className="modal-container"
-        shouldCloseOnEsc
-        onRequestClose={() => setModalOpen(false)}
-      >
-        <CloseAppModalContent setModalOpen={setModalOpen} />
-      </ReactModal>
-      */}
     </header>
   );
 };
 
 export default TitleBar;
-
-TitleBar.propTypes = {
-  showMenu: PropTypes.bool.isRequired,
-};

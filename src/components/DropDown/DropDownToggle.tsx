@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { useDropdownToggle } from 'react-overlays';
 import { CaretLeft } from '_/components/Icons';
 
@@ -39,9 +38,3 @@ const DropDownToggle: React.FC<DropDownToggleProps> = ({ id, text, themeColor })
 };
 
 export default DropDownToggle;
-
-DropDownToggle.propTypes = {
-  id: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  themeColor: PropTypes.string.isRequired,
-};

@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import { RootState } from '_/reducers/rootReducer';
 import { setCurrentToggle } from '_/reducers/slices/appStateSlice';
 import { SearchAction, updateSearch } from '_/reducers/slices/searchParametersSlice';
@@ -126,7 +125,3 @@ const SideBar: React.FC<ShipListProps> = ({ children, refe = null, show = false 
 };
 
 export default SideBar;
-
-SideBar.propTypes = {
-  children: PropTypes.node.isRequired,
-};

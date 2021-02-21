@@ -6,7 +6,6 @@ import FooterBar from './FooterBar';
 /**
  * Component for unified page template.
  */
-// eslint-disable-next-line react/prop-types
 const PageTemplate: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const config = useSelector((state: RootState) => state.config);
 

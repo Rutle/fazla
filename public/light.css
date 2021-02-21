@@ -2,7 +2,7 @@
 :root {
   --root-light-bg: #fdfdff;
   --main-light-color: #2f2f2f;
-  /*--main-light-bg: #55aeff;*/
+  --main-light-titlebar-color: white;
   --main-light-bg: #cce7ff;
   --main-light-hover-bg: #81bdf5;
   --main-light-border: #55aeff;
@@ -12,24 +12,6 @@
   --main-light-tooltip-border: #bcd0ff;
   --main-light-titlebar-bg: #55aeff;
 }
-
-/*
-:root {
-  --root-dark-bg: #1f1f1f;
-  --main-dark-bg: #2f2f2f;
-  --main-dark-border: #40556b;
-  --main-dark-color: rgb(184, 184, 184);
-  --main-dark-hover-bg: #40556b;
-  --main-dark-button-top-bg: #26313a;
-  --main-dark-button-bottom-bg: #1b2127;
-  --main-dark-selected-bottom-bg: #2a2e35;
-  --main-dark-active-bg: #40556b;
-  --main-dark-tooltip-bg: #1b1d24e3;
-  --main-dark-tooltip-border: #3f4657a6;
-  --main-dark-item-bg: #21252f;
-  --main-dark-footer-titlebar-bg: #202023;
-}
-*/
 
 /* ##### Scrollbar ##### */
 .light ::-webkit-scrollbar {     
@@ -55,8 +37,8 @@
 .light * {
   scrollbar-width: thin;
   scrollbar-color: var(--main-light-border) var(--root-light-bg);
-  scroll-padding-right: 5px;
 }
+
 .light .no-focus-outline:focus,
 .light .no-focus-outline:focus-within {
   outline: none!important;
@@ -128,7 +110,6 @@ div.page.light #sidebar-slider:hover {
 
 #titlebar.light #min-button {
   box-sizing: border-box;
-  color: white;
   grid-column: 1;
 }
 
