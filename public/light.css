@@ -94,7 +94,7 @@ div.page.light .ship-side-container,
 div.modal-overlay.light .ship-side-container {
   background-color: var(--root-light-bg);
 }
-
+div.modal-overlay.light #sidebar-slider,
 div.page.light #sidebar-slider {
   border-radius: 4px;
   background-color: var(--main-light-bg);
@@ -103,7 +103,10 @@ div.page.light #sidebar-slider {
   -moz-box-shadow: 1px 1px 4px 1px #0000008f;
   box-shadow: 1px 1px 4px 1px #0000008f;
 }
-
+div.modal-overlay.light #sidebar-slider:hover,
+div.page.light #sidebar-slider:hover {
+  background-color: var(--main-light-active-bg);
+}
 /* ##### Titlebar ##### */
 #titlebar.light {
   background: var(--main-light-titlebar-bg);

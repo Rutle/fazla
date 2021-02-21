@@ -43,7 +43,7 @@ const SideBar: React.FC<ShipListProps> = ({ children, refe = null, show = false 
   );
 
   return (
-    <div className={`ship-side-container ${!show ? 'small-hidden' : ''}`} ref={refe}>
+    <div className="ship-side-container" ref={refe}>
       <div className="top-container">
         <form role="search">
           <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>

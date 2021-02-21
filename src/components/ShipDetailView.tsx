@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PageTemplate from '_/components/PageTemplate';
 import ShipDetails from '_/components/ShipDetails';
 import { RootState } from '_/reducers/rootReducer';
@@ -27,7 +27,6 @@ const ShipDetailView: React.FC = () => {
   useRootClose(ref, handleRootClose, {
     disabled: !show,
   });
-
   return (
     <PageTemplate>
       <section className="page-content">
@@ -37,8 +36,8 @@ const ShipDetailView: React.FC = () => {
           </div>
         ) : (
           <>
-            <CSSTransition nodeRef={ref} in={show} timeout={600} classNames="my-node">
-              <SideBar refe={ref} show={show}>
+            <CSSTransition nodeRef={ref} in={show} timeout={600} classNames="side-slide">
+              <SideBar refe={ref}>
                 <ShipList shipSearchList={shipSearchList} listName="ALL" />
                 <ShipList shipSearchList={ownedSearchList} listName="OWNED" />
               </SideBar>

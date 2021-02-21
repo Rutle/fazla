@@ -949,19 +949,29 @@ div.f-grid div.f-icon.bottom-emp {
   cursor: pointer;
   padding-bottom: 2px;
 }
-.my-node-enter {
+.side-slide-enter {
+  display: inline-flex!important;
   transform: translate3d(-100%, 0, 0);
 }
-.my-node-enter-active {
+.side-slide-enter-active {
+  display: inline-flex!important;
   transform: translate3d(0, 0, 0);
   transition: all 600ms;
 }
-.my-node-exit {
+.side-slide-enter-done {
+  display: inline-flex!important;
+}
+.side-slide-exit {
+  display: inline-flex!important;
   transform: translate3d(0, 0, 0);
 }
-.my-node-exit-active {
+.side-slide-exit-active {
   transform: translate3d(-100%, 0, 0);
   transition: all 600ms;
+
+}
+.side-slide-exit-done {
+  display: none;
 }
 @keyframes toast-in-bottom {
 	from {
@@ -1055,14 +1065,14 @@ div.f-grid div.f-icon.bottom-emp {
   #sidebar-slider {
     display: inline-flex;
     position: fixed;
-    left: -20px;
-    top: 75%;
+    left: 95%;
+    top: 15%;
     width: 30px;
     height: 30px;
     transition: all 600ms;
   }
   #sidebar-slider:hover {
-    transform: translate3d(18px, 0, 0);
+    transform: translate3d(-18px, 0, 0);
     
   }
   #formation-content {
@@ -1073,20 +1083,38 @@ div.f-grid div.f-icon.bottom-emp {
   #formation-content > div.scroll {
     overflow-y: unset;
   }
+
+  .modal-overlay .ship-side-container,
   .page-content .ship-side-container {
-    position: fixed;
-    top: 40px;
     min-width: 40%;
     max-width: 40%;
-    height: 100%;
     z-index: 15;
+  }
+
+  .modal-overlay .ship-side-container {
+    display: none;
+    position: fixed;
+    left: 3px;
+    height: 74%;
+  }
+  .page-content .ship-side-container {
+    display: none;
+    position: fixed;
+    top: 40px;
     left: 0px;
-    /* transition: all 600ms;*/
+    height: 85%;
   }
   .popover-container {
     width: 150px;
     max-width: 150px;
   }
+
+  .modal-container.ship-select {
+    height: 80%;
+    width: 100%;
+    flex-direction: row!important;
+  }
+
   #formation-content .name.f-header,
   #formation-content .passive.f-header,
   #window-title {
@@ -1130,8 +1158,9 @@ div.f-grid div.f-icon.bottom-emp {
     min-width: unset;
     max-width: unset;
   }
-
-  .small-hidden {
+  .modal-container.ship-select .small-hidden,
+  .page .small-hidden,
+  .f-row.small-hidden {
     display: none;
   }
   .page {

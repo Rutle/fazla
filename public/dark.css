@@ -76,7 +76,7 @@ div.page.dark .ship-side-container,
 div.modal-overlay.dark .ship-side-container {
   background-color: var(--root-dark-bg);
 }
-
+div.modal-overlay.dark #sidebar-slider,
 div.page.dark #sidebar-slider {
   border-radius: 4px;
   background-color: var(--main-dark-bg);
