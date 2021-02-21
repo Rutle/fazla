@@ -98,7 +98,13 @@ const ShipDetails: React.FC = () => {
         {renderAddRemoveButton()}
         <RButton
           themeColor={config.themeColor}
-          onClick={() => openWikiUrl(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
+          onClick={async () => {
+            if (process.env.PLAT_ENV === 'electron') {
+              await openWikiUrl(ship.wikiUrl !== undefined ? ship.wikiUrl : '');
+            } else if (process.env.PLAT_ENV === 'web' && ship.wikiUrl !== undefined) {
+              window.open(ship.wikiUrl, '_blank', 'noopener,noreferrer');
+            }
+          }}
           className="btn normal"
           disabled={!urlValidation(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
           extraStyle={{ minWidth: '85px' }}

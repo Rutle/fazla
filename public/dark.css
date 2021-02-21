@@ -71,12 +71,20 @@ div.page.dark {
   background-color: var(--root-dark-bg);
   color: var(--main-dark-color);
 }
-/*
+
 div.page.dark .ship-side-container,
 div.modal-overlay.dark .ship-side-container {
-  border-right: 1px solid var(--main-dark-border);
+  background-color: var(--root-dark-bg);
 }
-*/
+
+div.page.dark #sidebar-slider {
+  border-radius: 4px;
+  background-color: var(--main-dark-bg);
+  border: 1px solid var(--main-dark-border);
+  -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
+  -moz-box-shadow: 1px 1px 4px 1px #0000008f;
+  box-shadow: 1px 1px 4px 1px #0000008f;
+}
 /* ##### Titlebar ##### */
 #titlebar.dark {
   background: var(--main-dark-bg);
@@ -142,6 +150,11 @@ div.modal-overlay.dark .ship-side-container {
   color: var(--main-dark-color);
 }
 
+#bottom-fleet-selector.dark {
+  background: var(--main-dark-bg);
+  border-top: 1px solid var(--main-dark-border);
+  color: var(--main-dark-color);
+}
 /* #### Modal #### */
 .modal-overlay.dark div.modal-title {
   border: 1px solid var(--main-dark-border);

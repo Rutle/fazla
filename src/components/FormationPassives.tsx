@@ -65,7 +65,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
       {!isShip('vanguard') ? (
         <>
           <div className="f-row action" onClick={() => setShowVanguard(!showVanguard)}>
-            <div className={`f-icon plain ${showVanguard ? '' : 'f-collapse'}`}>
+            <div className={`f-icon plain ${showVanguard ? '' : 'open'}`}>
               <CaretLeft themeColor={themeColor} />
             </div>
             <div className="f-title plain">Vanguard</div>

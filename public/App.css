@@ -26,7 +26,6 @@ body, nav, header {
 .page {
   height: 100%;
   display: flex;
-  /* min-height: 93vh;*/
   flex-direction: column;
   margin-top: 40px;
   margin-bottom: 25px;
@@ -34,10 +33,8 @@ body, nav, header {
 }
 
 .page-content {
-  /* margin: 0px 0px 25px 0px;*/
   height: 100%;
-  /*max-height: calc(100% - 62px);*/
-  /* max-height: calc(100% - 40px);*/
+  min-height: min-content;
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -288,6 +285,9 @@ div.scroll {
   max-width: 18%;
 }
 
+#sidebar-slider {
+  display: none;
+}
 /* ###### Buttons ###### */
 
 
@@ -307,6 +307,7 @@ button.btn.small {
 
 label.btn,
 label.btn *,
+#sidebar-slider *,
 button.tab-btn,
 button.btn {
   cursor: pointer;
@@ -721,9 +722,8 @@ div.grid-item > div.content > div.hullTypeAbb {
   padding: 3px 5px;
   height: 100%;
   justify-content: center;
+  text-align: center;
 }
-
-
 
 div.f-grid div.grid-item.toggle {
   flex-basis: auto;
@@ -741,7 +741,6 @@ div.f-row div.name {
   max-width: 160px;
   height: inherit;
   justify-content: center;
-  /* font-size: 15px;*/
   padding: 3px 5px;
 }
 
@@ -950,7 +949,20 @@ div.f-grid div.f-icon.bottom-emp {
   cursor: pointer;
   padding-bottom: 2px;
 }
-
+.my-node-enter {
+  transform: translate3d(-100%, 0, 0);
+}
+.my-node-enter-active {
+  transform: translate3d(0, 0, 0);
+  transition: all 600ms;
+}
+.my-node-exit {
+  transform: translate3d(0, 0, 0);
+}
+.my-node-exit-active {
+  transform: translate3d(-100%, 0, 0);
+  transition: all 600ms;
+}
 @keyframes toast-in-bottom {
 	from {
 	  transform: translateY(100%);
@@ -1015,6 +1027,7 @@ div.f-grid div.f-icon.bottom-emp {
 }
 
 @media only screen and (max-width: 733px) {
+  /*
   .modal-container .radio-group label:first-child {
     border-bottom-left-radius: 0px;
     border-top-right-radius: 4px;
@@ -1024,28 +1037,73 @@ div.f-grid div.f-icon.bottom-emp {
     border-bottom-left-radius: 4px;
     border-top-right-radius: 0px;
   }
-}
-@media only screen and (max-width: 586px) {
-  .page .radio-group label:first-child {
-    border-bottom-left-radius: 0px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 0px;
-  }
-  .page .radio-group label:last-child {
-    border-bottom-left-radius: 4px;
-    border-top-right-radius: 0px;
-  }
+  */
 }
 
 @media only screen and (max-width: 586px) {
+  #footer {
+    display: none;
+  }
+  /* #sidebar-reveal,*/
+  #fleet-selector {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 0px;
+  }
+  #sidebar-slider {
+    display: inline-flex;
+    position: fixed;
+    left: -20px;
+    top: 75%;
+    width: 30px;
+    height: 30px;
+    transition: all 600ms;
+  }
+  #sidebar-slider:hover {
+    transform: translate3d(18px, 0, 0);
+    
+  }
+  #formation-content {
+    overflow-y: scroll;
+    margin-bottom: 25px;
+  }
+  
+  #formation-content > div.scroll {
+    overflow-y: unset;
+  }
+  .page-content .ship-side-container {
+    position: fixed;
+    top: 40px;
+    min-width: 40%;
+    max-width: 40%;
+    height: 100%;
+    z-index: 15;
+    left: 0px;
+    /* transition: all 600ms;*/
+  }
+  .popover-container {
+    width: 150px;
+    max-width: 150px;
+  }
+  #formation-content .name.f-header,
+  #formation-content .passive.f-header,
   #window-title {
     display: none;
   }
-  div.f-grid div.f-row {
+  .f-row.passive-list,
+  #formation-content div.f-grid div.f-row {
     flex-direction: column;
+  }
+  #formation-content div.f-grid div.f-row.action {
+    flex-direction: row;
   }
   .tab {
     justify-content: flex-start;
+  }
+  .tab > button.tab-btn {
+    flex-grow: 1;
   }
   .button-group {
     flex-grow: 1;
@@ -1054,12 +1112,15 @@ div.f-grid div.f-icon.bottom-emp {
   .message-container {
     width: 100%;
   }
+
   .message-container > .message {
     flex-grow: 1;
   }
+
   .radio-group label.btn.normal {
     padding: 0px 2px 2px 2px;
   }
+
   .rList .rList-item.btn > .hullTypeAbb {
     display: none;
   }
@@ -1069,10 +1130,12 @@ div.f-grid div.f-icon.bottom-emp {
     min-width: unset;
     max-width: unset;
   }
-  .ship-data-container {
-    overflow-y: scroll;
+
+  .small-hidden {
+    display: none;
   }
-  div.scroll {
-    overflow-y: unset;
+  .page {
+    margin-bottom: 0px;
+    max-height: calc(100% - 40px);
   }
 }

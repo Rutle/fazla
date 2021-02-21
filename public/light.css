@@ -55,6 +55,7 @@
 .light * {
   scrollbar-width: thin;
   scrollbar-color: var(--main-light-border) var(--root-light-bg);
+  scroll-padding-right: 5px;
 }
 .light .no-focus-outline:focus,
 .light .no-focus-outline:focus-within {
@@ -88,12 +89,21 @@ div.page.light {
   background-color: var(--root-light-bg);
   color: var(--main-light-color);
 }
-/*
+
 div.page.light .ship-side-container,
 div.modal-overlay.light .ship-side-container {
-  border-right: 1px solid var(--main-light-border);
+  background-color: var(--root-light-bg);
 }
-*/
+
+div.page.light #sidebar-slider {
+  border-radius: 4px;
+  background-color: var(--main-light-bg);
+  border: 1px solid var(--main-light-border);
+  -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
+  -moz-box-shadow: 1px 1px 4px 1px #0000008f;
+  box-shadow: 1px 1px 4px 1px #0000008f;
+}
+
 /* ##### Titlebar ##### */
 #titlebar.light {
   background: var(--main-light-titlebar-bg);

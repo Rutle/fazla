@@ -21,7 +21,7 @@ function checkHullType() {
     console.log('JSON file has been saved.');
   });
 }
-
+checkHullType();
 function checkNationality() {
   const jsonObject = {};
   Object.keys(shipData).forEach((ele, idx) => {
@@ -63,7 +63,7 @@ function checkRarity() {
     console.log('JSON file has been saved.');
   });
 }
-checkNationality();
+// checkNationality();
 
 function checkSkills() {
   const jsonObject = {};

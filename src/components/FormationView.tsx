@@ -1,10 +1,9 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactModal from 'react-modal';
 import { AppContext } from '_/App';
 import { formationModalAction, FormationModalAction } from '_/reducers/slices/formationModalSlice';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
-import DataStore from '_/utils/dataStore';
 import { Ship } from '_/types/types';
 import { RootState } from '_/reducers/rootReducer';
 import PageTemplate from './PageTemplate';
@@ -12,7 +11,6 @@ import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
 import FormationModalContent from './Modal/FormationModalContent';
 import FormationDropDown from './DropDown/FormationDropDown';
-import FormationGridItem from './FormationGridItem';
 import NewFormationModalContent from './Modal/NewFormationModalContent';
 import RenameFormationModalContent from './Modal/RenameFormationModalContent';
 import RButton from './RButton/RButton';
@@ -33,13 +31,9 @@ const FormationView: React.FC = () => {
   // const [collapsed, setCollapsed] = useState([]);
   const [formationData, setFormationData] = useState<Ship[][]>([]);
 
-  const open = useCallback(
-    (action: FormationModalAction, toggle: 'ALL' | 'OWNED', index: number, data: DataStore) => () => {
-      dispatch(formationModalAction(action, toggle, index, data));
-      setModalOpen({ modal: 'shiplist', isOpen: true });
-    },
-    [dispatch]
-  );
+  useEffect(() => {
+    setFleetTabIndex(0);
+  }, [fData.selectedIndex]);
 
   useEffect(() => {
     if (fData.formations.length !== 0) {
@@ -91,148 +85,128 @@ const FormationView: React.FC = () => {
   }, [dispatch, fData.isEdit]);
   return (
     <PageTemplate>
-      <section className="page-content">
-        <ReactModal
-          overlayClassName={`modal-overlay ${config.themeColor}`}
-          isOpen={showModal.isOpen}
-          className={`modal-container ${showModal.modal === 'shiplist' ? 'ship-select' : 'formation-action'}`}
-          onRequestClose={requestClose}
-        >
-          {renderModal()}
-        </ReactModal>
-        <div className="ship-data-container">
-          <div className="tab">
-            {fData.formations.length !== 0 ? <FormationDropDown /> : <></>}
-            <RButton
-              themeColor={config.themeColor}
-              className="tab-btn normal"
-              onClick={() => setModalOpen({ modal: 'new', isOpen: true })}
-            >
-              New
-            </RButton>
+      <>
+        <section className="page-content">
+          <ReactModal
+            overlayClassName={`modal-overlay ${config.themeColor}`}
+            isOpen={showModal.isOpen}
+            className={`modal-container ${showModal.modal === 'shiplist' ? 'ship-select' : 'formation-action'}`}
+            onRequestClose={requestClose}
+          >
+            {renderModal()}
+          </ReactModal>
+          <div id="formation-content" className="ship-data-container">
+            <div className="tab">
+              {fData.formations.length !== 0 ? <FormationDropDown /> : <></>}
+              <RButton
+                themeColor={config.themeColor}
+                className="tab-btn normal"
+                onClick={() => setModalOpen({ modal: 'new', isOpen: true })}
+              >
+                New
+              </RButton>
+              {fData.formations.length !== 0 ? (
+                <>
+                  <RButton
+                    themeColor={config.themeColor}
+                    className="tab-btn normal"
+                    onClick={() => dispatch(formationAction(FormationAction.Remove, { storage }))}
+                    disabled={fData.formations.length === 0}
+                  >
+                    Remove
+                  </RButton>
+                  <RButton
+                    themeColor={config.themeColor}
+                    className="tab-btn normal"
+                    onClick={() => setModalOpen({ modal: 'rename', isOpen: true })}
+                  >
+                    Rename
+                  </RButton>
+                  <RButton
+                    themeColor={config.themeColor}
+                    className="tab-btn normal"
+                    onClick={() => setModalOpen({ modal: 'export', isOpen: true })}
+                  >
+                    Export
+                  </RButton>
+                  <RButton
+                    themeColor={config.themeColor}
+                    className="tab-btn normal"
+                    onClick={() => setModalOpen({ modal: 'import', isOpen: true })}
+                  >
+                    Import
+                  </RButton>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
             {fData.formations.length !== 0 ? (
               <>
-                <RButton
-                  themeColor={config.themeColor}
-                  className="tab-btn normal"
-                  onClick={() => dispatch(formationAction(FormationAction.Remove, { storage }))}
-                  disabled={fData.formations.length === 0}
+                <div
+                  style={{
+                    marginBottom: '15px',
+                    borderBottom: `1px solid var(--main-${config.themeColor}-border)`,
+                  }}
                 >
-                  Remove
-                </RButton>
-                {/* 
-                <RButton
-                  themeColor={config.themeColor}
-                  className={`tab-btn normal ${fData.isEdit[fData.selectedIndex] ? 'selected' : ''}`}
-                  onClick={() => dispatch(formationAction(FormationAction.Save, { storage }))}
-                  disabled={!fData.isEdit[fData.selectedIndex]}
-                >
-                  Save
-                </RButton>
-                */}
-                <RButton
-                  themeColor={config.themeColor}
-                  className="tab-btn normal"
-                  onClick={() => setModalOpen({ modal: 'rename', isOpen: true })}
-                >
-                  Rename
-                </RButton>
-                <RButton
-                  themeColor={config.themeColor}
-                  className="tab-btn normal"
-                  onClick={() => setModalOpen({ modal: 'export', isOpen: true })}
-                >
-                  Export
-                </RButton>
-                <RButton
-                  themeColor={config.themeColor}
-                  className="tab-btn normal"
-                  onClick={() => setModalOpen({ modal: 'import', isOpen: true })}
-                >
-                  Import
-                </RButton>
+                  <FormationGrid
+                    themeColor={config.themeColor}
+                    selectedIndex={fleetTabIndex}
+                    ships={formationData}
+                    openModal={setModalOpen}
+                    shipData={shipData}
+                  />
+                </div>
+                <div id="fleet-selector" className="tab">
+                  {formationData.map((fleet, idx) => {
+                    return (
+                      <RButton
+                        key={`${'button'}-${idx * fleet.length}`}
+                        themeColor={config.themeColor}
+                        className={`tab-btn normal${fleetTabIndex === idx ? ' selected' : ''}`}
+                        onClick={() => {
+                          setFleetTabIndex(idx);
+                        }}
+                        disabled={fData.formations.length === 0}
+                      >
+                        {`Fleet ${idx + 1}`}
+                      </RButton>
+                    );
+                  })}
+                </div>
+                <div className="scroll">
+                  {formationData.map((fleet, idx) => {
+                    return (
+                      <div key={`tab${fleet.length * idx}`} className={`${fleetTabIndex !== idx ? 'hidden' : ''}`}>
+                        <FormationPassives
+                          key={`${'passive'}-${idx * fleet.length}`}
+                          fleet={fleet}
+                          themeColor={config.themeColor}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               </>
             ) : (
-              <></>
+              <div style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
+                <div
+                  className={`message-container ${config.themeColor}`}
+                  style={{
+                    alignSelf: 'center',
+                    width: '50%',
+                    minHeight: '40px',
+                  }}
+                >
+                  <span className="message" style={{ fontSize: '24px', justifyContent: 'center' }}>
+                    No formations.
+                  </span>
+                </div>
+              </div>
             )}
           </div>
-          {fData.formations.length !== 0 ? (
-            <>
-              <div
-                style={{
-                  marginBottom: '15px',
-                  borderBottom: `1px solid var(--main-${config.themeColor}-border)`,
-                }}
-              >
-                {formationData.map((fleet, idx) => {
-                  return (
-                    <FormationGrid
-                      key={`fleet${idx * fleet.length}`}
-                      themeColor={config.themeColor}
-                      isTitle={idx === 0}
-                    >
-                      {fleet.map((ship, idxx) => (
-                        <FormationGridItem
-                          key={`${idx * 6 + idxx}`}
-                          index={idx * 6 + idxx}
-                          ship={ship}
-                          themeColor={config.themeColor}
-                          onClick={open(FormationModalAction.Open, appState.cToggle, idx * 6 + idxx, shipData)}
-                        />
-                      ))}
-                    </FormationGrid>
-                  );
-                })}
-              </div>
-              <div className="tab">
-                {formationData.map((fleet, idx) => {
-                  return (
-                    <RButton
-                      key={`${'button'}-${idx * fleet.length}`}
-                      themeColor={config.themeColor}
-                      className={`tab-btn normal${fleetTabIndex === idx ? ' selected' : ''}`}
-                      onClick={() => {
-                        setFleetTabIndex(idx);
-                      }}
-                      disabled={fData.formations.length === 0}
-                    >
-                      {`Fleet ${idx + 1}`}
-                    </RButton>
-                  );
-                })}
-              </div>
-              <div className="scroll">
-                {formationData.map((fleet, idx) => {
-                  return (
-                    <div key={`tab${fleet.length * idx}`} className={`${fleetTabIndex !== idx ? 'hidden' : ''}`}>
-                      <FormationPassives
-                        key={`${'passive'}-${idx * fleet.length}`}
-                        fleet={fleet}
-                        themeColor={config.themeColor}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          ) : (
-            <div style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
-              <div
-                className={`message-container ${config.themeColor}`}
-                style={{
-                  alignSelf: 'center',
-                  width: '50%',
-                  minHeight: '40px',
-                }}
-              >
-                <span className="message" style={{ fontSize: '24px', justifyContent: 'center' }}>
-                  No formations.
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
+        </section>
+      </>
     </PageTemplate>
   );
 };

@@ -45,6 +45,6 @@ yarn-error.log*
 .eslintignore
 
 # custom
-/src/data/ships.json
+/src/data/*.json
 /src/utils/test.js
 /src/utils/*.json

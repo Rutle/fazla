@@ -28,9 +28,9 @@ const CategoryOverlay: React.FC<{ themeColor: string }> = ({ themeColor }) => {
       <Overlay
         show={isOverlayOpen}
         rootClose
-        offset={[0, 10]}
+        offset={[140, 10]}
         onHide={() => setIsOverlayOpen(false)}
-        placement="bottom"
+        placement="right"
         container={containerRef}
         target={triggerRef}
       >

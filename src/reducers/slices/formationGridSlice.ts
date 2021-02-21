@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '_reducers/store';
-import { saveFormationData, removeAFormation } from '_/utils/ipcAPI';
+import { saveFormationData } from '_/utils/ipcAPI';
 import { Formation } from '_/types/types';
 import { setErrorMessage } from './appStateSlice';
 
@@ -191,7 +191,6 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
     const shipGridIndex = data.gridIndex || 0;
     const { storage } = data;
     let emptyFormation = [];
-    console.log(action, data);
     switch (action) {
       case 'NEW':
         if (fType === 'normal') {

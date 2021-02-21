@@ -142,7 +142,6 @@ if (isWeb) {
     minimize: isEnvProduction,
     splitChunks: {
       chunks: 'all',
-	  name: isEnvDevelopment,
     },
     runtimeChunk: {
       name: (entrypoint) => `runtime-${entrypoint.name}`,
