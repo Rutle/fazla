@@ -80,6 +80,8 @@ const ListIcon: React.FC<{ themeColor: string }> = ({ themeColor }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
+      width="30"
+      height="30"
       viewBox="0 0 16 16"
       stroke={`var(--main-${themeColor}-color)`}
       fill={`var(--main-${themeColor}-color)`}
