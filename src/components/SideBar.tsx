@@ -11,14 +11,13 @@ import { CloseIcon } from './Icons';
 
 interface ShipListProps {
   children: React.ReactNode;
-  refe?: React.MutableRefObject<null>;
-  show?: boolean;
+  refer?: React.MutableRefObject<null>;
 }
 
 /**
  * Component for a sidebar.
  */
-const SideBar: React.FC<ShipListProps> = ({ children, refe = null, show = false }) => {
+const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
   const dispatch = useDispatch();
   const { shipData } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
@@ -42,7 +41,7 @@ const SideBar: React.FC<ShipListProps> = ({ children, refe = null, show = false 
   );
 
   return (
-    <div className="ship-side-container" ref={refe}>
+    <div className="ship-side-container" ref={refer}>
       <div className="top-container">
         <form role="search">
           <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>

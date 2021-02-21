@@ -63,7 +63,7 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:prettier/recommended",
-        "prettier/react"
+        "prettier"
       ],
       "rules": {
         // This rule is already covered by the TypeScript compiler.

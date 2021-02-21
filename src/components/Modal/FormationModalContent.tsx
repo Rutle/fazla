@@ -51,7 +51,7 @@ const FormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) => {
   return (
     <>
       <CSSTransition nodeRef={ref} in={show} timeout={600} classNames="side-slide">
-        <SideBar refe={ref} show={show}>
+        <SideBar refer={ref}>
           <ShipList shipSearchList={shipSearchList} listName="ALL" />
           <ShipList shipSearchList={ownedSearchList} listName="OWNED" />
         </SideBar>

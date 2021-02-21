@@ -37,7 +37,7 @@ const ShipDetailView: React.FC = () => {
         ) : (
           <>
             <CSSTransition nodeRef={ref} in={show} timeout={600} classNames="side-slide">
-              <SideBar refe={ref}>
+              <SideBar refer={ref}>
                 <ShipList shipSearchList={shipSearchList} listName="ALL" />
                 <ShipList shipSearchList={ownedSearchList} listName="OWNED" />
               </SideBar>
