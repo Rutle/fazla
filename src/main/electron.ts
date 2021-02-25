@@ -92,8 +92,6 @@ ipcMain.on('restore-application', () => {
 ipcMain.on('open-logs', () => {
   const userDir = app.getPath('userData');
   shell.showItemInFolder(userDir);
-  // console.log('logs');
-  // console.log(`${userDir}\\logs`);
 });
 
 ipcMain.handle('resource-check', async () => {

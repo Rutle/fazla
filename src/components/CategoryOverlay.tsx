@@ -5,7 +5,7 @@ import SearchParameterContent from './SearchParameterContent';
 /**
  * Category overlay container for category parameter toggles.
  */
-const CategoryOverlay: React.FC<{ themeColor: string }> = ({ themeColor }) => {
+const CategoryOverlay: React.FC<{ themeColor: string; isSmallScreen: boolean }> = ({ themeColor, isSmallScreen }) => {
   const triggerRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -27,9 +27,9 @@ const CategoryOverlay: React.FC<{ themeColor: string }> = ({ themeColor }) => {
       <Overlay
         show={isOverlayOpen}
         rootClose
-        offset={[140, 10]}
+        offset={!isSmallScreen ? [140, 10] : [0, 10]}
         onHide={() => setIsOverlayOpen(false)}
-        placement="right"
+        placement={!isSmallScreen ? 'right' : 'bottom'}
         container={containerRef}
         target={triggerRef}
       >

@@ -1,20 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactModal from 'react-modal';
 import { AppContext } from '_/App';
-import { formationModalAction, FormationModalAction } from '_/reducers/slices/formationModalSlice';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
 import { Ship } from '_/types/types';
 import { RootState } from '_/reducers/rootReducer';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { CSSTransition } from 'react-transition-group';
 import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
-import FormationModalContent from './Modal/FormationModalContent';
 import FormationDropDown from './DropDown/FormationDropDown';
 import NewFormationModalContent from './Modal/NewFormationModalContent';
 import RenameFormationModalContent from './Modal/RenameFormationModalContent';
 import RButton from './RButton/RButton';
 import ImportExportModalContent from './Modal/ImportExportModalContent';
+import ShipList from './ShipList';
+import SideBar from './SideBar';
+import ShipDetails from './ShipDetails';
+import useVisibility from './Visibility/useVisibility';
+import { ArrowDegUp, CloseIcon } from './Icons';
 
 ReactModal.setAppElement('#root');
 /**
@@ -22,14 +27,20 @@ ReactModal.setAppElement('#root');
  */
 const FormationView: React.FC = () => {
   const dispatch = useDispatch();
+  const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
+  const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
   const { shipData, storage } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
   const appState = useSelector((state: RootState) => state.appState);
   const [showModal, setModalOpen] = useState({ modal: '', isOpen: false });
   const [fleetTabIndex, setFleetTabIndex] = useState(0);
-  // const [collapsed, setCollapsed] = useState([]);
   const [formationData, setFormationData] = useState<Ship[][]>([]);
+  const [showSearch, setShowSearch] = useState(false);
+  const [selectedGrid, setSelectedGrid] = useState(NaN);
+  const refData = useRef<HTMLDivElement>(null);
+  const refTransition = useRef<HTMLDivElement>(null);
+  const [isVisible, refSide] = useVisibility();
 
   useEffect(() => {
     setFleetTabIndex(0);
@@ -55,10 +66,31 @@ const FormationView: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fData.selectedIndex, fData.formations]);
 
-  const renderModal = (): JSX.Element => {
-    if (showModal.modal === 'shiplist') {
-      return <FormationModalContent setModalOpen={setModalOpen} />;
+  // Update search list and show the search section.
+  const showSearchSection = (isOpen: boolean, gridIndex: number) => {
+    setSelectedGrid(gridIndex);
+    dispatch(formationAction(FormationAction.Search, { shipData, gridIndex, isOpen }));
+    setShowSearch(isOpen);
+  };
+  const hideSearchSection = (isOpen: boolean) => {
+    dispatch(formationAction(FormationAction.Search, { shipData, isOpen }));
+    setShowSearch(isOpen);
+  };
+  const addShip = () => {
+    dispatch(formationAction(FormationAction.AddShip, { shipData, gridIndex: selectedGrid }));
+    setShowSearch(false);
+  };
+
+  const scrollTo = (loc: string) => {
+    if (loc === 'top' && refSide && refSide.current) {
+      refSide.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     }
+    if (loc === 'ship' && refData && refData.current) {
+      refData.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+    }
+  };
+
+  const renderModal = (): JSX.Element => {
     if (showModal.modal === 'new') {
       return <NewFormationModalContent setModalOpen={setModalOpen} />;
     }
@@ -73,10 +105,10 @@ const FormationView: React.FC = () => {
 
   const requestClose = () => {
     if (showModal.isOpen) {
-      dispatch(formationModalAction(FormationModalAction.Close, appState.cToggle, 0, shipData));
       setModalOpen({ modal: '', isOpen: false });
     }
   };
+  // Save data
   useEffect(() => {
     if (fData.isEdit.some((val) => val !== false)) {
       dispatch(formationAction(FormationAction.Save, { storage }));
@@ -86,7 +118,7 @@ const FormationView: React.FC = () => {
   return (
     <PageTemplate>
       <>
-        <section className="page-content">
+        <section className="page-content formations">
           <ReactModal
             overlayClassName={`modal-overlay ${config.themeColor}`}
             isOpen={showModal.isOpen}
@@ -153,8 +185,7 @@ const FormationView: React.FC = () => {
                     themeColor={config.themeColor}
                     selectedIndex={fleetTabIndex}
                     ships={formationData}
-                    openModal={setModalOpen}
-                    shipData={shipData}
+                    openSearchSection={showSearchSection}
                   />
                 </div>
                 <div id="fleet-selector" className="tab">
@@ -205,6 +236,41 @@ const FormationView: React.FC = () => {
               </div>
             )}
           </div>
+          <CSSTransition nodeRef={refTransition} in={showSearch} timeout={200} classNames="my-node">
+            <div id="formation-ship-search" ref={refTransition}>
+              <SideBar refer={refSide}>
+                <ShipList shipSearchList={shipSearchList} listName="ALL" scrollTo={() => scrollTo('ship')} />
+                <ShipList shipSearchList={ownedSearchList} listName="OWNED" scrollTo={() => scrollTo('ship')} />
+              </SideBar>
+              <div id="sidebar-slider" className={`button-group ${config.themeColor}`} style={{ width: 'unset' }}>
+                {!isVisible ? (
+                  <RButton themeColor={config.themeColor} className="btn slide" onClick={() => scrollTo('top')}>
+                    <ArrowDegUp themeColor={config.themeColor} />
+                  </RButton>
+                ) : (
+                  <></>
+                )}
+
+                <RButton themeColor={config.themeColor} className="btn slide" onClick={() => hideSearchSection(false)}>
+                  <CloseIcon themeColor={config.themeColor} />
+                </RButton>
+              </div>
+              <div className={`ship-data-container ${config.themeColor}`} ref={refData}>
+                <ShipDetails />
+                {shipData.getShips()[appState[appState.cToggle].index] ? (
+                  <RButton
+                    themeColor={config.themeColor}
+                    onClick={addShip}
+                    extraStyle={{ marginTop: '5px', height: '50px' }}
+                  >
+                    Add to formation
+                  </RButton>
+                ) : (
+                  <> </>
+                )}
+              </div>
+            </div>
+          </CSSTransition>
         </section>
       </>
     </PageTemplate>

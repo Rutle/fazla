@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList as List } from 'react-window';
@@ -11,11 +11,13 @@ import { hullTypes, hullTypesAbb } from '../data/categories';
 interface ShipListProps {
   shipSearchList: ShipSimple[];
   listName: string;
+  refe?: React.RefObject<HTMLDivElement>;
+  scrollTo?: () => void;
 }
 /**
  * Component for a list of ships.
  */
-const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
+const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName, refe, scrollTo }) => {
   const dispatch = useDispatch();
   const { shipData } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
@@ -25,8 +27,11 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
   const selectShip = useCallback(
     (id: string, index: number) => {
       dispatch(setSelectedShip(appState.cToggle, id, index));
+      if (scrollTo) {
+        scrollTo();
+      }
     },
-    [appState.cToggle, dispatch]
+    [appState.cToggle, dispatch, scrollTo]
   );
 
   const getHullTypeAbb = (hullType: string | undefined) => {
@@ -54,7 +59,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName }) => {
 
   return (
     <div className={`rList${listName !== appState.cToggle ? ' hidden' : ''}`}>
-      <AutoSizer>
+      <AutoSizer defaultHeight={(refe?.current?.scrollHeight as number) - 94}>
         {({ height, width }) => (
           <List
             height={height}

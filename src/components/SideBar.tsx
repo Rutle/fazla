@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '_/reducers/rootReducer';
 import { setCurrentToggle } from '_/reducers/slices/appStateSlice';
@@ -11,7 +11,7 @@ import { CloseIcon } from './Icons';
 
 interface ShipListProps {
   children: React.ReactNode;
-  refer?: React.MutableRefObject<null>;
+  refer?: React.RefObject<HTMLDivElement>;
 }
 
 /**
@@ -25,6 +25,7 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
   const searchParameters = useSelector((state: RootState) => state.searchParameters);
   const [searchValue, setSearchValue] = useState(searchParameters.name);
   const [inputFocus, setInputFocus] = useState(false);
+  // const [parentD, setParentD] = useState<number[]>(pHW);
 
   // Set details of the selected ship when changed between 'all ships' and 'owned ships'.
   useEffect(() => {
@@ -41,7 +42,7 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
   );
 
   return (
-    <div className="ship-side-container" ref={refer}>
+    <div id="ship-search-list" className="ship-side-container" ref={refer}>
       <div className="top-container">
         <form role="search">
           <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
@@ -94,7 +95,7 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
             )}
           </div>
         </form>
-        <CategoryOverlay themeColor={config.themeColor} />
+        <CategoryOverlay themeColor={config.themeColor} isSmallScreen />
         <div className={`radio-group ${config.themeColor}`}>
           <RToggle
             id="all-toggle"

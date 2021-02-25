@@ -2,7 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '_reducers/store';
 import { saveFormationData } from '_/utils/ipcAPI';
 import { Formation } from '_/types/types';
-import { setErrorMessage } from './appStateSlice';
+import DataStore from '_/utils/dataStore';
+import { batch } from 'react-redux';
+import { setErrorMessage, setIsUpdated } from './appStateSlice';
+import { resetParameters, SearchAction, setFleet, updateSearch } from './searchParametersSlice';
 
 export enum FormationAction {
   New = 'NEW',
@@ -13,7 +16,11 @@ export enum FormationAction {
   RemoveShip = 'REMOVESHIP',
   Export = 'EXPORT',
   Import = 'IMPORT',
+  Search = 'SEARCH',
 }
+
+const MAININDEX = [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20];
+const VANGUARDINDEX = [3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23];
 
 interface Formations {
   formations: Formation[];
@@ -22,7 +29,7 @@ interface Formations {
 }
 const initialState: Formations = {
   formations: [],
-  selectedIndex: NaN,
+  selectedIndex: NaN, // Selected formation index
   isEdit: [],
 };
 
@@ -97,7 +104,7 @@ const formationGridSlice = createSlice({
     },
     removeFormation(state, action: PayloadAction<number>) {
       const idx = action.payload;
-      const newForms = state.formations.filter((item, index) => index !== idx);
+      const newForms = state.formations.filter((item, index) => index !== idx) as Formation[];
       const newEdit = state.isEdit.filter((item, index) => index !== idx);
       const newLen = newForms.length;
       let newIdx = 0;
@@ -167,6 +174,8 @@ interface FormActionData {
   formationType?: string;
   importedFormation?: string[];
   storage?: LocalForage;
+  shipData?: DataStore;
+  isOpen?: boolean;
 }
 
 /**
@@ -180,16 +189,16 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
   let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
     const platform = process.env.PLAT_ENV;
-    const { formationGrid, formationModal, appState } = getState();
+    const { formationGrid, appState } = getState();
     const formIdx = formationGrid.selectedIndex; // Which formation is selected.
     const formCount = formationGrid.formations.length;
     const { id } = appState[appState.cToggle]; // ID of selected ship when adding ship to a fleet.
-    const gIndex = formationModal.gridIndex; // Ship selected on the grid of ships.
+    const list = appState.cToggle;
     const name = data.formationName || `Formation ${formCount}`;
     const fType = data.formationType || 'normal';
-    const iFormation = data.importedFormation || [];
-    const shipGridIndex = data.gridIndex || 0;
-    const { storage } = data;
+    const iFormation = data.importedFormation;
+    const shipGridIndex = data.gridIndex; // Ship selected on the grid of ships.
+    const { storage, shipData, isOpen } = data;
     let emptyFormation = [];
     switch (action) {
       case 'NEW':
@@ -200,10 +209,12 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
         }
         dispatch(addNewFormationData({ data: emptyFormation, name }));
         break;
-      case 'REMOVE': {
-        dispatch(removeFormation(formIdx));
+      case 'REMOVE':
+        batch(() => {
+          dispatch(removeFormation(formIdx));
+          dispatch(formationAction(FormationAction.Save, { storage }));
+        });
         break;
-      }
       case 'RENAME':
         dispatch(renameFormation({ idx: formIdx, name }));
         break;
@@ -212,26 +223,53 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
         if (result.isOk) dispatch(toggleIsEdit());
         break;
       case 'ADDSHIP':
-        dispatch(addShipToFormation({ id, gridIndex: gIndex, selectedIndex: formIdx }));
+        if (shipGridIndex && !Number.isNaN(shipGridIndex) && shipData) {
+          batch(() => {
+            dispatch(addShipToFormation({ id, gridIndex: shipGridIndex, selectedIndex: formIdx }));
+            dispatch(setFleet({ fleet: 'ALL' }));
+            dispatch(setIsUpdated({ key: list, value: false }));
+            dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
+            dispatch(resetParameters());
+          });
+        }
         break;
       case 'REMOVESHIP':
-        dispatch(removeShipFromFormation({ gridIndex: shipGridIndex, selectedIndex: formIdx }));
+        if (shipGridIndex) {
+          dispatch(removeShipFromFormation({ gridIndex: shipGridIndex, selectedIndex: formIdx }));
+        }
         break;
       case 'IMPORT':
-        dispatch(addNewFormationData({ data: iFormation, name }));
+        if (iFormation) {
+          dispatch(addNewFormationData({ data: iFormation, name }));
+        }
+        break;
+      case 'SEARCH':
+        if (!isOpen && isOpen !== undefined && shipData) {
+          dispatch(setFleet({ fleet: 'ALL' }));
+          dispatch(setIsUpdated({ key: list, value: false }));
+          dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
+          dispatch(resetParameters());
+        } else if (shipGridIndex && !Number.isNaN(shipGridIndex) && shipData) {
+          let fleet: 'ALL' | 'VANGUARD' | 'MAIN';
+          if (MAININDEX.includes(shipGridIndex)) {
+            fleet = 'MAIN';
+          } else if (VANGUARDINDEX.includes(shipGridIndex)) {
+            fleet = 'VANGUARD';
+          } else {
+            throw new Error('Invalid grid index.');
+          }
+          batch(() => {
+            dispatch(resetParameters());
+            dispatch(setFleet({ fleet }));
+            dispatch(setIsUpdated({ key: list, value: false }));
+            dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
+          });
+        }
+
         break;
       default:
         break;
     }
-    /*
-    if (platform === 'electron') {
-      result = await saveFormationData(formationGrid.formations, platform);
-    }
-    if (platform === 'web' && storage) {
-      const res = await storage.setItem('formations', formationGrid.formations);
-      result.isOk = res.length === formationGrid.formations.length;
-    } */
-    // if (!result.isOk)
   } catch (e) {
     let msg = '';
     // let msg = 'There was an error with formation action.';

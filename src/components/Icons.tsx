@@ -31,11 +31,15 @@ const MaxIcon: React.FC<{ themeColor: string }> = ({ themeColor }) => {
 };
 
 // https://icons.getbootstrap.com/icons/x/
-const CloseIcon: React.FC<{ themeColor: string }> = ({ themeColor }) => {
+const CloseIcon: React.FC<{ themeColor: string; width?: string; height?: string }> = ({
+  themeColor,
+  width = '16',
+  height = '16',
+}) => {
   return (
     <svg
-      width="16"
-      height="16"
+      width={width}
+      height={height}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 16 16"
       stroke={`var(--main-${themeColor}-titlebar-color)`}
@@ -76,22 +80,26 @@ const CaretLeft: React.FC<{ themeColor: string }> = ({ themeColor }) => {
   );
 };
 
-const ListIcon: React.FC<{ themeColor: string }> = ({ themeColor }) => {
+const ArrowDegUp: React.FC<{ themeColor: string; width?: string; height?: string }> = ({
+  themeColor,
+  width = '16px',
+  height = '16px',
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="30"
-      height="30"
+      width={width}
+      height={height}
       viewBox="0 0 16 16"
-      stroke={`var(--main-${themeColor}-color)`}
-      fill={`var(--main-${themeColor}-color)`}
+      stroke={`var(--main-${themeColor}-titlebar-color)`}
+      fill={`var(--main-${themeColor}-titlebar-color)`}
     >
       <path
         fillRule="evenodd"
-        d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+        d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z"
       />
     </svg>
   );
 };
 
-export { MinIcon, MaxIcon, CloseIcon, RestoreIcon, CaretLeft, ListIcon };
+export { MinIcon, MaxIcon, CloseIcon, RestoreIcon, CaretLeft, ArrowDegUp };

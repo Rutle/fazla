@@ -1,39 +1,23 @@
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '_/reducers/rootReducer';
-import { FormationModalAction, formationModalAction } from '_/reducers/slices/formationModalSlice';
 import { Ship } from '_/types/types';
-import DataStore from '_/utils/dataStore';
 import FormationGridItem from './FormationGridItem';
 
 interface FormationGridProps {
   themeColor: string;
-  // children: React.ReactNode;
-  // isTitle: boolean;
   selectedIndex: number;
   ships: Ship[][];
-  openModal: React.Dispatch<
-    React.SetStateAction<{
-      modal: string;
-      isOpen: boolean;
-    }>
-  >;
-  shipData: DataStore;
+  openSearchSection: (isOpen: boolean, gridIndex: number) => void;
 }
 
 /**
  * Component presenting ships in a grid.
  */
-const FormationGrid: React.FC<FormationGridProps> = ({ themeColor, selectedIndex, ships, openModal, shipData }) => {
-  const dispatch = useDispatch();
-  const appState = useSelector((state: RootState) => state.appState);
-
+const FormationGrid: React.FC<FormationGridProps> = ({ themeColor, selectedIndex, ships, openSearchSection }) => {
   const open = useCallback(
-    (action: FormationModalAction, toggle: 'ALL' | 'OWNED', index: number, data: DataStore) => () => {
-      dispatch(formationModalAction(action, toggle, index, data));
-      openModal({ modal: 'shiplist', isOpen: true });
+    (gridIndex: number) => () => {
+      openSearchSection(true, gridIndex);
     },
-    [dispatch, openModal]
+    [openSearchSection]
   );
   return (
     <div className={`f-grid ${themeColor}`}>
@@ -48,13 +32,13 @@ const FormationGrid: React.FC<FormationGridProps> = ({ themeColor, selectedIndex
                   index={idx * 6 + idxx}
                   ship={ship}
                   themeColor={themeColor}
-                  onClick={open(FormationModalAction.Open, appState.cToggle, idx * 6 + idxx, shipData)}
+                  onClick={open(idx * 6 + idxx)}
                 />
               ))}
             </div>
           ))}
         </div>
-        <div id="vanguard-secton" className="f-column">
+        <div id="vanguard-section" className="f-column">
           <div className="f-title">Vanguard</div>
           {ships.map((fleet, idx) => (
             <div
@@ -67,7 +51,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({ themeColor, selectedIndex
                   index={idx * 6 + (idxx + 3)}
                   ship={ship}
                   themeColor={themeColor}
-                  onClick={open(FormationModalAction.Open, appState.cToggle, idx * 6 + (idxx + 3), shipData)}
+                  onClick={open(idx * 6 + (idxx + 3))}
                 />
               ))}
             </div>

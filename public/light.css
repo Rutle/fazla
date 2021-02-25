@@ -72,23 +72,18 @@ div.page.light {
   color: var(--main-light-color);
 }
 
+div.page.light .ship-data-container,
 div.page.light .ship-side-container,
 div.modal-overlay.light .ship-side-container {
   background-color: var(--root-light-bg);
 }
 div.modal-overlay.light #sidebar-slider,
 div.page.light #sidebar-slider {
-  border-radius: 4px;
-  background-color: var(--main-light-bg);
-  border: 1px solid var(--main-light-border);
-  -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
-  -moz-box-shadow: 1px 1px 4px 1px #0000008f;
-  box-shadow: 1px 1px 4px 1px #0000008f;
+  -webkit-box-shadow: 0px 0px 6px -2px #000000;
+  -moz-box-shadow: 0px 0px 6px -2px #000000;
+  box-shadow: 0px 0px 6px -2px #000000;
 }
-div.modal-overlay.light #sidebar-slider:hover,
-div.page.light #sidebar-slider:hover {
-  background-color: var(--main-light-active-bg);
-}
+
 /* ##### Titlebar ##### */
 #titlebar.light {
   background: var(--main-light-titlebar-bg);

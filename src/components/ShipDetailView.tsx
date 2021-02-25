@@ -1,16 +1,13 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/interactive-supports-focus */
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import PageTemplate from '_/components/PageTemplate';
 import ShipDetails from '_/components/ShipDetails';
 import { RootState } from '_/reducers/rootReducer';
 import { useSelector } from 'react-redux';
-import useRootClose from 'react-overlays/useRootClose';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { CSSTransition } from 'react-transition-group';
 import SideBar from './SideBar';
 import ShipList from './ShipList';
-import { ListIcon } from './Icons';
+import RButton from './RButton/RButton';
+import { ArrowDegUp } from './Icons';
+import useVisibility from './Visibility/useVisibility';
 
 /**
  * Component for a ship details view.
@@ -20,32 +17,43 @@ const ShipDetailView: React.FC = () => {
   const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
   const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
   const config = useSelector((state: RootState) => state.config);
-  const ref = useRef(null);
-  const [show, setShow] = useState(false);
-  const handleRootClose = () => setShow(false);
+  const refData = useRef<HTMLDivElement>(null);
+  const refPageContent = useRef<HTMLDivElement>(null);
+  const [isVisible, refSide] = useVisibility();
 
-  useRootClose(ref, handleRootClose, {
-    disabled: !show,
-  });
+  const scrollTo = (loc: string) => {
+    if (loc === 'top' && refSide && refSide.current) {
+      refSide.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+    }
+    if (loc === 'ship' && refData && refData.current) {
+      refData.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+    }
+  };
+
   return (
     <PageTemplate>
-      <section className="page-content">
+      <section className="page-content ships" ref={refPageContent}>
         {appState.cState === 'INIT' ? (
           <div id="ship-details-content" className="ship-data-container">
             <div className="info-text">{appState.cMsg}</div>
           </div>
         ) : (
           <>
-            <CSSTransition nodeRef={ref} in={show} timeout={600} classNames="side-slide">
-              <SideBar refer={ref}>
-                <ShipList shipSearchList={shipSearchList} listName="ALL" />
-                <ShipList shipSearchList={ownedSearchList} listName="OWNED" />
-              </SideBar>
-            </CSSTransition>
-            <div role="button" id="sidebar-slider" onClick={() => setShow(true)}>
-              <ListIcon themeColor={config.themeColor} />
+            <SideBar refer={refSide}>
+              <ShipList shipSearchList={shipSearchList} listName="ALL" scrollTo={() => scrollTo('ship')} />
+              <ShipList shipSearchList={ownedSearchList} listName="OWNED" scrollTo={() => scrollTo('ship')} />
+            </SideBar>
+            <div
+              id="sidebar-slider"
+              className={`button-group ${config.themeColor}${isVisible ? ' small-hidden' : ''}`}
+              style={{ width: 'unset' }}
+            >
+              <RButton themeColor={config.themeColor} className="btn slide" onClick={() => scrollTo('top')}>
+                <ArrowDegUp themeColor={config.themeColor} />
+              </RButton>
             </div>
-            <div className="ship-data-container">
+
+            <div id="ship-details-content" className="ship-data-container" ref={refData}>
               <ShipDetails />
             </div>
           </>
