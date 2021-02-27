@@ -29,7 +29,6 @@ html {
 body {
   margin: 0px;
   padding: 0px;
-  /*height: 100vh;*/
   height: 100%;
   width: 100%;
   flex-direction: column;
@@ -64,7 +63,6 @@ body, nav, header {
 div.scroll {
   height: 100%;
   overflow-y: scroll;
-  padding-right: 5px;
 }
 
 :not(input):not(textarea),
@@ -82,7 +80,6 @@ div.scroll {
   height: 40px;
   width: 100%;
   z-index: 20;
-  
 }
 
 #footer {
@@ -101,12 +98,9 @@ div.scroll {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* grid-template-columns: auto 277px auto 96px; */
 }
 
 #window-menu {
-  /* width: 100%;*/
-  /* grid-column: 2;*/
   box-sizing: border-box;
   height: 40px;
   -webkit-app-region: no-drag;
@@ -120,7 +114,6 @@ div.scroll {
 }
 
 #window-menu nav {
-  /* width: 100%;*/
   width: max-content;
   height: 40px;
   margin-bottom: 0px!important;
@@ -160,7 +153,6 @@ div.scroll {
   border-radius: 0;
 }
 #window-controls label.btn {
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -169,7 +161,6 @@ div.scroll {
   border: 0;
   font-size: 12px;
   border-radius: 0;
-  /* background-color: inherit;*/
   padding: 0;
 }
 
@@ -181,7 +172,6 @@ div.scroll {
   width: 40px;
   height: 40px;
   border: 0;
-  /* background-color: inherit;*/
   padding: 0;
 }
 #window-controls .title-button {
@@ -192,7 +182,6 @@ div.scroll {
   width: 40px;
   height: 40px;
   border: 0;
-  /* background-color: inherit;*/
   padding: 0;
 }
 
@@ -209,7 +198,6 @@ div.scroll {
 }
 
 #window-title {
-  /* grid-column: 1;*/
   display: flex;
   align-items: center;
   padding-left: 8px;
@@ -237,8 +225,6 @@ div.scroll {
   overflow: hidden;
   font-size: 14px;
 }
-
-
 
 /* ###### Modal ###### */
 .modal-container > div.modal-title {
@@ -287,9 +273,7 @@ div.scroll {
   background-color: rgba(0,0,0,0.1);
 }
 
-.ship-data-container,
-.ship-side-container,
-.home-container {
+.container {
   display: flex;
   flex-direction: column;
   padding: 15px;
@@ -297,7 +281,7 @@ div.scroll {
   width: 100%;
 }
 
-.ship-side-container {
+.sidebar {
   min-width: 20%;
   width: 20%;
 }
@@ -305,54 +289,59 @@ div.scroll {
 #formation-ship-search {
   display: none;
   position: fixed;
-  top: 174px;
   width: calc(100% - 30px);
-  height: calc(100% - 200px);
   flex-direction: row;
   z-index: 25;
 }
 
-.my-node-enter {
+.normal-fleet {
+  top: 174px;
+  min-height: calc(100% - 200px);
+}
+.siren-fleet {
+  top: 230px;
+  min-height: calc(100% - 255px);
+}
+
+.search-section-enter {
   opacity: 0;
   display: flex!important;
 }
-.my-node-enter-active {
+.search-section-active {
   display: flex!important;
   opacity: 1;
   transition: opacity 200ms;
 }
-.my-node-enter-done {
+.search-section-enter-done {
+  opacity: 1;
   display: flex!important;
 }
-.my-node-exit {
+.search-section-exit {
   display: flex!important;
   opacity: 1;
 }
-.my-node-exit-active {
+.search-section-exit-active {
   display: flex!important;
   opacity: 0;
   transition: opacity 200ms;
 }
-.my-node-exit-done {
+.search-section-exit-done {
+  opacity: 0;
   display: none;
 }
 
 #sidebar-slider {
   display: none;
 }
-#bottom-menu-bar {
-  display: none;
-}
+
 /* ###### Buttons ###### */
-
-
 button:disabled {
   cursor: default!important;
   opacity: 0.2;
 }
 
 button.btn.small {
-  line-height: 1.2em;
+  line-height: 1.2;
   font-size: 14px;
   padding: 0px 5px 2px 5px;
   min-width: 35px;
@@ -360,21 +349,32 @@ button.btn.small {
   border-radius: 0px;
 }
 
+button.btn.grid-item *,
 label.btn,
 label.btn *,
 #sidebar-slider *,
 button.tab-btn,
-button.btn {
+button.btn,
+button.btn * {
   cursor: pointer;
 }
 
 label.btn,
 button.btn {
   border-radius: 4px;
+  display: inline-block;
 }
 
 button.btn.menu-item {
   border-radius: 0px;
+}
+
+button.btn.grid-item {
+  padding: 3px 5px;
+  white-space: nowrap;
+  font-size: 15px;
+  border: 0;
+  background: unset;
 }
 
 button.btn.slide {
@@ -392,13 +392,7 @@ button.tab-btn.normal {
   font-variant-caps: all-petite-caps;
   padding: 0px 10px 2px 10px;
   justify-content: center;
-  line-height: 1.2em;
-}
-
-label.btn.graphic,
-button.btn.graphic {
-  cursor: default;
-	border-radius: 4px;
+  line-height: 1.2;
 }
 
 /* ###### top-container + tab ##### */
@@ -424,24 +418,34 @@ button.btn.graphic {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  /* height: 24px;*/
   margin-bottom: 5px;
 }
 
 .tab > button.tab-btn {
+  display: inline-block;
   border-right: 0px!important;
 }
+
+.tab > div.help {
+  align-self: center;
+  display: inline-block;
+  line-height: 1.2;
+  padding: 0px 10px 2px 10px;
+}
+.tab > div.help > .icon {
+  vertical-align: middle;
+}
+
 nav > a {
   text-decoration: none;
   border: none;
   font-variant-caps: all-petite-caps;
   font-size: 18px;
 }
-.searchIcon,
+
 button.icon *,
 div.f-row.action *,
 .rList .rList-item *,
-.grid-item > div.content *,
 .tab * {
   cursor: pointer;
 }
@@ -535,7 +539,6 @@ div.f-row.action *,
   overflow: hidden; 
   position: absolute;
   z-index: 100;
-  /*max-width: 19%;*/
   width: 19%;
   border-radius: 2px;
 }
@@ -635,10 +638,17 @@ div.f-row.action *,
   border-radius: 4px;
 }
 
+.button-group.full-width {
+  flex-grow: 1;
+}
+
+.button-group.full-width > button {
+  flex: 1 1;
+}
+
 .radio-group label,
 .button-group button {
   border-radius: 0px;
-  flex: 1 1;
 }
 .radio-group label:first-child,
 .button-group button:first-child {
@@ -706,24 +716,17 @@ input[type="url"] {
   flex-grow: 1;
 }
 
-.searchIcon,
-button.icon {
-  text-align: center;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  width: 26px;
-  padding: 5px;
-  border-radius: 4px;
+button.btn > .icon {
+  vertical-align: -.2em;
 }
 
-button.icon {
+button.input {
   border-radius: 0px 4px 4px 0px;
 }
-button.icon:hover {
+button.input:hover {
   border-radius: 0px;
 }
+
 /* ##### GRID ##### */
 .f-grid {
   display: flex;
@@ -763,7 +766,7 @@ div.f-column {
 }
 
 /* ##### GRID-ITEM ##### */
-div.grid-item {
+.grid-item {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -772,24 +775,6 @@ div.grid-item {
   min-width: 0;
   overflow: hidden;
   margin-right: 1px;
-}
-
-.grid-item > div.content {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  border-radius: inherit;
-  font-size: 15px;
-  white-space: nowrap;
-}
-
-div.grid-item > div.content > div.details,
-div.grid-item > div.content > div.hullTypeAbb {
-  border-radius: inherit;
-  padding: 3px 5px;
-  height: 100%;
-  justify-content: center;
-  text-align: center;
 }
 
 div.f-grid div.grid-item.toggle {
@@ -1056,24 +1041,7 @@ div.f-grid div.f-icon.bottom-emp {
 	}
 }
 
-@media only screen and (max-width: 1340px) {
-  .formation-model-container div.searchIcon {
-    display: none;
-    width: 0;
-  }
-
-}
-
 @media only screen and (max-width: 900px) {
-  .searchIcon {
-    display: none;
-    width: 0;
-  }
-  /*
-  .modal-container.formation div.radio-group > label.btn {
-    flex-grow: 1;
-  }
-  */
   div.grid-item.action > input[type="url"] {
     max-width: 450px;
   }
@@ -1090,18 +1058,7 @@ div.f-grid div.f-icon.bottom-emp {
   #footer {
     display: none;
   }
-  #bottom-menu-bar {
-    display: inline-flex;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 24px;
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-  #bottom-menu-bar.tab {
-    margin-bottom: 0px;
-  }
+
   #fleet-selector {
     position: fixed;
     left: 0;
@@ -1114,17 +1071,11 @@ div.f-grid div.f-icon.bottom-emp {
     position: fixed;
     right: 5px;
     top: 95px;
-
   }
 
-  #formation-content {
-    margin-bottom: 25px;
-  }
-  
   #formation-content > div.scroll {
     overflow-y: unset;
   }
-
 
   #formation-ship-search,
   .page-content {
@@ -1133,53 +1084,61 @@ div.f-grid div.f-icon.bottom-emp {
     min-height: unset;
     margin-top: 1px;
   }
+
   .page-content.ships {
     overflow-y: scroll;
   }
-  .page-content.formations > .ship-data-container {
+
+  .page-content.formations > .container.content {
     min-height: calc(100% - 60px);
     overflow-y: scroll;
+    margin-bottom: 25px;
   }
   #formation-ship-search {
     overflow-y: scroll;
     top: 40px;
     left: 0;
     min-height: calc(100% - 40px);
+    height: calc(100% - 40px);
     width: 100%;
   }
-  .page-content .ship-data-container,
-  .page-content .ship-side-container {
+  .page-content .container.content,
+  .page-content .container.sidebar {
     width: calc(100% - 30px);
     min-height: calc(100% - 30px);
   }
 
   .popover-container {
     width: 80%;
-    /*max-width: 150px;*/
   }
 
+  /* .rList .rList-item.btn > .hullTypeAbb,*/
   #formation-content .name.f-header,
   #formation-content .passive.f-header,
   #window-title {
     display: none;
   }
+
   .f-row.passive-list,
-  #formation-content div.f-grid div.f-row {
+  #formation-grid .f-row {
     flex-direction: column;
   }
-  #formation-content div.f-grid div.f-row.action {
+  #formation-grid #vanguard-section > div.f-row > button,
+  #formation-grid #main-section > div.f-row > button {
+    margin-bottom: 1px;
+  }
+  #passive-section div.f-grid div.f-row.action {
     flex-direction: row;
   }
+
   .tab {
     justify-content: flex-start;
   }
+
   .tab > button.tab-btn {
     flex-grow: 1;
   }
-  .button-group {
-    flex-grow: 1;
-    width: calc(100% - 2px);
-  }
+
   .message-container {
     width: 100%;
   }
@@ -1190,10 +1149,6 @@ div.f-grid div.f-icon.bottom-emp {
 
   .radio-group label.btn.normal {
     padding: 0px 2px 2px 2px;
-  }
-
-  .rList .rList-item.btn > .hullTypeAbb {
-    display: none;
   }
 
   .f-row > div.name.f-header,
@@ -1255,7 +1210,7 @@ div.f-grid div.f-icon.bottom-emp {
 .light .no-focus-outline:focus,
 .light .no-focus-outline:focus-within {
   outline: none!important;
-  background-color: var(--main-light-hover-bg);
+  background-color: var(--main-light-bg);
 }
 
 .light :not(button):not(label):not(.switch-input):not(.modal-container):not(a):not(input):focus {
@@ -1285,12 +1240,10 @@ div.page.light {
   color: var(--main-light-color);
 }
 
-div.page.light .ship-data-container,
-div.page.light .ship-side-container,
-div.modal-overlay.light .ship-side-container {
+div.page.light .container {
   background-color: var(--root-light-bg);
 }
-div.modal-overlay.light #sidebar-slider,
+
 div.page.light #sidebar-slider {
   -webkit-box-shadow: 0px 0px 6px -2px #000000;
   -moz-box-shadow: 0px 0px 6px -2px #000000;
@@ -1361,20 +1314,11 @@ div.page.light #sidebar-slider {
 
 /* #### Tab #### */
 div.page.light .tab {
-  /*overflow: hidden;*/
   border: 1px solid var(--main-light-border);
   border-left: 0px;
   border-right: 0px;
   background-color: var(--main-light-bg);
   box-sizing: border-box;
-}
-
-div.page.light > button.tab-btn {
-  border: 1px solid var(--main-light-bg);
-}
-
-div.page.light > button.tab-btn:hover {
-  border: 1px solid var(--main-light-bg);
 }
 
 nav.tab.light {
@@ -1403,9 +1347,17 @@ button.light {
   border: 1px solid transparent;
 }
 
+button.light.input,
+input[type="text"].light {
+  color: inherit;
+  background-color: inherit;
+  border: unset;
+}
+
 .light .tab-btn:hover,
-.light .btn:hover,
-.light button.rList-item.btn:hover {
+.btn.light:hover,
+button.btn.grid-item.light:hover,
+button.rList-item.light.btn:hover {
   background-color: var(--main-light-hover-bg);
 }
 
@@ -1415,6 +1367,7 @@ button.tab-btn.light:disabled:hover {
 }
 
 label.btn.light.selected,
+button.rList-item.light.btn.selected,
 button.btn.light.selected,
 button.tab-btn.light.selected {
   background-color: var(--main-light-active-bg);
@@ -1487,13 +1440,7 @@ div.button-group.light {
 }
 
 /* #### Input #### */
-input[type="text"].light,
-.searchIcon.light,
-button.icon.light {
-  color: inherit;
-  background-color: inherit;
-  border: unset;
-}
+
 
 input[type="url"].light,
 #input-group.light {
@@ -1532,37 +1479,35 @@ div.f-grid.light div.f-icon {
   border: 1px solid var(--main-light-border);
 }
 
-.light .grid-item > div.content:hover {
-  background-color: var(--main-light-hover-bg);
-}
 /* #### hull types #### */
-.light .Aircraft.Carrier /* .hullTypeAbb */ {
+.btn.light.Aircraft.Carrier,
+.btn.light.Light.Carrier {
   background-color: Plum;
 }
 
-.light .Battleship, 
-.light .Battlecruiser {
+.btn.light.Battleship, 
+.btn.light.Battlecruiser {
   background-color: Pink;
 }
 
-.light .Large.Cruiser {
+.btn.light.Large.Cruiser {
   background-color: LightSalmon;
 }
-.light .Destroyer {
+.btn.light.Destroyer {
   background-color: powderblue;
 }
-.light .Submarine {
+.btn.light.Submarine {
   background-color: PaleGreen;
 }
 
-.light .Heavy.Cruiser,
-.light .Monitor,
-.light .Light.Cruiser {
+.btn.light.Heavy.Cruiser,
+.btn.light.Monitor,
+.btn.light.Light.Cruiser {
   background-color: NavajoWhite;
 }
 
-.light .Repair.Ship,
-.light .Repair {
+.btn.light.Repair.Ship,
+.btn.light.Repair {
   background-color: Aquamarine;
 }
 
@@ -1700,8 +1645,7 @@ div.page.dark {
   color: var(--main-dark-color);
 }
 
-div.page.dark .ship-side-container,
-div.modal-overlay.dark .ship-side-container {
+div.page.dark .container {
   background-color: var(--root-dark-bg);
 }
 div.modal-overlay.dark #sidebar-slider,
@@ -1813,14 +1757,6 @@ div.page.dark .tab {
   box-sizing: border-box;
 }
 
-div.page.dark > button.tab-btn {
-  border: 1px solid var(--main-dark-bg);
-}
-
-div.page.dark > button.tab-btn:hover {
-  border: 1px solid var(--main-dark-bg);
-}
-
 nav.tab.dark {
   box-sizing: border-box;
   /* justify-content: space-between;*/
@@ -1862,7 +1798,8 @@ button.dark {
 }
 
 .dark .tab-btn:hover,
-.dark .btn:hover {
+.btn.dark:hover,
+button.rList-item.dark.btn:hover {
   background-color: var(--main-dark-hover-bg);
 }
 
@@ -1872,6 +1809,7 @@ button.tab-btn.dark:disabled:hover {
 }
 
 label.btn.dark.selected,
+button.rList-item.dark.btn.selected,
 button.btn.dark.selected,
 button.tab-btn.dark.selected {
   background-color: var(--main-dark-active-bg);
@@ -1946,8 +1884,7 @@ div.button-group.dark {
 
 /* #### Input #### */
 input[type="text"].dark,
-.searchIcon.dark,
-button.icon.dark {
+button.input.dark {
   color: inherit;
   background-color: inherit;
   border: unset;
@@ -1976,65 +1913,44 @@ input[type="url"].dark.is-invalid,
 div.f-grid.dark div.f-header {
   border-bottom: 2px solid var(--main-dark-border);
 }
-div.f-grid.dark div.f-title {
-  background-color: var(--main-dark-bg);
-  border: 1px solid var(--main-dark-border);
-}
-
-div.f-grid.dark div.f-fleet {
-  background-color: var(--main-dark-bg);
-  border: 1px solid var(--main-dark-border);
-}
-
-/* #### grid icon #### */
+div.f-grid.dark div.f-title,
+div.f-grid.dark div.f-fleet,
 div.f-grid.dark div.f-icon {
   background-color: var(--main-dark-bg);
   border: 1px solid var(--main-dark-border);
 }
 
-.dark .grid-item > div.content:hover {
-  background-color: var(--main-dark-hover-bg);
-}
-
 /* #### hull types #### */
-.dark .grid-item div.hullTypeAbb.Aircraft.Carrier,
-.dark .Aircraft.Carrier div.hullTypeAbb {
+.btn.dark.Aircraft.Carrier,
+.btn.dark.Light.Carrier {
   background-color: #352035;
 }
-.dark .grid-item div.hullTypeAbb.Battleship,
-.dark .grid-item div.hullTypeAbb.Battlecruiser,
-.dark .Battleship div.hullTypeAbb, 
-.dark .Battlecruiser div.hullTypeAbb {
+
+.btn.dark.Battleship, 
+.btn.dark.Battlecruiser {
   background-color: #3e1c1a;
 }
-.dark .grid-item div.hullTypeAbb.Large.Cruiser,
-.dark .Large.Cruiser div.hullTypeAbb {
+
+.btn.dark.Large.Cruiser {
   background-color: #5a3023;
 }
-.dark .grid-item div.hullTypeAbb.Destroyer,
-.dark .Destroyer div.hullTypeAbb {
+
+.btn.dark.Destroyer {
   background-color: #203844;
 }
-.dark .grid-item div.hullTypeAbb.Submarine,
-.dark .Submarine div.hullTypeAbb {
+
+.btn.dark.Submarine {
   background-color: #3a4d21;
 }
-.dark .grid-item div.hullTypeAbb.Heavy.Cruiser,
-.dark .grid-item div.hullTypeAbb.Monitor,
-.dark .grid-item div.hullTypeAbb.Light.Cruiser,
-.dark .Heavy.Cruiser div.hullTypeAbb,
-.dark .Monitor div.hullTypeAbb,
-.dark .Light.Cruiser div.hullTypeAbb {
+.btn.dark.Heavy.Cruiser,
+.btn.dark.Monitor,
+.btn.dark.Light.Cruiser {
   background-color: #503c1e;
 }
-.dark .grid-item div.hullTypeAbb.Repair.Ship,
-.dark .grid-item div.hullTypeAbb.Repair,
-.dark .Repair.Ship div.hullTypeAbb,
-.dark .Repair div.hullTypeAbb {
+
+.btn.dark.Repair {
   background-color: #1a4638;
 }
-
-
 
 /* #### grid title #### */
 div.f-grid.dark div.f-icon.bottom-emp {
