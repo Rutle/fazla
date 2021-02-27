@@ -1,4 +1,4 @@
-## Project
+## Project [![Build Status](https://travis-ci.com/Rutle/fazla.svg?branch=master)](https://travis-ci.com/Rutle/fazla)
 
 Azur Lane fan application for formation management. There is a webapp version at [github pages](http://rutle.github.io/fazla) and then a desktop application using Electron. There is no release yet for the desktop application.
 
