@@ -52,12 +52,12 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
             {nameVal.length > 0 ? (
               <RButton
                 themeColor={config.themeColor}
-                className="btn icon"
+                className="btn input"
                 onClick={() => {
                   setNameVal('');
                 }}
               >
-                <CloseIcon themeColor={config.themeColor} />
+                <CloseIcon themeColor={config.themeColor} className="icon" />
               </RButton>
             ) : (
               <></>
@@ -91,7 +91,7 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
       </div>
 
       <div className="modal-action">
-        <div className={`button-group ${config.themeColor}`} style={{ flexGrow: 1 }}>
+        <div className={`button-group full-width ${config.themeColor}`}>
           <RButton
             themeColor={config.themeColor}
             onClick={() => {

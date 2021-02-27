@@ -5,7 +5,6 @@ import programConfigSlice from './slices/programConfigSlice';
 import appStateSlice from './slices/appStateSlice';
 import ownedSearchListSlice from './slices/ownedSearchListSlice';
 import formationGridSlice from './slices/formationGridSlice';
-import formationModalSlice from './slices/formationModalSlice';
 import searchParametersSlice from './slices/searchParametersSlice';
 import toastSlice from './slices/toastSlice';
 
@@ -16,7 +15,6 @@ const rootReducer = combineReducers({
   appState: appStateSlice,
   ownedSearchList: ownedSearchListSlice,
   formationGrid: formationGridSlice,
-  formationModal: formationModalSlice,
   searchParameters: searchParametersSlice,
   toastList: toastSlice,
 });

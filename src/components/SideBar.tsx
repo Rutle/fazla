@@ -42,7 +42,7 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
   );
 
   return (
-    <div id="ship-search-list" className="ship-side-container" ref={refer}>
+    <div className="container sidebar" ref={refer}>
       <div className="top-container">
         <form role="search">
           <div id="input-group" className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''}`}>
@@ -73,7 +73,7 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
             />
             {searchValue.length > 0 ? (
               <RButton
-                className="btn icon"
+                className="btn input"
                 themeColor={config.themeColor}
                 onClick={() => {
                   setSearchValue('');
@@ -88,7 +88,7 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
                   );
                 }}
               >
-                <CloseIcon themeColor={config.themeColor} />
+                <CloseIcon themeColor={config.themeColor} className="icon" />
               </RButton>
             ) : (
               <></>

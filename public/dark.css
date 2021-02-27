@@ -73,8 +73,7 @@ div.page.dark {
   color: var(--main-dark-color);
 }
 
-div.page.dark .ship-side-container,
-div.modal-overlay.dark .ship-side-container {
+div.page.dark .container {
   background-color: var(--root-dark-bg);
 }
 div.modal-overlay.dark #sidebar-slider,
@@ -186,14 +185,6 @@ div.page.dark .tab {
   box-sizing: border-box;
 }
 
-div.page.dark > button.tab-btn {
-  border: 1px solid var(--main-dark-bg);
-}
-
-div.page.dark > button.tab-btn:hover {
-  border: 1px solid var(--main-dark-bg);
-}
-
 nav.tab.dark {
   box-sizing: border-box;
   /* justify-content: space-between;*/
@@ -235,7 +226,8 @@ button.dark {
 }
 
 .dark .tab-btn:hover,
-.dark .btn:hover {
+.btn.dark:hover,
+button.rList-item.dark.btn:hover {
   background-color: var(--main-dark-hover-bg);
 }
 
@@ -245,6 +237,7 @@ button.tab-btn.dark:disabled:hover {
 }
 
 label.btn.dark.selected,
+button.rList-item.dark.btn.selected,
 button.btn.dark.selected,
 button.tab-btn.dark.selected {
   background-color: var(--main-dark-active-bg);
@@ -319,8 +312,7 @@ div.button-group.dark {
 
 /* #### Input #### */
 input[type="text"].dark,
-.searchIcon.dark,
-button.icon.dark {
+button.input.dark {
   color: inherit;
   background-color: inherit;
   border: unset;
@@ -349,65 +341,44 @@ input[type="url"].dark.is-invalid,
 div.f-grid.dark div.f-header {
   border-bottom: 2px solid var(--main-dark-border);
 }
-div.f-grid.dark div.f-title {
-  background-color: var(--main-dark-bg);
-  border: 1px solid var(--main-dark-border);
-}
-
-div.f-grid.dark div.f-fleet {
-  background-color: var(--main-dark-bg);
-  border: 1px solid var(--main-dark-border);
-}
-
-/* #### grid icon #### */
+div.f-grid.dark div.f-title,
+div.f-grid.dark div.f-fleet,
 div.f-grid.dark div.f-icon {
   background-color: var(--main-dark-bg);
   border: 1px solid var(--main-dark-border);
 }
 
-.dark .grid-item > div.content:hover {
-  background-color: var(--main-dark-hover-bg);
-}
-
 /* #### hull types #### */
-.dark .grid-item div.hullTypeAbb.Aircraft.Carrier,
-.dark .Aircraft.Carrier div.hullTypeAbb {
+.btn.dark.Aircraft.Carrier,
+.btn.dark.Light.Carrier {
   background-color: #352035;
 }
-.dark .grid-item div.hullTypeAbb.Battleship,
-.dark .grid-item div.hullTypeAbb.Battlecruiser,
-.dark .Battleship div.hullTypeAbb, 
-.dark .Battlecruiser div.hullTypeAbb {
+
+.btn.dark.Battleship, 
+.btn.dark.Battlecruiser {
   background-color: #3e1c1a;
 }
-.dark .grid-item div.hullTypeAbb.Large.Cruiser,
-.dark .Large.Cruiser div.hullTypeAbb {
+
+.btn.dark.Large.Cruiser {
   background-color: #5a3023;
 }
-.dark .grid-item div.hullTypeAbb.Destroyer,
-.dark .Destroyer div.hullTypeAbb {
+
+.btn.dark.Destroyer {
   background-color: #203844;
 }
-.dark .grid-item div.hullTypeAbb.Submarine,
-.dark .Submarine div.hullTypeAbb {
+
+.btn.dark.Submarine {
   background-color: #3a4d21;
 }
-.dark .grid-item div.hullTypeAbb.Heavy.Cruiser,
-.dark .grid-item div.hullTypeAbb.Monitor,
-.dark .grid-item div.hullTypeAbb.Light.Cruiser,
-.dark .Heavy.Cruiser div.hullTypeAbb,
-.dark .Monitor div.hullTypeAbb,
-.dark .Light.Cruiser div.hullTypeAbb {
+.btn.dark.Heavy.Cruiser,
+.btn.dark.Monitor,
+.btn.dark.Light.Cruiser {
   background-color: #503c1e;
 }
-.dark .grid-item div.hullTypeAbb.Repair.Ship,
-.dark .grid-item div.hullTypeAbb.Repair,
-.dark .Repair.Ship div.hullTypeAbb,
-.dark .Repair div.hullTypeAbb {
+
+.btn.dark.Repair {
   background-color: #1a4638;
 }
-
-
 
 /* #### grid title #### */
 div.f-grid.dark div.f-icon.bottom-emp {

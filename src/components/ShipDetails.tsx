@@ -9,21 +9,23 @@ import { SearchAction, updateSearch } from '_/reducers/slices/searchParametersSl
 import PassivesList from './PassivesList';
 import RButton from './RButton/RButton';
 import { Ship } from '../types/types';
+import { DashIcon, PlusIcon } from './Icons';
 
 /**
  * Component for displaying the details of a ship.
  */
-const ShipDetails: React.FC = () => {
+const ShipDetails: React.FC<{ additionalTopButtons?: JSX.Element }> = ({ additionalTopButtons }) => {
   const dispatch = useDispatch();
   const { addToast, shipData, storage } = useContext(AppContext);
   const appState = useSelector((state: RootState) => state.appState);
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
   const config = useSelector((state: RootState) => state.config);
   const [ship, setShip] = useState<Ship | undefined>();
+  const [isOwned, setIsOwned] = useState(false);
 
-  const isOwned = () => {
-    if (ship) {
-      return ownedShips.some((ele) => ele === ship.id);
+  const isShipOwned = (newShip?: Ship) => {
+    if (newShip) {
+      return ownedShips.some((ele) => ele === newShip.id);
     }
     return false;
   };
@@ -40,13 +42,17 @@ const ShipDetails: React.FC = () => {
         })
       );
     } else {
-      setShip(shipData.getShipByIndex(appState[appState.cToggle].index));
+      const tempShip = shipData.getShipByIndex(appState[appState.cToggle].index);
+      setShip(tempShip);
+      setIsOwned(isShipOwned(tempShip));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState.cToggle, dispatch, shipData]);
 
   useEffect(() => {
-    setShip(shipData.getShipByIndex(appState[appState.cToggle].index));
+    const tempShip = shipData.getShipByIndex(appState[appState.cToggle].index);
+    setShip(tempShip);
+    setIsOwned(isShipOwned(tempShip));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState.ALL, appState.OWNED, shipData]);
 
@@ -54,6 +60,7 @@ const ShipDetails: React.FC = () => {
     if (ship) {
       dispatch(addShip(ship.id, storage));
       if (config.isToast) addToast('success', 'Docks', `${ship.names.code} was added to docks.`);
+      setIsOwned(true);
     }
   }, [ship, dispatch, storage, config.isToast, addToast]);
 
@@ -61,33 +68,10 @@ const ShipDetails: React.FC = () => {
     if (ship) {
       dispatch(removeShip(shipData, ship.id, storage));
       if (config.isToast) addToast('info', 'Docks', `${ship.names.code} removed from docks.`);
+      setIsOwned(false);
     }
   }, [ship, dispatch, shipData, storage, config.isToast, addToast]);
 
-  const renderAddRemoveButton = () => {
-    if (!isOwned()) {
-      return (
-        <RButton
-          themeColor={config.themeColor}
-          onClick={addShipToOwned}
-          className="btn normal"
-          extraStyle={{ minWidth: '85px' }}
-        >
-          Add
-        </RButton>
-      );
-    }
-    return (
-      <RButton
-        themeColor={config.themeColor}
-        onClick={removeFromOwned}
-        className="btn normal"
-        extraStyle={{ minWidth: '85px' }}
-      >
-        Remove
-      </RButton>
-    );
-  };
   return ship ? (
     <>
       <div className="ship-title-bar">
@@ -95,7 +79,16 @@ const ShipDetails: React.FC = () => {
         <span className={ship.rarity}>{` ${ship.stars?.stars as string}`}</span>
       </div>
       <div className={`button-group ${config.themeColor}`} style={{ marginBottom: '5px' }}>
-        {renderAddRemoveButton()}
+        {additionalTopButtons || <></>}
+        <RButton
+          themeColor={config.themeColor}
+          onClick={isOwned ? removeFromOwned : addShipToOwned}
+          className="btn normal"
+          extraStyle={{ minWidth: '85px' }}
+        >
+          {isOwned ? <DashIcon themeColor={config.themeColor} /> : <PlusIcon themeColor={config.themeColor} />}
+          Docks
+        </RButton>
         <RButton
           themeColor={config.themeColor}
           onClick={async () => {

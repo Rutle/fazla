@@ -70,7 +70,7 @@ export const hullTypes: Pair = {
   Battlecruiser: 'Battlecruiser',
   Battleship: 'Battleship',
   // 'Light Aircraft Carrier': 'Light Aircraft Carrier',
-  'Light Carrier': 'Light Aircraft Carrier',
+  'Light Carrier': 'Light Carrier',
   'Aircraft Carrier': 'Aircraft Carrier',
   Monitor: 'Monitor',
   'Ayanami subclass': 'Destroyer',

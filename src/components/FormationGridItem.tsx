@@ -7,18 +7,20 @@ import { useDispatch } from 'react-redux';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
 import { Ship } from '_/types/types';
 import { hullTypes, hullTypesAbb } from '../data/categories';
+import RButton from './RButton/RButton';
 
 interface GridItemProps {
   index: number;
   ship?: Ship;
   themeColor: string;
   onClick: () => void;
+  isSelected: boolean;
 }
 
 /**
  * Singular component representing a grid item on a formation.
  */
-const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, themeColor, onClick }) => {
+const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, themeColor, onClick, isSelected }) => {
   const dispatch = useDispatch();
   const getLocation = (idx: number): string => {
     switch (idx) {
@@ -43,7 +45,7 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
   };
 
   const onRightClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       if (e.button === 2) e.preventDefault();
       dispatch(formationAction(FormationAction.RemoveShip, { gridIndex: index }));
     },
@@ -59,7 +61,17 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
     if (shipItem && shipItem.hullType) return hullTypes[shipItem.hullType];
     return '';
   };
-
+  return (
+    <RButton
+      onClick={onClick}
+      onRightClick={onRightClick}
+      className={`grid-item btn${isSelected ? ' selected' : ''} hullTypeAbb ${ship ? getHullType(ship) : ''}`}
+      themeColor={themeColor}
+    >
+      {ship ? `${getHullTypeAbb(ship.hullType)} ${ship.names.en}` : `Add ${getLocation(index)}`}
+    </RButton>
+  );
+  /*
   return (
     <div className="grid-item">
       <div
@@ -72,15 +84,15 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(({ index, ship, th
         onContextMenu={(e) => onRightClick(e)}
       >
         {ship !== undefined ? (
-          <div className={`hullTypeAbb ${getHullType(ship)}`}>{`${getHullTypeAbb(ship.hullType)} ${
-            ship.names.en
-          }`}</div>
+          <div className={`hullTypeAbb ${getHullType(ship)}`}>
+            {`${getHullTypeAbb(ship.hullType)} ${ship.names.en}`}
+          </div>
         ) : (
-          <div className="details">{`Add ${getLocation(index)}`}</div>
+          <div className={`details ${isSelected ? 'selected' : ''}`}>{`Add ${getLocation(index)}`}</div>
         )}
       </div>
     </div>
-  );
+  ); */
 });
 
 export default FormationGridItem;

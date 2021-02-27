@@ -179,8 +179,9 @@ interface FormActionData {
 }
 
 /**
- * Updates all ships search list.
+ * Formation view related actions
  * @param {FormationAction} action Enum action
+ * @param {FormActionData} data Object containing data for different actions
  */
 export const formationAction = (action: FormationAction, data: FormActionData): AppThunk => async (
   dispatch: AppDispatch,
@@ -223,13 +224,14 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
         if (result.isOk) dispatch(toggleIsEdit());
         break;
       case 'ADDSHIP':
-        if (shipGridIndex && !Number.isNaN(shipGridIndex) && shipData) {
+        // Add ship and reset list.
+        if (shipGridIndex !== undefined && !Number.isNaN(shipGridIndex) && shipData) {
           batch(() => {
             dispatch(addShipToFormation({ id, gridIndex: shipGridIndex, selectedIndex: formIdx }));
             dispatch(setFleet({ fleet: 'ALL' }));
             dispatch(setIsUpdated({ key: list, value: false }));
-            dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
             dispatch(resetParameters());
+            dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
           });
         }
         break;
@@ -244,12 +246,14 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
         }
         break;
       case 'SEARCH':
-        if (!isOpen && isOpen !== undefined && shipData) {
+        // Close and reset
+        if (!isOpen && shipData) {
           dispatch(setFleet({ fleet: 'ALL' }));
           dispatch(setIsUpdated({ key: list, value: false }));
           dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
           dispatch(resetParameters());
-        } else if (shipGridIndex && !Number.isNaN(shipGridIndex) && shipData) {
+          // Open and show proper list of ships.
+        } else if (isOpen && !Number.isNaN(shipGridIndex) && shipData && shipGridIndex !== undefined) {
           let fleet: 'ALL' | 'VANGUARD' | 'MAIN';
           if (MAININDEX.includes(shipGridIndex)) {
             fleet = 'MAIN';

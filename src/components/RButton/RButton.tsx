@@ -6,13 +6,14 @@ interface RButtonProps {
   children: React.ReactNode;
   themeColor?: string;
   onClick(event: React.MouseEvent<HTMLButtonElement>): void;
+  onRightClick?(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
   disabled?: boolean;
   extraStyle?: React.CSSProperties;
   role?: string;
 }
 
 const RButton: React.FC<RButtonProps> = React.memo(
-  ({ className = 'btn normal', children, themeColor = '', onClick, disabled, extraStyle, id, role }) => {
+  ({ className = 'btn normal', children, themeColor = '', onClick, onRightClick, disabled, extraStyle, id, role }) => {
     const [isFocusOutline, setFocusOutline] = useState(false);
     return (
       <button
@@ -26,6 +27,7 @@ const RButton: React.FC<RButtonProps> = React.memo(
         onMouseUp={() => {
           if (isFocusOutline) setFocusOutline(false);
         }}
+        onContextMenu={onRightClick}
         type="button"
         className={`${className} ${themeColor} ${!isFocusOutline ? 'no-focus-outline' : ''}`}
         onClick={onClick}

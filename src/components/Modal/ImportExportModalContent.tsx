@@ -23,7 +23,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
 
   const getTitle = () => {
     if (isType === 'export') return 'Export formation';
-    if (isType === 'import') return 'Import formation from a code';
+    if (isType === 'import') return 'Import formation';
     return '';
   };
 
@@ -108,12 +108,12 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
             {value.length > 0 ? (
               <RButton
                 themeColor={config.themeColor}
-                className="btn icon"
+                className="btn input"
                 onClick={() => {
                   setValue('');
                 }}
               >
-                <CloseIcon themeColor={config.themeColor} />
+                <CloseIcon themeColor={config.themeColor} className="icon" />
               </RButton>
             ) : (
               <></>
@@ -123,7 +123,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
       </div>
 
       <div className="modal-action">
-        <div className={`button-group ${config.themeColor}`} style={{ flexGrow: 1 }}>
+        <div className={`button-group full-width ${config.themeColor}`}>
           {isType === 'import' ? (
             <>
               <RButton
@@ -145,7 +145,6 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
               themeColor={config.themeColor}
               onClick={() => {
                 copyCode();
-                // setModalOpen({ modal: '', isOpen: false });
               }}
             >
               {!copySuccess ? 'Copy to clipboard' : 'Copied successfully.'}

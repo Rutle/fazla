@@ -34,7 +34,7 @@ const ShipDetailView: React.FC = () => {
     <PageTemplate>
       <section className="page-content ships" ref={refPageContent}>
         {appState.cState === 'INIT' ? (
-          <div id="ship-details-content" className="ship-data-container">
+          <div id="ship-details-content" className="container content">
             <div className="info-text">{appState.cMsg}</div>
           </div>
         ) : (
@@ -53,7 +53,7 @@ const ShipDetailView: React.FC = () => {
               </RButton>
             </div>
 
-            <div id="ship-details-content" className="ship-data-container" ref={refData}>
+            <div id="ship-details-content" className="container content" ref={refData}>
               <ShipDetails />
             </div>
           </>

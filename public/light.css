@@ -42,7 +42,7 @@
 .light .no-focus-outline:focus,
 .light .no-focus-outline:focus-within {
   outline: none!important;
-  background-color: var(--main-light-hover-bg);
+  background-color: var(--main-light-bg);
 }
 
 .light :not(button):not(label):not(.switch-input):not(.modal-container):not(a):not(input):focus {
@@ -72,12 +72,10 @@ div.page.light {
   color: var(--main-light-color);
 }
 
-div.page.light .ship-data-container,
-div.page.light .ship-side-container,
-div.modal-overlay.light .ship-side-container {
+div.page.light .container {
   background-color: var(--root-light-bg);
 }
-div.modal-overlay.light #sidebar-slider,
+
 div.page.light #sidebar-slider {
   -webkit-box-shadow: 0px 0px 6px -2px #000000;
   -moz-box-shadow: 0px 0px 6px -2px #000000;
@@ -148,20 +146,11 @@ div.page.light #sidebar-slider {
 
 /* #### Tab #### */
 div.page.light .tab {
-  /*overflow: hidden;*/
   border: 1px solid var(--main-light-border);
   border-left: 0px;
   border-right: 0px;
   background-color: var(--main-light-bg);
   box-sizing: border-box;
-}
-
-div.page.light > button.tab-btn {
-  border: 1px solid var(--main-light-bg);
-}
-
-div.page.light > button.tab-btn:hover {
-  border: 1px solid var(--main-light-bg);
 }
 
 nav.tab.light {
@@ -190,9 +179,17 @@ button.light {
   border: 1px solid transparent;
 }
 
+button.light.input,
+input[type="text"].light {
+  color: inherit;
+  background-color: inherit;
+  border: unset;
+}
+
 .light .tab-btn:hover,
-.light .btn:hover,
-.light button.rList-item.btn:hover {
+.btn.light:hover,
+button.btn.grid-item.light:hover,
+button.rList-item.light.btn:hover {
   background-color: var(--main-light-hover-bg);
 }
 
@@ -202,6 +199,7 @@ button.tab-btn.light:disabled:hover {
 }
 
 label.btn.light.selected,
+button.rList-item.light.btn.selected,
 button.btn.light.selected,
 button.tab-btn.light.selected {
   background-color: var(--main-light-active-bg);
@@ -274,13 +272,7 @@ div.button-group.light {
 }
 
 /* #### Input #### */
-input[type="text"].light,
-.searchIcon.light,
-button.icon.light {
-  color: inherit;
-  background-color: inherit;
-  border: unset;
-}
+
 
 input[type="url"].light,
 #input-group.light {
@@ -319,37 +311,35 @@ div.f-grid.light div.f-icon {
   border: 1px solid var(--main-light-border);
 }
 
-.light .grid-item > div.content:hover {
-  background-color: var(--main-light-hover-bg);
-}
 /* #### hull types #### */
-.light .Aircraft.Carrier /* .hullTypeAbb */ {
+.btn.light.Aircraft.Carrier,
+.btn.light.Light.Carrier {
   background-color: Plum;
 }
 
-.light .Battleship, 
-.light .Battlecruiser {
+.btn.light.Battleship, 
+.btn.light.Battlecruiser {
   background-color: Pink;
 }
 
-.light .Large.Cruiser {
+.btn.light.Large.Cruiser {
   background-color: LightSalmon;
 }
-.light .Destroyer {
+.btn.light.Destroyer {
   background-color: powderblue;
 }
-.light .Submarine {
+.btn.light.Submarine {
   background-color: PaleGreen;
 }
 
-.light .Heavy.Cruiser,
-.light .Monitor,
-.light .Light.Cruiser {
+.btn.light.Heavy.Cruiser,
+.btn.light.Monitor,
+.btn.light.Light.Cruiser {
   background-color: NavajoWhite;
 }
 
-.light .Repair.Ship,
-.light .Repair {
+.btn.light.Repair.Ship,
+.btn.light.Repair {
   background-color: Aquamarine;
 }
 

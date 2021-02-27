@@ -23,7 +23,7 @@ const LandingView: React.FC = () => {
       <TitleBar showMenu={false} />
       <div className={`page ${config.themeColor}`}>
         <section className="page-content">
-          <div className={`ship-data-container ${config.themeColor}`}>
+          <div className={`container content ${config.themeColor}`}>
             <div
               style={{
                 height: '50%',

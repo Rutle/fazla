@@ -15,7 +15,6 @@ const CategoryOverlay: React.FC<{ themeColor: string; isSmallScreen: boolean }> 
     <div style={{ display: 'flex', flexDirection: 'column' }} ref={containerRef}>
       <button
         ref={triggerRef}
-        style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
         className={`btn normal ${themeColor}`}
         type="button"
         onClick={() => {

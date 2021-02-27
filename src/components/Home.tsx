@@ -104,7 +104,7 @@ const Home: React.FC = () => {
   return (
     <PageTemplate>
       <section className="page-content">
-        <div className="home-container">
+        <div className="container content">
           <div className={`f-grid ${config.themeColor}`}>
             <div className="f-row">
               <div className="f-icon bottom-emp">{/* <FontAwesomeIcon icon={faCaretRight} /> */}</div>
