@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '_/reducers/rootReducer';
 import { setCurrentToggle } from '_/reducers/slices/appStateSlice';
@@ -25,7 +25,6 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
   const searchParameters = useSelector((state: RootState) => state.searchParameters);
   const [searchValue, setSearchValue] = useState(searchParameters.name);
   const [inputFocus, setInputFocus] = useState(false);
-  // const [parentD, setParentD] = useState<number[]>(pHW);
 
   // Set details of the selected ship when changed between 'all ships' and 'owned ships'.
   useEffect(() => {

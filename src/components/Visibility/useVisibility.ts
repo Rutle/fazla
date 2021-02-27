@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DebouncedFunc, throttle } from 'lodash';
-import { MutableRefObject, useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 /**
  * Check if an element is in viewport
  * source: https://stackoverflow.com/a/66136947
@@ -13,7 +13,6 @@ export default function useVisibility(
   const [isVisible, setIsVisible] = useState(false);
   const currentElement = useRef<HTMLDivElement>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const onScroll = throttle(() => {
     if (!currentElement.current) {
       setIsVisible(false);
