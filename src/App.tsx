@@ -60,7 +60,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (platform === 'NOSET') {
-      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Platform is has not been defined', eState: 'ERROR' }));
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Platform has not been defined', eState: 'ERROR' }));
       history.push('/error');
     } else {
       dispatch(initShipData(shipData, platform, storage));

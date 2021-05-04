@@ -1,5 +1,5 @@
 import { ipcRenderer, contextBridge, shell } from 'electron';
-import { AppConfig, BasicResponse, Formation, Ship } from '_/types/types';
+import { AppConfig, BasicResponse, Formation, Ship, VersionInfo } from '_/types/types';
 
 const validSendChannels = [
   'close-application',
@@ -8,7 +8,7 @@ const validSendChannels = [
   'open-logs',
   'maximize-application',
 ];
-const validSaveChannels = ['save-ship-data', 'save-owned-ships', 'save-formation-data', 'save-config'];
+const validSaveChannels = ['save-data', 'save-owned-ships', 'save-formation-data', 'save-config'];
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld('api', {
@@ -23,6 +23,7 @@ contextBridge.exposeInMainWorld('api', {
           config: AppConfig;
           ownedShips: string[];
           formations: Formation[];
+          versionInfo: VersionInfo;
         } & BasicResponse
       >;
     }

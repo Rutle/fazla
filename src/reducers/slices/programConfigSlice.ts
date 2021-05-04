@@ -83,7 +83,6 @@ export const configAction = (action: AppConfigAction, data: ConfigActionData): A
     const platform = process.env.PLAT_ENV;
     const { config } = getState();
     const { storage, key, value } = data;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // eslint-disable-next-line prefer-const
     let { isEdit, ...newConfig } = { ...config };
     switch (action) {

@@ -7,7 +7,6 @@ import { RootState } from '_/reducers/rootReducer';
 const FooterBar: React.FC = () => {
   const appState = useSelector((state: RootState) => state.appState);
   const config = useSelector((state: RootState) => state.config);
-
   return (
     <div id="footer" className={`${config.themeColor}`}>
       <div id="footer-state-msg" style={process.env.PLAT_ENV === 'web' ? { justifyContent: 'flex-end' } : {}}>

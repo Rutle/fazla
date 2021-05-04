@@ -4,8 +4,8 @@ import Store from 'electron-store';
 import * as fs from 'fs';
 import * as url from 'url';
 import * as path from 'path';
-import { isShipJson, safeJsonParse } from '_/utils/appUtilities';
-import { Ship, Formation, AppConfig } from '_/types/types';
+import { isShipJson, isVersionJson, safeJsonParse } from '_/utils/appUtilities';
+import { Ship, Formation, AppConfig, SaveDataObject, VersionInfo, emptyVersionInfo } from '_/types/types';
 
 let mainWindow: Electron.BrowserWindow;
 const electronStore = new Store({
@@ -15,6 +15,8 @@ const fsPromises = fs.promises;
 
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 const THEMECOLOR = 'dark';
+
+const APPRESFILES = ['ships', 'version-info'];
 
 function createWindow(): void {
   // Create the browser window.
@@ -101,20 +103,23 @@ ipcMain.handle('resource-check', async () => {
     let code = '';
     // userData is the appData path
     const userDir = app.getPath('userData');
-    if (process.env.NODE_ENV !== 'development') {
-      await fsPromises
-        .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
-        .then(() => {
-          // console.log('can access, has been created.');
-          isOk = true;
-          code = 'ResFound';
-        })
-        .catch(() => {
-          // console.log('cannot access, not created yet.');
-          isOk = true;
-          code = 'ResNotFound';
-        });
-    }
+    await Promise.all(
+      APPRESFILES.map(async (item) => {
+        if (process.env.NODE_ENV !== 'development') {
+          await fsPromises.access(`${userDir}\\resources\\${item}.json`, fs.constants.F_OK);
+        }
+      })
+    )
+      .then(() => {
+        // console.log('can access, has been created.');
+        isOk = true;
+        code = 'ResFound';
+      })
+      .catch(() => {
+        // console.log('cannot access, not created yet.');
+        isOk = true;
+        code = 'ResNotFound';
+      });
     return { isOk, msg, code };
   } catch (e) {
     return { isOk: false, msg: 'Resource check failed.', code: 'Error' };
@@ -135,31 +140,36 @@ ipcMain.handle('get-owned-ship-data', async () => {
 /**
  * Save ship data to json file.
  */
-ipcMain.handle('save-ship-data', async (event, arg) => {
+ipcMain.handle('save-data', async (event, arg: SaveDataObject[]) => {
   const today = new Date();
-  const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+  const date = today.toUTCString();
   try {
-    const rawData = JSON.stringify(arg);
-    if (process.env.NODE_ENV === 'development') {
-      await fsPromises.writeFile(path.join(__dirname, '../src/data/ships.json'), rawData, 'utf8');
-    } else {
-      const userDir = app.getPath('userData');
-      await fsPromises
-        .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
-        .then(async () => {
-          // console.log('can access, has been created. do not create directory but just save.');
-          await fsPromises.writeFile(`${userDir}\\resources\\ships.json`, rawData, 'utf8');
-        })
-        .catch(async () => {
-          // console.error('cannot access, not created yet. create directory now.');
-          await fsPromises.mkdir(`${userDir}\\resources`, { recursive: true });
-          await fsPromises.writeFile(`${userDir}\\resources\\ships.json`, rawData, 'utf8');
-        });
-    }
-    electronStore.set('config.updateDate', date);
+    await Promise.all([
+      arg.map(async (item) => {
+        const { data, fileName } = item;
+        const rawData = JSON.stringify(data);
+        if (process.env.NODE_ENV === 'development') {
+          await fsPromises.writeFile(path.join(__dirname, `../src/data/${fileName}.json`), rawData, 'utf8');
+        } else {
+          const userDir = app.getPath('userData');
+          await fsPromises
+            .access(`${userDir}\\resources\\${fileName}.json`, fs.constants.F_OK)
+            .then(async () => {
+              // console.log('can access, has been created. do not create directory but just save.');
+              await fsPromises.writeFile(`${userDir}\\resources\\${fileName}.json`, rawData, 'utf8');
+            })
+            .catch(async () => {
+              // console.error('cannot access, not created yet. create directory now.');
+              await fsPromises.mkdir(`${userDir}\\resources`, { recursive: true });
+              await fsPromises.writeFile(`${userDir}\\resources\\${fileName}.json`, rawData, 'utf8');
+            });
+        }
+      }),
+    ]);
+    electronStore.set('config.updateDate', today);
     return { updateDate: date, isOk: true, msg: 'Ship data saved succesfully.' };
   } catch (error) {
-    return { updateDate: date, isOk: false, msg: 'Failed to save ship data.', code: 'Failure' };
+    return { updateDate: '', isOk: false, msg: 'Failed to save ship data.', code: 'Failure' };
   }
 });
 
@@ -246,6 +256,7 @@ ipcMain.handle('rename-formation-by-index', (event, data: { idx: number; name: s
  */
 ipcMain.handle('initData', async () => {
   let jsonData: { [key: string]: Ship } = {};
+  let versionData: VersionInfo = emptyVersionInfo();
   let dataArr: Ship[] = [];
   let oShips: string[] = [];
   let formationData: Formation[] = [];
@@ -262,11 +273,8 @@ ipcMain.handle('initData', async () => {
   };
 
   try {
-    // userData is the appData path
-    const userDir = app.getPath('userData');
-    // resourcesPath is the installation path
-    // const resourceDir = process.resourcesPath;
-    // console.log(userDir, resourceDir);
+    const userDir = app.getPath('userData'); // appData path
+    // const resourceDir = process.resourcesPath; // installation path
     if (!electronStore.has('firstRun')) {
       electronStore.set('firstRun', false);
       electronStore.set({
@@ -283,31 +291,48 @@ ipcMain.handle('initData', async () => {
       });
     }
     configData = electronStore.get('config') as AppConfig;
-    let rawData = '';
-    if (process.env.NODE_ENV === 'development') {
-      rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
-    } else {
-      await fsPromises
-        .access(`${userDir}\\resources\\ships.json`, fs.constants.F_OK)
-        .then(async () => {
-          // console.log('can access, has been created. use file from appdata (updated/downloaded at least once)');
-          rawData = await fsPromises.readFile(`${userDir}\\resources\\ships.json`, 'utf8');
-          code = 'ResFound';
-          msg = 'Json data found and loaded.';
-        })
-        .catch(() => {
-          // console.log('Cannot access .json data even in appData.');
-          // rawData = await fsPromises.readFile(`${resourceDir}\\ships.json`, 'utf8');
-          // const rawData = await fsPromises.readFile(path.join(__dirname, '../src/data/ships.json'), 'utf8');
-          msg = 'Cannot access and load .json data.';
-          code = 'ResNotFound';
-        });
-    }
-    if (code === 'ResFound') {
+    const rawData: void | {
+      [x: string]: string;
+    } = await Promise.all(
+      APPRESFILES.map(async (item) => {
+        if (process.env.NODE_ENV === 'development') {
+          // console.log(`../src/data/${item}.json`);
+          return Promise.resolve({
+            [item]: await fsPromises.readFile(path.join(__dirname, `../src/data/${item}.json`), 'utf8'),
+          });
+        }
+        return fsPromises
+          .access(`${userDir}\\resources\\${item}.json`, fs.constants.F_OK)
+          .then(async () => {
+            // console.log('can access, has been created. use file from appdata (updated/downloaded at least once)');
+            return Promise.resolve({
+              [item]: await fsPromises.readFile(`${userDir}\\resources\\${item}.json`, 'utf8'),
+            });
+          })
+          .catch(() => {
+            // console.log('Cannot access .json data even in appData.');
+            return Promise.reject(new Error('ResNotFound'));
+          });
+      })
+    )
+      .then((result) => {
+        code = 'ResFound';
+        return Promise.resolve(
+          Object.assign({}, ...result) as {
+            [x: string]: string;
+          }
+        );
+      })
+      .catch(() => {
+        code = 'ResNotFound';
+      });
+    if (code === 'ResFound' && rawData) {
       // Parse and check JSON data (at least partially)
-      const result = safeJsonParse(isShipJson)(rawData);
-      if (result) {
-        jsonData = result as { [key: string]: Ship };
+      const shipData = safeJsonParse(isShipJson)(rawData.ships);
+      const versionDataParsed = safeJsonParse(isVersionJson)(rawData['version-info']);
+      if (shipData && versionDataParsed) {
+        jsonData = shipData as { [key: string]: Ship };
+        versionData = versionDataParsed as VersionInfo;
         dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
         oShips = electronStore.get('ownedShips') as string[];
         formationData = electronStore.get('formations') as Formation[];
@@ -320,6 +345,7 @@ ipcMain.handle('initData', async () => {
     }
     return {
       shipData: dataArr,
+      versionData,
       config: configData,
       ownedShips: oShips,
       formations: formationData,
@@ -330,6 +356,7 @@ ipcMain.handle('initData', async () => {
   } catch (error) {
     return {
       shipData: dataArr,
+      versionData,
       config: configData,
       ownedShips: oShips,
       formations: formationData,

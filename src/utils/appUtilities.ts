@@ -1,7 +1,8 @@
-import { saveShipData } from './ipcAPI';
-import { Ship, BasicResponse, BooleanSearchParam } from '../types/types';
+import { Ship, BooleanSearchParam, VersionInfo, ResponseWithData, emptyVersionInfo } from '_/types/types';
+import { saveData } from './ipcAPI';
 
-const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
+const SHIPDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
+const VERSIONINFO = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/version-info.json';
 
 export const urlValidation = (str: string): boolean => {
   if (str === undefined || str === '') return false;
@@ -11,17 +12,30 @@ export const urlValidation = (str: string): boolean => {
   return re.test(str);
 };
 
+export const elapsedSinceUpdate = (ms: number): number => {
+  const today = Date.now();
+  const elapsed = today - ms;
+  const days = Math.floor(elapsed / (24 * 60 * 60 * 1000));
+  return days;
+};
+
 // TYPE guards
 export const isBooleanObj = <T extends { All?: unknown }>(obj: T): obj is T & BooleanSearchParam => {
   return typeof obj.All === 'boolean';
 };
 
+// TODO: More fields to check.
 export const isShipJson = <
   T extends { [key: string]: { names?: unknown; id?: unknown; class?: unknown; nationality?: unknown } }
 >(
   o: T
 ): o is T & { [key: string]: Ship } => {
   return !Object.values(o).some((ele) => typeof ele.id !== 'string');
+};
+
+// TODO: Add more fields to check.
+export const isVersionJson = <T extends { ships?: { 'version-number'?: unknown } }>(o: T): o is T & VersionInfo => {
+  return o.ships !== undefined && typeof o.ships['version-number'] === 'number';
 };
 
 const isArrayJson = (o: unknown): o is string[] => {
@@ -55,6 +69,7 @@ export const encodeFormation = (formation: string[]): string => {
 };
 
 /* https://stackoverflow.com/a/57888548 */
+/* For now not used */
 export const fetchWithTimeout = (url: string, ms: number): Promise<Response> => {
   const controller = new AbortController();
   const promise = fetch(url, { signal: controller.signal });
@@ -73,24 +88,46 @@ export const handleHTTPError = (response: Response): Response => {
   }
   return response;
 };
-
-export const downloadShipData = async (platform: string, storage?: LocalForage): Promise<BasicResponse> => {
+/**
+ * Function that downloads latest ship data.
+ * @param platform Platform: 'electron or 'web'.
+ * @param storage LocalForage that uses IndexedDB.
+ * @returns Object containing response data.
+ */
+export const downloadShipData = async (
+  platform: string | undefined,
+  storage?: LocalForage
+): Promise<ResponseWithData> => {
   let isOk = false;
   let msg = '';
   try {
-    await fetchWithTimeout(SHIPAPIURL, 20000)
-      .then(handleHTTPError)
-      .then((res) => res.json())
-      .then(async (result: { [key: string]: Ship }) => {
+    let dataArr: Ship[] = [];
+    let versInfo: VersionInfo = emptyVersionInfo();
+    let updateDate = '';
+    await Promise.all([fetch(SHIPDATAURL).then(handleHTTPError), fetch(VERSIONINFO).then(handleHTTPError)])
+      .then((responses) => Promise.all(responses.map((r) => r.json())))
+      .then(async (results: [{ [key: string]: Ship }, VersionInfo]) => {
+        dataArr = [...Object.keys(results[0]).map((key) => results[0][key])];
+        versInfo = { ...results[1] };
         if (platform === 'electron') {
-          const res = await saveShipData(result);
-          isOk = res.isOk;
-          msg = res.msg;
+          const saveResponse = await saveData([
+            { data: results[0], fileName: 'ships' },
+            { data: results[1], fileName: 'version-info' },
+          ]);
+          if (saveResponse.isOk) {
+            isOk = true;
+            updateDate = saveResponse.updateDate as string;
+          } else {
+            isOk = false;
+            msg = 'There was a problem with saving data.';
+          }
         }
         if (platform === 'web' && storage) {
-          const dataArr = [...Object.keys(result).map((key) => result[key])];
-          const res = await storage.setItem('shipData', dataArr);
-          if (res.length === dataArr.length) {
+          const shipRes = await storage.setItem('shipData', dataArr);
+          const versionRes = await storage.setItem('versionInfo', results[1]);
+          const timeOfUpdateCheck = await storage.setItem('timeOfUpdateCheck', Date.now());
+          const isEq = Object.keys(versionRes).length === Object.keys(results[1]).length;
+          if (shipRes.length === dataArr.length && isEq && timeOfUpdateCheck !== null) {
             isOk = true;
           } else {
             isOk = false;
@@ -102,9 +139,40 @@ export const downloadShipData = async (platform: string, storage?: LocalForage):
         isOk = false;
         msg = e.message;
       });
-    return { isOk, msg };
+    return { isOk, msg, data: { shipData: dataArr, versionInfo: versInfo }, updateDate };
   } catch (e) {
     // if (e instanceof Error) console.log('k', e.message);
     return { isOk: false, msg: 'Failed to download and save ship data.' };
+  }
+};
+/**
+ * Function to download latest version data and compare it with current data.
+ * @param currentVersInfo Current version information.
+ * @returns Object containing response.
+ */
+export const compareVersion = async (
+  currentVersInfo: VersionInfo
+): Promise<{ isOk: boolean; msg: string; isUpdReq: boolean }> => {
+  let isOk = false;
+  let msg = '';
+  let isUpdReq = false;
+  try {
+    await fetch(VERSIONINFO)
+      .then(handleHTTPError)
+      .then((response) => response.json())
+      .then((result: VersionInfo) => {
+        const newVer = result.ships['version-number'];
+        const currentVer = currentVersInfo.ships['version-number'];
+        isUpdReq = newVer > currentVer;
+        isOk = true;
+      })
+      .catch((e: Error) => {
+        isOk = false;
+        msg = e.message;
+      });
+    return { isOk, msg, isUpdReq };
+  } catch (e) {
+    // if (e instanceof Error) console.log('k', e.message);
+    return { isOk: false, msg: 'Failed to download and check version data.', isUpdReq };
   }
 };

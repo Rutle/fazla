@@ -59,7 +59,7 @@ const Home: React.FC = () => {
         onClick={() => {
           setShipDiff({ count: shipData.getShips().length, isUpdate: true });
           if (config.isToast) addToast('info', 'Update', 'Updating ship information.');
-          dispatch(updateShipData(shipData, storage, addToast));
+          dispatch(updateShipData(shipData, addToast)); // Only used in Electron
         }}
         disabled={disabled}
       >

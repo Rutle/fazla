@@ -1,4 +1,14 @@
-import { BasicResponse, Ship, Formation, AppConfig } from '_/types/types';
+import {
+  BasicResponse,
+  Ship,
+  Formation,
+  AppConfig,
+  SaveDataObject,
+  VersionInfo,
+  ResponseWithData,
+  AppDataObject,
+  emptyVersionInfo,
+} from '_/types/types';
 import { urlValidation } from './appUtilities';
 
 // Renderer to Main
@@ -22,7 +32,7 @@ export const openLogs = (): void => {
   window.api.electronIpcSend('open-logs');
 };
 
-export const checkResource = async (): Promise<BasicResponse> => {
+export const checkResource = async (): Promise<ResponseWithData> => {
   return window.api.electronCheckResources('resource-check');
 };
 
@@ -30,8 +40,8 @@ export const checkResource = async (): Promise<BasicResponse> => {
  * Function that calls electron along with data to save data to .json file.
  * @param data Data that is saved to .json.
  */
-export const saveShipData = async (data = {}): Promise<BasicResponse> => {
-  return window.api.electronSaveData('save-ship-data', data).then((result: BasicResponse) => {
+export const saveData = async (data: SaveDataObject[]): Promise<ResponseWithData> => {
+  return window.api.electronSaveData('save-data', data).then((result: ResponseWithData) => {
     return result;
   });
 };
@@ -56,7 +66,7 @@ export const saveFormationData = async (
   platform: string,
   storage?: LocalForage
 ): Promise<BasicResponse> => {
-  let result: BasicResponse = { isOk: false, msg: '', code: '' };
+  let result: ResponseWithData = { isOk: false, msg: '', code: '' };
   if (platform === 'electron') {
     result = await window.api.electronSaveData('save-formation-data', data);
   }
@@ -101,31 +111,22 @@ export const openWikiUrl = async (str: string): Promise<void> => {
   return Promise.resolve();
 };
 
-export const initData = async (
-  platform: string,
-  storage?: LocalForage
-): Promise<
-  {
-    shipData: Ship[];
-    config: AppConfig;
-    ownedShips: string[];
-    formations: Formation[];
-  } & BasicResponse
-> => {
+/**
+ * Function that returns an object containing necessary data to initialize the application
+ * @param {string} platform Either 'electron' or 'web'.
+ * @param {LocalForage} storage If platform is 'electron', use LocalForage to store data to indexedDB.
+ * @returns Object containing application data.
+ */
+export const initData = async (platform: string, storage?: LocalForage): Promise<AppDataObject & ResponseWithData> => {
   if (platform === 'electron') {
-    return window.api
-      .electronInitData('initData')
-      .then(
-        (
-          result: { shipData: Ship[]; config: AppConfig; ownedShips: string[]; formations: Formation[] } & BasicResponse
-        ) => result
-      );
+    return window.api.electronInitData('initData').then((result: AppDataObject & ResponseWithData) => result);
   }
   if (platform === 'web' && storage) {
     const shipData = (await storage.getItem('shipData')) as Ship[];
     const config = (await storage.getItem('config')) as AppConfig;
     const ownedShips = ((await storage.getItem('ownedShips')) as string[]) || [];
     const formations = ((await storage.getItem('formations')) as Formation[]) || [];
+    const versionData = (await storage.getItem('version-info')) as VersionInfo;
     let isOk = false;
     let msg = '';
     let code = '';
@@ -135,7 +136,7 @@ export const initData = async (
       msg = 'Could not find ship data.';
       code = 'ResNotFound';
     }
-    return { shipData, config, ownedShips, formations, isOk, msg, code };
+    return { shipData, config, ownedShips, formations, versionData, isOk, msg, code };
   }
   return {
     shipData: [],
@@ -143,6 +144,7 @@ export const initData = async (
     ownedShips: [],
     formations: [],
     isOk: false,
+    versionData: emptyVersionInfo(),
     msg: '',
     code: '',
   };
