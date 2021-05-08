@@ -130,7 +130,7 @@ const appStateSlice = createSlice({
         ...state,
         versions: {
           ...state.versions,
-          versionData,
+          ...versionData,
         },
       };
     },
@@ -257,6 +257,7 @@ export const initShipData = (
     if (dataObj.code === 'InitError') throw new Error("Couldn't initialize application.");
     await data.setArray(dataObj.shipData);
     dispatch(initShipLists(dataObj.ownedShips, data, dataObj.config, dataObj.formations));
+    dispatch(setVersionData(dataObj.versionData));
   } catch (e) {
     if (e instanceof Error) {
       dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));

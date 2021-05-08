@@ -69,6 +69,26 @@ div.scroll {
   width: 100%;
 }
 
+#footer > div.footer-msg-container {
+  display: flex;
+  height: inherit;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#footer > div div {
+  display: flex;
+  align-items: center;
+  height: inherit;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 13px;
+}
+
+#footer-state-msg {
+  overflow: hidden;
+  
+}
 #titlebar #drag-region {
   width: 100%;
   height: 100%;
@@ -191,17 +211,6 @@ div.scroll {
   text-overflow: ellipsis;
   white-space: nowrap;
   line-height: 1.5;
-}
-
-#footer-state-msg {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 8px;
-  padding-right: 8px;
-  height: 100%;
-  overflow: hidden;
-  font-size: 14px;
 }
 
 /* ###### Modal ###### */
