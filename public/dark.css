@@ -5,13 +5,15 @@
   --main-dark-border: #40556b;
   --main-dark-titlebar-color: rgb(184, 184, 184);
   --main-dark-color: rgb(184, 184, 184);
-  --main-dark-hover-bg: #40556b;
+  /* --main-dark-hover-bg: #40556b;*/
+  --main-dark-hover-bg: #40556b88;
+  --main-dark-hover-color: #98caff;
   --main-dark-button-top-bg: #26313a;
   --main-dark-button-bottom-bg: #1b2127;
   --main-dark-selected-bottom-bg: #2a2e35;
   --main-dark-active-bg: #40556b;
-  --main-dark-tooltip-bg: #1b1d24e3;
-  --main-dark-tooltip-border: #3f4657a6;
+  --main-dark-tooltip-bg: #1b1d24;
+  --main-dark-tooltip-border: #3f4657;
   --main-dark-item-bg: #21252f;
   --main-dark-footer-titlebar-bg: #202023;
 }
@@ -217,6 +219,17 @@ nav.tab.dark > a:hover {
   color: var(--main-dark-color);
 }
 
+/* Tooltip */
+.tooltip.dark > .tooltip-content {
+  background-color: var(--main-dark-tooltip-bg);
+  border: 1px solid var(--main-dark-border);
+  color: var(--main-dark-color);
+}
+
+.tooltip-arrow::before {
+  background: var(--main-dark-tooltip-border);
+}
+
 /* ###### Buttons ###### */
 label.dark,
 button.dark {
@@ -228,7 +241,14 @@ button.dark {
 .dark .tab-btn:hover,
 .btn.dark:hover,
 button.rList-item.dark.btn:hover {
-  background-color: var(--main-dark-hover-bg);
+  /* background-color: var(--main-dark-hover-bg);*/
+  /* TODO: Check colors with electron for window controls */
+  background-color: #40556b88;
+  color:var(--main-dark-hover-color);
+}
+
+.btn.dark:hover > svg {
+  stroke: var(--main-dark-hover-color);
 }
 
 button.btn.dark:disabled:hover,
@@ -241,12 +261,18 @@ button.rList-item.dark.btn.selected,
 button.btn.dark.selected,
 button.tab-btn.dark.selected {
   background-color: var(--main-dark-active-bg);
+  color:#98caff;
+}
+/* */
+.rList-item.dark:hover .owned-indicator {
+  background-color: unset;
 }
 
-.rList-item.dark.owned > .owned-indicator,
-.rList-item.dark:hover .owned-indicator {
-  background-color: var(--main-dark-active-bg);
+.rList-item.dark.owned > .owned-indicator{
+  /* background-color: var(--main-dark-active-bg);*/
+  background-color: #40556b;
 }
+
 
 .rList-item.dark.owned > .owned-indicator + .name {
   border-left: 1px solid var(--main-dark-bg);
@@ -352,32 +378,41 @@ div.f-grid.dark div.f-icon {
 .btn.dark.Aircraft.Carrier,
 .btn.dark.Light.Carrier {
   background-color: #352035;
+  color: #d77dd7;
 }
 
 .btn.dark.Battleship, 
 .btn.dark.Battlecruiser {
   background-color: #3e1c1a;
+  color: #ff726a;
 }
 
 .btn.dark.Large.Cruiser {
   background-color: #5a3023;
+  color: #ff8560;
 }
 
 .btn.dark.Destroyer {
+  /* background-color: #203844;*/
   background-color: #203844;
+  color: #68b3d9;
 }
 
 .btn.dark.Submarine {
   background-color: #3a4d21;
+  color: #95c655;
 }
 .btn.dark.Heavy.Cruiser,
 .btn.dark.Monitor,
 .btn.dark.Light.Cruiser {
+  /* background-color: #503c1e; */
   background-color: #503c1e;
+  color: #dfa854;
 }
 
 .btn.dark.Repair {
   background-color: #1a4638;
+  color: #48caa1;
 }
 
 /* #### grid title #### */

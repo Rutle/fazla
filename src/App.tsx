@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, Redirect, RouteProps, HashRouter, useHistory } from 'react-router-dom';
 import ShipDetailView from '_components/ShipDetailView';
@@ -10,7 +10,9 @@ import { RootState } from './reducers/rootReducer';
 import LandingView from './components/LandingView';
 import ErrorView from './components/ErrorView';
 import ToastContainer from './components/Toast/ToastContainer';
+import Tooltip from './components/Tooltip/Tooltip';
 import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './components/Toast/useToast';
+import { useTooltip, TooltipHooks } from './components/Tooltip/useTooltip';
 import { initShipData, setErrorMessage } from './reducers/slices/appStateSlice';
 
 export const AppContext = React.createContext(
@@ -19,9 +21,10 @@ export const AppContext = React.createContext(
     onToastDismiss: (id: number) => void;
     popToast: () => void;
     shipData: DataStore;
-    setShipData: React.Dispatch<React.SetStateAction<DataStore>>;
+    // setShipData: React.Dispatch<React.SetStateAction<DataStore>>;
     toasts: ToastList;
     storage: LocalForage | undefined;
+    tooltip: TooltipHooks;
   }
 );
 
@@ -53,8 +56,10 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const platform = process.env.PLAT_ENV || 'NOSET';
-  const [shipData, setShipData] = useState(new DataStore());
+  // const [shipData, setShipData] = useState(new DataStore());
+  const shipData = useRef(new DataStore());
   const [addToast, onToastDismiss, popToast, toasts] = useToast(true, 3000);
+  const tooltip = useTooltip();
   const storage =
     process.env.PLAT_ENV === 'web' ? localForage.createInstance({ name: 'Fazla-storage', version: 1.0 }) : undefined;
 
@@ -63,7 +68,7 @@ const App: React.FC = () => {
       dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Platform has not been defined', eState: 'ERROR' }));
       history.push('/error');
     } else {
-      dispatch(initShipData(shipData, platform, storage));
+      dispatch(initShipData(shipData.current, platform, storage));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -77,9 +82,10 @@ const App: React.FC = () => {
             onToastDismiss,
             popToast,
             toasts,
-            shipData,
-            setShipData,
+            shipData: shipData.current,
+            // setShipData,
             storage,
+            tooltip,
           }}
         >
           <Switch>
@@ -98,6 +104,7 @@ const App: React.FC = () => {
             </Route>
           </Switch>
           <ToastContainer position="bottom-right" />
+          <Tooltip />
         </AppContext.Provider>
       </div>
     </HashRouter>

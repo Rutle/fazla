@@ -20,6 +20,7 @@ import SideBar from './SideBar';
 import ShipDetails from './ShipDetails';
 import useVisibility from './Visibility/useVisibility';
 import { ArrowDegUp, CloseIcon, PlusIcon, QuestionCircleIcon } from './Icons';
+import TooltipWrapper from './Tooltip/TooltipWrapper';
 
 ReactModal.setAppElement('#root');
 /**
@@ -183,9 +184,14 @@ const FormationView: React.FC = () => {
                   >
                     Import
                   </RButton>
-                  <div className="icon help">
+                  <TooltipWrapper
+                    data="Left mouse click to select. Right mouse click to remove."
+                    wrapperElement="div"
+                    wrapperClassNames="icon help"
+                    placement="bottom"
+                  >
                     <QuestionCircleIcon themeColor={config.themeColor} />
-                  </div>
+                  </TooltipWrapper>
                 </>
               ) : (
                 <></>
