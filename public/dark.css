@@ -221,13 +221,12 @@ nav.tab.dark > a:hover {
 
 /* Tooltip */
 .tooltip.dark > .tooltip-content {
-  background-color: var(--main-dark-tooltip-bg);
-  border: 1px solid var(--main-dark-border);
+  background-color: var(--root-dark-bg);
   color: var(--main-dark-color);
 }
 
 .tooltip-arrow::before {
-  background: var(--main-dark-tooltip-border);
+  background-color: var(--root-dark-bg);
 }
 
 /* ###### Buttons ###### */

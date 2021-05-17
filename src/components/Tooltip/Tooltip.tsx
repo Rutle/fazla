@@ -14,11 +14,21 @@ const Tooltip: React.FC = () => {
       <Overlay
         show={show}
         rootClose
-        offset={[0, 10]}
+        offset={[0, 12]}
         onHide={() => hideTooltip()}
         placement={tooltipData.placement}
         container={containerRef}
         target={tooltipData.ref}
+        popperConfig={{
+          modifiers: [
+            {
+              name: 'arrow',
+              options: {
+                padding: 1, // 5px from the edges of the popper
+              },
+            },
+          ],
+        }}
       >
         {({ props, arrowProps, placement }) => (
           <div className={`tooltip ${config.themeColor}`} {...props}>

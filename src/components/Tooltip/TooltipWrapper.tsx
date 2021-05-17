@@ -5,36 +5,38 @@ import { AppContext } from '_/App';
 interface TooltipProps {
   children: React.ReactNode;
   data: React.ReactNode;
-  wrapperElement: string;
+  WrapperElement?: 'div' | 'span' | 'label' | 'button';
   wrapperClassNames: string;
   placement: Placement;
+  extraProps?: { [key: string]: any };
 }
 /**
  * Tooltip wrapper.
  */
-const TooltipWrapper: React.FC<TooltipProps> = ({ data, children, wrapperClassNames, wrapperElement, placement }) => {
+const TooltipWrapper: React.FC<TooltipProps> = ({
+  data,
+  children,
+  wrapperClassNames,
+  WrapperElement = 'div',
+  placement,
+  extraProps = {},
+}) => {
   const { showTooltip, hideTooltip } = useContext(AppContext).tooltip;
   const ref = useRef(null);
-
-  const wrapper = (child: React.ReactNode, wrapperProps: unknown) => {
-    if (wrapperElement === 'div') return <div {...wrapperProps}>{child}</div>;
-    if (wrapperElement === 'span') return <span {...wrapperProps}>{child}</span>;
-    return <></>;
-  };
-
   return (
-    <>
-      {wrapper(children, {
-        ref,
-        className: wrapperClassNames,
-        onMouseEnter: () => {
-          showTooltip({ data, ref, placement });
-        },
-        onMouseLeave: () => {
-          hideTooltip();
-        },
-      })}
-    </>
+    <WrapperElement
+      ref={ref}
+      className={wrapperClassNames}
+      onMouseEnter={() => {
+        showTooltip({ data, ref, placement });
+      }}
+      onMouseLeave={() => {
+        hideTooltip();
+      }}
+      {...extraProps}
+    >
+      {children}
+    </WrapperElement>
   );
 };
 

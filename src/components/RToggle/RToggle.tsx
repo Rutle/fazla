@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Placement } from 'react-overlays/cjs/usePopper';
+import TooltipWrapper from '../Tooltip/TooltipWrapper';
 
 interface RToggleProps {
   id: string;
@@ -9,11 +11,74 @@ interface RToggleProps {
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
   selected: boolean;
   extraStyle?: React.CSSProperties;
+  tooltip?: { data: React.ReactNode; placement: Placement };
 }
 
 const RToggle: React.FC<RToggleProps> = React.memo(
-  ({ id, value, className = 'btn normal', children, themeColor, onChange, selected, extraStyle }) => {
+  ({ id, value, className = 'btn normal', children, themeColor, onChange, selected, extraStyle, tooltip }) => {
     const [isFocusOutline, setFocusOutline] = useState(false);
+
+    const withTooltip = (child: React.ReactElement) => {
+      if (!tooltip) {
+        return (
+          <label
+            className={`${className} ${themeColor}${selected ? ' selected' : ''} ${
+              !isFocusOutline ? 'no-focus-outline' : ''
+            }`}
+            htmlFor={`${id}-input`}
+            style={extraStyle}
+          >
+            {child}
+          </label>
+        );
+      }
+      return (
+        <TooltipWrapper
+          data={tooltip.data}
+          wrapperClassNames={`${className} ${themeColor}${selected ? ' selected' : ''} ${
+            !isFocusOutline ? 'no-focus-outline' : ''
+          }`}
+          WrapperElement="label"
+          placement={tooltip.placement}
+          extraProps={{
+            htmlFor: `${id}-input`,
+            style: extraStyle,
+          }}
+        >
+          {child}
+        </TooltipWrapper>
+      );
+    };
+    return (
+      <>
+        {withTooltip(
+          <>
+            {children}
+            <input
+              id={`${id}-input`}
+              value={value}
+              type="radio"
+              checked={selected}
+              onChange={onChange}
+              onClick={(e) => {
+                const { clientX, clientY } = e;
+                if (clientX !== 0 && clientY !== 0) {
+                  setFocusOutline(false);
+                } else {
+                  setFocusOutline(true);
+                }
+              }}
+              onKeyUp={(e) => {
+                if (e.key === 'Tab' || e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                  setFocusOutline(true);
+                }
+              }}
+            />
+          </>
+        )}
+      </>
+    );
+    /*
     return (
       <label
         className={`${className} ${themeColor}${selected ? ' selected' : ''} ${
@@ -44,7 +109,7 @@ const RToggle: React.FC<RToggleProps> = React.memo(
           }}
         />
       </label>
-    );
+    ); */
   }
 );
 

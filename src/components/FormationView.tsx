@@ -53,7 +53,7 @@ const FormationView: React.FC = () => {
   };
 
   const hideSearchSection = (isOpen: boolean) => {
-    dispatch(formationAction(FormationAction.Search, { shipData, isOpen }));
+    // dispatch(formationAction(FormationAction.Search, { shipData }));
     setShowSearch(isOpen);
     setSelectedGrid(NaN);
   };
@@ -95,7 +95,7 @@ const FormationView: React.FC = () => {
   // Update search list and show the search section.
   const showSearchSection = (isOpen: boolean, gridIndex: number) => {
     setSelectedGrid(gridIndex);
-    dispatch(formationAction(FormationAction.Search, { shipData, gridIndex, isOpen }));
+    dispatch(formationAction(FormationAction.Search, { shipData, gridIndex }));
     setShowSearch(isOpen);
   };
 
@@ -185,8 +185,8 @@ const FormationView: React.FC = () => {
                     Import
                   </RButton>
                   <TooltipWrapper
-                    data="Left mouse click to select. Right mouse click to remove."
-                    wrapperElement="div"
+                    data={`Left mouse click to select.\nRight mouse click to remove.`}
+                    WrapperElement="div"
                     wrapperClassNames="icon help"
                     placement="bottom"
                   >
@@ -295,8 +295,8 @@ const FormationView: React.FC = () => {
                       <RButton
                         themeColor={config.themeColor}
                         onClick={() => hideSearchSection(false)}
-                        className="btn normal"
-                        extraStyle={{ minWidth: '85px' }}
+                        className="btn normal icon"
+                        // extraStyle={{ minWidth: '85px' }}
                       >
                         <CloseIcon themeColor={config.themeColor} className="icon" />
                         Close
@@ -304,8 +304,8 @@ const FormationView: React.FC = () => {
                       <RButton
                         themeColor={config.themeColor}
                         onClick={addShip}
-                        className="btn normal"
-                        extraStyle={{ minWidth: '85px' }}
+                        className="btn normal icon"
+                        // extraStyle={{ minWidth: '85px' }}
                       >
                         <PlusIcon themeColor={config.themeColor} />
                         Formation

@@ -381,7 +381,11 @@ button.tab-btn.normal {
   justify-content: center;
   line-height: 1.2;
 }
-
+label.btn.normal.icon,
+button.btn.normal.icon,
+button.tab-btn.normal.icon {
+  padding: 0px 10px 2px 5px;
+}
 /* ###### top-container + tab ##### */
 .top-container {
   display: flex;
@@ -522,16 +526,17 @@ div.f-row.action *,
 }
 
 /* Tooltip */
-
 .tooltip {
   position: absolute;
   -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
   -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
+  white-space: pre-line;
+  z-index: 22;
 }
+
 .tooltip.dark > .tooltip-content {
   padding: 3px 8px;
-  text-align: center;
   border-radius: 3px;
 }
 .tooltip-arrow {
@@ -539,6 +544,9 @@ div.f-row.action *,
   width: 10px;
   height: 10px;
   z-index: -1;
+  -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
+  -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
 }
 
 .tooltip-arrow::before {
@@ -551,8 +559,17 @@ div.f-row.action *,
   left: 0;
 }
 
-.tooltip-arrow.bottom::before {
+.tooltip-arrow.bottom {
   top: -4px;
+}
+.tooltip-arrow.left {
+  right: -4px;
+}
+.tooltip-arrow.right {
+  left: -4px;
+}
+.tooltip-arrow.top {
+  bottom: -4px;
 }
 /* ###### popover ###### */
 .popover-container {

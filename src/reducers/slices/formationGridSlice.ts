@@ -175,7 +175,6 @@ interface FormActionData {
   importedFormation?: string[];
   storage?: LocalForage;
   shipData?: DataStore;
-  isOpen?: boolean;
 }
 
 /**
@@ -199,7 +198,7 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
     const fType = data.formationType || 'normal';
     const iFormation = data.importedFormation;
     const shipGridIndex = data.gridIndex; // Ship selected on the grid of ships.
-    const { storage, shipData, isOpen } = data;
+    const { storage, shipData } = data;
     let emptyFormation = [];
     switch (action) {
       case 'NEW':
@@ -246,14 +245,7 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
         }
         break;
       case 'SEARCH':
-        // Close and reset
-        if (!isOpen && shipData) {
-          dispatch(setFleet({ fleet: 'ALL' }));
-          dispatch(setIsUpdated({ key: list, value: false }));
-          dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
-          dispatch(resetParameters());
-          // Open and show proper list of ships.
-        } else if (isOpen && !Number.isNaN(shipGridIndex) && shipData && shipGridIndex !== undefined) {
+        if (!Number.isNaN(shipGridIndex) && shipData && shipGridIndex !== undefined) {
           let fleet: 'ALL' | 'VANGUARD' | 'MAIN';
           if (MAININDEX.includes(shipGridIndex)) {
             fleet = 'MAIN';
@@ -263,13 +255,12 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
             throw new Error('Invalid grid index.');
           }
           batch(() => {
-            dispatch(resetParameters());
+            // dispatch(resetParameters());
             dispatch(setFleet({ fleet }));
             dispatch(setIsUpdated({ key: list, value: false }));
             dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
           });
         }
-
         break;
       default:
         break;

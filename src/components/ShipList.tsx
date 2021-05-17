@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList as List } from 'react-window';
@@ -24,9 +24,6 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName, refe, scr
   const appState = useSelector((state: RootState) => state.appState);
   const ownedShips = useSelector((state: RootState) => state.ownedShips);
 
-  useEffect(() => {
-    console.log(shipData.getShips().length);
-  }, []);
   const selectShip = useCallback(
     (id: string, index: number) => {
       dispatch(setSelectedShip(appState.cToggle, id, index));

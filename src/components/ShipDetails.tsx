@@ -83,8 +83,8 @@ const ShipDetails: React.FC<{ additionalTopButtons?: JSX.Element }> = ({ additio
         <RButton
           themeColor={config.themeColor}
           onClick={isOwned ? removeFromOwned : addShipToOwned}
-          className="btn normal"
-          extraStyle={{ minWidth: '85px' }}
+          className="btn normal icon"
+          // extraStyle={{ minWidth: '85px' }}
         >
           {isOwned ? <DashIcon themeColor={config.themeColor} /> : <PlusIcon themeColor={config.themeColor} />}
           Docks
@@ -100,7 +100,7 @@ const ShipDetails: React.FC<{ additionalTopButtons?: JSX.Element }> = ({ additio
           }}
           className="btn normal"
           disabled={!urlValidation(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
-          extraStyle={{ minWidth: '85px' }}
+          // extraStyle={{ minWidth: '85px' }}
         >
           wiki
         </RButton>

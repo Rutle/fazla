@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, Redirect, RouteProps, HashRouter, useHistory } from 'react-router-dom';
 import ShipDetailView from '_components/ShipDetailView';
@@ -21,7 +21,6 @@ export const AppContext = React.createContext(
     onToastDismiss: (id: number) => void;
     popToast: () => void;
     shipData: DataStore;
-    // setShipData: React.Dispatch<React.SetStateAction<DataStore>>;
     toasts: ToastList;
     storage: LocalForage | undefined;
     tooltip: TooltipHooks;
@@ -56,7 +55,8 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const platform = process.env.PLAT_ENV || 'NOSET';
-  // const [shipData, setShipData] = useState(new DataStore());
+  // Finally found out how to properly pass down "static" data that doesn't cause re-render
+  // but still gets updated unlike just a const variable.
   const shipData = useRef(new DataStore());
   const [addToast, onToastDismiss, popToast, toasts] = useToast(true, 3000);
   const tooltip = useTooltip();
@@ -83,7 +83,6 @@ const App: React.FC = () => {
             popToast,
             toasts,
             shipData: shipData.current,
-            // setShipData,
             storage,
             tooltip,
           }}
