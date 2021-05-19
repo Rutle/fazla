@@ -275,7 +275,7 @@ const FormationView: React.FC = () => {
                 <ShipList shipSearchList={shipSearchList} listName="ALL" scrollTo={() => scrollTo('ship')} />
                 <ShipList shipSearchList={ownedSearchList} listName="OWNED" scrollTo={() => scrollTo('ship')} />
               </SideBar>
-              <div id="sidebar-slider" className={`button-group ${config.themeColor}`} style={{ width: 'unset' }}>
+              <div id="side-scroll" className={`button-group ${config.themeColor}`} style={{ width: 'unset' }}>
                 {!isVisible ? (
                   <RButton themeColor={config.themeColor} className="btn slide" onClick={() => scrollTo('top')}>
                     <ArrowDegUp themeColor={config.themeColor} />
@@ -290,23 +290,9 @@ const FormationView: React.FC = () => {
               </div>
               <div className={`container content ${config.themeColor}`} ref={refData}>
                 <ShipDetails
-                  additionalTopButtons={
+                  topButtonGroup={
                     <>
-                      <RButton
-                        themeColor={config.themeColor}
-                        onClick={() => hideSearchSection(false)}
-                        className="btn normal icon"
-                        // extraStyle={{ minWidth: '85px' }}
-                      >
-                        <CloseIcon themeColor={config.themeColor} className="icon" />
-                        Close
-                      </RButton>
-                      <RButton
-                        themeColor={config.themeColor}
-                        onClick={addShip}
-                        className="btn normal icon"
-                        // extraStyle={{ minWidth: '85px' }}
-                      >
+                      <RButton themeColor={config.themeColor} onClick={addShip} className="btn normal icon">
                         <PlusIcon themeColor={config.themeColor} />
                         Formation
                       </RButton>

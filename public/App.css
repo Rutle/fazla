@@ -317,8 +317,11 @@ div.scroll {
   display: none;
 }
 
-#sidebar-slider {
-  display: none;
+#side-scroll {
+  display: inline-flex;
+  right: 5px;
+  top: -4px;
+  position: absolute;
 }
 
 /* ###### Buttons ###### */
@@ -339,7 +342,7 @@ button.btn.small {
 button.btn.grid-item *,
 label.btn,
 label.btn *,
-#sidebar-slider *,
+#side-scroll *,
 button.tab-btn,
 button.btn,
 button.btn * {
@@ -369,7 +372,7 @@ button.btn.slide {
   justify-content: center;
   align-items: center;
   height: 30px;
-  width: 30px;
+  padding: 5px 5px 5px 5px;
 }
 
 label.btn.normal,
@@ -386,6 +389,7 @@ button.btn.normal.icon,
 button.tab-btn.normal.icon {
   padding: 0px 10px 2px 5px;
 }
+
 /* ###### top-container + tab ##### */
 .top-container {
   display: flex;
@@ -1103,11 +1107,12 @@ div.f-grid div.f-icon.bottom-emp {
     width: 100%;
     margin-bottom: 0px;
   }
-  #sidebar-slider {
+
+  #side-scroll {
     display: inline-flex;
-    position: fixed;
     right: 5px;
     top: 95px;
+    position: fixed;
   }
 
   #formation-content > div.scroll {

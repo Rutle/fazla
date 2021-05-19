@@ -8,7 +8,6 @@ import { AppContext } from '_/App';
 import { MinIcon, MaxIcon, RestoreIcon, CloseIcon } from './Icons';
 import RButton from './RButton/RButton';
 import RToggle from './RToggle/RToggle';
-import TooltipWrapper from './Tooltip/TooltipWrapper';
 
 const NavItem: React.FC<{ children: ReactNode; pathTo: string }> = ({ children, pathTo }) => {
   const [isFocusOutline, setFocusOutline] = useState(false);

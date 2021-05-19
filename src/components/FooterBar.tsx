@@ -10,7 +10,7 @@ const FooterBar: React.FC = () => {
 
   const getDate = (ms: number): string => {
     if (Number.isNaN(ms)) return '-';
-    return new Date(ms).toUTCString();
+    return new Date(ms).toLocaleDateString();
   };
   const getVersion = (version: number): string => {
     if (Number.isNaN(version)) return '-';
@@ -21,7 +21,16 @@ const FooterBar: React.FC = () => {
     <div id="footer" className={`${config.themeColor}`}>
       <div className="footer-msg-container">
         <div id="footer-version-msg">
-          Ship data: {getVersion(appState.versions.ships['version-number'])} |{' '}
+          <a
+            className="no-focus-outline"
+            href="https://github.com/AzurAPI/azurapi-js-setup"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Ship data
+          </a>
+          {': '}
+          {getVersion(appState.versions.ships['version-number'])} |{' '}
           {getDate(appState.versions.ships['last-data-refresh-date'])}
         </div>
         <div id="footer-state-msg" style={process.env.PLAT_ENV === 'web' ? { justifyContent: 'flex-end' } : {}}>

@@ -6,7 +6,7 @@
   --main-dark-titlebar-color: rgb(184, 184, 184);
   --main-dark-color: rgb(184, 184, 184);
   /* --main-dark-hover-bg: #40556b;*/
-  --main-dark-hover-bg: #40556b88;
+  --main-dark-hover-bg: #3c4652;
   --main-dark-hover-color: #98caff;
   --main-dark-button-top-bg: #26313a;
   --main-dark-button-bottom-bg: #1b2127;
@@ -69,6 +69,18 @@
   outline: none;
 }
 
+.dark a:link,
+.dark a:visited {
+  color: var(--main-dark-color);
+}
+
+.dark a:hover,
+.dark a:active {
+  color: var(--main-dark-hover-color);
+  background-color: unset;
+}
+
+
 /* ##### Page ##### */
 div.page.dark {
   background-color: var(--root-dark-bg);
@@ -78,8 +90,8 @@ div.page.dark {
 div.page.dark .container {
   background-color: var(--root-dark-bg);
 }
-div.modal-overlay.dark #sidebar-slider,
-div.page.dark #sidebar-slider {
+div.modal-overlay.dark #side-scroll,
+div.page.dark #side-scroll {
   border-radius: 4px;
   background-color: var(--main-dark-bg);
   border: 1px solid var(--main-dark-border);
@@ -242,8 +254,8 @@ button.dark {
 button.rList-item.dark.btn:hover {
   /* background-color: var(--main-dark-hover-bg);*/
   /* TODO: Check colors with electron for window controls */
-  background-color: #40556b88;
-  color:var(--main-dark-hover-color);
+  background-color: #3c4652;
+  color: var(--main-dark-hover-color);
 }
 
 .btn.dark:hover > svg {

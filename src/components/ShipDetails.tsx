@@ -14,7 +14,7 @@ import { DashIcon, PlusIcon } from './Icons';
 /**
  * Component for displaying the details of a ship.
  */
-const ShipDetails: React.FC<{ additionalTopButtons?: JSX.Element }> = ({ additionalTopButtons }) => {
+const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGroup }) => {
   const dispatch = useDispatch();
   const { addToast, shipData, storage } = useContext(AppContext);
   const appState = useSelector((state: RootState) => state.appState);
@@ -79,12 +79,11 @@ const ShipDetails: React.FC<{ additionalTopButtons?: JSX.Element }> = ({ additio
         <span className={ship.rarity}>{` ${ship.stars?.stars as string}`}</span>
       </div>
       <div className={`button-group ${config.themeColor}`} style={{ marginBottom: '5px' }}>
-        {additionalTopButtons || <></>}
+        {topButtonGroup || <></>}
         <RButton
           themeColor={config.themeColor}
           onClick={isOwned ? removeFromOwned : addShipToOwned}
           className="btn normal icon"
-          // extraStyle={{ minWidth: '85px' }}
         >
           {isOwned ? <DashIcon themeColor={config.themeColor} /> : <PlusIcon themeColor={config.themeColor} />}
           Docks
@@ -100,7 +99,6 @@ const ShipDetails: React.FC<{ additionalTopButtons?: JSX.Element }> = ({ additio
           }}
           className="btn normal"
           disabled={!urlValidation(ship.wikiUrl !== undefined ? ship.wikiUrl : '')}
-          // extraStyle={{ minWidth: '85px' }}
         >
           wiki
         </RButton>
