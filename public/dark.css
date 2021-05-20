@@ -232,6 +232,10 @@ nav.tab.dark > a:hover {
 }
 
 /* Tooltip */
+
+.tooltip.dark {
+  border: 1px solid var(--main-dark-tooltip-border);
+}
 .tooltip.dark > .tooltip-content {
   background-color: var(--root-dark-bg);
   color: var(--main-dark-color);
@@ -241,6 +245,22 @@ nav.tab.dark > a:hover {
   background-color: var(--root-dark-bg);
 }
 
+.tooltip.dark > .tooltip-arrow.bottom::before {
+  border-left: 1px solid var(--main-dark-tooltip-border);
+  border-top: 1px solid var(--main-dark-tooltip-border);
+}
+.tooltip.dark > .tooltip-arrow.left::before {
+  border-top: 1px solid var(--main-dark-tooltip-border);
+  border-right: 1px solid var(--main-dark-tooltip-border);
+}
+.tooltip.dark > .tooltip-arrow.right::before {
+  border-left: 1px solid var(--main-dark-tooltip-border);
+  border-bottom: 1px solid var(--main-dark-tooltip-border);
+}
+.tooltip.dark > .tooltip-arrow.top::before {
+  border-bottom: 1px solid var(--main-dark-tooltip-border);
+  border-right: 1px solid var(--main-dark-tooltip-border);
+}
 /* ###### Buttons ###### */
 label.dark,
 button.dark {
@@ -251,6 +271,7 @@ button.dark {
 
 .dark .tab-btn:hover,
 .btn.dark:hover,
+button.btn.grid-item.dark:hover,
 button.rList-item.dark.btn:hover {
   /* background-color: var(--main-dark-hover-bg);*/
   /* TODO: Check colors with electron for window controls */
@@ -279,7 +300,7 @@ button.tab-btn.dark.selected {
   background-color: unset;
 }
 
-.rList-item.dark.owned > .owned-indicator{
+.rList-item.dark.owned > .owned-indicator {
   /* background-color: var(--main-dark-active-bg);*/
   background-color: #40556b;
 }

@@ -537,23 +537,21 @@ div.f-row.action *,
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
   white-space: pre-line;
   z-index: 22;
+  border-radius: 2px;
 }
 
-.tooltip.dark > .tooltip-content {
+.tooltip > .tooltip-content {
   padding: 3px 8px;
-  border-radius: 3px;
 }
-.tooltip-arrow {
+
+.tooltip > .tooltip-arrow {
   position: absolute;
   width: 10px;
   height: 10px;
   z-index: -1;
-  -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
-  -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
 }
 
-.tooltip-arrow::before {
+.tooltip > .tooltip-arrow::before {
   content: "";
   position: absolute;
   transform: rotate(45deg);
@@ -561,18 +559,21 @@ div.f-row.action *,
   height: 10px;
   top: 0;
   left: 0;
+  -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
+  -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
 }
 
-.tooltip-arrow.bottom {
+.tooltip > .tooltip-arrow.bottom {
   top: -4px;
 }
-.tooltip-arrow.left {
+.tooltip > .tooltip-arrow.left {
   right: -4px;
 }
-.tooltip-arrow.right {
+.tooltip > .tooltip-arrow.right {
   left: -4px;
 }
-.tooltip-arrow.top {
+.tooltip > .tooltip-arrow.top {
   bottom: -4px;
 }
 /* ###### popover ###### */

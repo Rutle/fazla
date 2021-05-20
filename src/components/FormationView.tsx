@@ -53,7 +53,6 @@ const FormationView: React.FC = () => {
   };
 
   const hideSearchSection = (isOpen: boolean) => {
-    // dispatch(formationAction(FormationAction.Search, { shipData }));
     setShowSearch(isOpen);
     setSelectedGrid(NaN);
   };

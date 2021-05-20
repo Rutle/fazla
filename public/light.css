@@ -2,11 +2,11 @@
 :root {
   --root-light-bg: #fdfdff;
   --main-light-color: #2f2f2f;
-  --main-light-titlebar-color: white;
+  --main-light-titlebar-color: #2f2f2f;
   --main-light-bg: #cce7ff;
   --main-light-hover-bg: #81bdf5;
   --main-light-border: #55aeff;
-  --main-light-active-bg: #81bdf5;;
+  --main-light-active-bg: #81bdf5;
   --main-light-footer-bg: #efefef;
   --main-light-tooltip-bg: #d3eaff;
   --main-light-tooltip-border: #bcd0ff;
@@ -171,6 +171,39 @@ nav.tab.light > a:hover {
   background-color: var(--main-light-hover-bg);
 }
 
+/* Tooltip */
+
+.tooltip.light {
+  border: 1px solid var(--main-light-border);
+}
+
+.tooltip.light > .tooltip-content {
+  /* background-color: var(--root-light-bg);*/
+  background-color: var(--main-light-tooltip-bg);
+  color: var(--main-light-color);
+}
+
+.tooltip.light > .tooltip-arrow::before {
+  background-color: var(--main-light-tooltip-bg);
+  /* background-color: var(--root-light-bg);*/
+}
+
+.tooltip.light > .tooltip-arrow.bottom::before {
+  border-left: 1px solid var(--main-light-border);
+  border-top: 1px solid var(--main-light-border);
+}
+.tooltip.light > .tooltip-arrow.left::before {
+  border-top: 1px solid var(--main-light-border);
+  border-right: 1px solid var(--main-light-border);
+}
+.tooltip.light > .tooltip-arrow.right::before {
+  border-left: 1px solid var(--main-light-border);
+  border-bottom: 1px solid var(--main-light-border);
+}
+.tooltip.light > .tooltip-arrow.top::before {
+  border-bottom: 1px solid var(--main-light-border);
+  border-right: 1px solid var(--main-light-border);
+}
 /* ###### Buttons ###### */
 label.light,
 button.light {
@@ -190,7 +223,9 @@ input[type="text"].light {
 .btn.light:hover,
 button.btn.grid-item.light:hover,
 button.rList-item.light.btn:hover {
-  background-color: var(--main-light-hover-bg);
+  /* background-color: var(--main-light-hover-bg);*/
+  background-color: #a4d3ff;
+  color: var(--main-light-color);
 }
 
 button.btn.light:disabled:hover,
@@ -203,10 +238,14 @@ button.rList-item.light.btn.selected,
 button.btn.light.selected,
 button.tab-btn.light.selected {
   background-color: var(--main-light-active-bg);
+  color: var(--main-light-color);
 }
 
-.rList-item.light.owned > .owned-indicator,
 .rList-item.light:hover .owned-indicator {
+  background-color: unset;
+}
+
+.rList-item.light.owned > .owned-indicator {
   background-color: var(--main-light-active-bg);
 }
 
@@ -315,32 +354,39 @@ div.f-grid.light div.f-icon {
 .btn.light.Aircraft.Carrier,
 .btn.light.Light.Carrier {
   background-color: Plum;
+  color: #510051;
 }
 
 .btn.light.Battleship, 
 .btn.light.Battlecruiser {
   background-color: Pink;
+  color: #6c0013;
 }
 
 .btn.light.Large.Cruiser {
   background-color: LightSalmon;
+  color: #551800;
 }
 .btn.light.Destroyer {
   background-color: powderblue;
+  color: #005560;
 }
 .btn.light.Submarine {
   background-color: PaleGreen;
+  color: #006200;
 }
 
 .btn.light.Heavy.Cruiser,
 .btn.light.Monitor,
 .btn.light.Light.Cruiser {
   background-color: NavajoWhite;
+  color: #774700;
 }
 
 .btn.light.Repair.Ship,
 .btn.light.Repair {
   background-color: Aquamarine;
+  color: #005b3d;
 }
 
 /* #### grid icon #### */
