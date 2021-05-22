@@ -339,8 +339,11 @@ div.scroll {
   display: none;
 }
 
-#sidebar-slider {
-  display: none;
+#side-scroll {
+  display: inline-flex;
+  right: 5px;
+  top: -4px;
+  position: absolute;
 }
 
 /* ###### Buttons ###### */
@@ -361,7 +364,7 @@ button.btn.small {
 button.btn.grid-item *,
 label.btn,
 label.btn *,
-#sidebar-slider *,
+#side-scroll *,
 button.tab-btn,
 button.btn,
 button.btn * {
@@ -391,7 +394,7 @@ button.btn.slide {
   justify-content: center;
   align-items: center;
   height: 30px;
-  width: 30px;
+  padding: 5px 5px 5px 5px;
 }
 
 label.btn.normal,
@@ -408,6 +411,7 @@ button.btn.normal.icon,
 button.tab-btn.normal.icon {
   padding: 0px 10px 2px 5px;
 }
+
 /* ###### top-container + tab ##### */
 .top-container {
   display: flex;
@@ -555,23 +559,21 @@ div.f-row.action *,
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
   white-space: pre-line;
   z-index: 22;
+  border-radius: 2px;
 }
 
-.tooltip.dark > .tooltip-content {
+.tooltip > .tooltip-content {
   padding: 3px 8px;
-  border-radius: 3px;
 }
-.tooltip-arrow {
+
+.tooltip > .tooltip-arrow {
   position: absolute;
   width: 10px;
   height: 10px;
   z-index: -1;
-  -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
-  -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
 }
 
-.tooltip-arrow::before {
+.tooltip > .tooltip-arrow::before {
   content: "";
   position: absolute;
   transform: rotate(45deg);
@@ -579,18 +581,21 @@ div.f-row.action *,
   height: 10px;
   top: 0;
   left: 0;
+  -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
+  -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
 }
 
-.tooltip-arrow.bottom {
+.tooltip > .tooltip-arrow.bottom {
   top: -4px;
 }
-.tooltip-arrow.left {
+.tooltip > .tooltip-arrow.left {
   right: -4px;
 }
-.tooltip-arrow.right {
+.tooltip > .tooltip-arrow.right {
   left: -4px;
 }
-.tooltip-arrow.top {
+.tooltip > .tooltip-arrow.top {
   bottom: -4px;
 }
 /* ###### popover ###### */
@@ -1125,11 +1130,12 @@ div.f-grid div.f-icon.bottom-emp {
     width: 100%;
     margin-bottom: 0px;
   }
-  #sidebar-slider {
+
+  #side-scroll {
     display: inline-flex;
-    position: fixed;
     right: 5px;
     top: 95px;
+    position: fixed;
   }
 
   #formation-content > div.scroll {
@@ -1229,11 +1235,11 @@ div.f-grid div.f-icon.bottom-emp {
 :root {
   --root-light-bg: #fdfdff;
   --main-light-color: #2f2f2f;
-  --main-light-titlebar-color: white;
+  --main-light-titlebar-color: #2f2f2f;
   --main-light-bg: #cce7ff;
   --main-light-hover-bg: #81bdf5;
   --main-light-border: #55aeff;
-  --main-light-active-bg: #81bdf5;;
+  --main-light-active-bg: #81bdf5;
   --main-light-footer-bg: #efefef;
   --main-light-tooltip-bg: #d3eaff;
   --main-light-tooltip-border: #bcd0ff;
@@ -1303,7 +1309,7 @@ div.page.light .container {
   background-color: var(--root-light-bg);
 }
 
-div.page.light #sidebar-slider {
+div.page.light #side-scroll {
   -webkit-box-shadow: 0px 0px 6px -2px #000000;
   -moz-box-shadow: 0px 0px 6px -2px #000000;
   box-shadow: 0px 0px 6px -2px #000000;
@@ -1398,6 +1404,36 @@ nav.tab.light > a:hover {
   background-color: var(--main-light-hover-bg);
 }
 
+/* Tooltip */
+.tooltip.light {
+  border: 1px solid var(--main-light-border);
+}
+
+.tooltip.light > .tooltip-content {
+  background-color: var(--root-light-bg);
+  color: var(--main-light-color);
+}
+
+.tooltip.light > .tooltip-arrow::before {
+  background-color: var(--root-light-bg);
+}
+
+.tooltip.light > .tooltip-arrow.bottom::before {
+  border-left: 1px solid var(--main-light-border);
+  border-top: 1px solid var(--main-light-border);
+}
+.tooltip.light > .tooltip-arrow.left::before {
+  border-top: 1px solid var(--main-light-border);
+  border-right: 1px solid var(--main-light-border);
+}
+.tooltip.light > .tooltip-arrow.right::before {
+  border-left: 1px solid var(--main-light-border);
+  border-bottom: 1px solid var(--main-light-border);
+}
+.tooltip.light > .tooltip-arrow.top::before {
+  border-bottom: 1px solid var(--main-light-border);
+  border-right: 1px solid var(--main-light-border);
+}
 /* ###### Buttons ###### */
 label.light,
 button.light {
@@ -1417,7 +1453,9 @@ input[type="text"].light {
 .btn.light:hover,
 button.btn.grid-item.light:hover,
 button.rList-item.light.btn:hover {
-  background-color: var(--main-light-hover-bg);
+  /* background-color: var(--main-light-hover-bg);*/
+  background-color: #a4d3ff;
+  color: var(--main-light-color);
 }
 
 button.btn.light:disabled:hover,
@@ -1430,10 +1468,14 @@ button.rList-item.light.btn.selected,
 button.btn.light.selected,
 button.tab-btn.light.selected {
   background-color: var(--main-light-active-bg);
+  color: var(--main-light-color);
 }
 
-.rList-item.light.owned > .owned-indicator,
 .rList-item.light:hover .owned-indicator {
+  background-color: unset;
+}
+
+.rList-item.light.owned > .owned-indicator {
   background-color: var(--main-light-active-bg);
 }
 
@@ -1542,32 +1584,39 @@ div.f-grid.light div.f-icon {
 .btn.light.Aircraft.Carrier,
 .btn.light.Light.Carrier {
   background-color: Plum;
+  color: #510051;
 }
 
 .btn.light.Battleship, 
 .btn.light.Battlecruiser {
   background-color: Pink;
+  color: #6c0013;
 }
 
 .btn.light.Large.Cruiser {
   background-color: LightSalmon;
+  color: #551800;
 }
 .btn.light.Destroyer {
   background-color: powderblue;
+  color: #005560;
 }
 .btn.light.Submarine {
   background-color: PaleGreen;
+  color: #006200;
 }
 
 .btn.light.Heavy.Cruiser,
 .btn.light.Monitor,
 .btn.light.Light.Cruiser {
   background-color: NavajoWhite;
+  color: #774700;
 }
 
 .btn.light.Repair.Ship,
 .btn.light.Repair {
   background-color: Aquamarine;
+  color: #005b3d;
 }
 
 /* #### grid icon #### */
@@ -1637,7 +1686,7 @@ div.f-grid.light div.f-row.deepskyblue {
   --main-dark-titlebar-color: rgb(184, 184, 184);
   --main-dark-color: rgb(184, 184, 184);
   /* --main-dark-hover-bg: #40556b;*/
-  --main-dark-hover-bg: #40556b88;
+  --main-dark-hover-bg: #3c4652;
   --main-dark-hover-color: #98caff;
   --main-dark-button-top-bg: #26313a;
   --main-dark-button-bottom-bg: #1b2127;
@@ -1700,6 +1749,18 @@ div.f-grid.light div.f-row.deepskyblue {
   outline: none;
 }
 
+.dark a:link,
+.dark a:visited {
+  color: var(--main-dark-color);
+}
+
+.dark a:hover,
+.dark a:active {
+  color: var(--main-dark-hover-color);
+  background-color: unset;
+}
+
+
 /* ##### Page ##### */
 div.page.dark {
   background-color: var(--root-dark-bg);
@@ -1709,8 +1770,8 @@ div.page.dark {
 div.page.dark .container {
   background-color: var(--root-dark-bg);
 }
-div.modal-overlay.dark #sidebar-slider,
-div.page.dark #sidebar-slider {
+div.modal-overlay.dark #side-scroll,
+div.page.dark #side-scroll {
   border-radius: 4px;
   background-color: var(--main-dark-bg);
   border: 1px solid var(--main-dark-border);
@@ -1851,6 +1912,10 @@ nav.tab.dark > a:hover {
 }
 
 /* Tooltip */
+.tooltip.dark {
+  border: 1px solid var(--main-dark-tooltip-border);
+}
+
 .tooltip.dark > .tooltip-content {
   background-color: var(--root-dark-bg);
   color: var(--main-dark-color);
@@ -1860,6 +1925,22 @@ nav.tab.dark > a:hover {
   background-color: var(--root-dark-bg);
 }
 
+.tooltip.dark > .tooltip-arrow.bottom::before {
+  border-left: 1px solid var(--main-dark-tooltip-border);
+  border-top: 1px solid var(--main-dark-tooltip-border);
+}
+.tooltip.dark > .tooltip-arrow.left::before {
+  border-top: 1px solid var(--main-dark-tooltip-border);
+  border-right: 1px solid var(--main-dark-tooltip-border);
+}
+.tooltip.dark > .tooltip-arrow.right::before {
+  border-left: 1px solid var(--main-dark-tooltip-border);
+  border-bottom: 1px solid var(--main-dark-tooltip-border);
+}
+.tooltip.dark > .tooltip-arrow.top::before {
+  border-bottom: 1px solid var(--main-dark-tooltip-border);
+  border-right: 1px solid var(--main-dark-tooltip-border);
+}
 /* ###### Buttons ###### */
 label.dark,
 button.dark {
@@ -1870,11 +1951,12 @@ button.dark {
 
 .dark .tab-btn:hover,
 .btn.dark:hover,
+button.btn.grid-item.dark:hover,
 button.rList-item.dark.btn:hover {
   /* background-color: var(--main-dark-hover-bg);*/
   /* TODO: Check colors with electron for window controls */
-  background-color: #40556b88;
-  color:var(--main-dark-hover-color);
+  background-color: #3c4652;
+  color: var(--main-dark-hover-color);
 }
 
 .btn.dark:hover > svg {
@@ -1898,7 +1980,7 @@ button.tab-btn.dark.selected {
   background-color: unset;
 }
 
-.rList-item.dark.owned > .owned-indicator{
+.rList-item.dark.owned > .owned-indicator {
   /* background-color: var(--main-dark-active-bg);*/
   background-color: #40556b;
 }
