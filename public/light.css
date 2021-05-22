@@ -172,20 +172,17 @@ nav.tab.light > a:hover {
 }
 
 /* Tooltip */
-
 .tooltip.light {
   border: 1px solid var(--main-light-border);
 }
 
 .tooltip.light > .tooltip-content {
-  /* background-color: var(--root-light-bg);*/
-  background-color: var(--main-light-tooltip-bg);
+  background-color: var(--root-light-bg);
   color: var(--main-light-color);
 }
 
 .tooltip.light > .tooltip-arrow::before {
-  background-color: var(--main-light-tooltip-bg);
-  /* background-color: var(--root-light-bg);*/
+  background-color: var(--root-light-bg);
 }
 
 .tooltip.light > .tooltip-arrow.bottom::before {

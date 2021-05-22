@@ -232,10 +232,10 @@ nav.tab.dark > a:hover {
 }
 
 /* Tooltip */
-
 .tooltip.dark {
   border: 1px solid var(--main-dark-tooltip-border);
 }
+
 .tooltip.dark > .tooltip-content {
   background-color: var(--root-dark-bg);
   color: var(--main-dark-color);
