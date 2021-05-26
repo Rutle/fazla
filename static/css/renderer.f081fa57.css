@@ -369,6 +369,7 @@ button.tab-btn,
 button.btn,
 button.btn * {
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 label.btn,
@@ -619,6 +620,14 @@ div.f-row.action *,
 
 .popover-content > .f-grid > .f-row:last-child {
   margin-bottom: 0px;
+}
+
+.drag-over {
+  border-radius: 4px!important;
+}
+
+.drag-over-invalid {
+  border-radius: 4px!important;
 }
 
 /* ###### ship details / titlebar ##### */
@@ -1464,6 +1473,7 @@ button.tab-btn.light:disabled:hover {
 }
 
 label.btn.light.selected,
+button.grid-item.btn.light.selected,
 button.rList-item.light.btn.selected,
 button.btn.light.selected,
 button.tab-btn.light.selected {
@@ -1562,6 +1572,15 @@ input[type="url"].light.is-invalid,
   border-color: rgb(110, 19, 19);
 }
 
+.grid-item.light > .drag-over {
+  border: 2px dotted var(--main-light-border)!important;
+  border-radius: 4px!important;
+}
+
+.grid-item.light > .drag-over-invalid {
+  border: 2px dotted red!important;
+  border-radius: 4px!important;
+}
 /* #### Grid #### */
 div.f-grid.light div.f-header {
   border-bottom: 2px solid var(--main-light-border);
@@ -1581,8 +1600,7 @@ div.f-grid.light div.f-icon {
 }
 
 /* #### hull types #### */
-.btn.light.Aircraft.Carrier,
-.btn.light.Light.Carrier {
+.btn.light.Carrier {
   background-color: Plum;
   color: #510051;
 }
@@ -1969,6 +1987,7 @@ button.tab-btn.dark:disabled:hover {
 }
 
 label.btn.dark.selected,
+button.grid-item.btn.dark.selected,
 button.rList-item.dark.btn.selected,
 button.btn.dark.selected,
 button.tab-btn.dark.selected {
@@ -2075,6 +2094,16 @@ input[type="url"].dark.is-invalid,
   border-color: rgb(110, 19, 19);
 }
 
+.grid-item.dark > .drag-over {
+  border: 2px dotted var(--main-dark-border)!important;
+  border-radius: 4px!important;
+}
+
+.grid-item.dark > .drag-over-invalid {
+  border: 2px dotted red!important;
+  border-radius: 4px!important;
+}
+
 /* #### Grid #### */
 div.f-grid.dark div.f-header {
   border-bottom: 2px solid var(--main-dark-border);
@@ -2087,8 +2116,7 @@ div.f-grid.dark div.f-icon {
 }
 
 /* #### hull types #### */
-.btn.dark.Aircraft.Carrier,
-.btn.dark.Light.Carrier {
+.btn.dark.Carrier {
   background-color: #352035;
   color: #d77dd7;
 }
