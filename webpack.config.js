@@ -109,6 +109,7 @@ if (isElectron) {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './public/index.html'),
       inject: true,
+      hash: true,
     }),
     new webpack.DefinePlugin({
       'process.env.PLAT_ENV': JSON.stringify(process.env.PLAT_ENV),
@@ -141,7 +142,13 @@ if (isWeb) {
   webConfig.optimization = {
     minimize: isEnvProduction,
     splitChunks: {
-      chunks: 'all',
+      cacheGroups: {
+        vendor: {
+          name: 'node_vendors',
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'all',
+        },
+      },
     },
     runtimeChunk: {
       name: (entrypoint) => `runtime-${entrypoint.name}`,
@@ -153,6 +160,7 @@ if (isWeb) {
       template: path.resolve(__dirname, './public/index.html'),
       favicon: path.resolve(__dirname, './public/favicon.ico'),
       inject: true,
+      hash: true,
     }),
     new CopyPlugin({
       patterns: [
