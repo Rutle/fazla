@@ -289,6 +289,7 @@ button.tab-btn.dark:disabled:hover {
 }
 
 label.btn.dark.selected,
+button.grid-item.btn.dark.selected,
 button.rList-item.dark.btn.selected,
 button.btn.dark.selected,
 button.tab-btn.dark.selected {
@@ -395,6 +396,16 @@ input[type="url"].dark.is-invalid,
   border-color: rgb(110, 19, 19);
 }
 
+.grid-item.dark > .drag-over {
+  border: 2px dotted var(--main-dark-border)!important;
+  border-radius: 4px!important;
+}
+
+.grid-item.dark > .drag-over-invalid {
+  border: 2px dotted red!important;
+  border-radius: 4px!important;
+}
+
 /* #### Grid #### */
 div.f-grid.dark div.f-header {
   border-bottom: 2px solid var(--main-dark-border);
@@ -407,8 +418,7 @@ div.f-grid.dark div.f-icon {
 }
 
 /* #### hull types #### */
-.btn.dark.Aircraft.Carrier,
-.btn.dark.Light.Carrier {
+.btn.dark.Carrier {
   background-color: #352035;
   color: #d77dd7;
 }

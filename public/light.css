@@ -231,6 +231,7 @@ button.tab-btn.light:disabled:hover {
 }
 
 label.btn.light.selected,
+button.grid-item.btn.light.selected,
 button.rList-item.light.btn.selected,
 button.btn.light.selected,
 button.tab-btn.light.selected {
@@ -329,6 +330,15 @@ input[type="url"].light.is-invalid,
   border-color: rgb(110, 19, 19);
 }
 
+.grid-item.light > .drag-over {
+  border: 2px dotted var(--main-light-border)!important;
+  border-radius: 4px!important;
+}
+
+.grid-item.light > .drag-over-invalid {
+  border: 2px dotted red!important;
+  border-radius: 4px!important;
+}
 /* #### Grid #### */
 div.f-grid.light div.f-header {
   border-bottom: 2px solid var(--main-light-border);
@@ -348,8 +358,7 @@ div.f-grid.light div.f-icon {
 }
 
 /* #### hull types #### */
-.btn.light.Aircraft.Carrier,
-.btn.light.Light.Carrier {
+.btn.light.Carrier {
   background-color: Plum;
   color: #510051;
 }

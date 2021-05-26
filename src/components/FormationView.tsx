@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactModal from 'react-modal';
 import { AppContext } from '_/App';
-import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
+import { formationAction, FormationAction, MAININDEX, VANGUARDINDEX } from '_/reducers/slices/formationGridSlice';
 import { Ship } from '_/types/types';
 import { RootState } from '_/reducers/rootReducer';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { CSSTransition } from 'react-transition-group';
+import { SearchAction, setFleet, updateSearch } from '_/reducers/slices/searchParametersSlice';
+import { setIsUpdated } from '_/reducers/slices/appStateSlice';
 import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
@@ -33,6 +35,7 @@ const FormationView: React.FC = () => {
   const { shipData, storage } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
+  const appState = useSelector((state: RootState) => state.appState);
   const [showModal, setModalOpen] = useState({ modal: '', isOpen: false });
   const [fleetTabIndex, setFleetTabIndex] = useState(0);
   const [formationData, setFormationData] = useState<Ship[][]>([]);
@@ -69,7 +72,7 @@ const FormationView: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSearch]);
 
-  // Update currently selected formation data to state variable.
+  // Update currently selected formation data.
   useEffect(() => {
     if (fData.formations.length !== 0) {
       const formationShips = shipData
@@ -94,7 +97,26 @@ const FormationView: React.FC = () => {
   // Update search list and show the search section.
   const showSearchSection = (isOpen: boolean, gridIndex: number) => {
     setSelectedGrid(gridIndex);
-    dispatch(formationAction(FormationAction.Search, { shipData, gridIndex }));
+    // dispatch(formationAction(FormationAction.Search, { shipData, gridIndex }));
+    if (!Number.isNaN(gridIndex) && shipData && gridIndex !== undefined) {
+      let fleet: 'ALL' | 'VANGUARD' | 'MAIN' = 'ALL';
+      if (MAININDEX.includes(gridIndex)) {
+        fleet = 'MAIN';
+      } else if (VANGUARDINDEX.includes(gridIndex)) {
+        fleet = 'VANGUARD';
+      }
+      dispatch(setFleet({ fleet }));
+      dispatch(setIsUpdated({ key: appState.cToggle, value: false }));
+      dispatch(
+        updateSearch(shipData, SearchAction.UpdateList, {
+          name: '',
+          cat: '',
+          param: '',
+          id: '',
+          list: appState.cToggle,
+        })
+      );
+    }
     setShowSearch(isOpen);
   };
 

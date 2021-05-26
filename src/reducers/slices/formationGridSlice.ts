@@ -17,10 +17,11 @@ export enum FormationAction {
   Export = 'EXPORT',
   Import = 'IMPORT',
   Search = 'SEARCH',
+  Switch = 'SWITCH',
 }
 
-const MAININDEX = [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20];
-const VANGUARDINDEX = [3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23];
+export const MAININDEX = [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20];
+export const VANGUARDINDEX = [3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23];
 
 interface Formations {
   formations: Formation[];
@@ -30,7 +31,7 @@ interface Formations {
 const initialState: Formations = {
   formations: [],
   selectedIndex: NaN, // Selected formation index
-  isEdit: [],
+  isEdit: [], // TODO: Remove this and make save to be performed after each action.
 };
 
 const formationGridSlice = createSlice({
@@ -128,6 +129,30 @@ const formationGridSlice = createSlice({
         selectedIndex: action.payload,
       };
     },
+    switchPlacements(state, action: PayloadAction<{ data: string[]; fleetIndex: number }>) {
+      const { data, fleetIndex } = action.payload;
+      const fromIdx = parseInt(data[0], 10);
+      const toIdx = parseInt(data[1], 10);
+      const newFleet = state.formations[fleetIndex].data.slice();
+      const fromID = newFleet[fromIdx];
+      const toID = newFleet[toIdx];
+      newFleet[fromIdx] = toID;
+      newFleet[toIdx] = fromID;
+      const newForms = state.formations.map((item, index) => {
+        if (index !== fleetIndex) {
+          return item;
+        }
+        return {
+          ...item,
+          data: newFleet,
+        };
+      });
+      return {
+        ...state,
+        formations: newForms,
+        isEdit: state.isEdit.map((value, index) => (index !== fleetIndex ? value : true)),
+      };
+    },
     toggleIsEdit(state) {
       const arrLen = state.isEdit.length;
       const newArr = Array.from({ length: arrLen }, () => false);
@@ -166,6 +191,7 @@ export const {
   selectFormation,
   toggleIsEdit,
   removeShipFromFormation,
+  switchPlacements,
 } = formationGridSlice.actions;
 
 interface FormActionData {
@@ -175,6 +201,7 @@ interface FormActionData {
   importedFormation?: string[];
   storage?: LocalForage;
   shipData?: DataStore;
+  switchData?: string[];
 }
 
 /**
@@ -244,7 +271,8 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
           dispatch(addNewFormationData({ data: iFormation, name }));
         }
         break;
-      case 'SEARCH':
+      /*
+      case 'SEARCH': // TODO: Does not belong here. Move it.
         if (!Number.isNaN(shipGridIndex) && shipData && shipGridIndex !== undefined) {
           let fleet: 'ALL' | 'VANGUARD' | 'MAIN';
           if (MAININDEX.includes(shipGridIndex)) {
@@ -261,6 +289,10 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
             dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
           });
         }
+        break;
+      */
+      case 'SWITCH':
+        if (data && data.switchData) dispatch(switchPlacements({ data: data.switchData, fleetIndex: formIdx }));
         break;
       default:
         break;

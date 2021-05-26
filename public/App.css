@@ -347,6 +347,7 @@ button.tab-btn,
 button.btn,
 button.btn * {
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 label.btn,
@@ -597,6 +598,14 @@ div.f-row.action *,
 
 .popover-content > .f-grid > .f-row:last-child {
   margin-bottom: 0px;
+}
+
+.drag-over {
+  border-radius: 4px!important;
+}
+
+.drag-over-invalid {
+  border-radius: 4px!important;
 }
 
 /* ###### ship details / titlebar ##### */
