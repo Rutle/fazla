@@ -280,6 +280,7 @@ div.scroll {
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0,0.1);
+  z-index: 30;
 }
 
 .container {
@@ -304,12 +305,12 @@ div.scroll {
 }
 
 .normal-fleet {
-  top: 174px;
-  min-height: calc(100% - 200px);
+  top: 181px;
+  min-height: calc(100% - 206px);
 }
 .siren-fleet {
-  top: 230px;
-  min-height: calc(100% - 255px);
+  top: 245px;
+  min-height: calc(100% - 270px);
 }
 
 .search-section-enter {
@@ -1572,12 +1573,12 @@ input[type="url"].light.is-invalid,
   border-color: rgb(110, 19, 19);
 }
 
-.grid-item.light > .drag-over {
+.grid-item.light.drag-over {
   border: 2px dotted var(--main-light-border)!important;
   border-radius: 4px!important;
 }
 
-.grid-item.light > .drag-over-invalid {
+.grid-item.light.drag-over-invalid {
   border: 2px dotted red!important;
   border-radius: 4px!important;
 }
@@ -2094,12 +2095,12 @@ input[type="url"].dark.is-invalid,
   border-color: rgb(110, 19, 19);
 }
 
-.grid-item.dark > .drag-over {
-  border: 2px dotted var(--main-dark-border)!important;
+.grid-item.dark.drag-over {
+  border: 2px dotted!important;
   border-radius: 4px!important;
 }
 
-.grid-item.dark > .drag-over-invalid {
+.grid-item.dark.drag-over-invalid {
   border: 2px dotted red!important;
   border-radius: 4px!important;
 }
