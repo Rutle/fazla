@@ -133,6 +133,7 @@ if (isWeb) {
   };
   webConfig.output = {
     filename: 'static/js/[name].[contenthash:8].js',
+    clean: true,
   };
   webConfig.performance = {
     hints: false,
@@ -159,8 +160,8 @@ if (isWeb) {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './public/index.html'),
       favicon: path.resolve(__dirname, './public/favicon.ico'),
-      inject: true,
-      hash: true,
+      // inject: true,
+      // hash: true,
     }),
     new CopyPlugin({
       patterns: [

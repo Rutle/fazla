@@ -56,8 +56,6 @@ export const useDragAndDrop = ({
   };
 }): DragAndDrop => {
   const [dragStates, setDragStates] = useState({ isDragged: false, isTransferOk: false });
-  // const [isDragged, setIsDragged] = useState(false);
-  // const [isTransferOk, setIsTransferOk] = useState(false);
   const dataTransferArray = useRef<string[]>([]);
   const startKey = useRef('');
   const [data, dispatch] = useReducer(reducer, { dropDepth: 0, inDropZone: false });
@@ -81,7 +79,8 @@ export const useDragAndDrop = ({
     event.preventDefault();
     event.currentTarget.classList.remove(classNames.draggedClass);
     setDragStates({ ...dragStates, isDragged: false });
-    if (event.currentTarget.parentElement) event.currentTarget.parentElement.blur();
+    // if (event.currentTarget.parentElement) event.currentTarget.parentElement.blur();
+    if (event.currentTarget) event.currentTarget.blur();
   };
 
   const onDragStartCb = (event: React.DragEvent<HTMLElement>) => {
@@ -98,7 +97,7 @@ export const useDragAndDrop = ({
   const onDragOverCb = (event: React.DragEvent<HTMLElement>) => {
     event.stopPropagation();
     event.preventDefault();
-    if (!data.inDropZone) dispatch({ type: 'setInDropZone', payload: true });
+    // if (!data.inDropZone) dispatch({ type: 'setInDropZone', payload: true });
     const sKey = event.dataTransfer.getData(dataKey);
     const oKey = event.currentTarget.getAttribute(dataKey) as string;
     if (isValidDropZone && isValidDropZone(sKey, oKey)) return;
@@ -109,12 +108,12 @@ export const useDragAndDrop = ({
   const onDragEnterCb = (event: React.DragEvent<HTMLElement>) => {
     const sKey = event.dataTransfer.getData(dataKey);
     const oKey = event.currentTarget.getAttribute(dataKey) as string;
+    dispatch({ type: 'setDropDepth', payload: data.dropDepth + 1 });
     if (isValidDropZone && isValidDropZone(sKey, oKey) && data.dropDepth === 0) {
       if (sKey !== oKey) event.currentTarget.classList.add(classNames.dragOverClass);
     } else if (isValidDropZone && !isValidDropZone(sKey, oKey) && data.dropDepth === 0) {
       event.currentTarget.classList.add(classNames.dragOverInvalidClass);
     }
-    dispatch({ type: 'setDropDepth', payload: data.dropDepth + 1 });
   };
 
   const onDragLeaveCb = (event: React.DragEvent<HTMLElement>) => {

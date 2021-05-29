@@ -396,12 +396,12 @@ input[type="url"].dark.is-invalid,
   border-color: rgb(110, 19, 19);
 }
 
-.grid-item.dark > .drag-over {
-  border: 2px dotted var(--main-dark-border)!important;
+.grid-item.dark.drag-over {
+  border: 2px dotted!important;
   border-radius: 4px!important;
 }
 
-.grid-item.dark > .drag-over-invalid {
+.grid-item.dark.drag-over-invalid {
   border: 2px dotted red!important;
   border-radius: 4px!important;
 }

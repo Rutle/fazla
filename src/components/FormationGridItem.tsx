@@ -71,6 +71,12 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(
         onRightClick={onRightClick}
         className={`grid-item btn${isSelected ? ' selected' : ''} hullTypeAbb ${ship ? getHullType(ship) : ''}`}
         themeColor={themeColor}
+        extraStyle={{ border: '2px solid transparent' }}
+        dragProps={{
+          dragFunctions,
+          dragOptions: { draggable: 'true' },
+          data: { 'grid-index': index, 'ship-id': ship?.id ? ship.id : 'none' },
+        }}
       >
         <span
           style={{
@@ -79,14 +85,7 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(
             display: 'inline-block',
             background: 'inherit',
             boxSizing: 'border-box',
-            border: '2px solid transparent',
-            borderRadius: '4px',
           }}
-          draggable
-          className="draggable"
-          {...dragFunctions}
-          grid-index={index}
-          ship-id={ship?.id ? ship.id : 'none'}
         >
           {ship ? `${getHullTypeAbb(ship.hullType)} ${ship.names.en}` : `Add ${getLocation(index)}`}
         </span>

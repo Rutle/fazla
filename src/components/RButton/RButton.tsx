@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DragFunctions } from '../DragAndDrop/useDragAndDrop';
 
 interface RButtonProps {
   className?: string;
@@ -10,10 +11,26 @@ interface RButtonProps {
   disabled?: boolean;
   extraStyle?: React.CSSProperties;
   role?: string;
+  dragProps?: {
+    dragFunctions?: DragFunctions;
+    dragOptions: { [key in 'draggable']: any };
+    data: { [key: string]: any };
+  };
 }
 
 const RButton: React.FC<RButtonProps> = React.memo(
-  ({ className = 'btn normal', children, themeColor = '', onClick, onRightClick, disabled, extraStyle, id, role }) => {
+  ({
+    className = 'btn normal',
+    children,
+    themeColor = '',
+    onClick,
+    onRightClick,
+    disabled,
+    extraStyle,
+    id,
+    role,
+    dragProps,
+  }) => {
     const [isFocusOutline, setFocusOutline] = useState(false);
     return (
       <button
@@ -33,6 +50,9 @@ const RButton: React.FC<RButtonProps> = React.memo(
         onClick={onClick}
         disabled={disabled}
         style={extraStyle}
+        {...dragProps?.dragFunctions}
+        {...dragProps?.dragOptions}
+        {...dragProps?.data}
       >
         {children}
       </button>

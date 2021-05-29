@@ -330,12 +330,12 @@ input[type="url"].light.is-invalid,
   border-color: rgb(110, 19, 19);
 }
 
-.grid-item.light > .drag-over {
+.grid-item.light.drag-over {
   border: 2px dotted var(--main-light-border)!important;
   border-radius: 4px!important;
 }
 
-.grid-item.light > .drag-over-invalid {
+.grid-item.light.drag-over-invalid {
   border: 2px dotted red!important;
   border-radius: 4px!important;
 }

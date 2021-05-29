@@ -258,6 +258,7 @@ div.scroll {
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0,0.1);
+  z-index: 30;
 }
 
 .container {
@@ -282,12 +283,12 @@ div.scroll {
 }
 
 .normal-fleet {
-  top: 174px;
-  min-height: calc(100% - 200px);
+  top: 181px;
+  min-height: calc(100% - 206px);
 }
 .siren-fleet {
-  top: 230px;
-  min-height: calc(100% - 255px);
+  top: 245px;
+  min-height: calc(100% - 270px);
 }
 
 .search-section-enter {
