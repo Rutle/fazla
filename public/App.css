@@ -277,9 +277,10 @@ div.scroll {
 #formation-ship-search {
   display: none;
   position: fixed;
-  width: calc(100% - 30px);
+  /* width: calc(100% - 30px);*/
   flex-direction: row;
   z-index: 25;
+  /* overflow: hidden;*/
 }
 
 .normal-fleet {
@@ -295,10 +296,10 @@ div.scroll {
   opacity: 0;
   display: flex!important;
 }
-.search-section-active {
+.search-section-enter-active {
   display: flex!important;
   opacity: 1;
-  transition: opacity 200ms;
+  transition: opacity 300ms;
 }
 .search-section-enter-done {
   opacity: 1;
@@ -311,7 +312,7 @@ div.scroll {
 .search-section-exit-active {
   display: flex!important;
   opacity: 0;
-  transition: opacity 200ms;
+  transition: opacity 300ms;
 }
 .search-section-exit-done {
   opacity: 0;
@@ -321,7 +322,7 @@ div.scroll {
 #side-scroll {
   display: inline-flex;
   right: 5px;
-  top: -4px;
+  top: 0px;
   position: absolute;
 }
 
@@ -600,6 +601,7 @@ div.f-row.action *,
 .popover-content > .f-grid > .f-row:last-child {
   margin-bottom: 0px;
 }
+
 
 .drag-over {
   border-radius: 4px!important;

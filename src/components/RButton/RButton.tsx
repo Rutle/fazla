@@ -13,8 +13,8 @@ interface RButtonProps {
   role?: string;
   dragProps?: {
     dragFunctions?: DragFunctions;
-    dragOptions: { [key in 'draggable']: any };
-    data: { [key: string]: any };
+    dragOptions?: { [key in 'draggable']: any };
+    data?: { [key: string]: any };
   };
 }
 
@@ -46,7 +46,7 @@ const RButton: React.FC<RButtonProps> = React.memo(
         }}
         onContextMenu={onRightClick}
         type="button"
-        className={`${className} ${themeColor} ${!isFocusOutline ? 'no-focus-outline' : ''}`}
+        className={`${className} ${themeColor}${!isFocusOutline ? ' no-focus-outline' : ''}`}
         onClick={onClick}
         disabled={disabled}
         style={extraStyle}

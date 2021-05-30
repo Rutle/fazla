@@ -286,7 +286,7 @@ const FormationView: React.FC = () => {
               </div>
             )}
           </div>
-          <CSSTransition nodeRef={refTransition} in={showSearch} timeout={200} classNames="search-section">
+          <CSSTransition nodeRef={refTransition} in={showSearch} timeout={300} classNames="search-section">
             <div
               id="formation-ship-search"
               ref={refTransition}

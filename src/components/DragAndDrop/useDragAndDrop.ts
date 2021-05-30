@@ -106,13 +106,18 @@ export const useDragAndDrop = ({
   };
 
   const onDragEnterCb = (event: React.DragEvent<HTMLElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
     const sKey = event.dataTransfer.getData(dataKey);
     const oKey = event.currentTarget.getAttribute(dataKey) as string;
     dispatch({ type: 'setDropDepth', payload: data.dropDepth + 1 });
-    if (isValidDropZone && isValidDropZone(sKey, oKey) && data.dropDepth === 0) {
-      if (sKey !== oKey) event.currentTarget.classList.add(classNames.dragOverClass);
-    } else if (isValidDropZone && !isValidDropZone(sKey, oKey) && data.dropDepth === 0) {
-      event.currentTarget.classList.add(classNames.dragOverInvalidClass);
+    if (isValidDropZone) {
+      const isValid = isValidDropZone(sKey, oKey);
+      if (isValid && data.dropDepth === 0) {
+        if (sKey !== oKey) event.currentTarget.classList.add(classNames.dragOverClass);
+      } else if (!isValid && data.dropDepth === 0) {
+        event.currentTarget.classList.add(classNames.dragOverInvalidClass);
+      }
     }
   };
 
@@ -121,9 +126,7 @@ export const useDragAndDrop = ({
     if (data.dropDepth > 1) return;
     dispatch({ type: 'setInDropZone', payload: false });
     event.currentTarget.classList.remove(classNames.dragOverClass);
-    if (event.currentTarget.classList.contains(classNames.dragOverInvalidClass)) {
-      event.currentTarget.classList.remove(classNames.dragOverInvalidClass);
-    }
+    event.currentTarget.classList.remove(classNames.dragOverInvalidClass);
   };
 
   return {
