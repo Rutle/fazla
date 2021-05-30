@@ -206,7 +206,17 @@ const FormationView: React.FC = () => {
                     Import
                   </RButton>
                   <TooltipWrapper
-                    data={`Left mouse click to select.\nRight mouse click to remove.`}
+                    // data={`Left mouse click to select.\nRight mouse click to remove.\nDrag and drop ships.`}
+                    data={
+                      <dl>
+                        <dt>Add ship</dt>
+                        <dd>Left mouse click to select.</dd>
+                        <dt>Remove ship</dt>
+                        <dd>Right mouse click to remove.</dd>
+                        <dt>Drag</dt>
+                        <dd>Drag and drop ships.</dd>
+                      </dl>
+                    }
                     WrapperElement="div"
                     wrapperClassNames="icon help"
                     placement="bottom"

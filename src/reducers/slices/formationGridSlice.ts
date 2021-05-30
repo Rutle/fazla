@@ -254,9 +254,9 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
         if (shipGridIndex !== undefined && !Number.isNaN(shipGridIndex) && shipData) {
           batch(() => {
             dispatch(addShipToFormation({ id, gridIndex: shipGridIndex, selectedIndex: formIdx }));
-            dispatch(setFleet({ fleet: 'ALL' }));
+            // dispatch(setFleet({ fleet: 'ALL' }));
             dispatch(setIsUpdated({ key: list, value: false }));
-            dispatch(resetParameters());
+            // dispatch(resetParameters());
             dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
           });
         }

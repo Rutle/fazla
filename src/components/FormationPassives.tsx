@@ -29,7 +29,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
 
   const getData = (ship: Ship | undefined) => {
     if (ship) {
-      return { optionalName: ship.names.en, skills: ship.skills };
+      return { optionalName: ship.names.en, skills: ship.skills, hullType: ship.hullType };
     }
     return { optionalName: '', skills: undefined };
   };

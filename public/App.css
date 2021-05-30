@@ -22,6 +22,19 @@ body, nav, header {
   display: flex;
 }
 
+dt {
+  font-weight: bold;
+}
+
+dl,
+dd {
+  font-size: .9rem;
+}
+
+dd {
+  margin-bottom: 0.5em;
+}
+
 .page {
   height: 100%;
   display: flex;
@@ -278,6 +291,7 @@ div.scroll {
   display: none;
   position: fixed;
   /* width: calc(100% - 30px);*/
+  width: 100%;
   flex-direction: row;
   z-index: 25;
   /* overflow: hidden;*/
@@ -540,11 +554,12 @@ div.f-row.action *,
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
   white-space: pre-line;
   z-index: 22;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 .tooltip > .tooltip-content {
   padding: 3px 8px;
+  border-radius: inherit;
 }
 
 .tooltip > .tooltip-arrow {

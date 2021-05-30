@@ -13,7 +13,7 @@ const Tooltip: React.FC = () => {
     <div id="tooltip-container" ref={containerRef}>
       <Overlay
         show={show}
-        rootClose
+        // rootClose
         offset={[0, 12]}
         onHide={() => hideTooltip()}
         placement={tooltipData.placement}
