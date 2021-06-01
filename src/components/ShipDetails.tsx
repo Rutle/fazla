@@ -34,10 +34,6 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
     if (!appState[appState.cToggle].isUpdated) {
       dispatch(
         updateSearch(shipData, SearchAction.UpdateList, {
-          name: '',
-          cat: '',
-          param: '',
-          id: '',
           list: appState.cToggle,
         })
       );

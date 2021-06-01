@@ -88,6 +88,8 @@ export default class DataStore {
       isHullMatch = searchPs.hullType.All ? true : searchPs.hullType[ship.hullType];
     } else if (ship.hullType && searchPs.fleet === 'VANGUARD' && fleets.VANGUARD.includes(ship.hullType)) {
       isHullMatch = searchPs.hullType.All ? true : searchPs.hullType[ship.hullType];
+    } else if (ship.hullType && searchPs.fleet === 'SUBMARINE' && fleets.SUBS.includes(ship.hullType)) {
+      isHullMatch = searchPs.hullType.All ? true : searchPs.hullType[ship.hullType];
     }
     if (ship.rarity) {
       isRarityMatch = searchPs.rarity.All ? true : searchPs.rarity[ship.rarity];

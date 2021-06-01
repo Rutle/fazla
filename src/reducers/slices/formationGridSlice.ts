@@ -5,7 +5,7 @@ import { Formation } from '_/types/types';
 import DataStore from '_/utils/dataStore';
 import { batch } from 'react-redux';
 import { setErrorMessage, setIsUpdated } from './appStateSlice';
-import { resetParameters, SearchAction, setFleet, updateSearch } from './searchParametersSlice';
+import { SearchAction, setFleet, updateSearch } from './searchParametersSlice';
 
 export enum FormationAction {
   New = 'NEW',
@@ -20,8 +20,24 @@ export enum FormationAction {
   Switch = 'SWITCH',
 }
 
-export const MAININDEX = [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20];
-export const VANGUARDINDEX = [3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23];
+export const MAININDEX: { [key: number]: number[] } = {
+  2: [0, 1, 2, 6, 7, 8],
+  3: [0, 1, 2, 6, 7, 8],
+  4: [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20],
+  5: [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20],
+};
+export const VANGUARDINDEX: { [key: number]: number[] } = {
+  2: [3, 4, 5, 9, 10, 11],
+  3: [3, 4, 5, 9, 10, 11],
+  4: [3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23],
+  5: [3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23],
+};
+export const SUBMARINE: { [key: number]: number[] } = {
+  2: [12, 13, 14],
+  3: [12, 13, 14],
+  4: [24, 25, 26],
+  5: [24, 25, 26],
+};
 
 interface Formations {
   formations: Formation[];
@@ -31,7 +47,7 @@ interface Formations {
 const initialState: Formations = {
   formations: [],
   selectedIndex: NaN, // Selected formation index
-  isEdit: [], // TODO: Remove this and make save to be performed after each action.
+  isEdit: [],
 };
 
 const formationGridSlice = createSlice({
@@ -153,7 +169,7 @@ const formationGridSlice = createSlice({
         isEdit: state.isEdit.map((value, index) => (index !== fleetIndex ? value : true)),
       };
     },
-    toggleIsEdit(state) {
+    toggleEdit(state) {
       const arrLen = state.isEdit.length;
       const newArr = Array.from({ length: arrLen }, () => false);
       return {
@@ -189,7 +205,7 @@ export const {
   addNewFormationData,
   removeFormation,
   selectFormation,
-  toggleIsEdit,
+  toggleEdit,
   removeShipFromFormation,
   switchPlacements,
 } = formationGridSlice.actions;
@@ -215,7 +231,6 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
 ) => {
   let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
   try {
-    const platform = process.env.PLAT_ENV;
     const { formationGrid, appState } = getState();
     const formIdx = formationGrid.selectedIndex; // Which formation is selected.
     const formCount = formationGrid.formations.length;
@@ -230,9 +245,11 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
     switch (action) {
       case 'NEW':
         if (fType === 'normal') {
-          emptyFormation = Array.from({ length: 12 }, () => 'NONE');
+          // 12 normal ships and 3 submarines
+          emptyFormation = Array.from({ length: 15 }, () => 'NONE');
         } else {
-          emptyFormation = Array.from({ length: 24 }, () => 'NONE');
+          // 24 normal ships and 3 submarines
+          emptyFormation = Array.from({ length: 27 }, () => 'NONE');
         }
         dispatch(addNewFormationData({ data: emptyFormation, name }));
         break;
@@ -246,18 +263,21 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
         dispatch(renameFormation({ idx: formIdx, name }));
         break;
       case 'SAVE':
-        result = await saveFormationData(formationGrid.formations, platform as string, storage);
-        if (result.isOk) dispatch(toggleIsEdit());
+        {
+          const platform = process.env.PLAT_ENV;
+          result = await saveFormationData(formationGrid.formations, platform as string, storage);
+          if (result.isOk) dispatch(toggleEdit());
+        }
         break;
       case 'ADDSHIP':
         // Add ship and reset list.
         if (shipGridIndex !== undefined && !Number.isNaN(shipGridIndex) && shipData) {
           batch(() => {
             dispatch(addShipToFormation({ id, gridIndex: shipGridIndex, selectedIndex: formIdx }));
-            // dispatch(setFleet({ fleet: 'ALL' }));
+            dispatch(setFleet({ fleet: 'ALL' }));
             dispatch(setIsUpdated({ key: list, value: false }));
             // dispatch(resetParameters());
-            dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
+            dispatch(updateSearch(shipData, SearchAction.UpdateList, { list }));
           });
         }
         break;
@@ -271,26 +291,6 @@ export const formationAction = (action: FormationAction, data: FormActionData): 
           dispatch(addNewFormationData({ data: iFormation, name }));
         }
         break;
-      /*
-      case 'SEARCH': // TODO: Does not belong here. Move it.
-        if (!Number.isNaN(shipGridIndex) && shipData && shipGridIndex !== undefined) {
-          let fleet: 'ALL' | 'VANGUARD' | 'MAIN';
-          if (MAININDEX.includes(shipGridIndex)) {
-            fleet = 'MAIN';
-          } else if (VANGUARDINDEX.includes(shipGridIndex)) {
-            fleet = 'VANGUARD';
-          } else {
-            throw new Error('Invalid grid index.');
-          }
-          batch(() => {
-            // dispatch(resetParameters());
-            dispatch(setFleet({ fleet }));
-            dispatch(setIsUpdated({ key: list, value: false }));
-            dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list }));
-          });
-        }
-        break;
-      */
       case 'SWITCH':
         if (data && data.switchData) dispatch(switchPlacements({ data: data.switchData, fleetIndex: formIdx }));
         break;

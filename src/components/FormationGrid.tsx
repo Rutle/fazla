@@ -1,6 +1,12 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
+import {
+  formationAction,
+  FormationAction,
+  MAININDEX,
+  SUBMARINE,
+  VANGUARDINDEX,
+} from '_/reducers/slices/formationGridSlice';
 import { Ship } from '_/types/types';
 import { useDragAndDrop } from './DragAndDrop/useDragAndDrop';
 import FormationGridItem from './FormationGridItem';
@@ -11,25 +17,29 @@ interface FormationGridProps {
   ships: Ship[][];
   openSearchSection: (isOpen: boolean, gridIndex: number) => void;
   selectedGridIndex: number;
+  fleetCount: number;
+  isSubFleet: boolean;
 }
-/*
-  Formations 2:
-  Main:     0-2 | 6-8   |
-  Vanguard: 3-5 | 9-11  |
 
-  Formations 4:
-  Main:     0-2 | 6-8   | 12-14 | 18-20
-  Vanguard: 3-5 | 9-11  | 15-17 | 21-23
-
-*/
-const isValidDropZone = (startKey: string, overKey: string): boolean => {
+/**
+ * Function to check if drop zone is valid.
+ * @param fleetCount Number of fleets
+ * @param main Object containing list of main fleet indexes based on fleetcount.
+ * @param vanguard Object containing list of vanguard fleet indexes based on fleetcount.
+ * @returns true if valid, false otherwise.
+ */
+const isValidDropZone = (
+  fleetCount: number,
+  main: { [key: number]: number[] },
+  vanguard: { [key: number]: number[] },
+  submarine: { [key: number]: number[] }
+) => (startKey: string, overKey: string): boolean => {
   const sKey = Number.parseInt(startKey, 10);
   const oKey = Number.parseInt(overKey, 10);
-  const main = [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20];
-  const vanguard = [3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23];
   if (Number.isNaN(startKey) || Number.isNaN(overKey)) return false;
-  if (main.includes(sKey) && main.includes(oKey)) return true;
-  if (vanguard.includes(sKey) && vanguard.includes(oKey)) return true;
+  if (main[fleetCount].includes(sKey) && main[fleetCount].includes(oKey)) return true;
+  if (vanguard[fleetCount].includes(sKey) && vanguard[fleetCount].includes(oKey)) return true;
+  if (submarine[fleetCount].includes(sKey) && submarine[fleetCount].includes(oKey)) return true;
   return false;
 };
 
@@ -42,10 +52,12 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   ships,
   openSearchSection,
   selectedGridIndex,
+  fleetCount,
+  isSubFleet,
 }) => {
   const { dragFunctions, dragStates, dataTransferArray, startKey } = useDragAndDrop({
     dataKey: 'grid-index',
-    isValidDropZone,
+    isValidDropZone: isValidDropZone(fleetCount, MAININDEX, VANGUARDINDEX, SUBMARINE),
   });
   const dispatch = useDispatch();
   const open = useCallback(
@@ -56,12 +68,6 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   );
 
   useEffect(() => {
-    // Started drag
-    /*
-    if (dragStates.isDragged && !dragStates.isTransferOk) {
-      console.log('startkey', startKey);
-    }
-    */
     // Finished drag and drop.
     if (!dragStates.isDragged && dragStates.isTransferOk) {
       dispatch(formationAction(FormationAction.Switch, { switchData: dataTransferArray }));
@@ -70,14 +76,13 @@ const FormationGrid: React.FC<FormationGridProps> = ({
 
   return (
     <div id="formation-grid" className={`f-grid ${themeColor}`}>
-      <div className="f-row wrap">
+      <div className={`f-row wrap ${isSubFleet && selectedFleetIndex === fleetCount ? 'small-hidden' : ''}`}>
         <div id="main-section" className="f-column">
           <div className="f-title">Main</div>
-          {ships.map((fleet, fleetIdx) => (
+          {ships.slice(0, fleetCount).map((fleet, fleetIdx) => (
             <div
               key={`main-${fleetIdx * fleet.length}`}
               className={`f-row ${selectedFleetIndex === fleetIdx ? '' : 'small-hidden'}`}
-              // style={{ backgroundColor: 'var(--main-dark-bg)' }}
             >
               {fleet.slice(0, 3).map((ship, shipIdx) => (
                 <FormationGridItem
@@ -95,7 +100,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
         </div>
         <div id="vanguard-section" className="f-column">
           <div className="f-title">Vanguard</div>
-          {ships.map((fleet, fleetIdx) => (
+          {ships.slice(0, fleetCount).map((fleet, fleetIdx) => (
             <div
               key={`vanguard-${fleetIdx * fleet.length}`}
               className={`f-row ${selectedFleetIndex === fleetIdx ? '' : 'small-hidden'}`}
@@ -114,6 +119,31 @@ const FormationGrid: React.FC<FormationGridProps> = ({
             </div>
           ))}
         </div>
+      </div>
+      <div className="f-row wrap">
+        {isSubFleet ? (
+          <div id="submarine-section" className={`f-column ${selectedFleetIndex === fleetCount ? '' : 'small-hidden'}`}>
+            <div className="f-title">Submarines</div>
+            {ships.slice(-1).map((fleet) => (
+              <div key={`submarine-${fleetCount * fleet.length}`} className="f-row">
+                {fleet.map((ship, shipIdx) => (
+                  <FormationGridItem
+                    key={`sub-${fleetCount * 6 + shipIdx}`}
+                    index={fleetCount * 6 + shipIdx}
+                    ship={ship}
+                    themeColor={themeColor}
+                    onClick={open(fleetCount * 6 + shipIdx)}
+                    isSelected={selectedGridIndex === fleetCount * 6 + shipIdx}
+                    dragFunctions={dragFunctions}
+                    isSub
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

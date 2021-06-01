@@ -87,11 +87,7 @@ export const removeShip = (shipData: DataStore, id: string, storage?: LocalForag
       if (appState.cToggle === 'OWNED') {
         dispatch(
           updateSearch(shipData, SearchAction.UpdateList, {
-            name: '',
-            cat: '',
-            param: '',
             list: 'OWNED',
-            id: '',
           })
         );
       }

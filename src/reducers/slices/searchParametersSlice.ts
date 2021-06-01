@@ -11,9 +11,8 @@ import { setSearchList } from './shipSearchListSlice';
 export enum SearchAction {
   ToggleParameter = 'TOGGLEPARAMETER',
   ToggleAll = 'TOGGLEALL',
-  SetName = 'SETNAME',
+  SetSearch = 'SETSEARCH',
   UpdateList = 'UPDATE',
-  RemoveShip = 'REMOVE',
 }
 
 const initialState: SearchParams = {
@@ -154,7 +153,7 @@ const searchParametersSlice = createSlice({
     setSearchString(state, action: PayloadAction<string>) {
       return { ...state, name: action.payload, isChanged: true };
     },
-    setFleet(state, action: PayloadAction<{ fleet: 'ALL' | 'VANGUARD' | 'MAIN' }>) {
+    setFleet(state, action: PayloadAction<{ fleet: 'ALL' | 'VANGUARD' | 'MAIN' | 'SUBMARINE' }>) {
       return {
         ...state,
         fleet: action.payload.fleet,
@@ -181,29 +180,29 @@ export const {
  * Set the search results.
  * @param {DataStore} shipData Data structure containg full ship data.
  * @param {SearchAction} action Action to perform.
- * @param args Arguments { name: string, cat: string, param: string }
+ * @param args Arguments { name: string, cat: string, param: string, list: 'OWNED' | 'ALL', id: string }
  */
 export const updateSearch = (
   shipData: DataStore,
   action: SearchAction,
   args: {
-    name: string;
-    cat: string;
-    param: string;
     list: 'OWNED' | 'ALL';
-    id: string;
-  }
+    searchString?: string;
+    cat?: string;
+    param?: string;
+    id?: string;
+  } = { list: 'ALL', searchString: '', cat: '', param: '', id: '' }
 ): AppThunk => async (dispatch: AppDispatch, getState) => {
   try {
     const oldParams = getState().searchParameters;
-    const { name, cat, param, list } = args;
+    const { searchString, cat, param, list } = args;
     switch (action) {
       case 'TOGGLEPARAMETER': {
         let curParamValue = false;
         let curParamList: BooleanSearchParam = {};
-        if (isBooleanObj(oldParams[cat])) {
-          curParamList = oldParams[cat] as BooleanSearchParam;
-          curParamValue = curParamList[param];
+        if (isBooleanObj(oldParams[cat as string])) {
+          curParamList = oldParams[cat as string] as BooleanSearchParam;
+          curParamValue = curParamList[param as string];
         } else {
           dispatch(
             setErrorMessage({
@@ -219,26 +218,19 @@ export const updateSearch = (
           0
         );
         // Check if you are toggling the only true paramater back to false
-        // -> toggle all parameter to true.
+        // result -> toggle all parameter to true.
         if (curParamValue && trueCount === 1) {
-          dispatch(toggleAll(cat));
+          dispatch(toggleAll(cat as string));
         } else {
-          dispatch(toggleParameter({ cat, param }));
+          dispatch(toggleParameter({ cat: cat as string, param: param as string }));
         }
         break;
       }
       case 'TOGGLEALL':
-        dispatch(toggleAll(cat));
+        dispatch(toggleAll(cat as string));
         break;
-      case 'SETNAME':
-        dispatch(setSearchString(name));
-        break;
-      case 'UPDATE':
-        // dispatch(toggleSearchState(list));
-        break;
-      case 'REMOVE':
-        // dispatch(removeShip(id));
-        // dispatch(setIsUpdated({ key: 'OWNED', value: false }));
+      case 'SETSEARCH':
+        dispatch(setSearchString(searchString as string));
         break;
       default:
         break;
@@ -287,7 +279,7 @@ export const updateSearch = (
             dispatch(setListState({ key: 'OWNED', data: { id: 'NONE', index: NaN, isUpdated: true } }));
           }
         }
-        if (action !== 'UPDATE' && action !== 'REMOVE') {
+        if (action !== 'UPDATE') {
           if (list === 'ALL') {
             dispatch(setIsUpdated({ key: 'OWNED', value: false }));
           } else {

@@ -30,7 +30,7 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
   useEffect(() => {
     const { cToggle } = appState;
     if (appState.cState === 'INIT') return;
-    dispatch(updateSearch(shipData, SearchAction.UpdateList, { name: '', cat: '', param: '', id: '', list: cToggle }));
+    dispatch(updateSearch(shipData, SearchAction.UpdateList, { list: cToggle }));
   }, [appState, appState.cToggle, dispatch, shipData]);
 
   const changeList = useCallback(
@@ -55,12 +55,9 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setSearchValue(e.target.value);
                 dispatch(
-                  updateSearch(shipData, SearchAction.SetName, {
-                    name: e.target.value,
-                    cat: '',
-                    param: '',
+                  updateSearch(shipData, SearchAction.SetSearch, {
+                    searchString: e.target.value,
                     list: appState.cToggle,
-                    id: '',
                   })
                 );
               }}
@@ -77,12 +74,8 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
                 onClick={() => {
                   setSearchValue('');
                   dispatch(
-                    updateSearch(shipData, SearchAction.SetName, {
-                      name: '',
-                      cat: '',
-                      param: '',
+                    updateSearch(shipData, SearchAction.SetSearch, {
                       list: appState.cToggle,
-                      id: '',
                     })
                   );
                 }}

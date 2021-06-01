@@ -15,13 +15,14 @@ interface GridItemProps {
   isSelected: boolean;
   dragFunctions?: DragFunctions;
   isDragged?: boolean;
+  isSub?: boolean;
 }
 
 /**
  * Singular component representing a grid item on a formation.
  */
 const FormationGridItem: React.FC<GridItemProps> = React.memo(
-  ({ index, ship, themeColor, onClick, isSelected, dragFunctions, isDragged }) => {
+  ({ index, ship, themeColor, onClick, isSelected, dragFunctions, isDragged, isSub = false }) => {
     const dispatch = useDispatch();
     const getLocation = (idx: number): string => {
       switch (idx) {
@@ -84,7 +85,7 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(
             boxSizing: 'border-box',
           }}
         >
-          {ship ? `${getHullTypeAbb(ship.hullType)} ${ship.names.en}` : `Add ${getLocation(index)}`}
+          {ship ? `${getHullTypeAbb(ship.hullType)} ${ship.names.en}` : `Add ${!isSub ? getLocation(index) : 'ship'}`}
         </span>
       </RButton>
     );

@@ -65,16 +65,15 @@ export type SearchParams = {
   hullType: BooleanSearchParam;
   nationality: BooleanSearchParam;
   rarity: BooleanSearchParam;
-  fleet: 'ALL' | 'VANGUARD' | 'MAIN';
+  fleet: 'ALL' | 'VANGUARD' | 'MAIN' | 'SUBMARINE';
 };
 
 export type Formation = {
-  data: string[]; // array of IDs.
-} & MiscInformation;
-
-interface MiscInformation {
-  name: string; // Name displayed on the dropdown list
-}
+  // Array of Ids
+  data: string[];
+  // Name of the fleet
+  name: string;
+};
 
 export interface VersionInfo {
   ships: {

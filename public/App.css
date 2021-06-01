@@ -22,6 +22,10 @@ body, nav, header {
   display: flex;
 }
 
+form {
+  margin-bottom: 0px;
+}
+
 dt {
   font-weight: bold;
 }
@@ -63,6 +67,7 @@ div.scroll {
     user-select: none;
     cursor: default;
 }
+
 
 /* ##### Titlebar and Footer ##### */
 #titlebar {
@@ -298,12 +303,12 @@ div.scroll {
 }
 
 .normal-fleet {
-  top: 181px;
-  min-height: calc(100% - 206px);
+  top: 182px;
+  min-height: calc(100% - 207px);
 }
 .siren-fleet {
-  top: 245px;
-  min-height: calc(100% - 270px);
+  top: 246px;
+  min-height: calc(100% - 271px);
 }
 
 .search-section-enter {
