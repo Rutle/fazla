@@ -225,86 +225,85 @@ interface FormActionData {
  * @param {FormationAction} action Enum action
  * @param {FormActionData} data Object containing data for different actions
  */
-export const formationAction = (action: FormationAction, data: FormActionData): AppThunk => async (
-  dispatch: AppDispatch,
-  getState
-) => {
-  let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
-  try {
-    const { formationGrid, appState } = getState();
-    const formIdx = formationGrid.selectedIndex; // Which formation is selected.
-    const formCount = formationGrid.formations.length;
-    const { id } = appState[appState.cToggle]; // ID of selected ship when adding ship to a fleet.
-    const list = appState.cToggle;
-    const name = data.formationName || `Formation ${formCount}`;
-    const fType = data.formationType || 'normal';
-    const iFormation = data.importedFormation;
-    const shipGridIndex = data.gridIndex; // Ship selected on the grid of ships.
-    const { storage, shipData } = data;
-    let emptyFormation = [];
-    switch (action) {
-      case 'NEW':
-        if (fType === 'normal') {
-          // 12 normal ships and 3 submarines
-          emptyFormation = Array.from({ length: 15 }, () => 'NONE');
-        } else {
-          // 24 normal ships and 3 submarines
-          emptyFormation = Array.from({ length: 27 }, () => 'NONE');
-        }
-        dispatch(addNewFormationData({ data: emptyFormation, name }));
-        break;
-      case 'REMOVE':
-        batch(() => {
-          dispatch(removeFormation(formIdx));
-          dispatch(formationAction(FormationAction.Save, { storage }));
-        });
-        break;
-      case 'RENAME':
-        dispatch(renameFormation({ idx: formIdx, name }));
-        break;
-      case 'SAVE':
-        {
-          const platform = process.env.PLAT_ENV;
-          result = await saveFormationData(formationGrid.formations, platform as string, storage);
-          if (result.isOk) dispatch(toggleEdit());
-        }
-        break;
-      case 'ADDSHIP':
-        // Add ship and reset list.
-        if (shipGridIndex !== undefined && !Number.isNaN(shipGridIndex) && shipData) {
+export const formationAction =
+  (action: FormationAction, data: FormActionData): AppThunk =>
+  async (dispatch: AppDispatch, getState) => {
+    let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
+    try {
+      const { formationGrid, appState } = getState();
+      const formIdx = formationGrid.selectedIndex; // Which formation is selected.
+      const formCount = formationGrid.formations.length;
+      const { id } = appState[appState.cToggle]; // ID of selected ship when adding ship to a fleet.
+      const list = appState.cToggle;
+      const name = data.formationName || `Formation ${formCount}`;
+      const fType = data.formationType || 'normal';
+      const iFormation = data.importedFormation;
+      const shipGridIndex = data.gridIndex; // Ship selected on the grid of ships.
+      const { storage, shipData } = data;
+      let emptyFormation = [];
+      switch (action) {
+        case 'NEW':
+          if (fType === 'normal') {
+            // 12 normal ships and 3 submarines
+            emptyFormation = Array.from({ length: 15 }, () => 'NONE');
+          } else {
+            // 24 normal ships and 3 submarines
+            emptyFormation = Array.from({ length: 27 }, () => 'NONE');
+          }
+          dispatch(addNewFormationData({ data: emptyFormation, name }));
+          break;
+        case 'REMOVE':
           batch(() => {
-            dispatch(addShipToFormation({ id, gridIndex: shipGridIndex, selectedIndex: formIdx }));
-            dispatch(setFleet({ fleet: 'ALL' }));
-            dispatch(setIsUpdated({ key: list, value: false }));
-            // dispatch(resetParameters());
-            dispatch(updateSearch(shipData, SearchAction.UpdateList, { list }));
+            dispatch(removeFormation(formIdx));
+            dispatch(formationAction(FormationAction.Save, { storage }));
           });
-        }
-        break;
-      case 'REMOVESHIP':
-        if (shipGridIndex) {
-          dispatch(removeShipFromFormation({ gridIndex: shipGridIndex, selectedIndex: formIdx }));
-        }
-        break;
-      case 'IMPORT':
-        if (iFormation) {
-          dispatch(addNewFormationData({ data: iFormation, name }));
-        }
-        break;
-      case 'SWITCH':
-        if (data && data.switchData) dispatch(switchPlacements({ data: data.switchData, fleetIndex: formIdx }));
-        break;
-      default:
-        break;
+          break;
+        case 'RENAME':
+          dispatch(renameFormation({ idx: formIdx, name }));
+          break;
+        case 'SAVE':
+          {
+            const platform = process.env.PLAT_ENV;
+            result = await saveFormationData(formationGrid.formations, platform as string, storage);
+            if (result.isOk) dispatch(toggleEdit());
+          }
+          break;
+        case 'ADDSHIP':
+          // Add ship and reset list.
+          if (shipGridIndex !== undefined && !Number.isNaN(shipGridIndex) && shipData) {
+            batch(() => {
+              dispatch(addShipToFormation({ id, gridIndex: shipGridIndex, selectedIndex: formIdx }));
+              dispatch(setFleet({ fleet: 'ALL' }));
+              dispatch(setIsUpdated({ key: list, value: false }));
+              // dispatch(resetParameters());
+              dispatch(updateSearch(shipData, SearchAction.UpdateList, { list }));
+            });
+          }
+          break;
+        case 'REMOVESHIP':
+          if (shipGridIndex) {
+            dispatch(removeShipFromFormation({ gridIndex: shipGridIndex, selectedIndex: formIdx }));
+          }
+          break;
+        case 'IMPORT':
+          if (iFormation) {
+            dispatch(addNewFormationData({ data: iFormation, name }));
+          }
+          break;
+        case 'SWITCH':
+          if (data && data.switchData) dispatch(switchPlacements({ data: data.switchData, fleetIndex: formIdx }));
+          break;
+        default:
+          break;
+      }
+    } catch (e) {
+      let msg = '';
+      // let msg = 'There was an error with formation action.';
+      if (e instanceof Error) {
+        msg = e.message;
+      }
+      dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: msg, eState: 'WARNING' }));
     }
-  } catch (e) {
-    let msg = '';
-    // let msg = 'There was an error with formation action.';
-    if (e instanceof Error) {
-      msg = e.message;
-    }
-    dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: msg, eState: 'WARNING' }));
-  }
-};
+  };
 
 export default formationGridSlice.reducer;

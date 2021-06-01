@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDropdownToggle } from 'react-overlays';
 import { CaretLeft } from '_/components/Icons';
 
@@ -9,16 +9,14 @@ interface DropDownToggleProps {
 }
 
 const DropDownToggle: React.FC<DropDownToggleProps> = ({ id, text, themeColor }) => {
-  const ctrl = useDropdownToggle();
+  // const ctrl = useDropdownToggle();
+  const [props, { show }] = useDropdownToggle();
   const [isFocusOutline, setFocusOutline] = useState(false);
   return (
     <button
       type="button"
       id={id}
-      {...ctrl[0]}
-      onClick={(e) => {
-        ctrl[1].toggle(ctrl[1].show, e);
-      }}
+      {...props}
       className={`dropdown-toggle tab-btn normal ${themeColor} ${!isFocusOutline ? 'no-focus-outline' : ''}`}
       onKeyUp={(e) => {
         if (e.key === 'Tab') {
@@ -30,7 +28,7 @@ const DropDownToggle: React.FC<DropDownToggleProps> = ({ id, text, themeColor })
       }}
     >
       <span>{text}</span>
-      <div className={`toggle-icon ${ctrl[1].show ? 'open' : ''}`}>
+      <div className={`toggle-icon ${show ? 'open' : ''}`}>
         <CaretLeft themeColor={themeColor} />
       </div>
     </button>

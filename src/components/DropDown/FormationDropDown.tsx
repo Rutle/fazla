@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '_/reducers/rootReducer';
 import { selectFormation } from '_/reducers/slices/formationGridSlice';
@@ -13,7 +13,9 @@ const FormationDropDown: React.FC = () => {
   const selectIndex = (idx: number) => {
     dispatch(selectFormation(idx));
   };
-
+  useEffect(() => {
+    console.log('dropdown button show', show);
+  }, [show]);
   return (
     <DropDownButton
       show={show}

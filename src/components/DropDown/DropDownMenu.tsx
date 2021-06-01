@@ -17,13 +17,14 @@ const DropDownMenu: React.FC<FormationDropDownProps> = ({
   selectIndex,
   onSelect,
 }) => {
-  const { show, props } = useDropdownMenu({
+  const [menuProps, { show }] = useDropdownMenu({
     flip: true,
     offset: [0, 8],
   });
+  console.log(menuProps);
   return (
     <div
-      {...props}
+      {...menuProps}
       role="menu"
       className={`formation-dropdown-menu ${themeColor}`}
       style={{

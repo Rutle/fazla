@@ -27,22 +27,20 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({
   onSelect,
 }) => (
   <Dropdown show={show} onToggle={onToggle} drop={drop} alignEnd={alignEnd} itemSelector="button:not(:disabled)">
-    {({ props }) => (
-      <div {...props} id="formation-dropdown" style={{ display: 'inline-flex' }}>
-        <DropDownToggle
-          id="dropdown-toggle"
-          text={selectedIdx === undefined || listData.length === 0 ? 'Formations' : listData[selectedIdx]}
-          themeColor={themeColor}
-        />
-        <DropDownMenu
-          listData={listData}
-          themeColor={themeColor}
-          selectedIdx={selectedIdx}
-          selectIndex={selectIndex}
-          onSelect={onSelect}
-        />
-      </div>
-    )}
+    <div id="formation-dropdown" /* style={{ display: 'inline-flex' }} */>
+      <DropDownToggle
+        id="dropdown-toggle"
+        text={selectedIdx === undefined || listData.length === 0 ? 'Formations' : listData[selectedIdx]}
+        themeColor={themeColor}
+      />
+      <DropDownMenu
+        listData={listData}
+        themeColor={themeColor}
+        selectedIdx={selectedIdx}
+        selectIndex={selectIndex}
+        onSelect={onSelect}
+      />
+    </div>
   </Dropdown>
 );
 
