@@ -43,14 +43,16 @@ const isArrayJson = (o: unknown): o is string[] => {
 };
 
 // https://stackoverflow.com/a/62438143
-export const safeJsonParse = <T>(guard: (o: unknown) => o is T) => (text: string): T | boolean => {
-  try {
-    const parsed = JSON.parse(text) as T;
-    return guard(parsed) ? parsed : false;
-  } catch (e) {
-    return false;
-  }
-};
+export const safeJsonParse =
+  <T>(guard: (o: unknown) => o is T) =>
+  (text: string): T | boolean => {
+    try {
+      const parsed = JSON.parse(text) as T;
+      return guard(parsed) ? parsed : false;
+    } catch (e) {
+      return false;
+    }
+  };
 
 export const parseImportCode = (codeString: string): string[] | boolean => {
   try {

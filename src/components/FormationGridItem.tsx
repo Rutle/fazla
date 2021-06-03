@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
 import { Ship } from '_/types/types';
 import { hullTypes, hullTypesAbb } from '../data/categories';
-import { DragFunctions } from './DragAndDrop/useDragAndDrop';
+import { UseDragAndDropFunctions } from './DragAndDrop/useDragAndDrop';
 import RButton from './RButton/RButton';
 
 interface GridItemProps {
@@ -13,7 +13,7 @@ interface GridItemProps {
   themeColor: string;
   onClick: () => void;
   isSelected: boolean;
-  dragFunctions?: DragFunctions;
+  dragFunctions?: UseDragAndDropFunctions;
   isDragged?: boolean;
   isSub?: boolean;
 }

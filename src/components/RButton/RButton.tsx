@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DragFunctions } from '../DragAndDrop/useDragAndDrop';
+import { UseDragAndDropFunctions } from '../DragAndDrop/useDragAndDrop';
 
 interface RButtonProps {
   className?: string;
@@ -12,7 +12,7 @@ interface RButtonProps {
   extraStyle?: React.CSSProperties;
   role?: string;
   dragProps?: {
-    dragFunctions?: DragFunctions;
+    dragFunctions?: UseDragAndDropFunctions;
     dragOptions?: { [key in 'draggable']: any };
     data?: { [key: string]: any };
   };

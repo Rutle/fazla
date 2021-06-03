@@ -157,113 +157,111 @@ export const {
  * @param {AppConfig} config Configuration information
  * @param {Formation[]} formations Formations saved/created by the user.
  */
-export const initShipLists = (
-  ownedShips: string[],
-  data: DataStore,
-  config: AppConfig,
-  formations: Formation[]
-  // eslint-disable-next-line @typescript-eslint/require-await
-): AppThunk => async (dispatch: AppDispatch, getState) => {
-  let fullSimple: ShipSimple[] = [];
-  let ownedSearch: ShipSimple[] = [];
-  let searchInitId = 'NONE';
-  let searchInitIndex = 0;
-  let ownedInitId = 'NONE';
-  let ownedInitIndex = 0;
-  const initialConfig = getState().config;
-  try {
-    fullSimple = DataStore.transformShipList(data.getShips());
-    if (ownedSearch !== undefined) {
-      ownedSearch = DataStore.transformStringList(data.getShips(), ownedShips);
+export const initShipLists =
+  (ownedShips: string[], data: DataStore, config: AppConfig, formations: Formation[]): AppThunk =>
+  (dispatch: AppDispatch, getState) => {
+    let fullSimple: ShipSimple[] = [];
+    let ownedSearch: ShipSimple[] = [];
+    let searchInitId = 'NONE';
+    let searchInitIndex = 0;
+    let ownedInitId = 'NONE';
+    let ownedInitIndex = 0;
+    const initialConfig = getState().config;
+    try {
+      fullSimple = DataStore.transformShipList(data.getShips());
+      if (ownedSearch !== undefined) {
+        ownedSearch = DataStore.transformStringList(data.getShips(), ownedShips);
+      }
+      searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
+      searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
+      ownedInitId = ownedSearch.length > 0 ? ownedSearch[0].id : 'NONE';
+      ownedInitIndex = ownedSearch.length > 0 ? ownedSearch[0].index : NaN;
+      batch(() => {
+        dispatch(setSearchList(fullSimple));
+        dispatch(setOwnedSearchList(ownedSearch));
+        dispatch(setOwnedList(ownedShips));
+        dispatch(setListState({ key: 'ALL', data: { id: searchInitId, index: searchInitIndex, isUpdated: true } }));
+        dispatch(setListState({ key: 'OWNED', data: { id: ownedInitId, index: ownedInitIndex, isUpdated: true } }));
+      });
+      if (config !== null) {
+        dispatch(setConfig(config));
+      } else {
+        dispatch(setConfig(initialConfig));
+      }
+      dispatch(setFormationsData(formations));
+      dispatch(setShipCount(fullSimple.length));
+      dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
+    } catch (e) {
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Unable to initialize ship lists.', eState: 'ERROR' }));
     }
-    searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
-    searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
-    ownedInitId = ownedSearch.length > 0 ? ownedSearch[0].id : 'NONE';
-    ownedInitIndex = ownedSearch.length > 0 ? ownedSearch[0].index : NaN;
-    batch(() => {
-      dispatch(setSearchList(fullSimple));
-      dispatch(setOwnedSearchList(ownedSearch));
-      dispatch(setOwnedList(ownedShips));
-      dispatch(setListState({ key: 'ALL', data: { id: searchInitId, index: searchInitIndex, isUpdated: true } }));
-      dispatch(setListState({ key: 'OWNED', data: { id: ownedInitId, index: ownedInitIndex, isUpdated: true } }));
-    });
-    if (config !== null) {
-      dispatch(setConfig(config));
-    } else {
-      dispatch(setConfig(initialConfig));
-    }
-    dispatch(setFormationsData(formations));
-    dispatch(setShipCount(fullSimple.length));
-    dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
-  } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Unable to initialize ship lists.', eState: 'ERROR' }));
-  }
-};
+  };
 
-export const initShipData = (
-  data: DataStore,
-  platform: string,
-  storage?: LocalForage
-  // eslint-disable-next-line @typescript-eslint/require-await
-): AppThunk => async (dispatch: AppDispatch, getState) => {
-  const { cState } = getState().appState;
-  try {
-    let res: ResponseWithData = { isOk: false, msg: '', code: '' };
-    if (cState === 'INIT' && platform === 'electron') {
-      // Check if .json data exists on disk
-      // and download if necessary.
-      res = await checkResource();
-      if (res.code === 'ResNotFound') {
-        dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Downloading' }));
-        res = await downloadShipData(platform);
-        if (!res.isOk) throw new Error(res.msg);
-        dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));
-      }
-    }
-    if (cState === 'INIT' && platform === 'web') {
-      if (!storage) {
-        throw new Error('Storage was not found.');
-      }
-      // Check if data and update date exists in IndexedDB (LocalForage)
-      // and download if necessary.
-      // If it has been 7 days since last update check, check if there is new data.
-      const updateDateCheck = (await storage.getItem('timeOfUpdateCheck')) as number;
-      const days = elapsedSinceUpdate(updateDateCheck);
-      const dataCheck = (await storage.getItem('shipData')) as Ship[];
-      const versionInfo = (await storage.getItem('versionInfo')) as VersionInfo;
-      if (dataCheck === null || versionInfo === null || updateDateCheck === null) {
-        // No data has been set to storage yet. Also no update date has been set.
-        dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Downloading' }));
-        res = await downloadShipData(platform, storage);
-        if (!res.isOk) throw new Error(res.msg);
-        dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));
-      } else if (days >= 7) {
-        // 7 more days since update check. Compare version numbers and update if necessary.
-        const result = await compareVersion(versionInfo);
-        await storage.setItem('timeOfUpdateCheck', Date.now());
-        if (!result.isOk) throw new Error(result.msg);
-        if (result.isUpdReq) {
+export const initShipData =
+  (
+    data: DataStore,
+    platform: string,
+    storage?: LocalForage
+    // eslint-disable-next-line @typescript-eslint/require-await
+  ): AppThunk =>
+  async (dispatch: AppDispatch, getState) => {
+    const { cState } = getState().appState;
+    try {
+      let res: ResponseWithData = { isOk: false, msg: '', code: '' };
+      if (cState === 'INIT' && platform === 'electron') {
+        // Check if .json data exists on disk
+        // and download if necessary.
+        res = await checkResource();
+        if (res.code === 'ResNotFound') {
           dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Downloading' }));
-          res = await downloadShipData(platform, storage);
+          res = await downloadShipData(platform);
           if (!res.isOk) throw new Error(res.msg);
           dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));
         }
       }
+      if (cState === 'INIT' && platform === 'web') {
+        if (!storage) {
+          throw new Error('Storage was not found.');
+        }
+        // Check if data and update date exists in IndexedDB (LocalForage)
+        // and download if necessary.
+        // If it has been 7 days since last update check, check if there is new data.
+        const updateDateCheck = (await storage.getItem('timeOfUpdateCheck')) as number;
+        const days = elapsedSinceUpdate(updateDateCheck);
+        const dataCheck = (await storage.getItem('shipData')) as Ship[];
+        const versionInfo = (await storage.getItem('versionInfo')) as VersionInfo;
+        if (dataCheck === null || versionInfo === null || updateDateCheck === null) {
+          // No data has been set to storage yet. Also no update date has been set.
+          dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Downloading' }));
+          res = await downloadShipData(platform, storage);
+          if (!res.isOk) throw new Error(res.msg);
+          dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));
+        } else if (days >= 7) {
+          // 7 more days since update check. Compare version numbers and update if necessary.
+          const result = await compareVersion(versionInfo);
+          await storage.setItem('timeOfUpdateCheck', Date.now());
+          if (!result.isOk) throw new Error(result.msg);
+          if (result.isUpdReq) {
+            dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Downloading' }));
+            res = await downloadShipData(platform, storage);
+            if (!res.isOk) throw new Error(res.msg);
+            dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));
+          }
+        }
+      }
+      const dataObj = await initData(platform, storage);
+      if (dataObj.code === 'ResNotFound') throw new Error('Was not able to retrieve ship data.');
+      if (dataObj.code === 'JSONParseFail' && platform === 'electron')
+        throw new Error("JSON data form didn't match. Delete ships.json and restart app.");
+      if (dataObj.code === 'InitError') throw new Error("Couldn't initialize application.");
+      await data.setArray(dataObj.shipData);
+      dispatch(initShipLists(dataObj.ownedShips, data, dataObj.config, dataObj.formations));
+      dispatch(setVersionData(dataObj.versionData));
+    } catch (e) {
+      if (e instanceof Error) {
+        dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
+      }
     }
-    const dataObj = await initData(platform, storage);
-    if (dataObj.code === 'ResNotFound') throw new Error('Was not able to retrieve ship data.');
-    if (dataObj.code === 'JSONParseFail' && platform === 'electron')
-      throw new Error("JSON data form didn't match. Delete ships.json and restart app.");
-    if (dataObj.code === 'InitError') throw new Error("Couldn't initialize application.");
-    await data.setArray(dataObj.shipData);
-    dispatch(initShipLists(dataObj.ownedShips, data, dataObj.config, dataObj.formations));
-    dispatch(setVersionData(dataObj.versionData));
-  } catch (e) {
-    if (e instanceof Error) {
-      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
-    }
-  }
-};
+  };
 
 /**
  * Set details of the seleced ship
@@ -272,62 +270,66 @@ export const initShipData = (
  * @param {number} index Index of the ship in the main DataStore array.
  */
 // eslint-disable-next-line @typescript-eslint/require-await
-export const setSelectedShip = (key: 'ALL' | 'OWNED', id: string, index: number): AppThunk => async (
-  dispatch: AppDispatch,
-  getState
-  // eslint-disable-next-line @typescript-eslint/require-await
-) => {
-  const { appState } = getState();
-  try {
-    dispatch(setListState({ key, data: { id, index, isUpdated: appState[key].isUpdated } }));
-  } catch (e) {
-    dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'There was a problem selecting a ship', eState: 'WARNING' }));
-  }
-};
+export const setSelectedShip =
+  (key: 'ALL' | 'OWNED', id: string, index: number): AppThunk =>
+  async (
+    dispatch: AppDispatch,
+    getState
+    // eslint-disable-next-line @typescript-eslint/require-await
+  ) => {
+    const { appState } = getState();
+    try {
+      dispatch(setListState({ key, data: { id, index, isUpdated: appState[key].isUpdated } }));
+    } catch (e) {
+      dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'There was a problem selecting a ship', eState: 'WARNING' }));
+    }
+  };
 
 /**
  * Update the ship data by downloading raw data from github.
  */
-export const updateShipData = (
-  shipData: DataStore,
-  // storage?: LocalForage,
-  addToast?: (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss | undefined) => void
-): AppThunk => async (dispatch: AppDispatch, getState) => {
-  dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Please wait while downloading data.' }));
-  const { config } = getState();
-  const platform = process.env.PLAT_ENV;
-  try {
-    const res = await downloadShipData(platform);
-    if (res.isOk && res.data) {
-      dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating app state.' }));
-      const dataArr = res.data.shipData as Ship[];
-      const versInfo = res.data.versionInfo as VersionInfo;
-      const updateDate = res.updateDate as string;
-      await shipData.setArray(dataArr);
-      const fullSimple = DataStore.transformShipList(dataArr);
-      const searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
-      const searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
-      batch(() => {
-        dispatch(setSearchList(fullSimple));
-        dispatch(
-          setListState({
-            key: 'ALL',
-            data: { id: searchInitId, index: searchInitIndex, isUpdated: false },
-          })
-        );
-        dispatch(setShipCount(dataArr.length));
-        dispatch(setUpdateDate(updateDate));
-        dispatch(setVersionData(versInfo));
-      });
-    } else {
-      throw new Error('There was a problem updating ship data.');
+export const updateShipData =
+  (
+    shipData: DataStore,
+    // storage?: LocalForage,
+    addToast?: (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss | undefined) => void
+  ): AppThunk =>
+  async (dispatch: AppDispatch, getState) => {
+    dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Please wait while downloading data.' }));
+    const { config } = getState();
+    const platform = process.env.PLAT_ENV;
+    try {
+      const res = await downloadShipData(platform);
+      if (res.isOk && res.data) {
+        dispatch(setCurrentState({ cState: 'UPDATING', cMsg: 'Please wait while updating app state.' }));
+        const dataArr = res.data.shipData as Ship[];
+        const versInfo = res.data.versionInfo as VersionInfo;
+        const updateDate = res.updateDate as string;
+        await shipData.setArray(dataArr);
+        const fullSimple = DataStore.transformShipList(dataArr);
+        const searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
+        const searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;
+        batch(() => {
+          dispatch(setSearchList(fullSimple));
+          dispatch(
+            setListState({
+              key: 'ALL',
+              data: { id: searchInitId, index: searchInitIndex, isUpdated: false },
+            })
+          );
+          dispatch(setShipCount(dataArr.length));
+          dispatch(setUpdateDate(updateDate));
+          dispatch(setVersionData(versInfo));
+        });
+      } else {
+        throw new Error('There was a problem updating ship data.');
+      }
+      dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
+      if (config.isToast && addToast) addToast('success', 'Update', 'Update finished succesfully.');
+    } catch (e) {
+      dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'Failed to update ship data.', eState: 'WARNING' }));
+      if (config.isToast && addToast) addToast('warning', 'Update', 'Failed to update ship data.');
     }
-    dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
-    if (config.isToast && addToast) addToast('success', 'Update', 'Update finished succesfully.');
-  } catch (e) {
-    dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'Failed to update ship data.', eState: 'WARNING' }));
-    if (config.isToast && addToast) addToast('warning', 'Update', 'Failed to update ship data.');
-  }
-};
+  };
 
 export default appStateSlice.reducer;

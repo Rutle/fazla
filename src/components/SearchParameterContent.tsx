@@ -18,13 +18,14 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
 
   const updSearch = useCallback(
     (
-      data: DataStore,
-      action: SearchAction,
-      options: { name: string; cat: string; param: string; list: 'ALL' | 'OWNED'; id: string }
+        data: DataStore,
+        action: SearchAction,
+        options: { name: string; cat: string; param: string; list: 'ALL' | 'OWNED'; id: string }
+      ) =>
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      dispatch(updateSearch(data, action, options));
-    },
+      (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        dispatch(updateSearch(data, action, options));
+      },
     [dispatch]
   );
 

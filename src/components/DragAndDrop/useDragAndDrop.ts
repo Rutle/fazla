@@ -1,6 +1,6 @@
 import React, { useReducer, useRef, useState } from 'react';
 
-export interface DragFunctions {
+export interface UseDragAndDropFunctions {
   onDrop: (event: React.DragEvent<HTMLElement>) => void;
   onDragEnd: (event: React.DragEvent<HTMLElement>) => void;
   onDragStart: (event: React.DragEvent<HTMLElement>) => void;
@@ -9,8 +9,8 @@ export interface DragFunctions {
   onDragLeave: (event: React.DragEvent<HTMLElement>) => void;
 }
 
-interface DragAndDrop {
-  dragFunctions: DragFunctions;
+interface UseDragAndDrop {
+  dragFunctions: UseDragAndDropFunctions;
   dragStates: {
     isDragged: boolean;
     isTransferOk: boolean;
@@ -54,7 +54,7 @@ export const useDragAndDrop = ({
     draggedClass: string;
     dragOverInvalidClass: string;
   };
-}): DragAndDrop => {
+}): UseDragAndDrop => {
   const [dragStates, setDragStates] = useState({ isDragged: false, isTransferOk: false });
   const dataTransferArray = useRef<string[]>([]);
   const startKey = useRef('');

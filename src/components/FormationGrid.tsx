@@ -28,20 +28,22 @@ interface FormationGridProps {
  * @param vanguard Object containing list of vanguard fleet indexes based on fleetcount.
  * @returns true if valid, false otherwise.
  */
-const isValidDropZone = (
-  fleetCount: number,
-  main: { [key: number]: number[] },
-  vanguard: { [key: number]: number[] },
-  submarine: { [key: number]: number[] }
-) => (startKey: string, overKey: string): boolean => {
-  const sKey = Number.parseInt(startKey, 10);
-  const oKey = Number.parseInt(overKey, 10);
-  if (Number.isNaN(startKey) || Number.isNaN(overKey)) return false;
-  if (main[fleetCount].includes(sKey) && main[fleetCount].includes(oKey)) return true;
-  if (vanguard[fleetCount].includes(sKey) && vanguard[fleetCount].includes(oKey)) return true;
-  if (submarine[fleetCount].includes(sKey) && submarine[fleetCount].includes(oKey)) return true;
-  return false;
-};
+const isValidDropZone =
+  (
+    fleetCount: number,
+    main: { [key: number]: number[] },
+    vanguard: { [key: number]: number[] },
+    submarine: { [key: number]: number[] }
+  ) =>
+  (startKey: string, overKey: string): boolean => {
+    const sKey = Number.parseInt(startKey, 10);
+    const oKey = Number.parseInt(overKey, 10);
+    if (Number.isNaN(startKey) || Number.isNaN(overKey)) return false;
+    if (main[fleetCount].includes(sKey) && main[fleetCount].includes(oKey)) return true;
+    if (vanguard[fleetCount].includes(sKey) && vanguard[fleetCount].includes(oKey)) return true;
+    if (submarine[fleetCount].includes(sKey) && submarine[fleetCount].includes(oKey)) return true;
+    return false;
+  };
 
 /**
  * Component presenting ships in a grid.

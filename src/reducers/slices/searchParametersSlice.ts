@@ -168,138 +168,134 @@ const searchParametersSlice = createSlice({
   },
 });
 
-export const {
-  resetParameters,
-  toggleParameter,
-  toggleAll,
-  setFleet,
-  setSearchString,
-  setChangeState,
-} = searchParametersSlice.actions;
+export const { resetParameters, toggleParameter, toggleAll, setFleet, setSearchString, setChangeState } =
+  searchParametersSlice.actions;
 /**
  * Set the search results.
  * @param {DataStore} shipData Data structure containg full ship data.
  * @param {SearchAction} action Action to perform.
  * @param args Arguments { name: string, cat: string, param: string, list: 'OWNED' | 'ALL', id: string }
  */
-export const updateSearch = (
-  shipData: DataStore,
-  action: SearchAction,
-  args: {
-    list: 'OWNED' | 'ALL';
-    searchString?: string;
-    cat?: string;
-    param?: string;
-    id?: string;
-  } = { list: 'ALL', searchString: '', cat: '', param: '', id: '' }
-): AppThunk => async (dispatch: AppDispatch, getState) => {
-  try {
-    const oldParams = getState().searchParameters;
-    const { searchString, cat, param, list } = args;
-    switch (action) {
-      case 'TOGGLEPARAMETER': {
-        let curParamValue = false;
-        let curParamList: BooleanSearchParam = {};
-        if (isBooleanObj(oldParams[cat as string])) {
-          curParamList = oldParams[cat as string] as BooleanSearchParam;
-          curParamValue = curParamList[param as string];
-        } else {
-          dispatch(
-            setErrorMessage({
-              cState: 'RUNNING',
-              eMsg: 'Failed to toggle parameter. Problem with parameter object.',
-              eState: 'WARNING',
-            })
+export const updateSearch =
+  (
+    shipData: DataStore,
+    action: SearchAction,
+    args: {
+      list: 'OWNED' | 'ALL';
+      searchString?: string;
+      cat?: string;
+      param?: string;
+      id?: string;
+    } = { list: 'ALL', searchString: '', cat: '', param: '', id: '' }
+  ): AppThunk =>
+  async (dispatch: AppDispatch, getState) => {
+    try {
+      const oldParams = getState().searchParameters;
+      const { searchString, cat, param, list } = args;
+      switch (action) {
+        case 'TOGGLEPARAMETER': {
+          let curParamValue = false;
+          let curParamList: BooleanSearchParam = {};
+          if (isBooleanObj(oldParams[cat as string])) {
+            curParamList = oldParams[cat as string] as BooleanSearchParam;
+            curParamValue = curParamList[param as string];
+          } else {
+            dispatch(
+              setErrorMessage({
+                cState: 'RUNNING',
+                eMsg: 'Failed to toggle parameter. Problem with parameter object.',
+                eState: 'WARNING',
+              })
+            );
+            return;
+          }
+          const trueCount = Object.keys(curParamList).reduce<number>(
+            (a: number, v: string) => (curParamList[v] ? a + 1 : a),
+            0
           );
-          return;
+          // Check if you are toggling the only true paramater back to false
+          // result -> toggle all parameter to true.
+          if (curParamValue && trueCount === 1) {
+            dispatch(toggleAll(cat as string));
+          } else {
+            dispatch(toggleParameter({ cat: cat as string, param: param as string }));
+          }
+          break;
         }
-        const trueCount = Object.keys(curParamList).reduce<number>(
-          (a: number, v: string) => (curParamList[v] ? a + 1 : a),
-          0
-        );
-        // Check if you are toggling the only true paramater back to false
-        // result -> toggle all parameter to true.
-        if (curParamValue && trueCount === 1) {
+        case 'TOGGLEALL':
           dispatch(toggleAll(cat as string));
-        } else {
-          dispatch(toggleParameter({ cat: cat as string, param: param as string }));
-        }
-        break;
-      }
-      case 'TOGGLEALL':
-        dispatch(toggleAll(cat as string));
-        break;
-      case 'SETSEARCH':
-        dispatch(setSearchString(searchString as string));
-        break;
-      default:
-        break;
-    }
-
-    const { searchParameters, ownedShips, appState } = getState();
-    const oldListState = appState[list];
-    if (searchParameters.isChanged || !appState[list].isUpdated) {
-      let allShipsSearch: ShipSimple[] = [];
-      let ownedSearch: ShipSimple[] = [];
-      if (list === 'ALL') {
-        allShipsSearch = await shipData.getShipsByParams(searchParameters);
-      }
-      if (list === 'OWNED') {
-        ownedSearch = DataStore.transformStringList(shipData.getShips(), ownedShips);
-        ownedSearch = await DataStore.reduceByParams(shipData, ownedSearch, searchParameters);
+          break;
+        case 'SETSEARCH':
+          dispatch(setSearchString(searchString as string));
+          break;
+        default:
+          break;
       }
 
-      const aLen = allShipsSearch.length;
-      const oLen = ownedSearch.length;
-      batch(() => {
-        if (appState.cToggle === 'ALL' && list === 'ALL') {
-          // Check if currently selected ship is still in the results and keep it selected.
-          const newShip = allShipsSearch.find((ship) => ship.id === oldListState.id) || allShipsSearch[0];
-          if (aLen !== 0) {
-            dispatch(
-              setListState({
-                key: 'ALL',
-                data: { id: newShip.id, index: newShip.index, isUpdated: true },
-              })
-            );
-          } else {
-            dispatch(setListState({ key: 'ALL', data: { id: 'NONE', index: NaN, isUpdated: true } }));
-          }
-        } else if (appState.cToggle === 'OWNED' && list === 'OWNED') {
-          // Check if currently selected ship is still in the results and keep it selected.
-          const newShip = ownedSearch.find((ship) => ship.id === oldListState.id) || ownedSearch[0];
-          if (oLen !== 0) {
-            dispatch(
-              setListState({
-                key: 'OWNED',
-                data: { id: newShip.id, index: newShip.index, isUpdated: true },
-              })
-            );
-          } else {
-            dispatch(setListState({ key: 'OWNED', data: { id: 'NONE', index: NaN, isUpdated: true } }));
-          }
-        }
-        if (action !== 'UPDATE') {
-          if (list === 'ALL') {
-            dispatch(setIsUpdated({ key: 'OWNED', value: false }));
-          } else {
-            dispatch(setIsUpdated({ key: 'ALL', value: false }));
-          }
-        }
+      const { searchParameters, ownedShips, appState } = getState();
+      const oldListState = appState[list];
+      if (searchParameters.isChanged || !appState[list].isUpdated) {
+        let allShipsSearch: ShipSimple[] = [];
+        let ownedSearch: ShipSimple[] = [];
         if (list === 'ALL') {
-          dispatch(setSearchList(allShipsSearch));
+          allShipsSearch = await shipData.getShipsByParams(searchParameters);
         }
         if (list === 'OWNED') {
-          dispatch(setOwnedSearchList(ownedSearch));
+          ownedSearch = DataStore.transformStringList(shipData.getShips(), ownedShips);
+          ownedSearch = await DataStore.reduceByParams(shipData, ownedSearch, searchParameters);
         }
-      });
-      dispatch(setChangeState(false));
+
+        const aLen = allShipsSearch.length;
+        const oLen = ownedSearch.length;
+        batch(() => {
+          if (appState.cToggle === 'ALL' && list === 'ALL') {
+            // Check if currently selected ship is still in the results and keep it selected.
+            const newShip = allShipsSearch.find((ship) => ship.id === oldListState.id) || allShipsSearch[0];
+            if (aLen !== 0) {
+              dispatch(
+                setListState({
+                  key: 'ALL',
+                  data: { id: newShip.id, index: newShip.index, isUpdated: true },
+                })
+              );
+            } else {
+              dispatch(setListState({ key: 'ALL', data: { id: 'NONE', index: NaN, isUpdated: true } }));
+            }
+          } else if (appState.cToggle === 'OWNED' && list === 'OWNED') {
+            // Check if currently selected ship is still in the results and keep it selected.
+            const newShip = ownedSearch.find((ship) => ship.id === oldListState.id) || ownedSearch[0];
+            if (oLen !== 0) {
+              dispatch(
+                setListState({
+                  key: 'OWNED',
+                  data: { id: newShip.id, index: newShip.index, isUpdated: true },
+                })
+              );
+            } else {
+              dispatch(setListState({ key: 'OWNED', data: { id: 'NONE', index: NaN, isUpdated: true } }));
+            }
+          }
+          if (action !== 'UPDATE') {
+            if (list === 'ALL') {
+              dispatch(setIsUpdated({ key: 'OWNED', value: false }));
+            } else {
+              dispatch(setIsUpdated({ key: 'ALL', value: false }));
+            }
+          }
+          if (list === 'ALL') {
+            dispatch(setSearchList(allShipsSearch));
+          }
+          if (list === 'OWNED') {
+            dispatch(setOwnedSearchList(ownedSearch));
+          }
+        });
+        dispatch(setChangeState(false));
+      }
+    } catch (e) {
+      // if (e instanceof Error) console.log(e.message);
+      dispatch(
+        setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with performing search update.', eState: 'ERROR' })
+      );
     }
-  } catch (e) {
-    // if (e instanceof Error) console.log(e.message);
-    dispatch(
-      setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with performing search update.', eState: 'ERROR' })
-    );
-  }
-};
+  };
 export default searchParametersSlice.reducer;

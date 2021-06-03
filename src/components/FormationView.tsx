@@ -27,7 +27,7 @@ import ShipList from './ShipList';
 import SideBar from './SideBar';
 import ShipDetails from './ShipDetails';
 import useVisibility from './Visibility/useVisibility';
-import { ArrowDegUp, CloseIcon, PlusIcon, QuestionCircleIcon } from './Icons';
+import { ArrowDegUp, BoxArrowUp, CloseIcon, QuestionCircleIcon } from './Icons';
 import TooltipWrapper from './Tooltip/TooltipWrapper';
 
 ReactModal.setAppElement('#root');
@@ -323,7 +323,7 @@ const FormationView: React.FC = () => {
             <div
               id="formation-ship-search"
               ref={refTransition}
-              className={`${fleetCount === 2 ? 'normal-fleet' : 'siren-fleet'}`}
+              className={`${fleetCount === 2 ? 'normal-fleet' : 'siren-fleet'}${isSubFleet ? ' sub-fleet' : ''}`}
             >
               <SideBar refer={refSide}>
                 <ShipList shipSearchList={shipSearchList} listName="ALL" scrollTo={() => scrollTo('ship')} />
@@ -346,9 +346,8 @@ const FormationView: React.FC = () => {
                 <ShipDetails
                   topButtonGroup={
                     <>
-                      <RButton themeColor={config.themeColor} onClick={addShip} className="btn normal icon">
-                        <PlusIcon themeColor={config.themeColor} />
-                        Formation
+                      <RButton themeColor={config.themeColor} onClick={addShip} className="btn normal icon-only">
+                        <BoxArrowUp themeColor={config.themeColor} className="icon" />
                       </RButton>
                     </>
                   }

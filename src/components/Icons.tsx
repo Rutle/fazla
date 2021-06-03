@@ -82,13 +82,15 @@ const CaretLeft: React.FC<{ themeColor: string }> = ({ themeColor }) => {
   );
 };
 
-const ArrowDegUp: React.FC<{ themeColor: string; width?: string; height?: string }> = ({
+const ArrowDegUp: React.FC<{ themeColor: string; width?: string; height?: string; className?: string }> = ({
   themeColor,
   width = '16px',
   height = '16px',
+  className = '',
 }) => {
   return (
     <svg
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
@@ -122,6 +124,34 @@ const PlusIcon: React.FC<{ themeColor: string; width?: string; height?: string; 
       fill={`var(--main-${themeColor}-titlebar-color)`}
     >
       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+    </svg>
+  );
+};
+
+const BoxArrowUp: React.FC<{ themeColor: string; width?: string; height?: string; className?: string }> = ({
+  themeColor,
+  width = '16px',
+  height = '16px',
+  className = 'icon',
+}) => {
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      stroke={`var(--main-${themeColor}-titlebar-color)`}
+      fill={`var(--main-${themeColor}-titlebar-color)`}
+      viewBox="0 0 16 16"
+    >
+      <path
+        fillRule="evenodd"
+        d="M3.5 10a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 0 0 1h2A1.5 1.5 0 0 0 14 9.5v-8A1.5 1.5 0 0 0 12.5 0h-9A1.5 1.5 0 0 0 2 1.5v8A1.5 1.5 0 0 0 3.5 11h2a.5.5 0 0 0 0-1h-2z"
+      />
+      <path
+        fillRule="evenodd"
+        d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3z"
+      />
     </svg>
   );
 };
@@ -171,4 +201,15 @@ const QuestionCircleIcon: React.FC<{ themeColor: string; width?: string; height?
   );
 };
 
-export { MinIcon, MaxIcon, CloseIcon, RestoreIcon, CaretLeft, ArrowDegUp, PlusIcon, DashIcon, QuestionCircleIcon };
+export {
+  MinIcon,
+  MaxIcon,
+  CloseIcon,
+  RestoreIcon,
+  CaretLeft,
+  ArrowDegUp,
+  PlusIcon,
+  DashIcon,
+  QuestionCircleIcon,
+  BoxArrowUp,
+};
