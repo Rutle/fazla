@@ -44,6 +44,10 @@ body, nav, header {
   display: flex;
 }
 
+form {
+  margin-bottom: 0px;
+}
+
 dt {
   font-weight: bold;
 }
@@ -85,6 +89,7 @@ div.scroll {
     user-select: none;
     cursor: default;
 }
+
 
 /* ##### Titlebar and Footer ##### */
 #titlebar {
@@ -320,14 +325,24 @@ div.scroll {
 }
 
 .normal-fleet {
-  top: 181px;
-  min-height: calc(100% - 206px);
+  top: 186px;
+  min-height: calc(100% - 211px);
 }
-.siren-fleet {
+
+.normal-fleet.sub-fleet {
   top: 245px;
   min-height: calc(100% - 270px);
 }
 
+.siren-fleet {
+  top: 250px;
+  min-height: calc(100% - 275px);
+}
+
+.siren-fleet.sub-fleet {
+  top: 309px;
+  min-height: calc(100% - 334px);
+}
 .search-section-enter {
   opacity: 0;
   display: flex!important;
@@ -369,7 +384,7 @@ button:disabled {
 }
 
 button.btn.small {
-  line-height: 1.2;
+  /* line-height: 1.2;*/
   font-size: 14px;
   padding: 0px 5px 2px 5px;
   min-width: 35px;
@@ -421,12 +436,18 @@ button.tab-btn.normal {
   font-variant-caps: all-petite-caps;
   padding: 0px 10px 2px 10px;
   justify-content: center;
-  line-height: 1.2;
+  /* line-height: 1.2;*/
 }
 label.btn.normal.icon,
 button.btn.normal.icon,
 button.tab-btn.normal.icon {
   padding: 0px 10px 2px 5px;
+}
+
+label.btn.normal.icon-only,
+button.btn.normal.icon-only,
+button.tab-btn.normal.icon-only {
+  padding: 0px 5px 0px 5px;
 }
 
 /* ###### top-container + tab ##### */
@@ -551,7 +572,7 @@ div.f-row.action *,
 .formation-dropdown-menu {
   display: flex;
   position: absolute;
-  z-index: 15;
+  z-index: 30;
   flex-direction: column;
   transition: opacity 0.3s linear;
   -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
@@ -720,6 +741,10 @@ div.f-row.action *,
   height: 29px;
   width: 100%;
   border-left: 1px solid transparent;
+}
+
+.shiplist-item-menu {
+  
 }
 
 .button-group {
