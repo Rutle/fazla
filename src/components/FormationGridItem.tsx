@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
 import { Ship } from '_/types/types';
-import { hullTypes, hullTypesAbb } from '../data/categories';
+import { hullTypes } from '../data/categories';
 import { UseDragAndDropFunctions } from './DragAndDrop/useDragAndDrop';
 import RButton from './RButton/RButton';
 
@@ -54,11 +54,6 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(
       [dispatch, index]
     );
 
-    const getHullTypeAbb = (hullType: string | undefined) => {
-      if (!hullType) return '-';
-      return hullTypesAbb[hullTypes[hullType]];
-    };
-
     const getHullType = (shipItem: Ship | undefined) => {
       if (shipItem && shipItem.hullType) return hullTypes[shipItem.hullType];
       return '';
@@ -81,11 +76,10 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(
             width: '100%',
             height: '100%',
             display: 'inline-block',
-            background: 'inherit',
             boxSizing: 'border-box',
           }}
         >
-          {ship ? `${getHullTypeAbb(ship.hullType)} ${ship.names.en}` : `Add ${!isSub ? getLocation(index) : 'ship'}`}
+          {ship ? `${ship.names.en}` : `Add ${!isSub ? getLocation(index) : 'ship'}`}
         </span>
       </RButton>
     );

@@ -140,7 +140,7 @@ div.scroll {
   display: flex;
   height: 100%;
   align-items: center;
-  padding: 2px 16px 2px 16px;
+  padding: 0px 16px 0px 16px;
 }
 
 #window-controls.electron {
@@ -292,6 +292,11 @@ div.scroll {
   width: 20%;
 }
 
+#formation-grid {
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--main-dark-border);
+}
+
 #formation-ship-search {
   display: none;
   position: fixed;
@@ -303,23 +308,23 @@ div.scroll {
 }
 
 .normal-fleet {
-  top: 186px;
-  min-height: calc(100% - 211px);
+  top: 187px;
+  min-height: calc(100% - 212px);
 }
 
 .normal-fleet.sub-fleet {
-  top: 245px;
-  min-height: calc(100% - 270px);
+  top: 246px;
+  min-height: calc(100% - 271px);
 }
 
 .siren-fleet {
-  top: 250px;
-  min-height: calc(100% - 275px);
+  top: 251px;
+  min-height: calc(100% - 276px);
 }
 
 .siren-fleet.sub-fleet {
-  top: 309px;
-  min-height: calc(100% - 334px);
+  top: 310px;
+  min-height: calc(100% - 335px);
 }
 .search-section-enter {
   opacity: 0;
@@ -328,6 +333,7 @@ div.scroll {
 .search-section-enter-active {
   display: flex!important;
   opacity: 1;
+  -webkit-transition: opacity 300ms;
   transition: opacity 300ms;
 }
 .search-section-enter-done {
@@ -341,6 +347,7 @@ div.scroll {
 .search-section-exit-active {
   display: flex!important;
   opacity: 0;
+  -webkit-transition: opacity 300ms;
   transition: opacity 300ms;
 }
 .search-section-exit-done {
@@ -362,7 +369,6 @@ button:disabled {
 }
 
 button.btn.small {
-  /* line-height: 1.2;*/
   font-size: 14px;
   padding: 0px 5px 2px 5px;
   min-width: 35px;
@@ -379,6 +385,8 @@ button.btn,
 button.btn * {
   cursor: pointer;
   box-sizing: border-box;
+  -webkit-transition: background-color 0.2s ease-in, color 0.2s ease-in;
+  transition: background-color 0.2s ease-in, color 0.2s ease-in;
 }
 
 label.btn,
@@ -395,8 +403,8 @@ button.btn.grid-item {
   padding: 3px 5px;
   white-space: nowrap;
   font-size: 15px;
-  border: 0;
   background: unset;
+  overflow: hidden;
 }
 
 button.btn.slide {
@@ -414,8 +422,8 @@ button.tab-btn.normal {
   font-variant-caps: all-petite-caps;
   padding: 0px 10px 2px 10px;
   justify-content: center;
-  /* line-height: 1.2;*/
 }
+
 label.btn.normal.icon,
 button.btn.normal.icon,
 button.tab-btn.normal.icon {
@@ -452,6 +460,8 @@ button.tab-btn.normal.icon-only {
   flex-direction: row;
   justify-content: center;
   margin-bottom: 5px;
+  box-sizing: border-box;
+
 }
 
 .tab > button.tab-btn {
@@ -462,8 +472,7 @@ button.tab-btn.normal.icon-only {
 .tab > div.help {
   align-self: center;
   display: inline-block;
-  line-height: 1.2;
-  padding: 0px 2px 0px 2px;
+  padding: 0px 5px 0px 5px;
 }
 .tab > div.help > .icon {
   vertical-align: middle;
@@ -521,6 +530,7 @@ div.f-row.action *,
   padding-top: 1px;
   margin-left: 10px;
   align-self: center;
+  -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
@@ -552,6 +562,7 @@ div.f-row.action *,
   position: absolute;
   z-index: 30;
   flex-direction: column;
+  -webkit-transition: opacity 0.3s linear;
   transition: opacity 0.3s linear;
   -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
   -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
@@ -721,10 +732,6 @@ div.f-row.action *,
   border-left: 1px solid transparent;
 }
 
-.shiplist-item-menu {
-  
-}
-
 .button-group {
   display: flex;
   flex-direction: row;
@@ -754,10 +761,6 @@ div.f-row.action *,
 .button-group button:last-child {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-}
-
-.borderless {
-  border: unset!important;
 }
 
 .radio-group {
@@ -791,7 +794,6 @@ input[type="url"] {
   border-radius: 4px;
   font-size: 14px;
   min-width: 0;
-  text-overflow: ellipsis;
 }
 
 #input-group {
@@ -799,10 +801,12 @@ input[type="url"] {
   box-sizing: border-box;
   border-radius: 4px;
   height: 35px;
+  -webkit-transition: background-color .2s ease-in, width 0.2s ease-in, color .2s ease-in;
   transition: background-color .2s ease-in, width 0.2s ease-in, color .2s ease-in;
 }
 
 .url-input {
+  -webkit-transition: box-shadow .2s ease-in, border .2s ease-in, background-color .2s ease-in, width 0.2s ease-in, color .2s ease-in;
   transition: box-shadow .2s ease-in, border .2s ease-in, background-color .2s ease-in, width 0.2s ease-in, color .2s ease-in;
 }
 
@@ -839,16 +843,18 @@ div.f-row.wrap {
   flex-wrap: wrap;
 }
 
-
 div.f-grid div.f-collapsible {
   display: flex;
   flex-direction: column;
-  transition: flex 0.3s ease-out;
+  -webkit-transition: max-height 0.3s ease-out;
+  transition: max-height 0.3s ease-out;
   margin-bottom: 5px;
+  max-height: fit-content; /* calculate max height (React) */
 }
 
 div.f-grid div.f-collapsible.f-collapsed {
-  display: none;
+  max-height: 0px;
+  overflow: hidden;
 }
 
 div.f-column {
@@ -861,17 +867,16 @@ div.f-column {
 
 /* ##### GRID-ITEM ##### */
 .grid-item {
-  display: flex;
   flex: 1;
-  flex-direction: column;
   height: inherit;
-  border-radius: 4px;
   min-width: 0;
-  overflow: hidden;
+  /* overflow: hidden;*/
   margin-right: 1px;
 }
 
 div.f-grid div.grid-item.toggle {
+  display: flex;
+  flex-direction: column;
   flex-basis: auto;
 }
 
@@ -917,25 +922,6 @@ div.f-grid div.f-title {
   font-size: 14px;
   padding: 2px 12px;
   margin-bottom: 2px;
-  border-left: 0px!important;
-  border-right: 0px!important;
-  justify-content: center;
-}
-div.f-grid div.f-icon.plain,
-div.f-grid div.f-title.plain {
-  background-color: unset!important;
-  border: 0!important;
-  justify-content: unset!important;
-}
-
-div.f-grid div.f-fleet {
-  display: flex;
-  flex-basis: auto;
-  font-size: 14px;
-  padding: 3px 12px;
-  margin-bottom: 2px;
-  border-left: 0px!important;
-  border-right: 0px!important;
   justify-content: center;
 }
 
@@ -946,15 +932,20 @@ div.f-grid div.f-icon {
   border-right: 0px!important;
   padding: 3px 12px;
   margin-bottom: 2px;
-  transition: 0.3s;
-}
-div.f-row.action div.f-icon {
-  cursor: pointer;
-  transform: rotate(270deg);
+
   
 }
-div.f-grid div.f-icon.open {
+div.f-row.action div.f-icon > svg {
+  cursor: pointer;
+  transform: rotate(270deg);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  
+}
+div.f-grid div.f-icon.open > svg{
   transform: rotate(180deg);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 div.f-grid div.f-title.bottom-emp {

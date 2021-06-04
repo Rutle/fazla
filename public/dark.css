@@ -191,17 +191,13 @@ div.page.dark #side-scroll {
 
 /* #### Tab #### */
 div.page.dark .tab {
-  /* overflow: hidden;*/
   border: 1px solid var(--main-dark-border);
   border-left: 0px;
   border-right: 0px;
   background-color: var(--main-dark-bg);
-  box-sizing: border-box;
 }
 
 nav.tab.dark {
-  box-sizing: border-box;
-  /* justify-content: space-between;*/
   border-bottom: 1px solid var(--main-dark-border);
 }
 
@@ -411,10 +407,10 @@ div.f-grid.dark div.f-header {
   border-bottom: 2px solid var(--main-dark-border);
 }
 div.f-grid.dark div.f-title,
-div.f-grid.dark div.f-fleet,
 div.f-grid.dark div.f-icon {
   background-color: var(--main-dark-bg);
-  border: 1px solid var(--main-dark-border);
+  border-bottom: 1px solid var(--main-dark-border);
+  border-top: 1px solid var(--main-dark-border);
 }
 
 /* #### hull types #### */

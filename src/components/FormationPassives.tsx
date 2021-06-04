@@ -44,10 +44,10 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
               setShowMain(!showMain);
             }}
           >
-            <div className={`f-icon plain ${showMain ? '' : 'open'}`}>
+            <div className={`f-icon ${showMain ? '' : 'open'}`}>
               <CaretLeft themeColor={themeColor} />
             </div>
-            <div className="f-title plain">Main</div>
+            <div className="f-title">Main</div>
           </div>
           <div className={`f-collapsible ${showMain ? '' : 'f-collapsed'}`}>
             <div className="f-row">
@@ -65,10 +65,10 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
       {!isShip('vanguard') ? (
         <>
           <div className="f-row action" onClick={() => setShowVanguard(!showVanguard)}>
-            <div className={`f-icon plain ${showVanguard ? '' : 'open'}`}>
+            <div className={`f-icon ${showVanguard ? '' : 'open'}`}>
               <CaretLeft themeColor={themeColor} />
             </div>
-            <div className="f-title plain">Vanguard</div>
+            <div className="f-title">Vanguard</div>
           </div>
           <div className={`f-collapsible ${showVanguard ? '' : 'f-collapsed'}`}>
             <div className="f-row">

@@ -251,22 +251,16 @@ const FormationView: React.FC = () => {
             </div>
             {fData.formations.length !== 0 ? (
               <>
-                <div
-                  style={{
-                    marginBottom: '15px',
-                    borderBottom: `1px solid var(--main-${config.themeColor}-border)`,
-                  }}
-                >
-                  <FormationGrid
-                    themeColor={config.themeColor}
-                    selectedFleetIndex={fleetTabIndex}
-                    ships={formationData}
-                    openSearchSection={showSearchSection}
-                    selectedGridIndex={selectedGrid}
-                    fleetCount={fleetCount}
-                    isSubFleet={isSubFleet}
-                  />
-                </div>
+                <FormationGrid
+                  themeColor={config.themeColor}
+                  selectedFleetIndex={fleetTabIndex}
+                  ships={formationData}
+                  openSearchSection={showSearchSection}
+                  selectedGridIndex={selectedGrid}
+                  fleetCount={fleetCount}
+                  isSubFleet={isSubFleet}
+                />
+
                 <div id="fleet-selector" className="tab">
                   {formationData.map((fleet, idx) => {
                     return (

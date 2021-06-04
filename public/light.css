@@ -153,16 +153,11 @@ div.page.light .tab {
   box-sizing: border-box;
 }
 
-nav.tab.light {
-  box-sizing: border-box;
-}
-
 nav.tab.light > a {
   color: white;
 }
 
 nav.tab.light > a.active {
-  height: 40px!important;
   color: var(--main-light-color);
   background-color: var(--root-light-bg)!important;
 }
@@ -345,13 +340,10 @@ div.f-grid.light div.f-header {
 }
 div.f-grid.light div.f-title {
   background-color: var(--main-light-bg);
-  border: 1px solid var(--main-light-border);
+  border-bottom: 1px solid var(--main-light-border);
+  border-top: 1px solid var(--main-light-border);
 }
 
-div.f-grid.light div.f-fleet {
-  background-color: var(--main-light-bg);
-  border: 1px solid var(--main-light-border);
-}
 div.f-grid.light div.f-icon {
   background-color: var(--main-light-bg);
   border: 1px solid var(--main-light-border);

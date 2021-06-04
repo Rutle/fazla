@@ -76,6 +76,7 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
                   dispatch(
                     updateSearch(shipData, SearchAction.SetSearch, {
                       list: appState.cToggle,
+                      searchString: '',
                     })
                   );
                 }}
