@@ -43,11 +43,7 @@ const ShipDetailView: React.FC = () => {
               <ShipList shipSearchList={shipSearchList} listName="ALL" scrollTo={() => scrollTo('ship')} />
               <ShipList shipSearchList={ownedSearchList} listName="OWNED" scrollTo={() => scrollTo('ship')} />
             </SideBar>
-            <div
-              id="side-scroll"
-              className={`button-group ${config.themeColor}${isVisible ? ' small-hidden' : ''}`}
-              style={{ width: 'unset' }}
-            >
+            <div id="side-scroll" className={`button-group ${config.themeColor}${isVisible ? ' small-hidden' : ''}`}>
               <RButton themeColor={config.themeColor} className="btn slide" onClick={() => scrollTo('top')}>
                 <ArrowDegUp themeColor={config.themeColor} />
               </RButton>

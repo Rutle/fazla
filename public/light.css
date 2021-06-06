@@ -168,7 +168,8 @@ nav.tab.light > a:hover {
 
 /* Tooltip */
 .tooltip.light {
-  border: 1px solid var(--main-light-border);
+  /* border: 1px solid var(--main-light-border); */
+  border-bottom: 2px solid var(--main-light-border);
 }
 
 .tooltip.light > .tooltip-content {
@@ -180,22 +181,6 @@ nav.tab.light > a:hover {
   background-color: var(--root-light-bg);
 }
 
-.tooltip.light > .tooltip-arrow.bottom::before {
-  border-left: 1px solid var(--main-light-border);
-  border-top: 1px solid var(--main-light-border);
-}
-.tooltip.light > .tooltip-arrow.left::before {
-  border-top: 1px solid var(--main-light-border);
-  border-right: 1px solid var(--main-light-border);
-}
-.tooltip.light > .tooltip-arrow.right::before {
-  border-left: 1px solid var(--main-light-border);
-  border-bottom: 1px solid var(--main-light-border);
-}
-.tooltip.light > .tooltip-arrow.top::before {
-  border-bottom: 1px solid var(--main-light-border);
-  border-right: 1px solid var(--main-light-border);
-}
 /* ###### Buttons ###### */
 label.light,
 button.light {
@@ -258,6 +243,9 @@ button.tab-btn.light.selected {
   border-bottom: 1px solid var(--main-light-bg)!important;
 }
 
+.light #formation-grid {
+  border-bottom: 1px solid var(--main-light-border);
+}
 /* #### Popover #### */
 .popover-container.light {
   background-color: var(--root-light-bg);
@@ -326,7 +314,7 @@ input[type="url"].light.is-invalid,
 }
 
 .grid-item.light.drag-over {
-  border: 2px dotted var(--main-light-border)!important;
+  border: 2px dotted!important;
   border-radius: 4px!important;
 }
 

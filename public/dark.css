@@ -12,7 +12,7 @@
   --main-dark-button-bottom-bg: #1b2127;
   --main-dark-selected-bottom-bg: #2a2e35;
   --main-dark-active-bg: #40556b;
-  --main-dark-tooltip-bg: #1b1d24;
+  --main-dark-tooltip-bg: #2a2c31;
   --main-dark-tooltip-border: #3f4657;
   --main-dark-item-bg: #21252f;
   --main-dark-footer-titlebar-bg: #202023;
@@ -229,34 +229,18 @@ nav.tab.dark > a:hover {
 
 /* Tooltip */
 .tooltip.dark {
-  border: 1px solid var(--main-dark-tooltip-border);
+  border-bottom: 2px solid var(--main-dark-tooltip-border);
 }
 
 .tooltip.dark > .tooltip-content {
-  background-color: var(--root-dark-bg);
+  background-color: var(--main-dark-tooltip-bg);
   color: var(--main-dark-color);
 }
 
 .tooltip-arrow::before {
-  background-color: var(--root-dark-bg);
+  background-color: var(--main-dark-tooltip-bg);
 }
 
-.tooltip.dark > .tooltip-arrow.bottom::before {
-  border-left: 1px solid var(--main-dark-tooltip-border);
-  border-top: 1px solid var(--main-dark-tooltip-border);
-}
-.tooltip.dark > .tooltip-arrow.left::before {
-  border-top: 1px solid var(--main-dark-tooltip-border);
-  border-right: 1px solid var(--main-dark-tooltip-border);
-}
-.tooltip.dark > .tooltip-arrow.right::before {
-  border-left: 1px solid var(--main-dark-tooltip-border);
-  border-bottom: 1px solid var(--main-dark-tooltip-border);
-}
-.tooltip.dark > .tooltip-arrow.top::before {
-  border-bottom: 1px solid var(--main-dark-tooltip-border);
-  border-right: 1px solid var(--main-dark-tooltip-border);
-}
 /* ###### Buttons ###### */
 label.dark,
 button.dark {
@@ -269,7 +253,6 @@ button.dark {
 .btn.dark:hover,
 button.btn.grid-item.dark:hover,
 button.rList-item.dark.btn:hover {
-  /* background-color: var(--main-dark-hover-bg);*/
   /* TODO: Check colors with electron for window controls */
   background-color: #3c4652;
   color: var(--main-dark-hover-color);
@@ -317,6 +300,9 @@ button.tab-btn.dark.selected {
 
 .formation-dropdown-menu.dark .btn.menu-item:last-child {
   border-bottom: 1px solid var(--main-dark-bg)!important;
+}
+.dark #formation-grid {
+  border-bottom: 1px solid var(--main-dark-border);
 }
 
 /* #### Popover #### */

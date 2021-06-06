@@ -157,6 +157,7 @@ const searchParametersSlice = createSlice({
       return {
         ...state,
         fleet: action.payload.fleet,
+        isChanged: true,
       };
     },
     setChangeState(state, action: PayloadAction<boolean>) {

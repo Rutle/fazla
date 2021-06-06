@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactModal from 'react-modal';
 import { AppContext } from '_/App';
@@ -53,32 +53,42 @@ const FormationView: React.FC = () => {
   const [fleetCount, setFleetCount] = useState(0);
   const [isSubFleet, setIsSubFleet] = useState(false);
 
-  const scrollTo = (loc: string) => {
-    if (loc === 'top' && refSide && refSide.current) {
-      refSide.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
-    }
-    if (loc === 'ship' && refData && refData.current) {
-      refData.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
-    }
-  };
+  const scrollTo = useCallback(
+    (loc: string) => {
+      if (loc === 'top' && refSide && refSide.current) {
+        refSide.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+      }
+      if (loc === 'ship' && refData && refData.current) {
+        refData.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+      }
+    },
+    [refSide]
+  );
 
-  const hideSearchSection = (isOpen: boolean) => {
-    setShowSearch(isOpen);
-    setSelectedGrid(NaN);
-    dispatch(setFleet({ fleet: 'ALL' }));
-  };
+  const hideSearchSection = useCallback(
+    (isOpen: boolean) => {
+      setShowSearch(isOpen);
+      setSelectedGrid(NaN);
+      dispatch(setFleet({ fleet: 'ALL' })); // Changed to trigger is changed. TODO: Check where setIsUpdated is necessary.
+      // dispatch(setIsUpdated({ key: appState.cToggle, value: false }));
+      dispatch(
+        updateSearch(shipData, SearchAction.UpdateList, {
+          list: appState.cToggle,
+        })
+      );
+    },
+    [appState.cToggle, dispatch, shipData]
+  );
 
   useEffect(() => {
     setFleetTabIndex(0);
     hideSearchSection(false);
     setSelectedGrid(NaN);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fData.selectedIndex]);
+  }, [fData.selectedIndex, hideSearchSection]);
 
   useEffect(() => {
     if (showSearch) scrollTo('top');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showSearch]);
+  }, [scrollTo, showSearch]);
 
   // Update currently selected formation data.
   useEffect(() => {
@@ -290,6 +300,7 @@ const FormationView: React.FC = () => {
                           key={`${'passive'}-${idx * formationData.length}`}
                           fleet={fleet}
                           themeColor={config.themeColor}
+                          isSelected={fleetTabIndex === idx}
                         />
                       </div>
                     );

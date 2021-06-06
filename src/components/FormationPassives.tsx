@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import useResizeObserver from 'use-resize-observer';
 import { Ship } from '../types/types';
 import PassivesList from './PassivesList';
 import { CaretLeft } from './Icons';
@@ -8,14 +10,112 @@ import { CaretLeft } from './Icons';
 interface FormationPassivesProps {
   fleet: Ship[];
   themeColor: string;
+  isSelected: boolean;
 }
 
 /**
  * Component for displaying passives of ships in a formation.
  */
-const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet }) => {
+const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet, isSelected }) => {
   const [showMain, setShowMain] = useState(true);
   const [showVanguard, setShowVanguard] = useState(true);
+  const [isOpen, setIsOpen] = useState({ main: true, vanguard: true });
+  const refMain = useRef<HTMLDivElement>(null);
+  const refVanguard = useRef<HTMLDivElement>(null);
+
+  const mainSize = useResizeObserver<HTMLDivElement>({ ref: refMain });
+  const vanguardSize = useResizeObserver<HTMLDivElement>({ ref: refVanguard });
+  const [newHeight, setNewHeight] = useState<{ mainHeight: number | undefined; vanguardHeight: number | undefined }>({
+    mainHeight: undefined,
+    vanguardHeight: undefined,
+  });
+
+  /*
+  const measuredRef = useCallback((node: HTMLDivElement) => {
+    if (node) {
+      setHeight(node.getBoundingClientRect().height);
+    }
+  }, []);
+  */
+  /*
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      console.log(entries);
+    });
+    resizeObserver.observe(document.getElementById('test'));
+    return (): void => {
+      resizeObserver.unobserve(document.getElementById('test'));
+    };
+  }, []);
+  */
+  useEffect(() => {
+    if (refMain && refMain.current && mainSize.height !== undefined) {
+      if (showMain && mainSize.height > 0) {
+        setNewHeight({ ...newHeight, mainHeight: mainSize.height });
+      } else if (showMain && mainSize.height === 0) {
+        // We have clicked to expand a section with 'showMain' and it's still currently at height === 0.
+        // We calculate the height of the current children, add a bit extra and set the new height. We
+        // then finally let it open.
+        const tempHeight = Array.from(refMain.current.children).reduce<number>(
+          (a, c) => a + c.getBoundingClientRect().height,
+          0
+        );
+        setNewHeight({ ...newHeight, mainHeight: tempHeight + 100 });
+        setIsOpen({ ...isOpen, main: true });
+      } else if (!showMain && mainSize.height === 0) {
+        // We have clicked to collapse a section. The height is 0 and so we can set it as not being open.
+        setIsOpen({ ...isOpen, main: false });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showMain]);
+
+  useEffect(() => {
+    if (refVanguard && refVanguard.current && vanguardSize.height !== undefined) {
+      if (showVanguard && vanguardSize.height > 0) {
+        setNewHeight({ ...newHeight, vanguardHeight: vanguardSize.height });
+      } else if (showVanguard && vanguardSize.height === 0) {
+        // We have clicked to expand a section with 'showMain' and it's still currently at height === 0.
+        // We calculate the height of the current children, add a bit extra and set the new height. We
+        // then finally let it open.
+        const tempHeight = Array.from(refVanguard.current.children).reduce<number>(
+          (a, c) => a + c.getBoundingClientRect().height,
+          0
+        );
+        setNewHeight({ ...newHeight, vanguardHeight: tempHeight + 100 });
+        setIsOpen({ ...isOpen, vanguard: true });
+      } else if (!showVanguard && vanguardSize.height === 0) {
+        // We have clicked to collapse a section. The height is 0 and so we can set it as not being open.
+        setIsOpen({ ...isOpen, vanguard: false });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showVanguard]);
+
+  useEffect(() => {
+    const curRefMain = refMain.current;
+    const curRefVanguard = refVanguard.current;
+    if (
+      curRefMain &&
+      curRefVanguard &&
+      !mainSize.height &&
+      !vanguardSize.height &&
+      !newHeight.mainHeight &&
+      !newHeight.vanguardHeight &&
+      isSelected
+    ) {
+      const tempMainHeight = Array.from(curRefMain.children).reduce<number>(
+        (a, c) => a + c.getBoundingClientRect().height,
+        0
+      );
+      const tempVanguardHeight = Array.from(curRefVanguard.children).reduce<number>(
+        (a, c) => a + c.getBoundingClientRect().height,
+        0
+      );
+      setNewHeight({ vanguardHeight: tempVanguardHeight + 100, mainHeight: tempMainHeight + 100 });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSelected]);
 
   const isShip = (position: string) => {
     if (position === 'main') {
@@ -39,7 +139,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
       {!isShip('main') ? (
         <>
           <div
-            className="f-row action"
+            className="f-row action no-focus-outline"
             onClick={() => {
               setShowMain(!showMain);
             }}
@@ -49,7 +149,11 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
             </div>
             <div className="f-title">Main</div>
           </div>
-          <div className={`f-collapsible ${showMain ? '' : 'f-collapsed'}`}>
+          <div
+            ref={refMain}
+            className={`f-collapsible${showMain ? '' : ' f-collapsed'}`}
+            style={isOpen.main ? { maxHeight: newHeight.mainHeight } : { maxHeight: 0 }}
+          >
             <div className="f-row">
               <div className="name f-header">Ship</div>
               <div className="passive f-header">Passive</div>
@@ -70,7 +174,11 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
             </div>
             <div className="f-title">Vanguard</div>
           </div>
-          <div className={`f-collapsible ${showVanguard ? '' : 'f-collapsed'}`}>
+          <div
+            ref={refVanguard}
+            className={`f-collapsible ${showVanguard ? '' : 'f-collapsed'}`}
+            style={isOpen.vanguard ? { maxHeight: newHeight.vanguardHeight } : { maxHeight: 0 }}
+          >
             <div className="f-row">
               <div className="name f-header">Name</div>
               <div className="passive f-header">Passive</div>
