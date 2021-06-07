@@ -253,6 +253,10 @@ div.scroll {
   line-height: 1.5;
 }
 
+.dragged {
+  position: relative!important;
+}
+
 /* ###### Modal ###### */
 .modal-container > div.modal-title {
   display: flex;
@@ -316,7 +320,6 @@ div.scroll {
 
 #formation-grid {
   margin-bottom: 15px;
-  border-bottom: 1px solid var(--main-dark-border);
 }
 
 #formation-ship-search {
@@ -407,8 +410,8 @@ button.btn,
 button.btn * {
   cursor: pointer;
   box-sizing: border-box;
-  -webkit-transition: background-color 0.2s ease-in, color 0.2s ease-in;
-  transition: background-color 0.2s ease-in, color 0.2s ease-in;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 label.btn,
@@ -608,7 +611,6 @@ div.f-row.action *,
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
   white-space: pre-line;
   z-index: 22;
-  border-radius: 4px;
 }
 
 .tooltip > .tooltip-content {
@@ -671,15 +673,6 @@ div.f-row.action *,
   margin-bottom: 0px;
 }
 
-
-.drag-over {
-  border-radius: 4px!important;
-}
-
-.drag-over-invalid {
-  border-radius: 4px!important;
-}
-
 /* ###### ship details / titlebar ##### */
 .ship-title-bar {
   display: flex;
@@ -697,14 +690,7 @@ div.f-row.action *,
 }
 
 /* #####  rList  ##### */
-
 .rList {
-  /*
-  flex: 1 1 auto;
-  margin-top: 0px;
-  padding: 0px;
-  width: 100%;
-  height: 100%;*/
   flex: 1;
   height: 100%;
 }
@@ -868,15 +854,16 @@ div.f-row.wrap {
 div.f-grid div.f-collapsible {
   display: flex;
   flex-direction: column;
-  -webkit-transition: max-height 0.3s ease-out;
-  transition: max-height 0.3s ease-out;
+  -webkit-transition: max-height 0.2s ease-in;
+  transition: max-height 0.2s ease-in;
   margin-bottom: 5px;
-  max-height: fit-content; /* calculate max height (React) */
+  overflow: hidden;
 }
 
 div.f-grid div.f-collapsible.f-collapsed {
-  max-height: 0px;
-  overflow: hidden;
+  -webkit-transition: max-height 0.15s ease-out;
+  transition: max-height 0.15s ease-out;
+  max-height: 0px!important;
 }
 
 div.f-column {
@@ -1444,7 +1431,8 @@ nav.tab.light > a:hover {
 
 /* Tooltip */
 .tooltip.light {
-  border: 1px solid var(--main-light-border);
+  /* border: 1px solid var(--main-light-border); */
+  border-bottom: 2px solid var(--main-light-border);
 }
 
 .tooltip.light > .tooltip-content {
@@ -1456,22 +1444,6 @@ nav.tab.light > a:hover {
   background-color: var(--root-light-bg);
 }
 
-.tooltip.light > .tooltip-arrow.bottom::before {
-  border-left: 1px solid var(--main-light-border);
-  border-top: 1px solid var(--main-light-border);
-}
-.tooltip.light > .tooltip-arrow.left::before {
-  border-top: 1px solid var(--main-light-border);
-  border-right: 1px solid var(--main-light-border);
-}
-.tooltip.light > .tooltip-arrow.right::before {
-  border-left: 1px solid var(--main-light-border);
-  border-bottom: 1px solid var(--main-light-border);
-}
-.tooltip.light > .tooltip-arrow.top::before {
-  border-bottom: 1px solid var(--main-light-border);
-  border-right: 1px solid var(--main-light-border);
-}
 /* ###### Buttons ###### */
 label.light,
 button.light {
@@ -1534,6 +1506,9 @@ button.tab-btn.light.selected {
   border-bottom: 1px solid var(--main-light-bg)!important;
 }
 
+.light #formation-grid {
+  border-bottom: 1px solid var(--main-light-border);
+}
 /* #### Popover #### */
 .popover-container.light {
   background-color: var(--root-light-bg);
@@ -1602,7 +1577,7 @@ input[type="url"].light.is-invalid,
 }
 
 .grid-item.light.drag-over {
-  border: 2px dotted var(--main-light-border)!important;
+  border: 2px dotted!important;
   border-radius: 4px!important;
 }
 
@@ -1736,7 +1711,7 @@ div.f-grid.light div.f-row.deepskyblue {
   --main-dark-button-bottom-bg: #1b2127;
   --main-dark-selected-bottom-bg: #2a2e35;
   --main-dark-active-bg: #40556b;
-  --main-dark-tooltip-bg: #1b1d24;
+  --main-dark-tooltip-bg: #2a2c31;
   --main-dark-tooltip-border: #3f4657;
   --main-dark-item-bg: #21252f;
   --main-dark-footer-titlebar-bg: #202023;
@@ -1953,34 +1928,18 @@ nav.tab.dark > a:hover {
 
 /* Tooltip */
 .tooltip.dark {
-  border: 1px solid var(--main-dark-tooltip-border);
+  border-bottom: 2px solid var(--main-dark-tooltip-border);
 }
 
 .tooltip.dark > .tooltip-content {
-  background-color: var(--root-dark-bg);
+  background-color: var(--main-dark-tooltip-bg);
   color: var(--main-dark-color);
 }
 
 .tooltip-arrow::before {
-  background-color: var(--root-dark-bg);
+  background-color: var(--main-dark-tooltip-bg);
 }
 
-.tooltip.dark > .tooltip-arrow.bottom::before {
-  border-left: 1px solid var(--main-dark-tooltip-border);
-  border-top: 1px solid var(--main-dark-tooltip-border);
-}
-.tooltip.dark > .tooltip-arrow.left::before {
-  border-top: 1px solid var(--main-dark-tooltip-border);
-  border-right: 1px solid var(--main-dark-tooltip-border);
-}
-.tooltip.dark > .tooltip-arrow.right::before {
-  border-left: 1px solid var(--main-dark-tooltip-border);
-  border-bottom: 1px solid var(--main-dark-tooltip-border);
-}
-.tooltip.dark > .tooltip-arrow.top::before {
-  border-bottom: 1px solid var(--main-dark-tooltip-border);
-  border-right: 1px solid var(--main-dark-tooltip-border);
-}
 /* ###### Buttons ###### */
 label.dark,
 button.dark {
@@ -1993,7 +1952,6 @@ button.dark {
 .btn.dark:hover,
 button.btn.grid-item.dark:hover,
 button.rList-item.dark.btn:hover {
-  /* background-color: var(--main-dark-hover-bg);*/
   /* TODO: Check colors with electron for window controls */
   background-color: #3c4652;
   color: var(--main-dark-hover-color);
@@ -2041,6 +1999,9 @@ button.tab-btn.dark.selected {
 
 .formation-dropdown-menu.dark .btn.menu-item:last-child {
   border-bottom: 1px solid var(--main-dark-bg)!important;
+}
+.dark #formation-grid {
+  border-bottom: 1px solid var(--main-dark-border);
 }
 
 /* #### Popover #### */
