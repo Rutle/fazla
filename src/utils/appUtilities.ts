@@ -1,3 +1,5 @@
+import { hullTypes, hullTypesAbb } from '_/data/categories';
+import { MAININDEX, SUBMARINE, VANGUARDINDEX } from '_/reducers/slices/formationGridSlice';
 import { Ship, BooleanSearchParam, VersionInfo, ResponseWithData, emptyVersionInfo } from '_/types/types';
 import { saveData } from './ipcAPI';
 
@@ -177,4 +179,16 @@ export const compareVersion = async (
     // if (e instanceof Error) console.log('k', e.message);
     return { isOk: false, msg: 'Failed to download and check version data.', isUpdReq };
   }
+};
+
+export const getHullTypeAbb = (hullType: string | undefined): string => {
+  if (!hullType) return 'none';
+  return hullTypesAbb[hullTypes[hullType]];
+};
+
+export const getFleet = (index: number, fleetCount: number): string => {
+  if (MAININDEX[fleetCount].includes(index)) return 'main';
+  if (VANGUARDINDEX[fleetCount].includes(index)) return 'vanguard';
+  if (SUBMARINE[fleetCount].includes(index)) return 'submarine';
+  return 'none';
 };

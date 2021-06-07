@@ -74,44 +74,43 @@ interface ConfigActionData {
  * @param {AppConfigAction} action Enum of different actions.
  * @param {ConfigActionData} data Key in slice.
  */
-export const configAction = (action: AppConfigAction, data: ConfigActionData): AppThunk => async (
-  dispatch: AppDispatch,
-  getState
-) => {
-  let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
-  try {
-    const platform = process.env.PLAT_ENV;
-    const { config } = getState();
-    const { storage, key, value } = data;
-    // eslint-disable-next-line prefer-const
-    let { isEdit, ...newConfig } = { ...config };
-    switch (action) {
-      case 'UPDATE':
-        if (key && value) newConfig = { ...newConfig, ...{ [key]: value } };
-        if (platform === 'web' && storage) {
-          const res = await storage.setItem('config', newConfig);
-          result.isOk = Object.is(res, newConfig);
-        }
-        if (platform === 'electron') {
-          result = await saveConfig(newConfig);
-        }
-        dispatch(setStateValue({ key: key as string, value: value as string | boolean | 'dark' | 'light' }));
-        break;
-      case 'SAVE':
-        if (platform === 'electron') {
-          result = await saveConfig(newConfig);
-        }
-        if (platform === 'web' && storage) {
-          const res = await storage.setItem('config', newConfig);
-          result.isOk = Object.is(res, newConfig);
-        }
-        break;
-      default:
-        break;
+export const configAction =
+  (action: AppConfigAction, data: ConfigActionData): AppThunk =>
+  async (dispatch: AppDispatch, getState) => {
+    let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
+    try {
+      const platform = process.env.PLAT_ENV;
+      const { config } = getState();
+      const { storage, key, value } = data;
+      // eslint-disable-next-line prefer-const
+      let { isEdit, ...newConfig } = { ...config };
+      switch (action) {
+        case 'UPDATE':
+          if (key && value) newConfig = { ...newConfig, ...{ [key]: value } };
+          if (platform === 'web' && storage) {
+            const res = await storage.setItem('config', newConfig);
+            result.isOk = Object.is(res, newConfig);
+          }
+          if (platform === 'electron') {
+            result = await saveConfig(newConfig);
+          }
+          dispatch(setStateValue({ key: key as string, value: value as string | boolean | 'dark' | 'light' }));
+          break;
+        case 'SAVE':
+          if (platform === 'electron') {
+            result = await saveConfig(newConfig);
+          }
+          if (platform === 'web' && storage) {
+            const res = await storage.setItem('config', newConfig);
+            result.isOk = Object.is(res, newConfig);
+          }
+          break;
+        default:
+          break;
+      }
+    } catch (e) {
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with a config action.', eState: 'ERROR' }));
     }
-  } catch (e) {
-    dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with a config action.', eState: 'ERROR' }));
-  }
-};
+  };
 
 export default programConfigSlice.reducer;

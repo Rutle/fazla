@@ -22,7 +22,6 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
   const [isOpen, setIsOpen] = useState({ main: true, vanguard: true });
   const refMain = useRef<HTMLDivElement>(null);
   const refVanguard = useRef<HTMLDivElement>(null);
-
   const mainSize = useResizeObserver<HTMLDivElement>({ ref: refMain });
   const vanguardSize = useResizeObserver<HTMLDivElement>({ ref: refVanguard });
   const [newHeight, setNewHeight] = useState<{ mainHeight: number | undefined; vanguardHeight: number | undefined }>({
@@ -30,40 +29,20 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
     vanguardHeight: undefined,
   });
 
-  /*
-  const measuredRef = useCallback((node: HTMLDivElement) => {
-    if (node) {
-      setHeight(node.getBoundingClientRect().height);
-    }
-  }, []);
-  */
-  /*
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      console.log(entries);
-    });
-    resizeObserver.observe(document.getElementById('test'));
-    return (): void => {
-      resizeObserver.unobserve(document.getElementById('test'));
-    };
-  }, []);
-  */
   useEffect(() => {
     if (refMain && refMain.current && mainSize.height !== undefined) {
-      if (showMain && mainSize.height > 0) {
-        setNewHeight({ ...newHeight, mainHeight: mainSize.height });
-      } else if (showMain && mainSize.height === 0) {
-        // We have clicked to expand a section with 'showMain' and it's still currently at height === 0.
-        // We calculate the height of the current children, add a bit extra and set the new height. We
-        // then finally let it open.
+      if (showMain) {
+        // We have clicked to expand a section with 'showMain'.
+        // We calculate the height of the current children, add a bit extra and set the new height.
+        // We then finally let it open.
         const tempHeight = Array.from(refMain.current.children).reduce<number>(
           (a, c) => a + c.getBoundingClientRect().height,
           0
         );
         setNewHeight({ ...newHeight, mainHeight: tempHeight + 100 });
         setIsOpen({ ...isOpen, main: true });
-      } else if (!showMain && mainSize.height === 0) {
-        // We have clicked to collapse a section. The height is 0 and so we can set it as not being open.
+      } else if (!showMain) {
+        // We have clicked to collapse a section.
         setIsOpen({ ...isOpen, main: false });
       }
     }
@@ -72,20 +51,14 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
 
   useEffect(() => {
     if (refVanguard && refVanguard.current && vanguardSize.height !== undefined) {
-      if (showVanguard && vanguardSize.height > 0) {
-        setNewHeight({ ...newHeight, vanguardHeight: vanguardSize.height });
-      } else if (showVanguard && vanguardSize.height === 0) {
-        // We have clicked to expand a section with 'showMain' and it's still currently at height === 0.
-        // We calculate the height of the current children, add a bit extra and set the new height. We
-        // then finally let it open.
+      if (showVanguard) {
         const tempHeight = Array.from(refVanguard.current.children).reduce<number>(
           (a, c) => a + c.getBoundingClientRect().height,
           0
         );
         setNewHeight({ ...newHeight, vanguardHeight: tempHeight + 100 });
         setIsOpen({ ...isOpen, vanguard: true });
-      } else if (!showVanguard && vanguardSize.height === 0) {
-        // We have clicked to collapse a section. The height is 0 and so we can set it as not being open.
+      } else if (!showVanguard) {
         setIsOpen({ ...isOpen, vanguard: false });
       }
     }

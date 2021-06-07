@@ -6,18 +6,19 @@ import { RootState } from '_/reducers/rootReducer';
 import { Ship, ShipSimple } from '_/types/types';
 import { setSelectedShip } from '_/reducers/slices/appStateSlice';
 import { AppContext } from '_/App';
-import { hullTypes, hullTypesAbb } from '../data/categories';
+import { getHullTypeAbb } from '_/utils/appUtilities';
 
 interface ShipListProps {
   shipSearchList: ShipSimple[];
   listName: string;
   refe?: React.RefObject<HTMLDivElement>;
   scrollTo?: () => void;
+  isDraggable?: boolean;
 }
 /**
  * Component for a list of ships.
  */
-const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName, refe, scrollTo }) => {
+const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName, refe, scrollTo, isDraggable = false }) => {
   const dispatch = useDispatch();
   const { shipData } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
@@ -33,16 +34,6 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName, refe, scr
     [appState.cToggle, dispatch, scrollTo]
   );
 
-  const getHullTypeAbb = (hullType: string | undefined) => {
-    if (!hullType) return '-';
-    return hullTypesAbb[hullTypes[hullType]];
-  };
-
-  const getHullType = (ship: Ship | undefined) => {
-    if (ship && ship.hullType) return hullTypes[ship.hullType];
-    return '';
-  };
-
   const getRarity = (ship: Ship | undefined) => {
     if (ship && ship.rarity) return ship.rarity;
     return '';
@@ -55,7 +46,24 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName, refe, scr
     },
     [listName, ownedShips]
   );
-
+  const onDragStartFunc = (event: React.DragEvent<HTMLElement>) => (id: string, hull: string) => {
+    event.stopPropagation();
+    event.dataTransfer.clearData();
+    // eslint-disable-next-line no-param-reassign
+    event.dataTransfer.effectAllowed = 'move';
+    const hullType = hull || 'none';
+    event.dataTransfer.setData('grid-index', 'none');
+    event.dataTransfer.setData('ship-id', id);
+    event.dataTransfer.setData('transfer-type', 'insert');
+    event.dataTransfer.setData('hull', hullType);
+    event.currentTarget.classList.add('dragged');
+  };
+  const onDragEndFunc = (event: React.DragEvent<HTMLElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+    event.currentTarget.classList.remove('dragged');
+    if (event.currentTarget) event.currentTarget.blur();
+  };
   return (
     <div className={`rList${listName !== appState.cToggle ? ' hidden' : ''}`}>
       <AutoSizer defaultHeight={(refe?.current?.scrollHeight as number) - 94}>
@@ -73,11 +81,14 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName, refe, scr
               return (
                 <button
                   type="button"
+                  draggable={isDraggable}
                   style={{ ...style, top: (style.top as number) + 1, height: 29, width: 'calc(100% - 1px)' }}
                   className={`rList-item btn ${config.themeColor} ${isShipOwned ? 'owned' : ''} ${
                     shipSearchList[index].id === appState[appState.cToggle].id ? 'selected' : ''
-                  } ${getHullType(ship)}`}
+                  } ${ship.hullType || 'none'}`}
                   onClick={() => selectShip(shipSearchList[index].id, shipSearchList[index].index)}
+                  onDragStart={isDraggable ? (e) => onDragStartFunc(e)(ship.id, ship.hullType || 'none') : undefined}
+                  onDragEnd={isDraggable ? onDragEndFunc : undefined}
                 >
                   <div className="owned-indicator" />
                   <div className={`name ${getRarity(ship)}`}>{ship.names.en}</div>

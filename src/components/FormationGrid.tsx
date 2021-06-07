@@ -1,12 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  formationAction,
-  FormationAction,
-  MAININDEX,
-  SUBMARINE,
-  VANGUARDINDEX,
-} from '_/reducers/slices/formationGridSlice';
+import { fleets } from '_/data/categories';
+import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
 import { Ship } from '_/types/types';
 import { useDragAndDrop } from './DragAndDrop/useDragAndDrop';
 import FormationGridItem from './FormationGridItem';
@@ -29,19 +24,24 @@ interface FormationGridProps {
  * @returns true if valid, false otherwise.
  */
 const isValidDropZone =
-  (
-    fleetCount: number,
-    main: { [key: number]: number[] },
-    vanguard: { [key: number]: number[] },
-    submarine: { [key: number]: number[] }
-  ) =>
+  (fleetHulls: { MAIN: string[]; VANGUARD: string[]; SUBS: string[] }) =>
   (startKey: string, overKey: string): boolean => {
-    const sKey = Number.parseInt(startKey, 10);
-    const oKey = Number.parseInt(overKey, 10);
-    if (Number.isNaN(startKey) || Number.isNaN(overKey)) return false;
-    if (main[fleetCount].includes(sKey) && main[fleetCount].includes(oKey)) return true;
-    if (vanguard[fleetCount].includes(sKey) && vanguard[fleetCount].includes(oKey)) return true;
-    if (submarine[fleetCount].includes(sKey) && submarine[fleetCount].includes(oKey)) return true;
+    if (startKey === 'none' || overKey === 'none') return false;
+    if (
+      (fleetHulls.MAIN.includes(startKey) && fleetHulls.MAIN.includes(overKey)) ||
+      (fleetHulls.MAIN.includes(startKey) && overKey === 'main')
+    )
+      return true;
+    if (
+      (fleetHulls.VANGUARD.includes(startKey) && fleetHulls.VANGUARD.includes(overKey)) ||
+      (fleetHulls.VANGUARD.includes(startKey) && overKey === 'vanguard')
+    )
+      return true;
+    if (
+      (fleetHulls.SUBS.includes(startKey) && fleetHulls.SUBS.includes(overKey)) ||
+      (fleetHulls.SUBS.includes(startKey) && overKey === 'submarine')
+    )
+      return true;
     return false;
   };
 
@@ -57,11 +57,13 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   fleetCount,
   isSubFleet,
 }) => {
-  const { dragFunctions, dragStates, dataTransferArray, startKey } = useDragAndDrop({
-    dataKey: 'grid-index',
-    isValidDropZone: isValidDropZone(fleetCount, MAININDEX, VANGUARDINDEX, SUBMARINE),
+  const { dragFunctions, dragStates, transferData } = useDragAndDrop({
+    dataKeys: ['grid-index', 'transfer-type', 'ship-id'],
+    baseKey: 'hull',
+    isValidDropZone: isValidDropZone(fleets),
   });
   const dispatch = useDispatch();
+
   const open = useCallback(
     (gridIndex: number) => () => {
       openSearchSection(true, gridIndex);
@@ -72,9 +74,23 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   useEffect(() => {
     // Finished drag and drop.
     if (!dragStates.isDragged && dragStates.isTransferOk) {
-      dispatch(formationAction(FormationAction.Switch, { switchData: dataTransferArray }));
+      const { start, end } = transferData;
+      if (start['transfer-type'] === 'switch') {
+        // Drag within formation
+        dispatch(
+          formationAction(FormationAction.Switch, {
+            switchData: [start['grid-index'], end['grid-index']],
+          })
+        );
+      } else if (start['transfer-type'] === 'insert') {
+        // Drag from ship list to formation.
+        const gridIndex = Number.parseInt(end['grid-index'], 10);
+        const shipID = start['ship-id'];
+        dispatch(formationAction(FormationAction.Insert, { insertData: { gridIndex, shipID } }));
+      }
     }
-  }, [dataTransferArray, dispatch, dragStates, startKey]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transferData, dispatch, dragStates]);
 
   return (
     <div id="formation-grid" className={`f-grid ${themeColor}`}>
@@ -95,6 +111,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
                   onClick={open(fleetIdx * 6 + shipIdx)}
                   isSelected={selectedGridIndex === fleetIdx * 6 + shipIdx}
                   dragFunctions={dragFunctions}
+                  fleetCount={fleetCount}
                 />
               ))}
             </div>
@@ -116,6 +133,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
                   onClick={open(fleetIdx * 6 + (shipIdx + 3))}
                   isSelected={selectedGridIndex === fleetIdx * 6 + (shipIdx + 3)}
                   dragFunctions={dragFunctions}
+                  fleetCount={fleetCount}
                 />
               ))}
             </div>
@@ -138,6 +156,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
                     isSelected={selectedGridIndex === fleetCount * 6 + shipIdx}
                     dragFunctions={dragFunctions}
                     isSub
+                    fleetCount={fleetCount}
                   />
                 ))}
               </div>

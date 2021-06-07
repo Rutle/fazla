@@ -4,7 +4,7 @@ import { saveFormationData } from '_/utils/ipcAPI';
 import { Formation } from '_/types/types';
 import DataStore from '_/utils/dataStore';
 import { batch } from 'react-redux';
-import { setErrorMessage, setIsUpdated } from './appStateSlice';
+import { setErrorMessage } from './appStateSlice';
 import { SearchAction, setFleet, updateSearch } from './searchParametersSlice';
 
 export enum FormationAction {
@@ -13,6 +13,7 @@ export enum FormationAction {
   Rename = 'RENAME',
   Save = 'SAVE',
   AddShip = 'ADDSHIP',
+  Insert = 'INSERT',
   RemoveShip = 'REMOVESHIP',
   Export = 'EXPORT',
   Import = 'IMPORT',
@@ -26,6 +27,7 @@ export const MAININDEX: { [key: number]: number[] } = {
   4: [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20],
   5: [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20],
 };
+
 export const VANGUARDINDEX: { [key: number]: number[] } = {
   2: [3, 4, 5, 9, 10, 11],
   3: [3, 4, 5, 9, 10, 11],
@@ -218,6 +220,7 @@ interface FormActionData {
   storage?: LocalForage;
   shipData?: DataStore;
   switchData?: string[];
+  insertData?: { gridIndex: number; shipID: string };
 }
 
 /**
@@ -274,10 +277,16 @@ export const formationAction =
             batch(() => {
               dispatch(addShipToFormation({ id, gridIndex: shipGridIndex, selectedIndex: formIdx }));
               dispatch(setFleet({ fleet: 'ALL' }));
-              dispatch(setIsUpdated({ key: list, value: false }));
+              // dispatch(setIsUpdated({ key: list, value: false }));
               // dispatch(resetParameters());
               dispatch(updateSearch(shipData, SearchAction.UpdateList, { list }));
             });
+          }
+          break;
+        case 'INSERT':
+          if (data.insertData) {
+            const { gridIndex, shipID } = data.insertData;
+            dispatch(addShipToFormation({ id: shipID, gridIndex, selectedIndex: formIdx }));
           }
           break;
         case 'REMOVESHIP':

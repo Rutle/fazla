@@ -65,26 +65,26 @@ const FormationView: React.FC = () => {
     [refSide]
   );
 
-  const hideSearchSection = useCallback(
-    (isOpen: boolean) => {
-      setShowSearch(isOpen);
-      setSelectedGrid(NaN);
-      dispatch(setFleet({ fleet: 'ALL' })); // Changed to trigger is changed. TODO: Check where setIsUpdated is necessary.
-      // dispatch(setIsUpdated({ key: appState.cToggle, value: false }));
-      dispatch(
+  const hideSearchSection = (isOpen: boolean) => {
+    setShowSearch(isOpen);
+    setSelectedGrid(NaN);
+    dispatch(setFleet({ fleet: 'ALL' })); // Changed to trigger is changed. TODO: Check where setIsUpdated is necessary.
+    // dispatch(setIsUpdated({ key: appState.cToggle, value: false }));
+    /* Keep the list at which it was left after closing search section.
+    dispatch(
         updateSearch(shipData, SearchAction.UpdateList, {
           list: appState.cToggle,
         })
-      );
-    },
-    [appState.cToggle, dispatch, shipData]
-  );
+      ); 
+    */
+  };
 
   useEffect(() => {
     setFleetTabIndex(0);
     hideSearchSection(false);
     setSelectedGrid(NaN);
-  }, [fData.selectedIndex, hideSearchSection]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fData.selectedIndex]);
 
   useEffect(() => {
     if (showSearch) scrollTo('top');
@@ -331,8 +331,18 @@ const FormationView: React.FC = () => {
               className={`${fleetCount === 2 ? 'normal-fleet' : 'siren-fleet'}${isSubFleet ? ' sub-fleet' : ''}`}
             >
               <SideBar refer={refSide}>
-                <ShipList shipSearchList={shipSearchList} listName="ALL" scrollTo={() => scrollTo('ship')} />
-                <ShipList shipSearchList={ownedSearchList} listName="OWNED" scrollTo={() => scrollTo('ship')} />
+                <ShipList
+                  shipSearchList={shipSearchList}
+                  listName="ALL"
+                  scrollTo={() => scrollTo('ship')}
+                  isDraggable
+                />
+                <ShipList
+                  shipSearchList={ownedSearchList}
+                  listName="OWNED"
+                  scrollTo={() => scrollTo('ship')}
+                  isDraggable
+                />
               </SideBar>
               <div id="side-scroll" className={`button-group ${config.themeColor}`} style={{ width: 'unset' }}>
                 {!isVisible ? (

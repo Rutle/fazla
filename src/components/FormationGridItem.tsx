@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
 import { Ship } from '_/types/types';
-import { hullTypes } from '../data/categories';
+import { getFleet } from '_/utils/appUtilities';
 import { UseDragAndDropFunctions } from './DragAndDrop/useDragAndDrop';
 import RButton from './RButton/RButton';
 
@@ -16,13 +16,14 @@ interface GridItemProps {
   dragFunctions?: UseDragAndDropFunctions;
   isDragged?: boolean;
   isSub?: boolean;
+  fleetCount: number;
 }
 
 /**
  * Singular component representing a grid item on a formation.
  */
 const FormationGridItem: React.FC<GridItemProps> = React.memo(
-  ({ index, ship, themeColor, onClick, isSelected, dragFunctions, isDragged, isSub = false }) => {
+  ({ index, ship, themeColor, onClick, isSelected, dragFunctions, isDragged, fleetCount, isSub = false }) => {
     const dispatch = useDispatch();
     const getLocation = (idx: number): string => {
       switch (idx) {
@@ -54,21 +55,22 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(
       [dispatch, index]
     );
 
-    const getHullType = (shipItem: Ship | undefined) => {
-      if (shipItem && shipItem.hullType) return hullTypes[shipItem.hullType];
-      return '';
-    };
     return (
       <RButton
         onClick={onClick}
         onRightClick={onRightClick}
-        className={`grid-item btn${isSelected ? ' selected' : ''} hullTypeAbb ${ship ? getHullType(ship) : ''}`}
+        className={`grid-item btn${isSelected ? ' selected' : ''} hullTypeAbb ${ship?.hullType || 'none'}`}
         themeColor={themeColor}
         extraStyle={{ border: '2px solid transparent' }}
         dragProps={{
           dragFunctions,
           dragOptions: { draggable: 'true' },
-          data: { 'grid-index': index, 'ship-id': ship?.id ? ship.id : 'none' },
+          data: {
+            'grid-index': index,
+            'ship-id': ship?.id || 'none',
+            'transfer-type': 'switch',
+            hull: ship?.hullType || getFleet(index, fleetCount),
+          },
         }}
       >
         <span

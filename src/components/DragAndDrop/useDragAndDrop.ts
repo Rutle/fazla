@@ -15,8 +15,7 @@ interface UseDragAndDrop {
     isDragged: boolean;
     isTransferOk: boolean;
   };
-  dataTransferArray: string[];
-  startKey: string;
+  transferData: { start: { [key: string]: string }; end: { [key: string]: string } };
 }
 
 interface DragAndDropState {
@@ -43,12 +42,14 @@ function reducer(
  * @returns DragAndDrop
  */
 export const useDragAndDrop = ({
-  dataKey,
+  dataKeys = [],
+  baseKey,
   classNames = { dragOverClass: 'drag-over', draggedClass: 'dragged', dragOverInvalidClass: 'drag-over-invalid' },
   isValidDropZone,
 }: {
-  dataKey: string;
-  isValidDropZone?: (startKey: string, overKey: string) => boolean;
+  dataKeys: string[];
+  baseKey: string;
+  isValidDropZone?: (sKey: string, oKey: string) => boolean;
   classNames?: {
     dragOverClass: string;
     draggedClass: string;
@@ -56,22 +57,29 @@ export const useDragAndDrop = ({
   };
 }): UseDragAndDrop => {
   const [dragStates, setDragStates] = useState({ isDragged: false, isTransferOk: false });
-  const dataTransferArray = useRef<string[]>([]);
-  const startKey = useRef('');
+  const dataRef = useRef<{ start: { [key: string]: string }; end: { [key: string]: string } }>({
+    start: {},
+    end: {},
+  });
   const [data, dispatch] = useReducer(reducer, { dropDepth: 0, inDropZone: false });
 
   const onDropCb = (event: React.DragEvent<HTMLElement>) => {
     event.stopPropagation();
     event.preventDefault();
-    const start = event.dataTransfer.getData(dataKey);
-    const end = event.currentTarget.getAttribute(dataKey) as string;
+    const start = dataKeys.reduce(
+      (a, c) => Object.assign(a, { [c]: event.dataTransfer.getData(c) }),
+      {} as { [key: string]: string }
+    );
+
+    const end = dataKeys.reduce(
+      (a, c) => Object.assign(a, { [c]: event.currentTarget.getAttribute(c) }),
+      {} as { [key: string]: string }
+    );
     event.currentTarget.classList.remove(classNames.dragOverClass);
     dispatch({ type: 'setDropDepth', payload: 0 });
     dispatch({ type: 'setInDropZone', payload: false });
-    if (start === end) return;
-    dataTransferArray.current = [start, end];
+    dataRef.current = { start, end };
     setDragStates({ ...dragStates, isTransferOk: true });
-    startKey.current = '';
   };
 
   const onDragEndCb = (event: React.DragEvent<HTMLElement>) => {
@@ -89,17 +97,16 @@ export const useDragAndDrop = ({
     // eslint-disable-next-line no-param-reassign
     event.dataTransfer.effectAllowed = 'move';
     setDragStates({ isDragged: true, isTransferOk: false });
-    event.dataTransfer.setData(dataKey, event.currentTarget.getAttribute(dataKey) as string);
+    event.dataTransfer.setData(baseKey, event.currentTarget.getAttribute(baseKey) as string);
     event.currentTarget.classList.add(classNames.draggedClass);
-    startKey.current = event.currentTarget.getAttribute(dataKey) as string;
   };
 
   const onDragOverCb = (event: React.DragEvent<HTMLElement>) => {
     event.stopPropagation();
     event.preventDefault();
     // if (!data.inDropZone) dispatch({ type: 'setInDropZone', payload: true });
-    const sKey = event.dataTransfer.getData(dataKey);
-    const oKey = event.currentTarget.getAttribute(dataKey) as string;
+    const sKey = event.dataTransfer.getData(baseKey);
+    const oKey = event.currentTarget.getAttribute(baseKey) as string;
     if (isValidDropZone && isValidDropZone(sKey, oKey)) return;
     // eslint-disable-next-line no-param-reassign
     event.dataTransfer.dropEffect = 'none';
@@ -108,8 +115,8 @@ export const useDragAndDrop = ({
   const onDragEnterCb = (event: React.DragEvent<HTMLElement>) => {
     event.stopPropagation();
     event.preventDefault();
-    const sKey = event.dataTransfer.getData(dataKey);
-    const oKey = event.currentTarget.getAttribute(dataKey) as string;
+    const sKey = event.dataTransfer.getData(baseKey);
+    const oKey = event.currentTarget.getAttribute(baseKey) as string;
     dispatch({ type: 'setDropDepth', payload: data.dropDepth + 1 });
     if (isValidDropZone) {
       const isValid = isValidDropZone(sKey, oKey);
@@ -139,7 +146,6 @@ export const useDragAndDrop = ({
       onDragLeave: onDragLeaveCb,
     },
     dragStates,
-    dataTransferArray: dataTransferArray.current,
-    startKey: startKey.current,
+    transferData: dataRef.current,
   };
 };

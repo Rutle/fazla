@@ -231,6 +231,10 @@ div.scroll {
   line-height: 1.5;
 }
 
+.dragged {
+  position: relative!important;
+}
+
 /* ###### Modal ###### */
 .modal-container > div.modal-title {
   display: flex;
