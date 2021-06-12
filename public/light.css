@@ -257,7 +257,7 @@ button.tab-btn.light.selected {
 
 /* #### ship title bar #### */
 .light .ship-title-bar {
-  border: 1px solid var(--main-light-border);
+  border-bottom: 2px solid var(--main-light-border);
   background-color: var(--main-light-bg);
 }
 
@@ -325,7 +325,14 @@ input[type="url"].light.is-invalid,
 /* #### Grid #### */
 div.f-grid.light div.f-header {
   border-bottom: 2px solid var(--main-light-border);
+  background-color: var(--main-light-bg);
 }
+
+div.f-grid.light div.f-body {
+  background-color: #eff7ff;
+  border-bottom: 2px solid var(--main-light-border);
+}
+
 div.f-grid.light div.f-title {
   background-color: var(--main-light-bg);
   border-bottom: 1px solid var(--main-light-border);
@@ -337,6 +344,12 @@ div.f-grid.light div.f-icon {
   border: 1px solid var(--main-light-border);
 }
 
+div.f-row.light div.f-header.tab-group > button:first-child {
+  border-left: 2px dotted var(--main-light-border);
+}
+div.f-row.light div.f-header.tab-group > button:last-child {
+  border-right: 2px dotted var(--main-light-border);
+}
 /* #### hull types #### */
 .btn.light.Carrier {
   background-color: Plum;
@@ -381,29 +394,19 @@ div.f-grid.light div.f-icon {
   border: 1px solid var(--main-light-border);
 }
 
-/* #### grid title #### */
-div.f-grid.light div.f-icon.bottom-emp {
-  background-color: unset;
-  border-bottom: 2px solid var(--main-light-border);
-}
-div.f-grid.light div.f-title.bottom-emp {
-  background-color: unset;
-  border-bottom: 2px solid var(--main-light-border);
-}
-
 /* #### rarity #### */
 div.f-grid.light div.f-row.pink {
   border-bottom: 2px solid rgba(255, 192, 203, 1);
-  background-color: var(--main-light-bg);
+  background-color: #eff7ff;
 }
 /* #### rarity #### */
 div.f-grid.light div.f-row.gold {
-  background-color: var(--main-light-bg);
+  background-color: #eff7ff;
   border-bottom: 2px solid rgba(255, 215, 0, 1);
 }
 
 div.f-grid.light div.f-row.deepskyblue {
-  background-color: var(--main-light-bg);
+  background-color: #eff7ff;
   border-bottom: 2px solid rgba(0, 191, 255, 1);
 }
 

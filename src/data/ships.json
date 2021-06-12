@@ -837,7 +837,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -1663,6 +1663,21 @@
           "jpClient": "元宵の灯籠祭",
           "cost": 780
         }
+      },
+      {
+        "name": "Monochromatic Marvel",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/082/Monochromatic_Marvel/image.nobg.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_145.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/082/Monochromatic_Marvel/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Monochromatic Marvel",
+          "cnClient": "「白」与「黑」",
+          "jpClient": "ラブリー・モノクロミック",
+          "cost": 780
+        },
+        "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/082/Monochromatic_Marvel/image.png"
       }
     ],
     "gallery": []
@@ -2487,6 +2502,10 @@
       {
         "description": "Deutschland, Admiral Graf Spee, Kitakaze, Azuma, Yukikaze",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.11.18_1.png"
+      },
+      {
+        "description": "Z23, Roon, Friedrich der Grosse, Graf Zeppelin, Admiral Graf Spee, Prinz Eugen with Hood and Glorious",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_10.png"
       }
     ]
   },
@@ -4037,13 +4056,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/224/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/224/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/224/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/224/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Deep Crimson Poppy",
           "cnClient": "深红的虞美人",
           "jpClient": "真紅の雛罌粟"
@@ -4805,13 +4824,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/232/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/232/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/232/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/232/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "White Cat's Repayment",
           "cnClient": "白猫的报恩",
           "jpClient": "白猫報恩す！"
@@ -6302,7 +6321,7 @@
           "cn": "星火之光",
           "jp": "プレミアム・ガン・スター"
         },
-        "description": "Decrease the duration of burns inflicted on this ship by 3 seconds. Increase damage this ship deals dealt to Light Armor enemies by 5.0% (15.0%). Every 20 seconds after the battle begins, 70.0% chance to fire a special barrage (damage scales with skill level) and increase your entire fleet's AA stat by 10.0% (20.0%) for 8 seconds.",
+        "description": "Decrease the duration of burns inflicted on this ship by 3 seconds. Increase the damage this ship deals to Light Armor enemies by 5.0% (15.0%). Every 20 seconds after the battle begins, 70.0% chance to fire a special barrage (damage scales with skill level) and increase your entire fleet's AA stat by 10.0% (20.0%) for 8 seconds.",
         "color": "pink"
       },
       {
@@ -6410,6 +6429,20 @@
         "info": {
           "live2dModel": false,
           "obtainedFrom": "Default"
+        }
+      },
+      {
+        "name": "Charming Rabbit",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/508/Charming_Rabbit/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_145.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/508/Charming_Rabbit/chibi.png",
+        "info": {
+          "live2dModel": true,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Charming Rabbit",
+          "cnClient": "Charming Rabbit",
+          "jpClient": "チャーミングラビット",
+          "cost": 1180
         }
       }
     ],
@@ -6723,6 +6756,10 @@
       {
         "description": "Tosa, Amagi",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.12.29_5.png"
+      },
+      {
+        "description": "Amagi, Shinano, Kashino, Suzutsuki",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_13.png"
       }
     ]
   },
@@ -8390,7 +8427,6 @@
       {
         "name": "Sardegnian Shallows and Sunshine",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/502/Sardegnian_Shallows_and_Sunshine/image.nobg.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/502/Sardegnian_Shallows_and_Sunshine/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_106.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/502/Sardegnian_Shallows_and_Sunshine/chibi.png",
         "info": {
@@ -8637,6 +8673,276 @@
       }
     ],
     "gallery": []
+  },
+  {
+    "wikiUrl": "https://azurlane.koumakan.jp/Archerfish",
+    "id": "513",
+    "_gid": 10806,
+    "_sid": [
+      108061,
+      108062,
+      108063,
+      108064
+    ],
+    "_code": 513,
+    "names": {
+      "en": "Archerfish",
+      "code": "USS Archerfish",
+      "cn": "射水鱼",
+      "jp": "アーチャーフィッシュ",
+      "kr": "Archerfish"
+    },
+    "exists": {
+      "en": true,
+      "cn": true,
+      "jp": true,
+      "kr": false
+    },
+    "hexagon": [
+      1,
+      5,
+      0,
+      1,
+      0,
+      1
+    ],
+    "class": "Balao",
+    "nationality": "Eagle Union",
+    "hullType": "Submarine",
+    "thumbnail": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/513/thumbnail.png",
+    "rarity": "Super Rare",
+    "stars": {
+      "stars": "★★★★★★",
+      "value": 6
+    },
+    "stats": {
+      "baseStats": {
+        "health": "310",
+        "armor": "Light",
+        "reload": "35",
+        "luck": "90",
+        "firepower": "12",
+        "torpedo": "102",
+        "evasion": "9",
+        "speed": "16",
+        "antiair": "0",
+        "aviation": "0",
+        "oilConsumption": "2",
+        "accuracy": "66",
+        "antisubmarineWarfare": "0",
+        "oxygen": "243",
+        "ammunition": "2",
+        "huntingRange": "   4   \n  323  \n5****2 \n **S**4\n52**** \n  323  \n   4   "
+      },
+      "level100": {
+        "health": "1603",
+        "armor": "Light",
+        "reload": "82",
+        "luck": "90",
+        "firepower": "57",
+        "torpedo": "482",
+        "evasion": "22",
+        "speed": "16",
+        "antiair": "0",
+        "aviation": "0",
+        "oilConsumption": "7",
+        "accuracy": "171",
+        "antisubmarineWarfare": "0",
+        "oxygen": "243",
+        "ammunition": "2",
+        "huntingRange": "   4   \n  323  \n5****2 \n **S**4\n52**** \n  323  \n   4   "
+      },
+      "level120": {
+        "health": "1924",
+        "armor": "Light",
+        "reload": "95",
+        "luck": "90",
+        "firepower": "65",
+        "torpedo": "530",
+        "evasion": "41",
+        "speed": "16",
+        "antiair": "0",
+        "aviation": "0",
+        "oilConsumption": "7",
+        "accuracy": "192",
+        "antisubmarineWarfare": "0",
+        "oxygen": "243",
+        "ammunition": "2",
+        "huntingRange": "   4   \n  323  \n5****2 \n **S**4\n52**** \n  323  \n   4   "
+      }
+    },
+    "slots": [
+      {
+        "maxEfficiency": 130,
+        "minEfficiency": 114,
+        "type": "Submarine Torpedoes",
+        "max": 2
+      },
+      {
+        "maxEfficiency": 130,
+        "minEfficiency": 114,
+        "type": "Submarine Torpedoes",
+        "max": 2
+      },
+      {
+        "maxEfficiency": 85,
+        "minEfficiency": 85,
+        "type": "DD Guns",
+        "max": 1
+      }
+    ],
+    "enhanceValue": {
+      "firepower": 1,
+      "torpedo": 40,
+      "aviation": 0,
+      "reload": 7
+    },
+    "scrapValue": {
+      "coin": 4,
+      "oil": 3,
+      "medal": 10
+    },
+    "skills": [
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/513/hottie_hunters.png",
+        "names": {
+          "en": "Hottie Hunters",
+          "cn": "鱼群之光",
+          "jp": "イケイケよ！"
+        },
+        "description": "Increases this boat's DMG to Heavy Armor enemies by 5.0% (15.0%). When sortied with at least 1 other Eagle Union submarine: increases Crit DMG by 5.0% (15.0%) and increases TRP and Accuracy by 3.5% (8.0%) for all your Eagle Union submarines.",
+        "color": "gold"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/513/parting_gift.png",
+        "names": {
+          "en": "Parting Gift",
+          "cn": "射手的赠礼",
+          "jp": "熟練アーチャーフィッシュ"
+        },
+        "description": "Increases this boat's OXY by 2 (20). When this boat resurfaces, and again when she leaves the battle: fires a Lv.1 (Lv.10) torpedo barrage (DMG is based on the skill's level).",
+        "color": "pink"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/513/all_out_assault:_ii.png",
+        "names": {
+          "en": "All-Out Assault: II",
+          "cn": "专属弹幕-喷水鱼II",
+          "jp": "特殊弾幕-アーチャーフィッシュII"
+        },
+        "description": "Activates All Out Assault II: Archerfish immediately after entering the battle.",
+        "color": "pink"
+      }
+    ],
+    "limitBreaks": [
+      [
+        "Unlock EX Barrage Ⅰ",
+        "Torpedo efficiency +5%"
+      ],
+      [
+        "Torpedo base +1",
+        "Improve Hunting range"
+      ],
+      [
+        "Improve EX Barrage",
+        "Torpedo efficiency +10%"
+      ]
+    ],
+    "fleetTech": {
+      "statsBonus": {
+        "collection": {
+          "applicable": [
+            "Submarine",
+            "Submarine carrier"
+          ],
+          "bonus": "+1",
+          "stat": "accuracy"
+        },
+        "maxLevel": {
+          "applicable": [
+            "Submarine",
+            "Submarine carrier"
+          ],
+          "bonus": "+2",
+          "stat": "torpedo"
+        }
+      },
+      "techPoints": {
+        "collection": 6,
+        "maxLimitBreak": 12,
+        "maxLevel": 9,
+        "total": 27
+      }
+    },
+    "construction": {
+      "constructionTime": "00:25:00",
+      "availableIn": {
+        "light": false,
+        "heavy": false,
+        "aviation": false,
+        "limited": "Only during event: Mirror Involution",
+        "exchange": false
+      }
+    },
+    "obtainedFrom": {
+      "obtainedFrom": "Available during \"Mirror Involution\" event.",
+      "fromMaps": []
+    },
+    "misc": {
+      "artist": {
+        "name": "かにビーム",
+        "url": "https://azurlane.koumakan.jp/Artists#.E3.81.8B.E3.81.AB.E3.83.93.E3.83.BC.E3.83.A0"
+      },
+      "pixiv": {
+        "name": "かにビーム",
+        "url": "https://www.pixiv.net/member.php?id=3439325"
+      },
+      "twitter": {
+        "name": "かにビーム",
+        "url": "https://twitter.com/kani_biimu"
+      },
+      "web": {
+        "name": "ルミノシティ",
+        "url": "http://lumino.sakura.ne.jp/"
+      },
+      "voice": {
+        "name": "Hikaru Akao",
+        "url": "https://en.wikipedia.org/wiki/Hikaru_Akao"
+      }
+    },
+    "skins": [
+      {
+        "name": "Default",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/513/Default/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/513/Default/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Default"
+        }
+      },
+      {
+        "name": "Coquettish Bunny",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/513/Coquettish_Bunny/image.nobg.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_145.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/513/Coquettish_Bunny/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Coquettish Bunny",
+          "cnClient": "兔兔特调",
+          "jpClient": "キャッツィバニィ！",
+          "cost": 880
+        },
+        "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/513/Coquettish_Bunny/image.png"
+      }
+    ],
+    "gallery": [
+      {
+        "description": "San Francisco, Ticonderoga, New Jersey, Archerfish, Boise, Morrison",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_1.png"
+      }
+    ]
   },
   {
     "wikiUrl": "https://azurlane.koumakan.jp/Ardent",
@@ -9535,7 +9841,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -10536,9 +10842,9 @@
         "color": "gold"
       },
       {
-        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/30002/scorched_blade·ark_royal.png",
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/30002/ashen_might·ark_royal.png",
         "names": {
-          "en": "Scorched Blade·Ark Royal",
+          "en": "Ashen Might·Ark Royal",
           "cn": "破敌之炬·皇家方舟II",
           "jp": "炬火の力-アーク・ロイヤルⅡ"
         },
@@ -10548,9 +10854,7 @@
     ],
     "limitBreaks": [
       [
-        "Learn skill Scorched BladeIn game description uses Ashen Might<",
-        "div><",
-        "div>",
+        "Learn skill Ashen Might",
         "All Torpedo Bombers +1",
         "Torpedo Bomber efficiency +3%"
       ],
@@ -10560,9 +10864,7 @@
         "Torpedo Bomber efficiency +5%"
       ],
       [
-        "Improve skill Scorched BladeIn game description uses Ashen Might<",
-        "div><",
-        "div>",
+        "Improve skill Ashen Might",
         "All Torpedo Bombers +1",
         "Torpedo Bomber efficiency +7%"
       ]
@@ -11418,7 +11720,6 @@
       {
         "name": "Black Bunny Carnival",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/046/Black_Bunny_Carnival/image.nobg.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/046/Black_Bunny_Carnival/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_104.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/046/Black_Bunny_Carnival/chibi.png",
         "info": {
@@ -11577,7 +11878,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -11682,13 +11983,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/201/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/201/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/201/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/201/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Lily-White Vow",
           "cnClient": "白花的誓言",
           "jpClient": "白き約束"
@@ -12523,13 +12824,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/118/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/118/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/118/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/118/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Garb of Eternal Prosperity",
           "cnClient": "良辰凤褂",
           "jpClient": "吉日凰単"
@@ -12840,6 +13141,10 @@
       {
         "description": "Gangut and Avrora",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.02.25_1.png"
+      },
+      {
+        "description": "Gangut, Grozny, Tashkent, Pamiat Merkuria, Sovetskaya Rossiya, Chapayev, Avrora, Minsk",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_4.png"
       }
     ]
   },
@@ -13535,13 +13840,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/155/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/155/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/155/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/155/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Demon's Finest Dress",
           "cnClient": "鬼神之华裳",
           "jpClient": "鬼神華裳"
@@ -13672,6 +13977,20 @@
           "cost": 1100
         },
         "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/155/Nightfall_Raiment/image.png"
+      },
+      {
+        "name": "Off-Duty Battle Station Gear",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/155/OffDuty_Battle_Station_Gear/image.nobg.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_109.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/155/OffDuty_Battle_Station_Gear/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Azur Lane Slow Ahead animation Blu-ray Vol 1 purchase bonus",
+          "enClient": "Off-Duty Battle Station Gear",
+          "cnClient": "微速战斗姿势",
+          "jpClient": "微速戦闘姿勢"
+        },
+        "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/155/OffDuty_Battle_Station_Gear/image.png"
       }
     ],
     "gallery": [
@@ -13694,6 +14013,10 @@
       {
         "description": "Bremerton, Z23, Laffey, Javelin, Ayanami, Prinz Heinrich, Kumano, Pamiat Merkuria",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.03.12_1.png"
+      },
+      {
+        "description": "Javelin, Laffey, Z23, Ayanami",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_3.png"
       }
     ]
   },
@@ -14522,6 +14845,10 @@
       {
         "description": "Bache, San Diego",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.10.29_1.png"
+      },
+      {
+        "description": "Bache, Baltimore, Prinz Eugen",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_11.png"
       }
     ]
   },
@@ -15343,6 +15670,10 @@
       {
         "description": "Bremerton, Z23, Laffey, Javelin, Ayanami, Prinz Heinrich, Kumano, Pamiat Merkuria",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.03.12_1.png"
+      },
+      {
+        "description": "Bache, Baltimore, Prinz Eugen",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_11.png"
       }
     ]
   },
@@ -16321,13 +16652,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/115/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/115/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/115/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/115/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "The Pledge of Claddagh",
           "cnClient": "克拉达的誓约",
           "jpClient": "クラダリングの誓い"
@@ -17476,7 +17807,7 @@
       "constructionTime": "06:00:00",
       "availableIn": {
         "light": false,
-        "heavy": false,
+        "heavy": "CN/JP Only",
         "aviation": false,
         "limited": "Only during event: Scherzo of Iron and Blood",
         "exchange": false
@@ -17764,7 +18095,6 @@
       {
         "name": "Goddesses' Smile",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Collab006/Goddesses_Smile/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Collab006/Goddesses_Smile/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_202.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Collab006/Goddesses_Smile/chibi.png",
         "info": {
@@ -18041,6 +18371,20 @@
           "cnClient": "Fairmaid·Spring",
           "jpClient": "フェアメイド・スプリング",
           "cost": 800
+        }
+      },
+      {
+        "name": "Pop the Cork",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/408/Pop_the_Cork/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_146.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/408/Pop_the_Cork/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Pop the Cork",
+          "cnClient": "Pop The Cork",
+          "jpClient": "ポップ・ザ・コルク",
+          "cost": 780
         }
       }
     ],
@@ -19032,6 +19376,262 @@
       }
     ],
     "gallery": []
+  },
+  {
+    "wikiUrl": "https://azurlane.koumakan.jp/Boise",
+    "id": "514",
+    "_gid": 10229,
+    "_sid": [
+      102291,
+      102292,
+      102293,
+      102294
+    ],
+    "_code": 514,
+    "names": {
+      "en": "Boise",
+      "code": "USS Boise",
+      "cn": "博伊西",
+      "jp": "ボイシ",
+      "kr": "Boise"
+    },
+    "exists": {
+      "en": true,
+      "cn": true,
+      "jp": true,
+      "kr": false
+    },
+    "hexagon": [
+      3,
+      0,
+      0,
+      3,
+      3,
+      2
+    ],
+    "class": "Brooklyn",
+    "nationality": "Eagle Union",
+    "hullType": "Light Cruiser",
+    "thumbnail": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/514/thumbnail.png",
+    "rarity": "Elite",
+    "stars": {
+      "stars": "★★★★★",
+      "value": 5
+    },
+    "stats": {
+      "baseStats": {
+        "health": "612",
+        "armor": "Light",
+        "reload": "69",
+        "luck": "70",
+        "firepower": "31",
+        "torpedo": "0",
+        "evasion": "28",
+        "speed": "32",
+        "antiair": "62",
+        "aviation": "0",
+        "oilConsumption": "3",
+        "accuracy": "56",
+        "antisubmarineWarfare": "24"
+      },
+      "level100": {
+        "health": "3165",
+        "armor": "Light",
+        "reload": "164",
+        "luck": "70",
+        "firepower": "144",
+        "torpedo": "0",
+        "evasion": "73",
+        "speed": "32",
+        "antiair": "289",
+        "aviation": "0",
+        "oilConsumption": "10",
+        "accuracy": "146",
+        "antisubmarineWarfare": "88"
+      },
+      "level120": {
+        "health": "3561",
+        "armor": "Light",
+        "reload": "189",
+        "luck": "70",
+        "firepower": "165",
+        "torpedo": "0",
+        "evasion": "90",
+        "speed": "32",
+        "antiair": "327",
+        "aviation": "0",
+        "oilConsumption": "10",
+        "accuracy": "163",
+        "antisubmarineWarfare": "100"
+      }
+    },
+    "slots": [
+      {
+        "maxEfficiency": 130,
+        "minEfficiency": 100,
+        "type": "CL Guns",
+        "max": 2
+      },
+      {
+        "maxEfficiency": 65,
+        "minEfficiency": 65,
+        "type": "DD Guns",
+        "max": 1
+      },
+      {
+        "maxEfficiency": 100,
+        "minEfficiency": 100,
+        "type": "Anti-Air Guns",
+        "max": 1
+      }
+    ],
+    "enhanceValue": {
+      "firepower": 13,
+      "torpedo": 0,
+      "aviation": 0,
+      "reload": 13
+    },
+    "scrapValue": {
+      "coin": 6,
+      "oil": 3,
+      "medal": 4
+    },
+    "skills": [
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/514/the_bigger_they_are....png",
+        "names": {
+          "en": "The Bigger They Are...",
+          "cn": "瞄准最大的！",
+          "jp": "ビゲスト・ターゲット"
+        },
+        "description": "Every 15s during battle: fires a Lv.1 (Lv.10) special barrage (DMG is based on the skill's level). Additionally, increases this ship's Crit Rate by 1.0% (10.0%), and increases her DMG to Heavy Armor enemies by 5.0% (15.0%).",
+        "color": "pink"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/514/breathe_in,_breathe_out.png",
+        "names": {
+          "en": "Breathe In, Breathe Out",
+          "cn": "沉稳抉择",
+          "jp": "ピュアリーフェイス"
+        },
+        "description": "While this ship has 45.0% or more HP remaining: increases this ship's FP and AA by 5.0% (15.0%). When this ship's HP falls below 45.0% as a result of DMG taken: decreases this ship's Burn DMG taken by 5.0% (15.0%) while below this threshold. Once per battle, when this ship's HP falls below 30.0%: heals this ship for 4.0% (10.0%) of her max HP.",
+        "color": "gold"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/514/all_out_assault_ⅱ.png",
+        "names": {
+          "en": "All Out Assault Ⅱ",
+          "cn": "全弹发射II",
+          "jp": "全弾発射-ブルックリン級Ⅱ"
+        },
+        "description": "Activates All Out Assault Ⅱ: Brooklyn Class once every 10 times the Main Guns are fired.",
+        "color": "pink"
+      }
+    ],
+    "limitBreaks": [
+      [
+        "Unlock All Out Assault Ⅰ",
+        "Main gun efficiency +5%"
+      ],
+      [
+        "Main gun base +1",
+        "Main gun efficiency +10%"
+      ],
+      [
+        "Improve All Out Assault",
+        "Main gun efficiency +15%"
+      ]
+    ],
+    "fleetTech": {
+      "statsBonus": {
+        "collection": {
+          "applicable": [
+            "Light cruiser"
+          ],
+          "bonus": "+1",
+          "stat": "health"
+        },
+        "maxLevel": {
+          "applicable": [
+            "Light cruiser"
+          ],
+          "bonus": "+1",
+          "stat": "firepower"
+        }
+      },
+      "techPoints": {
+        "collection": 9,
+        "maxLimitBreak": 18,
+        "maxLevel": 13,
+        "total": 40
+      }
+    },
+    "construction": {
+      "constructionTime": "01:15:00",
+      "availableIn": {
+        "light": false,
+        "heavy": false,
+        "aviation": false,
+        "limited": "Only during event: Mirror Involution",
+        "exchange": false
+      }
+    },
+    "obtainedFrom": {
+      "obtainedFrom": "Available during \"Mirror Involution\" event.",
+      "fromMaps": []
+    },
+    "misc": {
+      "artist": {
+        "name": "羽織イオ",
+        "url": "https://azurlane.koumakan.jp/Artists#.E7.BE.BD.E7.B9.94.E3.82.A4.E3.82.AA"
+      },
+      "pixiv": {
+        "name": "羽織イオ",
+        "url": "https://www.pixiv.net/member.php?id=3211072"
+      },
+      "twitter": {
+        "name": "羽織イオ",
+        "url": "https://twitter.com/haori_crescendo"
+      },
+      "web": null,
+      "voice": {
+        "name": "Yuu Sasahara",
+        "url": "https://en.wikipedia.org/wiki/Y%C5%AB_Sasahara"
+      }
+    },
+    "skins": [
+      {
+        "name": "Default",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/514/Default/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/514/Default/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Default"
+        }
+      },
+      {
+        "name": "Sheepish Sapphire",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/514/Sheepish_Sapphire/image.nobg.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_145.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/514/Sheepish_Sapphire/chibi.png",
+        "info": {
+          "live2dModel": true,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Sheepish Sapphire",
+          "cnClient": "羞怯的蓝宝石",
+          "jpClient": "恥じらいのエメラルド",
+          "cost": 1080
+        },
+        "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/514/Sheepish_Sapphire/image.png"
+      }
+    ],
+    "gallery": [
+      {
+        "description": "San Francisco, Ticonderoga, New Jersey, Archerfish, Boise, Morrison",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_1.png"
+      }
+    ]
   },
   {
     "wikiUrl": "https://azurlane.koumakan.jp/Bremerton",
@@ -20053,7 +20653,6 @@
       {
         "name": "Mission Relaxation",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/380/Mission_Relaxation/image.nobg.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/380/Mission_Relaxation/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_109.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/380/Mission_Relaxation/chibi.png",
         "info": {
@@ -21189,7 +21788,7 @@
           "cn": "空域辅助",
           "jp": "航空戦力支援"
         },
-        "description": "The following buffs are active as long as this ship is afloat:\nAt the start of the battle, increases AVI by 4.5% (12.0%) and RLD by 5.0% (10.0%) for all CVs and CVLs in the same fleet this ship is in, and decreases the load time of this ship's first Airstrike by 10.0% (25.0%).\nAt the start of the battle, increases RLD and AVI by 3.5% (8.0%) (Regular play) / 2.0% (4.0%) (Operation Siren) for all CVs and CVLs in the fleet this ship is NOT in. Effect does not stack with the same skill.",
+        "description": "As long as this ship is afloat:\nIncrease AVI by 4.5% (12.0%) and RLD by 5.0% (10.0%) for all CVs and CVLs in your fleet (including this ship). Decrease the load time of this ship's first airstrike by 10.0% (25.0%).\nIncrease AVI and RLD by 3.5% (8.0%) for all CVs and CVLs in each fleet this ship is NOT in. [In Operation Siren, increase these stats by 2.0% (4.0%) instead.]\n(This skill does not stack with itself or other Supporting Wings skills in any way. The same-fleet buff takes priority over the cross-fleet buff, if applicable.)",
         "color": "gold"
       }
     ],
@@ -23390,6 +23989,10 @@
       {
         "description": "Chapayev, Sovetskaya Rossiya, Tashkent",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.02.25_3.png"
+      },
+      {
+        "description": "Gangut, Grozny, Tashkent, Pamiat Merkuria, Sovetskaya Rossiya, Chapayev, Avrora, Minsk",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_4.png"
       }
     ]
   },
@@ -24220,6 +24823,10 @@
       {
         "description": "Hermione, Dido, Cheshire, Sirius",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.02.04_9.png"
+      },
+      {
+        "description": "Hermione, Perseus, Cheshire",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_9.png"
       }
     ]
   },
@@ -24673,7 +25280,10 @@
         "url": "https://twitter.com/tofuyuui"
       },
       "web": null,
-      "voice": null
+      "voice": {
+        "name": "Hitomi Sekine",
+        "url": "http://www.imenterprise.jp/profile.php?id=43"
+      }
     },
     "skins": [
       {
@@ -24917,7 +25527,10 @@
         "url": "https://twitter.com/tofuyuui"
       },
       "web": null,
-      "voice": null
+      "voice": {
+        "name": "Hitomi Sekine",
+        "url": "http://www.imenterprise.jp/profile.php?id=43"
+      }
     },
     "skins": [
       {
@@ -25665,13 +26278,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/037/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/037/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/037/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/037/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Heartfelt Moment",
           "cnClient": "心动一刻",
           "jpClient": "ときめきモメント"
@@ -26489,6 +27102,10 @@
       {
         "description": "Columbia and Cleveland in battle",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_cleveland_1.png"
+      },
+      {
+        "description": "St. Louis, Columbia, Minneapolis",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_6.png"
       }
     ]
   },
@@ -27471,7 +28088,6 @@
       {
         "name": "Fierce Beachside Battle",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/411/Fierce_Beachside_Battle/image.nobg.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/411/Fierce_Beachside_Battle/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_106.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/411/Fierce_Beachside_Battle/chibi.png",
         "info": {
@@ -27878,7 +28494,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -30044,7 +30660,6 @@
       {
         "name": "Sea Star on Shore",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/090/Sea_Star_on_Shore/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/090/Sea_Star_on_Shore/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_106.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/090/Sea_Star_on_Shore/chibi.png",
         "info": {
@@ -31449,6 +32064,10 @@
       {
         "description": "Sirius, Dido, Formidable",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.02.04_10.png"
+      },
+      {
+        "description": "Formidable, Sirius, Dido",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_8.png"
       }
     ]
   },
@@ -32960,7 +33579,6 @@
       {
         "name": "Default",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/501/Default/image.nobg.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/501/Default/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/501/Default/chibi.png",
         "info": {
@@ -32972,7 +33590,6 @@
       {
         "name": "Lustrous Onyx Sirenetta",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/501/Lustrous_Onyx_Sirenetta/image.nobg.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/501/Lustrous_Onyx_Sirenetta/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_133.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/501/Lustrous_Onyx_Sirenetta/chibi.png",
         "info": {
@@ -33523,6 +34140,10 @@
       {
         "description": "Gascogne, Dunkerque",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.12.212_1.png"
+      },
+      {
+        "description": "Dunkerque, Jean Bart, Gascogne, Le Malin",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_2.png"
       }
     ]
   },
@@ -33967,7 +34588,7 @@
         "heavy": false,
         "aviation": false,
         "limited": "Only during event: Scherzo of Iron and Blood",
-        "exchange": false
+        "exchange": "Merit"
       }
     },
     "obtainedFrom": {
@@ -35018,13 +35639,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/077/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/077/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/077/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/077/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Starlight Oath",
           "cnClient": "誓约的星光",
           "jpClient": "マリースター"
@@ -38051,6 +38672,20 @@
           "cost": 880
         },
         "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/147/The_Lady_of_the_Beach/image.png"
+      },
+      {
+        "name": "Timeless Classics",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/147/Timeless_Classics/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_146.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/147/Timeless_Classics/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Timeless Classics",
+          "cnClient": "梳妆的“大小姐”",
+          "jpClient": "クラシック・ドレスアップ！",
+          "cost": 880
+        }
       }
     ],
     "gallery": [
@@ -38085,6 +38720,10 @@
       {
         "description": "Sirius, Dido, Formidable",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.02.04_10.png"
+      },
+      {
+        "description": "Formidable, Sirius, Dido",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_8.png"
       }
     ]
   },
@@ -39336,13 +39975,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Plan011/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Plan011/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Plan011/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Plan011/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Zeremonie of the Cradle",
           "cnClient": "摇篮的Zeremonie",
           "jpClient": "ユリカゴのセレモニー"
@@ -39380,6 +40019,10 @@
       {
         "description": "Z23, Admiral Hipper, Prinz Eugen, Scharnhorst, Gneisenau, Z46, Graf Zeppelin, Tirpitz, U-556, Bismarck, U-81, Roon, Admiral Graf Spee, Deutschland, Friedrich der Große",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2019.12.26_10.png"
+      },
+      {
+        "description": "Z23, Roon, Friedrich der Grosse, Graf Zeppelin, Admiral Graf Spee, Prinz Eugen with Hood and Glorious",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_10.png"
       }
     ]
   },
@@ -40555,7 +41198,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -41905,6 +42548,10 @@
       {
         "description": "Gangut and Avrora",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.02.25_1.png"
+      },
+      {
+        "description": "Gangut, Grozny, Tashkent, Pamiat Merkuria, Sovetskaya Rossiya, Chapayev, Avrora, Minsk",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_4.png"
       }
     ]
   },
@@ -42047,7 +42694,7 @@
           "cn": "精密操作协议",
           "jp": "精密射撃プロトコル"
         },
-        "description": "[Regular]Main Gun can be fired twice per reload, and each salvo can be fired independently. This ship's damage bonus with manually aimed salvos becomes 25% (40%). Every 20 seconds after battle starts: 50% (100%) chance to fire a special barrage (damage is based on skill level).Barrage preview (gif), Enhanced barrage preview (gif)[Operation Siren]Each Main Gun reload gives this ship 2 Salvoes that can be fired independently (this effect is unaffected by your ship's damage status). This ship's DMG bonus with manually aimed Salvoes becomes 25% (40%). Every 20s: 50% (100%) chance to fire a special barrage (barrage DMG is based on the skill's level). [This skill's sortie battle counter resets when moving to a new area or changing your formation within Operation Siren.]",
+        "description": "This ship's main gun can be fired twice per reload cycle, and each salvo can be fired independently. This ship's damage bonus with manually-aimed salvos becomes 25.0% (40.0%). Every 20 seconds after battle starts, 50.0% (100.0%) chance to fire a special barrage (damage scales with skill level).Barrage preview (gif), Enhanced barrage preview (gif)(The change to her main gun firing characteristics still applies when experiencing Toll of War in Operation Siren, although the rest of the skill does not.)",
         "color": "pink"
       },
       {
@@ -42216,6 +42863,10 @@
       {
         "description": "Gascogne, Dunkerque",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.12.212_1.png"
+      },
+      {
+        "description": "Dunkerque, Jean Bart, Gascogne, Le Malin",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_2.png"
       }
     ]
   },
@@ -43014,7 +43665,6 @@
       {
         "name": "High Tide Under the Sunlight",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/412/High_Tide_Under_the_Sunlight/image.nobg.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/412/High_Tide_Under_the_Sunlight/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_133.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/412/High_Tide_Under_the_Sunlight/chibi.png",
         "info": {
@@ -44593,6 +45243,10 @@
       {
         "description": "Admiral Graf Spee, Prinz Eugen, Deutschland, Z46, Bismarck, Graf Zeppelin, Tirpitz, Admiral Hipper",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.09.17_7.png"
+      },
+      {
+        "description": "Z23, Roon, Friedrich der Grosse, Graf Zeppelin, Admiral Graf Spee, Prinz Eugen with Hood and Glorious",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_10.png"
       }
     ]
   },
@@ -44798,7 +45452,6 @@
       {
         "name": "Default",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Collab008/Default/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Collab008/Default/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Collab008/Default/chibi.png",
         "info": {
@@ -44809,7 +45462,6 @@
       {
         "name": "Goddesses' Moment",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Collab008/Goddesses_Moment/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Collab008/Goddesses_Moment/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_204.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Collab008/Goddesses_Moment/chibi.png",
         "info": {
@@ -45466,7 +46118,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -45739,7 +46391,7 @@
         "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/499/all_out_assault.png",
         "names": {
           "en": "All Out Assault",
-          "cn": "全弹发射I",
+          "cn": "全弹发射",
           "jp": "全弾発射"
         },
         "description": "Activates All Out Assault Ⅱ: Gnevny once every 10 times the Main Guns are fired.",
@@ -46117,6 +46769,10 @@
       {
         "description": "Pamiat Merkuria, Grozny, Gangut, Sovetskaya Rossiya, Chapayev, Tashkent, Minsk",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.02.27_3.png"
+      },
+      {
+        "description": "Gangut, Grozny, Tashkent, Pamiat Merkuria, Sovetskaya Rossiya, Chapayev, Avrora, Minsk",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_4.png"
       }
     ]
   },
@@ -48178,6 +48834,10 @@
       {
         "description": "Ping Hai, York, Jersey, Haruna, Souryuu, Eldridge and Ryuujou in a town setting",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_in_town.png"
+      },
+      {
+        "description": "Hiei, Kongou, Haruna, Kirishima",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_7.png"
       }
     ]
   },
@@ -48818,7 +49478,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When this ship fires its Torpedoes: 15.0% (30.0%) chance to launch a second wave of Torpedoes.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -49146,6 +49806,20 @@
           "jpClient": "雪の初春",
           "cost": 700
         }
+      },
+      {
+        "name": "Hatsuharu in the Limelight",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/171/Hatsuharu_in_the_Limelight/image.nobg.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_146.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/171/Hatsuharu_in_the_Limelight/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Hatsuharu in the Limelight",
+          "enClient": "Hatsuharu in the Limelight",
+          "cnClient": "春邀灯火",
+          "jpClient": "灯の初春"
+        },
+        "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/171/Hatsuharu_in_the_Limelight/image.png"
       }
     ],
     "gallery": []
@@ -49311,7 +49985,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -51193,6 +51867,20 @@
           "jpClient": "ピュアホワイトホリデー",
           "cost": 1180
         }
+      },
+      {
+        "name": "Graceful Afternoon Tea",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/463/Graceful_Afternoon_Tea/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_146.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/463/Graceful_Afternoon_Tea/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Graceful Afternoon Tea",
+          "cnClient": "女仆的优雅午后",
+          "jpClient": "午後喫茶「メイドの優雅」",
+          "cost": 880
+        }
       }
     ],
     "gallery": [
@@ -51207,6 +51895,10 @@
       {
         "description": "Hermione, Dido, Cheshire, Sirius",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.02.04_9.png"
+      },
+      {
+        "description": "Hermione, Perseus, Cheshire",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_9.png"
       }
     ]
   },
@@ -51751,6 +52443,10 @@
       {
         "description": "Illustrious, Hiei, Swiftsure, Taihou, Azuma, Yukikaze",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.01.22_5.png"
+      },
+      {
+        "description": "Hiei, Kongou, Haruna, Kirishima",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_7.png"
       }
     ]
   },
@@ -52576,7 +53272,7 @@
       "level100": {
         "health": "4892",
         "armor": "Medium",
-        "reload": "118",
+        "reload": "115",
         "luck": "36",
         "firepower": "0",
         "torpedo": "0",
@@ -52591,7 +53287,7 @@
       "level120": {
         "health": "5699",
         "armor": "Medium",
-        "reload": "142",
+        "reload": "138",
         "luck": "36",
         "firepower": "0",
         "torpedo": "0",
@@ -52658,9 +53354,9 @@
         "color": "deepskyblue"
       },
       {
-        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/30001/scorched_blade·hiryuu.png",
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/30001/ashen_might·hiryuu.png",
         "names": {
-          "en": "Scorched Blade·Hiryuu",
+          "en": "Ashen Might·Hiryuu",
           "cn": "破敌之炬・龙II",
           "jp": "炬火の力・飛龍"
         },
@@ -53973,13 +54669,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/129/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/129/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/129/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/129/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Rosey Love Poem",
           "cnClient": "蔷薇恋诗",
           "jpClient": "薔薇恋詩"
@@ -54013,6 +54709,21 @@
           "cost": 880
         },
         "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/129/Porcelain_Grace/image.png"
+      },
+      {
+        "name": "Dawnlight's Dame",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/129/Dawnlights_Dame/image.nobg.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_146.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/129/Dawnlights_Dame/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Dawnlight's Dame",
+          "cnClient": "晨曦的淑女",
+          "jpClient": "サンシャイン・グレース",
+          "cost": 880
+        },
+        "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/129/Dawnlights_Dame/image.png"
       }
     ],
     "gallery": [
@@ -56557,6 +57268,21 @@
           "jpClient": "おまくら天国",
           "cost": 880
         }
+      },
+      {
+        "name": "Blossoming Bunny",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/338/Blossoming_Bunny/image.nobg.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_145.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/338/Blossoming_Bunny/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Blossoming Bunny",
+          "cnClient": "粉红甜心兔",
+          "jpClient": "ブロッサム・バニー",
+          "cost": 880
+        },
+        "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/338/Blossoming_Bunny/image.png"
       }
     ],
     "gallery": []
@@ -58755,13 +59481,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/145/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/145/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/145/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/145/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Morning Star of Love and Hope",
           "cnClient": "爱与希望的晨星",
           "jpClient": "愛と希望の暁星"
@@ -59425,7 +60151,8 @@
       107221,
       107222,
       107223,
-      107224
+      107224,
+      107984
     ],
     "_code": 377,
     "names": {
@@ -59504,6 +60231,36 @@
         "oilConsumption": "11",
         "accuracy": "89",
         "antisubmarineWarfare": "109"
+      },
+      "level100Retrofit": {
+        "health": "4345",
+        "armor": "Medium",
+        "reload": "178",
+        "luck": "78",
+        "firepower": "0",
+        "torpedo": "0",
+        "evasion": "54",
+        "speed": "31",
+        "antiair": "304",
+        "aviation": "293",
+        "oilConsumption": "11",
+        "accuracy": "75",
+        "antisubmarineWarfare": "95"
+      },
+      "level120Retrofit": {
+        "health": "5006",
+        "armor": "Medium",
+        "reload": "202",
+        "luck": "78",
+        "firepower": "0",
+        "torpedo": "0",
+        "evasion": "83",
+        "speed": "31",
+        "antiair": "338",
+        "aviation": "330",
+        "oilConsumption": "11",
+        "accuracy": "89",
+        "antisubmarineWarfare": "109"
       }
     },
     "slots": [
@@ -59511,19 +60268,22 @@
         "maxEfficiency": 130,
         "minEfficiency": 115,
         "type": "Fighters",
-        "max": 3
+        "max": 3,
+        "kaiEfficiency": 145
       },
       {
         "maxEfficiency": 145,
         "minEfficiency": 130,
         "type": "Torpedo Bombers",
-        "max": 3
+        "max": 3,
+        "kaiEfficiency": 150
       },
       {
         "maxEfficiency": 80,
         "minEfficiency": 80,
         "type": "Anti-Air Guns",
-        "max": 1
+        "max": 1,
+        "kaiEfficiency": 80
       }
     ],
     "enhanceValue": {
@@ -59545,7 +60305,7 @@
           "cn": "鹰击长空",
           "jp": "大空を撃つ白鷹"
         },
-        "description": "Eagle Union airplanes in use gain 5% (15%) additional Efficiency.",
+        "description": "Eagle Union airplanes in use gain 5.0% (15.0%) additional efficiency.",
         "color": "pink"
       },
       {
@@ -59555,7 +60315,17 @@
           "cn": "天之骑士",
           "jp": "大空の騎士団"
         },
-        "description": "When launching an airstrike: launches an additional Lv.1 (Lv.10) TBF Avenger squadron. If sortied with any Cleveland-class cruisers: increases their Firepower by 3.5% (8.0%), increases own Air Power and Accuracy by 5% (15%), and enhances TBF Avenger squadron barrage pattern.",
+        "description": "When this ship launches an airstrike, launch a TBF avenger aerial barrage (barrage damage scales with skill level). If this ship is sortied with any Cleveland-class cruisers, then increase their FP by 3.5% (8.0%), increase this ship's AVI and Accuracy by 5.0% (15.0%), and enhance the TBF Avenger barrage.",
+        "color": "gold"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/377/supporting_wings_independence.kai.png",
+        "names": {
+          "en": "(Retrofit) Supporting Wings - Independence",
+          "cn": "空域辅助·独立",
+          "jp": "航空戦力支援・インディペンデンス"
+        },
+        "description": "Improves the \"Knight of the Sky\" TBF Avenger airstrike. Additionally, as long as this ship is afloat:\nIncrease AVI by 4.5% (12.0%) and RLD by 5.0% (10.0%) for all CVs and CVLs in your fleet (including this ship). Decrease the load time of this ship's first airstrike by 10.0% (25.0%).\nIncrease AVI and RLD by 3.5% (8.0%) for all CVs and CVLs in each fleet this ship is NOT in. [In Operation Siren, increase these stats by 2.0% (4.0%) instead.]\n(This skill does not stack with itself or other Supporting Wings skills in any way. The same-fleet buff takes priority over the cross-fleet buff, if applicable.)",
         "color": "gold"
       }
     ],
@@ -59599,6 +60369,221 @@
         "total": 36
       }
     },
+    "retrofit": true,
+    "retrofitId": "3377",
+    "retrofitProjects": {
+      "A": {
+        "id": "Hull Improvement Ⅰ",
+        "attributes": [
+          "\"Health\" +60"
+        ],
+        "materials": [
+          "2x \"CarrierT1BP\""
+        ],
+        "coins": 400,
+        "level": 1,
+        "levelBreakLevel": 0,
+        "levelBreakStars": "★★☆☆☆",
+        "recurrence": 1,
+        "require": []
+      },
+      "B": {
+        "id": "Reload Enhancement Ⅰ",
+        "attributes": [
+          "\"Reload\" +5"
+        ],
+        "materials": [
+          "3x \"CarrierT1BP\""
+        ],
+        "coins": 600,
+        "level": 5,
+        "levelBreakLevel": 0,
+        "levelBreakStars": "★★☆☆☆",
+        "recurrence": 1,
+        "require": [
+          "A"
+        ]
+      },
+      "C": {
+        "id": "Air Elite Ⅰ",
+        "attributes": [
+          "Fighters Efficiency +4%"
+        ],
+        "materials": [
+          "3x \"CarrierT1BP\""
+        ],
+        "coins": 800,
+        "level": 20,
+        "levelBreakLevel": 1,
+        "levelBreakStars": "★★★☆☆",
+        "recurrence": 1,
+        "require": [
+          "A"
+        ]
+      },
+      "D": {
+        "id": "Anti-Air Enhancement Ⅰ",
+        "attributes": [
+          "\"Anti-air\" +15"
+        ],
+        "materials": [
+          "5x \"CarrierT1BP\""
+        ],
+        "coins": 1000,
+        "level": 25,
+        "levelBreakLevel": 1,
+        "levelBreakStars": "★★★☆☆",
+        "recurrence": 1,
+        "require": [
+          "C"
+        ]
+      },
+      "E": {
+        "id": "Torpedo Dive Ⅰ",
+        "attributes": [
+          "Torpedo Bombers Efficiency +5%"
+        ],
+        "materials": [
+          "3x \"CarrierT2BP\""
+        ],
+        "coins": 1200,
+        "level": 35,
+        "levelBreakLevel": 2,
+        "levelBreakStars": "★★★★☆",
+        "recurrence": 1,
+        "require": [
+          "C"
+        ]
+      },
+      "F": {
+        "id": "Aviation Enhancement Ⅰ",
+        "attributes": [
+          "\"Aviation\" +10"
+        ],
+        "materials": [
+          "2x \"CarrierT2BP\""
+        ],
+        "coins": 1500,
+        "level": 40,
+        "levelBreakLevel": 2,
+        "levelBreakStars": "★★★★☆",
+        "recurrence": 1,
+        "require": [
+          "E"
+        ]
+      },
+      "G": {
+        "id": "Hull Improvement Ⅱ",
+        "attributes": [
+          "\"Health\" +60 / +90"
+        ],
+        "materials": [
+          "2x / 3x \"CarrierT2BP\""
+        ],
+        "coins": 1800,
+        "level": 50,
+        "levelBreakLevel": 2,
+        "levelBreakStars": "★★★★☆",
+        "recurrence": 2,
+        "require": [
+          "E"
+        ]
+      },
+      "H": {
+        "id": "Reload Enhancement Ⅱ",
+        "attributes": [
+          "\"Reload\" +5 / +10"
+        ],
+        "materials": [
+          "1x / 2x \"CarrierT2BP\""
+        ],
+        "coins": 2000,
+        "level": 55,
+        "levelBreakLevel": 2,
+        "levelBreakStars": "★★★★☆",
+        "recurrence": 2,
+        "require": [
+          "G",
+          "B"
+        ]
+      },
+      "I": {
+        "id": "Air Elite Ⅱ",
+        "attributes": [
+          "Fighters Efficiency +4% / +7%"
+        ],
+        "materials": [
+          "1x / 1x \"CarrierT3BP\""
+        ],
+        "coins": 2500,
+        "level": 70,
+        "levelBreakLevel": 3,
+        "levelBreakStars": "★★★★★",
+        "recurrence": 2,
+        "require": [
+          "G"
+        ]
+      },
+      "J": {
+        "id": "Aviation Enhancement Ⅱ",
+        "grade": "sic This appears to be mislabeled as Aviation in game",
+        "attributes": [
+          "\"Anti-air\" +5 / +15"
+        ],
+        "materials": [
+          "1x / 2x \"CarrierT3BP\"",
+          "15x / 35x \"AAT3Plate\""
+        ],
+        "coins": 3000,
+        "level": 75,
+        "levelBreakLevel": 3,
+        "levelBreakStars": "★★★★★",
+        "recurrence": 2,
+        "require": [
+          "I"
+        ]
+      },
+      "K": {
+        "id": "Modernization",
+        "attributes": [
+          "\"Aviation\" +10",
+          "\"Anti-air\" +35",
+          "All Planes +1"
+        ],
+        "materials": [
+          "3x \"CarrierT3BP\"",
+          "1x \"Independence\" or \"Universal Bulin\""
+        ],
+        "coins": 4000,
+        "level": 85,
+        "levelBreakLevel": 3,
+        "levelBreakStars": "★★★★★",
+        "recurrence": 1,
+        "require": [
+          "I",
+          "J"
+        ]
+      },
+      "L": {
+        "id": "Tactical Learning",
+        "attributes": [
+          "Unlock Skill \"Supporting Wings - Independence\""
+        ],
+        "materials": [
+          "2x \"CarrierT3BP\"",
+          "50x \"AuxT3Plate\""
+        ],
+        "coins": 3000,
+        "level": 90,
+        "levelBreakLevel": 3,
+        "levelBreakStars": "★★★★★",
+        "recurrence": 1,
+        "require": [
+          "K"
+        ]
+      }
+    },
+    "retrofitHullType": "Light Carrier",
     "construction": {
       "constructionTime": "Cannot Be Constructed",
       "availableIn": {
@@ -59606,11 +60591,11 @@
         "heavy": false,
         "aviation": false,
         "limited": false,
-        "exchange": false
+        "exchange": "Core data"
       }
     },
     "obtainedFrom": {
-      "obtainedFrom": "Available as a reward during \"Air Raid Drills with Essex\" Event.",
+      "obtainedFrom": "Available in the Core Data Shop for 1200 \"Core Data\".",
       "fromMaps": []
     },
     "misc": {
@@ -59644,6 +60629,16 @@
         "info": {
           "live2dModel": false,
           "obtainedFrom": "Default"
+        }
+      },
+      {
+        "name": "Retrofit",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/377/Retrofit/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/377/Retrofit/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Retrofit"
         }
       },
       {
@@ -62608,13 +63603,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/101/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/101/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/101/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/101/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Blissful Purity",
           "cnClient": "幸福纯白",
           "jpClient": "幸せのジューンブライド"
@@ -62742,6 +63737,10 @@
       {
         "description": "Bremerton, Z23, Laffey, Javelin, Ayanami, Prinz Heinrich, Kumano, Pamiat Merkuria",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.03.12_1.png"
+      },
+      {
+        "description": "Javelin, Laffey, Z23, Ayanami",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_3.png"
       }
     ]
   },
@@ -62873,7 +63872,7 @@
           "cn": "海盗之魂",
           "jp": "パイレーツソウル"
         },
-        "description": "During battle: First main gun volley of each salvo deals 40% (60%) more damage. Manual aim damage bonus increased to 40% (60%).",
+        "description": "This ship deals 40.0% (60.0%) more damage with each aimed shot from its main guns. Additionally, for each aimed shot that is manually aimed, the manual aim bonus becomes 40.0% (60.0%). (These two bonuses stack additively with each other. Aimed shots are the first salvo round of each main gun volley, regardless of whether auto-mode or the player aimed them. They get a “slow-down” effect outside of exercises.)",
         "color": "pink"
       },
       {
@@ -62883,7 +63882,7 @@
           "cn": "最后的炮火",
           "jp": "ラストファイア"
         },
-        "description": "If equipped with the Quadruple 380mm (Mle 1935) gun, main gun critical rate is increased by 10% (30%) and main gun critical damage is increased by 20% (50%).",
+        "description": "If this ship is equipped with the Quadruple 380mm (Mle 1935) gun, increase this ship's main gun critical rate by 10.0% (30.0%) and main gun critical damage by 20.0% (50.0%).",
         "color": "pink"
       }
     ],
@@ -63027,6 +64026,10 @@
       {
         "description": "Jean Bart",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_Jean_1.png"
+      },
+      {
+        "description": "Dunkerque, Jean Bart, Gascogne, Le Malin",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_2.png"
       }
     ]
   },
@@ -65511,13 +66514,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/225/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/225/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/225/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/225/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Sacred Blue Lily",
           "cnClient": "苍染的君子兰",
           "jpClient": "浄界の君子蘭"
@@ -66035,7 +67038,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -66540,7 +67543,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -68322,6 +69325,10 @@
       {
         "description": "Chitose, Kashino (Facing backwards), Kumano (Facing backwards), Kii, Shinano, Suzutsuki",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.09.17_1.png"
+      },
+      {
+        "description": "Amagi, Shinano, Kashino, Suzutsuki",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_13.png"
       }
     ]
   },
@@ -69060,13 +70067,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/288/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/288/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/288/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/288/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Unsullied White Fox",
           "cnClient": "美梦构造论",
           "jpClient": "甘夢のアーキテクチャ"
@@ -69281,7 +70288,7 @@
         "heavy": true,
         "aviation": true,
         "limited": false,
-        "exchange": false
+        "exchange": "Medal"
       }
     },
     "obtainedFrom": {
@@ -70008,10 +71015,10 @@
       "constructionTime": "04:50:00",
       "availableIn": {
         "light": false,
-        "heavy": false,
+        "heavy": "CN/JP Only",
         "aviation": false,
         "limited": "Only during event: Scherzo of Iron and Blood",
-        "exchange": false
+        "exchange": "Merit"
       }
     },
     "obtainedFrom": {
@@ -70572,6 +71579,20 @@
           "cnClient": "新年的剑鬼",
           "jpClient": "正月の剣鬼"
         }
+      },
+      {
+        "name": "Token and Ghost",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/186/Token_and_Ghost/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_145.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/186/Token_and_Ghost/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Token and Ghost",
+          "cnClient": "Token＆Ghost",
+          "jpClient": "トークンとゴースト",
+          "cost": 780
+        }
       }
     ],
     "gallery": [
@@ -71109,7 +72130,12 @@
         }
       }
     ],
-    "gallery": []
+    "gallery": [
+      {
+        "description": "Hiei, Kongou, Haruna, Kirishima",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_7.png"
+      }
+    ]
   },
   {
     "wikiUrl": "https://azurlane.koumakan.jp/Kirov",
@@ -71548,7 +72574,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -72927,7 +73953,12 @@
         "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/204/Hospital_Talent/image.png"
       }
     ],
-    "gallery": []
+    "gallery": [
+      {
+        "description": "Hiei, Kongou, Haruna, Kirishima",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_7.png"
+      }
+    ]
   },
   {
     "wikiUrl": "https://azurlane.koumakan.jp/Kumano",
@@ -73560,7 +74591,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -75106,7 +76137,7 @@
           "cn": "所罗门的战神",
           "jp": "ソロモンの戦神"
         },
-        "description": "When firing main gun, 5% chance to increase own Firepower, Reload, and Evasion by 20% (40%) for 8 seconds.",
+        "description": "When firing main gun, 5% chance to increase own Firepower, Reload, and Evasion by 20% (40%) for 8 seconds. (5s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -75488,13 +76519,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/019/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/019/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/019/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/019/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "White Rabbit's Oath",
           "cnClient": "白兔与誓约",
           "jpClient": "ウサウサブライド"
@@ -75652,6 +76683,10 @@
       {
         "description": "Bremerton, Z23, Laffey, Javelin, Ayanami, Prinz Heinrich, Kumano, Pamiat Merkuria",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.03.12_1.png"
+      },
+      {
+        "description": "Javelin, Laffey, Z23, Ayanami",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_3.png"
       }
     ]
   },
@@ -76460,6 +77495,10 @@
       {
         "description": "Taihou, Le Malin, Roon",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.10.22_1.png"
+      },
+      {
+        "description": "Dunkerque, Jean Bart, Gascogne, Le Malin",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_2.png"
       }
     ]
   },
@@ -79570,7 +80609,7 @@
           "cn": "陆间海的西南风",
           "jp": "南西を吹くマエストラーレ"
         },
-        "description": "When any ship in your fleet (other than this one) takes DMG: 30% chance to fire a Lv.1 (Lv.10) barrage (15s cooldown). Damage is based on the skill's level.",
+        "description": "When any ship in your fleet (other than this one) takes DMG: 30% chance to fire a Lv.1 (Lv.10) barrageIncorrectly listed as smokebomb ingame (15s cooldown). Damage is based on the skill's level.",
         "color": "pink"
       },
       {
@@ -79942,6 +80981,214 @@
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.03.12_2.png"
       }
     ]
+  },
+  {
+    "wikiUrl": "https://azurlane.koumakan.jp/Little_Enterprise",
+    "id": "516",
+    "_gid": 10799,
+    "_sid": [
+      107991,
+      107992,
+      107993,
+      107994
+    ],
+    "_code": 516,
+    "names": {
+      "en": "Little Enterprise",
+      "code": "USS Enterprise",
+      "cn": "小企业",
+      "jp": "リトル・エンタープライズ",
+      "kr": "Little Enterprise"
+    },
+    "exists": {
+      "en": true,
+      "cn": true,
+      "jp": true,
+      "kr": false
+    },
+    "hexagon": [
+      0,
+      0,
+      4,
+      2,
+      3,
+      3
+    ],
+    "class": "Yorktown",
+    "nationality": "Eagle Union",
+    "hullType": "Aircraft Carrier",
+    "thumbnail": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/516/thumbnail.png",
+    "rarity": "Elite",
+    "stars": {
+      "stars": "★★★★★",
+      "value": 5
+    },
+    "stats": {
+      "baseStats": {
+        "health": "983",
+        "armor": "Medium",
+        "reload": "43",
+        "luck": "93",
+        "firepower": "0",
+        "torpedo": "0",
+        "evasion": "13",
+        "speed": "32",
+        "antiair": "56",
+        "aviation": "77",
+        "oilConsumption": "4",
+        "accuracy": "32",
+        "antisubmarineWarfare": "0"
+      },
+      "level100": {
+        "health": "5084",
+        "armor": "Medium",
+        "reload": "101",
+        "luck": "93",
+        "firepower": "0",
+        "torpedo": "0",
+        "evasion": "34",
+        "speed": "32",
+        "antiair": "263",
+        "aviation": "364",
+        "oilConsumption": "12",
+        "accuracy": "84",
+        "antisubmarineWarfare": "0"
+      },
+      "level120": {
+        "health": "5897",
+        "armor": "Medium",
+        "reload": "116",
+        "luck": "93",
+        "firepower": "0",
+        "torpedo": "0",
+        "evasion": "54",
+        "speed": "32",
+        "antiair": "299",
+        "aviation": "405",
+        "oilConsumption": "12",
+        "accuracy": "94",
+        "antisubmarineWarfare": "0"
+      }
+    },
+    "slots": [
+      {
+        "maxEfficiency": 125,
+        "minEfficiency": 110,
+        "type": "Fighters",
+        "max": 3
+      },
+      {
+        "maxEfficiency": 125,
+        "minEfficiency": 110,
+        "type": "Dive Bombers",
+        "max": 3
+      },
+      {
+        "maxEfficiency": 125,
+        "minEfficiency": 110,
+        "type": "Torpedo Bombers",
+        "max": 2
+      }
+    ],
+    "enhanceValue": {
+      "firepower": 0,
+      "torpedo": 0,
+      "aviation": 63,
+      "reload": 8
+    },
+    "scrapValue": {
+      "coin": 9,
+      "oil": 3,
+      "medal": 4
+    },
+    "skills": [
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/516/lucky_little_e.png",
+        "names": {
+          "en": "Lucky Little E",
+          "cn": "Little Luckye",
+          "jp": "リトルビッグ「E」"
+        },
+        "description": "70.0% (100.%) chance to activate one of the following effects (chosen at random) when this ship launches an Airstrike:\nDoubles this ship's DMG dealt to all enemies for 6s.\nGrants this ship 100% Evasion Rate for 5s.\nDecreases the Speed of all enemies by 15.0% (30.0%) for 4s.",
+        "color": "pink"
+      }
+    ],
+    "limitBreaks": [
+      [
+        "All fighters +1",
+        "Aircraft efficiency +3%"
+      ],
+      [
+        "Hangar capacity +1",
+        "All Dive Bombers +1",
+        "Aircraft efficiency +5%"
+      ],
+      [
+        "All aircraft +1",
+        "Aircraft efficiency +7%"
+      ]
+    ],
+    "fleetTech": {
+      "statsBonus": {
+        "collection": null,
+        "maxLevel": null
+      },
+      "techPoints": {
+        "collection": 0,
+        "maxLimitBreak": 0,
+        "maxLevel": 0,
+        "total": 0
+      }
+    },
+    "construction": {
+      "constructionTime": "Cannot Be Constructed",
+      "availableIn": {
+        "light": false,
+        "heavy": false,
+        "aviation": false,
+        "limited": false,
+        "exchange": false
+      }
+    },
+    "obtainedFrom": {
+      "obtainedFrom": "Reward from the Soar Fledgling Wings! event.",
+      "fromMaps": []
+    },
+    "misc": {
+      "artist": {
+        "name": "豆芽菜",
+        "url": "https://azurlane.koumakan.jp/Artists#.E8.B1.86.E8.8A.BD.E8.8F.9C"
+      },
+      "pixiv": {
+        "name": "豆芽菜",
+        "url": "https://www.pixiv.net/en/users/13779480"
+      },
+      "twitter": {
+        "name": "豆芽",
+        "url": "https://twitter.com/douya233"
+      },
+      "web": {
+        "name": "乐色豆芽",
+        "url": "https://weibo.com/p/1005057292643099"
+      },
+      "voice": {
+        "name": "Yui Ishikawa",
+        "url": "https://en.wikipedia.org/wiki/Yui_Ishikawa"
+      }
+    },
+    "skins": [
+      {
+        "name": "Default",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/516/Default/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/516/Default/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Default"
+        }
+      }
+    ],
+    "gallery": []
   },
   {
     "wikiUrl": "https://azurlane.koumakan.jp/Little_Illustrious",
@@ -81613,7 +82860,6 @@
       {
         "name": "Retrofit",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/070/Retrofit/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/070/Retrofit/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/070/Retrofit/chibi.png",
         "info": {
@@ -81889,7 +83135,6 @@
       {
         "name": "Lonesome Beachfarer",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/504/Lonesome_Beachfarer/image.nobg.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/504/Lonesome_Beachfarer/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_106.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/504/Lonesome_Beachfarer/chibi.png",
         "info": {
@@ -82331,7 +83576,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -84304,7 +85549,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -84774,7 +86019,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -85615,13 +86860,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/320/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/320/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/320/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/320/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Untarnished Splendor",
           "cnClient": "无垢舰裳",
           "jpClient": "艦前式裳"
@@ -86915,13 +88160,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/364/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/364/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/364/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/364/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Trapper White",
           "cnClient": "Trapper white",
           "jpClient": "トラッパーホワイト"
@@ -86974,6 +88219,10 @@
       {
         "description": "Izumo, Yamashiro, Eldridge, Minneapolis",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2019.12.19_6.png"
+      },
+      {
+        "description": "St. Louis, Columbia, Minneapolis",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_6.png"
       }
     ]
   },
@@ -87237,6 +88486,10 @@
       {
         "description": "Minsk",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.02.25_2.png"
+      },
+      {
+        "description": "Gangut, Grozny, Tashkent, Pamiat Merkuria, Sovetskaya Rossiya, Chapayev, Avrora, Minsk",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_4.png"
       }
     ]
   },
@@ -87367,7 +88620,7 @@
           "cn": "害羞的助理少女",
           "jp": "恥ずかしがり屋のサポーター"
         },
-        "description": "After the battle starts: for 60s, increases this ship's FP and its armor modifier against Light Armor enemies by 5.0% (15.0%). If there are other Venus Vacation characters in the same fleet: increases this ship's AA by 5.0% (15.0%) and decreases its DMG taken from guns by 4.5% (12.0%).",
+        "description": "For the first 60 seconds of the battle, increase this ship's FP stat and its armor modifier against Light Armor enemies by 5.0% (15.0%). If there is another Venus Vacation character in the same fleet as this ship, increase this ship's AA stat by 5.0% (15.0%) and decrease this ship's damage taken from shelling by 4.5% (12.0%).",
         "color": "gold"
       },
       {
@@ -87377,7 +88630,7 @@
           "cn": "维纳斯之友",
           "jp": "ヴィーナスフレンズ"
         },
-        "description": "Every 20s after the start of the battle: fires a Lv.1 (Lv.10) special barrage (DMG is based on the skill's level). Enemies hit by this barrage take 5.0% (15.0%) more DMG from Venus Vacation characters for 8s.",
+        "description": "Every 20 seconds after the start of the battle, fire a special barrage (damage scales with skill level). Enemies hit by this barrage take 5.0% (15.0%) more damage from Venus Vacation ships (including this ship) for 8 seconds.",
         "color": "pink"
       }
     ],
@@ -88801,6 +90054,20 @@
           "jpClient": "雪夜の華",
           "cost": 880
         }
+      },
+      {
+        "name": "Persephone's Throne",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/329/Persephones_Throne/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_146.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/329/Persephones_Throne/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Persephone's Throne",
+          "cnClient": "魔境的公主？",
+          "jpClient": "プリンセス・メタモルフォーゼ",
+          "cost": 880
+        }
       }
     ],
     "gallery": [
@@ -88811,6 +90078,265 @@
       {
         "description": "Montpelier, Cleveland, Erebus, Admiral Graf Spee",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2019.12.19_4.png"
+      }
+    ]
+  },
+  {
+    "wikiUrl": "https://azurlane.koumakan.jp/Morrison",
+    "id": "515",
+    "_gid": 10147,
+    "_sid": [
+      101471,
+      101472,
+      101473,
+      101474
+    ],
+    "_code": 515,
+    "names": {
+      "en": "Morrison",
+      "code": "USS Morrison",
+      "cn": "莫里森",
+      "jp": "モリソン",
+      "kr": "Morrison"
+    },
+    "exists": {
+      "en": true,
+      "cn": true,
+      "jp": true,
+      "kr": false
+    },
+    "hexagon": [
+      2,
+      2,
+      0,
+      3,
+      2,
+      2
+    ],
+    "class": "Fletcher",
+    "nationality": "Eagle Union",
+    "hullType": "Destroyer",
+    "thumbnail": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/515/thumbnail.png",
+    "rarity": "Elite",
+    "stars": {
+      "stars": "★★★★★",
+      "value": 5
+    },
+    "stats": {
+      "baseStats": {
+        "health": "341",
+        "armor": "Light",
+        "reload": "77",
+        "luck": "48",
+        "firepower": "16",
+        "torpedo": "54",
+        "evasion": "59",
+        "speed": "42",
+        "antiair": "33",
+        "aviation": "0",
+        "oilConsumption": "2",
+        "accuracy": "75",
+        "antisubmarineWarfare": "53"
+      },
+      "level100": {
+        "health": "1762",
+        "armor": "Light",
+        "reload": "182",
+        "luck": "48",
+        "firepower": "73",
+        "torpedo": "254",
+        "evasion": "154",
+        "speed": "42",
+        "antiair": "154",
+        "aviation": "0",
+        "oilConsumption": "9",
+        "accuracy": "195",
+        "antisubmarineWarfare": "194"
+      },
+      "level120": {
+        "health": "2115",
+        "armor": "Light",
+        "reload": "209",
+        "luck": "48",
+        "firepower": "84",
+        "torpedo": "289",
+        "evasion": "160",
+        "speed": "42",
+        "antiair": "178",
+        "aviation": "0",
+        "oilConsumption": "9",
+        "accuracy": "205",
+        "antisubmarineWarfare": "215"
+      }
+    },
+    "slots": [
+      {
+        "maxEfficiency": 125,
+        "minEfficiency": 114,
+        "type": "DD Guns",
+        "max": 1
+      },
+      {
+        "maxEfficiency": 130,
+        "minEfficiency": 120,
+        "type": "Torpedoes",
+        "max": 2
+      },
+      {
+        "maxEfficiency": 130,
+        "minEfficiency": 120,
+        "type": "Anti-Air Guns",
+        "max": 1
+      }
+    ],
+    "enhanceValue": {
+      "firepower": 5,
+      "torpedo": 18,
+      "aviation": 0,
+      "reload": 14
+    },
+    "scrapValue": {
+      "coin": 4,
+      "oil": 3,
+      "medal": 4
+    },
+    "skills": [
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/515/emergency_beardrop.png",
+        "names": {
+          "en": "Emergency Beardrop",
+          "cn": "小熊的庇护",
+          "jp": "クマちゃんサポート"
+        },
+        "description": "Decreases the duration of Burns inflicted on this ship by 3s. When this ship sinks an enemy: until the end of the battle, increases this ship's AA by 1.5% (6.0%) and FP by 1.0% (5.0%), and also increases the ASW of your fleet by 1.0% (4.0%). This buff can be stacked up to 5 times.",
+        "color": "deepskyblue"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/515/flagship_cover.png",
+        "names": {
+          "en": "Flagship Cover",
+          "cn": "旗舰掩护",
+          "jp": "旗艦随伴"
+        },
+        "description": "While this ship is afloat: decreases the DMG your Flagship takes by 15.0% (25.0%).",
+        "color": "gold"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/515/all_out_assault_ⅱ.png",
+        "names": {
+          "en": "All Out Assault Ⅱ",
+          "cn": "全弹发射II",
+          "jp": "全弾発射-フレッチャー級Ⅱ"
+        },
+        "description": "Activates All Out Assault Ⅱ: Fletcher Class once every 10 times the Main Guns are fired.",
+        "color": "pink"
+      }
+    ],
+    "limitBreaks": [
+      [
+        "Unlock All Out Assault Ⅰ",
+        "All weapons' efficiency +2%"
+      ],
+      [
+        "Torpedo base +1",
+        "Torpedo preload +1",
+        "All weapons' efficiency +3%"
+      ],
+      [
+        "Improve All Out Assault",
+        "All weapons' efficiency +5%"
+      ]
+    ],
+    "fleetTech": {
+      "statsBonus": {
+        "collection": {
+          "applicable": [
+            "Destroyer"
+          ],
+          "bonus": "+1",
+          "stat": "health"
+        },
+        "maxLevel": {
+          "applicable": [
+            "Destroyer"
+          ],
+          "bonus": "+1",
+          "stat": "antisubmarineWarfare"
+        }
+      },
+      "techPoints": {
+        "collection": 8,
+        "maxLimitBreak": 17,
+        "maxLevel": 13,
+        "total": 38
+      }
+    },
+    "construction": {
+      "constructionTime": "",
+      "availableIn": {
+        "light": false,
+        "heavy": false,
+        "aviation": false,
+        "limited": false,
+        "exchange": false
+      }
+    },
+    "obtainedFrom": {
+      "fromMaps": []
+    },
+    "misc": {
+      "artist": {
+        "name": "水乌龟XD",
+        "url": "https://azurlane.koumakan.jp/Artists#.E6.B0.B4.E4.B9.8C.E9.BE.9FXD"
+      },
+      "pixiv": {
+        "name": "Suisai❤",
+        "url": "https://www.pixiv.net/member.php?id=1596981"
+      },
+      "twitter": {
+        "name": "水乌龟",
+        "url": "https://twitter.com/suisaiii"
+      },
+      "web": {
+        "name": "水乌龟XD",
+        "url": "https://www.weibo.com/suisao"
+      },
+      "voice": {
+        "name": "Sakura Namiki",
+        "url": "https://sigma7.co.jp/actors/namiki_sakura"
+      }
+    },
+    "skins": [
+      {
+        "name": "Default",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/515/Default/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/515/Default/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Default"
+        }
+      },
+      {
+        "name": "Sleeping Bunny",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/515/Sleeping_Bunny/image.nobg.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_145.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/515/Sleeping_Bunny/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Sleeping Bunny",
+          "cnClient": "小熊整备中",
+          "jpClient": "クマちゃんは整備中",
+          "cost": 780
+        },
+        "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/515/Sleeping_Bunny/image.png"
+      }
+    ],
+    "gallery": [
+      {
+        "description": "San Francisco, Ticonderoga, New Jersey, Archerfish, Boise, Morrison",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_1.png"
       }
     ]
   },
@@ -89035,7 +90561,6 @@
       {
         "name": "Default",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/375/Default/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/375/Default/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/375/Default/chibi.png",
         "info": {
@@ -91240,7 +92765,10 @@
         "name": "水乌龟XD",
         "url": "https://www.weibo.com/suisao"
       },
-      "voice": null
+      "voice": {
+        "name": "Yomogi Ashitaba",
+        "url": "https://yomogiashitaba.wixsite.com/mysite"
+      }
     },
     "skins": [
       {
@@ -91266,6 +92794,21 @@
           "jpClient": "幸せのロングウェーブ",
           "cost": 780
         }
+      },
+      {
+        "name": "Long-Awaited Warmth",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/450/LongAwaited_Warmth/image.nobg.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_146.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/450/LongAwaited_Warmth/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Long-Awaited Warmth",
+          "cnClient": "安心的“长波”",
+          "jpClient": "待ち望む暖かさ",
+          "cost": 780
+        },
+        "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/450/LongAwaited_Warmth/image.png"
       }
     ],
     "gallery": []
@@ -91753,13 +93296,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/212/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/212/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/212/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/212/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Great Fox's White Gown",
           "cnClient": "御狐的白装束",
           "jpClient": "御狐の白装束"
@@ -94501,6 +96044,265 @@
     "gallery": []
   },
   {
+    "wikiUrl": "https://azurlane.koumakan.jp/New_Jersey",
+    "id": "068",
+    "_gid": 10517,
+    "_sid": [
+      105171,
+      105172,
+      105173,
+      105174
+    ],
+    "_code": 68,
+    "names": {
+      "en": "New Jersey",
+      "code": "USS New Jersey",
+      "cn": "新泽西",
+      "jp": "ニュージャージー",
+      "kr": "New Jersey"
+    },
+    "exists": {
+      "en": true,
+      "cn": true,
+      "jp": true,
+      "kr": false
+    },
+    "hexagon": [
+      5,
+      0,
+      0,
+      1,
+      4,
+      5
+    ],
+    "class": "Iowa",
+    "nationality": "Eagle Union",
+    "hullType": "Battleship",
+    "thumbnail": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/068/thumbnail.png",
+    "rarity": "Ultra Rare",
+    "stars": {
+      "stars": "★★★★★★",
+      "value": 6
+    },
+    "stats": {
+      "baseStats": {
+        "health": "1594",
+        "armor": "Heavy",
+        "reload": "62",
+        "luck": "72",
+        "firepower": "87",
+        "torpedo": "0",
+        "evasion": "9",
+        "speed": "33",
+        "antiair": "84",
+        "aviation": "0",
+        "oilConsumption": "9",
+        "accuracy": "24",
+        "antisubmarineWarfare": "0"
+      },
+      "level100": {
+        "health": "8242",
+        "armor": "Heavy",
+        "reload": "148",
+        "luck": "72",
+        "firepower": "411",
+        "torpedo": "0",
+        "evasion": "24",
+        "speed": "33",
+        "antiair": "394",
+        "aviation": "0",
+        "oilConsumption": "17",
+        "accuracy": "61",
+        "antisubmarineWarfare": "0"
+      },
+      "level120": {
+        "health": "9520",
+        "armor": "Heavy",
+        "reload": "170",
+        "luck": "72",
+        "firepower": "447",
+        "torpedo": "0",
+        "evasion": "39",
+        "speed": "33",
+        "antiair": "427",
+        "aviation": "0",
+        "oilConsumption": "17",
+        "accuracy": "74",
+        "antisubmarineWarfare": "0"
+      }
+    },
+    "slots": [
+      {
+        "maxEfficiency": 150,
+        "minEfficiency": 120,
+        "type": "BB Guns",
+        "max": 3
+      },
+      {
+        "maxEfficiency": 210,
+        "minEfficiency": 210,
+        "type": "DD Guns",
+        "max": 3
+      },
+      {
+        "maxEfficiency": 130,
+        "minEfficiency": 130,
+        "type": "Anti-Air Guns",
+        "max": 1
+      }
+    ],
+    "enhanceValue": {
+      "firepower": 72,
+      "torpedo": 0,
+      "aviation": 0,
+      "reload": 12
+    },
+    "scrapValue": {
+      "coin": 11,
+      "oil": 4,
+      "medal": 30
+    },
+    "skills": [
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/068/dragon's_breath.png",
+        "names": {
+          "en": "Dragon's Breath",
+          "cn": "吐息之焰",
+          "jp": "ドラゴンファイア！"
+        },
+        "description": "When this ship fires its main guns, 50.0% (100.0%) chance to fire a special barrage with guaranteed critical hits (barrage damage scales with skill level). The barrage pattern is independent of this ship's position in the main fleet. Additionally, 10 seconds into the start of the battle, fire this barrage.",
+        "color": "pink"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/068/freedom_through_firepower.png",
+        "names": {
+          "en": "Freedom Through Firepower",
+          "cn": "领向自由的炮火",
+          "jp": "その火力は自由のために"
+        },
+        "description": "Decrease the spread range of this ship's main guns by 0.5 (5.0). Whenever ANOTHER fleet in the same sortie engages in battle, if this ship is afloat, fire a special barrage 20 seconds into the start of that battle (damage scales with skill level and the FP stat of that fleet's flagship). At the start of that battle, if that fleet's flagship is an Eagle Union ship, increase the AVI stat of all Eagle Union CVs and CVLs in that fleet by 5.0% (15.0%).",
+        "color": "gold"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/068/don'tcha_just_love_it?.png",
+        "names": {
+          "en": "Don'tcha Just Love It?",
+          "cn": "Big J",
+          "jp": "こういうの好きなんでしょ？"
+        },
+        "description": "Increases this ship's FP by 5.0% (15.0%) and RLD by 1.0% (10.0%). If this ship is sortied with another Eagle Union ship, increase the AA stat by 5.0% (15.0%) for all Eagle Union ships in your fleet, decrease their damage taken by 5.0%, and increase the FP stat by 4.0% (10.0%) for all Eagle Union BBs and BCs in your fleet.",
+        "color": "gold"
+      }
+    ],
+    "limitBreaks": [
+      [
+        "Main gun base +1",
+        "Main gun efficiency +5%"
+      ],
+      [
+        "Auxiliary gun base +2",
+        "Main gun efficiency +10%"
+      ],
+      [
+        "Main gun base +1",
+        "Main gun efficiency +15%"
+      ]
+    ],
+    "fleetTech": {
+      "statsBonus": {
+        "collection": {
+          "applicable": [
+            "Battleship",
+            "Battlecruiser",
+            "Aviation battleship"
+          ],
+          "bonus": "+2",
+          "stat": "health"
+        },
+        "maxLevel": {
+          "applicable": [
+            "Battleship",
+            "Battlecruiser",
+            "Aviation battleship"
+          ],
+          "bonus": "+1",
+          "stat": "firepower"
+        }
+      },
+      "techPoints": {
+        "collection": 28,
+        "maxLimitBreak": 57,
+        "maxLevel": 43,
+        "total": 128
+      }
+    },
+    "construction": {
+      "constructionTime": "06:30:00",
+      "availableIn": {
+        "light": false,
+        "heavy": false,
+        "aviation": false,
+        "limited": "Only during event: Mirror Involution",
+        "exchange": false
+      }
+    },
+    "obtainedFrom": {
+      "obtainedFrom": "Available during \"Mirror Involution\" event.",
+      "fromMaps": []
+    },
+    "misc": {
+      "artist": {
+        "name": "全班最菜嘤嘤嘤",
+        "url": "https://azurlane.koumakan.jp/Artists#.E5.85.A8.E7.8F.AD.E6.9C.80.E8.8F.9C.E5.98.A4.E5.98.A4.E5.98.A4"
+      },
+      "pixiv": null,
+      "twitter": {
+        "name": "zelda10010",
+        "url": "https://twitter.com/zelda10010"
+      },
+      "web": {
+        "name": "全班最菜嘤嘤嘤",
+        "url": "https://weibo.com/u/7477949468"
+      },
+      "voice": {
+        "name": "Miyu Tomita",
+        "url": "https://en.wikipedia.org/wiki/Miyu_Tomita"
+      }
+    },
+    "skins": [
+      {
+        "name": "Default",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/068/Default/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/068/Default/chibi.png",
+        "info": {
+          "live2dModel": true,
+          "obtainedFrom": "Default"
+        }
+      },
+      {
+        "name": "Exhilarating Steps!",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/068/Exhilarating_Steps/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_145.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/068/Exhilarating_Steps/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Exhilarating Steps!",
+          "cnClient": "跃动的舞台时间！",
+          "jpClient": "リッピング・ステッピング！",
+          "cost": 880
+        }
+      }
+    ],
+    "gallery": [
+      {
+        "description": "San Francisco, Ticonderoga, New Jersey, Archerfish, Boise, Morrison",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_1.png"
+      }
+    ]
+  },
+  {
     "wikiUrl": "https://azurlane.koumakan.jp/Newcastle",
     "id": "361",
     "_gid": 20219,
@@ -95785,10 +97587,22 @@
       "fromMaps": []
     },
     "misc": {
-      "artist": null,
-      "pixiv": null,
-      "twitter": null,
-      "web": null,
+      "artist": {
+        "name": "德意志的科学",
+        "url": "https://azurlane.koumakan.jp/Artists#.E5.BE.B7.E6.84.8F.E5.BF.97.E7.9A.84.E7.A7.91.E5.AD.A6"
+      },
+      "pixiv": {
+        "name": "科学",
+        "url": "https://www.pixiv.net/member.php?id=6054803"
+      },
+      "twitter": {
+        "name": "科学",
+        "url": "https://twitter.com/ls809251250"
+      },
+      "web": {
+        "name": "科学-余生不过两万天",
+        "url": "https://www.weibo.com/onlykexue"
+      },
       "voice": {
         "name": "Aoi Koga",
         "url": "https://en.wikipedia.org/wiki/Aoi_Koga"
@@ -95809,7 +97623,6 @@
       {
         "name": "To a Smashing Voyage!",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/506/To_a_Smashing_Voyage/image.nobg.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/506/To_a_Smashing_Voyage/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_106.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/506/To_a_Smashing_Voyage/chibi.png",
         "info": {
@@ -96586,7 +98399,6 @@
       {
         "name": "Moon Palace Rabbit",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/258/Moon_Palace_Rabbit/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/258/Moon_Palace_Rabbit/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/258/Moon_Palace_Rabbit/chibi.png",
         "info": {
@@ -96686,6 +98498,10 @@
       {
         "description": "St. Louis, Sirius, Ning Hai, Ping Hai, Yat Sen, Belfast",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.02.04_3.png"
+      },
+      {
+        "description": "Ning Hai and Ping Hai",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_12.png"
       }
     ]
   },
@@ -97082,7 +98898,7 @@
         "heavy": true,
         "aviation": true,
         "limited": false,
-        "exchange": false
+        "exchange": "Medal"
       }
     },
     "obtainedFrom": {
@@ -100170,7 +101986,6 @@
       {
         "name": "The Reindeer's Present",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/332/The_Reindeers_Present/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/332/The_Reindeers_Present/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_100.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/332/The_Reindeers_Present/chibi.png",
         "info": {
@@ -100349,7 +102164,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -100979,6 +102794,10 @@
       {
         "description": "Bremerton, Z23, Laffey, Javelin, Ayanami, Prinz Heinrich, Kumano, Pamiat Merkuria",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.03.12_1.png"
+      },
+      {
+        "description": "Gangut, Grozny, Tashkent, Pamiat Merkuria, Sovetskaya Rossiya, Chapayev, Avrora, Minsk",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_4.png"
       }
     ]
   },
@@ -101868,7 +103687,7 @@
           "cn": "广域舰船维护",
           "jp": "ハデス・リペアラー"
         },
-        "description": "[Regular]Increase hangar size to 3. All ships in this fleet recover 1.0% of their max HP every 40 (20) seconds. When the fleet this ship is NOT in engages in battle, 20 seconds after that battle starts, heal all vanguard ships in that fleet by 1.0% (3.0%) of their max HP.[Operation Siren]Increases this ship's max Airstrike capacity to 3 (this effect is unaffected by your ship's damage status) and restores 1.0% HP to all ships in the same fleet as this ship once every 40 (20) seconds. 20s after a fleet this ship is NOT in starts a battle: heals said fleet's Vanguard for 0.5% (1.5%) HP.",
+        "description": "Increase this ship's hangar size to 3. Every 40.0 (20.0) seconds after the start of the battle, heal all ships in your fleet by 1.0% of their maximum HP. When ANOTHER fleet in the same sortie engages in battle, heal all ships in that fleet by 1.5% (3.0%) of their maximum HP, 20 seconds into the start of that battle. (In Operation Siren, cross-fleet healing received from this skill is halved. The hangar size increase still applies when experiencing Toll of War in Operation Siren, although the rest of the skill does not.)",
         "color": "gold"
       }
     ],
@@ -101980,6 +103799,10 @@
       {
         "description": "Perseus, Formidable, Cheshire",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.12.29_4.png"
+      },
+      {
+        "description": "Hermione, Perseus, Cheshire",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_9.png"
       }
     ]
   },
@@ -103004,7 +104827,6 @@
       {
         "name": "Osmanthus Moon Rabbit",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/259/Osmanthus_Moon_Rabbit/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/259/Osmanthus_Moon_Rabbit/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/259/Osmanthus_Moon_Rabbit/chibi.png",
         "info": {
@@ -103116,6 +104938,10 @@
       {
         "description": "St. Louis, Sirius, Ning Hai, Ping Hai, Yat Sen, Belfast",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.02.04_3.png"
+      },
+      {
+        "description": "Ning Hai and Ping Hai",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_12.png"
       }
     ]
   },
@@ -104685,13 +106511,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/244/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/244/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/244/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/244/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Symphonic Fate",
           "cnClient": "命运交响曲",
           "jpClient": "運命シンフォニック"
@@ -104700,7 +106526,6 @@
       {
         "name": "Unfading Smile",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/244/Unfading_Smile/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/244/Unfading_Smile/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_106.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/244/Unfading_Smile/chibi.png",
         "info": {
@@ -104761,6 +106586,14 @@
       {
         "description": "Prinz Heinrich, Prinz Eugen",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.02.04_5.png"
+      },
+      {
+        "description": "Bache, Baltimore, Prinz Eugen",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_11.png"
+      },
+      {
+        "description": "Z23, Roon, Friedrich der Grosse, Graf Zeppelin, Admiral Graf Spee, Prinz Eugen with Hood and Glorious",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_10.png"
       }
     ]
   },
@@ -105766,6 +107599,10 @@
       {
         "description": "Queen Elizabeth, Perseus, Warspite",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.08.13_6.png"
+      },
+      {
+        "description": "Tashkent, Queen Elizabeth, Warspite, Z46",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_5.png"
       }
     ]
   },
@@ -108886,6 +110723,10 @@
       {
         "description": "Prinz Eugen, Bismarck, Roon",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.12.212_3.png"
+      },
+      {
+        "description": "Z23, Roon, Friedrich der Grosse, Graf Zeppelin, Admiral Graf Spee, Prinz Eugen with Hood and Glorious",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_10.png"
       }
     ]
   },
@@ -110943,13 +112784,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/036/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/036/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/036/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/036/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "No. 1 June Bride!",
           "cnClient": "June Bride No.1！",
           "jpClient": "ジューンブライドNo.1！"
@@ -111002,6 +112843,257 @@
       {
         "description": "Bache, San Diego",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.10.29_1.png"
+      }
+    ]
+  },
+  {
+    "wikiUrl": "https://azurlane.koumakan.jp/San_Francisco",
+    "id": "512",
+    "_gid": 10314,
+    "_sid": [
+      103141,
+      103142,
+      103143,
+      103144
+    ],
+    "_code": 512,
+    "names": {
+      "en": "San Francisco",
+      "code": "USS San Francisco",
+      "cn": "旧金山",
+      "jp": "サンフランシスコ",
+      "kr": "San Francisco"
+    },
+    "exists": {
+      "en": true,
+      "cn": true,
+      "jp": true,
+      "kr": false
+    },
+    "hexagon": [
+      3,
+      0,
+      0,
+      2,
+      3,
+      4
+    ],
+    "class": "New Orleans",
+    "nationality": "Eagle Union",
+    "hullType": "Heavy Cruiser",
+    "thumbnail": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/512/thumbnail.png",
+    "rarity": "Super Rare",
+    "stars": {
+      "stars": "★★★★★★",
+      "value": 6
+    },
+    "stats": {
+      "baseStats": {
+        "health": "834",
+        "armor": "Medium",
+        "reload": "66",
+        "luck": "75",
+        "firepower": "47",
+        "torpedo": "0",
+        "evasion": "13",
+        "speed": "26",
+        "antiair": "42",
+        "aviation": "0",
+        "oilConsumption": "4",
+        "accuracy": "45",
+        "antisubmarineWarfare": "0"
+      },
+      "level100": {
+        "health": "4313",
+        "armor": "Medium",
+        "reload": "156",
+        "luck": "75",
+        "firepower": "222",
+        "torpedo": "0",
+        "evasion": "34",
+        "speed": "26",
+        "antiair": "197",
+        "aviation": "0",
+        "oilConsumption": "12",
+        "accuracy": "116",
+        "antisubmarineWarfare": "0"
+      },
+      "level120": {
+        "health": "4831",
+        "armor": "Medium",
+        "reload": "179",
+        "luck": "75",
+        "firepower": "255",
+        "torpedo": "0",
+        "evasion": "68",
+        "speed": "26",
+        "antiair": "226",
+        "aviation": "0",
+        "oilConsumption": "12",
+        "accuracy": "136",
+        "antisubmarineWarfare": "0"
+      }
+    },
+    "slots": [
+      {
+        "maxEfficiency": 125,
+        "minEfficiency": 105,
+        "type": "CA Guns",
+        "max": 2
+      },
+      {
+        "maxEfficiency": 75,
+        "minEfficiency": 70,
+        "type": "DD Guns",
+        "max": 1
+      },
+      {
+        "maxEfficiency": 125,
+        "minEfficiency": 120,
+        "type": "Anti-Air Guns",
+        "max": 1
+      }
+    ],
+    "enhanceValue": {
+      "firepower": 26,
+      "torpedo": 0,
+      "aviation": 0,
+      "reload": 12
+    },
+    "scrapValue": {
+      "coin": 9,
+      "oil": 3,
+      "medal": 10
+    },
+    "skills": [
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/512/get_starstruck!.png",
+        "names": {
+          "en": "Get Starstruck!",
+          "cn": "星光连打",
+          "jp": "ハーレ・スマッシュ"
+        },
+        "description": "Every 10s after the start of the battle: 45.0% (75.0%) chance to fire a Lv.1 (Lv.10) special barrage (DMG is based on the skill's level). If this barrage fails to activate, instead increases this ship's AA and Accuracy by 1.0% (10.0%) for 5s.",
+        "color": "pink"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/512/right_place_at_the_right_time.png",
+        "names": {
+          "en": "Right Place at the Right Time",
+          "cn": "久经沙场",
+          "jp": "戦場のアプティテュード"
+        },
+        "description": "Increases this ship's EVA and AA by 1.0% (10.0%). Activates one of the following effects based on this ship's position in your Vanguard during battle:\nFront (and also when this ship is your last afloat Vanguard ship): increases this ship's EVA and AA by 1.0% (5.0%), and decreases her DMG taken by 5.0% (15.0%).\nMiddle: heals all ships in your Vanguard for 5.0% (10.0%) of their max HP 20s after the battle starts.\nRear: increases this ship's FP by 5.0% (15.0%) and AA by 1.0% (10.0%), and also increases your whole Vanguard's DMG dealt to enemies by 5.0%.",
+        "color": "gold"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/512/all_out_assault_ⅱ.png",
+        "names": {
+          "en": "All Out Assault Ⅱ",
+          "cn": "专属弹幕-雾城II",
+          "jp": "特殊弾幕-サンフランシスコII"
+        },
+        "description": "Activates All Out Assault II: San Francisco once every 8 times the Main Guns are fired.",
+        "color": "pink"
+      }
+    ],
+    "limitBreaks": [
+      [
+        "Unlock EX Barrage Ⅰ",
+        "Main gun efficiency +5%"
+      ],
+      [
+        "Main gun base +1",
+        "Main gun efficiency +10%"
+      ],
+      [
+        "Improve EX Barrage",
+        "All weapons' efficiency +5%"
+      ]
+    ],
+    "fleetTech": {
+      "statsBonus": {
+        "collection": {
+          "applicable": [
+            "Heavy cruiser",
+            "Large cruiser",
+            "Monitor"
+          ],
+          "bonus": "+1",
+          "stat": "health"
+        },
+        "maxLevel": {
+          "applicable": [
+            "Heavy cruiser",
+            "Large cruiser",
+            "Monitor"
+          ],
+          "bonus": "+1",
+          "stat": "firepower"
+        }
+      },
+      "techPoints": {
+        "collection": 12,
+        "maxLimitBreak": 25,
+        "maxLevel": 18,
+        "total": 55
+      }
+    },
+    "construction": {
+      "constructionTime": "01:56:00",
+      "availableIn": {
+        "light": false,
+        "heavy": false,
+        "aviation": false,
+        "limited": "Only during event: Mirror Involution",
+        "exchange": false
+      }
+    },
+    "obtainedFrom": {
+      "obtainedFrom": "Available during \"Mirror Involution\" event.",
+      "fromMaps": []
+    },
+    "misc": {
+      "artist": null,
+      "pixiv": null,
+      "twitter": null,
+      "web": null,
+      "voice": {
+        "name": "Tomomi Mineuchi",
+        "url": "https://www.imenterprise.jp/profile.php?id=85"
+      }
+    },
+    "skins": [
+      {
+        "name": "Default",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/512/Default/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/512/Default/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Default"
+        }
+      },
+      {
+        "name": "Funny Bunny!",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/512/Funny_Bunny/image.nobg.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_145.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/512/Funny_Bunny/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Funny Bunny!",
+          "cnClient": "Funny Bunny！",
+          "jpClient": "Funny Bunny！",
+          "cost": 880
+        },
+        "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/512/Funny_Bunny/image.png"
+      }
+    ],
+    "gallery": [
+      {
+        "description": "San Francisco, Ticonderoga, New Jersey, Archerfish, Boise, Morrison",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_1.png"
       }
     ]
   },
@@ -111211,7 +113303,10 @@
         "name": "帕瓦波",
         "url": "https://weibo.com/u/5131774467"
       },
-      "voice": null
+      "voice": {
+        "name": "Yuki Shion",
+        "url": "http://www.rme.jp/talent/women/yuki-shion.html"
+      }
     },
     "skins": [
       {
@@ -112046,6 +114141,19 @@
           "cost": 800
         },
         "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/074/Springs_Opening_Act/image.png"
+      },
+      {
+        "name": "The Sweetest Picnic!",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/074/The_Sweetest_Picnic/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_103.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/074/The_Sweetest_Picnic/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Manjuu Creamery - 10000 Point Milestone",
+          "enClient": "The Sweetest Picnic!",
+          "cnClient": "悠哉野餐时光",
+          "jpClient": "シロクマちゃんとピクニック！"
+        }
       }
     ],
     "gallery": [
@@ -114733,6 +116841,10 @@
       {
         "description": "Suzutsuki, Kii, Shinano",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.09.17_9.png"
+      },
+      {
+        "description": "Amagi, Shinano, Kashino, Suzutsuki",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_13.png"
       }
     ]
   },
@@ -115131,7 +117243,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -115897,7 +118009,7 @@
           "cn": "支援空母",
           "jp": "支援空母"
         },
-        "description": "When launching an airstrike: heals the Escort Fleet for 3.5% (8%) of their max HP.",
+        "description": "When this ship launches an Airstrike: heals your entire Vanguard for 3.5% (8%) of its max HP.",
         "color": "gold"
       },
       {
@@ -117192,7 +119304,7 @@
         "heavy": false,
         "aviation": false,
         "limited": false,
-        "exchange": false
+        "exchange": "Medal"
       }
     },
     "obtainedFrom": {
@@ -117578,6 +119690,10 @@
       {
         "description": "Sirius, Dido, Formidable",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.02.04_10.png"
+      },
+      {
+        "description": "Formidable, Sirius, Dido",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_8.png"
       }
     ]
   },
@@ -119392,6 +121508,10 @@
       {
         "description": "Chapayev, Sovetskaya Rossiya, Tashkent",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.02.25_3.png"
+      },
+      {
+        "description": "Gangut, Grozny, Tashkent, Pamiat Merkuria, Sovetskaya Rossiya, Chapayev, Avrora, Minsk",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_4.png"
       }
     ]
   },
@@ -120081,7 +122201,6 @@
       {
         "name": "Blue and White Pottery",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/305/Blue_and_White_Pottery/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/305/Blue_and_White_Pottery/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_102.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/305/Blue_and_White_Pottery/chibi.png",
         "info": {
@@ -120146,6 +122265,10 @@
       {
         "description": "St. Louis, Sirius, Ning Hai, Ping Hai, Yat Sen, Belfast",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.02.04_3.png"
+      },
+      {
+        "description": "St. Louis, Columbia, Minneapolis",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_6.png"
       }
     ]
   },
@@ -120605,6 +122728,21 @@
           "live2dModel": false,
           "obtainedFrom": "Default"
         }
+      },
+      {
+        "name": "Chillaxation Station",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/509/Chillaxation_Station/image.nobg.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_145.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/509/Chillaxation_Station/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Chillaxation Station",
+          "cnClient": "粉红干物兔",
+          "jpClient": "セーフハウス・ヘア",
+          "cost": 780
+        },
+        "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/509/Chillaxation_Station/image.png"
       }
     ],
     "gallery": []
@@ -120827,7 +122965,10 @@
         "name": "或一",
         "url": "http://bcy.net/u/1495574"
       },
-      "voice": null
+      "voice": {
+        "name": "Momoki Kakimura",
+        "url": "http://earlywing.co.jp/pretalent_w/kakimuramomoki.html"
+      }
     },
     "skins": [
       {
@@ -121329,7 +123470,6 @@
       {
         "name": "Default",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/122/Default/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/122/Default/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/122/Default/chibi.png",
         "info": {
@@ -121813,7 +123953,6 @@
       {
         "name": "Default",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/350/Default/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/350/Default/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/350/Default/chibi.png",
         "info": {
@@ -122648,6 +124787,10 @@
       {
         "description": "Suzutsuki, Kii, Shinano",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.09.17_9.png"
+      },
+      {
+        "description": "Amagi, Shinano, Kashino, Suzutsuki",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_13.png"
       }
     ]
   },
@@ -123672,7 +125815,6 @@
       {
         "name": "Forbidden Fruit",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/230/Forbidden_Fruit/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/230/Forbidden_Fruit/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_107.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/230/Forbidden_Fruit/chibi.png",
         "info": {
@@ -124107,7 +126249,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -124204,7 +126346,6 @@
       {
         "name": "Default",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/200/Default/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/200/Default/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/200/Default/chibi.png",
         "info": {
@@ -124213,13 +126354,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/200/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/200/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/200/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/200/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Sakura Hanami",
           "cnClient": "神护樱华",
           "jpClient": "神護ノ風華"
@@ -125574,6 +127715,14 @@
       {
         "description": "Chapayev, Sovetskaya Rossiya, Tashkent",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.02.25_3.png"
+      },
+      {
+        "description": "Tashkent, Queen Elizabeth, Warspite, Z46",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_5.png"
+      },
+      {
+        "description": "Gangut, Grozny, Tashkent, Pamiat Merkuria, Sovetskaya Rossiya, Chapayev, Avrora, Minsk",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_4.png"
       }
     ]
   },
@@ -126484,7 +128633,7 @@
         "heavy": false,
         "aviation": false,
         "limited": false,
-        "exchange": false
+        "exchange": "Medal"
       }
     },
     "obtainedFrom": {
@@ -126534,6 +128683,264 @@
       }
     ],
     "gallery": []
+  },
+  {
+    "wikiUrl": "https://azurlane.koumakan.jp/Ticonderoga",
+    "id": "511",
+    "_gid": 10714,
+    "_sid": [
+      107141,
+      107142,
+      107143,
+      107144
+    ],
+    "_code": 511,
+    "names": {
+      "en": "Ticonderoga",
+      "code": "USS Ticonderoga",
+      "cn": "提康德罗加",
+      "jp": "タイコンデロガ",
+      "kr": "Ticonderoga"
+    },
+    "exists": {
+      "en": true,
+      "cn": true,
+      "jp": true,
+      "kr": false
+    },
+    "hexagon": [
+      0,
+      0,
+      5,
+      3,
+      3,
+      3
+    ],
+    "class": "Essex",
+    "nationality": "Eagle Union",
+    "hullType": "Aircraft Carrier",
+    "thumbnail": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/511/thumbnail.png",
+    "rarity": "Super Rare",
+    "stars": {
+      "stars": "★★★★★★",
+      "value": 6
+    },
+    "stats": {
+      "baseStats": {
+        "health": "1104",
+        "armor": "Medium",
+        "reload": "48",
+        "luck": "72",
+        "firepower": "0",
+        "torpedo": "0",
+        "evasion": "13",
+        "speed": "33",
+        "antiair": "63",
+        "aviation": "83",
+        "oilConsumption": "4",
+        "accuracy": "30",
+        "antisubmarineWarfare": "0"
+      },
+      "level100": {
+        "health": "5709",
+        "armor": "Medium",
+        "reload": "114",
+        "luck": "72",
+        "firepower": "0",
+        "torpedo": "0",
+        "evasion": "34",
+        "speed": "33",
+        "antiair": "293",
+        "aviation": "391",
+        "oilConsumption": "13",
+        "accuracy": "78",
+        "antisubmarineWarfare": "0"
+      },
+      "level120": {
+        "health": "6622",
+        "armor": "Medium",
+        "reload": "131",
+        "luck": "72",
+        "firepower": "0",
+        "torpedo": "0",
+        "evasion": "54",
+        "speed": "33",
+        "antiair": "331",
+        "aviation": "433",
+        "oilConsumption": "13",
+        "accuracy": "87",
+        "antisubmarineWarfare": "0"
+      }
+    },
+    "slots": [
+      {
+        "maxEfficiency": 140,
+        "minEfficiency": 125,
+        "type": "Fighters",
+        "max": 3
+      },
+      {
+        "maxEfficiency": 130,
+        "minEfficiency": 114,
+        "type": "Dive Bombers",
+        "max": 3
+      },
+      {
+        "maxEfficiency": 120,
+        "minEfficiency": 105,
+        "type": "Torpedo Bombers",
+        "max": 2
+      }
+    ],
+    "enhanceValue": {
+      "firepower": 0,
+      "torpedo": 0,
+      "aviation": 68,
+      "reload": 9
+    },
+    "scrapValue": {
+      "coin": 9,
+      "oil": 3,
+      "medal": 10
+    },
+    "skills": [
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/511/wings_of_soaring_flames.png",
+        "names": {
+          "en": "Wings of Soaring Flames",
+          "cn": "流火之翼",
+          "jp": "空照らす焔翼"
+        },
+        "description": "When this ship launches an Airstrike: launches an additional Lv.1 (Lv.10) special airstrike that has a chance to Burn enemies hit by it (Airstrike DMG is based on the skill's level; Burn DMG is based on this ship's AVI stat).",
+        "color": "pink"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/511/shielded_advance.png",
+        "names": {
+          "en": "Shielded Advance",
+          "cn": "航空装甲",
+          "jp": "控え目の防御戦術"
+        },
+        "description": "Decreases this ship's first 2 (4) instances of DMG taken by 30.0% (60.0%) every battle. At the start of the battle and every 20s after that: targets the ship in the frontmost position of your Vanguard and gives that ship a shield that blocks up to 6 shots, lasting for up to 8 seconds.",
+        "color": "deepskyblue"
+      },
+      {
+        "icon": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skills/511/advanced_support_formation.png",
+        "names": {
+          "en": "Advanced Support Formation",
+          "cn": "编队掩护",
+          "jp": "派手な補助陣形"
+        },
+        "description": "Increases this ship's AVI by 4.0% (10.0%). When sortied in a fleet with at least 2 CVs/CVLs: decreases your Flagship's DMG taken by 5.0% (15.0%).",
+        "color": "gold"
+      }
+    ],
+    "limitBreaks": [
+      [
+        "All fighters +1",
+        "Aircraft efficiency +3%"
+      ],
+      [
+        "Hangar capacity +1",
+        "All Dive Bombers +1",
+        "Aircraft efficiency +5%"
+      ],
+      [
+        "All aircraft +1",
+        "Aircraft efficiency +7%"
+      ]
+    ],
+    "fleetTech": {
+      "statsBonus": {
+        "collection": {
+          "applicable": [
+            "Aircraft carrier",
+            "Light aircraft carrier"
+          ],
+          "bonus": "+1",
+          "stat": "health"
+        },
+        "maxLevel": {
+          "applicable": [
+            "Aircraft carrier",
+            "Light aircraft carrier"
+          ],
+          "bonus": "+2",
+          "stat": "aviation"
+        }
+      },
+      "techPoints": {
+        "collection": 17,
+        "maxLimitBreak": 35,
+        "maxLevel": 26,
+        "total": 78
+      }
+    },
+    "construction": {
+      "constructionTime": "04:25:00",
+      "availableIn": {
+        "light": false,
+        "heavy": false,
+        "aviation": false,
+        "limited": "Only during event: Mirror Involution",
+        "exchange": false
+      }
+    },
+    "obtainedFrom": {
+      "obtainedFrom": "Available during \"Mirror Involution\" event.",
+      "fromMaps": []
+    },
+    "misc": {
+      "artist": {
+        "name": "智弘カイ",
+        "url": "https://azurlane.koumakan.jp/Artists#.E6.99.BA.E5.BC.98.E3.82.AB.E3.82.A4"
+      },
+      "pixiv": {
+        "name": "智弘",
+        "url": "https://www.pixiv.net/en/users/2960453"
+      },
+      "twitter": {
+        "name": "智弘カイ",
+        "url": "https://twitter.com/kai_tomohiro"
+      },
+      "web": null,
+      "voice": {
+        "name": "Kana Ichinose",
+        "url": "https://en.wikipedia.org/wiki/Kana_Ichinose"
+      }
+    },
+    "skins": [
+      {
+        "name": "Default",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/511/Default/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/511/Default/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Default"
+        }
+      },
+      {
+        "name": "Show Stopper!",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/511/Show_Stopper/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_145.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/511/Show_Stopper/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Show Stopper!",
+          "cnClient": "黑兔的舞台秀",
+          "jpClient": "グランドステージ・ショー！",
+          "cost": 880
+        }
+      }
+    ],
+    "gallery": [
+      {
+        "description": "San Francisco, Ticonderoga, New Jersey, Archerfish, Boise, Morrison",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_1.png"
+      }
+    ]
   },
   {
     "wikiUrl": "https://azurlane.koumakan.jp/Tirpitz",
@@ -127285,13 +129692,15 @@
         "url": "https://twitter.com/byul_zzi"
       },
       "web": null,
-      "voice": null
+      "voice": {
+        "name": "Kaede Hondo",
+        "url": "https://en.wikipedia.org/wiki/Kaede_Hondo"
+      }
     },
     "skins": [
       {
         "name": "Default",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/503/Default/image.nobg.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/503/Default/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/503/Default/chibi.png",
         "info": {
@@ -127445,7 +129854,7 @@
           "cn": "勇无不克",
           "jp": "奮えば成す！"
         },
-        "description": "When this ship fires a Salvo: 45% (75%) chance to fire a special barrage; the barrage is unaffected by this ship's position in your Main Fleet.",
+        "description": "When this ship fires its main guns, 45.0% (75.0%) chance to fire a special barrage (damage scales with skill level). The barrage always fires from the flagship spot, regardless of where this ship is located in the main fleet.",
         "color": "pink"
       },
       {
@@ -127455,7 +129864,7 @@
           "cn": "敌无不击",
           "jp": "凌げば討つ！"
         },
-        "description": "[Regular]1) When: a) this ship is afloat, b) the fleet this ship is NOT in has a BB as its Flagship, and c) said fleet is engaging in its 3rd, 4th, or 5th battle: launches a special barrage 20s after the other fleet's battle begins.2) When this ship is in combat and takes DMG or when an enemy comes within close range of this ship: fires a special Lv.1 (Lv.10) barrage. Has a cooldown of 15s between activations.[Operation Siren]1) When: a) this ship is afloat, b) a fleet this ship is NOT in has a BB as its Flagship, and c) said fleet is engaging in its 3rd or 4th battle: your Tosa fires a covering barrage 20s after said fleet's battle begins.2) When this ship is in combat and takes DMG or when an enemy comes within close range of this ship: fires a special Lv.1 (Lv.10) barrage. Barrage DMG is based on the skill's level and has a cooldown of 15s between activations. [This skill's sortie battle counter resets when moving to a new area or changing your formation within Operation Siren.]",
+        "description": "As long as this ship is afloat:\nWhen this ship take damage, or when an enemy comes within close range of this ship, fire a special barrage (damage scales with skill level). This barrage has a 15-second cooldown between activations.\nWhen ANOTHER fleet in the same sortie engages in its third, fourth, or fifth battle, if that fleet has a BB as its flagship (BC, BBV, and BM do not count), then fire a special barrage 20 seconds into the start of that battle (damage scales with skill level and the FP stat of that fleet's flagship). In Operation Siren, this barrage is limited to the third and fourth battle instead (not the fifth).\n[This skill's sortie battle counter resets when moving to a new area or changing your formation within Operation Siren.]",
         "color": "gold"
       }
     ],
@@ -129661,7 +132070,7 @@
       "availableIn": {
         "light": false,
         "heavy": false,
-        "aviation": false,
+        "aviation": "CN/JP Only",
         "limited": "Only during event: Scherzo of Iron and Blood",
         "exchange": false
       }
@@ -130193,7 +132602,7 @@
       "availableIn": {
         "light": false,
         "heavy": false,
-        "aviation": false,
+        "aviation": "CN/JP Only",
         "limited": "Only during event: Scherzo of Iron and Blood",
         "exchange": false
       }
@@ -130731,7 +133140,7 @@
       "availableIn": {
         "light": false,
         "heavy": false,
-        "aviation": false,
+        "aviation": "CN/JP Only",
         "limited": "Only during event: Scherzo of Iron and Blood Rerun",
         "exchange": false
       }
@@ -131021,13 +133430,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/142/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/142/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/142/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/142/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "A Dream of Pure Vows",
           "cnClient": "梦想的纯白誓约",
           "jpClient": "純白なる夢の誓い"
@@ -131100,6 +133509,20 @@
           "cnClient": "天使的My Night",
           "jpClient": "天使のMy Night",
           "cost": 1100
+        }
+      },
+      {
+        "name": "Icy-Sweet Storytime",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/142/IcySweet_Storytime/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_109.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/142/IcySweet_Storytime/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Icy-Sweet Storytime",
+          "cnClient": "清凉阅读时光",
+          "jpClient": "シロクマと夏のアイスタイム",
+          "cost": 780
         }
       }
     ],
@@ -131587,7 +134010,6 @@
       {
         "name": "Seasonal Shogun",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/316/Seasonal_Shogun/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/316/Seasonal_Shogun/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_100.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/316/Seasonal_Shogun/chibi.png",
         "info": {
@@ -132573,6 +134995,20 @@
           "jpClient": "リトルナースタイム",
           "cost": 780
         }
+      },
+      {
+        "name": "Queen Valiant I",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/464/Queen_Valiant_I/image.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_146.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/464/Queen_Valiant_I/chibi.png",
+        "info": {
+          "live2dModel": false,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Queen Valiant I",
+          "cnClient": "英勇女王陛下？",
+          "jpClient": "ヴァリアント陛下？",
+          "cost": 780
+        }
       }
     ],
     "gallery": []
@@ -132806,13 +135242,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/103/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/103/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/103/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/103/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Eloi's Blessing",
           "cnClient": "以罗伊的赐福",
           "jpClient": "エロイの祝福"
@@ -133325,7 +135761,6 @@
       {
         "name": "Default",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Collab004/Default/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Collab004/Default/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/Collab004/Default/chibi.png",
         "info": {
@@ -134612,7 +137047,6 @@
       {
         "name": "Default",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/500/Default/image.nobg.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/500/Default/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/500/Default/chibi.png",
         "info": {
@@ -134776,7 +137210,7 @@
           "cn": "鱼雷连射",
           "jp": "次発装填"
         },
-        "description": "When launching a wave of torpedoes: 15% (30%) chance to launch another wave.",
+        "description": "When this ship fires its Torpedoes: 15% (30%) chance to launch a second wave of Torpedoes. (10s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -135442,6 +137876,10 @@
       {
         "description": "Queen Elizabeth, Perseus, Warspite",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.08.13_6.png"
+      },
+      {
+        "description": "Tashkent, Queen Elizabeth, Warspite, Z46",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_5.png"
       }
     ]
   },
@@ -136164,6 +138602,21 @@
           "cost": 780
         },
         "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/485/Obsidian_Elegance/image.png"
+      },
+      {
+        "name": "Urbane Onyx",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/485/Urbane_Onyx/image.nobg.png",
+        "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/Skin_BG_146.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/485/Urbane_Onyx/chibi.png",
+        "info": {
+          "live2dModel": true,
+          "obtainedFrom": "Skin Shop",
+          "enClient": "Urbane Onyx",
+          "cnClient": "黯调铅华",
+          "jpClient": "黒曜に輝くブラックダイヤ",
+          "cost": 1080
+        },
+        "bg": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/485/Urbane_Onyx/image.png"
       }
     ],
     "gallery": [
@@ -137386,13 +139839,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/209/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/209/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/209/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/209/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Bridal Attack!",
           "cnClient": "花嫁攻势！",
           "jpClient": "白無垢大作戦？"
@@ -137733,13 +140186,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/257/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/257/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/257/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/257/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Coronal Afterglow",
           "cnClient": "凤冠霞帔",
           "jpClient": "鳳冠霞帔"
@@ -139325,13 +141778,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/166/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/166/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/166/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/166/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "The Warmth of Spring",
           "cnClient": "春日的暖风",
           "jpClient": "ポカポカ春模様"
@@ -140141,13 +142594,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/164/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/164/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/164/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/164/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "The Bride of Solomon",
           "cnClient": "所罗门的新娘",
           "jpClient": "ソロモンのハナヨメ"
@@ -141979,16 +144432,16 @@
         }
       },
       {
-        "name": "Daily Scenery in Foreign Colours",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/379/Daily_Scenery_in_Foreign_Colours/image.png",
+        "name": "High-Rise, High-Style",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/379/HighRise_HighStyle/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/379/Daily_Scenery_in_Foreign_Colours/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/379/HighRise_HighStyle/chibi.png",
         "info": {
           "live2dModel": false,
           "obtainedFrom": "Skin Shop",
-          "enClient": "skin unavailable",
+          "enClient": "High-Rise, High-Style",
           "cnClient": "异色的日常风景",
-          "jpClient": "skin unavailable",
+          "jpClient": "見馴れざる日常風景",
           "cost": 700
         }
       }
@@ -142624,7 +145077,7 @@
           "cn": "铁血先锋",
           "jp": "鉄血先鋭"
         },
-        "description": "When firing main gun, 5% chance to increase own Firepower by 30% (60%) for 8 seconds.",
+        "description": "When firing main gun, 5% chance to increase own Firepower by 30% (60%) for 8 seconds. (5s cooldown, starts on cooldown)",
         "color": "pink"
       },
       {
@@ -143160,13 +145613,13 @@
         }
       },
       {
-        "name": "Oath",
-        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/236/Oath/image.png",
+        "name": "Wedding",
+        "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/236/Wedding/image.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
-        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/236/Oath/chibi.png",
+        "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/236/Wedding/chibi.png",
         "info": {
           "live2dModel": false,
-          "obtainedFrom": "Oath",
+          "obtainedFrom": "Wedding",
           "enClient": "Schwarze Hochzeit",
           "cnClient": "黑曜的嫁衣",
           "jpClient": "ハイラーテンシュヴァルツ"
@@ -143300,6 +145753,14 @@
       {
         "description": "Bremerton, Z23, Laffey, Javelin, Ayanami, Prinz Heinrich, Kumano, Pamiat Merkuria",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.03.12_1.png"
+      },
+      {
+        "description": "Javelin, Laffey, Z23, Ayanami",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_3.png"
+      },
+      {
+        "description": "Z23, Roon, Friedrich der Grosse, Graf Zeppelin, Admiral Graf Spee, Prinz Eugen with Hood and Glorious",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_10.png"
       }
     ]
   },
@@ -144006,7 +146467,7 @@
         "heavy": false,
         "aviation": false,
         "limited": "Only during event: Scherzo of Iron and Blood Rerun",
-        "exchange": false
+        "exchange": "Merit"
       }
     },
     "obtainedFrom": {
@@ -144743,7 +147204,7 @@
         "heavy": false,
         "aviation": false,
         "limited": "Only during event: Scherzo of Iron and Blood",
-        "exchange": false
+        "exchange": "Merit"
       }
     },
     "obtainedFrom": {
@@ -145108,6 +147569,10 @@
       {
         "description": "Admiral Graf Spee, Prinz Eugen, Deutschland, Z46, Bismarck, Graf Zeppelin, Tirpitz, Admiral Hipper",
         "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2020.09.17_7.png"
+      },
+      {
+        "description": "Tashkent, Queen Elizabeth, Warspite, Z46",
+        "url": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/gallery/Bg_2021.05.27_5.png"
       }
     ]
   },
@@ -145741,7 +148206,7 @@
           "cn": "鹤之奋进",
           "jp": "奮進の鶴"
         },
-        "description": "If there are three or more Sakura Empire ships in your fleet, increase own damage dealt by 8.0% (20.0%). When this ship launches an airstrike, increase the damage dealt by all subsequent airstrikes by 8.0% (20.0%). This buff may stack up to three times.",
+        "description": "If there are three or more Sakura Empire ships in your fleet (including this ship), increase own damage dealt by 8.0% (20.0%). When this ship launches an airstrike, increase the damage dealt by all subsequent airstrikes by 8.0% (20.0%). This buff may stack up to three times.",
         "color": "pink"
       }
     ],
@@ -146373,7 +148838,6 @@
       {
         "name": "Retrofit",
         "image": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/349/Retrofit/image.png",
-        "cn": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/349/Retrofit/image.cn.png",
         "background": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/backgrounds/MainDayBG.png",
         "chibi": "https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/images/skins/349/Retrofit/chibi.png",
         "info": {

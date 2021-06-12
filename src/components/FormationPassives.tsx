@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import useResizeObserver from 'use-resize-observer';
-import { Ship } from '../types/types';
+import { Ship } from '_/types/shipTypes';
 import PassivesList from './PassivesList';
 import { CaretLeft } from './Icons';
 
@@ -127,13 +127,17 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
             className={`f-collapsible${showMain ? '' : ' f-collapsed'}`}
             style={isOpen.main ? { maxHeight: newHeight.mainHeight } : { maxHeight: 0 }}
           >
+            {/* 
             <div className="f-row">
               <div className="name f-header">Ship</div>
               <div className="passive f-header">Passive</div>
             </div>
-            <PassivesList {...getData(fleet[0])} />
-            <PassivesList {...getData(fleet[1])} />
-            <PassivesList {...getData(fleet[2])} />
+            */}
+            <div className="f-column">
+              <PassivesList {...getData(fleet[0])} />
+              <PassivesList {...getData(fleet[1])} />
+              <PassivesList {...getData(fleet[2])} />
+            </div>
           </div>
         </>
       ) : (
@@ -152,10 +156,12 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
             className={`f-collapsible ${showVanguard ? '' : 'f-collapsed'}`}
             style={isOpen.vanguard ? { maxHeight: newHeight.vanguardHeight } : { maxHeight: 0 }}
           >
+            {/*
             <div className="f-row">
               <div className="name f-header">Name</div>
               <div className="passive f-header">Passive</div>
             </div>
+            */}
             <PassivesList {...getData(fleet[3])} />
             <PassivesList {...getData(fleet[4])} />
             <PassivesList {...getData(fleet[5])} />

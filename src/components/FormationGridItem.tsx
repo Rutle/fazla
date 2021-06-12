@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
-import { Ship } from '_/types/types';
+import { Ship } from '_/types/shipTypes';
 import { getFleet } from '_/utils/appUtilities';
 import { UseDragAndDropFunctions } from './DragAndDrop/useDragAndDrop';
 import RButton from './RButton/RButton';

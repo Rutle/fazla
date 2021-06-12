@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList as List } from 'react-window';
 import { RootState } from '_/reducers/rootReducer';
-import { Ship, ShipSimple } from '_/types/types';
+import { ShipSimple } from '_/types/types';
 import { setSelectedShip } from '_/reducers/slices/appStateSlice';
 import { AppContext } from '_/App';
 import { getHullTypeAbb } from '_/utils/appUtilities';
+import { Ship } from '_/types/shipTypes';
 
 interface ShipListProps {
   shipSearchList: ShipSimple[];

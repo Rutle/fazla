@@ -1,5 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import { SearchParams, Ship, ShipSimple } from '_/types/types';
+import { Equipment } from '_/types/equipmentTypes';
+import { Ship } from '_/types/shipTypes';
+import { SearchParams, ShipSimple } from '_/types/types';
 import { fleets } from '../data/categories';
 
 /**
@@ -8,7 +10,11 @@ import { fleets } from '../data/categories';
 export default class DataStore {
   private shipsArr: Ship[] = [];
 
-  private count = 0;
+  private eqArr: Equipment[] = [];
+
+  private shipCount = 0;
+
+  private eqCount = 0;
 
   private state: 'INIT' | 'READY' | 'UPDATING' = 'INIT';
 
@@ -16,13 +22,17 @@ export default class DataStore {
    * Constructor for DataStore
    * @param shipData Ship data json.
    */
-  constructor(ships?: Ship[]) {
-    if (ships) {
+  constructor(ships?: Ship[], eqs?: Equipment[]) {
+    if (ships && eqs) {
       this.shipsArr = [...ships.slice()];
-      this.count = ships.length;
+      this.eqArr = [...eqs.slice()];
+      this.shipCount = ships.length;
+      this.eqCount = eqs.length;
     } else {
       this.shipsArr = [];
-      this.count = 0;
+      this.eqArr = [];
+      this.shipCount = 0;
+      this.eqCount = 0;
     }
     this.state = 'INIT';
   }
@@ -31,16 +41,35 @@ export default class DataStore {
     return this.shipsArr;
   }
 
+  getEqs(): Equipment[] {
+    return this.eqArr;
+  }
+
   getShipByIndex(index: number): Ship | undefined {
     return this.shipsArr[index];
   }
 
-  async setArray(data: Ship[]): Promise<Ship[]> {
+  getEqByIndex(index: number): Equipment | undefined {
+    return this.eqArr[index];
+  }
+
+  async setShips(data: Ship[]): Promise<Ship[]> {
     try {
       this.shipsArr = [...data.slice()];
-      this.count = data.length;
+      this.shipCount = data.length;
     } catch (error) {
-      return Promise.reject(new Error('Failed to set array in DataStore.'));
+      return Promise.reject(new Error('Failed to set ship data in DataStore.'));
+    }
+    this.state = 'READY';
+    return Promise.resolve(data);
+  }
+
+  async setEqs(data: Equipment[]): Promise<Equipment[]> {
+    try {
+      this.eqArr = [...data.slice()];
+      this.eqCount = data.length;
+    } catch (error) {
+      return Promise.reject(new Error('Failed to set equipment data in DataStore.'));
     }
     this.state = 'READY';
     return Promise.resolve(data);

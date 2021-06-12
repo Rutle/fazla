@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skill } from '_/types/types';
+import { Skill } from '_/types/shipTypes';
 
 interface PassiveProps {
   optionalName?: string;
@@ -15,7 +15,7 @@ const PassivesList: React.FC<PassiveProps> = ({ optionalName, skills, hullType }
       {skills !== undefined ? (
         skills?.map((skill: Skill) => {
           return (
-            <div key={skill.names.en} className={`f-row passive-list ${skill.color}`}>
+            <div key={skill.names.en} className={`f-row passive-item ${skill.color}`}>
               <div className={`grid-item name ${hullType || ''}`}>
                 {optionalName !== undefined ? optionalName : skill.names.en}
               </div>

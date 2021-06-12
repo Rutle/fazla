@@ -1,21 +1,15 @@
 /* ##### DARK ##### */
 :root {
   --root-dark-bg: #1f1f1f;
-  --main-dark-bg: #2f2f2f;
+  --main-dark-header-bg: #2f2f2f;
+  --main-dark-body-bg: #252525;
   --main-dark-border: #40556b;
-  --main-dark-titlebar-color: rgb(184, 184, 184);
   --main-dark-color: rgb(184, 184, 184);
-  /* --main-dark-hover-bg: #40556b;*/
   --main-dark-hover-bg: #3c4652;
   --main-dark-hover-color: #98caff;
-  --main-dark-button-top-bg: #26313a;
-  --main-dark-button-bottom-bg: #1b2127;
-  --main-dark-selected-bottom-bg: #2a2e35;
   --main-dark-active-bg: #40556b;
   --main-dark-tooltip-bg: #2a2c31;
   --main-dark-tooltip-border: #3f4657;
-  --main-dark-item-bg: #21252f;
-  --main-dark-footer-titlebar-bg: #202023;
 }
 
 /* ##### Scrollbar ##### */
@@ -45,7 +39,7 @@
 .dark .no-focus-outline:focus,
 .dark .no-focus-outline:focus-within {
   outline: none!important;
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
 }
 
 .dark :not(button):not(label):not(.switch-input):not(.modal-container):not(a):not(input):focus {
@@ -93,7 +87,7 @@ div.page.dark .container {
 div.modal-overlay.dark #side-scroll,
 div.page.dark #side-scroll {
   border-radius: 4px;
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   border: 1px solid var(--main-dark-border);
   -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
   -moz-box-shadow: 1px 1px 4px 1px #0000008f;
@@ -101,7 +95,7 @@ div.page.dark #side-scroll {
 }
 /* ##### Titlebar ##### */
 #titlebar.dark {
-  background: var(--main-dark-bg);
+  background: var(--main-dark-header-bg);
   color: var(--main-dark-color);
 
 }
@@ -110,7 +104,7 @@ div.page.dark #side-scroll {
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
 #titlebar.dark #window-menu {
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   border-bottom: 1px solid var(--main-dark-border);
 }
 
@@ -121,7 +115,7 @@ div.page.dark #side-scroll {
 
 #titlebar.dark .title-button {
   border-bottom: 1px solid var(--main-dark-border);
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
 
@@ -132,7 +126,7 @@ div.page.dark #side-scroll {
 
 #titlebar.dark #window-controls {
   border-bottom: 1px solid var(--main-dark-border);
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
 
@@ -159,20 +153,24 @@ div.page.dark #side-scroll {
 }
 
 #footer.dark {
-  background: var(--main-dark-bg);
+  background: var(--main-dark-header-bg);
   border-top: 1px solid var(--main-dark-border);
   color: var(--main-dark-color);
 }
 
 #bottom-fleet-selector.dark {
-  background: var(--main-dark-bg);
+  background: var(--main-dark-header-bg);
   border-top: 1px solid var(--main-dark-border);
   color: var(--main-dark-color);
+}
+
+#formation-ship-search.dark {
+  border-top: 3px solid var(--main-dark-border);
 }
 /* #### Modal #### */
 .modal-overlay.dark div.modal-title {
   border: 1px solid var(--main-dark-border);
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
 }
 
 .modal-overlay.dark div.modal-action {
@@ -194,7 +192,7 @@ div.page.dark .tab {
   border: 1px solid var(--main-dark-border);
   border-left: 0px;
   border-right: 0px;
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
 }
 
 nav.tab.dark {
@@ -203,8 +201,8 @@ nav.tab.dark {
 
 nav.tab.dark > a {
   color: rgba(184, 184, 184, 0.4);
-  border-right: 1px solid var(--main-dark-bg);
-  border-left: 1px solid var(--main-dark-bg);
+  border-right: 1px solid var(--main-dark-header-bg);
+  border-left: 1px solid var(--main-dark-header-bg);
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
 
@@ -244,7 +242,7 @@ nav.tab.dark > a:hover {
 /* ###### Buttons ###### */
 label.dark,
 button.dark {
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   color: var(--main-dark-color);
   border: 1px solid transparent;
 }
@@ -264,7 +262,7 @@ button.rList-item.dark.btn:hover {
 
 button.btn.dark:disabled:hover,
 button.tab-btn.dark:disabled:hover {
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
 }
 
 label.btn.dark.selected,
@@ -287,7 +285,7 @@ button.tab-btn.dark.selected {
 
 
 .rList-item.dark.owned > .owned-indicator + .name {
-  border-left: 1px solid var(--main-dark-bg);
+  border-left: 1px solid var(--main-dark-header-bg);
 }
 .rList-item.dark > .owned-indicator + .name {
   border-left: 1px solid transparent;
@@ -299,7 +297,7 @@ button.tab-btn.dark.selected {
 }
 
 .formation-dropdown-menu.dark .btn.menu-item:last-child {
-  border-bottom: 1px solid var(--main-dark-bg)!important;
+  border-bottom: 1px solid var(--main-dark-header-bg)!important;
 }
 .dark #formation-grid {
   border-bottom: 1px solid var(--main-dark-border);
@@ -316,8 +314,8 @@ button.tab-btn.dark.selected {
 
 /* #### ship title bar #### */
 .dark .ship-title-bar {
-  border: 1px solid var(--main-dark-border);
-  background-color: var(--main-dark-bg);
+  border-bottom: 2px solid var(--main-dark-border);
+  background-color: var(--main-dark-header-bg);
 }
 
 div.radio-group.dark,
@@ -328,7 +326,7 @@ div.button-group.dark {
 .radio-group.dark label,
 .button-group.dark button,
 .page.dark .tab button {
-  border: 1px solid var(--main-dark-bg);
+  border: 1px solid var(--main-dark-header-bg);
 }
 
 /* #### Rarity colors #### */
@@ -362,7 +360,7 @@ button.input.dark {
 input[type="url"].dark,
 #input-group.dark {
   color: var(--main-dark-color);
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   border: 2px solid var(--main-dark-border);
 }
 
@@ -391,14 +389,27 @@ input[type="url"].dark.is-invalid,
 /* #### Grid #### */
 div.f-grid.dark div.f-header {
   border-bottom: 2px solid var(--main-dark-border);
+  background-color: var(--main-dark-header-bg);
 }
+
+div.f-grid.dark div.f-body {
+  background-color: var(--main-dark-body-bg);
+  border-bottom: 2px solid var(--main-dark-border);
+}
+
 div.f-grid.dark div.f-title,
 div.f-grid.dark div.f-icon {
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   border-bottom: 1px solid var(--main-dark-border);
   border-top: 1px solid var(--main-dark-border);
 }
 
+div.f-row.dark div.f-header.tab-group > button:first-child {
+  border-left: 2px dotted var(--main-dark-border);
+}
+div.f-row.dark div.f-header.tab-group > button:last-child {
+  border-right: 2px dotted var(--main-dark-border);
+}
 /* #### hull types #### */
 .btn.dark.Carrier {
   background-color: #352035;
@@ -439,29 +450,32 @@ div.f-grid.dark div.f-icon {
   color: #48caa1;
 }
 
-/* #### grid title #### */
-div.f-grid.dark div.f-icon.bottom-emp {
-  background-color: unset;
-  border-bottom: 2px solid var(--main-dark-border);
-}
-div.f-grid.dark div.f-title.bottom-emp {
-  background-color: unset;
-  border-bottom: 2px solid var(--main-dark-border);
+/* #### grid slot/stats #### */
+table.f-table.dark .stat-item,
+div.f-grid.dark .f-row > .stat-item {
+  border-right: 1px solid var(--main-dark-border);
 }
 
+
+table.f-table.dark .stat-item:last-child {
+  border-right: unset;
+}
 /* #### rarity #### */
 div.f-grid.dark div.f-row.pink {
   border-bottom: 2px solid rgba(255, 192, 203, 0.50);
-  background-color: var(--main-dark-bg);
+  /* background-color: var(--main-dark-header-bg);*/
+  background-color: var(--main-dark-body-bg);
 }
 /* #### rarity #### */
 div.f-grid.dark div.f-row.gold {
-  background-color: var(--main-dark-bg);
+  /* background-color: var(--main-dark-header-bg);*/
+  background-color: var(--main-dark-body-bg);
   border-bottom: 2px solid rgba(255, 215, 0, 0.50);
 }
 
 div.f-grid.dark div.f-row.deepskyblue {
-  background-color: var(--main-dark-bg);
+  /* background-color: var(--main-dark-header-bg);*/
+  background-color: var(--main-dark-body-bg);
   border-bottom: 2px solid rgba(0, 191, 255, 0.50);
 }
 
@@ -469,7 +483,7 @@ div.f-grid.dark div.f-row.deepskyblue {
 .message-container.dark {
   color: var(--main-dark-color);
   border: 1px solid var(--main-dark-border);
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   /* box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;*/
 }
 .toast-container.dark > .toast {
@@ -491,4 +505,10 @@ div.f-grid.dark div.f-row.deepskyblue {
 
 @media only screen and (max-width: 900px) {
 
+}
+
+@media only screen and (max-width: 576px) {
+  nav.tab.dark > a.active:first-child {
+    border-left: 1px solid transparent;
+  }
 }

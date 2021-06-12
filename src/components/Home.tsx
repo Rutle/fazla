@@ -54,17 +54,19 @@ const Home: React.FC = () => {
       disabled = true;
     }
     return (
-      <RButton
-        themeColor={`${config.themeColor}`}
-        onClick={() => {
-          setShipDiff({ count: shipData.getShips().length, isUpdate: true });
-          if (config.isToast) addToast('info', 'Update', 'Updating ship information.');
-          dispatch(updateShipData(shipData, addToast)); // Only used in Electron
-        }}
-        disabled={disabled}
-      >
-        {text}
-      </RButton>
+      <div className={`button-group ${config.themeColor}`}>
+        <RButton
+          themeColor={`${config.themeColor}`}
+          onClick={() => {
+            setShipDiff({ count: shipData.getShips().length, isUpdate: true });
+            if (config.isToast) addToast('info', 'Update', 'Updating ship information.');
+            dispatch(updateShipData(shipData, addToast)); // Only used in Electron
+          }}
+          disabled={disabled}
+        >
+          {text}
+        </RButton>
+      </div>
     );
   };
   /*
@@ -107,16 +109,16 @@ const Home: React.FC = () => {
         <div className="container content">
           <div className={`f-grid ${config.themeColor}`}>
             <div className="f-row">
-              <div className="f-icon bottom-emp">{/* <FontAwesomeIcon icon={faCaretRight} /> */}</div>
-              <div className="f-title bottom-emp">Options</div>
+              <div className="f-header">Options</div>
             </div>
-            <div className="f-row wrap">
-              <div className="grid-item name">Update ship data</div>
-              <div className="grid-item action">{renderUpdate()}</div>
-            </div>
-            {process.env.PLAT_ENV === 'electron' ? (
-              <>
-                {/* 
+            <div className="f-column f-body">
+              <div className="f-row wrap">
+                <div className="grid-item name">Update ship data</div>
+                <div className="grid-item action">{renderUpdate()}</div>
+              </div>
+              {process.env.PLAT_ENV === 'electron' ? (
+                <>
+                  {/* 
                 <div className="f-row wrap">
                   <div className="grid-item name">Raw data URL</div>
                   <div className="grid-item action">
@@ -167,48 +169,50 @@ const Home: React.FC = () => {
                     />
                   </div>
                 </div> */}
-              </>
-            ) : (
-              <></>
-            )}
-            <div className="f-row wrap">
-              <div className="grid-item name">Theme color</div>
-              <div className="grid-item action">
-                <div className={`radio-group ${config.themeColor}`}>
-                  <RToggle
-                    id="dark"
-                    value="dark"
-                    themeColor={config.themeColor}
-                    onChange={() => updateConfig('themeColor', 'dark')}
-                    selected={config.themeColor === 'dark'}
-                  >
-                    Dark
-                  </RToggle>
-                  <RToggle
-                    id="light"
-                    value="light"
-                    themeColor={config.themeColor}
-                    onChange={() => updateConfig('themeColor', 'light')}
-                    selected={config.themeColor === 'light'}
-                  >
-                    Light
-                  </RToggle>
+                </>
+              ) : (
+                <></>
+              )}
+              <div className="f-row wrap">
+                <div className="grid-item name">Theme color</div>
+                <div className="grid-item action">
+                  <div className={`radio-group ${config.themeColor}`}>
+                    <RToggle
+                      id="dark"
+                      value="dark"
+                      themeColor={config.themeColor}
+                      onChange={() => updateConfig('themeColor', 'dark')}
+                      selected={config.themeColor === 'dark'}
+                    >
+                      Dark
+                    </RToggle>
+                    <RToggle
+                      id="light"
+                      value="light"
+                      themeColor={config.themeColor}
+                      onChange={() => updateConfig('themeColor', 'light')}
+                      selected={config.themeColor === 'light'}
+                    >
+                      Light
+                    </RToggle>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="f-row wrap">
-              <div className="grid-item name">Ship data update date</div>
-              <div className="grid-item action">{config.updateDate !== '' ? config.updateDate : 'N/A'}</div>
-            </div>
-            {/* 
+              <div className="f-row wrap">
+                <div className="grid-item name">Ship data update date</div>
+                <div className="grid-item name" style={{ maxWidth: 'unset' }}>
+                  {config.updateDate !== '' ? config.updateDate : 'N/A'}
+                </div>
+              </div>
+              {/* 
             <div className="f-row wrap">
               <div className="grid-item name" style={{ opacity: `${config.isEdit ? '1' : '0.2'}` }} />
               <div className="grid-item action">{renderSave()}</div>
             </div>
             */}
+            </div>
             <div className="f-row">
-              <div className="f-icon bottom-emp">{/* <FontAwesomeIcon icon={faCaretRight} /> */}</div>
-              <div className="f-title bottom-emp">Stats</div>
+              <div className="f-header">Stats</div>
             </div>
             <div className="f-row wrap">
               <div className="grid-item name">Ship count</div>

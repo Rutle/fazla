@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fleets } from '_/data/categories';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
-import { Ship } from '_/types/types';
+import { Ship } from '_/types/shipTypes';
 import { useDragAndDrop } from './DragAndDrop/useDragAndDrop';
 import FormationGridItem from './FormationGridItem';
 
@@ -101,6 +101,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
             <div
               key={`main-${fleetIdx * fleet.length}`}
               className={`f-row ${selectedFleetIndex === fleetIdx ? '' : 'small-hidden'}`}
+              style={{ marginBottom: '2px' }}
             >
               {fleet.slice(0, 3).map((ship, shipIdx) => (
                 <FormationGridItem
@@ -123,6 +124,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
             <div
               key={`vanguard-${fleetIdx * fleet.length}`}
               className={`f-row ${selectedFleetIndex === fleetIdx ? '' : 'small-hidden'}`}
+              style={{ marginBottom: '2px' }}
             >
               {fleet.slice(3).map((ship, shipIdx) => (
                 <FormationGridItem

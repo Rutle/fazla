@@ -6,10 +6,12 @@ import { urlValidation } from '_utils/appUtilities';
 import { addShip, removeShip } from '_/reducers/slices/ownedShipListSlice';
 import { AppContext } from '_/App';
 import { SearchAction, updateSearch } from '_/reducers/slices/searchParametersSlice';
+import { Ship } from '_/types/shipTypes';
 import PassivesList from './PassivesList';
 import RButton from './RButton/RButton';
-import { Ship } from '../types/types';
 import { DashIcon, PlusIcon } from './Icons';
+import SlotList from './SlotList';
+import StatList from './StatList';
 
 /**
  * Component for displaying the details of a ship.
@@ -101,10 +103,18 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
       </div>
       <div className="scroll">
         <div className={`f-grid ${config.themeColor}`}>
+          <StatList stats={ship.stats} themeColor={config.themeColor} />
+        </div>
+        <div className={`f-grid ${config.themeColor}`}>
+          <SlotList slots={ship.slots} hasRetrofit={ship.retrofit} themeColor={config.themeColor} />
+        </div>
+        <div className={`f-grid ${config.themeColor}`}>
           <div className="f-row">
-            <div className="passive f-header">Passives</div>
+            <div className="f-header">Passives</div>
           </div>
-          <PassivesList skills={ship.skills} />
+          <div className="f-column">
+            <PassivesList skills={ship.skills} />
+          </div>
         </div>
       </div>
     </>

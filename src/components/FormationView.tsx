@@ -9,7 +9,7 @@ import {
   SUBMARINE,
   VANGUARDINDEX,
 } from '_/reducers/slices/formationGridSlice';
-import { Ship } from '_/types/types';
+import { Ship } from '_/types/shipTypes';
 import { RootState } from '_/reducers/rootReducer';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { CSSTransition } from 'react-transition-group';
@@ -61,6 +61,9 @@ const FormationView: React.FC = () => {
       if (loc === 'ship' && refData && refData.current) {
         refData.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
       }
+      if (loc === 'reset' && refSide && refSide.current) {
+        refSide.current.scrollIntoView(true);
+      }
     },
     [refSide]
   );
@@ -87,7 +90,8 @@ const FormationView: React.FC = () => {
   }, [fData.selectedIndex]);
 
   useEffect(() => {
-    if (showSearch) scrollTo('top');
+    /* TODO: Check that is scrolls to top when search lit is hidden especially on small screen */
+    if (showSearch) scrollTo('reset');
   }, [scrollTo, showSearch]);
 
   // Update currently selected formation data.
@@ -251,6 +255,7 @@ const FormationView: React.FC = () => {
                     WrapperElement="div"
                     wrapperClassNames="icon help"
                     placement="bottom"
+                    extraProps={{ style: { maxWidth: '16px' } }}
                   >
                     <QuestionCircleIcon themeColor={config.themeColor} />
                   </TooltipWrapper>
@@ -328,7 +333,9 @@ const FormationView: React.FC = () => {
             <div
               id="formation-ship-search"
               ref={refTransition}
-              className={`${fleetCount === 2 ? 'normal-fleet' : 'siren-fleet'}${isSubFleet ? ' sub-fleet' : ''}`}
+              className={`${fleetCount === 2 ? 'normal-fleet' : 'siren-fleet'}${isSubFleet ? ' sub-fleet' : ''} ${
+                config.themeColor
+              }`}
             >
               <SideBar refer={refSide}>
                 <ShipList

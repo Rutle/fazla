@@ -1,5 +1,7 @@
 import { ipcRenderer, contextBridge, shell } from 'electron';
-import { AppConfig, BasicResponse, Formation, Ship, VersionInfo } from '_/types/types';
+import { Equipment } from '_/types/equipmentTypes';
+import { Ship } from '_/types/shipTypes';
+import { AppConfig, BasicResponse, Formation, VersionInfo } from '_/types/types';
 
 const validSendChannels = [
   'close-application',
@@ -24,6 +26,7 @@ contextBridge.exposeInMainWorld('api', {
           ownedShips: string[];
           formations: Formation[];
           versionInfo: VersionInfo;
+          eqData: Equipment[];
         } & BasicResponse
       >;
     }

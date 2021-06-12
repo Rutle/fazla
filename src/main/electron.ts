@@ -4,8 +4,10 @@ import Store from 'electron-store';
 import * as fs from 'fs';
 import * as url from 'url';
 import * as path from 'path';
-import { isShipJson, isVersionJson, safeJsonParse } from '_/utils/appUtilities';
-import { Ship, Formation, AppConfig, SaveDataObject, VersionInfo, emptyVersionInfo } from '_/types/types';
+import { isEquipmentJson, isShipJson, isVersionJson, safeJsonParse } from '_/utils/appUtilities';
+import { Formation, AppConfig, SaveDataObject, VersionInfo, emptyVersionInfo } from '_/types/types';
+import { Ship } from '_/types/shipTypes';
+import { Equipment } from '_/types/equipmentTypes';
 
 let mainWindow: Electron.BrowserWindow;
 const electronStore = new Store({
@@ -16,7 +18,7 @@ const fsPromises = fs.promises;
 const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 const THEMECOLOR = 'dark';
 
-const APPRESFILES = ['ships', 'version-info'];
+const APPRESFILES = ['ships', 'version-info', 'equipments'];
 
 function createWindow(): void {
   // Create the browser window.
@@ -255,8 +257,9 @@ ipcMain.handle('rename-formation-by-index', (event, data: { idx: number; name: s
  * Initialize by getting data from .json and config data from config file.
  */
 ipcMain.handle('initData', async () => {
-  let jsonData: { [key: string]: Ship } = {};
+  let shipData: { [key: string]: Ship } = {};
   let versionData: VersionInfo = emptyVersionInfo();
+  let eqData: Equipment[] = [];
   let dataArr: Ship[] = [];
   let oShips: string[] = [];
   let formationData: Formation[] = [];
@@ -328,12 +331,15 @@ ipcMain.handle('initData', async () => {
       });
     if (code === 'ResFound' && rawData) {
       // Parse and check JSON data (at least partially)
-      const shipData = safeJsonParse(isShipJson)(rawData.ships);
+      const shipDataParsed = safeJsonParse(isShipJson)(rawData.ships);
       const versionDataParsed = safeJsonParse(isVersionJson)(rawData['version-info']);
-      if (shipData && versionDataParsed) {
-        jsonData = shipData as { [key: string]: Ship };
+      const eqDataParsed = safeJsonParse(isEquipmentJson)(rawData.equipments);
+      // const eqData = safeJsonParse(isEquipmentJson)(rawData.equipments);
+      if (shipDataParsed && versionDataParsed && eqDataParsed) {
+        shipData = shipDataParsed as { [key: string]: Ship };
         versionData = versionDataParsed as VersionInfo;
-        dataArr = [...Object.keys(jsonData).map((key) => jsonData[key])];
+        eqData = eqDataParsed as Equipment[];
+        dataArr = [...Object.keys(shipData).map((key) => shipData[key])];
         oShips = electronStore.get('ownedShips') as string[];
         formationData = electronStore.get('formations') as Formation[];
         isOk = true;
@@ -346,6 +352,7 @@ ipcMain.handle('initData', async () => {
     return {
       shipData: dataArr,
       versionData,
+      eqData,
       config: configData,
       ownedShips: oShips,
       formations: formationData,
@@ -357,6 +364,7 @@ ipcMain.handle('initData', async () => {
     return {
       shipData: dataArr,
       versionData,
+      eqData,
       config: configData,
       ownedShips: oShips,
       formations: formationData,

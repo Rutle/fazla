@@ -1,6 +1,7 @@
+import { Equipment } from '_/types/equipmentTypes';
+import { Ship } from '_/types/shipTypes';
 import {
   BasicResponse,
-  Ship,
   Formation,
   AppConfig,
   SaveDataObject,
@@ -127,6 +128,7 @@ export const initData = async (platform: string, storage?: LocalForage): Promise
     const ownedShips = ((await storage.getItem('ownedShips')) as string[]) || [];
     const formations = ((await storage.getItem('formations')) as Formation[]) || [];
     const versionData = (await storage.getItem('versionInfo')) as VersionInfo;
+    const eqData = (await storage.getItem('eqData')) as Equipment[];
     let isOk = false;
     let msg = '';
     let code = '';
@@ -136,7 +138,7 @@ export const initData = async (platform: string, storage?: LocalForage): Promise
       msg = 'Could not find ship data.';
       code = 'ResNotFound';
     }
-    return { shipData, config, ownedShips, formations, versionData, isOk, msg, code };
+    return { shipData, config, ownedShips, formations, versionData, isOk, msg, code, eqData };
   }
   return {
     shipData: [],
@@ -147,5 +149,6 @@ export const initData = async (platform: string, storage?: LocalForage): Promise
     versionData: emptyVersionInfo(),
     msg: '',
     code: '',
+    eqData: [],
   };
 };

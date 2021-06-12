@@ -11,10 +11,11 @@ import {
   emptyVersionInfo,
   Formation,
   ResponseWithData,
-  Ship,
   ShipSimple,
   VersionInfo,
 } from '_/types/types';
+import { Ship } from '_/types/shipTypes';
+import { Equipment } from '_/types/equipmentTypes';
 import { setSearchList } from './shipSearchListSlice';
 import { setOwnedSearchList } from './ownedSearchListSlice';
 import { setOwnedList } from './ownedShipListSlice';
@@ -229,8 +230,9 @@ export const initShipData =
         const days = elapsedSinceUpdate(updateDateCheck);
         const dataCheck = (await storage.getItem('shipData')) as Ship[];
         const versionInfo = (await storage.getItem('versionInfo')) as VersionInfo;
-        if (dataCheck === null || versionInfo === null || updateDateCheck === null) {
-          // No data has been set to storage yet. Also no update date has been set.
+        const eqCheck = (await storage.getItem('eqData')) as Equipment[];
+        if (dataCheck === null || versionInfo === null || updateDateCheck === null || eqCheck === null) {
+          // Some data missing. Also no update date has been set.
           dispatch(setCurrentState({ cState: 'DOWNLOADING', cMsg: 'Downloading' }));
           res = await downloadShipData(platform, storage);
           if (!res.isOk) throw new Error(res.msg);
@@ -253,7 +255,8 @@ export const initShipData =
       if (dataObj.code === 'JSONParseFail' && platform === 'electron')
         throw new Error("JSON data form didn't match. Delete ships.json and restart app.");
       if (dataObj.code === 'InitError') throw new Error("Couldn't initialize application.");
-      await data.setArray(dataObj.shipData);
+      await data.setShips(dataObj.shipData);
+      await data.setEqs(dataObj.eqData);
       dispatch(initShipLists(dataObj.ownedShips, data, dataObj.config, dataObj.formations));
       dispatch(setVersionData(dataObj.versionData));
     } catch (e) {
@@ -305,7 +308,7 @@ export const updateShipData =
         const dataArr = res.data.shipData as Ship[];
         const versInfo = res.data.versionInfo as VersionInfo;
         const updateDate = res.updateDate as string;
-        await shipData.setArray(dataArr);
+        await shipData.setShips(dataArr);
         const fullSimple = DataStore.transformShipList(dataArr);
         const searchInitId = fullSimple.length > 0 ? fullSimple[0].id : 'NONE';
         const searchInitIndex = fullSimple.length > 0 ? fullSimple[0].index : NaN;

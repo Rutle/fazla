@@ -1,5 +1,6 @@
 const fs = require('fs');
 const shipData = require('../data/ships.json');
+const eqData = require('../data/equipments.json');
 
 function checkHullType() {
   const jsonObject = {};
@@ -21,7 +22,7 @@ function checkHullType() {
     console.log('JSON file has been saved.');
   });
 }
-checkHullType();
+
 function checkNationality() {
   const jsonObject = {};
   Object.keys(shipData).forEach((ele, idx) => {
@@ -63,7 +64,7 @@ function checkRarity() {
     console.log('JSON file has been saved.');
   });
 }
-// checkNationality();
+
 
 function checkSkills() {
   const jsonObject = {};
@@ -100,4 +101,52 @@ function checkSkills() {
     console.log('JSON file has been saved.');
   });
 }
+
+function checkEqTypes() {
+  const jsonObject = {};
+  console.log(eqData.length);
+  eqData.forEach((eq, idx) => {
+    if (jsonObject[eq.type.name] === undefined) {
+      jsonObject[eq.type.name] = 1;
+    } else {
+      jsonObject[eq.type.name] = jsonObject[eq.type.name] + 1;
+    }
+  });
+  const jsonStr = JSON.stringify(jsonObject);
+  fs.writeFile('eqTypes.json', jsonStr, 'utf8', (err) => {
+    if (err) {
+      console.log('An error occured while writing JSON Object to File.');
+      return console.log(err);
+    }
+
+    console.log('JSON file has been saved.');
+  });
+}
+function checkShipEqSlotTypes() {
+  const jsonObject = {};
+  Object.keys(shipData).forEach((ele, idx) => {
+    const ship = shipData[ele];
+    ship.slots.forEach((slot) => {
+      if (jsonObject[slot.type] === undefined) {
+        jsonObject[slot.type] = 1;
+      } else {
+        jsonObject[slot.type] = jsonObject[slot.type] + 1;
+      }
+    });
+
+  });
+  const jsonStr = JSON.stringify(jsonObject);
+  fs.writeFile('shipEqSlotTypes.json', jsonStr, 'utf8', (err) => {
+    if (err) {
+      console.log('An error occured while writing JSON Object to File.');
+      return console.log(err);
+    }
+
+    console.log('JSON file has been saved.');
+  });
+}
 // checkSkills();
+// checkNationality();
+// checkHullType();
+checkShipEqSlotTypes();
+// checkEqTypes();

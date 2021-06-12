@@ -303,30 +303,31 @@ div.scroll {
 #formation-ship-search {
   display: none;
   position: fixed;
-  /* width: calc(100% - 30px);*/
   width: 100%;
   flex-direction: row;
   z-index: 25;
-  /* overflow: hidden;*/
+  box-shadow: 0px -1px 5px 4px rgba(0,0,0,0.65);
+  -webkit-box-shadow: 0px -1px 5px 4px rgba(0,0,0,0.65);
+  -moz-box-shadow: 0px -1px 5px 4px rgba(0,0,0,0.65);
 }
 
 .normal-fleet {
-  top: 187px;
+  top: 184px;
   min-height: calc(100% - 212px);
 }
 
 .normal-fleet.sub-fleet {
-  top: 246px;
+  top: 243px;
   min-height: calc(100% - 271px);
 }
 
 .siren-fleet {
-  top: 251px;
+  top: 248px;
   min-height: calc(100% - 276px);
 }
 
 .siren-fleet.sub-fleet {
-  top: 310px;
+  top: 307px;
   min-height: calc(100% - 335px);
 }
 .search-section-enter {
@@ -421,7 +422,7 @@ button.btn.slide {
 label.btn.normal,
 button.btn.normal,
 button.tab-btn.normal {
-  font-size: 16px;
+  font-size: 15px;
   font-variant-caps: all-petite-caps;
   padding: 0px 10px 2px 10px;
   justify-content: center;
@@ -473,12 +474,14 @@ button.tab-btn.normal.icon-only {
 }
 
 .tab > div.help {
-  align-self: center;
+  align-self: center; /* TODO: Check if needed on Firefox. Vertical-align below related. Either of them is required on electron */
   display: inline-block;
   padding: 0px 5px 0px 5px;
+  flex-grow: 1;
 }
 .tab > div.help > .icon {
-  vertical-align: middle;
+  vertical-align: middle; /* TODO: Check if needed on Firefox. align-self above related */
+  padding-top: 4px; /* Enough with these two on electron. */
 }
 
 nav > a {
@@ -654,8 +657,9 @@ div.f-row.action *,
 /* ###### ship details / titlebar ##### */
 .ship-title-bar {
   display: flex;
+  /*
   border-left: 0px!important;
-  border-right: 0px!important;
+  border-right: 0px!important; */
   padding: 5px 16px;
   font-size: 1.5em;
   align-items: center;
@@ -816,13 +820,20 @@ button.input:hover {
   display: flex;
   flex-direction: column;
   padding: 1px;
-  border-radius: 2px;
+  margin-bottom: 10px;
 }
 
 div.f-row {
   display: flex;
   flex-direction: row;
-  margin-bottom: 2px;
+}
+
+div.f-column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  border-radius: inherit;
+  min-width: 0;
 }
 
 div.f-row.wrap {
@@ -844,20 +855,12 @@ div.f-grid div.f-collapsible.f-collapsed {
   max-height: 0px!important;
 }
 
-div.f-column {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  border-radius: inherit;
-  min-width: 0;
-}
+
 
 /* ##### GRID-ITEM ##### */
 .grid-item {
   flex: 1;
-  height: inherit;
-  min-width: 0;
-  /* overflow: hidden;*/
+  /* height: inherit;*/
   margin-right: 1px;
 }
 
@@ -872,14 +875,25 @@ div.f-row div.f-header {
   flex: 1;
   flex-direction: column;
   border-radius: inherit;
+  padding: 3px 5px;
+  justify-content: center; /* TODO: Check on Firefox if does anything. */
+  font-size: 15px;
+}
+
+div.f-row div.f-header.tab-group {
+  flex-direction: row;
+  padding: unset;
+  justify-content: flex-end;
+  flex: 0;
 }
 
 div.f-row div.name {
-  min-width: 160px;
+  /* min-width: 160px;*/ /* TODO: Check on Firefox. */
   max-width: 160px;
   height: inherit;
-  justify-content: center;
+  justify-content: center; /* TODO: Check on Firefox if does anything. */
   padding: 3px 5px;
+  align-self: center;
 }
 
 div.f-grid .grid-item.action {
@@ -895,10 +909,25 @@ div.f-grid .grid-item.action {
   align-items: center;
 }
 
+table.f-table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  color: inherit;
+}
+
+table.f-table .stat-item {
+  padding: 3px 5px;
+  width: 25%;
+  font-size: 13px;
+}
+
+div.f-grid div.f-row div.slot,
 div.f-grid div.f-row div.passive {
   padding: 3px 5px;
   justify-content: center;
   font-size: 13px;
+  white-space: break-spaces;
 }
 
 /* ##### f-title ##### */
@@ -935,16 +964,6 @@ div.f-grid div.f-icon.open > svg{
   transition: 0.3s;
 }
 
-div.f-grid div.f-title.bottom-emp {
-  flex: unset;
-  width: 367px;
-  border-top: unset!important;
-  justify-content: flex-start;
-}
-
-div.f-grid div.f-icon.bottom-emp {
-  border-top: unset!important;
-}
 /* https://dev.to/link2twenty/accessibility-first-toggle-switches-3obj */
 .switch {
   display: inline-flex;
@@ -1174,6 +1193,10 @@ div.f-grid div.f-icon.bottom-emp {
     min-height: calc(100% - 40px);
     height: calc(100% - 40px);
     width: 100%;
+    border-top: unset!important;
+    box-shadow: unset!important;
+    -webkit-box-shadow: unset!important;
+    -moz-box-shadow: unset!important;
   }
   .page-content .container.content,
   .page-content .container.sidebar {
@@ -1186,13 +1209,18 @@ div.f-grid div.f-icon.bottom-emp {
   }
 
   /* .rList .rList-item.btn > .hullTypeAbb,*/
-  #formation-content .name.f-header,
-  #formation-content .passive.f-header,
+  #formation-content .f-header,
+  #formation-content .f-header,
   #window-title {
     display: none;
   }
 
-  .f-row.passive-list,
+  div.f-row div.name {
+    min-width: unset;
+    max-width: unset;
+    padding: 3px 5px;
+  }
+  .f-row.passive-item,
   #formation-grid .f-row {
     flex-direction: column;
   }
@@ -1204,12 +1232,12 @@ div.f-grid div.f-icon.bottom-emp {
     flex-direction: row;
   }
 
-  .tab {
+  .tab { /* TODO: check if needed on firefox */
     justify-content: flex-start;
   }
 
   .tab > button.tab-btn {
-    flex-grow: 1;
+    flex: 1;
   }
 
   .message-container {
@@ -1224,8 +1252,8 @@ div.f-grid div.f-icon.bottom-emp {
     padding: 0px 2px 2px 2px;
   }
 
-  .f-row > div.name.f-header,
-  .f-row > div.passive.f-header {
+  .f-row > div.f-header,
+  .f-row > div.f-header {
     min-width: unset;
     max-width: unset;
   }
