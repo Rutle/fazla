@@ -325,30 +325,31 @@ div.scroll {
 #formation-ship-search {
   display: none;
   position: fixed;
-  /* width: calc(100% - 30px);*/
   width: 100%;
   flex-direction: row;
   z-index: 25;
-  /* overflow: hidden;*/
+  box-shadow: 0px -1px 5px 4px rgba(0,0,0,0.65);
+  -webkit-box-shadow: 0px -1px 5px 4px rgba(0,0,0,0.65);
+  -moz-box-shadow: 0px -1px 5px 4px rgba(0,0,0,0.65);
 }
 
 .normal-fleet {
-  top: 187px;
+  top: 184px;
   min-height: calc(100% - 212px);
 }
 
 .normal-fleet.sub-fleet {
-  top: 246px;
+  top: 243px;
   min-height: calc(100% - 271px);
 }
 
 .siren-fleet {
-  top: 251px;
+  top: 248px;
   min-height: calc(100% - 276px);
 }
 
 .siren-fleet.sub-fleet {
-  top: 310px;
+  top: 307px;
   min-height: calc(100% - 335px);
 }
 .search-section-enter {
@@ -443,7 +444,7 @@ button.btn.slide {
 label.btn.normal,
 button.btn.normal,
 button.tab-btn.normal {
-  font-size: 16px;
+  font-size: 15px;
   font-variant-caps: all-petite-caps;
   padding: 0px 10px 2px 10px;
   justify-content: center;
@@ -495,12 +496,14 @@ button.tab-btn.normal.icon-only {
 }
 
 .tab > div.help {
-  align-self: center;
+  align-self: center; /* TODO: Check if needed on Firefox. Vertical-align below related. Either of them is required on electron */
   display: inline-block;
   padding: 0px 5px 0px 5px;
+  flex-grow: 1;
 }
 .tab > div.help > .icon {
-  vertical-align: middle;
+  vertical-align: middle; /* TODO: Check if needed on Firefox. align-self above related */
+  padding-top: 4px; /* Enough with these two on electron. */
 }
 
 nav > a {
@@ -676,8 +679,9 @@ div.f-row.action *,
 /* ###### ship details / titlebar ##### */
 .ship-title-bar {
   display: flex;
+  /*
   border-left: 0px!important;
-  border-right: 0px!important;
+  border-right: 0px!important; */
   padding: 5px 16px;
   font-size: 1.5em;
   align-items: center;
@@ -838,13 +842,20 @@ button.input:hover {
   display: flex;
   flex-direction: column;
   padding: 1px;
-  border-radius: 2px;
+  margin-bottom: 10px;
 }
 
 div.f-row {
   display: flex;
   flex-direction: row;
-  margin-bottom: 2px;
+}
+
+div.f-column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  border-radius: inherit;
+  min-width: 0;
 }
 
 div.f-row.wrap {
@@ -866,20 +877,12 @@ div.f-grid div.f-collapsible.f-collapsed {
   max-height: 0px!important;
 }
 
-div.f-column {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  border-radius: inherit;
-  min-width: 0;
-}
+
 
 /* ##### GRID-ITEM ##### */
 .grid-item {
   flex: 1;
-  height: inherit;
-  min-width: 0;
-  /* overflow: hidden;*/
+  /* height: inherit;*/
   margin-right: 1px;
 }
 
@@ -894,14 +897,25 @@ div.f-row div.f-header {
   flex: 1;
   flex-direction: column;
   border-radius: inherit;
+  padding: 3px 5px;
+  justify-content: center; /* TODO: Check on Firefox if does anything. */
+  font-size: 15px;
+}
+
+div.f-row div.f-header.tab-group {
+  flex-direction: row;
+  padding: unset;
+  justify-content: flex-end;
+  flex: 0;
 }
 
 div.f-row div.name {
-  min-width: 160px;
+  /* min-width: 160px;*/ /* TODO: Check on Firefox. */
   max-width: 160px;
   height: inherit;
-  justify-content: center;
+  justify-content: center; /* TODO: Check on Firefox if does anything. */
   padding: 3px 5px;
+  align-self: center;
 }
 
 div.f-grid .grid-item.action {
@@ -917,10 +931,25 @@ div.f-grid .grid-item.action {
   align-items: center;
 }
 
+table.f-table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  color: inherit;
+}
+
+table.f-table .stat-item {
+  padding: 3px 5px;
+  width: 25%;
+  font-size: 13px;
+}
+
+div.f-grid div.f-row div.slot,
 div.f-grid div.f-row div.passive {
   padding: 3px 5px;
   justify-content: center;
   font-size: 13px;
+  white-space: break-spaces;
 }
 
 /* ##### f-title ##### */
@@ -957,16 +986,6 @@ div.f-grid div.f-icon.open > svg{
   transition: 0.3s;
 }
 
-div.f-grid div.f-title.bottom-emp {
-  flex: unset;
-  width: 367px;
-  border-top: unset!important;
-  justify-content: flex-start;
-}
-
-div.f-grid div.f-icon.bottom-emp {
-  border-top: unset!important;
-}
 /* https://dev.to/link2twenty/accessibility-first-toggle-switches-3obj */
 .switch {
   display: inline-flex;
@@ -1196,6 +1215,10 @@ div.f-grid div.f-icon.bottom-emp {
     min-height: calc(100% - 40px);
     height: calc(100% - 40px);
     width: 100%;
+    border-top: unset!important;
+    box-shadow: unset!important;
+    -webkit-box-shadow: unset!important;
+    -moz-box-shadow: unset!important;
   }
   .page-content .container.content,
   .page-content .container.sidebar {
@@ -1208,13 +1231,18 @@ div.f-grid div.f-icon.bottom-emp {
   }
 
   /* .rList .rList-item.btn > .hullTypeAbb,*/
-  #formation-content .name.f-header,
-  #formation-content .passive.f-header,
+  #formation-content .f-header,
+  #formation-content .f-header,
   #window-title {
     display: none;
   }
 
-  .f-row.passive-list,
+  div.f-row div.name {
+    min-width: unset;
+    max-width: unset;
+    padding: 3px 5px;
+  }
+  .f-row.passive-item,
   #formation-grid .f-row {
     flex-direction: column;
   }
@@ -1226,12 +1254,12 @@ div.f-grid div.f-icon.bottom-emp {
     flex-direction: row;
   }
 
-  .tab {
+  .tab { /* TODO: check if needed on firefox */
     justify-content: flex-start;
   }
 
   .tab > button.tab-btn {
-    flex-grow: 1;
+    flex: 1;
   }
 
   .message-container {
@@ -1246,8 +1274,8 @@ div.f-grid div.f-icon.bottom-emp {
     padding: 0px 2px 2px 2px;
   }
 
-  .f-row > div.name.f-header,
-  .f-row > div.passive.f-header {
+  .f-row > div.f-header,
+  .f-row > div.f-header {
     min-width: unset;
     max-width: unset;
   }
@@ -1520,7 +1548,7 @@ button.tab-btn.light.selected {
 
 /* #### ship title bar #### */
 .light .ship-title-bar {
-  border: 1px solid var(--main-light-border);
+  border-bottom: 2px solid var(--main-light-border);
   background-color: var(--main-light-bg);
 }
 
@@ -1588,7 +1616,14 @@ input[type="url"].light.is-invalid,
 /* #### Grid #### */
 div.f-grid.light div.f-header {
   border-bottom: 2px solid var(--main-light-border);
+  background-color: var(--main-light-bg);
 }
+
+div.f-grid.light div.f-body {
+  background-color: #eff7ff;
+  border-bottom: 2px solid var(--main-light-border);
+}
+
 div.f-grid.light div.f-title {
   background-color: var(--main-light-bg);
   border-bottom: 1px solid var(--main-light-border);
@@ -1600,6 +1635,12 @@ div.f-grid.light div.f-icon {
   border: 1px solid var(--main-light-border);
 }
 
+div.f-row.light div.f-header.tab-group > button:first-child {
+  border-left: 2px dotted var(--main-light-border);
+}
+div.f-row.light div.f-header.tab-group > button:last-child {
+  border-right: 2px dotted var(--main-light-border);
+}
 /* #### hull types #### */
 .btn.light.Carrier {
   background-color: Plum;
@@ -1644,29 +1685,19 @@ div.f-grid.light div.f-icon {
   border: 1px solid var(--main-light-border);
 }
 
-/* #### grid title #### */
-div.f-grid.light div.f-icon.bottom-emp {
-  background-color: unset;
-  border-bottom: 2px solid var(--main-light-border);
-}
-div.f-grid.light div.f-title.bottom-emp {
-  background-color: unset;
-  border-bottom: 2px solid var(--main-light-border);
-}
-
 /* #### rarity #### */
 div.f-grid.light div.f-row.pink {
   border-bottom: 2px solid rgba(255, 192, 203, 1);
-  background-color: var(--main-light-bg);
+  background-color: #eff7ff;
 }
 /* #### rarity #### */
 div.f-grid.light div.f-row.gold {
-  background-color: var(--main-light-bg);
+  background-color: #eff7ff;
   border-bottom: 2px solid rgba(255, 215, 0, 1);
 }
 
 div.f-grid.light div.f-row.deepskyblue {
-  background-color: var(--main-light-bg);
+  background-color: #eff7ff;
   border-bottom: 2px solid rgba(0, 191, 255, 1);
 }
 
@@ -1700,21 +1731,15 @@ div.f-grid.light div.f-row.deepskyblue {
 /* ##### DARK ##### */
 :root {
   --root-dark-bg: #1f1f1f;
-  --main-dark-bg: #2f2f2f;
+  --main-dark-header-bg: #2f2f2f;
+  --main-dark-body-bg: #252525;
   --main-dark-border: #40556b;
-  --main-dark-titlebar-color: rgb(184, 184, 184);
   --main-dark-color: rgb(184, 184, 184);
-  /* --main-dark-hover-bg: #40556b;*/
   --main-dark-hover-bg: #3c4652;
   --main-dark-hover-color: #98caff;
-  --main-dark-button-top-bg: #26313a;
-  --main-dark-button-bottom-bg: #1b2127;
-  --main-dark-selected-bottom-bg: #2a2e35;
   --main-dark-active-bg: #40556b;
   --main-dark-tooltip-bg: #2a2c31;
   --main-dark-tooltip-border: #3f4657;
-  --main-dark-item-bg: #21252f;
-  --main-dark-footer-titlebar-bg: #202023;
 }
 
 /* ##### Scrollbar ##### */
@@ -1744,7 +1769,7 @@ div.f-grid.light div.f-row.deepskyblue {
 .dark .no-focus-outline:focus,
 .dark .no-focus-outline:focus-within {
   outline: none!important;
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
 }
 
 .dark :not(button):not(label):not(.switch-input):not(.modal-container):not(a):not(input):focus {
@@ -1792,7 +1817,7 @@ div.page.dark .container {
 div.modal-overlay.dark #side-scroll,
 div.page.dark #side-scroll {
   border-radius: 4px;
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   border: 1px solid var(--main-dark-border);
   -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
   -moz-box-shadow: 1px 1px 4px 1px #0000008f;
@@ -1800,7 +1825,7 @@ div.page.dark #side-scroll {
 }
 /* ##### Titlebar ##### */
 #titlebar.dark {
-  background: var(--main-dark-bg);
+  background: var(--main-dark-header-bg);
   color: var(--main-dark-color);
 
 }
@@ -1809,7 +1834,7 @@ div.page.dark #side-scroll {
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
 #titlebar.dark #window-menu {
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   border-bottom: 1px solid var(--main-dark-border);
 }
 
@@ -1820,7 +1845,7 @@ div.page.dark #side-scroll {
 
 #titlebar.dark .title-button {
   border-bottom: 1px solid var(--main-dark-border);
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
 
@@ -1831,7 +1856,7 @@ div.page.dark #side-scroll {
 
 #titlebar.dark #window-controls {
   border-bottom: 1px solid var(--main-dark-border);
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
 
@@ -1858,20 +1883,24 @@ div.page.dark #side-scroll {
 }
 
 #footer.dark {
-  background: var(--main-dark-bg);
+  background: var(--main-dark-header-bg);
   border-top: 1px solid var(--main-dark-border);
   color: var(--main-dark-color);
 }
 
 #bottom-fleet-selector.dark {
-  background: var(--main-dark-bg);
+  background: var(--main-dark-header-bg);
   border-top: 1px solid var(--main-dark-border);
   color: var(--main-dark-color);
+}
+
+#formation-ship-search.dark {
+  border-top: 3px solid var(--main-dark-border);
 }
 /* #### Modal #### */
 .modal-overlay.dark div.modal-title {
   border: 1px solid var(--main-dark-border);
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
 }
 
 .modal-overlay.dark div.modal-action {
@@ -1893,7 +1922,7 @@ div.page.dark .tab {
   border: 1px solid var(--main-dark-border);
   border-left: 0px;
   border-right: 0px;
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
 }
 
 nav.tab.dark {
@@ -1902,8 +1931,8 @@ nav.tab.dark {
 
 nav.tab.dark > a {
   color: rgba(184, 184, 184, 0.4);
-  border-right: 1px solid var(--main-dark-bg);
-  border-left: 1px solid var(--main-dark-bg);
+  border-right: 1px solid var(--main-dark-header-bg);
+  border-left: 1px solid var(--main-dark-header-bg);
   box-shadow: inset 0px -4px 3px -4px #00000099;
 }
 
@@ -1943,7 +1972,7 @@ nav.tab.dark > a:hover {
 /* ###### Buttons ###### */
 label.dark,
 button.dark {
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   color: var(--main-dark-color);
   border: 1px solid transparent;
 }
@@ -1963,7 +1992,7 @@ button.rList-item.dark.btn:hover {
 
 button.btn.dark:disabled:hover,
 button.tab-btn.dark:disabled:hover {
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
 }
 
 label.btn.dark.selected,
@@ -1986,7 +2015,7 @@ button.tab-btn.dark.selected {
 
 
 .rList-item.dark.owned > .owned-indicator + .name {
-  border-left: 1px solid var(--main-dark-bg);
+  border-left: 1px solid var(--main-dark-header-bg);
 }
 .rList-item.dark > .owned-indicator + .name {
   border-left: 1px solid transparent;
@@ -1998,7 +2027,7 @@ button.tab-btn.dark.selected {
 }
 
 .formation-dropdown-menu.dark .btn.menu-item:last-child {
-  border-bottom: 1px solid var(--main-dark-bg)!important;
+  border-bottom: 1px solid var(--main-dark-header-bg)!important;
 }
 .dark #formation-grid {
   border-bottom: 1px solid var(--main-dark-border);
@@ -2015,8 +2044,8 @@ button.tab-btn.dark.selected {
 
 /* #### ship title bar #### */
 .dark .ship-title-bar {
-  border: 1px solid var(--main-dark-border);
-  background-color: var(--main-dark-bg);
+  border-bottom: 2px solid var(--main-dark-border);
+  background-color: var(--main-dark-header-bg);
 }
 
 div.radio-group.dark,
@@ -2027,7 +2056,7 @@ div.button-group.dark {
 .radio-group.dark label,
 .button-group.dark button,
 .page.dark .tab button {
-  border: 1px solid var(--main-dark-bg);
+  border: 1px solid var(--main-dark-header-bg);
 }
 
 /* #### Rarity colors #### */
@@ -2061,7 +2090,7 @@ button.input.dark {
 input[type="url"].dark,
 #input-group.dark {
   color: var(--main-dark-color);
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   border: 2px solid var(--main-dark-border);
 }
 
@@ -2090,14 +2119,27 @@ input[type="url"].dark.is-invalid,
 /* #### Grid #### */
 div.f-grid.dark div.f-header {
   border-bottom: 2px solid var(--main-dark-border);
+  background-color: var(--main-dark-header-bg);
 }
+
+div.f-grid.dark div.f-body {
+  background-color: var(--main-dark-body-bg);
+  border-bottom: 2px solid var(--main-dark-border);
+}
+
 div.f-grid.dark div.f-title,
 div.f-grid.dark div.f-icon {
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   border-bottom: 1px solid var(--main-dark-border);
   border-top: 1px solid var(--main-dark-border);
 }
 
+div.f-row.dark div.f-header.tab-group > button:first-child {
+  border-left: 2px dotted var(--main-dark-border);
+}
+div.f-row.dark div.f-header.tab-group > button:last-child {
+  border-right: 2px dotted var(--main-dark-border);
+}
 /* #### hull types #### */
 .btn.dark.Carrier {
   background-color: #352035;
@@ -2138,29 +2180,32 @@ div.f-grid.dark div.f-icon {
   color: #48caa1;
 }
 
-/* #### grid title #### */
-div.f-grid.dark div.f-icon.bottom-emp {
-  background-color: unset;
-  border-bottom: 2px solid var(--main-dark-border);
-}
-div.f-grid.dark div.f-title.bottom-emp {
-  background-color: unset;
-  border-bottom: 2px solid var(--main-dark-border);
+/* #### grid slot/stats #### */
+table.f-table.dark .stat-item,
+div.f-grid.dark .f-row > .stat-item {
+  border-right: 1px solid var(--main-dark-border);
 }
 
+
+table.f-table.dark .stat-item:last-child {
+  border-right: unset;
+}
 /* #### rarity #### */
 div.f-grid.dark div.f-row.pink {
   border-bottom: 2px solid rgba(255, 192, 203, 0.50);
-  background-color: var(--main-dark-bg);
+  /* background-color: var(--main-dark-header-bg);*/
+  background-color: var(--main-dark-body-bg);
 }
 /* #### rarity #### */
 div.f-grid.dark div.f-row.gold {
-  background-color: var(--main-dark-bg);
+  /* background-color: var(--main-dark-header-bg);*/
+  background-color: var(--main-dark-body-bg);
   border-bottom: 2px solid rgba(255, 215, 0, 0.50);
 }
 
 div.f-grid.dark div.f-row.deepskyblue {
-  background-color: var(--main-dark-bg);
+  /* background-color: var(--main-dark-header-bg);*/
+  background-color: var(--main-dark-body-bg);
   border-bottom: 2px solid rgba(0, 191, 255, 0.50);
 }
 
@@ -2168,7 +2213,7 @@ div.f-grid.dark div.f-row.deepskyblue {
 .message-container.dark {
   color: var(--main-dark-color);
   border: 1px solid var(--main-dark-border);
-  background-color: var(--main-dark-bg);
+  background-color: var(--main-dark-header-bg);
   /* box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;*/
 }
 .toast-container.dark > .toast {
@@ -2192,3 +2237,8 @@ div.f-grid.dark div.f-row.deepskyblue {
 
 }
 
+@media only screen and (max-width: 576px) {
+  nav.tab.dark > a.active:first-child {
+    border-left: 1px solid transparent;
+  }
+}
