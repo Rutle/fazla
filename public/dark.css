@@ -279,16 +279,15 @@ button.tab-btn.dark.selected {
 }
 
 .rList-item.dark.owned > .owned-indicator {
-  /* background-color: var(--main-dark-active-bg);*/
-  background-color: #40556b;
+  background-color: var(--main-dark-border);
 }
 
 
-.rList-item.dark.owned > .owned-indicator + .name {
-  border-left: 1px solid var(--main-dark-header-bg);
+.rList-item.dark.owned > .owned-indicator /* + .name */ {
+  border-right: 1px solid var(--main-dark-header-bg);
 }
-.rList-item.dark > .owned-indicator + .name {
-  border-left: 1px solid transparent;
+.rList-item.dark > .owned-indicator /* + .name */ {
+  border-right: 1px solid transparent;
 }
 
 /* #### Formation menu ##### */
@@ -327,26 +326,6 @@ div.button-group.dark {
 .button-group.dark button,
 .page.dark .tab button {
   border: 1px solid var(--main-dark-header-bg);
-}
-
-/* #### Rarity colors #### */
-.ship-title-bar > span.Super.Rare:last-child {
-  color: PaleGoldenrod;
-}
-
-.ship-title-bar > span.Rare:last-child {
-  color: powderblue;
-}
-.ship-title-bar > span.Ultra.Rare:last-child,
-.ship-title-bar > span.Decisive:last-child {
-  background-image: linear-gradient(to bottom right, #AFA 15%, #AAF, #FAA 85%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.ship-title-bar > span.Elite:last-child {
-  color: rgba(144, 98, 253, 0.616);
 }
 
 /* #### Input #### */
@@ -410,10 +389,17 @@ div.f-row.dark div.f-header.tab-group > button:first-child {
 div.f-row.dark div.f-header.tab-group > button:last-child {
   border-right: 2px dotted var(--main-dark-border);
 }
+
 /* #### hull types #### */
+
 .btn.dark.Carrier {
   background-color: #352035;
   color: #d77dd7;
+}
+
+.btn.dark.Destroyer {
+  background-color: #203844;
+  color: #68b3d9;
 }
 
 .btn.dark.Battleship, 
@@ -422,25 +408,21 @@ div.f-row.dark div.f-header.tab-group > button:last-child {
   color: #ff726a;
 }
 
+
 .btn.dark.Large.Cruiser {
   background-color: #5a3023;
   color: #ff8560;
-}
-
-.btn.dark.Destroyer {
-  /* background-color: #203844;*/
-  background-color: #203844;
-  color: #68b3d9;
 }
 
 .btn.dark.Submarine {
   background-color: #3a4d21;
   color: #95c655;
 }
+
+
 .btn.dark.Heavy.Cruiser,
 .btn.dark.Monitor,
 .btn.dark.Light.Cruiser {
-  /* background-color: #503c1e; */
   background-color: #503c1e;
   color: #dfa854;
 }
@@ -450,15 +432,17 @@ div.f-row.dark div.f-header.tab-group > button:last-child {
   color: #48caa1;
 }
 
-/* #### grid slot/stats #### */
+/* #### grid/table slot/stats #### */
 table.f-table.dark .stat-item,
 div.f-grid.dark .f-row > .stat-item {
   border-right: 1px solid var(--main-dark-border);
 }
 
-
 table.f-table.dark .stat-item:last-child {
   border-right: unset;
+}
+#stat-section .f-column {
+  border-right: 2px dotted var(--main-dark-border);
 }
 /* #### rarity #### */
 div.f-grid.dark div.f-row.pink {
@@ -503,7 +487,15 @@ div.f-grid.dark div.f-row.deepskyblue {
 @media only screen and (max-width: 1340px) {
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 695px) {
+  /*
+  #stat-section {
+    margin-bottom: 12px;
+  }
+  */
+  #stat-section .f-column {
+    border-right: unset;
+  }
 
 }
 

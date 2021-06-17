@@ -271,29 +271,8 @@ div.button-group.light {
 .page.light .tab button {
   border: 1px solid var(--main-light-bg);
 }
-/* #### Rarity colors #### */
-.ship-title-bar > span.Super.Rare:last-child {
-  color: PaleGoldenrod;
-}
-
-.ship-title-bar > span.Rare:last-child {
-  color: powderblue;
-}
-.ship-title-bar > span.Ultra.Rare:last-child,
-.ship-title-bar > span.Decisive:last-child {
-  background-image: linear-gradient(to bottom right, #AFA 15%, #AAF, #FAA 85%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.ship-title-bar > span.Elite:last-child {
-  color: rgba(144, 98, 253, 0.616);
-}
 
 /* #### Input #### */
-
-
 input[type="url"].light,
 #input-group.light {
   color: var(--main-light-color);
@@ -351,6 +330,7 @@ div.f-row.light div.f-header.tab-group > button:last-child {
   border-right: 2px dotted var(--main-light-border);
 }
 /* #### hull types #### */
+/*
 .btn.light.Carrier {
   background-color: Plum;
   color: #510051;
@@ -387,7 +367,7 @@ div.f-row.light div.f-header.tab-group > button:last-child {
   background-color: Aquamarine;
   color: #005b3d;
 }
-
+*/
 /* #### grid icon #### */
 div.f-grid.light div.f-icon {
   background-color: var(--main-light-bg);

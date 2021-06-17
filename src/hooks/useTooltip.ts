@@ -26,10 +26,13 @@ export const useTooltip = (): TooltipHooks => {
   });
   const [show, setShow] = useState(false);
 
-  const showTooltip = useCallback((data: TooltipData) => {
-    setTooltip(data);
-    setShow(true);
-  }, []);
+  const showTooltip = useCallback(
+    (data: TooltipData) => {
+      setTooltip(data);
+      setShow(true);
+    },
+    [setTooltip]
+  );
 
   const hideTooltip = (): void => setShow(false);
 

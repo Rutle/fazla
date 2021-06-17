@@ -3,6 +3,7 @@ import { MAININDEX, SUBMARINE, VANGUARDINDEX } from '_/reducers/slices/formation
 import { Equipment } from '_/types/equipmentTypes';
 import { Ship, Slot } from '_/types/shipTypes';
 import { BooleanSearchParam, VersionInfo, ResponseWithData, emptyVersionInfo } from '_/types/types';
+import DataStore from './dataStore';
 import { saveData } from './ipcAPI';
 
 const SHIPDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
@@ -24,6 +25,7 @@ export const elapsedSinceUpdate = (ms: number): number => {
   return days;
 };
 
+// TODO: More fields to check.
 // TYPE guards
 export const isBooleanObj = <T extends { All?: unknown }>(obj: T): obj is T & BooleanSearchParam => {
   return typeof obj.All === 'boolean';
@@ -43,28 +45,7 @@ export const isVersionJson = <T extends { ships?: { 'version-number'?: unknown }
   return o.ships !== undefined && typeof o.ships['version-number'] === 'number';
 };
 
-/*
-"type": {
-      "focus": "Firepower",
-      "name": "DD Gun"
-    },
-    "id": "Single 127mm (SK C/34)",
-    "wikiUrl": "https://azurlane.koumakan.jp/Single_127mm_(SK_C/34)",
-    "category": "Destroyer Guns",
-    "names": {
-      "en": "Single 127mm Main Gun",
-      "cn": "单装127mm主炮",
-      "jp": "127mm単装砲",
-      "kr": "127mm 단장포"
-    }
-  type: EquipmentType;
-  id: string;
-  wikiUrl: string;
-  category: string;
-  names: Names;
-*/
 // TODO: Add more fields to check.
-
 const eqTypeCheck = (e: { type?: unknown; id?: unknown; wikiUrl?: unknown; category?: unknown; names?: unknown }) => {
   return typeof e.id !== 'string';
 };
@@ -245,22 +226,45 @@ export const getFleet = (index: number, fleetCount: number): string => {
   return 'none';
 };
 
-export const parseSlots = (slots: { [key: string]: Slot }, hasRetrofit?: boolean): { [key: string]: string[] }[] => {
+interface ParsedSlot {
+  [key: string]: string[];
+}
+
+interface ParsedFit {
+  [key: string]: string[][];
+}
+export interface ParsedValues {
+  parsedSlots: ParsedSlot[];
+  parsedFits: ParsedFit[];
+}
+
+export const parseSlots = (slots: { [key: string]: Slot }, data: DataStore): ParsedValues => {
   // [{1: [006], 2: [002, 001], 3: [013]}, {1: [006], 2: [012], 3: [013]}]
-  const baseSlots: { [key: string]: string[] } = {};
-  const retroSlots: { [key: string]: string[] } = {};
+  const baseSlots: ParsedSlot = {};
+  const retroSlots: ParsedSlot = {};
+  const baseFits: ParsedFit = {};
+  const retroFits: ParsedFit = {};
+  const hasRetrofitSlots = Object.keys(slots).some((key) => slotTypes[slots[key].type].length >= 2);
   Object.keys(slots).forEach((key) => {
     const slotIDs = slotTypes[slots[key].type];
     const baseSlot: string[] = slotIDs[0].map((eqID) => eqTypes[eqID]);
     let retroSlot: string[] = [];
+    let retroFit: string[][] = [];
+    const baseFit = slotIDs[0].map((eqID) => data.getEqId(eqTypes[eqID]));
     if (slotIDs.length > 1) {
       retroSlot = slotIDs[1].map((eqID) => eqTypes[eqID]);
+      retroFit = slotIDs[1].map((eqID) => data.getEqId(eqTypes[eqID]));
     } else {
-      retroSlot = slotIDs[0].map((eqID) => eqTypes[eqID]);
+      retroSlot = baseSlot;
+      retroFit = baseFit;
     }
     baseSlots[key] = baseSlot;
     retroSlots[key] = retroSlot;
+    baseFits[key] = baseFit;
+    retroFits[key] = retroFit;
   });
-  if (hasRetrofit) return [baseSlots, retroSlots];
-  return [baseSlots];
+  if (hasRetrofitSlots) return { parsedSlots: [baseSlots, retroSlots], parsedFits: [baseFits, retroFits] };
+  return { parsedSlots: [baseSlots], parsedFits: [baseFits] };
 };
+
+// export const parseFits

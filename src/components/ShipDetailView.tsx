@@ -7,7 +7,7 @@ import SideBar from './SideBar';
 import ShipList from './ShipList';
 import RButton from './RButton/RButton';
 import { ArrowDegUp } from './Icons';
-import useVisibility from './Visibility/useVisibility';
+import useVisibility from '../hooks/useVisibility';
 
 /**
  * Component for a ship details view.

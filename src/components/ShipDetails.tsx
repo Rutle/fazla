@@ -102,11 +102,16 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
         </RButton>
       </div>
       <div className="scroll">
-        <div className={`f-grid ${config.themeColor}`}>
-          <StatList stats={ship.stats} themeColor={config.themeColor} />
-        </div>
-        <div className={`f-grid ${config.themeColor}`}>
-          <SlotList slots={ship.slots} hasRetrofit={ship.retrofit} themeColor={config.themeColor} />
+        <div className={`f-grid ${config.themeColor}`} style={{ marginBottom: '0px' }}>
+          <div id="stats-slots-details" className="f-row wrap">
+            <div className="f-column" id="stat-section" style={{ marginBottom: '12px' }}>
+              <StatList stats={ship.stats} themeColor={config.themeColor} />
+            </div>
+
+            <div className="f-column" id="slot-section" style={{ marginBottom: '12px' }}>
+              <SlotList slots={ship.slots} hasRetrofit={ship.retrofit} themeColor={config.themeColor} />
+            </div>
+          </div>
         </div>
         <div className={`f-grid ${config.themeColor}`}>
           <div className="f-row">

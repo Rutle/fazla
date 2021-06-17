@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { fleets } from '_/data/categories';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
 import { Ship } from '_/types/shipTypes';
-import { useDragAndDrop } from './DragAndDrop/useDragAndDrop';
+import { useDragAndDrop } from '../hooks/useDragAndDrop';
 import FormationGridItem from './FormationGridItem';
 
 interface FormationGridProps {
@@ -14,6 +14,7 @@ interface FormationGridProps {
   selectedGridIndex: number;
   fleetCount: number;
   isSubFleet: boolean;
+  refd: React.RefObject<HTMLDivElement>;
 }
 
 /**
@@ -56,6 +57,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   selectedGridIndex,
   fleetCount,
   isSubFleet,
+  refd,
 }) => {
   const { dragFunctions, dragStates, transferData } = useDragAndDrop({
     dataKeys: ['grid-index', 'transfer-type', 'ship-id'],
@@ -93,7 +95,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   }, [transferData, dispatch, dragStates]);
 
   return (
-    <div id="formation-grid" className={`f-grid ${themeColor}`}>
+    <div id="formation-grid" className={`f-grid ${themeColor}`} ref={refd}>
       <div className={`f-row wrap ${isSubFleet && selectedFleetIndex === fleetCount ? 'small-hidden' : ''}`}>
         <div id="main-section" className="f-column">
           <div className="f-title">Main</div>

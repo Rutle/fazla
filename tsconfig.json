@@ -12,6 +12,7 @@
       "_utils/*": ["src/utils/*"],
       "_reducers/*": ["src/reducers/*"],
       "_components/*": ["src/components/*"],
+      "_hooks/*": ["src/hooks/*"],
       "_types/*": ["src/types/*"]
     },
     "module": "commonjs",

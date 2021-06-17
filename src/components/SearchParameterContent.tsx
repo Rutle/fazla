@@ -30,8 +30,8 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
   );
 
   return (
-    <div className={`popover-content ${themeColor}`}>
-      <div className="f-grid">
+    <div id="search-categories" className={`${themeColor}`}>
+      <div className="f-grid" style={{ marginBottom: '0px' }}>
         <div className="f-row wrap">
           <div className="grid-item toggle">
             <RButton

@@ -11,8 +11,8 @@ import LandingView from './components/LandingView';
 import ErrorView from './components/ErrorView';
 import ToastContainer from './components/Toast/ToastContainer';
 import Tooltip from './components/Tooltip/Tooltip';
-import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './components/Toast/useToast';
-import { useTooltip, TooltipHooks } from './components/Tooltip/useTooltip';
+import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './hooks/useToast';
+import { useTooltip, TooltipHooks } from './hooks/useTooltip';
 import { initShipData, setErrorMessage } from './reducers/slices/appStateSlice';
 
 export const AppContext = React.createContext(

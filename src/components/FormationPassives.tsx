@@ -31,7 +31,14 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
 
   useEffect(() => {
     if (refMain && refMain.current && mainSize.height !== undefined) {
-      if (showMain) {
+      if (newHeight.mainHeight && mainSize.height + 100 > newHeight.mainHeight && isOpen.main) {
+        // Apply new height when the window is being resized.
+        const tempHeight = Array.from(refMain.current.children).reduce<number>(
+          (a, c) => a + c.getBoundingClientRect().height,
+          0
+        );
+        setNewHeight({ ...newHeight, mainHeight: tempHeight + 100 });
+      } else if (showMain && !isOpen.main) {
         // We have clicked to expand a section with 'showMain'.
         // We calculate the height of the current children, add a bit extra and set the new height.
         // We then finally let it open.
@@ -41,24 +48,32 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
         );
         setNewHeight({ ...newHeight, mainHeight: tempHeight + 100 });
         setIsOpen({ ...isOpen, main: true });
-      } else if (!showMain) {
+      } else if (!showMain && isOpen.main) {
         // We have clicked to collapse a section.
         setIsOpen({ ...isOpen, main: false });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showMain]);
+  }, [showMain, mainSize.height]);
 
   useEffect(() => {
     if (refVanguard && refVanguard.current && vanguardSize.height !== undefined) {
-      if (showVanguard) {
+      if (newHeight.vanguardHeight && vanguardSize.height + 100 > newHeight.vanguardHeight && isOpen.vanguard) {
+        // Apply new height when the window is being resized. Only when the height increases.
+        // Can ignore when the height decreases because of max height is being used.
+        const tempHeight = Array.from(refVanguard.current.children).reduce<number>(
+          (a, c) => a + c.getBoundingClientRect().height,
+          0
+        );
+        setNewHeight({ ...newHeight, mainHeight: tempHeight + 100 });
+      } else if (showVanguard && !isOpen.vanguard) {
         const tempHeight = Array.from(refVanguard.current.children).reduce<number>(
           (a, c) => a + c.getBoundingClientRect().height,
           0
         );
         setNewHeight({ ...newHeight, vanguardHeight: tempHeight + 100 });
         setIsOpen({ ...isOpen, vanguard: true });
-      } else if (!showVanguard) {
+      } else if (!showVanguard && isOpen.vanguard) {
         setIsOpen({ ...isOpen, vanguard: false });
       }
     }
@@ -68,6 +83,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
   useEffect(() => {
     const curRefMain = refMain.current;
     const curRefVanguard = refVanguard.current;
+    // Set the heights when fleet is selected.
     if (
       curRefMain &&
       curRefVanguard &&

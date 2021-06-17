@@ -53,6 +53,10 @@ export default class DataStore {
     return this.eqArr[index];
   }
 
+  getEqId(type: string): string[] {
+    return this.eqArr.filter((value) => value.type.name === type).map((eq) => eq.id);
+  }
+
   async setShips(data: Ship[]): Promise<Ship[]> {
     try {
       this.shipsArr = [...data.slice()];

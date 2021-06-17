@@ -141,7 +141,14 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                 themeColor={config.themeColor}
                 onChange={() => updateConfig('themeColor', 'dark')}
                 selected={config.themeColor === 'dark'}
-                tooltip={{ data: 'Dark mode', placement: 'left' }}
+                tooltip={{
+                  data: (
+                    <div className="f-grid" style={{ marginBottom: '0px', padding: '3px 8px 3px 8px' }}>
+                      <div className="f-body">Dark mode</div>
+                    </div>
+                  ),
+                  placement: 'left',
+                }}
               >
                 D
               </RToggle>
@@ -152,7 +159,14 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                 themeColor={config.themeColor}
                 onChange={() => updateConfig('themeColor', 'light')}
                 selected={config.themeColor === 'light'}
-                tooltip={{ data: 'Light mode', placement: 'left' }}
+                tooltip={{
+                  data: (
+                    <div className="f-grid" style={{ marginBottom: '0px', padding: '3px 8px 3px 8px' }}>
+                      <div className="f-body">Light mode</div>
+                    </div>
+                  ),
+                  placement: 'left',
+                }}
               >
                 L
               </RToggle>

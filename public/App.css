@@ -306,30 +306,11 @@ div.scroll {
   width: 100%;
   flex-direction: row;
   z-index: 25;
-  box-shadow: 0px -1px 5px 4px rgba(0,0,0,0.65);
-  -webkit-box-shadow: 0px -1px 5px 4px rgba(0,0,0,0.65);
-  -moz-box-shadow: 0px -1px 5px 4px rgba(0,0,0,0.65);
+  box-shadow: 0px -5px 6px 2px rgba(0,0,0,0.65);
+  -webkit-box-shadow: 0px -5px 6px 2px rgba(0,0,0,0.65);
+  -moz-box-shadow: 0px -5px 6px 2px rgba(0,0,0,0.65);
 }
 
-.normal-fleet {
-  top: 184px;
-  min-height: calc(100% - 212px);
-}
-
-.normal-fleet.sub-fleet {
-  top: 243px;
-  min-height: calc(100% - 271px);
-}
-
-.siren-fleet {
-  top: 248px;
-  min-height: calc(100% - 276px);
-}
-
-.siren-fleet.sub-fleet {
-  top: 307px;
-  min-height: calc(100% - 335px);
-}
 .search-section-enter {
   opacity: 0;
   display: flex!important;
@@ -474,7 +455,7 @@ button.tab-btn.normal.icon-only {
 }
 
 .tab > div.help {
-  align-self: center; /* TODO: Check if needed on Firefox. Vertical-align below related. Either of them is required on electron */
+  /* align-self: center;*/ /* TODO: Check if needed on Firefox. Vertical-align below related. Either of them is required on electron -> Not required on Firefox*/
   display: inline-block;
   padding: 0px 5px 0px 5px;
   flex-grow: 1;
@@ -595,7 +576,7 @@ div.f-row.action *,
 }
 
 .tooltip > .tooltip-content {
-  padding: 3px 8px;
+  /* padding: 3px 8px; */
   border-radius: inherit;
 }
 
@@ -640,17 +621,17 @@ div.f-row.action *,
   border-radius: 2px;
 }
 
-.popover-content > .f-grid > .f-row > .grid-item {
+#search-categories > .f-grid > .f-row > .grid-item {
   margin-bottom: 1px;
   border-radius: 0px;
 }
 
-.popover-content > .f-grid  {
+#search-categories > .f-grid  {
   margin-top: 1px;
   margin-left: 1px;
 }
 
-.popover-content > .f-grid > .f-row:last-child {
+#search-categories > .f-grid > .f-row:last-child {
   margin-bottom: 0px;
 }
 
@@ -671,10 +652,58 @@ div.f-row.action *,
   margin-right: 10px;
 }
 
+/* #### Rarity colors #### */
+span.Super.Rare:last-child {
+  color: PaleGoldenrod;
+}
+/*
+.rList-item div.name.Super.Rare {
+  border-bottom: 2px solid PaleGoldenrod;
+}
+*/
+span.Rare:last-child {
+  color: powderblue;
+}
+/*
+.rList-item div.name.Rare {
+  border-bottom: 2px solid powderblue;
+}
+
+.rList-item div.name.Normal {
+  border-bottom: 2px solid Gainsboro;
+}
+*/
+span.Ultra.Rare:last-child,
+span.Priority:last-child,
+span.Decisive:last-child {
+  background-image: linear-gradient(to bottom right, #AFA 15%, #AAF, #FAA 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/*
+.rList-item div.name.Priority,
+.rList-item div.name.Ultra.Rare,
+.rList-item div.name.Decisive {
+  border-image-source: linear-gradient(to bottom, #AFA 15%, #AAF, #FAA 85%);
+  border-image-slice: 1;
+  border-width: 0px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+*/
+
+span.Elite:last-child {
+  color: rgba(144, 98, 253, 0.616);
+}
+/* 
+.rList-item div.name.Elite {
+  border-bottom: 2px solid rgba(144, 98, 253, 0.616);
+}*/
 /* #####  rList  ##### */
 .rList {
   flex: 1;
-  height: 100%;
+  /* height: 100%;*/ /* TODO: CHECK on electron if needed (grid and ship list)*/
 }
 
 .hidden {
@@ -696,14 +725,14 @@ div.f-row.action *,
   border-radius: 3px;
 }
 
-.rList .rList-item > div.hullTypeAbb {
-  box-sizing: border-box;
+.rList .rList-item > div.hulltype {
+  /* box-sizing: border-box;*/
   display: flex;
   justify-content: center;
   align-items: center;
   width: 30%;
   max-width: 30%;
-  height: 29px;
+  height: inherit;
   border-radius: inherit;
   border-top-left-radius: 0px!important;
   border-bottom-left-radius: 0px!important;
@@ -719,7 +748,6 @@ div.f-row.action *,
   overflow: hidden;
   height: 29px;
   width: 100%;
-  border-left: 1px solid transparent;
 }
 
 .button-group {
@@ -833,7 +861,7 @@ div.f-column {
   flex: 1;
   flex-direction: column;
   border-radius: inherit;
-  min-width: 0;
+  /* min-width: 0;*/
 }
 
 div.f-row.wrap {
@@ -870,7 +898,7 @@ div.f-grid div.grid-item.toggle {
   flex-basis: auto;
 }
 
-div.f-row div.f-header {
+div.f-grid div.f-header {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -912,13 +940,12 @@ div.f-grid .grid-item.action {
 table.f-table {
   border-collapse: collapse;
   table-layout: fixed;
-  width: 100%;
   color: inherit;
+  width: 400px;
 }
 
-table.f-table .stat-item {
+table.f-table td.stat-item {
   padding: 3px 5px;
-  width: 25%;
   font-size: 13px;
 }
 
@@ -928,8 +955,16 @@ div.f-grid div.f-row div.passive {
   justify-content: center;
   font-size: 13px;
   white-space: break-spaces;
+  align-self: center;
+}
+div.f-row.slots {
+  justify-content: space-evenly;
+  flex-grow: 1;
 }
 
+div.grid-item.slot {
+  flex: unset;
+}
 /* ##### f-title ##### */
 div.f-grid div.f-title {
   display: flex;
@@ -1188,10 +1223,10 @@ div.f-grid div.f-icon.open > svg{
   }
   #formation-ship-search {
     overflow-y: scroll;
-    top: 40px;
+    top: 40px!important;
     left: 0;
-    min-height: calc(100% - 40px);
-    height: calc(100% - 40px);
+    min-height: calc(100% - 40px)!important;
+    height: calc(100% - 40px)!important;;
     width: 100%;
     border-top: unset!important;
     box-shadow: unset!important;
@@ -1224,6 +1259,7 @@ div.f-grid div.f-icon.open > svg{
   #formation-grid .f-row {
     flex-direction: column;
   }
+  #formation-grid #submarine-section > div.f-row > button,
   #formation-grid #vanguard-section > div.f-row > button,
   #formation-grid #main-section > div.f-row > button {
     margin-bottom: 1px;
@@ -1265,5 +1301,12 @@ div.f-grid div.f-icon.open > svg{
   .page {
     margin-bottom: 0px;
     max-height: calc(100% - 40px);
+  }
+  table.f-table {
+    table-layout: fixed;
+    width: 100%;
+  }
+  #stats-slots-details {
+    flex-direction: column;
   }
 }

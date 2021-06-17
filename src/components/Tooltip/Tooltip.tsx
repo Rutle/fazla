@@ -15,8 +15,10 @@ const Tooltip: React.FC = () => {
         show={show}
         // rootClose
         offset={[0, 12]}
+        flip
         onHide={() => hideTooltip()}
-        placement={tooltipData.placement}
+        // placement={tooltipData.placement}
+        placement="auto"
         container={containerRef}
         target={tooltipData.ref}
         popperConfig={{

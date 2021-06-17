@@ -13,31 +13,26 @@ interface TooltipProps {
 /**
  * Tooltip wrapper.
  */
-const TooltipWrapper: React.FC<TooltipProps> = ({
-  data,
-  children,
-  wrapperClassNames,
-  WrapperElement = 'div',
-  placement,
-  extraProps = {},
-}) => {
-  const { showTooltip, hideTooltip } = useContext(AppContext).tooltip;
-  const ref = useRef(null);
-  return (
-    <WrapperElement
-      ref={ref}
-      className={wrapperClassNames}
-      onMouseEnter={() => {
-        showTooltip({ data, ref, placement });
-      }}
-      onMouseLeave={() => {
-        hideTooltip();
-      }}
-      {...extraProps}
-    >
-      {children}
-    </WrapperElement>
-  );
-};
+const TooltipWrapper: React.FC<TooltipProps> = React.memo(
+  ({ data, children, wrapperClassNames, WrapperElement = 'div', placement, extraProps = {} }) => {
+    const { showTooltip, hideTooltip } = useContext(AppContext).tooltip;
+    const ref = useRef(null);
+    return (
+      <WrapperElement
+        ref={ref}
+        className={wrapperClassNames}
+        onMouseEnter={() => {
+          showTooltip({ data, ref, placement });
+        }}
+        onMouseLeave={() => {
+          hideTooltip();
+        }}
+        {...extraProps}
+      >
+        {children}
+      </WrapperElement>
+    );
+  }
+);
 
 export default TooltipWrapper;

@@ -86,14 +86,14 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName, refe, scr
                   style={{ ...style, top: (style.top as number) + 1, height: 29, width: 'calc(100% - 1px)' }}
                   className={`rList-item btn ${config.themeColor} ${isShipOwned ? 'owned' : ''} ${
                     shipSearchList[index].id === appState[appState.cToggle].id ? 'selected' : ''
-                  } ${ship.hullType || 'none'}`}
+                  }`}
                   onClick={() => selectShip(shipSearchList[index].id, shipSearchList[index].index)}
                   onDragStart={isDraggable ? (e) => onDragStartFunc(e)(ship.id, ship.hullType || 'none') : undefined}
                   onDragEnd={isDraggable ? onDragEndFunc : undefined}
                 >
                   <div className="owned-indicator" />
                   <div className={`name ${getRarity(ship)}`}>{ship.names.en}</div>
-                  <div className="hullTypeAbb">{getHullTypeAbb(ship.hullType)}</div>
+                  <div className={`hulltype ${ship.hullType || 'none'}`}>{getHullTypeAbb(ship.hullType)}</div>
                 </button>
               );
             })}

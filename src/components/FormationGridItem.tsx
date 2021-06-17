@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
 import { Ship } from '_/types/shipTypes';
 import { getFleet } from '_/utils/appUtilities';
-import { UseDragAndDropFunctions } from './DragAndDrop/useDragAndDrop';
+import { UseDragAndDropFunctions } from '../hooks/useDragAndDrop';
 import RButton from './RButton/RButton';
 
 interface GridItemProps {
@@ -79,6 +79,9 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(
             height: '100%',
             display: 'inline-block',
             boxSizing: 'border-box',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
         >
           {ship ? `${ship.names.en}` : `Add ${!isSub ? getLocation(index) : 'ship'}`}

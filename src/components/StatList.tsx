@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { statCatAbb, statsAbb } from '_/data/categories';
 import { isStat, ShipStats } from '_/types/shipTypes';
 import RButton from './RButton/RButton';
@@ -7,12 +7,9 @@ const StatList: React.FC<{ stats: ShipStats; themeColor: string }> = ({ stats, t
   const statKeys = Object.keys(stats);
   const [selectedStats, setSelectedStats] = useState(0);
 
-  const selectStats = useCallback(
-    (index: number) => () => {
-      setSelectedStats(index);
-    },
-    []
-  );
+  useEffect(() => {
+    setSelectedStats(0);
+  }, [stats]);
 
   return (
     <>
@@ -26,7 +23,7 @@ const StatList: React.FC<{ stats: ShipStats; themeColor: string }> = ({ stats, t
                   key={`btn-${cat}`}
                   themeColor={themeColor}
                   className={`tab-btn normal${selectedStats === index ? ' selected' : ''}`}
-                  onClick={selectStats(index)}
+                  onClick={() => setSelectedStats(index)}
                 >
                   {statCatAbb[cat]}
                 </RButton>

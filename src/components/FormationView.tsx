@@ -15,6 +15,8 @@ import { RootState } from '_/reducers/rootReducer';
 import { CSSTransition } from 'react-transition-group';
 import { SearchAction, setFleet, updateSearch } from '_/reducers/slices/searchParametersSlice';
 import { setIsUpdated } from '_/reducers/slices/appStateSlice';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import useResizeObserver from 'use-resize-observer';
 import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
@@ -26,7 +28,7 @@ import ImportExportModalContent from './Modal/ImportExportModalContent';
 import ShipList from './ShipList';
 import SideBar from './SideBar';
 import ShipDetails from './ShipDetails';
-import useVisibility from './Visibility/useVisibility';
+import useVisibility from '../hooks/useVisibility';
 import { ArrowDegUp, BoxArrowUp, CloseIcon, QuestionCircleIcon } from './Icons';
 import TooltipWrapper from './Tooltip/TooltipWrapper';
 
@@ -52,6 +54,8 @@ const FormationView: React.FC = () => {
   const [isVisible, refSide] = useVisibility();
   const [fleetCount, setFleetCount] = useState(0);
   const [isSubFleet, setIsSubFleet] = useState(false);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const gridSize = useResizeObserver<HTMLDivElement>({ ref: gridRef });
 
   const scrollTo = useCallback(
     (loc: string) => {
@@ -274,8 +278,8 @@ const FormationView: React.FC = () => {
                   selectedGridIndex={selectedGrid}
                   fleetCount={fleetCount}
                   isSubFleet={isSubFleet}
+                  refd={gridRef}
                 />
-
                 <div id="fleet-selector" className="tab">
                   {formationData.map((fleet, idx) => {
                     return (
@@ -336,6 +340,15 @@ const FormationView: React.FC = () => {
               className={`${fleetCount === 2 ? 'normal-fleet' : 'siren-fleet'}${isSubFleet ? ' sub-fleet' : ''} ${
                 config.themeColor
               }`}
+              style={
+                gridSize.height
+                  ? {
+                      top: `${gridSize.height + 25 + 15 + 53}px`,
+                      minHeight: `calc(100% - ${gridSize.height + 25 + 15 + 53 + 28}px)`,
+                      height: `calc(100% - ${gridSize.height + 25 + 15 + 53 + 28}px)`,
+                    }
+                  : {}
+              }
             >
               <SideBar refer={refSide}>
                 <ShipList

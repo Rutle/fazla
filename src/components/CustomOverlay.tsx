@@ -1,11 +1,14 @@
 import React, { useRef, useState } from 'react';
 import Overlay from 'react-overlays/Overlay';
-import SearchParameterContent from './SearchParameterContent';
 
 /**
  * Category overlay container for category parameter toggles.
  */
-const CategoryOverlay: React.FC<{ themeColor: string; isSmallScreen: boolean }> = ({ themeColor, isSmallScreen }) => {
+const CustomOverlay: React.FC<{ themeColor: string; isSmallScreen: boolean; children: React.ReactNode }> = ({
+  themeColor,
+  isSmallScreen,
+  children,
+}) => {
   const triggerRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -35,7 +38,7 @@ const CategoryOverlay: React.FC<{ themeColor: string; isSmallScreen: boolean }> 
         {({ props /* arrowProps, placement */ }) => (
           // eslint-disable-next-line react/jsx-props-no-spreading
           <div className={`popover-container ${themeColor}`} {...props}>
-            <SearchParameterContent themeColor={themeColor} />
+            {children}
           </div>
         )}
       </Overlay>
@@ -43,4 +46,4 @@ const CategoryOverlay: React.FC<{ themeColor: string; isSmallScreen: boolean }> 
   );
 };
 
-export default CategoryOverlay;
+export default CustomOverlay;

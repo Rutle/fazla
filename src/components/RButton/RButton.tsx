@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UseDragAndDropFunctions } from '../DragAndDrop/useDragAndDrop';
+import { UseDragAndDropFunctions } from '../../hooks/useDragAndDrop';
 
 interface RButtonProps {
   className?: string;

@@ -31,6 +31,7 @@ const commonConfig = {
       _utils: srcPaths('src/utils'),
       _reducers: srcPaths('src/reducers'),
       _components: srcPaths('src/components'),
+      _hooks: srcPaths('src/hooks'),
     },
     extensions: ['.js', '.json', '.ts', '.tsx'],
   },

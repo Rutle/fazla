@@ -3,7 +3,7 @@ import { AppDispatch, AppThunk } from '_/reducers/store';
 import { batch } from 'react-redux';
 import { checkResource, initData } from '_/utils/ipcAPI';
 import { compareVersion, downloadShipData, elapsedSinceUpdate } from '_/utils/appUtilities';
-import { CallbackDismiss, ToastMessageType } from '_/components/Toast/useToast';
+import { CallbackDismiss, ToastMessageType } from '_/hooks/useToast';
 import DataStore from '_/utils/dataStore';
 import {
   AppConfig,

@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '_/reducers/rootReducer';
 import { setCurrentToggle } from '_/reducers/slices/appStateSlice';
 import { SearchAction, updateSearch } from '_/reducers/slices/searchParametersSlice';
-import CategoryOverlay from './CategoryOverlay';
 import { AppContext } from '../App';
 import RToggle from './RToggle/RToggle';
 import RButton from './RButton/RButton';
 import { CloseIcon } from './Icons';
+import SearchParameterContent from './SearchParameterContent';
+import CustomOverlay from './CustomOverlay';
 
 interface ShipListProps {
   children: React.ReactNode;
@@ -54,12 +55,14 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
               value={searchValue}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setSearchValue(e.target.value);
-                dispatch(
-                  updateSearch(shipData, SearchAction.SetSearch, {
-                    searchString: e.target.value,
-                    list: appState.cToggle,
-                  })
-                );
+                if (e.target.value.length > 1) {
+                  dispatch(
+                    updateSearch(shipData, SearchAction.SetSearch, {
+                      searchString: e.target.value,
+                      list: appState.cToggle,
+                    })
+                  );
+                }
               }}
               onFocus={(e) => {
                 e.target.select();
@@ -88,7 +91,9 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
             )}
           </div>
         </form>
-        <CategoryOverlay themeColor={config.themeColor} isSmallScreen />
+        <CustomOverlay themeColor={config.themeColor} isSmallScreen>
+          <SearchParameterContent themeColor={config.themeColor} />
+        </CustomOverlay>
         <div className={`radio-group ${config.themeColor}`}>
           <RToggle
             id="all-toggle"
