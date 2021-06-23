@@ -48,17 +48,17 @@ form {
   margin-bottom: 0px;
 }
 
-dt {
-  font-weight: bold;
+.tooltip ul {
+  list-style: none;
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+  padding: 0px;
 }
 
-dl,
-dd {
-  font-size: .9rem;
-}
-
-dd {
-  margin-bottom: 0.5em;
+.tooltip li {
+  background-color: var(--main-dark-body-bg);
+  padding: 3px 8px;
+  border-bottom: 1px dotted var(--main-dark-border);
 }
 
 .page {
@@ -328,9 +328,9 @@ div.scroll {
   width: 100%;
   flex-direction: row;
   z-index: 25;
-  box-shadow: 0px -5px 6px 2px rgba(0,0,0,0.65);
-  -webkit-box-shadow: 0px -5px 6px 2px rgba(0,0,0,0.65);
-  -moz-box-shadow: 0px -5px 6px 2px rgba(0,0,0,0.65);
+  box-shadow: 0px -5px 10px 0px rgba(0,0,0,0.65);
+  -webkit-box-shadow: 0px -5px 10px 0px rgba(0,0,0,0.65);
+  -moz-box-shadow: 0px -5px 10px 0px rgba(0,0,0,0.65);
 }
 
 .search-section-enter {
@@ -388,12 +388,13 @@ label.btn,
 label.btn *,
 #side-scroll *,
 button.tab-btn,
+button.tab-btn *,
 button.btn,
 button.btn * {
   cursor: pointer;
   box-sizing: border-box;
-  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, stroke 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, stroke 0.2s ease-in-out;
 }
 
 label.btn,
@@ -405,7 +406,7 @@ button.btn {
 button.btn.menu-item {
   border-radius: 0px;
 }
-
+div.grid-item.non-interactive,
 button.btn.grid-item {
   padding: 3px 5px;
   white-space: nowrap;
@@ -443,6 +444,12 @@ button.tab-btn.normal.icon-only {
   padding: 0px 5px 0px 5px;
 }
 
+.btn:active > span,
+.tab-btn:active > span,
+.btn:active > div.name,
+.btn:active > div.hulltype {
+  transform: translateY(1px);
+}
 /* ###### top-container + tab ##### */
 .top-container {
   display: flex;
@@ -471,20 +478,24 @@ button.tab-btn.normal.icon-only {
 
 }
 
+.tab-group > button.tab-btn {
+  display: inline-block;
+  position: relative;
+}
+
 .tab > button.tab-btn {
   display: inline-block;
   border-right: 0px!important;
 }
 
 .tab > div.help {
-  /* align-self: center;*/ /* TODO: Check if needed on Firefox. Vertical-align below related. Either of them is required on electron -> Not required on Firefox*/
   display: inline-block;
   padding: 0px 5px 0px 5px;
   flex-grow: 1;
 }
 .tab > div.help > .icon {
-  vertical-align: middle; /* TODO: Check if needed on Firefox. align-self above related */
-  padding-top: 4px; /* Enough with these two on electron. */
+  vertical-align: middle;
+  padding-top: 4px;
 }
 
 nav > a {
@@ -539,8 +550,8 @@ div.f-row.action *,
   padding-top: 1px;
   margin-left: 10px;
   align-self: center;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, stroke 0.2s ease-in-out, transform 0.2s ease-out!important;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, stroke 0.2s ease-in-out, transform 0.2s ease-out!important;
 }
 
 .toggle-icon.open {
@@ -660,9 +671,6 @@ div.f-row.action *,
 /* ###### ship details / titlebar ##### */
 .ship-title-bar {
   display: flex;
-  /*
-  border-left: 0px!important;
-  border-right: 0px!important; */
   padding: 5px 16px;
   font-size: 1.5em;
   align-items: center;
@@ -725,7 +733,6 @@ span.Elite:last-child {
 /* #####  rList  ##### */
 .rList {
   flex: 1;
-  /* height: 100%;*/ /* TODO: CHECK on electron if needed (grid and ship list)*/
 }
 
 .hidden {
@@ -854,7 +861,7 @@ input[type="url"] {
   flex-grow: 1;
 }
 
-button.btn > .icon {
+button.btn .icon {
   vertical-align: -.2em;
 }
 
@@ -926,7 +933,6 @@ div.f-grid div.f-header {
   flex-direction: column;
   border-radius: inherit;
   padding: 3px 5px;
-  justify-content: center; /* TODO: Check on Firefox if does anything. */
   font-size: 15px;
 }
 
@@ -938,10 +944,8 @@ div.f-row div.f-header.tab-group {
 }
 
 div.f-row div.name {
-  /* min-width: 160px;*/ /* TODO: Check on Firefox. */
   max-width: 160px;
   height: inherit;
-  justify-content: center; /* TODO: Check on Firefox if does anything. */
   padding: 3px 5px;
   align-self: center;
 }
@@ -951,12 +955,6 @@ div.f-grid .grid-item.action {
   flex-basis: auto;
   flex-direction: row;
   padding: 1px 1px 1px 5px;
-  min-height: 29px;
-}
-
-div.f-grid .grid-item.action {
-  justify-content: center;
-  align-items: center;
 }
 
 table.f-table {
@@ -976,17 +974,26 @@ div.f-grid div.f-row div.passive {
   padding: 3px 5px;
   justify-content: center;
   font-size: 13px;
-  white-space: break-spaces;
   align-self: center;
 }
 div.f-row.slots {
   justify-content: space-evenly;
   flex-grow: 1;
+  text-align: center;
 }
 
-div.grid-item.slot {
-  flex: unset;
+.grid-item.ship > span {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  vertical-align: middle;
 }
+
 /* ##### f-title ##### */
 div.f-grid div.f-title {
   display: flex;
@@ -1265,27 +1272,19 @@ div.f-grid div.f-icon.open > svg{
     width: 80%;
   }
 
-  /* .rList .rList-item.btn > .hullTypeAbb,*/
-  #formation-content .f-header,
-  #formation-content .f-header,
   #window-title {
     display: none;
   }
 
-  div.f-row div.name {
-    min-width: unset;
-    max-width: unset;
-    padding: 3px 5px;
-  }
   .f-row.passive-item,
   #formation-grid .f-row {
     flex-direction: column;
   }
-  #formation-grid #submarine-section > div.f-row > button,
-  #formation-grid #vanguard-section > div.f-row > button,
-  #formation-grid #main-section > div.f-row > button {
+
+  #formation-grid div.f-row > button {
     margin-bottom: 1px;
   }
+
   #passive-section div.f-grid div.f-row.action {
     flex-direction: row;
   }
@@ -1304,10 +1303,6 @@ div.f-grid div.f-icon.open > svg{
 
   .message-container > .message {
     flex-grow: 1;
-  }
-
-  .radio-group label.btn.normal {
-    padding: 0px 2px 2px 2px;
   }
 
   .f-row > div.f-header,
@@ -1501,11 +1496,6 @@ nav.tab.light > a:hover {
 }
 
 /* Tooltip */
-.tooltip.light {
-  /* border: 1px solid var(--main-light-border); */
-  border-bottom: 2px solid var(--main-light-border);
-}
-
 .tooltip.light > .tooltip-content {
   background-color: var(--root-light-bg);
   color: var(--main-light-color);
@@ -1579,6 +1569,9 @@ button.tab-btn.light.selected {
 
 .light #formation-grid {
   border-bottom: 1px solid var(--main-light-border);
+}
+#formation-ship-search.light {
+  border-top: 3px solid var(--main-light-border);
 }
 /* #### Popover #### */
 .popover-container.light {
@@ -1663,45 +1656,45 @@ div.f-row.light div.f-header.tab-group > button:first-child {
 div.f-row.light div.f-header.tab-group > button:last-child {
   border-right: 2px dotted var(--main-light-border);
 }
-/* #### hull types #### */
-/*
-.btn.light.Carrier {
+/* #### hull type colors #### */
+
+.grid-item.light.ship.Carrier {
   background-color: Plum;
   color: #510051;
 }
 
-.btn.light.Battleship, 
-.btn.light.Battlecruiser {
+.grid-item.light.ship.Battleship, 
+.grid-item.light.ship.Battlecruiser {
   background-color: Pink;
   color: #6c0013;
 }
 
-.btn.light.Large.Cruiser {
+.grid-item.light.ship.Large.Cruiser {
   background-color: LightSalmon;
   color: #551800;
 }
-.btn.light.Destroyer {
+.grid-item.light.ship.Destroyer {
   background-color: powderblue;
   color: #005560;
 }
-.btn.light.Submarine {
+.grid-item.light.ship.Submarine {
   background-color: PaleGreen;
   color: #006200;
 }
 
-.btn.light.Heavy.Cruiser,
-.btn.light.Monitor,
-.btn.light.Light.Cruiser {
+.grid-item.light.ship.Heavy.Cruiser,
+.grid-item.light.ship.Monitor,
+.grid-item.light.ship.Light.Cruiser {
   background-color: NavajoWhite;
   color: #774700;
 }
 
-.btn.light.Repair.Ship,
-.btn.light.Repair {
+.grid-item.light.ship.Repair.Ship,
+.grid-item.light.ship.Repair {
   background-color: Aquamarine;
   color: #005b3d;
 }
-*/
+
 /* #### grid icon #### */
 div.f-grid.light div.f-icon {
   background-color: var(--main-light-bg);
@@ -1809,7 +1802,8 @@ div.f-grid.light div.f-row.deepskyblue {
 .dark button:not(.no-focus-outline):focus,
 #titlebar.dark button.title-button:not(.no-focus-outline):focus {
   outline: none;
-  background-color: var(--main-dark-border);
+  background-color: var(--main-dark-hover-bg);
+  color: var(--main-dark-hover-color);
 }
 
 .dark .modal-container:focus {
@@ -1979,10 +1973,6 @@ nav.tab.dark > a:hover {
 }
 
 /* Tooltip */
-.tooltip.dark {
-  border-bottom: 2px solid var(--main-dark-tooltip-border);
-}
-
 .tooltip.dark > .tooltip-content {
   background-color: var(--main-dark-tooltip-bg);
   color: var(--main-dark-color);
@@ -2000,16 +1990,23 @@ button.dark {
   border: 1px solid transparent;
 }
 
-.dark .tab-btn:hover,
-.btn.dark:hover,
-button.btn.grid-item.dark:hover,
-button.rList-item.dark.btn:hover {
+.btn.dark:hover {
   /* TODO: Check colors with electron for window controls */
   background-color: #3c4652;
   color: var(--main-dark-hover-color);
 }
 
-.btn.dark:hover > svg {
+button.dark.tab-btn:hover {
+  background-color: var(--main-dark-hover-bg);
+  color: var(--main-dark-hover-color);
+}
+
+button.btn.rList-item.dark:hover {
+  background-color: var(--main-dark-hover-bg);
+  color: var(--main-dark-hover-color);
+}
+
+.btn.dark:hover svg {
   stroke: var(--main-dark-hover-color);
 }
 
@@ -2018,7 +2015,7 @@ button.tab-btn.dark:disabled:hover {
   background-color: var(--main-dark-header-bg);
 }
 
-label.btn.dark.selected,
+label.btn.dark.selected, 
 button.grid-item.btn.dark.selected,
 button.rList-item.dark.btn.selected,
 button.btn.dark.selected,
@@ -2026,7 +2023,14 @@ button.tab-btn.dark.selected {
   background-color: var(--main-dark-active-bg);
   color:#98caff;
 }
-/* */
+
+button.dark.tab-btn:active {
+  box-shadow: 1px 1px 3px 0px var(--main-dark-header-bg) inset;
+  -webkit-box-shadow: 1px 1px 3px 0px var(--main-dark-header-bg) inset;
+  -moz-box-shadow: 1px 1px 3px 0px var(--main-dark-header-bg) inset;
+}
+
+
 .rList-item.dark:hover .owned-indicator {
   background-color: unset;
 }
@@ -2034,7 +2038,6 @@ button.tab-btn.dark.selected {
 .rList-item.dark.owned > .owned-indicator {
   background-color: var(--main-dark-border);
 }
-
 
 .rList-item.dark.owned > .owned-indicator /* + .name */ {
   border-right: 1px solid var(--main-dark-header-bg);
@@ -2145,42 +2148,41 @@ div.f-row.dark div.f-header.tab-group > button:last-child {
 
 /* #### hull types #### */
 
-.btn.dark.Carrier {
+.grid-item.dark.ship.Carrier {
   background-color: #352035;
   color: #d77dd7;
 }
 
-.btn.dark.Destroyer {
+.grid-item.dark.ship.Destroyer {
   background-color: #203844;
   color: #68b3d9;
 }
 
-.btn.dark.Battleship, 
-.btn.dark.Battlecruiser {
+.grid-item.dark.ship.Battleship, 
+.grid-item.dark.ship.Battlecruiser {
   background-color: #3e1c1a;
   color: #ff726a;
 }
 
 
-.btn.dark.Large.Cruiser {
+.grid-item.dark.ship.Large.Cruiser {
   background-color: #5a3023;
   color: #ff8560;
 }
 
-.btn.dark.Submarine {
+.grid-item.dark.ship.Submarine {
   background-color: #3a4d21;
   color: #95c655;
 }
 
-
-.btn.dark.Heavy.Cruiser,
-.btn.dark.Monitor,
-.btn.dark.Light.Cruiser {
+.grid-item.dark.ship.Monitor,
+.grid-item.dark.ship.Heavy.Cruiser,
+.grid-item.dark.ship.Light.Cruiser {
   background-color: #503c1e;
   color: #dfa854;
 }
 
-.btn.dark.Repair {
+.grid-item.dark.ship.Repair {
   background-color: #1a4638;
   color: #48caa1;
 }
