@@ -35,28 +35,30 @@ export const { resetList, addShipId, setOwnedList, removeShipId } = ownedShipLis
  * @param {string} id Id of the ship.
  * @param {LocalForage} storage LocalForage store holding ship data.
  */
-export const addShip = (id: string, storage?: LocalForage): AppThunk => async (dispatch: AppDispatch, getState) => {
-  let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
-  try {
-    const platform = process.env.PLAT_ENV as string;
-    const ownedShips = [...getState().ownedShips, id];
-    if (platform === 'electron') {
-      result = await saveOwnedShipData(ownedShips);
+export const addShip =
+  (id: string, storage?: LocalForage): AppThunk =>
+  async (dispatch: AppDispatch, getState) => {
+    let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
+    try {
+      const platform = process.env.PLAT_ENV as string;
+      const ownedShips = [...getState().ownedShips, id];
+      if (platform === 'electron') {
+        result = await saveOwnedShipData(ownedShips);
+      }
+      if (platform === 'web' && storage) {
+        const res = await storage.setItem('ownedShips', ownedShips);
+        result.isOk = res.length === ownedShips.length;
+      }
+      if (result.isOk) {
+        dispatch(addShipId(id));
+        dispatch(setIsUpdated({ key: 'OWNED', value: false }));
+      }
+    } catch (e) {
+      dispatch(
+        setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with adding ship to docks.', eState: 'ERROR' })
+      );
     }
-    if (platform === 'web' && storage) {
-      const res = await storage.setItem('ownedShips', ownedShips);
-      result.isOk = res.length === ownedShips.length;
-    }
-    if (result.isOk) {
-      dispatch(addShipId(id));
-      dispatch(setIsUpdated({ key: 'OWNED', value: false }));
-    }
-  } catch (e) {
-    dispatch(
-      setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with adding ship to docks.', eState: 'ERROR' })
-    );
-  }
-};
+  };
 
 /**
  * Remove ship id from owned list.
@@ -64,38 +66,37 @@ export const addShip = (id: string, storage?: LocalForage): AppThunk => async (d
  * @param {string} id Id of the ship.
  * @param {LocalForage} storage Holding data in IndexedDB.
  */
-export const removeShip = (shipData: DataStore, id: string, storage?: LocalForage): AppThunk => async (
-  dispatch: AppDispatch,
-  getState
-) => {
-  let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
-  try {
-    const platform = process.env.PLAT_ENV as string;
-    const ownedShips = [...getState().ownedShips];
-    const { appState } = getState();
-    const newList = ownedShips.filter((cId) => cId !== id);
-    if (platform === 'electron') {
-      result = await saveOwnedShipData(newList);
-    }
-    if (platform === 'web' && storage) {
-      const res = await storage.setItem('ownedShips', newList);
-      result.isOk = res.length === newList.length;
-    }
-    if (result.isOk) {
-      dispatch(setOwnedList(newList));
-      dispatch(setIsUpdated({ key: 'OWNED', value: false }));
-      if (appState.cToggle === 'OWNED') {
-        dispatch(
-          updateSearch(shipData, SearchAction.UpdateList, {
-            list: 'OWNED',
-          })
-        );
+export const removeShip =
+  (shipData: DataStore, id: string, storage?: LocalForage): AppThunk =>
+  async (dispatch: AppDispatch, getState) => {
+    let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
+    try {
+      const platform = process.env.PLAT_ENV as string;
+      const ownedShips = [...getState().ownedShips];
+      const { appState } = getState();
+      const newList = ownedShips.filter((cId) => cId !== id);
+      if (platform === 'electron') {
+        result = await saveOwnedShipData(newList);
       }
+      if (platform === 'web' && storage) {
+        const res = await storage.setItem('ownedShips', newList);
+        result.isOk = res.length === newList.length;
+      }
+      if (result.isOk) {
+        dispatch(setOwnedList(newList));
+        dispatch(setIsUpdated({ key: 'OWNED', value: false }));
+        if (appState.cToggle === 'OWNED') {
+          dispatch(
+            updateSearch(shipData, SearchAction.UpdateList, {
+              list: 'OWNED',
+            })
+          );
+        }
+      }
+    } catch (e) {
+      dispatch(
+        setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with adding ship to docks.', eState: 'ERROR' })
+      );
     }
-  } catch (e) {
-    dispatch(
-      setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with adding ship to docks.', eState: 'ERROR' })
-    );
-  }
-};
+  };
 export default ownedShipListSlice.reducer;

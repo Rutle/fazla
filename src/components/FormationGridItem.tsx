@@ -17,13 +17,25 @@ interface GridItemProps {
   isDragged?: boolean;
   isSub?: boolean;
   fleetCount: number;
+  isInteractive?: boolean;
 }
 
 /**
  * Singular component representing a grid item on a formation.
  */
 const FormationGridItem: React.FC<GridItemProps> = React.memo(
-  ({ index, ship, themeColor, onClick, isSelected, dragFunctions, isDragged, fleetCount, isSub = false }) => {
+  ({
+    index,
+    ship,
+    themeColor,
+    onClick,
+    isSelected,
+    dragFunctions,
+    isDragged,
+    fleetCount,
+    isSub = false,
+    isInteractive = true,
+  }) => {
     const dispatch = useDispatch();
     const getLocation = (idx: number): string => {
       switch (idx) {
@@ -56,37 +68,36 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(
     );
 
     return (
-      <RButton
-        onClick={onClick}
-        onRightClick={onRightClick}
-        className={`grid-item btn${isSelected ? ' selected' : ''} hullTypeAbb ${ship?.hullType || 'none'}`}
-        themeColor={themeColor}
-        extraStyle={{ border: '2px solid transparent' }}
-        dragProps={{
-          dragFunctions,
-          dragOptions: { draggable: 'true' },
-          data: {
-            'grid-index': index,
-            'ship-id': ship?.id || 'none',
-            'transfer-type': 'switch',
-            hull: ship?.hullType || getFleet(index, fleetCount),
-          },
-        }}
-      >
-        <span
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'inline-block',
-            boxSizing: 'border-box',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {ship ? `${ship.names.en}` : `Add ${!isSub ? getLocation(index) : 'ship'}`}
-        </span>
-      </RButton>
+      <>
+        {isInteractive ? (
+          <RButton
+            onClick={onClick}
+            onRightClick={onRightClick}
+            className={`grid-item ship btn${isSelected ? ' selected' : ''} hullTypeAbb ${ship?.hullType || 'none'}`}
+            themeColor={themeColor}
+            extraStyle={{ border: '2px solid transparent' }}
+            dragProps={{
+              dragFunctions,
+              dragOptions: { draggable: 'true' },
+              data: {
+                'grid-index': index,
+                'ship-id': ship?.id || 'none',
+                'transfer-type': 'switch',
+                hull: ship?.hullType || getFleet(index, fleetCount),
+              },
+            }}
+          >
+            <span>{ship ? `${ship.names.en}` : `Add ${!isSub ? getLocation(index) : 'ship'}`}</span>
+          </RButton>
+        ) : (
+          <div
+            className={`grid-item ship non-interactive ${themeColor} hullTypeAbb ${ship?.hullType || 'none'}`}
+            style={{ border: '2px solid transparent', borderRadius: '4px', display: 'inline-block' }}
+          >
+            <span>{ship ? `${ship.names.en}` : `Empty`}</span>
+          </div>
+        )}
+      </>
     );
   }
 );

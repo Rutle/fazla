@@ -7,31 +7,19 @@ import { AppContext } from '_/App';
 import PageTemplate from './PageTemplate';
 import RButton from './RButton/RButton';
 import RToggle from './RToggle/RToggle';
-// import RSwitch from './RSwitch/RSwitch';
 /**
  * Options page.
  */
 const Home: React.FC = () => {
   const dispatch = useDispatch();
-  const { addToast, shipData, storage } = useContext(AppContext);
+  const { addToast, shipData } = useContext(AppContext);
   const appState = useSelector((state: RootState) => state.appState);
   const ownedList = useSelector((state: RootState) => state.ownedShips);
   const config = useSelector((state: RootState) => state.config);
   const [shipCount, setShipCount] = useState(appState.shipCount);
   const [docksCount, setDocksCount] = useState(ownedList.length);
-  /*
-  const [srcInputLen, setSRCInputLen] = useState(config.jsonURL.length || 25);
-  const [jsonSRCValue, setJSONSRCValue] = useState(config.jsonURL);
-  const [isSRCFocus, setSRCFocus] = useState(false);
-  */
   const [shipDiff, setShipDiff] = useState({ count: 0, isUpdate: false });
-  /*
-  useEffect(() => {
-    setSRCFocus(false);
-    setSRCInputLen(25);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  */
+
   useEffect(() => {
     setDocksCount(ownedList.length);
   }, [ownedList]);
@@ -69,25 +57,6 @@ const Home: React.FC = () => {
       </div>
     );
   };
-  /*
-  const renderSave = () => {
-    return (
-      <RButton
-        themeColor={`${config.themeColor}`}
-        onClick={() => dispatch(configAction(AppConfigAction.Save, {}))}
-        disabled={!config.isEdit}
-      >
-        Save changes
-      </RButton>
-    );
-  };
-  */
-  /*
-  const setSRCInputFocus = (e: React.FocusEvent<HTMLInputElement>, len: number) => {
-    setSRCInputLen(len);
-    setSRCFocus(!isSRCFocus);
-  };
-  */
   const getShipCount = () => {
     if (shipDiff.isUpdate && appState.cState === 'RUNNING') {
       const diff = shipData.getShips().length - shipDiff.count;
@@ -199,28 +168,26 @@ const Home: React.FC = () => {
                 </div>
               </div>
               <div className="f-row wrap">
-                <div className="grid-item name">Ship data update date</div>
+                <div className="grid-item name">Last update on</div>
                 <div className="grid-item name" style={{ maxWidth: 'unset' }}>
                   {config.updateDate !== '' ? config.updateDate : 'N/A'}
                 </div>
               </div>
-              {/* 
-            <div className="f-row wrap">
-              <div className="grid-item name" style={{ opacity: `${config.isEdit ? '1' : '0.2'}` }} />
-              <div className="grid-item action">{renderSave()}</div>
             </div>
-            */}
-            </div>
+          </div>
+          <div className={`f-grid ${config.themeColor}`}>
             <div className="f-row">
               <div className="f-header">Stats</div>
             </div>
-            <div className="f-row wrap">
-              <div className="grid-item name">Ship count</div>
-              <div className="grid-item action">{getShipCount()}</div>
-            </div>
-            <div className="f-row wrap">
-              <div className="grid-item name">Docks count</div>
-              <div className="grid-item action">{appState.cState === 'INIT' ? '-' : docksCount}</div>
+            <div className="f-column f-body">
+              <div className="f-row wrap">
+                <div className="grid-item name">Ship count</div>
+                <div className="grid-item action">{getShipCount()}</div>
+              </div>
+              <div className="f-row wrap">
+                <div className="grid-item name">Docks count</div>
+                <div className="grid-item action">{appState.cState === 'INIT' ? '-' : docksCount}</div>
+              </div>
             </div>
           </div>
         </div>

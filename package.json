@@ -39,8 +39,10 @@
     "@reduxjs/toolkit": "^1.5.1",
     "@types/node": "^15.6.1",
     "electron-store": "^8.0.0",
+    "history": "^5.0.0",
     "localforage": "^1.9.0",
     "lodash.throttle": "^4.1.1",
+    "pako": "^2.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-modal": "^3.13.1",
@@ -82,6 +84,7 @@
   },
   "devDependencies": {
     "@types/lodash.throttle": "^4.1.6",
+    "@types/pako": "^1.0.1",
     "@types/react": "^17.0.8",
     "@types/react-dom": "^17.0.5",
     "@types/react-modal": "^3.12.0",

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '_/reducers/rootReducer';
 import { FormationAction, formationAction } from '_/reducers/slices/formationGridSlice';
+import { AppContext } from '_/App';
 import RButton from '../RButton/RButton';
 import RToggle from '../RToggle/RToggle';
 import { CloseIcon } from '../Icons';
@@ -11,6 +12,7 @@ interface FormModalProps {
 }
 const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) => {
   const dispatch = useDispatch();
+  const { addToast } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
   const [nameVal, setNameVal] = useState('');
   const [typeVal, setTypeVal] = useState('normal');
@@ -40,10 +42,14 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
               onKeyUp={(e) => {
                 if (e.key === 'Enter') {
                   dispatch(
-                    formationAction(FormationAction.New, {
-                      formationName: nameVal,
-                      formationType: typeVal,
-                    })
+                    formationAction(
+                      FormationAction.New,
+                      {
+                        formationName: nameVal,
+                        formationType: typeVal,
+                      },
+                      addToast
+                    )
                   );
                   setModalOpen({ modal: '', isOpen: false });
                 }
@@ -96,10 +102,14 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
             themeColor={config.themeColor}
             onClick={() => {
               dispatch(
-                formationAction(FormationAction.New, {
-                  formationName: nameVal,
-                  formationType: typeVal,
-                })
+                formationAction(
+                  FormationAction.New,
+                  {
+                    formationName: nameVal,
+                    formationType: typeVal,
+                  },
+                  addToast
+                )
               );
               setModalOpen({ modal: '', isOpen: false });
             }}

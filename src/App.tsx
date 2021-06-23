@@ -1,19 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch, Redirect, RouteProps, HashRouter, useHistory } from 'react-router-dom';
+import { Route, Switch, Redirect, RouteProps, HashRouter } from 'react-router-dom';
 import ShipDetailView from '_components/ShipDetailView';
 import Home from '_components/Home';
 import localForage from 'localforage';
 import DataStore from './utils/dataStore';
 import FormationView from './components/FormationView';
 import { RootState } from './reducers/rootReducer';
-import LandingView from './components/LandingView';
 import ErrorView from './components/ErrorView';
 import ToastContainer from './components/Toast/ToastContainer';
 import Tooltip from './components/Tooltip/Tooltip';
 import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './hooks/useToast';
 import { useTooltip, TooltipHooks } from './hooks/useTooltip';
 import { initShipData, setErrorMessage } from './reducers/slices/appStateSlice';
+import FormationLinkView from './components/FormationLinkView';
+import LandingView from './components/LandingView';
 
 export const AppContext = React.createContext(
   {} as {
@@ -27,10 +28,13 @@ export const AppContext = React.createContext(
   }
 );
 
-const RefreshRoute: React.FC<RouteProps> = (props) => {
-  const { component } = props;
+const RefreshRoute: React.FC<RouteProps> = ({ component, ...props }) => {
   const appState = useSelector((state: RootState) => state.appState);
-
+  // Grab the location on refresh of page or linking and save it to sessionStorage.
+  if (props.location && props.location.pathname) {
+    sessionStorage.setItem('rr', props.location.pathname);
+  }
+  // In error state redirect to error page.
   if (appState.cState === 'ERROR') {
     return (
       <Redirect
@@ -40,20 +44,21 @@ const RefreshRoute: React.FC<RouteProps> = (props) => {
       />
     );
   }
-  return appState.cState === 'INIT' ? (
-    <Redirect
-      to={{
-        pathname: '/',
-      }}
-    />
-  ) : (
-    <Route {...props} component={component} />
-  );
+  // If state is still INIT and data hasn't been loaded, Redirect to '/' where data is loaded first.
+  if (appState.cState === 'INIT' && !appState.isData) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/',
+        }}
+      />
+    );
+  }
+  return <Route {...props} component={component} />;
 };
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const platform = process.env.PLAT_ENV || 'NOSET';
   // Finally found out how to properly pass down "static" data that doesn't cause re-render
   // but still gets updated unlike just a const variable.
@@ -62,12 +67,13 @@ const App: React.FC = () => {
   const tooltip = useTooltip();
   const storage =
     process.env.PLAT_ENV === 'web' ? localForage.createInstance({ name: 'Fazla-storage', version: 1.0 }) : undefined;
+  const appState = useSelector((state: RootState) => state.appState);
 
   useEffect(() => {
     if (platform === 'NOSET') {
       dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Platform has not been defined', eState: 'ERROR' }));
-      history.push('/error');
-    } else {
+    }
+    if (appState.cState === 'INIT' && !appState.isData) {
       dispatch(initShipData(shipData.current, platform, storage));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,8 +94,14 @@ const App: React.FC = () => {
           }}
         >
           <Switch>
-            <Route exact path="/" render={() => <LandingView />} />
-            <RefreshRoute path="/shipdetails">
+            <Route exact path="/">
+              {appState.isData && sessionStorage.getItem('rr') ? (
+                <Redirect to={sessionStorage.getItem('rr') as string} />
+              ) : (
+                <LandingView />
+              )}
+            </Route>
+            <RefreshRoute /* path={['/ships', '/ships/:id']} */ path="/ships">
               <ShipDetailView />
             </RefreshRoute>
             <RefreshRoute path="/formations">
@@ -98,8 +110,14 @@ const App: React.FC = () => {
             <RefreshRoute path="/options">
               <Home />
             </RefreshRoute>
+            <RefreshRoute path="/link/:code">
+              <FormationLinkView />
+            </RefreshRoute>
             <Route path="/error">
               <ErrorView />
+            </Route>
+            <Route>
+              <ErrorView isNotFound />
             </Route>
           </Switch>
           <ToastContainer position="bottom-right" />

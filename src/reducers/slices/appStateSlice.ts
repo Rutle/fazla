@@ -44,6 +44,7 @@ type ListStateObject = {
   OWNED: ListState;
   shipCount: number;
   versions: VersionInfo;
+  isData: boolean;
 } & CurrentState &
   ErrorState;
 
@@ -66,6 +67,7 @@ const initialState: ListStateObject = {
   shipCount: 0,
   isSearchChanged: false,
   versions: emptyVersionInfo(),
+  isData: false,
 };
 
 const appStateSlice = createSlice({
@@ -191,6 +193,7 @@ export const initShipLists =
       }
       dispatch(setFormationsData(formations));
       dispatch(setShipCount(fullSimple.length));
+      dispatch(setListValue({ key: 'isData', value: true }));
       dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
     } catch (e) {
       dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Unable to initialize ship lists.', eState: 'ERROR' }));
@@ -257,8 +260,8 @@ export const initShipData =
       if (dataObj.code === 'InitError') throw new Error("Couldn't initialize application.");
       await data.setShips(dataObj.shipData);
       await data.setEqs(dataObj.eqData);
-      dispatch(initShipLists(dataObj.ownedShips, data, dataObj.config, dataObj.formations));
       dispatch(setVersionData(dataObj.versionData));
+      dispatch(initShipLists(dataObj.ownedShips, data, dataObj.config, dataObj.formations));
     } catch (e) {
       if (e instanceof Error) {
         dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));

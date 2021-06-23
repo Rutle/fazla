@@ -10,11 +10,12 @@ interface FormationGridProps {
   themeColor: string;
   selectedFleetIndex: number;
   ships: Ship[][];
-  openSearchSection: (isOpen: boolean, gridIndex: number) => void;
-  selectedGridIndex: number;
+  openSearchSection?: (isOpen: boolean, gridIndex: number) => void;
+  selectedGridIndex?: number;
   fleetCount: number;
   isSubFleet: boolean;
   refd: React.RefObject<HTMLDivElement>;
+  isExportedLink?: boolean;
 }
 
 /**
@@ -58,6 +59,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   fleetCount,
   isSubFleet,
   refd,
+  isExportedLink = false,
 }) => {
   const { dragFunctions, dragStates, transferData } = useDragAndDrop({
     dataKeys: ['grid-index', 'transfer-type', 'ship-id'],
@@ -68,7 +70,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
 
   const open = useCallback(
     (gridIndex: number) => () => {
-      openSearchSection(true, gridIndex);
+      if (openSearchSection) openSearchSection(true, gridIndex);
     },
     [openSearchSection]
   );
@@ -115,6 +117,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
                   isSelected={selectedGridIndex === fleetIdx * 6 + shipIdx}
                   dragFunctions={dragFunctions}
                   fleetCount={fleetCount}
+                  isInteractive={!isExportedLink}
                 />
               ))}
             </div>
@@ -138,6 +141,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
                   isSelected={selectedGridIndex === fleetIdx * 6 + (shipIdx + 3)}
                   dragFunctions={dragFunctions}
                   fleetCount={fleetCount}
+                  isInteractive={!isExportedLink}
                 />
               ))}
             </div>
@@ -161,6 +165,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
                     dragFunctions={dragFunctions}
                     isSub
                     fleetCount={fleetCount}
+                    isInteractive={!isExportedLink}
                   />
                 ))}
               </div>

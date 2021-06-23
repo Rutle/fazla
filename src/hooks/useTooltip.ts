@@ -1,10 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Placement } from 'react-overlays/esm/usePopper';
 
 interface TooltipData {
   data: React.ReactNode;
   ref: React.RefObject<HTMLElement>;
-  placement: Placement;
 }
 
 export interface TooltipHooks {
@@ -22,7 +20,6 @@ export const useTooltip = (): TooltipHooks => {
   const [tooltip, setTooltip] = useState<TooltipData>({
     data: '',
     ref: useRef<HTMLElement>(null),
-    placement: 'bottom',
   });
   const [show, setShow] = useState(false);
 

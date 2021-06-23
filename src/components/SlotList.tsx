@@ -85,7 +85,7 @@ const SlotList: React.FC<{ slots: { [key: string]: Slot }; hasRetrofit?: boolean
                   className={`tab-btn normal${selectedSlotList === index ? ' selected' : ''}`}
                   onClick={() => setSelectedSlotList(index)}
                 >
-                  {slotTabs[index]}
+                  <span style={{ display: 'inline-block' }}>{slotTabs[index]}</span>
                 </RButton>
               ))}
             </div>

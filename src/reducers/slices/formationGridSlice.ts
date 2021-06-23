@@ -4,6 +4,7 @@ import { saveFormationData } from '_/utils/ipcAPI';
 import { Formation } from '_/types/types';
 import DataStore from '_/utils/dataStore';
 import { batch } from 'react-redux';
+import { CallbackDismiss, ToastMessageType } from '_/hooks/useToast';
 import { setErrorMessage } from './appStateSlice';
 import { SearchAction, setFleet, updateSearch } from './searchParametersSlice';
 
@@ -216,7 +217,7 @@ interface FormActionData {
   gridIndex?: number;
   formationName?: string;
   formationType?: string;
-  importedFormation?: string[];
+  importedFormation?: Formation;
   storage?: LocalForage;
   shipData?: DataStore;
   switchData?: string[];
@@ -229,7 +230,11 @@ interface FormActionData {
  * @param {FormActionData} data Object containing data for different actions
  */
 export const formationAction =
-  (action: FormationAction, data: FormActionData): AppThunk =>
+  (
+    action: FormationAction,
+    data: FormActionData,
+    addToast?: (type: ToastMessageType, label: string, msg: string, onDismiss?: CallbackDismiss | undefined) => void
+  ): AppThunk =>
   async (dispatch: AppDispatch, getState) => {
     let result: { isOk: boolean; msg: string } = { isOk: false, msg: '' };
     try {
@@ -243,29 +248,38 @@ export const formationAction =
       const iFormation = data.importedFormation;
       const shipGridIndex = data.gridIndex; // Ship selected on the grid of ships.
       const { storage, shipData } = data;
-      let emptyFormation = [];
+      let emptyFormation: string[] = [];
+      let emptyEquips: string[][] = [];
       switch (action) {
         case 'NEW':
           if (fType === 'normal') {
             // 12 normal ships and 3 submarines
-            emptyFormation = Array.from({ length: 15 }, () => 'NONE');
+            emptyFormation = Array.from({ length: 15 }, () => 'N');
+            emptyEquips = Array.from({ length: 15 }, () => ['N', 'N', 'N']);
           } else {
             // 24 normal ships and 3 submarines
-            emptyFormation = Array.from({ length: 27 }, () => 'NONE');
+            emptyFormation = Array.from({ length: 27 }, () => 'N');
+            emptyEquips = Array.from({ length: 27 }, () => ['N', 'N', 'N']);
           }
-          dispatch(addNewFormationData({ data: emptyFormation, name }));
+          dispatch(addNewFormationData({ data: emptyFormation, name, equipment: emptyEquips }));
+          if (addToast) addToast('info', 'New formation', 'New formation was created.');
           break;
         case 'REMOVE':
-          batch(() => {
-            dispatch(removeFormation(formIdx));
-            dispatch(formationAction(FormationAction.Save, { storage }));
-          });
+          {
+            const removedName = formationGrid.formations[formIdx].name;
+            batch(() => {
+              dispatch(removeFormation(formIdx));
+              dispatch(formationAction(FormationAction.Save, { storage }));
+              if (addToast) addToast('info', 'Formation removal', `${removedName} was removed.`);
+            });
+          }
           break;
         case 'RENAME':
           dispatch(renameFormation({ idx: formIdx, name }));
           break;
         case 'SAVE':
           {
+            // TODO: Move at the end of try block, because every action requires it.
             const platform = process.env.PLAT_ENV;
             result = await saveFormationData(formationGrid.formations, platform as string, storage);
             if (result.isOk) dispatch(toggleEdit());
@@ -296,7 +310,8 @@ export const formationAction =
           break;
         case 'IMPORT':
           if (iFormation) {
-            dispatch(addNewFormationData({ data: iFormation, name }));
+            dispatch(addNewFormationData(iFormation));
+            if (addToast) addToast('info', 'Formation import', `${iFormation.name} was imported.`);
           }
           break;
         case 'SWITCH':

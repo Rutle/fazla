@@ -8,25 +8,29 @@ import TitleBar from './TitleBar';
 /**
  * A view for displaying error messages.
  */
-const ErrorView: React.FC = () => {
+const ErrorView: React.FC<{ isNotFound?: boolean }> = ({ isNotFound = false }) => {
   const appState = useSelector((state: RootState) => state.appState);
   const config = useSelector((state: RootState) => state.config);
+
   return (
     <>
-      <TitleBar showMenu={false} />
+      <TitleBar showMenu={isNotFound} />
       <div className={`page ${config.themeColor}`}>
         <section className="page-content">
-          <div className="ship-data-container dark">
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                width: '100%',
-                height: '100%',
-              }}
-            >
-              <div className="info-text">{appState.eMsg}</div>
+          <div className="container content">
+            <div style={{ display: 'flex', height: '100%', justifyContent: 'center', width: '100%' }}>
+              <div
+                className={`message-container ${config.themeColor}`}
+                style={{
+                  alignSelf: 'center',
+                  width: '50%',
+                  minHeight: '40px',
+                }}
+              >
+                <span className="message" style={{ fontSize: '24px', justifyContent: 'center' }}>
+                  {!isNotFound ? appState.eMsg : 'Page not found.'}
+                </span>
+              </div>
               {process.env.PLAT_ENV === 'electron' ? (
                 <RButton
                   themeColor={config.themeColor}

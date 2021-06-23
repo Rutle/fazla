@@ -25,7 +25,7 @@ const StatList: React.FC<{ stats: ShipStats; themeColor: string }> = ({ stats, t
                   className={`tab-btn normal${selectedStats === index ? ' selected' : ''}`}
                   onClick={() => setSelectedStats(index)}
                 >
-                  {statCatAbb[cat]}
+                  <span style={{ display: 'inline-block' }}>{statCatAbb[cat]}</span>
                 </RButton>
               ))}
             </>

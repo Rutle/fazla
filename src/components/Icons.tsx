@@ -86,7 +86,7 @@ const ArrowDegUp: React.FC<{ themeColor: string; width?: string; height?: string
   themeColor,
   width = '16px',
   height = '16px',
-  className = '',
+  className = 'icon',
 }) => {
   return (
     <svg
@@ -128,7 +128,7 @@ const PlusIcon: React.FC<{ themeColor: string; width?: string; height?: string; 
   );
 };
 
-const BoxArrowUp: React.FC<{ themeColor: string; width?: string; height?: string; className?: string }> = ({
+const BoxArrowUp: React.FC<{ themeColor: string; className: string; width?: string; height?: string }> = ({
   themeColor,
   width = '16px',
   height = '16px',

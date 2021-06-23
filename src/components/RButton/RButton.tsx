@@ -54,7 +54,7 @@ const RButton: React.FC<RButtonProps> = React.memo(
         {...dragProps?.dragOptions}
         {...dragProps?.data}
       >
-        {children}
+        <span style={{ display: 'inline-block' }}>{children}</span>
       </button>
     );
   }

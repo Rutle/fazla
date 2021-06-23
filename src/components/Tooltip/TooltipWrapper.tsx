@@ -1,5 +1,4 @@
 import React, { useContext, useRef } from 'react';
-import { Placement } from 'react-overlays/cjs/usePopper';
 import { AppContext } from '_/App';
 
 interface TooltipProps {
@@ -7,14 +6,13 @@ interface TooltipProps {
   data: React.ReactNode;
   WrapperElement?: 'div' | 'span' | 'label' | 'button';
   wrapperClassNames: string;
-  placement: Placement;
   extraProps?: { [key: string]: any };
 }
 /**
  * Tooltip wrapper.
  */
 const TooltipWrapper: React.FC<TooltipProps> = React.memo(
-  ({ data, children, wrapperClassNames, WrapperElement = 'div', placement, extraProps = {} }) => {
+  ({ data, children, wrapperClassNames, WrapperElement = 'div', extraProps = {} }) => {
     const { showTooltip, hideTooltip } = useContext(AppContext).tooltip;
     const ref = useRef(null);
     return (
@@ -22,7 +20,7 @@ const TooltipWrapper: React.FC<TooltipProps> = React.memo(
         ref={ref}
         className={wrapperClassNames}
         onMouseEnter={() => {
-          showTooltip({ data, ref, placement });
+          showTooltip({ data, ref });
         }}
         onMouseLeave={() => {
           hideTooltip();

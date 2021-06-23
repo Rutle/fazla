@@ -2,7 +2,8 @@ import { eqTypes, hullTypes, hullTypesAbb, slotTypes } from '_/data/categories';
 import { MAININDEX, SUBMARINE, VANGUARDINDEX } from '_/reducers/slices/formationGridSlice';
 import { Equipment } from '_/types/equipmentTypes';
 import { Ship, Slot } from '_/types/shipTypes';
-import { BooleanSearchParam, VersionInfo, ResponseWithData, emptyVersionInfo } from '_/types/types';
+import { BooleanSearchParam, VersionInfo, ResponseWithData, emptyVersionInfo, Formation } from '_/types/types';
+import pako from 'pako';
 import DataStore from './dataStore';
 import { saveData } from './ipcAPI';
 
@@ -58,8 +59,15 @@ export const isEquipmentJson = <
   return !o.some(eqTypeCheck);
 };
 
-const isArrayJson = (o: unknown): o is string[] => {
-  return o instanceof Array;
+const isImportJson = <T extends { data?: unknown; name?: unknown }>(
+  o: T
+): o is T & { data: string[]; name: string } => {
+  if (!(o.data && o.name)) return false;
+  if (!(o.data instanceof Array)) return false;
+  // if (!(o.equipment instanceof Array && !o.equipment.some((k) => !(k instanceof Array)))) return false;
+  if (typeof o.name !== 'string') return false;
+
+  return true;
 };
 
 // https://stackoverflow.com/a/62438143
@@ -74,20 +82,24 @@ export const safeJsonParse =
     }
   };
 
-export const parseImportCode = (codeString: string): string[] | boolean => {
+export const parseImportCode = (codeString: string): Formation | boolean => {
   try {
-    const jsonString = atob(codeString);
-    const result = safeJsonParse(isArrayJson)(jsonString);
-    if (result) return result;
+    const data = atob(codeString)
+      .split('')
+      .map((x) => x.charCodeAt(0));
+    const f = new Uint8Array(data);
+    const result = safeJsonParse(isImportJson)(pako.inflate(f, { to: 'string' }));
+    if (result) return { ...(result as { data: string[]; name: string }), equipment: [] };
     return false;
   } catch (e) {
     return false;
   }
 };
 
-export const encodeFormation = (formation: string[]): string => {
-  const d = JSON.stringify(formation);
-  return btoa(d);
+export const encodeFormation = (formation: Formation): string => {
+  const { equipment, ...rest } = formation;
+  const compressed = pako.deflate(JSON.stringify(formation));
+  return btoa(String.fromCharCode.apply(null, compressed));
 };
 
 /* https://stackoverflow.com/a/57888548 */
@@ -267,4 +279,42 @@ export const parseSlots = (slots: { [key: string]: Slot }, data: DataStore): Par
   return { parsedSlots: [baseSlots], parsedFits: [baseFits] };
 };
 
-// export const parseFits
+export const getFormationData = async (
+  data: string[],
+  shipData: DataStore
+): Promise<{ data: Ship[][]; isSubFleet: boolean; fleetCount: number }> => {
+  try {
+    // Find Ship data for each ship ID in the formation and transform it to key-value pairs of
+    // { ID:Ship }
+    const formationShips = shipData
+      .getShips()
+      .filter((ship) => data.includes(ship.id))
+      .reduce(
+        (accumulator, currentValue) => Object.assign(accumulator, { [currentValue.id]: currentValue }),
+        {} as { [key: string]: Ship }
+      );
+    const formLen = data.length;
+    const fleetCount = Math.floor(formLen / 6);
+    const form: Ship[][] = [];
+    // Normal ships
+    // Slice array of formation IDs into size 6 and match the ID with correct ship.
+    for (let idx = 0; idx < fleetCount; idx += 1) {
+      const temp = data.slice(idx * 6, idx * 6 + 6);
+      form.push(temp.map((id) => formationShips[id]));
+    }
+    // Submarines
+    // Submarines are at the end of the array.
+    let isSubFleet = false;
+    if (formLen === 15 || formLen === 27) {
+      const temp = data.slice(-3);
+      form.push(temp.map((id) => formationShips[id]));
+      isSubFleet = true;
+    } else {
+      // In case of old formation data.
+      isSubFleet = false;
+    }
+    return Promise.resolve({ data: form, isSubFleet, fleetCount });
+  } catch (e) {
+    return Promise.reject(new Error('Failed to form formation data.'));
+  }
+};

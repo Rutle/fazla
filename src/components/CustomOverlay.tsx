@@ -24,7 +24,7 @@ const CustomOverlay: React.FC<{ themeColor: string; isSmallScreen: boolean; chil
           setIsOverlayOpen(!isOverlayOpen);
         }}
       >
-        Categories
+        <span style={{ display: 'inline-block' }}>Categories</span>
       </button>
       <Overlay
         show={isOverlayOpen}

@@ -56,7 +56,8 @@
 .dark button:not(.no-focus-outline):focus,
 #titlebar.dark button.title-button:not(.no-focus-outline):focus {
   outline: none;
-  background-color: var(--main-dark-border);
+  background-color: var(--main-dark-hover-bg);
+  color: var(--main-dark-hover-color);
 }
 
 .dark .modal-container:focus {
@@ -226,10 +227,6 @@ nav.tab.dark > a:hover {
 }
 
 /* Tooltip */
-.tooltip.dark {
-  border-bottom: 2px solid var(--main-dark-tooltip-border);
-}
-
 .tooltip.dark > .tooltip-content {
   background-color: var(--main-dark-tooltip-bg);
   color: var(--main-dark-color);
@@ -247,16 +244,23 @@ button.dark {
   border: 1px solid transparent;
 }
 
-.dark .tab-btn:hover,
-.btn.dark:hover,
-button.btn.grid-item.dark:hover,
-button.rList-item.dark.btn:hover {
+.btn.dark:hover {
   /* TODO: Check colors with electron for window controls */
   background-color: #3c4652;
   color: var(--main-dark-hover-color);
 }
 
-.btn.dark:hover > svg {
+button.dark.tab-btn:hover {
+  background-color: var(--main-dark-hover-bg);
+  color: var(--main-dark-hover-color);
+}
+
+button.btn.rList-item.dark:hover {
+  background-color: var(--main-dark-hover-bg);
+  color: var(--main-dark-hover-color);
+}
+
+.btn.dark:hover svg {
   stroke: var(--main-dark-hover-color);
 }
 
@@ -265,7 +269,7 @@ button.tab-btn.dark:disabled:hover {
   background-color: var(--main-dark-header-bg);
 }
 
-label.btn.dark.selected,
+label.btn.dark.selected, 
 button.grid-item.btn.dark.selected,
 button.rList-item.dark.btn.selected,
 button.btn.dark.selected,
@@ -273,7 +277,14 @@ button.tab-btn.dark.selected {
   background-color: var(--main-dark-active-bg);
   color:#98caff;
 }
-/* */
+
+button.dark.tab-btn:active {
+  box-shadow: 1px 1px 3px 0px var(--main-dark-header-bg) inset;
+  -webkit-box-shadow: 1px 1px 3px 0px var(--main-dark-header-bg) inset;
+  -moz-box-shadow: 1px 1px 3px 0px var(--main-dark-header-bg) inset;
+}
+
+
 .rList-item.dark:hover .owned-indicator {
   background-color: unset;
 }
@@ -281,7 +292,6 @@ button.tab-btn.dark.selected {
 .rList-item.dark.owned > .owned-indicator {
   background-color: var(--main-dark-border);
 }
-
 
 .rList-item.dark.owned > .owned-indicator /* + .name */ {
   border-right: 1px solid var(--main-dark-header-bg);
@@ -392,42 +402,41 @@ div.f-row.dark div.f-header.tab-group > button:last-child {
 
 /* #### hull types #### */
 
-.btn.dark.Carrier {
+.grid-item.dark.ship.Carrier {
   background-color: #352035;
   color: #d77dd7;
 }
 
-.btn.dark.Destroyer {
+.grid-item.dark.ship.Destroyer {
   background-color: #203844;
   color: #68b3d9;
 }
 
-.btn.dark.Battleship, 
-.btn.dark.Battlecruiser {
+.grid-item.dark.ship.Battleship, 
+.grid-item.dark.ship.Battlecruiser {
   background-color: #3e1c1a;
   color: #ff726a;
 }
 
 
-.btn.dark.Large.Cruiser {
+.grid-item.dark.ship.Large.Cruiser {
   background-color: #5a3023;
   color: #ff8560;
 }
 
-.btn.dark.Submarine {
+.grid-item.dark.ship.Submarine {
   background-color: #3a4d21;
   color: #95c655;
 }
 
-
-.btn.dark.Heavy.Cruiser,
-.btn.dark.Monitor,
-.btn.dark.Light.Cruiser {
+.grid-item.dark.ship.Monitor,
+.grid-item.dark.ship.Heavy.Cruiser,
+.grid-item.dark.ship.Light.Cruiser {
   background-color: #503c1e;
   color: #dfa854;
 }
 
-.btn.dark.Repair {
+.grid-item.dark.ship.Repair {
   background-color: #1a4638;
   color: #48caa1;
 }

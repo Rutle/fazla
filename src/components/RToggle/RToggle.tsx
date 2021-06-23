@@ -11,7 +11,7 @@ interface RToggleProps {
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
   selected: boolean;
   extraStyle?: React.CSSProperties;
-  tooltip?: { data: React.ReactNode; placement: Placement };
+  tooltip?: { data: React.ReactNode };
 }
 
 const RToggle: React.FC<RToggleProps> = React.memo(
@@ -28,7 +28,7 @@ const RToggle: React.FC<RToggleProps> = React.memo(
             htmlFor={`${id}-input`}
             style={extraStyle}
           >
-            {child}
+            <span style={{ display: 'inline-block' }}>{child}</span>
           </label>
         );
       }
@@ -39,13 +39,12 @@ const RToggle: React.FC<RToggleProps> = React.memo(
             !isFocusOutline ? 'no-focus-outline' : ''
           }`}
           WrapperElement="label"
-          placement={tooltip.placement}
           extraProps={{
             htmlFor: `${id}-input`,
             style: extraStyle,
           }}
         >
-          {child}
+          <span style={{ display: 'inline-block' }}>{child}</span>
         </TooltipWrapper>
       );
     };

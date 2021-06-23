@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PageTemplate from '_/components/PageTemplate';
 import ShipDetails from '_/components/ShipDetails';
 import { RootState } from '_/reducers/rootReducer';
@@ -13,6 +13,7 @@ import useVisibility from '../hooks/useVisibility';
  * Component for a ship details view.
  */
 const ShipDetailView: React.FC = () => {
+  // const { id } = useParams<{ id: string }>();
   const appState = useSelector((state: RootState) => state.appState);
   const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
   const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
@@ -30,12 +31,29 @@ const ShipDetailView: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    localStorage.removeItem('rr');
+  }, []);
+
   return (
     <PageTemplate>
       <section className="page-content ships" ref={refPageContent}>
         {appState.cState === 'INIT' ? (
           <div id="ship-details-content" className="container content">
-            <div className="info-text">{appState.cMsg}</div>
+            <div style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
+              <div
+                className={`message-container ${config.themeColor}`}
+                style={{
+                  alignSelf: 'center',
+                  width: '50%',
+                  minHeight: '40px',
+                }}
+              >
+                <span className="message" style={{ fontSize: '24px', justifyContent: 'center' }}>
+                  {appState.cState}
+                </span>
+              </div>
+            </div>
           </div>
         ) : (
           <>

@@ -4,6 +4,7 @@ import { encodeFormation, parseImportCode } from '_/utils/appUtilities';
 import { RootState } from '_/reducers/rootReducer';
 import { FormationAction, formationAction } from '_/reducers/slices/formationGridSlice';
 import { CloseIcon } from '_components/Icons';
+import { Formation } from '_/types/types';
 import RButton from '../RButton/RButton';
 
 interface FormModalProps {
@@ -17,7 +18,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
   const [value, setValue] = useState('');
   const [inputFocus, setInputFocus] = useState(false);
   const [isValidCode, setIsValidCode] = useState(true);
-  const [importedFormation, setImportedFormation] = useState<string[]>([]);
+  const [importedFormation, setImportedFormation] = useState<Formation>({ data: [], equipment: [], name: '' });
   const [copySuccess, setCopySuccess] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -29,7 +30,10 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
 
   useEffect(() => {
     if (isType === 'export') {
-      setValue(encodeFormation(fGrid.formations[fGrid.selectedIndex].data));
+      const encURI = encodeURIComponent(encodeFormation(fGrid.formations[fGrid.selectedIndex]));
+      const urlList = window.location.href.split('/');
+      const linkURL = urlList.slice(0, -1).concat('link').join('/');
+      setValue(`${linkURL}/${encURI}`);
     }
   }, [fGrid.formations, fGrid.selectedIndex, isType]);
 
@@ -67,10 +71,10 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
                   setValue(e.target.value);
                   const result = parseImportCode(e.target.value);
                   if (result) {
-                    setImportedFormation(result as string[]);
+                    setImportedFormation(result as Formation);
                     setIsValidCode(true);
                   } else {
-                    setImportedFormation([]);
+                    setImportedFormation({ data: [], equipment: [], name: '' });
                     setIsValidCode(false);
                   }
                 }}

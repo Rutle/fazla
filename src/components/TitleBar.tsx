@@ -72,7 +72,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
         {showMenu ? (
           <div id="window-menu">
             <nav className={`tab ${config.themeColor}`} aria-label="primary">
-              <NavItem pathTo="/shipdetails">
+              <NavItem pathTo="/ships">
                 <span>Ships</span>
               </NavItem>
               <NavItem pathTo="/formations">
@@ -142,12 +142,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                 onChange={() => updateConfig('themeColor', 'dark')}
                 selected={config.themeColor === 'dark'}
                 tooltip={{
-                  data: (
-                    <div className="f-grid" style={{ marginBottom: '0px', padding: '3px 8px 3px 8px' }}>
-                      <div className="f-body">Dark mode</div>
-                    </div>
-                  ),
-                  placement: 'left',
+                  data: <span style={{ padding: '3px 8px' }}>Dark mode</span>,
                 }}
               >
                 D
@@ -160,12 +155,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                 onChange={() => updateConfig('themeColor', 'light')}
                 selected={config.themeColor === 'light'}
                 tooltip={{
-                  data: (
-                    <div className="f-grid" style={{ marginBottom: '0px', padding: '3px 8px 3px 8px' }}>
-                      <div className="f-body">Light mode</div>
-                    </div>
-                  ),
-                  placement: 'left',
+                  data: <span style={{ padding: '3px 8px' }}>Light mode</span>,
                 }}
               >
                 L

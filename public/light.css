@@ -167,11 +167,6 @@ nav.tab.light > a:hover {
 }
 
 /* Tooltip */
-.tooltip.light {
-  /* border: 1px solid var(--main-light-border); */
-  border-bottom: 2px solid var(--main-light-border);
-}
-
 .tooltip.light > .tooltip-content {
   background-color: var(--root-light-bg);
   color: var(--main-light-color);
@@ -245,6 +240,9 @@ button.tab-btn.light.selected {
 
 .light #formation-grid {
   border-bottom: 1px solid var(--main-light-border);
+}
+#formation-ship-search.light {
+  border-top: 3px solid var(--main-light-border);
 }
 /* #### Popover #### */
 .popover-container.light {
@@ -329,45 +327,45 @@ div.f-row.light div.f-header.tab-group > button:first-child {
 div.f-row.light div.f-header.tab-group > button:last-child {
   border-right: 2px dotted var(--main-light-border);
 }
-/* #### hull types #### */
-/*
-.btn.light.Carrier {
+/* #### hull type colors #### */
+
+.grid-item.light.ship.Carrier {
   background-color: Plum;
   color: #510051;
 }
 
-.btn.light.Battleship, 
-.btn.light.Battlecruiser {
+.grid-item.light.ship.Battleship, 
+.grid-item.light.ship.Battlecruiser {
   background-color: Pink;
   color: #6c0013;
 }
 
-.btn.light.Large.Cruiser {
+.grid-item.light.ship.Large.Cruiser {
   background-color: LightSalmon;
   color: #551800;
 }
-.btn.light.Destroyer {
+.grid-item.light.ship.Destroyer {
   background-color: powderblue;
   color: #005560;
 }
-.btn.light.Submarine {
+.grid-item.light.ship.Submarine {
   background-color: PaleGreen;
   color: #006200;
 }
 
-.btn.light.Heavy.Cruiser,
-.btn.light.Monitor,
-.btn.light.Light.Cruiser {
+.grid-item.light.ship.Heavy.Cruiser,
+.grid-item.light.ship.Monitor,
+.grid-item.light.ship.Light.Cruiser {
   background-color: NavajoWhite;
   color: #774700;
 }
 
-.btn.light.Repair.Ship,
-.btn.light.Repair {
+.grid-item.light.ship.Repair.Ship,
+.grid-item.light.ship.Repair {
   background-color: Aquamarine;
   color: #005b3d;
 }
-*/
+
 /* #### grid icon #### */
 div.f-grid.light div.f-icon {
   background-color: var(--main-light-bg);

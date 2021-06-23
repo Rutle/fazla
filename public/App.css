@@ -26,17 +26,17 @@ form {
   margin-bottom: 0px;
 }
 
-dt {
-  font-weight: bold;
+.tooltip ul {
+  list-style: none;
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+  padding: 0px;
 }
 
-dl,
-dd {
-  font-size: .9rem;
-}
-
-dd {
-  margin-bottom: 0.5em;
+.tooltip li {
+  background-color: var(--main-dark-body-bg);
+  padding: 3px 8px;
+  border-bottom: 1px dotted var(--main-dark-border);
 }
 
 .page {
@@ -306,9 +306,9 @@ div.scroll {
   width: 100%;
   flex-direction: row;
   z-index: 25;
-  box-shadow: 0px -5px 6px 2px rgba(0,0,0,0.65);
-  -webkit-box-shadow: 0px -5px 6px 2px rgba(0,0,0,0.65);
-  -moz-box-shadow: 0px -5px 6px 2px rgba(0,0,0,0.65);
+  box-shadow: 0px -5px 10px 0px rgba(0,0,0,0.65);
+  -webkit-box-shadow: 0px -5px 10px 0px rgba(0,0,0,0.65);
+  -moz-box-shadow: 0px -5px 10px 0px rgba(0,0,0,0.65);
 }
 
 .search-section-enter {
@@ -366,12 +366,13 @@ label.btn,
 label.btn *,
 #side-scroll *,
 button.tab-btn,
+button.tab-btn *,
 button.btn,
 button.btn * {
   cursor: pointer;
   box-sizing: border-box;
-  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, stroke 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, stroke 0.2s ease-in-out;
 }
 
 label.btn,
@@ -383,7 +384,7 @@ button.btn {
 button.btn.menu-item {
   border-radius: 0px;
 }
-
+div.grid-item.non-interactive,
 button.btn.grid-item {
   padding: 3px 5px;
   white-space: nowrap;
@@ -421,6 +422,12 @@ button.tab-btn.normal.icon-only {
   padding: 0px 5px 0px 5px;
 }
 
+.btn:active > span,
+.tab-btn:active > span,
+.btn:active > div.name,
+.btn:active > div.hulltype {
+  transform: translateY(1px);
+}
 /* ###### top-container + tab ##### */
 .top-container {
   display: flex;
@@ -449,20 +456,24 @@ button.tab-btn.normal.icon-only {
 
 }
 
+.tab-group > button.tab-btn {
+  display: inline-block;
+  position: relative;
+}
+
 .tab > button.tab-btn {
   display: inline-block;
   border-right: 0px!important;
 }
 
 .tab > div.help {
-  /* align-self: center;*/ /* TODO: Check if needed on Firefox. Vertical-align below related. Either of them is required on electron -> Not required on Firefox*/
   display: inline-block;
   padding: 0px 5px 0px 5px;
   flex-grow: 1;
 }
 .tab > div.help > .icon {
-  vertical-align: middle; /* TODO: Check if needed on Firefox. align-self above related */
-  padding-top: 4px; /* Enough with these two on electron. */
+  vertical-align: middle;
+  padding-top: 4px;
 }
 
 nav > a {
@@ -517,8 +528,8 @@ div.f-row.action *,
   padding-top: 1px;
   margin-left: 10px;
   align-self: center;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, stroke 0.2s ease-in-out, transform 0.2s ease-out!important;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, stroke 0.2s ease-in-out, transform 0.2s ease-out!important;
 }
 
 .toggle-icon.open {
@@ -638,9 +649,6 @@ div.f-row.action *,
 /* ###### ship details / titlebar ##### */
 .ship-title-bar {
   display: flex;
-  /*
-  border-left: 0px!important;
-  border-right: 0px!important; */
   padding: 5px 16px;
   font-size: 1.5em;
   align-items: center;
@@ -703,7 +711,6 @@ span.Elite:last-child {
 /* #####  rList  ##### */
 .rList {
   flex: 1;
-  /* height: 100%;*/ /* TODO: CHECK on electron if needed (grid and ship list)*/
 }
 
 .hidden {
@@ -832,7 +839,7 @@ input[type="url"] {
   flex-grow: 1;
 }
 
-button.btn > .icon {
+button.btn .icon {
   vertical-align: -.2em;
 }
 
@@ -904,7 +911,6 @@ div.f-grid div.f-header {
   flex-direction: column;
   border-radius: inherit;
   padding: 3px 5px;
-  justify-content: center; /* TODO: Check on Firefox if does anything. */
   font-size: 15px;
 }
 
@@ -916,10 +922,8 @@ div.f-row div.f-header.tab-group {
 }
 
 div.f-row div.name {
-  /* min-width: 160px;*/ /* TODO: Check on Firefox. */
   max-width: 160px;
   height: inherit;
-  justify-content: center; /* TODO: Check on Firefox if does anything. */
   padding: 3px 5px;
   align-self: center;
 }
@@ -929,12 +933,6 @@ div.f-grid .grid-item.action {
   flex-basis: auto;
   flex-direction: row;
   padding: 1px 1px 1px 5px;
-  min-height: 29px;
-}
-
-div.f-grid .grid-item.action {
-  justify-content: center;
-  align-items: center;
 }
 
 table.f-table {
@@ -954,17 +952,26 @@ div.f-grid div.f-row div.passive {
   padding: 3px 5px;
   justify-content: center;
   font-size: 13px;
-  white-space: break-spaces;
   align-self: center;
 }
 div.f-row.slots {
   justify-content: space-evenly;
   flex-grow: 1;
+  text-align: center;
 }
 
-div.grid-item.slot {
-  flex: unset;
+.grid-item.ship > span {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  vertical-align: middle;
 }
+
 /* ##### f-title ##### */
 div.f-grid div.f-title {
   display: flex;
@@ -1243,27 +1250,19 @@ div.f-grid div.f-icon.open > svg{
     width: 80%;
   }
 
-  /* .rList .rList-item.btn > .hullTypeAbb,*/
-  #formation-content .f-header,
-  #formation-content .f-header,
   #window-title {
     display: none;
   }
 
-  div.f-row div.name {
-    min-width: unset;
-    max-width: unset;
-    padding: 3px 5px;
-  }
   .f-row.passive-item,
   #formation-grid .f-row {
     flex-direction: column;
   }
-  #formation-grid #submarine-section > div.f-row > button,
-  #formation-grid #vanguard-section > div.f-row > button,
-  #formation-grid #main-section > div.f-row > button {
+
+  #formation-grid div.f-row > button {
     margin-bottom: 1px;
   }
+
   #passive-section div.f-grid div.f-row.action {
     flex-direction: row;
   }
@@ -1282,10 +1281,6 @@ div.f-grid div.f-icon.open > svg{
 
   .message-container > .message {
     flex-grow: 1;
-  }
-
-  .radio-group label.btn.normal {
-    padding: 0px 2px 2px 2px;
   }
 
   .f-row > div.f-header,
