@@ -70,7 +70,7 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
             )}
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px', justifyContent: 'center' }}>
           <div className={`radio-group ${config.themeColor}`}>
             <RToggle
               id="normal-toggle"

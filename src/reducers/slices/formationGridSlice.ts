@@ -304,7 +304,7 @@ export const formationAction =
           }
           break;
         case 'REMOVESHIP':
-          if (shipGridIndex) {
+          if (shipGridIndex !== undefined) {
             dispatch(removeShipFromFormation({ gridIndex: shipGridIndex, selectedIndex: formIdx }));
           }
           break;

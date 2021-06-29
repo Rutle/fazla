@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { CSSProperties, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactModal from 'react-modal';
 import { AppContext } from '_/App';
@@ -57,6 +57,7 @@ const FormationView: React.FC = () => {
   const [isSubFleet, setIsSubFleet] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
   const gridSize = useResizeObserver<HTMLDivElement>({ ref: gridRef });
+  const cHeight = useRef(0);
 
   const scrollTo = useCallback(
     (loc: string) => {
@@ -179,6 +180,28 @@ const FormationView: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    // Use width to prevent re-renders when drag and dropping items.
+    if (gridSize && gridSize.width && gridSize.height && gridSize.height !== cHeight.current)
+      cHeight.current = gridSize.height;
+    if (gridSize && gridSize.height && gridSize.height !== cHeight.current) cHeight.current = gridSize.height;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gridSize.width, gridSize.height]);
+
+  const getSlideStyle = (): CSSProperties => {
+    if (isVisible) {
+      if (gridSize.width && gridSize.width <= 546) {
+        return { right: '10px', top: '200px', display: 'inline-flex', position: 'fixed' };
+      }
+      return {
+        display: 'inline-flex',
+        top: '2px',
+        right: '2px',
+        position: 'absolute',
+      };
+    }
+    return {};
+  };
 
   return (
     <PageTemplate>
@@ -266,7 +289,7 @@ const FormationView: React.FC = () => {
                 />
                 <div id="fleet-selector" className={`f-grid ${config.themeColor}`}>
                   <div className="f-row">
-                    <div className="f-header tab-group" style={{ flex: '1', justifyContent: 'center' }}>
+                    <div className="tab-group" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                       {formationData.map((fleet, idx) => {
                         return (
                           <RButton
@@ -333,11 +356,12 @@ const FormationView: React.FC = () => {
                 config.themeColor
               }`}
               style={
-                gridSize.height
+                // gridSize.height
+                cHeight.current
                   ? {
-                      top: `${gridSize.height + 25 + 15 + 53}px`,
-                      minHeight: `calc(100% - ${gridSize.height + 25 + 15 + 51 + 28}px)`,
-                      height: `calc(100% - ${gridSize.height + 25 + 15 + 51 + 28}px)`,
+                      top: `${cHeight.current + 25 + 15 + 53}px`,
+                      minHeight: `calc(100% - ${cHeight.current + 25 + 15 + 53}px)`,
+                      height: `calc(100% - ${cHeight.current + 25 + 15 + 53}px)`,
                     }
                   : {}
               }
@@ -356,16 +380,26 @@ const FormationView: React.FC = () => {
                   isDraggable
                 />
               </SideBar>
-              <div id="side-scroll" className={`button-group ${config.themeColor}`} style={{ width: 'unset' }}>
+              <div id="small-nav" className={`navigation ${config.themeColor}`} style={getSlideStyle()}>
                 {!isVisible ? (
-                  <RButton themeColor={config.themeColor} className="btn slide" onClick={() => scrollTo('top')}>
+                  <RButton
+                    extraStyle={{ paddingTop: '7px' }}
+                    themeColor={config.themeColor}
+                    className="nav-item"
+                    onClick={() => scrollTo('top')}
+                  >
                     <ArrowDegUp themeColor={config.themeColor} className="icon" />
                   </RButton>
                 ) : (
                   <></>
                 )}
 
-                <RButton themeColor={config.themeColor} className="btn slide" onClick={() => hideSearchSection(false)}>
+                <RButton
+                  extraStyle={{ paddingTop: '7px' }}
+                  themeColor={config.themeColor}
+                  className="nav-item"
+                  onClick={() => hideSearchSection(false)}
+                >
                   <CloseIcon themeColor={config.themeColor} className="icon" />
                 </RButton>
               </div>

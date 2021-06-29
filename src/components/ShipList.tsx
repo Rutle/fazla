@@ -6,7 +6,7 @@ import { RootState } from '_/reducers/rootReducer';
 import { ShipSimple } from '_/types/types';
 import { setSelectedShip } from '_/reducers/slices/appStateSlice';
 import { AppContext } from '_/App';
-import { getHullTypeAbb } from '_/utils/appUtilities';
+import { getFleet, getHullTypeAbb } from '_/utils/appUtilities';
 import { Ship } from '_/types/shipTypes';
 
 interface ShipListProps {
@@ -52,11 +52,16 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName, refe, scr
     event.dataTransfer.clearData();
     // eslint-disable-next-line no-param-reassign
     event.dataTransfer.effectAllowed = 'move';
-    const hullType = hull || 'none';
-    event.dataTransfer.setData('grid-index', 'none');
-    event.dataTransfer.setData('ship-id', id);
-    event.dataTransfer.setData('transfer-type', 'insert');
-    event.dataTransfer.setData('hull', hullType);
+    const hullType = getFleet({ hullType: hull });
+    event.dataTransfer.setData(
+      hullType,
+      JSON.stringify({
+        'grid-index': 'none',
+        'ship-id': id,
+        'transfer-type': 'insert',
+        hullType: 'fleet',
+      })
+    );
     event.currentTarget.classList.add('dragged');
   };
   const onDragEndFunc = (event: React.DragEvent<HTMLElement>) => {

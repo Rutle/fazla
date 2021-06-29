@@ -1,4 +1,4 @@
-import { eqTypes, hullTypes, hullTypesAbb, slotTypes } from '_/data/categories';
+import { eqTypes, fleets, hullTypes, hullTypesAbb, slotTypes } from '_/data/categories';
 import { MAININDEX, SUBMARINE, VANGUARDINDEX } from '_/reducers/slices/formationGridSlice';
 import { Equipment } from '_/types/equipmentTypes';
 import { Ship, Slot } from '_/types/shipTypes';
@@ -231,10 +231,19 @@ export const getHullTypeAbb = (hullType: string | undefined): string => {
   return hullTypesAbb[hullTypes[hullType]];
 };
 
-export const getFleet = (index: number, fleetCount: number): string => {
-  if (MAININDEX[fleetCount].includes(index)) return 'main';
-  if (VANGUARDINDEX[fleetCount].includes(index)) return 'vanguard';
-  if (SUBMARINE[fleetCount].includes(index)) return 'submarine';
+export const getFleet = (data: { hullType?: string; index?: number; fleetCount?: number }): string => {
+  const { hullType, index, fleetCount } = data;
+  if (hullType) {
+    if (fleets.MAIN.includes(hullType)) return 'main';
+    if (fleets.VANGUARD.includes(hullType)) return 'vanguard';
+    if (fleets.SUBS.includes(hullType)) return 'submarine';
+  }
+  if (index !== undefined && fleetCount !== undefined) {
+    if (MAININDEX[fleetCount].includes(index)) return 'main';
+    if (VANGUARDINDEX[fleetCount].includes(index)) return 'vanguard';
+    if (SUBMARINE[fleetCount].includes(index)) return 'submarine';
+  }
+
   return 'none';
 };
 

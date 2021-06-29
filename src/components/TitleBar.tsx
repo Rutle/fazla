@@ -9,12 +9,16 @@ import { MinIcon, MaxIcon, RestoreIcon, CloseIcon } from './Icons';
 import RButton from './RButton/RButton';
 import RToggle from './RToggle/RToggle';
 
-const NavItem: React.FC<{ children: ReactNode; pathTo: string }> = ({ children, pathTo }) => {
+const NavItem: React.FC<{ children: ReactNode; pathTo: string; classNames?: string }> = ({
+  children,
+  pathTo,
+  classNames = 'nav-item',
+}) => {
   const [isFocusOutline, setFocusOutline] = useState(false);
 
   return (
     <NavLink
-      className={`${!isFocusOutline ? 'no-focus-outline' : ''}`}
+      className={`${classNames} ${!isFocusOutline ? 'no-focus-outline' : ''}`}
       to={pathTo}
       onKeyUp={(e) => {
         if (e.key === 'Tab') {
@@ -71,7 +75,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
         </div>
         {showMenu ? (
           <div id="window-menu">
-            <nav className={`tab ${config.themeColor}`} aria-label="primary">
+            <nav className={`tab navigation ${config.themeColor}`} aria-label="primary">
               <NavItem pathTo="/ships">
                 <span>Ships</span>
               </NavItem>
@@ -133,7 +137,22 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
           </div>
         ) : (
           <div id="window-controls" className="web">
-            <div className={`radio-group ${config.themeColor}`}>
+            <div id="theme-controls" className={`navigation ${config.themeColor}`}>
+              <RButton
+                className={`nav-item ${config.themeColor === 'dark' ? 'selected' : ''}`}
+                themeColor={config.themeColor}
+                onClick={() => updateConfig('themeColor', 'dark')}
+              >
+                D
+              </RButton>
+              <RButton
+                className={`nav-item ${config.themeColor === 'light' ? 'selected' : ''}`}
+                themeColor={config.themeColor}
+                onClick={() => updateConfig('themeColor', 'light')}
+              >
+                L
+              </RButton>
+              {/* 
               <RToggle
                 id="dark-toggle"
                 value="dark"
@@ -160,6 +179,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
               >
                 L
               </RToggle>
+              */}
             </div>
           </div>
         )}

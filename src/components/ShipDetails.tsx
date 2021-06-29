@@ -76,7 +76,7 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
         <span className="ship-name">{ship.names.code}</span>
         <span className={ship.rarity}>{` ${ship.stars?.stars as string}`}</span>
       </div>
-      <div className={`button-group ${config.themeColor}`} style={{ marginBottom: '5px' }}>
+      <div className={`button-group start ${config.themeColor}`} style={{ marginBottom: '5px' }}>
         {topButtonGroup || <></>}
         <RButton
           themeColor={config.themeColor}

@@ -1,12 +1,12 @@
 /* ##### Light theme ##### */
 :root {
   --root-light-bg: #fdfdff;
-  --main-light-color: #2f2f2f;
+  --main-light-color: #000000;
   --main-light-titlebar-color: #2f2f2f;
   --main-light-bg: #cce7ff;
   --main-light-hover-bg: #81bdf5;
   --main-light-border: #55aeff;
-  --main-light-active-bg: #81bdf5;
+  --main-light-active-bg: #55aeff;
   --main-light-footer-bg: #efefef;
   --main-light-tooltip-bg: #d3eaff;
   --main-light-tooltip-border: #bcd0ff;
@@ -44,7 +44,12 @@
   outline: none!important;
   background-color: var(--main-light-bg);
 }
-
+.light button.nav-item.no-focus-outline:focus,
+.light a.no-focus-outline:focus,
+.light a.no-focus-outline:focus-within {
+  outline: none!important;
+  background-color: var(--main-light-border);
+}
 .light :not(button):not(label):not(.switch-input):not(.modal-container):not(a):not(input):focus {
   outline: none;
   background-color: var(--main-light-hover-bg);
@@ -76,17 +81,13 @@ div.page.light .container {
   background-color: var(--root-light-bg);
 }
 
-div.page.light #side-scroll {
-  -webkit-box-shadow: 0px 0px 6px -2px #000000;
-  -moz-box-shadow: 0px 0px 6px -2px #000000;
-  box-shadow: 0px 0px 6px -2px #000000;
-}
-
 /* ##### Titlebar ##### */
 #titlebar.light {
   background: var(--main-light-titlebar-bg);
   color: var(--main-light-color);
-
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.35);
 }
 #titlebar.light #window-title {
   color: white;
@@ -153,35 +154,53 @@ div.page.light .tab {
   box-sizing: border-box;
 }
 
-nav.tab.light > a {
+nav.navigation.tab.light {
+  padding-left: 5px;
+}
+#small-nav.navigation.light {
+  /* background-color: #6ebaff;*/
+  background-color: var(--main-light-bg);
+  outline: 1px solid var(--main-light-border);
+}
+#small-nav.navigation.light > .nav-item:hover {
+  background-color: var(--main-light-hover-bg);
+}
+#small-nav.navigation.light:hover {
+  box-shadow: 0px 0px 5px 2px var(--main-light-bg);
+}
+.navigation.light > .nav-item {
   color: white;
 }
 
-nav.tab.light > a.active {
-  color: var(--main-light-color);
-  background-color: var(--root-light-bg)!important;
+:not(#small-nav).navigation.light > .nav-item:hover {
+  border-bottom: 2px solid var(--main-light-bg);
 }
-
-nav.tab.light > a:hover {
-  background-color: var(--main-light-hover-bg);
+.navigation.light > .nav-item.selected,
+.navigation.light > .nav-item.active {
+  border-bottom: 2px solid var(--main-light-bg);
 }
 
 /* Tooltip */
 .tooltip.light > .tooltip-content {
-  background-color: var(--root-light-bg);
+  background-color: #eff7ff;
   color: var(--main-light-color);
 }
 
-.tooltip.light > .tooltip-arrow::before {
-  background-color: var(--root-light-bg);
+.tooltip.light > .tooltip-content > .f-grid {
+  padding: 0px;
 }
 
+.tooltip.light li {
+  background-color: #eff7ff;
+  border-bottom: 1px dotted var(--main-light-border);
+}
 /* ###### Buttons ###### */
 label.light,
 button.light {
   background-color: var(--main-light-bg);
   color: var(--main-light-color);
-  border: 1px solid transparent;
+  /* border: 1px solid transparent;*/
+  border: none;
 }
 
 button.light.input,
@@ -190,12 +209,9 @@ input[type="text"].light {
   background-color: inherit;
   border: unset;
 }
-
+button.grid-item.btn.light:hover,
 .light .tab-btn:hover,
-.btn.light:hover,
-button.btn.grid-item.light:hover,
-button.rList-item.light.btn:hover {
-  /* background-color: var(--main-light-hover-bg);*/
+.btn.light:hover {
   background-color: #a4d3ff;
   color: var(--main-light-color);
 }
@@ -211,9 +227,14 @@ button.rList-item.light.btn.selected,
 button.btn.light.selected,
 button.tab-btn.light.selected {
   background-color: var(--main-light-active-bg);
-  color: var(--main-light-color);
+  color: white;
 }
 
+button.btn.rList-item.light:active,
+label.btn.light:active,
+button.btn.light:active {
+  background-color: var(--main-light-active-bg);
+}
 .rList-item.light:hover .owned-indicator {
   background-color: unset;
 }
@@ -257,17 +278,6 @@ button.tab-btn.light.selected {
 .light .ship-title-bar {
   border-bottom: 2px solid var(--main-light-border);
   background-color: var(--main-light-bg);
-}
-
-div.radio-group.light,
-div.button-group.light {
-  border: 1px solid var(--main-light-border);
-}
-
-.radio-group.light label,
-.button-group.light button,
-.page.light .tab button {
-  border: 1px solid var(--main-light-bg);
 }
 
 /* #### Input #### */
@@ -321,6 +331,12 @@ div.f-grid.light div.f-icon {
   border: 1px solid var(--main-light-border);
 }
 
+div.f-grid.light div.tab-group,
+div.radio-group.light,
+div.button-group.light {
+  background-color: var(--main-light-bg);
+  border-bottom: 2px solid var(--main-light-border);
+}
 div.f-row.light div.f-header.tab-group > button:first-child {
   border-left: 2px dotted var(--main-light-border);
 }
@@ -365,7 +381,18 @@ div.f-row.light div.f-header.tab-group > button:last-child {
   background-color: Aquamarine;
   color: #005b3d;
 }
+/* #### grid/table slot/stats #### */
+table.f-table.light .stat-item,
+div.f-grid.light .f-row > .stat-item {
+  border-right: 1px solid var(--main-light-border);
+}
 
+table.f-table.light .stat-item:last-child {
+  border-right: unset;
+}
+.light #stat-section .f-column {
+  border-right: 2px dotted var(--main-light-border);
+}
 /* #### grid icon #### */
 div.f-grid.light div.f-icon {
   background-color: var(--main-light-bg);
@@ -413,5 +440,16 @@ div.f-grid.light div.f-row.deepskyblue {
 }
 
 @media only screen and (max-width: 900px) {
+
+}
+@media only screen and (max-width: 695px) {
+  /*
+  #stat-section {
+    margin-bottom: 12px;
+  }
+  */
+  .light #stat-section .f-column {
+    border-right: unset;
+  }
 
 }

@@ -17,6 +17,7 @@ const ShipDetailView: React.FC = () => {
   const appState = useSelector((state: RootState) => state.appState);
   const ownedSearchList = useSelector((state: RootState) => state.ownedSearchList);
   const shipSearchList = useSelector((state: RootState) => state.shipSearchList);
+  const searchParams = useSelector((state: RootState) => state.searchParameters);
   const config = useSelector((state: RootState) => state.config);
   const refData = useRef<HTMLDivElement>(null);
   const refPageContent = useRef<HTMLDivElement>(null);
@@ -30,10 +31,6 @@ const ShipDetailView: React.FC = () => {
       refData.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     }
   };
-
-  useEffect(() => {
-    localStorage.removeItem('rr');
-  }, []);
 
   return (
     <PageTemplate>
@@ -61,8 +58,13 @@ const ShipDetailView: React.FC = () => {
               <ShipList shipSearchList={shipSearchList} listName="ALL" scrollTo={() => scrollTo('ship')} />
               <ShipList shipSearchList={ownedSearchList} listName="OWNED" scrollTo={() => scrollTo('ship')} />
             </SideBar>
-            <div id="side-scroll" className={`button-group ${config.themeColor}${isVisible ? ' small-hidden' : ''}`}>
-              <RButton themeColor={config.themeColor} className="btn slide" onClick={() => scrollTo('top')}>
+            <div id="small-nav" className={`navigation ${config.themeColor}${isVisible ? ' small-hidden' : ''}`}>
+              <RButton
+                extraStyle={{ paddingTop: '7px' }}
+                themeColor={config.themeColor}
+                className="nav-item"
+                onClick={() => scrollTo('top')}
+              >
                 <ArrowDegUp themeColor={config.themeColor} />
               </RButton>
             </div>

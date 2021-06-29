@@ -44,11 +44,13 @@ function reducer(
 export const useDragAndDrop = ({
   dataKeys = [],
   baseKey,
+  overKey,
   classNames = { dragOverClass: 'drag-over', draggedClass: 'dragged', dragOverInvalidClass: 'drag-over-invalid' },
   isValidDropZone,
 }: {
   dataKeys: string[];
   baseKey: string;
+  overKey: string;
   isValidDropZone?: (sKey: string, oKey: string) => boolean;
   classNames?: {
     dragOverClass: string;
@@ -66,11 +68,7 @@ export const useDragAndDrop = ({
   const onDropCb = (event: React.DragEvent<HTMLElement>) => {
     event.stopPropagation();
     event.preventDefault();
-    const start = dataKeys.reduce(
-      (a, c) => Object.assign(a, { [c]: event.dataTransfer.getData(c) }),
-      {} as { [key: string]: string }
-    );
-
+    const start = JSON.parse(event.dataTransfer.getData(baseKey)) as { [key: string]: string };
     const end = dataKeys.reduce(
       (a, c) => Object.assign(a, { [c]: event.currentTarget.getAttribute(c) }),
       {} as { [key: string]: string }
@@ -87,7 +85,7 @@ export const useDragAndDrop = ({
     event.preventDefault();
     event.currentTarget.classList.remove(classNames.draggedClass);
     setDragStates({ ...dragStates, isDragged: false });
-    // if (event.currentTarget.parentElement) event.currentTarget.parentElement.blur();
+    if (event.currentTarget.parentElement) event.currentTarget.parentElement.blur();
     if (event.currentTarget) event.currentTarget.blur();
   };
 
@@ -97,17 +95,23 @@ export const useDragAndDrop = ({
     // eslint-disable-next-line no-param-reassign
     event.dataTransfer.effectAllowed = 'move';
     setDragStates({ isDragged: true, isTransferOk: false });
-    event.dataTransfer.setData(baseKey, event.currentTarget.getAttribute(baseKey) as string);
+    const obj = dataKeys.reduce((acc, cur) => {
+      acc[cur] = event.currentTarget.getAttribute(cur) as string;
+      return acc;
+    }, {} as { [key: string]: string });
+    event.dataTransfer.setData(baseKey, JSON.stringify(obj));
     event.currentTarget.classList.add(classNames.draggedClass);
   };
 
   const onDragOverCb = (event: React.DragEvent<HTMLElement>) => {
     event.stopPropagation();
     event.preventDefault();
-    // if (!data.inDropZone) dispatch({ type: 'setInDropZone', payload: true });
-    const sKey = event.dataTransfer.getData(baseKey);
-    const oKey = event.currentTarget.getAttribute(baseKey) as string;
+    if (!data.inDropZone) dispatch({ type: 'setInDropZone', payload: true });
+    const oKey = event.currentTarget.getAttribute(overKey) as string;
+    const sKey = event.dataTransfer.types[0];
+    // console.log('types', event.dataTransfer.types, '[oKey]', oKey, 'sKey', sKey, 'baseKey', baseKey, 'overKey', overKey);
     if (isValidDropZone && isValidDropZone(sKey, oKey)) return;
+    // console.log('dragover none');
     // eslint-disable-next-line no-param-reassign
     event.dataTransfer.dropEffect = 'none';
   };
@@ -115,13 +119,15 @@ export const useDragAndDrop = ({
   const onDragEnterCb = (event: React.DragEvent<HTMLElement>) => {
     event.stopPropagation();
     event.preventDefault();
-    const sKey = event.dataTransfer.getData(baseKey);
-    const oKey = event.currentTarget.getAttribute(baseKey) as string;
+    const sKey = event.dataTransfer.types[0];
+    const oKey = event.currentTarget.getAttribute(overKey) as string;
     dispatch({ type: 'setDropDepth', payload: data.dropDepth + 1 });
+    // console.log(event.dataTransfer.types);
+    // console.log('onDragEnter sKey:', sKey, 'oKey', oKey, 'baseKey', baseKey);
     if (isValidDropZone) {
       const isValid = isValidDropZone(sKey, oKey);
       if (isValid && data.dropDepth === 0) {
-        if (sKey !== oKey) event.currentTarget.classList.add(classNames.dragOverClass);
+        if (sKey === oKey) event.currentTarget.classList.add(classNames.dragOverClass);
       } else if (!isValid && data.dropDepth === 0) {
         event.currentTarget.classList.add(classNames.dragOverInvalidClass);
       }

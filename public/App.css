@@ -120,6 +120,7 @@ div.scroll {
   box-sizing: border-box;
   height: 40px;
   -webkit-app-region: no-drag;
+  display: flex;
 }
 
 #window-filler {
@@ -131,8 +132,8 @@ div.scroll {
 
 #window-menu nav {
   width: max-content;
-  height: 40px;
   margin-bottom: 0px!important;
+  align-self: center;
 }
 
 #window-menu a {
@@ -140,7 +141,7 @@ div.scroll {
   display: flex;
   height: 100%;
   align-items: center;
-  padding: 0px 16px 0px 16px;
+  padding: 5px 16px 5px 16px;
 }
 
 #window-controls.electron {
@@ -154,20 +155,25 @@ div.scroll {
 #window-controls.web {
   display: grid;
   grid-column: 4;
-  grid-template-columns: repeat(2, 48px);
+  grid-template-columns: repeat(2, 64px);
   height: 40px;
   box-sizing: border-box;
   align-content: center;
   justify-items: end;
+  padding-right: 5px;
 }
 
-#window-controls > .radio-group {
+#window-controls > .navigation {
   grid-column-start: 2;
   grid-column-end: 3;
-  height: 18px;
+  height: 32px;
   border: 0;
   border-radius: 0;
 }
+#window-controls > .navigation > button {
+  width: 20px;
+}
+/*
 #window-controls label.btn {
   display: flex;
   justify-content: center;
@@ -178,8 +184,12 @@ div.scroll {
   font-size: 12px;
   border-radius: 0;
   padding: 0;
-}
-
+  height: inherit;
+  width: 32px;
+  font-size: 15px;
+  border-bottom: 2px solid transparent;
+}*/
+/*
 #window-controls #light-toggle {
   grid-row: 1 / span 1;
   display: flex;
@@ -189,7 +199,8 @@ div.scroll {
   height: 40px;
   border: 0;
   padding: 0;
-}
+}*/
+
 #window-controls .title-button {
   grid-row: 1 / span 1;
   display: flex;
@@ -220,7 +231,7 @@ div.scroll {
   overflow: hidden;
   font-size: 15px;
   font-variant-caps: all-petite-caps;
-  padding-bottom: 1px;
+  /* padding-bottom: 1px;*/
   width: 100%;
 }
 
@@ -269,7 +280,8 @@ div.scroll {
 
 
 .modal-container.formation-action {
-  width: 30%;
+  width: 500px;
+  max-width: 100%;
 }
 
 .modal-overlay {
@@ -306,9 +318,9 @@ div.scroll {
   width: 100%;
   flex-direction: row;
   z-index: 25;
-  box-shadow: 0px -5px 10px 0px rgba(0,0,0,0.65);
-  -webkit-box-shadow: 0px -5px 10px 0px rgba(0,0,0,0.65);
-  -moz-box-shadow: 0px -5px 10px 0px rgba(0,0,0,0.65);
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.35);
 }
 
 .search-section-enter {
@@ -340,17 +352,35 @@ div.scroll {
   display: none;
 }
 
-#side-scroll {
-  display: inline-flex;
-  right: 5px;
-  top: 0px;
-  position: absolute;
+.navigation {
+  height: 32px;
+  z-index: 20;
 }
 
+.navigation > .nav-item {
+  height: 100%;
+  background-color: inherit;
+  -webkit-transition: border-bottom 200ms;
+  transition: border-bottom 200ms;
+  border-bottom: 2px solid transparent;
+}
+
+#small-nav.navigation {
+  display: none;
+  -webkit-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, outline 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, outline 0.2s ease-in-out;
+}
+
+#small-nav.navigation > .nav-item > span {
+  width: 22px;
+}
+
+
 /* ###### Buttons ###### */
-button:disabled {
+button:disabled,
+button:disabled * {
   cursor: default!important;
-  opacity: 0.2;
+  opacity: 0.4;
 }
 
 button.btn.small {
@@ -364,26 +394,24 @@ button.btn.small {
 button.btn.grid-item *,
 label.btn,
 label.btn *,
-#side-scroll *,
+#small-nav *,
 button.tab-btn,
 button.tab-btn *,
 button.btn,
 button.btn * {
   cursor: pointer;
   box-sizing: border-box;
-  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, stroke 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, stroke 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, /*color 0.2s ease-in-out, */stroke 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, /*color 0.2s ease-in-out, */stroke 0.2s ease-in-out;
 }
 
+/* TODO. Check on electron.
 label.btn,
 button.btn {
-  border-radius: 4px;
   display: inline-block;
 }
+*/
 
-button.btn.menu-item {
-  border-radius: 0px;
-}
 div.grid-item.non-interactive,
 button.btn.grid-item {
   padding: 3px 5px;
@@ -391,14 +419,7 @@ button.btn.grid-item {
   font-size: 15px;
   background: unset;
   overflow: hidden;
-}
-
-button.btn.slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-  padding: 5px 5px 5px 5px;
+  min-width: 150px;
 }
 
 label.btn.normal,
@@ -422,7 +443,7 @@ button.tab-btn.normal.icon-only {
   padding: 0px 5px 0px 5px;
 }
 
-.btn:active > span,
+.btn:not(:disabled):active > span,
 .tab-btn:active > span,
 .btn:active > div.name,
 .btn:active > div.hulltype {
@@ -456,11 +477,6 @@ button.tab-btn.normal.icon-only {
 
 }
 
-.tab-group > button.tab-btn {
-  display: inline-block;
-  position: relative;
-}
-
 .tab > button.tab-btn {
   display: inline-block;
   border-right: 0px!important;
@@ -475,18 +491,18 @@ button.tab-btn.normal.icon-only {
   vertical-align: middle;
   padding-top: 4px;
 }
-
-nav > a {
+.navigation > button.nav-item,
+nav.navigation > a {
   text-decoration: none;
-  border: none;
   font-variant-caps: all-petite-caps;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 button.icon *,
 div.f-row.action *,
 .rList .rList-item *,
-.tab * {
+.tab *,
+.navigation * {
   cursor: pointer;
 }
 
@@ -507,6 +523,7 @@ div.f-row.action *,
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
+  font-variant-caps: all-petite-caps;
 }
 
 /* ###### FORMATION DROPDOWN ###### */
@@ -567,15 +584,6 @@ div.f-row.action *,
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
 }
 
-.info-text {
-  display: flex;
-  height: 70%;
-  width: 100%;
-  font-size: 24px;
-  justify-content: center;
-  align-items: center;
-}
-
 /* Tooltip */
 .tooltip {
   position: absolute;
@@ -583,7 +591,7 @@ div.f-row.action *,
   -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
   white-space: pre-line;
-  z-index: 22;
+  z-index: 25;
 }
 
 .tooltip > .tooltip-content {
@@ -591,38 +599,6 @@ div.f-row.action *,
   border-radius: inherit;
 }
 
-.tooltip > .tooltip-arrow {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  z-index: -1;
-}
-
-.tooltip > .tooltip-arrow::before {
-  content: "";
-  position: absolute;
-  transform: rotate(45deg);
-  width: 10px;
-  height: 10px;
-  top: 0;
-  left: 0;
-  -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
-  -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
-}
-
-.tooltip > .tooltip-arrow.bottom {
-  top: -4px;
-}
-.tooltip > .tooltip-arrow.left {
-  right: -4px;
-}
-.tooltip > .tooltip-arrow.right {
-  left: -4px;
-}
-.tooltip > .tooltip-arrow.top {
-  bottom: -4px;
-}
 /* ###### popover ###### */
 .popover-container {
   overflow: hidden; 
@@ -720,8 +696,6 @@ span.Elite:last-child {
 .owned-indicator {
   height: inherit;
   width: 5px;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
 }
 
 .rList .rList-item {
@@ -729,20 +703,15 @@ span.Elite:last-child {
   box-sizing: border-box;
   padding: 0px;
   border: unset;
-  border-radius: 3px;
 }
 
 .rList .rList-item > div.hulltype {
-  /* box-sizing: border-box;*/
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30%;
-  max-width: 30%;
-  height: inherit;
-  border-radius: inherit;
-  border-top-left-radius: 0px!important;
-  border-bottom-left-radius: 0px!important;
+  width: 50px;
+  color: inherit;
+  height: inherit; /* Required by webkit */
 }
 
 .rList .rList-item > div.name {
@@ -750,20 +719,15 @@ span.Elite:last-child {
   display: flex;
   align-items: center;
   padding-left: 5px;
-  max-width: 70%;
   white-space: nowrap;
   overflow: hidden;
-  height: 29px;
   width: 100%;
+  height: inherit; /* Required by webkit */
 }
 
-.button-group {
-  display: flex;
-  flex-direction: row;
+.button-group.start {
   align-self: flex-start;
-  border-radius: 4px;
 }
-
 .button-group.full-width {
   flex-grow: 1;
 }
@@ -771,31 +735,15 @@ span.Elite:last-child {
 .button-group.full-width > button {
   flex: 1 1;
 }
-
-.radio-group label,
-.button-group button {
-  border-radius: 0px;
-}
-.radio-group label:first-child,
-.button-group button:first-child {
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
-
-.radio-group label:last-child,
-.button-group button:last-child {
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-
+.button-group,
 .radio-group {
   box-sizing: border-box;
-  width: 100%;
+  /* width: 100%;*/ /*Check on Electron. TODO */
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap;*/ /*Check on Electron. TODO */
   flex-direction: row;
-  justify-content: center;
-  border-radius: 4px;
+  /* justify-content: center;*/ /*Check on Electron. TODO */
+  /*border-radius: 4px; */
 }
 
 .radio-group input[type="radio"] {
@@ -914,7 +862,7 @@ div.f-grid div.f-header {
   font-size: 15px;
 }
 
-div.f-row div.f-header.tab-group {
+div.f-row div.f-header + div.tab-group {
   flex-direction: row;
   padding: unset;
   justify-content: flex-end;
@@ -1004,6 +952,11 @@ div.f-grid div.f-icon.open > svg{
   transform: rotate(180deg);
   -webkit-transition: 0.3s;
   transition: 0.3s;
+}
+
+div.f-grid .f-body.apart > .f-row {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 /* https://dev.to/link2twenty/accessibility-first-toggle-switches-3obj */
@@ -1200,11 +1153,20 @@ div.f-grid div.f-icon.open > svg{
     margin-bottom: 0px;
   }
 
-  #side-scroll {
-    display: inline-flex;
-    right: 5px;
-    top: 95px;
+  #small-nav.navigation {
+    top: 200px;
+    right: 10px;
     position: fixed;
+    flex-direction: column;
+    border-radius: 2px;
+    height: unset;
+    display: flex;
+  }
+
+  .navigation {
+    display: flex;
+    box-sizing: border-box;
+    width: max-content;
   }
 
   #formation-content > div.scroll {
@@ -1268,11 +1230,7 @@ div.f-grid div.f-icon.open > svg{
   }
 
   .tab { /* TODO: check if needed on firefox */
-    justify-content: flex-start;
-  }
-
-  .tab > button.tab-btn {
-    flex: 1;
+    justify-content: space-evenly;
   }
 
   .message-container {
@@ -1289,8 +1247,9 @@ div.f-grid div.f-icon.open > svg{
     max-width: unset;
   }
 
-  .page .small-hidden,
-  .f-row.small-hidden {
+  .page #small-nav.small-hidden,
+  .f-row.small-hidden,
+  .f-column.small-hidden {
     display: none!important;
   }
   .page {

@@ -34,8 +34,7 @@ const Tooltip: React.FC = () => {
       >
         {({ props, arrowProps, placement }) => (
           <div className={`tooltip ${config.themeColor}`} {...props}>
-            <div {...arrowProps} className={`tooltip-arrow ${placement}`} />
-            <div className="tooltip-content dark">
+            <div className={`tooltip-content ${config.themeColor}`}>
               <div className={`f-grid ${config.themeColor}`} style={{ marginBottom: '0px' }}>
                 <div className="f-body">{tooltipData.data}</div>
               </div>

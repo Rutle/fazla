@@ -77,38 +77,6 @@ const RToggle: React.FC<RToggleProps> = React.memo(
         )}
       </>
     );
-    /*
-    return (
-      <label
-        className={`${className} ${themeColor}${selected ? ' selected' : ''} ${
-          !isFocusOutline ? 'no-focus-outline' : ''
-        }`}
-        htmlFor={`${id}-input`}
-        style={extraStyle}
-      >
-        {children}
-        <input
-          id={`${id}-input`}
-          value={value}
-          type="radio"
-          checked={selected}
-          onChange={onChange}
-          onClick={(e) => {
-            const { clientX, clientY } = e;
-            if (clientX !== 0 && clientY !== 0) {
-              setFocusOutline(false);
-            } else {
-              setFocusOutline(true);
-            }
-          }}
-          onKeyUp={(e) => {
-            if (e.key === 'Tab' || e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-              setFocusOutline(true);
-            }
-          }}
-        />
-      </label>
-    ); */
   }
 );
 

@@ -4,9 +4,9 @@ const MinIcon: React.FC<{ themeColor: string }> = ({ themeColor }) => {
   return (
     <svg width="10" height="10" aria-hidden="true">
       <path
-        fill={`var(--main-${themeColor}-color)`}
+        stroke={`${themeColor === 'light' ? 'white' : 'var(--main-dark-color)'}`}
+        fill={`${themeColor === 'light' ? 'white' : 'var(--main-dark-color)'}`}
         strokeLinecap="round"
-        stroke={`var(--main-${themeColor}-color)`}
         strokeWidth="2"
         d="M0 5h10v1H0z"
       />
@@ -22,8 +22,8 @@ const MaxIcon: React.FC<{ themeColor: string }> = ({ themeColor }) => {
       height="12"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 16 16"
-      stroke={`var(--main-${themeColor}-color)`}
-      fill={`var(--main-${themeColor}-color)`}
+      stroke={`${themeColor === 'light' ? 'white' : 'var(--main-dark-color)'}`}
+      fill={`${themeColor === 'light' ? 'white' : 'var(--main-dark-color)'}`}
     >
       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
     </svg>
@@ -44,8 +44,8 @@ const CloseIcon: React.FC<{ themeColor: string; width?: string; height?: string;
       height={height}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 16 16"
-      stroke={`var(--main-${themeColor}-color)`}
-      fill={`var(--main-${themeColor}-color)`}
+      stroke={`${themeColor === 'light' ? 'white' : 'var(--main-dark-color)'}`}
+      fill={`${themeColor === 'light' ? 'white' : 'var(--main-dark-color)'}`}
     >
       <path d="M4.646 4.646a.5.5 0 01.708 0L8 7.293l2.646-2.647a.5.5 0 01.708.708L8.707 8l2.647 2.646a.5.5 0 01-.708.708L8 8.707l-2.646 2.647a.5.5 0 01-.708-.708L7.293 8 4.646 5.354a.5.5 0 010-.708z" />
     </svg>
@@ -95,8 +95,8 @@ const ArrowDegUp: React.FC<{ themeColor: string; width?: string; height?: string
       width={width}
       height={height}
       viewBox="0 0 16 16"
-      stroke={`var(--main-${themeColor}-color)`}
-      fill={`var(--main-${themeColor}-color)`}
+      stroke={`${themeColor === 'light' ? 'white' : 'var(--main-dark-color)'}`}
+      fill={`${themeColor === 'light' ? 'white' : 'var(--main-dark-color)'}`}
     >
       <path
         fillRule="evenodd"

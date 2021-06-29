@@ -166,10 +166,13 @@ const searchParametersSlice = createSlice({
     resetParameters() {
       return initialState;
     },
+    resetToggles(state) {
+      return { ...initialState, name: state.name, isChanged: true };
+    },
   },
 });
 
-export const { resetParameters, toggleParameter, toggleAll, setFleet, setSearchString, setChangeState } =
+export const { resetParameters, toggleParameter, toggleAll, setFleet, setSearchString, setChangeState, resetToggles } =
   searchParametersSlice.actions;
 /**
  * Set the search results.
