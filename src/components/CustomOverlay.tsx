@@ -36,6 +36,7 @@ const CustomOverlay: React.FC<{ themeColor: string; isSmallScreen: boolean; chil
       style={{ display: 'flex', flexDirection: 'row', width: '100%', flexWrap: 'wrap' }}
       ref={containerRef}
       id="categories"
+      className="button-group rounded"
     >
       <button
         ref={btnRef}

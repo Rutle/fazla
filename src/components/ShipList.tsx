@@ -89,7 +89,7 @@ const ShipList: React.FC<ShipListProps> = ({ shipSearchList, listName, refe, scr
                   type="button"
                   draggable={isDraggable}
                   style={{ ...style, top: (style.top as number) + 1, height: 29, width: 'calc(100% - 1px)' }}
-                  className={`rList-item btn ${config.themeColor} ${isShipOwned ? 'owned' : ''} ${
+                  className={`rList-item btn rounded ${config.themeColor} ${isShipOwned ? 'owned' : ''} ${
                     shipSearchList[index].id === appState[appState.cToggle].id ? 'selected' : ''
                   }`}
                   onClick={() => selectShip(shipSearchList[index].id, shipSearchList[index].index)}

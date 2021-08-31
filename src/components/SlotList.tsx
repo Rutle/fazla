@@ -104,20 +104,6 @@ const SlotList: React.FC<{ slots: { [key: string]: Slot }; hasRetrofit?: boolean
                     <React.Fragment key={`${eq}`}>{`${eq}\n`}</React.Fragment>
                   ))}
                 </div>
-                /*
-                <TooltipWrapper
-                  key={`slot-${t.length * i}`}
-                  wrapperClassNames="grid-item slot"
-                  WrapperElement="div"
-                  data={
-                    <EqList list={parsedData.parsedFits[idx][i.toString()]} headers={t[i]} themeColor={themeColor} />
-                  }
-                  placement="auto"
-                >
-                  {t[i].map((eq) => (
-                    <React.Fragment key={`${eq}`}>{`${eq}\n`}</React.Fragment>
-                  ))}
-                </TooltipWrapper> */
               );
             }
             return (

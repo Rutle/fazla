@@ -36,10 +36,13 @@ const StatList: React.FC<{ stats: ShipStats; themeColor: string }> = ({ stats, t
       </div>
       {stats ? (
         statKeys.map((key, idx) => {
+          // Grab stats of a stat catergory
           const statArr = Object.keys(stats[key]);
           const tempArr = [];
+          // Go through array in steps of 4
           for (let i = 0; i < statArr.length; i += 4) {
             const temp = statArr.slice(i, i + 4);
+            // Add table rows with data to tempArr
             tempArr.push(
               <tr key={`${key}-${i + 4}`} className="f-table-row">
                 {temp.map((stat) => {
@@ -63,10 +66,7 @@ const StatList: React.FC<{ stats: ShipStats; themeColor: string }> = ({ stats, t
             );
           }
           return (
-            <div
-              key={`div-${key}`}
-              className={`f-column f-body ${themeColor} ${selectedStats !== idx ? 'hidden' : ''}`}
-            >
+            <div key={`div-${key}`} className={`f-body ${themeColor} ${selectedStats !== idx ? 'hidden' : ''}`}>
               <table className={`f-table ${themeColor}`}>
                 <tbody className="f-table-body">{tempArr}</tbody>
               </table>

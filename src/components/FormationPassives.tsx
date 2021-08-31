@@ -65,7 +65,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
           (a, c) => a + c.getBoundingClientRect().height,
           0
         );
-        setNewHeight({ ...newHeight, mainHeight: tempHeight + 100 });
+        setNewHeight({ ...newHeight, vanguardHeight: tempHeight + 100 });
       } else if (showVanguard && !isOpen.vanguard) {
         const tempHeight = Array.from(refVanguard.current.children).reduce<number>(
           (a, c) => a + c.getBoundingClientRect().height,
@@ -78,7 +78,7 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showVanguard]);
+  }, [showVanguard, vanguardSize.height]);
 
   useEffect(() => {
     const curRefMain = refMain.current;
@@ -124,53 +124,51 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
   };
 
   return (
-    <div className={`f-grid ${themeColor}`}>
+    <div className={`f-grid rounded gap ${themeColor}`}>
       {!isShip('main') ? (
-        <>
+        <div className="f-column section">
           <div
-            className="f-row action no-focus-outline"
+            className={`f-row action ${themeColor} no-focus-outline`}
             onClick={() => {
               setShowMain(!showMain);
             }}
           >
+            <div className="f-header">Main</div>
             <div className={`f-icon ${showMain ? '' : 'open'}`}>
               <CaretLeft themeColor={themeColor} />
             </div>
-            <div className="f-title">Main</div>
           </div>
           <div
             ref={refMain}
-            className={`f-collapsible${showMain ? '' : ' f-collapsed'}`}
+            className={`f-body f-collapsible${showMain ? '' : ' collapsed'}`}
             style={isOpen.main ? { maxHeight: newHeight.mainHeight } : { maxHeight: 0 }}
           >
-            <div className="f-column">
-              <PassivesList {...getData(fleet[0])} />
-              <PassivesList {...getData(fleet[1])} />
-              <PassivesList {...getData(fleet[2])} />
-            </div>
+            <PassivesList {...getData(fleet[0])} />
+            <PassivesList {...getData(fleet[1])} />
+            <PassivesList {...getData(fleet[2])} />
           </div>
-        </>
+        </div>
       ) : (
         <></>
       )}
       {!isShip('vanguard') ? (
-        <>
-          <div className="f-row action" onClick={() => setShowVanguard(!showVanguard)}>
-            <div className={`f-icon ${showVanguard ? '' : 'open'}`}>
+        <div className="f-column section">
+          <div className={`f-row action ${themeColor} no-focus-outline`} onClick={() => setShowVanguard(!showVanguard)}>
+            <div className="f-header">Vanguard</div>
+            <div className={`f-icon${showVanguard ? '' : ' open'}`}>
               <CaretLeft themeColor={themeColor} />
             </div>
-            <div className="f-title">Vanguard</div>
           </div>
           <div
             ref={refVanguard}
-            className={`f-collapsible ${showVanguard ? '' : 'f-collapsed'}`}
+            className={`f-body f-collapsible${showVanguard ? '' : ' collapsed'}`}
             style={isOpen.vanguard ? { maxHeight: newHeight.vanguardHeight } : { maxHeight: 0 }}
           >
             <PassivesList {...getData(fleet[3])} />
             <PassivesList {...getData(fleet[4])} />
             <PassivesList {...getData(fleet[5])} />
           </div>
-        </>
+        </div>
       ) : (
         <></>
       )}

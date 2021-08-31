@@ -72,11 +72,11 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
 
   return ship ? (
     <>
-      <div className="ship-title-bar">
+      <div className="ship-title-bar rounded">
         <span className="ship-name">{ship.names.code}</span>
         <span className={ship.rarity}>{` ${ship.stars?.stars as string}`}</span>
       </div>
-      <div className={`button-group start ${config.themeColor}`} style={{ marginBottom: '5px' }}>
+      <div className={`button-group start rounded ${config.themeColor}`} style={{ marginBottom: '5px' }}>
         {topButtonGroup || <></>}
         <RButton
           themeColor={config.themeColor}
@@ -102,40 +102,32 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
         </RButton>
       </div>
       <div className="scroll">
-        <div className={`f-grid ${config.themeColor}`} style={{ marginBottom: '0px' }}>
-          <div id="stats-slots-details" className="f-row wrap">
-            <div className="f-column" id="stat-section" style={{ marginBottom: '12px' }}>
+        <div className={`f-grid rounded ${config.themeColor}`}>
+          <div className={`f-row wrap gap ${config.themeColor}`}>
+            <div className="f-column section" id="stat-section">
               <StatList stats={ship.stats} themeColor={config.themeColor} />
             </div>
-
-            <div className="f-column" id="slot-section" style={{ marginBottom: '12px' }}>
+            <div className="f-column section" id="slot-section">
               <SlotList slots={ship.slots} hasRetrofit={ship.retrofit} themeColor={config.themeColor} />
             </div>
           </div>
         </div>
-        <div className={`f-grid ${config.themeColor}`}>
-          <div className="f-row">
-            <div className="f-header">Passives</div>
-          </div>
-          <div className="f-column">
-            <PassivesList skills={ship.skills} />
+        <div className={`f-grid rounded ${config.themeColor}`}>
+          <div className="f-column section" id="passive-section">
+            <div className={`f-row ${config.themeColor}`}>
+              <div className="f-header">Passives</div>
+            </div>
+            <div className="f-body">
+              <PassivesList skills={ship.skills} />
+            </div>
           </div>
         </div>
       </div>
     </>
   ) : (
     <div style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
-      <div
-        className={`message-container ${config.themeColor}`}
-        style={{
-          alignSelf: 'center',
-          width: '50%',
-          minHeight: '40px',
-        }}
-      >
-        <span className="message" style={{ fontSize: '24px', justifyContent: 'center' }}>
-          No ship selected or found.
-        </span>
+      <div className={`message-container ${config.themeColor}`}>
+        <span className="message">No ship selected or found.</span>
       </div>
     </div>
   );

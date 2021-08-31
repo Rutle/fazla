@@ -7,7 +7,6 @@ import { configAction, AppConfigAction } from '_/reducers/slices/programConfigSl
 import { AppContext } from '_/App';
 import { MinIcon, MaxIcon, RestoreIcon, CloseIcon } from './Icons';
 import RButton from './RButton/RButton';
-import RToggle from './RToggle/RToggle';
 
 const NavItem: React.FC<{ children: ReactNode; pathTo: string; classNames?: string }> = ({
   children,
@@ -152,34 +151,6 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
               >
                 L
               </RButton>
-              {/* 
-              <RToggle
-                id="dark-toggle"
-                value="dark"
-                className="btn normal"
-                themeColor={config.themeColor}
-                onChange={() => updateConfig('themeColor', 'dark')}
-                selected={config.themeColor === 'dark'}
-                tooltip={{
-                  data: <span style={{ padding: '3px 8px' }}>Dark mode</span>,
-                }}
-              >
-                D
-              </RToggle>
-              <RToggle
-                id="light-toggle"
-                value="light"
-                className="btn normal"
-                themeColor={config.themeColor}
-                onChange={() => updateConfig('themeColor', 'light')}
-                selected={config.themeColor === 'light'}
-                tooltip={{
-                  data: <span style={{ padding: '3px 8px' }}>Light mode</span>,
-                }}
-              >
-                L
-              </RToggle>
-              */}
             </div>
           </div>
         )}

@@ -15,7 +15,9 @@ const electronStore = new Store({
 });
 const fsPromises = fs.promises;
 
-const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
+// const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
+// New url.
+const SHIPAPIURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/dist/ships.json';
 const THEMECOLOR = 'dark';
 
 const APPRESFILES = ['ships', 'version-info', 'equipments'];

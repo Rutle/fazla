@@ -136,7 +136,9 @@ const FormationGridItem: React.FC<GridItemProps> = React.memo(
           <RButton
             onClick={onClick}
             onRightClick={onRightClick}
-            className={`grid-item ship btn${isSelected ? ' selected' : ''} hullTypeAbb ${ship?.hullType || 'none'}`}
+            className={`grid-item rounded ship btn${isSelected ? ' selected' : ''} hullTypeAbb ${
+              ship?.hullType || 'none'
+            }`}
             themeColor={themeColor}
             extraStyle={{ border: '2px solid transparent' }}
             dragProps={{

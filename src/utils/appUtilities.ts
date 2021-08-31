@@ -7,9 +7,12 @@ import pako from 'pako';
 import DataStore from './dataStore';
 import { saveData } from './ipcAPI';
 
-const SHIPDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
-const VERSIONINFO = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/version-info.json';
-const EQDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/equipments.json';
+// const SHIPDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
+const SHIPDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/dist/ships.json';
+// const VERSIONINFO = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/version-info.json';
+const VERSIONINFO = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/dist/version.json';
+// const EQDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/equipments.json';
+const EQDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/dist/equipments.json';
 
 export const urlValidation = (str: string): boolean => {
   if (str === undefined || str === '') return false;
@@ -97,7 +100,7 @@ export const parseImportCode = (codeString: string): Formation | boolean => {
 };
 
 export const encodeFormation = (formation: Formation): string => {
-  const { equipment, ...rest } = formation;
+  // const { equipment, ...rest } = formation;
   const compressed = pako.deflate(JSON.stringify(formation));
   return btoa(String.fromCharCode.apply(null, compressed));
 };
@@ -179,6 +182,7 @@ export const downloadShipData = async (
           } else {
             isOk = false;
             msg = 'There was a problem with saving data.';
+            console.log('d');
           }
         }
       })
@@ -259,6 +263,7 @@ export interface ParsedValues {
   parsedFits: ParsedFit[];
 }
 
+// Parse equipment slots
 export const parseSlots = (slots: { [key: string]: Slot }, data: DataStore): ParsedValues => {
   // [{1: [006], 2: [002, 001], 3: [013]}, {1: [006], 2: [012], 3: [013]}]
   const baseSlots: ParsedSlot = {};

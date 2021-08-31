@@ -356,12 +356,11 @@ const FormationView: React.FC = () => {
                 config.themeColor
               }`}
               style={
-                // gridSize.height
                 cHeight.current
                   ? {
-                      top: `${cHeight.current + 25 + 15 + 53}px`,
-                      minHeight: `calc(100% - ${cHeight.current + 25 + 15 + 53}px)`,
-                      height: `calc(100% - ${cHeight.current + 25 + 15 + 53}px)`,
+                      top: `${cHeight.current + 25 + 15 + 53 + 12}px`,
+                      minHeight: `calc(100% - ${cHeight.current + 25 + 15 + 53 + 40}px)`,
+                      height: `calc(100% - ${cHeight.current + 25 + 15 + 53 + 40}px)`,
                     }
                   : {}
               }
@@ -382,24 +381,14 @@ const FormationView: React.FC = () => {
               </SideBar>
               <div id="small-nav" className={`navigation ${config.themeColor}`} style={getSlideStyle()}>
                 {!isVisible ? (
-                  <RButton
-                    extraStyle={{ paddingTop: '7px' }}
-                    themeColor={config.themeColor}
-                    className="nav-item"
-                    onClick={() => scrollTo('top')}
-                  >
+                  <RButton themeColor={config.themeColor} className="nav-item" onClick={() => scrollTo('top')}>
                     <ArrowDegUp themeColor={config.themeColor} className="icon" />
                   </RButton>
                 ) : (
                   <></>
                 )}
 
-                <RButton
-                  extraStyle={{ paddingTop: '7px' }}
-                  themeColor={config.themeColor}
-                  className="nav-item"
-                  onClick={() => hideSearchSection(false)}
-                >
+                <RButton themeColor={config.themeColor} className="nav-item" onClick={() => hideSearchSection(false)}>
                   <CloseIcon themeColor={config.themeColor} className="icon" />
                 </RButton>
               </div>

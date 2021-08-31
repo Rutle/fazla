@@ -80,7 +80,7 @@ const Home: React.FC = () => {
             <div className="f-row">
               <div className="f-header">Options</div>
             </div>
-            <div className="f-column f-body apart">
+            <div className="f-column f-body widen">
               <div className="f-row wrap">
                 <div className="grid-item name">Update ship data</div>
                 <div className="grid-item action">{renderUpdate()}</div>
@@ -179,7 +179,7 @@ const Home: React.FC = () => {
             <div className="f-row">
               <div className="f-header">Stats</div>
             </div>
-            <div className="f-column f-body apart">
+            <div className="f-column f-body widen">
               <div className="f-row wrap">
                 <div className="grid-item name">Ship count</div>
                 <div className="grid-item action">{getShipCount()}</div>

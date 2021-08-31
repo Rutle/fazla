@@ -94,7 +94,7 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
         <CustomOverlay themeColor={config.themeColor} isSmallScreen>
           <SearchParameterContent themeColor={config.themeColor} />
         </CustomOverlay>
-        <div className={`radio-group ${config.themeColor}`}>
+        <div className={`radio-group rounded ${config.themeColor}`}>
           <RToggle
             id="all-toggle"
             value="ALL"

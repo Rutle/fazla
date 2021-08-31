@@ -179,6 +179,7 @@ div.page.dark #side-scroll:hover {
 
 #formation-ship-search.dark {
   border-top: 3px solid var(--main-dark-border);
+  background-color: var(--root-dark-bg);
 }
 /* #### Modal #### */
 .modal-overlay.dark div.modal-title {
@@ -328,11 +329,13 @@ button.dark.tab-btn:active {
 /* #### Formation menu ##### */
 .formation-dropdown-menu.dark {
   border: 1px solid var(--main-dark-border);
+  background-color: var(--main-dark-body-bg);
 }
-
+/*
 .formation-dropdown-menu.dark .btn.menu-item:last-child {
   border-bottom: 1px solid var(--main-dark-header-bg)!important;
 }
+*/
 .dark #formation-grid {
   border-bottom: 1px solid var(--main-dark-border);
 }
@@ -348,13 +351,27 @@ button.dark.tab-btn:active {
 
 /* #### ship title bar #### */
 .dark .ship-title-bar {
-  border-bottom: 2px solid var(--main-dark-border);
+  /* border-bottom: 2px solid var(--main-dark-border);*/
   background-color: var(--main-dark-header-bg);
+  /*
+  //border-bottom: 2px solid var(--main-dark-border);
+  background-color: var(--main-dark-header-bg);
+  border-radius: 5px;
+  outline: 1px solid #1a1a1a;
+  */
 }
+
+div.f-grid.dark .f-column.section,
+.button-group.rounded,
+.radio-group.rounded,
+.ship-title-bar.rounded {
+  border: 1px solid #1a1a1a;
+}
+
 #theme-controls.navigation.dark > button.selected,
-div.f-grid.dark div.tab-group,
-div.radio-group.dark,
-div.button-group.dark {
+div.f-grid.dark div.tab-group
+/*div.radio-group.dark,
+div.button-group.dark */{
   border-bottom: 2px solid var(--main-dark-border);
   background-color: var(--main-dark-header-bg);
 }
@@ -397,6 +414,7 @@ input[type="url"].dark.is-invalid,
 }
 
 /* #### Grid #### */
+div.f-grid.dark div.f-icon,
 div.f-grid.dark div.f-header {
   border-bottom: 2px solid var(--main-dark-border);
   background-color: var(--main-dark-header-bg);
@@ -404,23 +422,24 @@ div.f-grid.dark div.f-header {
 
 div.f-grid.dark div.f-body {
   background-color: var(--main-dark-body-bg);
-  border-bottom: 2px solid var(--main-dark-border);
+  /* border-bottom: 2px solid var(--main-dark-border);*/
 }
 
-div.f-grid.dark div.f-title,
-div.f-grid.dark div.f-icon {
+div.f-grid.dark div.f-title
+/* div.f-grid.dark div.f-icon */{
   background-color: var(--main-dark-header-bg);
   border-bottom: 1px solid var(--main-dark-border);
   border-top: 1px solid var(--main-dark-border);
 }
-
+div.f-row.dark div.f-header + div.f-icon,
 div.f-row.dark div.f-header + div.tab-group > button:first-child {
   border-left: 2px dotted var(--main-dark-border);
 }
+/*
 div.f-row.dark div.f-header + div.tab-group > button:last-child {
   border-right: 2px dotted var(--main-dark-border);
 }
-
+*/
 /* #### hull types #### */
 
 .grid-item.dark.ship.Carrier {
@@ -479,18 +498,21 @@ div.f-grid.dark div.f-row.pink {
   border-bottom: 2px solid rgba(255, 192, 203, 0.50);
   /* background-color: var(--main-dark-header-bg);*/
   background-color: var(--main-dark-body-bg);
+  border-radius: 0px;
 }
 /* #### rarity #### */
 div.f-grid.dark div.f-row.gold {
   /* background-color: var(--main-dark-header-bg);*/
   background-color: var(--main-dark-body-bg);
   border-bottom: 2px solid rgba(255, 215, 0, 0.50);
+  border-radius: 0px;
 }
 
 div.f-grid.dark div.f-row.deepskyblue {
   /* background-color: var(--main-dark-header-bg);*/
   background-color: var(--main-dark-body-bg);
   border-bottom: 2px solid rgba(0, 191, 255, 0.50);
+  border-radius: 0px;
 }
 
 .toast-container.dark > .toast,

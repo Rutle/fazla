@@ -207,3 +207,13 @@ export type Stats = {
 export type ShipStats = {
   [key: string]: { [key in Stat]: string };
 };
+
+/*
+export type ShipStats = {
+  baseStats: Stats;
+  level100: Stats;
+  level120: Stats;
+  level100Retrofit?: Stats;
+  level120Retrofit?: Stats;
+};
+*/
