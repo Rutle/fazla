@@ -15,6 +15,9 @@ it lacks functionality such as web server for quick testing of changes.
  
 ### Misc
 * Uses raw ship data from [AzurApi-JS](https://azurapi.github.io/).
+* Webapp stores data into IndexedDB. There is no backend.
+* Webapp updates/downloads raw data on first load, when there is missing data in IndexedDB or there is new update/7 days has passed since last update.
+* Electron version stores data locally.
 
 ### Builds
 * Web (dev)

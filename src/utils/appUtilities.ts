@@ -7,12 +7,12 @@ import pako from 'pako';
 import DataStore from './dataStore';
 import { saveData } from './ipcAPI';
 
-// const SHIPDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
-const SHIPDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/dist/ships.json';
-// const VERSIONINFO = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/version-info.json';
-const VERSIONINFO = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/dist/version.json';
-// const EQDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/equipments.json';
-const EQDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/dist/equipments.json';
+const SHIPDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
+// const SHIPDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/dist/ships.json';
+const VERSIONINFO = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/version-info.json';
+// const VERSIONINFO = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/dist/version.json';
+const EQDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/equipments.json';
+// const EQDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/dist/equipments.json';
 
 export const urlValidation = (str: string): boolean => {
   if (str === undefined || str === '') return false;

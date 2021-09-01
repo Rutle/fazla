@@ -16,8 +16,8 @@ export enum AppConfigAction {
 }
 
 const initialState: AppConfig = {
-  // jsonURL: 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json',
-  jsonURL: 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/dist/ships.json',
+  jsonURL: 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json',
+  // jsonURL: 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/dist/ships.json',
   themeColor: 'dark',
   firstTime: true,
   formHelpTooltip: true,
