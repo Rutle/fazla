@@ -7,7 +7,7 @@ cache:
 script:
   - npm run web-prod
 deploy:
-  provider: pages:git
+  provider: pages
   cleanup: false
   github_token: $TRAVIS_TOKEN
   edge: true

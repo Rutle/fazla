@@ -181,3 +181,13 @@ export const statCatAbb: { [key: string]: string } = {
   level120Retrofit: '120R',
   level125Retrofit: '125R',
 };
+
+export const statCatAbbOrder = [
+  'baseStats',
+  'level100',
+  'level120',
+  'level125',
+  'level100Retrofit',
+  'level120Retrofit',
+  'level125Retrofit',
+];

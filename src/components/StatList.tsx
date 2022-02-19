@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { statCatAbb, statsAbb } from '_/data/categories';
+import { statCatAbb, statsAbb, statCatAbbOrder } from '_/data/categories';
 import { isStat, ShipStats } from '_/types/shipTypes';
 import RButton from './RButton/RButton';
 
@@ -18,16 +18,20 @@ const StatList: React.FC<{ stats: ShipStats; themeColor: string }> = ({ stats, t
         <div className="f-header tab-group">
           {stats ? (
             <>
-              {statKeys.map((cat, index) => (
-                <RButton
-                  key={`btn-${cat}`}
-                  themeColor={themeColor}
-                  className={`tab-btn normal${selectedStats === index ? ' selected' : ''}`}
-                  onClick={() => setSelectedStats(index)}
-                >
-                  <span style={{ display: 'inline-block' }}>{statCatAbb[cat]}</span>
-                </RButton>
-              ))}
+              {statCatAbbOrder.map((cat, index) =>
+                statKeys.includes(cat) ? (
+                  <RButton
+                    key={`btn-${cat}`}
+                    themeColor={themeColor}
+                    className={`tab-btn normal${selectedStats === index ? ' selected' : ''}`}
+                    onClick={() => setSelectedStats(index)}
+                  >
+                    <span style={{ display: 'inline-block' }}>{statCatAbb[cat]}</span>
+                  </RButton>
+                ) : (
+                  <></>
+                )
+              )}
             </>
           ) : (
             <></>
@@ -35,7 +39,8 @@ const StatList: React.FC<{ stats: ShipStats; themeColor: string }> = ({ stats, t
         </div>
       </div>
       {stats ? (
-        statKeys.map((key, idx) => {
+        statCatAbbOrder.map((key, idx) => {
+          if (!statKeys.includes(key)) return <></>;
           // Grab stats of a stat catergory
           const statArr = Object.keys(stats[key]);
           const tempArr = [];
