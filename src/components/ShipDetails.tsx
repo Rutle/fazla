@@ -41,7 +41,6 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
       );
     } else {
       const tempShip = shipData.getShipByIndex(appState[appState.cToggle].index);
-      console.log(tempShip);
       setShip(tempShip);
       setIsOwned(isShipOwned(tempShip));
     }
@@ -75,7 +74,7 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
     <>
       <div className="ship-title-bar rounded">
         <span className="ship-name">{ship.names.code}</span>
-        <span className={ship.rarity}>{` ${ship.stars?.stars as string}`}</span>
+        <span className={ship.rarity}>{` ${'\u2605'.repeat(ship.stars)}`}</span>
       </div>
       <div className={`button-group start rounded ${config.themeColor}`} style={{ marginBottom: '5px' }}>
         {topButtonGroup || <></>}

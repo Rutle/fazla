@@ -10,7 +10,7 @@ export interface Ship {
   hullType?: string;
   thumbnail?: string;
   rarity?: string;
-  stars?: Stars;
+  stars: number;
   stats: ShipStats;
   slots: { [key: string]: Slot };
   enhanceValue?: EnhanceValue;
@@ -158,8 +158,8 @@ export interface Slot {
 }
 
 export interface Stars {
-  stars: string;
-  value: number;
+  stars: number;
+  // value: number;
 }
 
 export const isStat = (str: string): str is Stat => {
