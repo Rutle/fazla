@@ -264,13 +264,13 @@ export interface ParsedValues {
 }
 
 // Parse equipment slots
-export const parseSlots = (slots: { [key: string]: Slot }, data: DataStore): ParsedValues => {
+export const parseSlots = (slots: { [key: string]: Slot }, data: DataStore, hasRetrofit?: boolean): ParsedValues => {
   // [{1: [006], 2: [002, 001], 3: [013]}, {1: [006], 2: [012], 3: [013]}]
   const baseSlots: ParsedSlot = {};
   const retroSlots: ParsedSlot = {};
   const baseFits: ParsedFit = {};
   const retroFits: ParsedFit = {};
-  const hasRetrofitSlots = Object.keys(slots).some((key) => slotTypes[slots[key].type].length >= 2);
+  // const hasRetrofitSlots = Object.keys(slots).some((key) => slotTypes[slots[key].type].length >= 2);
   Object.keys(slots).forEach((key) => {
     const slotIDs = slotTypes[slots[key].type];
     const baseSlot: string[] = slotIDs[0].map((eqID) => eqTypes[eqID]);
@@ -289,7 +289,7 @@ export const parseSlots = (slots: { [key: string]: Slot }, data: DataStore): Par
     baseFits[key] = baseFit;
     retroFits[key] = retroFit;
   });
-  if (hasRetrofitSlots) return { parsedSlots: [baseSlots, retroSlots], parsedFits: [baseFits, retroFits] };
+  if (hasRetrofit) return { parsedSlots: [baseSlots, retroSlots], parsedFits: [baseFits, retroFits] };
   return { parsedSlots: [baseSlots], parsedFits: [baseFits] };
 };
 

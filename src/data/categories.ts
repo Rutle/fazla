@@ -125,6 +125,7 @@ export const slotTypes: SlotType = {
   'CL Guns / Anti-Air Guns': [['002', '013']],
   'Fighters / Dive Bombers (LB1) / Torpedo Bombers (LB1)': [['009', '010', '011']],
   'Submarine-mounted 203mm Gun': [['005']],
+  'CA/283mm CB Gun': [['003', '004']],
 };
 
 // Slot types on equipment.
