@@ -1,15 +1,16 @@
 language: node_js
 node_js:
-  - "stable"
+  - 16
 cache:
   directories:
   - node_modules
 script:
   - npm run web-prod
 deploy:
-  provider: pages
+  provider: pages:git
   cleanup: false
   github_token: $TRAVIS_TOKEN
+  edge: true
   local_dir: dist
   keep_history: true
   on:
