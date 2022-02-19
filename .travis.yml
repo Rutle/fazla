@@ -8,7 +8,7 @@ script:
   - npm run web-prod
 deploy:
   provider: pages
-  skip_cleanup: true
+  cleanup: false
   github_token: $TRAVIS_TOKEN
   local_dir: dist
   keep_history: true
