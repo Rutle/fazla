@@ -176,6 +176,8 @@ export const statCatAbb: { [key: string]: string } = {
   baseStats: 'Base',
   level100: '100',
   level120: '120',
+  level125: '125',
   level100Retrofit: '100R',
   level120Retrofit: '120R',
+  level125Retrofit: '125R',
 };

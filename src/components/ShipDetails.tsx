@@ -41,6 +41,7 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
       );
     } else {
       const tempShip = shipData.getShipByIndex(appState[appState.cToggle].index);
+      console.log(tempShip);
       setShip(tempShip);
       setIsOwned(isShipOwned(tempShip));
     }
