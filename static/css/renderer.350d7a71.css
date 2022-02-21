@@ -326,7 +326,6 @@ div.scroll {
   padding: 15px;
   margin: 15px;
   width: 100%;
-  box-shadow: 0px 0px 20px 5px #0000005e;
   border-radius: 5px;
 }
 
@@ -380,7 +379,7 @@ div.scroll {
 }
 
 .navigation {
-  height: 32px;
+  /* height: 32px;*/
   z-index: 20;
 }
 
@@ -434,8 +433,8 @@ button.btn,
 button.btn * {
   cursor: pointer;
   box-sizing: border-box;
-  -webkit-transition: background-color 0.2s ease-in-out, /*color 0.2s ease-in-out, */stroke 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, /*color 0.2s ease-in-out, */stroke 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out, stroke 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out, stroke 0.2s ease-in-out;
 }
 
 /* TODO. Check on electron.
@@ -505,8 +504,11 @@ button.tab-btn.normal.icon-only {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   box-sizing: border-box;
+  /*
+  border-bottom-left-radius: 0px!important;
+  border-bottom-right-radius: 0px!important;*/
 
 }
 
@@ -791,12 +793,16 @@ span.Elite:last-child {
   border-bottom-left-radius: inherit;
 }
 
-.tab-group > button:last-child,
+.f-header.tab-group > button:last-child,
 .button-group > button:last-child,
 .radio-group > label:last-child {
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
+}
 
+div.f-grid div.tab-group {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
 }
 .radio-group input[type="radio"] {
   opacity: 0;
@@ -1242,11 +1248,11 @@ div.f-grid .f-body {
     box-sizing: border-box;
     width: max-content;
   }
-
+  /*
   #formation-content > div.scroll {
     overflow-y: unset;
   }
-
+  */
   #formation-ship-search,
   .page-content {
     flex-direction: column;
@@ -1261,7 +1267,7 @@ div.f-grid .f-body {
 
   .page-content.formations > .container.content {
     min-height: calc(100% - 60px);
-    overflow-y: scroll;
+    /* overflow-y: scroll;*/
     margin-bottom: 25px;
   }
   #formation-ship-search {
@@ -1269,7 +1275,7 @@ div.f-grid .f-body {
     top: 55px!important;
     left: 0;
     min-height: calc(100% - 55px)!important;
-    height: calc(100% - 55px)!important;;
+    height: calc(100% - 55px)!important;
     width: 100%;
     border-top: unset!important;
     box-shadow: unset!important;
@@ -1302,7 +1308,9 @@ div.f-grid .f-body {
   .tab { /* TODO: check if needed on firefox */
     justify-content: space-evenly;
   }
-
+  .tab > .tab-btn.normal {
+    flex-grow: 1;
+  }
   .message-container {
     width: 100%;
   }
@@ -1417,6 +1425,7 @@ div.page.light {
 
 div.page.light .container {
   background-color: var(--root-light-bg);
+  box-shadow: 0px 0px 20px 5px #a8a8a85e;
 }
 
 /* ##### Titlebar ##### */
@@ -1485,9 +1494,9 @@ div.page.light .container {
 
 /* #### Tab #### */
 div.page.light .tab {
-  border: 1px solid var(--main-light-border);
-  border-left: 0px;
-  border-right: 0px;
+  border-bottom: 2px solid var(--main-light-border);
+  /* border-left: 0px;
+  border-right: 0px; */
   background-color: var(--main-light-bg);
   box-sizing: border-box;
 }
@@ -1537,8 +1546,8 @@ label.light,
 button.light {
   background-color: var(--main-light-bg);
   color: var(--main-light-color);
-  /* border: 1px solid transparent;*/
-  border: none;
+  border: 1px solid transparent;
+  /* border: none;*/
 }
 
 button.light.input,
@@ -1552,6 +1561,7 @@ button.grid-item.btn.light:hover,
 .btn.light:hover {
   background-color: #a4d3ff;
   color: var(--main-light-color);
+  border: 1px solid #a4d3ff;
 }
 
 button.btn.light:disabled:hover,
@@ -1561,13 +1571,18 @@ button.tab-btn.light:disabled:hover {
 
 label.btn.light.selected,
 button.grid-item.btn.light.selected,
-button.rList-item.light.btn.selected,
 button.btn.light.selected,
 button.tab-btn.light.selected {
   background-color: var(--main-light-active-bg);
   color: white;
+  border: 1px solid var(--main-light-active-bg);
 }
 
+button.rList-item.light.btn.selected {
+  background-color: var(--main-light-active-bg);
+  color: white;
+  border: unset;
+}
 button.btn.rList-item.light:active,
 label.btn.light:active,
 button.btn.light:active {
@@ -1591,17 +1606,19 @@ button.btn.light:active {
 /* #### Formation menu ##### */
 .formation-dropdown-menu.light {
   border: 1px solid var(--main-light-border);
+  background-color:#a4d3ff;
 }
-
+/*
 .formation-dropdown-menu.light .btn.menu-item:last-child {
   border-bottom: 1px solid var(--main-light-bg)!important;
 }
-
+*/
 .light #formation-grid {
   border-bottom: 1px solid var(--main-light-border);
 }
 #formation-ship-search.light {
   border-top: 3px solid var(--main-light-border);
+  background-color: var(--root-light-bg);
 }
 /* #### Popover #### */
 .popover-container.light {
@@ -1613,11 +1630,22 @@ button.btn.light:active {
 }
 
 /* #### ship title bar #### */
-.light .ship-title-bar {
-  border-bottom: 2px solid var(--main-light-border);
+.ship-title-bar.light {
+  /* border-bottom: 2px solid var(--main-light-border);*/
   background-color: var(--main-light-bg);
 }
 
+div.f-grid.light .f-column.section,
+.button-group.rounded.light,
+.radio-group.rounded.light,
+.ship-title-bar.rounded.light {
+  border: 1px solid #aed8ff;
+}
+/*
+.radio-group.light > label{
+  border: 1px solid #aed8ff;
+}
+*/
 /* #### Input #### */
 input[type="url"].light,
 #input-group.light {
@@ -1655,7 +1683,7 @@ div.f-grid.light div.f-header {
 
 div.f-grid.light div.f-body {
   background-color: #eff7ff;
-  border-bottom: 2px solid var(--main-light-border);
+  /* border-bottom: 2px solid var(--main-light-border);*/
 }
 
 div.f-grid.light div.f-title {
@@ -1664,23 +1692,31 @@ div.f-grid.light div.f-title {
   border-top: 1px solid var(--main-light-border);
 }
 
-div.f-grid.light div.f-icon {
+div.f-grid.light div.f-icon,
+div.f-grid.light div.f-header {
   background-color: var(--main-light-bg);
-  border: 1px solid var(--main-light-border);
+  border-bottom: 2px solid var(--main-light-border);
+}
+
+div.f-row.light div.f-header + div.f-icon,
+div.f-row.light div.f-header + div.tab-group > button:first-child {
+  border-left: 2px dotted var(--main-light-border);
 }
 
 div.f-grid.light div.tab-group,
-div.radio-group.light,
+/* div.radio-group.light,*/
 div.button-group.light {
   background-color: var(--main-light-bg);
   border-bottom: 2px solid var(--main-light-border);
 }
+/*
 div.f-row.light div.f-header.tab-group > button:first-child {
   border-left: 2px dotted var(--main-light-border);
 }
+
 div.f-row.light div.f-header.tab-group > button:last-child {
   border-right: 2px dotted var(--main-light-border);
-}
+}*/
 /* #### hull type colors #### */
 
 .grid-item.light.ship.Carrier {
@@ -1732,25 +1768,29 @@ table.f-table.light .stat-item:last-child {
   border-right: 2px dotted var(--main-light-border);
 }
 /* #### grid icon #### */
+/*
 div.f-grid.light div.f-icon {
   background-color: var(--main-light-bg);
   border: 1px solid var(--main-light-border);
-}
+}*/
 
 /* #### rarity #### */
 div.f-grid.light div.f-row.pink {
   border-bottom: 2px solid rgba(255, 192, 203, 1);
   background-color: #eff7ff;
+  border-radius: 0px;
 }
 /* #### rarity #### */
 div.f-grid.light div.f-row.gold {
   background-color: #eff7ff;
   border-bottom: 2px solid rgba(255, 215, 0, 1);
+  border-radius: 0px;
 }
 
 div.f-grid.light div.f-row.deepskyblue {
   background-color: #eff7ff;
   border-bottom: 2px solid rgba(0, 191, 255, 1);
+  border-radius: 0px;
 }
 
 .toast-container.light > .toast,
@@ -1877,6 +1917,7 @@ div.page.dark {
 
 div.page.dark .container {
   background-color: var(--root-dark-bg);
+  box-shadow: 0px 0px 20px 5px #0000005e;
 }
 
 div.page.dark #side-scroll {
@@ -1995,13 +2036,14 @@ div.page.dark #side-scroll:hover {
 }
 
 /* #### Tab #### */
+/*
 div.page.dark .tab {
   border: 1px solid var(--main-dark-border);
   border-left: 0px;
   border-right: 0px;
   background-color: var(--main-dark-header-bg);
 }
-
+*/
 nav.tab.dark {
   align-self: unset!important;
   height: 40px;
@@ -2143,7 +2185,7 @@ button.dark.tab-btn:active {
 }
 
 /* #### ship title bar #### */
-.dark .ship-title-bar {
+.ship-title-bar.dark {
   /* border-bottom: 2px solid var(--main-dark-border);*/
   background-color: var(--main-dark-header-bg);
   /*
@@ -2155,14 +2197,15 @@ button.dark.tab-btn:active {
 }
 
 div.f-grid.dark .f-column.section,
-.button-group.rounded,
-.radio-group.rounded,
-.ship-title-bar.rounded {
+.button-group.rounded.dark,
+.radio-group.rounded.dark,
+.ship-title-bar.rounded.dark {
   border: 1px solid #1a1a1a;
 }
 
 #theme-controls.navigation.dark > button.selected,
-div.f-grid.dark div.tab-group
+div.f-grid.dark div.tab-group,
+div.page.dark .tab
 /*div.radio-group.dark,
 div.button-group.dark */{
   border-bottom: 2px solid var(--main-dark-border);
