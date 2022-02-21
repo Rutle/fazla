@@ -72,7 +72,7 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
 
   return ship ? (
     <>
-      <div className="ship-title-bar rounded">
+      <div className={`ship-title-bar rounded ${config.themeColor}`}>
         <span className="ship-name">{ship.names.code}</span>
         <span className={ship.rarity}>{` ${'\u2605'.repeat(ship.stars)}`}</span>
       </div>

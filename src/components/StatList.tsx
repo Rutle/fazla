@@ -17,24 +17,22 @@ const StatList: React.FC<{ stats: ShipStats; themeColor: string }> = ({ stats, t
         <div className="f-header">Stats</div>
         <div className="f-header tab-group">
           {stats ? (
-            <>
-              {statCatAbbOrder.map((cat, index) =>
-                statKeys.includes(cat) ? (
-                  <RButton
-                    key={`btn-${cat}`}
-                    themeColor={themeColor}
-                    className={`tab-btn normal${selectedStats === index ? ' selected' : ''}`}
-                    onClick={() => setSelectedStats(index)}
-                  >
-                    <span style={{ display: 'inline-block' }}>{statCatAbb[cat]}</span>
-                  </RButton>
-                ) : (
-                  <></>
-                )
-              )}
-            </>
+            statCatAbbOrder.map((cat, index) =>
+              statKeys.includes(cat) ? (
+                <RButton
+                  key={`btn-${cat}`}
+                  themeColor={themeColor}
+                  className={`tab-btn normal${selectedStats === index ? ' selected' : ''}`}
+                  onClick={() => setSelectedStats(index)}
+                >
+                  <span style={{ display: 'inline-block' }}>{statCatAbb[cat]}</span>
+                </RButton>
+              ) : (
+                <React.Fragment key={`btn-${cat}`} />
+              )
+            )
           ) : (
-            <></>
+            <React.Fragment key="statlist" />
           )}
         </div>
       </div>

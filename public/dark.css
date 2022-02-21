@@ -84,6 +84,7 @@ div.page.dark {
 
 div.page.dark .container {
   background-color: var(--root-dark-bg);
+  box-shadow: 0px 0px 20px 5px #0000005e;
 }
 
 div.page.dark #side-scroll {
@@ -202,13 +203,14 @@ div.page.dark #side-scroll:hover {
 }
 
 /* #### Tab #### */
+/*
 div.page.dark .tab {
   border: 1px solid var(--main-dark-border);
   border-left: 0px;
   border-right: 0px;
   background-color: var(--main-dark-header-bg);
 }
-
+*/
 nav.tab.dark {
   align-self: unset!important;
   height: 40px;
@@ -350,7 +352,7 @@ button.dark.tab-btn:active {
 }
 
 /* #### ship title bar #### */
-.dark .ship-title-bar {
+.ship-title-bar.dark {
   /* border-bottom: 2px solid var(--main-dark-border);*/
   background-color: var(--main-dark-header-bg);
   /*
@@ -362,14 +364,15 @@ button.dark.tab-btn:active {
 }
 
 div.f-grid.dark .f-column.section,
-.button-group.rounded,
-.radio-group.rounded,
-.ship-title-bar.rounded {
+.button-group.rounded.dark,
+.radio-group.rounded.dark,
+.ship-title-bar.rounded.dark {
   border: 1px solid #1a1a1a;
 }
 
 #theme-controls.navigation.dark > button.selected,
-div.f-grid.dark div.tab-group
+div.f-grid.dark div.tab-group,
+div.page.dark .tab
 /*div.radio-group.dark,
 div.button-group.dark */{
   border-bottom: 2px solid var(--main-dark-border);

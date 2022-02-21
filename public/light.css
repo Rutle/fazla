@@ -79,6 +79,7 @@ div.page.light {
 
 div.page.light .container {
   background-color: var(--root-light-bg);
+  box-shadow: 0px 0px 20px 5px #a8a8a85e;
 }
 
 /* ##### Titlebar ##### */
@@ -147,9 +148,9 @@ div.page.light .container {
 
 /* #### Tab #### */
 div.page.light .tab {
-  border: 1px solid var(--main-light-border);
-  border-left: 0px;
-  border-right: 0px;
+  border-bottom: 2px solid var(--main-light-border);
+  /* border-left: 0px;
+  border-right: 0px; */
   background-color: var(--main-light-bg);
   box-sizing: border-box;
 }
@@ -199,8 +200,8 @@ label.light,
 button.light {
   background-color: var(--main-light-bg);
   color: var(--main-light-color);
-  /* border: 1px solid transparent;*/
-  border: none;
+  border: 1px solid transparent;
+  /* border: none;*/
 }
 
 button.light.input,
@@ -214,6 +215,7 @@ button.grid-item.btn.light:hover,
 .btn.light:hover {
   background-color: #a4d3ff;
   color: var(--main-light-color);
+  border: 1px solid #a4d3ff;
 }
 
 button.btn.light:disabled:hover,
@@ -223,13 +225,18 @@ button.tab-btn.light:disabled:hover {
 
 label.btn.light.selected,
 button.grid-item.btn.light.selected,
-button.rList-item.light.btn.selected,
 button.btn.light.selected,
 button.tab-btn.light.selected {
   background-color: var(--main-light-active-bg);
   color: white;
+  border: 1px solid var(--main-light-active-bg);
 }
 
+button.rList-item.light.btn.selected {
+  background-color: var(--main-light-active-bg);
+  color: white;
+  border: unset;
+}
 button.btn.rList-item.light:active,
 label.btn.light:active,
 button.btn.light:active {
@@ -253,17 +260,19 @@ button.btn.light:active {
 /* #### Formation menu ##### */
 .formation-dropdown-menu.light {
   border: 1px solid var(--main-light-border);
+  background-color:#a4d3ff;
 }
-
+/*
 .formation-dropdown-menu.light .btn.menu-item:last-child {
   border-bottom: 1px solid var(--main-light-bg)!important;
 }
-
+*/
 .light #formation-grid {
   border-bottom: 1px solid var(--main-light-border);
 }
 #formation-ship-search.light {
   border-top: 3px solid var(--main-light-border);
+  background-color: var(--root-light-bg);
 }
 /* #### Popover #### */
 .popover-container.light {
@@ -275,11 +284,22 @@ button.btn.light:active {
 }
 
 /* #### ship title bar #### */
-.light .ship-title-bar {
-  border-bottom: 2px solid var(--main-light-border);
+.ship-title-bar.light {
+  /* border-bottom: 2px solid var(--main-light-border);*/
   background-color: var(--main-light-bg);
 }
 
+div.f-grid.light .f-column.section,
+.button-group.rounded.light,
+.radio-group.rounded.light,
+.ship-title-bar.rounded.light {
+  border: 1px solid #aed8ff;
+}
+/*
+.radio-group.light > label{
+  border: 1px solid #aed8ff;
+}
+*/
 /* #### Input #### */
 input[type="url"].light,
 #input-group.light {
@@ -317,7 +337,7 @@ div.f-grid.light div.f-header {
 
 div.f-grid.light div.f-body {
   background-color: #eff7ff;
-  border-bottom: 2px solid var(--main-light-border);
+  /* border-bottom: 2px solid var(--main-light-border);*/
 }
 
 div.f-grid.light div.f-title {
@@ -326,23 +346,31 @@ div.f-grid.light div.f-title {
   border-top: 1px solid var(--main-light-border);
 }
 
-div.f-grid.light div.f-icon {
+div.f-grid.light div.f-icon,
+div.f-grid.light div.f-header {
   background-color: var(--main-light-bg);
-  border: 1px solid var(--main-light-border);
+  border-bottom: 2px solid var(--main-light-border);
+}
+
+div.f-row.light div.f-header + div.f-icon,
+div.f-row.light div.f-header + div.tab-group > button:first-child {
+  border-left: 2px dotted var(--main-light-border);
 }
 
 div.f-grid.light div.tab-group,
-div.radio-group.light,
+/* div.radio-group.light,*/
 div.button-group.light {
   background-color: var(--main-light-bg);
   border-bottom: 2px solid var(--main-light-border);
 }
+/*
 div.f-row.light div.f-header.tab-group > button:first-child {
   border-left: 2px dotted var(--main-light-border);
 }
+
 div.f-row.light div.f-header.tab-group > button:last-child {
   border-right: 2px dotted var(--main-light-border);
-}
+}*/
 /* #### hull type colors #### */
 
 .grid-item.light.ship.Carrier {
@@ -394,25 +422,29 @@ table.f-table.light .stat-item:last-child {
   border-right: 2px dotted var(--main-light-border);
 }
 /* #### grid icon #### */
+/*
 div.f-grid.light div.f-icon {
   background-color: var(--main-light-bg);
   border: 1px solid var(--main-light-border);
-}
+}*/
 
 /* #### rarity #### */
 div.f-grid.light div.f-row.pink {
   border-bottom: 2px solid rgba(255, 192, 203, 1);
   background-color: #eff7ff;
+  border-radius: 0px;
 }
 /* #### rarity #### */
 div.f-grid.light div.f-row.gold {
   background-color: #eff7ff;
   border-bottom: 2px solid rgba(255, 215, 0, 1);
+  border-radius: 0px;
 }
 
 div.f-grid.light div.f-row.deepskyblue {
   background-color: #eff7ff;
   border-bottom: 2px solid rgba(0, 191, 255, 1);
+  border-radius: 0px;
 }
 
 .toast-container.light > .toast,

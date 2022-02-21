@@ -127,7 +127,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
       </div>
 
       <div className="modal-action">
-        <div className={`button-group full-width ${config.themeColor}`}>
+        <div className={`button-group rounded full-width ${config.themeColor}`}>
           {isType === 'import' ? (
             <>
               <RButton

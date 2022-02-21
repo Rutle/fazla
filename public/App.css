@@ -304,7 +304,6 @@ div.scroll {
   padding: 15px;
   margin: 15px;
   width: 100%;
-  box-shadow: 0px 0px 20px 5px #0000005e;
   border-radius: 5px;
 }
 
@@ -358,7 +357,7 @@ div.scroll {
 }
 
 .navigation {
-  height: 32px;
+  /* height: 32px;*/
   z-index: 20;
 }
 
@@ -412,8 +411,8 @@ button.btn,
 button.btn * {
   cursor: pointer;
   box-sizing: border-box;
-  -webkit-transition: background-color 0.2s ease-in-out, /*color 0.2s ease-in-out, */stroke 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, /*color 0.2s ease-in-out, */stroke 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out, stroke 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out, stroke 0.2s ease-in-out;
 }
 
 /* TODO. Check on electron.
@@ -483,8 +482,11 @@ button.tab-btn.normal.icon-only {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   box-sizing: border-box;
+  /*
+  border-bottom-left-radius: 0px!important;
+  border-bottom-right-radius: 0px!important;*/
 
 }
 
@@ -769,12 +771,16 @@ span.Elite:last-child {
   border-bottom-left-radius: inherit;
 }
 
-.tab-group > button:last-child,
+.f-header.tab-group > button:last-child,
 .button-group > button:last-child,
 .radio-group > label:last-child {
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
+}
 
+div.f-grid div.tab-group {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
 }
 .radio-group input[type="radio"] {
   opacity: 0;
@@ -1220,11 +1226,11 @@ div.f-grid .f-body {
     box-sizing: border-box;
     width: max-content;
   }
-
+  /*
   #formation-content > div.scroll {
     overflow-y: unset;
   }
-
+  */
   #formation-ship-search,
   .page-content {
     flex-direction: column;
@@ -1239,7 +1245,7 @@ div.f-grid .f-body {
 
   .page-content.formations > .container.content {
     min-height: calc(100% - 60px);
-    overflow-y: scroll;
+    /* overflow-y: scroll;*/
     margin-bottom: 25px;
   }
   #formation-ship-search {
@@ -1247,7 +1253,7 @@ div.f-grid .f-body {
     top: 55px!important;
     left: 0;
     min-height: calc(100% - 55px)!important;
-    height: calc(100% - 55px)!important;;
+    height: calc(100% - 55px)!important;
     width: 100%;
     border-top: unset!important;
     box-shadow: unset!important;
@@ -1280,7 +1286,9 @@ div.f-grid .f-body {
   .tab { /* TODO: check if needed on firefox */
     justify-content: space-evenly;
   }
-
+  .tab > .tab-btn.normal {
+    flex-grow: 1;
+  }
   .message-container {
     width: 100%;
   }

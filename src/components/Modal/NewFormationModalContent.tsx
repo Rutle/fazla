@@ -71,7 +71,7 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px', justifyContent: 'center' }}>
-          <div className={`radio-group ${config.themeColor}`}>
+          <div className={`radio-group rounded ${config.themeColor}`}>
             <RToggle
               id="normal-toggle"
               value="normal"
@@ -97,7 +97,7 @@ const NewFormationModalContent: React.FC<FormModalProps> = ({ setModalOpen }) =>
       </div>
 
       <div className="modal-action">
-        <div className={`button-group full-width ${config.themeColor}`}>
+        <div className={`button-group rounded full-width ${config.themeColor}`}>
           <RButton
             themeColor={config.themeColor}
             onClick={() => {
