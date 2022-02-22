@@ -99,10 +99,6 @@ div.page.dark #side-scroll {
 }
 
 div.page.dark #side-scroll:hover {
-  /*
-  border-radius: 4px;
-  background-color: var(--main-dark-header-bg);
-  border: 1px solid var(--main-dark-border); */
   -webkit-box-shadow: 0px 0px 2px 2px #0000008f;
   -moz-box-shadow: 0px 0px 2px 2px #0000008f;
   box-shadow: 0px 0px 2px 2px #0000008f;
@@ -195,7 +191,6 @@ div.page.dark #side-scroll:hover {
 .modal-overlay.dark .modal-container {
   background-color: var(--root-dark-bg);
   border: 3px double var(--main-dark-border);
-  border-radius: 2px;
   color: var(--main-dark-color);
   -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
   -moz-box-shadow: 1px 1px 4px 1px #0000008f;
@@ -203,14 +198,6 @@ div.page.dark #side-scroll:hover {
 }
 
 /* #### Tab #### */
-/*
-div.page.dark .tab {
-  border: 1px solid var(--main-dark-border);
-  border-left: 0px;
-  border-right: 0px;
-  background-color: var(--main-dark-header-bg);
-}
-*/
 nav.tab.dark {
   align-self: unset!important;
   height: 40px;
@@ -333,11 +320,7 @@ button.dark.tab-btn:active {
   border: 1px solid var(--main-dark-border);
   background-color: var(--main-dark-body-bg);
 }
-/*
-.formation-dropdown-menu.dark .btn.menu-item:last-child {
-  border-bottom: 1px solid var(--main-dark-header-bg)!important;
-}
-*/
+
 .dark #formation-grid {
   border-bottom: 1px solid var(--main-dark-border);
 }
@@ -353,28 +336,19 @@ button.dark.tab-btn:active {
 
 /* #### ship title bar #### */
 .ship-title-bar.dark {
-  /* border-bottom: 2px solid var(--main-dark-border);*/
   background-color: var(--main-dark-header-bg);
-  /*
-  //border-bottom: 2px solid var(--main-dark-border);
-  background-color: var(--main-dark-header-bg);
-  border-radius: 5px;
-  outline: 1px solid #1a1a1a;
-  */
 }
 
 div.f-grid.dark .f-column.section,
-.button-group.rounded.dark,
-.radio-group.rounded.dark,
-.ship-title-bar.rounded.dark {
+.button-group.dark,
+.radio-group.dark,
+.ship-title-bar.dark {
   border: 1px solid #1a1a1a;
 }
 
 #theme-controls.navigation.dark > button.selected,
 div.f-grid.dark div.tab-group,
-div.page.dark .tab
-/*div.radio-group.dark,
-div.button-group.dark */{
+div.page.dark .tab {
   border-bottom: 2px solid var(--main-dark-border);
   background-color: var(--main-dark-header-bg);
 }
@@ -425,7 +399,6 @@ div.f-grid.dark div.f-header {
 
 div.f-grid.dark div.f-body {
   background-color: var(--main-dark-body-bg);
-  /* border-bottom: 2px solid var(--main-dark-border);*/
 }
 
 div.f-grid.dark div.f-title
@@ -543,11 +516,6 @@ div.f-grid.dark div.f-row.deepskyblue {
 }
 
 @media only screen and (max-width: 695px) {
-  /*
-  #stat-section {
-    margin-bottom: 12px;
-  }
-  */
   .dark #stat-section .f-column {
     border-right: unset;
   }

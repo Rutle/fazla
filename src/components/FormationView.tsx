@@ -210,7 +210,7 @@ const FormationView: React.FC = () => {
           <ReactModal
             overlayClassName={`modal-overlay ${config.themeColor}`}
             isOpen={showModal.isOpen}
-            className="modal-container formation-action"
+            className="modal-container formation-action rounded"
             onRequestClose={requestClose}
           >
             {renderModal()}
@@ -289,7 +289,7 @@ const FormationView: React.FC = () => {
                 />
                 <div id="fleet-selector" className={`f-grid ${config.themeColor}`}>
                   <div className="f-row">
-                    <div className="tab-group" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                    <div className="tab" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                       {formationData.map((fleet, idx) => {
                         return (
                           <RButton

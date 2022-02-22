@@ -722,6 +722,7 @@ span.Elite:last-child {
   box-sizing: border-box;
   padding: 0px;
   border: unset;
+  /* border: 1px solid transparent;*/
 }
 
 .rList .rList-item > div.hulltype {
@@ -1211,7 +1212,9 @@ div.f-grid .f-body {
     width: 100%;
     margin-bottom: 0px;
   }
-
+  #fleet-selector .tab {
+    margin-bottom: 0px;
+  }
   #small-nav.navigation {
     top: 200px;
     right: 10px;

@@ -67,7 +67,6 @@ const SlotList: React.FC<{ slots: { [key: string]: Slot }; hasRetrofit?: boolean
     const [parsedData, setParsedSlots] = useState<ParsedValues>({ parsedFits: [], parsedSlots: [] });
 
     useEffect(() => {
-      console.log('has', hasRetrofit, slots);
       setParsedSlots(parseSlots(slots, shipData, hasRetrofit));
       setSelectedSlotList(0);
       // eslint-disable-next-line react-hooks/exhaustive-deps

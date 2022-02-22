@@ -172,7 +172,7 @@ export const statsAbb: { [key: string]: string } = {
   huntingRange: 'ASR',
 };
 
-export const statCatAbb: { [key: string]: string } = {
+export const levelCategories: { [key: string]: string } = {
   baseStats: 'Base',
   level100: '100',
   level120: '120',
@@ -182,7 +182,7 @@ export const statCatAbb: { [key: string]: string } = {
   level125Retrofit: '125R',
 };
 
-export const statCatAbbOrder = [
+export const levelOrder = [
   'baseStats',
   'level100',
   'level120',
