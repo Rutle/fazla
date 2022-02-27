@@ -140,9 +140,9 @@ div.page.light .container {
   background-color: var(--root-light-bg);
   border: 3px double var(--main-light-border);
   color: var(--main-light-color);
-  -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
-  -moz-box-shadow: 1px 1px 4px 1px #0000008f;
-  box-shadow: 1px 1px 4px 1px #0000008f;
+  -webkit-box-shadow: 0px 0px 4px 2px rgba(183, 183, 183, 0.75);
+  -moz-box-shadow: 0px 0px 4px 2px rgba(183, 183, 183, 0.75);
+  box-shadow: 0px 0px 4px 2px rgba(183, 183, 183, 0.75);
 }
 
 /* #### Tab #### */
@@ -158,13 +158,14 @@ nav.navigation.tab.light {
 #small-nav.navigation.light {
   /* background-color: #6ebaff;*/
   background-color: var(--main-light-bg);
-  outline: 1px solid var(--main-light-border);
+  /*outline: 1px solid var(--main-light-border);*/
+  border: 1px solid var(--main-light-border);
 }
 #small-nav.navigation.light > .nav-item:hover {
   background-color: var(--main-light-hover-bg);
 }
-#small-nav.navigation.light:hover {
-  box-shadow: 0px 0px 5px 2px var(--main-light-bg);
+#small-nav.navigation.light {
+  box-shadow: 0px 0px 2px 1px var(--main-light-bg);
 }
 .navigation.light > .nav-item {
   color: white;
@@ -279,9 +280,9 @@ button.btn.light:active {
 .popover-container.light {
   background-color: var(--root-light-bg);
   border: 3px double var(--main-light-border);
-  -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(183, 183, 183, 0.75);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(183, 183, 183, 0.75);
+  box-shadow: 0px 0px 3px 1px rgba(183, 183, 183, 0.75);
 }
 
 .ship-title-bar.light {

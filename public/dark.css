@@ -230,14 +230,21 @@ nav.tab.dark > a:hover {
 }
 #small-nav.navigation.dark {
   background-color: var(--main-dark-tooltip-bg);
-  outline: 1px solid var(--main-dark-border);
+  /* outline: 1px solid var(--main-dark-border);*/
+  border: 1px solid var(--main-dark-border);
 }
+
 #small-nav.navigation.dark > .nav-item:hover {
   background-color: var(--main-dark-hover-bg);
 }
-#small-nav.navigation.dark:hover {
-  box-shadow: 0px 0px 5px 2px var(--main-dark-header-bg);
+#small-nav.navigation.dark {
+  box-shadow: 0px 0px 2px 1px var(--main-dark-header-bg);
 }
+/*
+:not(.tab):not(#small-nav).navigation.dark > .nav-item:hover {
+  border-bottom: 2px solid var(--main-dark-border);
+}
+*/
 /* Tooltip */
 .tooltip.dark > .tooltip-content {
   background-color: var(--main-dark-tooltip-bg);
@@ -469,6 +476,13 @@ table.f-table.dark .stat-item:last-child {
 .dark #stat-section .f-column {
   border-right: 2px dotted var(--main-dark-border);
 }
+
+.f-column.f-body.slots .f-row.slot {
+  border-bottom: 2px solid var(--main-dark-border);
+  border-radius: 0px;
+  flex-grow: 1;
+}
+
 /* #### rarity #### */
 div.f-grid.dark div.f-row.pink {
   border-bottom: 2px solid rgba(255, 192, 203, 0.50);

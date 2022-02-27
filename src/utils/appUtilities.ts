@@ -252,7 +252,10 @@ export const getFleet = (data: { hullType?: string; index?: number; fleetCount?:
 };
 
 interface ParsedSlot {
-  [key: string]: string[];
+  [key: string]: {
+    str: string;
+    slot: Slot;
+  }[];
 }
 
 interface ParsedFit {
@@ -263,22 +266,32 @@ export interface ParsedValues {
   parsedFits: ParsedFit[];
 }
 
-// Parse equipment slots
+/**
+ * Parses ship equipment slot-data from generic string to proper slot categories.
+ * @param {Object} slots Object containing equipment slot data.
+ * @param {class} data Ship data.
+ * @param {boolean|undefined} hasRetrofit If the ship has retrofit.
+ * @returns {{parsedSlots: Object[], parsedFits: Object[][]}} Parsed data object.
+ */
 export const parseSlots = (slots: { [key: string]: Slot }, data: DataStore, hasRetrofit?: boolean): ParsedValues => {
   // [{1: [006], 2: [002, 001], 3: [013]}, {1: [006], 2: [012], 3: [013]}]
   const baseSlots: ParsedSlot = {};
   const retroSlots: ParsedSlot = {};
   const baseFits: ParsedFit = {};
   const retroFits: ParsedFit = {};
+  console.log(slots);
   // const hasRetrofitSlots = Object.keys(slots).some((key) => slotTypes[slots[key].type].length >= 2);
   Object.keys(slots).forEach((key) => {
     const slotIDs = slotTypes[slots[key].type];
-    const baseSlot: string[] = slotIDs[0].map((eqID) => eqTypes[eqID]);
-    let retroSlot: string[] = [];
+    const baseSlot = slotIDs[0].map((eqID) => ({ str: `${eqTypes[eqID]}`, slot: slots[key] }));
+    let retroSlot: {
+      str: string;
+      slot: Slot;
+    }[] = [];
     let retroFit: string[][] = [];
     const baseFit = slotIDs[0].map((eqID) => data.getEqId(eqTypes[eqID]));
     if (slotIDs.length > 1) {
-      retroSlot = slotIDs[1].map((eqID) => eqTypes[eqID]);
+      retroSlot = slotIDs[1].map((eqID) => ({ str: `${eqTypes[eqID]}`, slot: slots[key] }));
       retroFit = slotIDs[1].map((eqID) => data.getEqId(eqTypes[eqID]));
     } else {
       retroSlot = baseSlot;
