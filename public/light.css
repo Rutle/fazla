@@ -295,13 +295,17 @@ div.f-grid.light .f-column.section,
 .ship-title-bar.light {
   border: 1px solid #aed8ff;
 }
+
 .button-group.light > button:first-child {
   border-right: 1px solid transparent;
 }
 .button-group.light > button:last-child {
   border-left: 1px solid transparent;
 }
-
+.button-group.light > :not(button:last-child):not(button:first-child) {
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+}
 /* #### Input #### */
 input[type="url"].light,
 #input-group.light {
@@ -407,6 +411,11 @@ table.f-table.light .stat-item:last-child {
 .light #stat-section .f-column {
   border-right: 2px dotted var(--main-light-border);
 }
+
+.f-column.f-body.slots.light .f-row.slot {
+  border-bottom: 2px solid var(--main-light-border);
+}
+
 /* #### grid icon #### */
 /*
 div.f-grid.light div.f-icon {

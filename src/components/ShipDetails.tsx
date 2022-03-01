@@ -104,10 +104,10 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
       <div className="scroll">
         <div className={`f-grid rounded ${config.themeColor}`}>
           <div className={`f-row wrap gap ${config.themeColor}`}>
-            <div className="f-column section" id="stat-section">
+            <div className="f-column section" id="stat-section" style={!ship.retrofit ? { minWidth: '330px' } : {}}>
               <StatList stats={ship.stats} themeColor={config.themeColor} />
             </div>
-            <div className="f-column section" id="slot-section">
+            <div className="f-column section" id="slot-section" style={{ minWidth: '220px' }}>
               <SlotList slots={ship.slots} hasRetrofit={ship.retrofit} themeColor={config.themeColor} />
             </div>
           </div>

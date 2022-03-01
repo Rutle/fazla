@@ -126,6 +126,7 @@ export const slotTypes: SlotType = {
   'Fighters / Dive Bombers (LB1) / Torpedo Bombers (LB1)': [['009', '010', '011']],
   'Submarine-mounted 203mm Gun': [['005']],
   'CA/283mm CB Gun': [['003', '004']],
+  'Torpedoes (Missiles on retrofit)': [['007'], ['019']],
 };
 
 // Slot types on equipment.
@@ -151,6 +152,7 @@ export const eqTypes: Pair = {
   '016': 'Auxiliary',
   '017': 'ASW Bomber',
   '018': 'ASW Helicopter',
+  '019': 'Missile',
 };
 
 export const statsAbb: { [key: string]: string } = {

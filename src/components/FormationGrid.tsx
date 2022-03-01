@@ -1,10 +1,5 @@
-import React, { useCallback, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { fleets } from '_/data/categories';
-import { formationAction, FormationAction } from '_/reducers/slices/formationGridSlice';
+import React, { useCallback, useRef } from 'react';
 import { Ship } from '_/types/shipTypes';
-import { getFleet } from '_/utils/appUtilities';
-import { useDragAndDrop } from '../hooks/useDragAndDrop';
 import FormationGridItem from './FormationGridItem';
 
 interface FormationGridProps {
@@ -33,7 +28,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   refd,
   isExportedLink = false,
 }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const vanRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
   const subRef = useRef<HTMLDivElement>(null);

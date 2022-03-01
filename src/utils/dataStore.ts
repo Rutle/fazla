@@ -2,7 +2,7 @@
 import { Equipment } from '_/types/equipmentTypes';
 import { Ship } from '_/types/shipTypes';
 import { SearchParams, ShipSimple } from '_/types/types';
-import { fleets } from '../data/categories';
+import { fleets, eqTypes } from '../data/categories';
 
 /**
  * @class Ship data store wrapper.
@@ -11,6 +11,8 @@ export default class DataStore {
   private shipsArr: Ship[] = [];
 
   private eqArr: Equipment[] = [];
+
+  private eqByType: { [key: string]: Equipment[] } = {};
 
   private shipCount = 0;
 
@@ -25,7 +27,9 @@ export default class DataStore {
   constructor(ships?: Ship[], eqs?: Equipment[]) {
     if (ships && eqs) {
       this.shipsArr = [...ships.slice()];
+      // Split data into categories by slot type to avoid having to filter everytime?
       this.eqArr = [...eqs.slice()];
+      this.parseEqData();
       this.shipCount = ships.length;
       this.eqCount = eqs.length;
     } else {
@@ -35,6 +39,13 @@ export default class DataStore {
       this.eqCount = 0;
     }
     this.state = 'INIT';
+  }
+
+  parseEqData(): void {
+    this.eqByType = Object.values(eqTypes).reduce(
+      (a, c) => Object.assign(a, { [c]: this.eqArr.filter((value) => value.type.name === c) }),
+      {} as { [key: string]: Equipment[] }
+    );
   }
 
   getShips(): Ship[] {
@@ -53,8 +64,10 @@ export default class DataStore {
     return this.eqArr[index];
   }
 
-  getEqId(type: string): string[] {
-    return this.eqArr.filter((value) => value.type.name === type).map((eq) => eq.id);
+  getEqName(type: string): string[] {
+    if (Object.keys(this.eqByType).includes(type)) return this.eqByType[type].map((eq) => eq.id);
+    return [];
+    // return this.eqArr.filter((value) => value.type.name === type).map((eq) => eq.id);
   }
 
   async setShips(data: Ship[]): Promise<Ship[]> {
@@ -72,6 +85,7 @@ export default class DataStore {
     try {
       this.eqArr = [...data.slice()];
       this.eqCount = data.length;
+      this.parseEqData();
     } catch (error) {
       return Promise.reject(new Error('Failed to set equipment data in DataStore.'));
     }

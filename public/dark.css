@@ -75,7 +75,6 @@
   background-color: unset;
 }
 
-
 /* ##### Page ##### */
 div.page.dark {
   background-color: var(--root-dark-bg);
@@ -87,22 +86,6 @@ div.page.dark .container {
   box-shadow: 0px 0px 20px 5px #0000005e;
 }
 
-div.page.dark #side-scroll {
-  /*
-  background-color: var(--main-dark-header-bg);
-  border: 1px solid var(--main-dark-border);
-  -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
-  -moz-box-shadow: 1px 1px 4px 1px #0000008f;
-  box-shadow: 1px 1px 4px 1px #0000008f;*/
-  outline: 1px solid var(--main-dark-body-bg);
-  
-}
-
-div.page.dark #side-scroll:hover {
-  -webkit-box-shadow: 0px 0px 2px 2px #0000008f;
-  -moz-box-shadow: 0px 0px 2px 2px #0000008f;
-  box-shadow: 0px 0px 2px 2px #0000008f;
-}
 /* ##### Titlebar ##### */
 #titlebar.dark {
   background: var(--main-dark-header-bg);
@@ -240,11 +223,7 @@ nav.tab.dark > a:hover {
 #small-nav.navigation.dark {
   box-shadow: 0px 0px 2px 1px var(--main-dark-header-bg);
 }
-/*
-:not(.tab):not(#small-nav).navigation.dark > .nav-item:hover {
-  border-bottom: 2px solid var(--main-dark-border);
-}
-*/
+
 /* Tooltip */
 .tooltip.dark > .tooltip-content {
   background-color: var(--main-dark-tooltip-bg);
@@ -303,6 +282,7 @@ label.btn.dark:active,
 button.btn.dark:active {
   background-color: var(--main-dark-active-bg);
 }
+
 button.dark.tab-btn:active {
   background-color: var(--main-dark-active-bg);
   box-shadow: 1px 1px 3px 0px var(--main-dark-header-bg) inset;
@@ -328,10 +308,6 @@ button.dark.tab-btn:active {
   background-color: var(--main-dark-body-bg);
 }
 
-.dark #formation-grid {
-  border-bottom: 1px solid var(--main-dark-border);
-}
-
 /* #### Popover #### */
 .popover-container.dark {
   background-color: var(--root-dark-bg);
@@ -353,11 +329,18 @@ div.f-grid.dark .f-column.section,
   border: 1px solid #1a1a1a;
 }
 
-#theme-controls.navigation.dark > button.selected,
 div.f-grid.dark div.tab-group,
 div.page.dark .tab {
   border-bottom: 2px solid var(--main-dark-border);
   background-color: var(--main-dark-header-bg);
+}
+
+#theme-controls.navigation.dark > .nav-item {
+  border-bottom: 2px solid transparent;
+}
+#theme-controls.navigation.dark > button.selected,
+#theme-controls.navigation.dark > .nav-item:hover {
+  border-bottom: 2px solid var(--main-dark-border);
 }
 
 /* #### Input #### */
@@ -477,10 +460,8 @@ table.f-table.dark .stat-item:last-child {
   border-right: 2px dotted var(--main-dark-border);
 }
 
-.f-column.f-body.slots .f-row.slot {
+.f-column.f-body.slots.dark .f-row.slot {
   border-bottom: 2px solid var(--main-dark-border);
-  border-radius: 0px;
-  flex-grow: 1;
 }
 
 /* #### rarity #### */

@@ -149,4 +149,4 @@ function checkShipEqSlotTypes() {
 // checkNationality();
 // checkHullType();
 checkShipEqSlotTypes();
-// checkEqTypes();
+checkEqTypes();

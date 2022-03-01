@@ -182,7 +182,6 @@ export const downloadShipData = async (
           } else {
             isOk = false;
             msg = 'There was a problem with saving data.';
-            console.log('d');
           }
         }
       })
@@ -279,8 +278,6 @@ export const parseSlots = (slots: { [key: string]: Slot }, data: DataStore, hasR
   const retroSlots: ParsedSlot = {};
   const baseFits: ParsedFit = {};
   const retroFits: ParsedFit = {};
-  console.log(slots);
-  // const hasRetrofitSlots = Object.keys(slots).some((key) => slotTypes[slots[key].type].length >= 2);
   Object.keys(slots).forEach((key) => {
     const slotIDs = slotTypes[slots[key].type];
     const baseSlot = slotIDs[0].map((eqID) => ({ str: `${eqTypes[eqID]}`, slot: slots[key] }));
@@ -289,10 +286,11 @@ export const parseSlots = (slots: { [key: string]: Slot }, data: DataStore, hasR
       slot: Slot;
     }[] = [];
     let retroFit: string[][] = [];
-    const baseFit = slotIDs[0].map((eqID) => data.getEqId(eqTypes[eqID]));
+    // List of equipment that fit the slot
+    const baseFit = slotIDs[0].map((eqID) => data.getEqName(eqTypes[eqID]));
     if (slotIDs.length > 1) {
       retroSlot = slotIDs[1].map((eqID) => ({ str: `${eqTypes[eqID]}`, slot: slots[key] }));
-      retroFit = slotIDs[1].map((eqID) => data.getEqId(eqTypes[eqID]));
+      retroFit = slotIDs[1].map((eqID) => data.getEqName(eqTypes[eqID]));
     } else {
       retroSlot = baseSlot;
       retroFit = baseFit;
