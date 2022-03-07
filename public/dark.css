@@ -218,13 +218,11 @@ nav.tab.dark > a:hover {
 }
 
 /* Tooltip */
-.tooltip.dark > .tooltip-content {
-  background-color: var(--main-dark-tooltip-bg);
+.tooltip.dark {
   color: var(--main-dark-color);
 }
 
-.tooltip.dark li {
-  background-color: var(--main-dark-body-bg);
+.tooltip.dark ul > li:not(:last-child) {
   border-bottom: 1px dotted var(--main-dark-border);
 }
 /* ###### Buttons ###### */
@@ -270,6 +268,8 @@ button.tab-btn.dark.selected {
   color:#98caff;
 }
 
+div.f-grid.dark div.tab > #formation-dropdown,
+div.f-grid.dark div.tab:not(.fleets) > button.tab-btn,
 div.f-grid.dark div.tab.fleets button.tab-btn.selected {
   box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.5);
 }
@@ -309,12 +309,13 @@ button.dark.tab-btn:active {
 }
 
 /* #### Popover #### */
+.tooltip.dark,
 .popover-container.dark {
   background-color: var(--root-dark-bg);
   -webkit-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   -moz-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
-  border: 1px solid #1a1a1a;
+  /* border: 1px solid #1a1a1a;*/
 }
 
 /* #### ship title bar #### */
@@ -323,7 +324,7 @@ button.dark.tab-btn:active {
 }
 
 #small-nav.dark button.nav-item,
-div.f-grid.dark div.tab,
+/*div.f-grid.dark div.tab,*/
 div.f-grid.dark .f-column.section,
 .button-group.dark,
 .radio-group.dark,
@@ -335,9 +336,8 @@ div.f-grid.dark .f-row.fleet {
   gap: 8px;
 }
 
-
 div.f-grid.dark .f-row.fleet > button.grid-item {
-  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.5);
 }
 
 
@@ -402,11 +402,11 @@ div.f-grid.dark div.f-title {
   border-bottom: 1px solid var(--main-dark-border);
   border-top: 1px solid var(--main-dark-border);
 }
-
+/*
 div.f-grid.dark div.tab {
   background-color: var(--main-dark-header-bg);
 }
-
+*/
 div.f-grid.dark div.f-row div.f-header + div.f-icon,
 div.f-row.dark div.f-header + div.tab-group > button:first-child {
   border-left: 2px dotted var(--main-dark-border);

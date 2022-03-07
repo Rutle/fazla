@@ -132,26 +132,7 @@ div.page.light .container {
   background-color: var(--main-light-bg);
 }
 
-.modal-overlay.light div.modal-action {
-  border: 1px solid var(--main-light-border);
-}
-
-.modal-overlay.light .modal-container {
-  background-color: var(--root-light-bg);
-  border: 3px double var(--main-light-border);
-  color: var(--main-light-color);
-  -webkit-box-shadow: 0px 0px 4px 2px rgba(183, 183, 183, 0.75);
-  -moz-box-shadow: 0px 0px 4px 2px rgba(183, 183, 183, 0.75);
-  box-shadow: 0px 0px 4px 2px rgba(183, 183, 183, 0.75);
-}
-
 /* #### Tab #### */
-div.page.light .tab {
-  /* border-bottom: 2px solid var(--main-light-border);*/
-  background-color: var(--main-light-bg);
-  box-sizing: border-box;
-}
-
 nav.navigation.tab.light {
   padding-left: 5px;
 }
@@ -175,19 +156,15 @@ nav.navigation.tab.light {
 }
 
 /* Tooltip */
-.tooltip.light > .tooltip-content {
-  background-color: #eff7ff;
-  color: var(--main-light-color);
+
+.tooltip.light div.f-grid > .f-column.section {
+  border: unset;
 }
 
-.tooltip.light > .tooltip-content > .f-grid {
-  padding: 0px;
-}
-
-.tooltip.light li {
-  background-color: #eff7ff;
+.tooltip.light ul > li:not(:last-child) {
   border-bottom: 1px dotted var(--main-light-border);
 }
+
 /* ###### Buttons ###### */
 label.light,
 button.light {
@@ -265,12 +242,14 @@ button.btn.light:active {
   background-color: var(--root-light-bg);
 }
 /* #### Popover #### */
+.tooltip.light,
+.modal-overlay.light .modal-container,
 .popover-container.light {
   background-color: var(--root-light-bg);
-  border: 3px double var(--main-light-border);
-  -webkit-box-shadow: 0px 0px 3px 1px rgba(183, 183, 183, 0.75);
-  -moz-box-shadow: 0px 0px 3px 1px rgba(183, 183, 183, 0.75);
-  box-shadow: 0px 0px 3px 1px rgba(183, 183, 183, 0.75);
+  border: 1px solid var(--main-light-border);
+  -webkit-box-shadow: 0px 1px 6px 1px rgba(183, 183, 183, 0.75);
+  -moz-box-shadow: 0px 1px 6px 1px rgba(183, 183, 183, 0.75);
+  box-shadow: 0px 1px 6px 1px rgba(183, 183, 183, 0.75);
 }
 
 .ship-title-bar.light {
@@ -278,8 +257,6 @@ button.btn.light:active {
 }
 
 div.f-grid.light .f-column.section,
-.button-group.light > button,
-.radio-group.light > label,
 .ship-title-bar.light {
   border: 1px solid #aed8ff;
 }
@@ -294,16 +271,6 @@ div.f-grid.light .f-row.fleet {
   background-color: var(--main-light-hover-bg);
 }
 
-.button-group.light > button:first-child {
-  border-right: 1px solid transparent;
-}
-.button-group.light > button:last-child {
-  border-left: 1px solid transparent;
-}
-.button-group.light > :not(button:last-child):not(button:first-child) {
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-}
 /* #### Input #### */
 input[type="url"].light,
 #input-group.light {
