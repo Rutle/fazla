@@ -76,7 +76,7 @@ const Home: React.FC = () => {
     <PageTemplate>
       <section className="page-content">
         <div className="container content">
-          <div className={`f-grid ${config.themeColor}`}>
+          <div className={`f-grid rounded ${config.themeColor}`}>
             <div className="f-row">
               <div className="f-header">Options</div>
             </div>
@@ -175,7 +175,7 @@ const Home: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className={`f-grid ${config.themeColor}`}>
+          <div className={`f-grid rounded ${config.themeColor}`}>
             <div className="f-row">
               <div className="f-header">Stats</div>
             </div>

@@ -83,8 +83,10 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
           onClick={isOwned ? removeFromOwned : addShipToOwned}
           className="btn normal icon"
         >
-          {isOwned ? <DashIcon themeColor={config.themeColor} /> : <PlusIcon themeColor={config.themeColor} />}
-          Docks
+          <div className="btn-icon">
+            {isOwned ? <DashIcon themeColor={config.themeColor} /> : <PlusIcon themeColor={config.themeColor} />}
+          </div>
+          <span>Docks</span>
         </RButton>
         <RButton
           themeColor={config.themeColor}

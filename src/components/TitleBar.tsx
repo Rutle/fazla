@@ -141,6 +141,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                 className={`nav-item ${config.themeColor === 'dark' ? 'selected' : ''}`}
                 themeColor={config.themeColor}
                 onClick={() => updateConfig('themeColor', 'dark')}
+                extraStyle={{ backgroundColor: 'inherit' }}
               >
                 D
               </RButton>
@@ -148,6 +149,7 @@ const TitleBar: React.FC<{ showMenu: boolean }> = ({ showMenu }) => {
                 className={`nav-item ${config.themeColor === 'light' ? 'selected' : ''}`}
                 themeColor={config.themeColor}
                 onClick={() => updateConfig('themeColor', 'light')}
+                extraStyle={{ backgroundColor: 'inherit' }}
               >
                 L
               </RButton>

@@ -71,7 +71,7 @@ const CustomOverlay: React.FC<{ themeColor: string; isSmallScreen: boolean; chil
       >
         {({ props /* arrowProps, placement */ }) => (
           // eslint-disable-next-line react/jsx-props-no-spreading
-          <div className={`popover-container rounded ${themeColor}`} {...props}>
+          <div className={`popover-container ${themeColor}`} {...props}>
             {children}
           </div>
         )}

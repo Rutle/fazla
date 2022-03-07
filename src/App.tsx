@@ -63,7 +63,7 @@ const App: React.FC = () => {
   // Finally found out how to properly pass down "static" data that doesn't cause re-render
   // but still gets updated unlike just a const variable.
   const shipData = useRef(new DataStore());
-  const [addToast, onToastDismiss, popToast, toasts] = useToast(true, 3000);
+  const [addToast, onToastDismiss, popToast, toasts] = useToast(true, 35000);
   const tooltip = useTooltip();
   const storage =
     process.env.PLAT_ENV === 'web' ? localForage.createInstance({ name: 'Fazla-storage', version: 1.0 }) : undefined;

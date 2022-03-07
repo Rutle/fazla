@@ -147,7 +147,7 @@ div.page.light .container {
 
 /* #### Tab #### */
 div.page.light .tab {
-  border-bottom: 2px solid var(--main-light-border);
+  /* border-bottom: 2px solid var(--main-light-border);*/
   background-color: var(--main-light-bg);
   box-sizing: border-box;
 }
@@ -155,18 +155,13 @@ div.page.light .tab {
 nav.navigation.tab.light {
   padding-left: 5px;
 }
-#small-nav.navigation.light {
-  /* background-color: #6ebaff;*/
-  background-color: var(--main-light-bg);
-  /*outline: 1px solid var(--main-light-border);*/
+#small-nav.light button.nav-item {
   border: 1px solid var(--main-light-border);
 }
 #small-nav.navigation.light > .nav-item:hover {
   background-color: var(--main-light-hover-bg);
 }
-#small-nav.navigation.light {
-  box-shadow: 0px 0px 2px 1px var(--main-light-bg);
-}
+
 .navigation.light > .nav-item {
   color: white;
 }
@@ -264,14 +259,7 @@ button.btn.light:active {
   border: 1px solid var(--main-light-border);
   background-color:#a4d3ff;
 }
-/*
-.formation-dropdown-menu.light .btn.menu-item:last-child {
-  border-bottom: 1px solid var(--main-light-bg)!important;
-}
-*/
-.light #formation-grid {
-  border-bottom: 1px solid var(--main-light-border);
-}
+
 #formation-ship-search.light {
   border-top: 3px solid var(--main-light-border);
   background-color: var(--root-light-bg);
@@ -294,6 +282,16 @@ div.f-grid.light .f-column.section,
 .radio-group.light > label,
 .ship-title-bar.light {
   border: 1px solid #aed8ff;
+}
+
+div.f-grid.light .f-row.fleet {
+  padding-bottom: 3px;
+  margin: -2px -3px 0px 3px;
+  gap: unset;
+}
+
+#formation-grid.light .f-column {
+  background-color: var(--main-light-hover-bg);
 }
 
 .button-group.light > button:first-child {
@@ -363,6 +361,10 @@ div.f-row.light div.f-header + div.tab-group > button:first-child {
 }
 
 /* #### hull type colors #### */
+.grid-item.light.ship {
+  background-color: var(--main-light-bg);
+}
+
 .grid-item.light.ship.Carrier {
   background-color: Plum;
   color: #510051;

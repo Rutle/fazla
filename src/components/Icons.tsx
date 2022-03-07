@@ -62,7 +62,7 @@ const RestoreIcon: React.FC<{ themeColor: string }> = ({ themeColor }) => {
 };
 
 // https://icons.getbootstrap.com/icons/caret-left/
-const CaretLeft: React.FC<{ themeColor: string }> = ({ themeColor }) => {
+const CaretDown: React.FC<{ themeColor: string }> = ({ themeColor }) => {
   return (
     <svg
       width="10"
@@ -72,11 +72,12 @@ const CaretLeft: React.FC<{ themeColor: string }> = ({ themeColor }) => {
       stroke={`var(--main-${themeColor}-color)`}
       fill={`var(--main-${themeColor}-color)`}
     >
-      <path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z" />
+      <path d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z" />
     </svg>
   );
 };
 
+// https://icons.getbootstrap.com/icons/arrow-up/
 const ArrowDegUp: React.FC<{ themeColor: string; width?: string; height?: string; className?: string }> = ({
   themeColor,
   width = '16px',
@@ -95,7 +96,7 @@ const ArrowDegUp: React.FC<{ themeColor: string; width?: string; height?: string
     >
       <path
         fillRule="evenodd"
-        d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z"
+        d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"
       />
     </svg>
   );
@@ -173,7 +174,6 @@ const DashIcon: React.FC<{ themeColor: string; width?: string; height?: string; 
   );
 };
 
-// https://icons.getbootstrap.com/icons/dash/
 const QuestionCircleIcon: React.FC<{ themeColor: string; width?: string; height?: string; className?: string }> = ({
   themeColor,
   width = '16px',
@@ -196,15 +196,41 @@ const QuestionCircleIcon: React.FC<{ themeColor: string; width?: string; height?
   );
 };
 
+// https://icons.getbootstrap.com/icons/arrow-left-right/
+const ArrowLeftRight: React.FC<{ themeColor: string; width?: string; height?: string; className?: string }> = ({
+  themeColor,
+  width = '10px',
+  height = '10px',
+  className = 'icon',
+}) => {
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 16 16"
+      stroke={`var(--main-${themeColor}-color)`}
+      fill={`var(--main-${themeColor}-color)`}
+    >
+      <path
+        fillRule="evenodd"
+        d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"
+      />
+    </svg>
+  );
+};
+
 export {
   MinIcon,
   MaxIcon,
   CloseIcon,
   RestoreIcon,
-  CaretLeft,
+  CaretDown,
   ArrowDegUp,
   PlusIcon,
   DashIcon,
   QuestionCircleIcon,
   BoxArrowUp,
+  ArrowLeftRight,
 };

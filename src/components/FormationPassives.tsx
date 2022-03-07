@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import useResizeObserver from 'use-resize-observer';
 import { Ship } from '_/types/shipTypes';
 import PassivesList from './PassivesList';
-import { CaretLeft } from './Icons';
+import { CaretDown } from './Icons';
 
 interface FormationPassivesProps {
   fleet: Ship[];
@@ -134,8 +134,8 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
             }}
           >
             <div className="f-header">Main</div>
-            <div className={`f-icon ${showMain ? '' : 'open'}`}>
-              <CaretLeft themeColor={themeColor} />
+            <div className={`f-icon ${showMain ? '' : 'close'}`}>
+              <CaretDown themeColor={themeColor} />
             </div>
           </div>
           <div
@@ -155,8 +155,8 @@ const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet
         <div className="f-column section">
           <div className={`f-row action ${themeColor} no-focus-outline`} onClick={() => setShowVanguard(!showVanguard)}>
             <div className="f-header">Vanguard</div>
-            <div className={`f-icon${showVanguard ? '' : ' open'}`}>
-              <CaretLeft themeColor={themeColor} />
+            <div className={`f-icon${showVanguard ? '' : ' close'}`}>
+              <CaretDown themeColor={themeColor} />
             </div>
           </div>
           <div

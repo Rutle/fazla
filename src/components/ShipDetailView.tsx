@@ -59,7 +59,12 @@ const ShipDetailView: React.FC = () => {
               <ShipList shipSearchList={ownedSearchList} listName="OWNED" scrollTo={() => scrollTo('ship')} />
             </SideBar>
             <div id="small-nav" className={`navigation ${config.themeColor}${isVisible ? ' small-hidden' : ''}`}>
-              <RButton themeColor={config.themeColor} className="nav-item" onClick={() => scrollTo('top')}>
+              <RButton
+                themeColor={config.themeColor}
+                className="nav-item"
+                onClick={() => scrollTo('top')}
+                extraStyle={{ display: 'flex', padding: '6px', marginTop: '4px', borderRadius: 'inherit' }}
+              >
                 <ArrowDegUp themeColor={config.themeColor} />
               </RButton>
             </div>

@@ -18,7 +18,7 @@ const Tooltip: React.FC = () => {
         flip
         onHide={() => hideTooltip()}
         // placement={tooltipData.placement}
-        placement="auto"
+        placement="bottom"
         container={containerRef}
         target={tooltipData.ref}
         popperConfig={{
@@ -33,10 +33,15 @@ const Tooltip: React.FC = () => {
         }}
       >
         {({ props, arrowProps, placement }) => (
-          <div className={`tooltip ${config.themeColor}`} {...props}>
+          <div className={`tooltip rounded ${config.themeColor}`} {...props}>
             <div className={`tooltip-content ${config.themeColor}`}>
-              <div className={`f-grid ${config.themeColor}`} style={{ marginBottom: '0px' }}>
-                <div className="f-body">{tooltipData.data}</div>
+              <div className={`f-grid rounded ${config.themeColor}`} style={{ marginBottom: '0px' }}>
+                <div className="f-column section">
+                  <div className="f-row">
+                    <div className="f-header">Help</div>
+                  </div>
+                  <div className="f-body">{tooltipData.data}</div>
+                </div>
               </div>
             </div>
           </div>

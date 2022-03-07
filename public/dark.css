@@ -42,7 +42,7 @@
   background-color: unset;
 }
 
-.dark :not(button):not(label):not(.switch-input):not(.modal-container):not(a):not(input):focus {
+.dark :not(button):not(label):not(.switch-input):not(.modal-container):not(a):not(input):not(.f-icon):focus {
   outline: none;
   background-color: var(--main-dark-border);
 }
@@ -83,7 +83,7 @@ div.page.dark {
 
 div.page.dark .container {
   background-color: var(--root-dark-bg);
-  box-shadow: 0px 0px 20px 5px #0000005e;
+  box-shadow: 0px 0px 20px 5px #0000004a;
 }
 
 /* ##### Titlebar ##### */
@@ -163,21 +163,21 @@ div.page.dark .container {
 }
 /* #### Modal #### */
 .modal-overlay.dark div.modal-title {
-  border: 1px solid var(--main-dark-border);
+  border: 1px solid #1a1a1a;
   background-color: var(--main-dark-header-bg);
 }
-
+/*
 .modal-overlay.dark div.modal-action {
   border: 1px solid var(--main-dark-border);
 }
-
+*/
 .modal-overlay.dark .modal-container {
   background-color: var(--root-dark-bg);
-  border: 3px double var(--main-dark-border);
   color: var(--main-dark-color);
-  -webkit-box-shadow: 1px 1px 4px 1px #0000008f;
-  -moz-box-shadow: 1px 1px 4px 1px #0000008f;
-  box-shadow: 1px 1px 4px 1px #0000008f;
+  -webkit-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
+  border: 1px solid #1a1a1a;
 }
 
 /* #### Tab #### */
@@ -191,6 +191,7 @@ nav.tab.dark > a {
   border-right: 1px solid var(--main-dark-header-bg);
   border-left: 1px solid var(--main-dark-header-bg);
   box-shadow: inset 0px -4px 3px -4px #00000099;
+  border-bottom: 1px solid transparent;
 }
 
 nav.tab.dark > a.active {
@@ -211,17 +212,9 @@ nav.tab.dark > a.active > span {
 nav.tab.dark > a:hover {
   color: var(--main-dark-color);
 }
-#small-nav.navigation.dark {
-  background-color: var(--main-dark-tooltip-bg);
-  /* outline: 1px solid var(--main-dark-border);*/
-  border: 1px solid var(--main-dark-border);
-}
 
 #small-nav.navigation.dark > .nav-item:hover {
   background-color: var(--main-dark-hover-bg);
-}
-#small-nav.navigation.dark {
-  box-shadow: 0px 0px 2px 1px var(--main-dark-header-bg);
 }
 
 /* Tooltip */
@@ -277,6 +270,10 @@ button.tab-btn.dark.selected {
   color:#98caff;
 }
 
+div.f-grid.dark div.tab.fleets button.tab-btn.selected {
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.5);
+}
+
 button.btn.rList-item.dark:active,
 label.btn.dark:active,
 button.btn.dark:active {
@@ -304,17 +301,20 @@ button.dark.tab-btn:active {
 
 /* #### Formation menu ##### */
 .formation-dropdown-menu.dark {
-  border: 1px solid var(--main-dark-border);
+  -webkit-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
+  border: 1px solid #1a1a1a;
   background-color: var(--main-dark-body-bg);
 }
 
 /* #### Popover #### */
 .popover-container.dark {
   background-color: var(--root-dark-bg);
-  border: 3px double var(--main-dark-border);
-  -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
+  border: 1px solid #1a1a1a;
 }
 
 /* #### ship title bar #### */
@@ -322,6 +322,8 @@ button.dark.tab-btn:active {
   background-color: var(--main-dark-header-bg);
 }
 
+#small-nav.dark button.nav-item,
+div.f-grid.dark div.tab,
 div.f-grid.dark .f-column.section,
 .button-group.dark,
 .radio-group.dark,
@@ -329,11 +331,15 @@ div.f-grid.dark .f-column.section,
   border: 1px solid #1a1a1a;
 }
 
-div.f-grid.dark div.tab-group,
-div.page.dark .tab {
-  border-bottom: 2px solid var(--main-dark-border);
-  background-color: var(--main-dark-header-bg);
+div.f-grid.dark .f-row.fleet {
+  gap: 8px;
 }
+
+
+div.f-grid.dark .f-row.fleet > button.grid-item {
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.35);
+}
+
 
 #theme-controls.navigation.dark > .nav-item {
   border-bottom: 2px solid transparent;
@@ -391,23 +397,25 @@ div.f-grid.dark div.f-body {
   background-color: var(--main-dark-body-bg);
 }
 
-div.f-grid.dark div.f-title
-/* div.f-grid.dark div.f-icon */{
+div.f-grid.dark div.f-title {
   background-color: var(--main-dark-header-bg);
   border-bottom: 1px solid var(--main-dark-border);
   border-top: 1px solid var(--main-dark-border);
 }
-div.f-row.dark div.f-header + div.f-icon,
+
+div.f-grid.dark div.tab {
+  background-color: var(--main-dark-header-bg);
+}
+
+div.f-grid.dark div.f-row div.f-header + div.f-icon,
 div.f-row.dark div.f-header + div.tab-group > button:first-child {
   border-left: 2px dotted var(--main-dark-border);
 }
-/*
-div.f-row.dark div.f-header + div.tab-group > button:last-child {
-  border-right: 2px dotted var(--main-dark-border);
-}
-*/
-/* #### hull types #### */
 
+/* #### hull types #### */
+.grid-item.dark.ship {
+  background-color: var(--main-dark-body-bg);
+}
 .grid-item.dark.ship.Carrier {
   background-color: #352035;
   color: #d77dd7;
@@ -473,14 +481,12 @@ div.f-grid.dark div.f-row.pink {
 }
 /* #### rarity #### */
 div.f-grid.dark div.f-row.gold {
-  /* background-color: var(--main-dark-header-bg);*/
   background-color: var(--main-dark-body-bg);
   border-bottom: 2px solid rgba(255, 215, 0, 0.50);
   border-radius: 0px;
 }
 
 div.f-grid.dark div.f-row.deepskyblue {
-  /* background-color: var(--main-dark-header-bg);*/
   background-color: var(--main-dark-body-bg);
   border-bottom: 2px solid rgba(0, 191, 255, 0.50);
   border-radius: 0px;
@@ -489,9 +495,8 @@ div.f-grid.dark div.f-row.deepskyblue {
 .toast-container.dark > .toast,
 .message-container.dark {
   color: var(--main-dark-color);
-  border: 1px solid var(--main-dark-border);
+  border: 1px solid #1a1a1a;
   background-color: var(--main-dark-header-bg);
-  /* box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;*/
 }
 .toast-container.dark > .toast {
   box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;
@@ -521,4 +526,16 @@ div.f-grid.dark div.f-row.deepskyblue {
   nav.tab.dark > a.active:first-child {
     border-left: 1px solid transparent;
   }
+
+  div.f-grid.dark div.f-row.fleet > button.grid-item:first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+  }
+  
+  div.f-grid.dark div.f-row.fleet > button.grid-item:last-child {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    border-top-right-radius: 0px;
+  }
+
 }

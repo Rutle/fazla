@@ -3,7 +3,7 @@ import { Dropdown, useDropdownMenu, useDropdownToggle } from 'react-overlays';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '_/reducers/rootReducer';
 import { selectFormation } from '_/reducers/slices/formationGridSlice';
-import { CaretLeft } from '../Icons';
+import { CaretDown } from '../Icons';
 
 interface FormationDropDownProps {
   listData: string[] | undefined;
@@ -83,8 +83,8 @@ const DropDownToggle: React.FC<DropDownToggleProps> = ({ id, text, themeColor })
       }}
     >
       <span>{text}</span>
-      <div className={`toggle-icon ${show ? 'open' : ''}`}>
-        <CaretLeft themeColor={themeColor} />
+      <div className={`btn-icon ${show ? '' : 'close'}`}>
+        <CaretDown themeColor={themeColor} />
       </div>
     </button>
   );
@@ -114,7 +114,7 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({
   onSelect,
 }) => (
   <Dropdown show={show} onToggle={onToggle} drop={drop} alignEnd={alignEnd} itemSelector="button:not(:disabled)">
-    <div id="formation-dropdown">
+    <div id="formation-dropdown" style={{ borderRadius: 'inherit' }}>
       <DropDownToggle
         id="dropdown-toggle"
         text={selectedIdx === undefined || listData.length === 0 ? 'Formations' : listData[selectedIdx]}
