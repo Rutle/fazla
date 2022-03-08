@@ -56,9 +56,7 @@ form {
 }
 
 .tooltip li {
-  background-color: var(--main-dark-body-bg);
-  padding: 3px 8px;
-  border-bottom: 1px dotted var(--main-dark-border);
+  padding: 10px;
 }
 
 .page {
@@ -278,6 +276,8 @@ div.scroll {
   border-top: 0px!important;
   padding: 5px 16px;
   justify-content: flex-start;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
 }
 
 .modal-container > div.modal-content {
@@ -554,6 +554,7 @@ div.f-row.action *,
   max-width: 200px;
   display: flex;
   justify-content: space-between!important;
+  height: 100%;
 }
 
 .dropdown-toggle > span {
@@ -603,9 +604,6 @@ div.f-row.action *,
 /* Tooltip */
 .tooltip {
   position: absolute;
-  -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
-  -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.39);
   white-space: pre-line;
   z-index: 25;
 }
@@ -640,10 +638,10 @@ div.f-row.action *,
 
 /* ###### ship details / titlebar ##### */
 .ship-title-bar {
-  /* display: flex;*/
+  display: flex;
   padding: 5px 16px;
   font-size: 1.5em;
-  /* align-items: center; */ /* TODO: check on electron */
+  align-items: center; /* TODO: check on electron */
   margin-bottom: 10px;
   /* flex-wrap: wrap;*/
 }
@@ -1498,26 +1496,7 @@ div.page.light .container {
   background-color: var(--main-light-bg);
 }
 
-.modal-overlay.light div.modal-action {
-  border: 1px solid var(--main-light-border);
-}
-
-.modal-overlay.light .modal-container {
-  background-color: var(--root-light-bg);
-  border: 3px double var(--main-light-border);
-  color: var(--main-light-color);
-  -webkit-box-shadow: 0px 0px 4px 2px rgba(183, 183, 183, 0.75);
-  -moz-box-shadow: 0px 0px 4px 2px rgba(183, 183, 183, 0.75);
-  box-shadow: 0px 0px 4px 2px rgba(183, 183, 183, 0.75);
-}
-
 /* #### Tab #### */
-div.page.light .tab {
-  /* border-bottom: 2px solid var(--main-light-border);*/
-  background-color: var(--main-light-bg);
-  box-sizing: border-box;
-}
-
 nav.navigation.tab.light {
   padding-left: 5px;
 }
@@ -1541,19 +1520,15 @@ nav.navigation.tab.light {
 }
 
 /* Tooltip */
-.tooltip.light > .tooltip-content {
-  background-color: #eff7ff;
-  color: var(--main-light-color);
+
+.tooltip.light div.f-grid > .f-column.section {
+  border: unset;
 }
 
-.tooltip.light > .tooltip-content > .f-grid {
-  padding: 0px;
-}
-
-.tooltip.light li {
-  background-color: #eff7ff;
+.tooltip.light ul > li:not(:last-child) {
   border-bottom: 1px dotted var(--main-light-border);
 }
+
 /* ###### Buttons ###### */
 label.light,
 button.light {
@@ -1631,12 +1606,14 @@ button.btn.light:active {
   background-color: var(--root-light-bg);
 }
 /* #### Popover #### */
+.tooltip.light,
+.modal-overlay.light .modal-container,
 .popover-container.light {
   background-color: var(--root-light-bg);
-  border: 3px double var(--main-light-border);
-  -webkit-box-shadow: 0px 0px 3px 1px rgba(183, 183, 183, 0.75);
-  -moz-box-shadow: 0px 0px 3px 1px rgba(183, 183, 183, 0.75);
-  box-shadow: 0px 0px 3px 1px rgba(183, 183, 183, 0.75);
+  border: 1px solid var(--main-light-border);
+  -webkit-box-shadow: 0px 1px 6px 1px rgba(183, 183, 183, 0.75);
+  -moz-box-shadow: 0px 1px 6px 1px rgba(183, 183, 183, 0.75);
+  box-shadow: 0px 1px 6px 1px rgba(183, 183, 183, 0.75);
 }
 
 .ship-title-bar.light {
@@ -1644,8 +1621,6 @@ button.btn.light:active {
 }
 
 div.f-grid.light .f-column.section,
-.button-group.light > button,
-.radio-group.light > label,
 .ship-title-bar.light {
   border: 1px solid #aed8ff;
 }
@@ -1660,16 +1635,6 @@ div.f-grid.light .f-row.fleet {
   background-color: var(--main-light-hover-bg);
 }
 
-.button-group.light > button:first-child {
-  border-right: 1px solid transparent;
-}
-.button-group.light > button:last-child {
-  border-left: 1px solid transparent;
-}
-.button-group.light > :not(button:last-child):not(button:first-child) {
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-}
 /* #### Input #### */
 input[type="url"].light,
 #input-group.light {
@@ -2063,13 +2028,11 @@ nav.tab.dark > a:hover {
 }
 
 /* Tooltip */
-.tooltip.dark > .tooltip-content {
-  background-color: var(--main-dark-tooltip-bg);
+.tooltip.dark {
   color: var(--main-dark-color);
 }
 
-.tooltip.dark li {
-  background-color: var(--main-dark-body-bg);
+.tooltip.dark ul > li:not(:last-child) {
   border-bottom: 1px dotted var(--main-dark-border);
 }
 /* ###### Buttons ###### */
@@ -2115,6 +2078,8 @@ button.tab-btn.dark.selected {
   color:#98caff;
 }
 
+div.f-grid.dark div.tab > #formation-dropdown,
+div.f-grid.dark div.tab:not(.fleets) > button.tab-btn,
 div.f-grid.dark div.tab.fleets button.tab-btn.selected {
   box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.5);
 }
@@ -2154,12 +2119,13 @@ button.dark.tab-btn:active {
 }
 
 /* #### Popover #### */
+.tooltip.dark,
 .popover-container.dark {
   background-color: var(--root-dark-bg);
   -webkit-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   -moz-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
-  border: 1px solid #1a1a1a;
+  /* border: 1px solid #1a1a1a;*/
 }
 
 /* #### ship title bar #### */
@@ -2168,7 +2134,7 @@ button.dark.tab-btn:active {
 }
 
 #small-nav.dark button.nav-item,
-div.f-grid.dark div.tab,
+/*div.f-grid.dark div.tab,*/
 div.f-grid.dark .f-column.section,
 .button-group.dark,
 .radio-group.dark,
@@ -2180,9 +2146,8 @@ div.f-grid.dark .f-row.fleet {
   gap: 8px;
 }
 
-
 div.f-grid.dark .f-row.fleet > button.grid-item {
-  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.5);
 }
 
 
@@ -2247,11 +2212,11 @@ div.f-grid.dark div.f-title {
   border-bottom: 1px solid var(--main-dark-border);
   border-top: 1px solid var(--main-dark-border);
 }
-
+/*
 div.f-grid.dark div.tab {
   background-color: var(--main-dark-header-bg);
 }
-
+*/
 div.f-grid.dark div.f-row div.f-header + div.f-icon,
 div.f-row.dark div.f-header + div.tab-group > button:first-child {
   border-left: 2px dotted var(--main-dark-border);
