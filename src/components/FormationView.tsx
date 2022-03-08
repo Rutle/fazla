@@ -267,7 +267,9 @@ const FormationView: React.FC = () => {
                         </ul>
                       }
                       WrapperElement="div"
-                      extraProps={{ style: { maxWidth: '16px', padding: '4px' } }}
+                      extraProps={{
+                        style: { maxWidth: '20px', padding: '2px', display: 'flex', alignItems: 'center' },
+                      }}
                     >
                       <QuestionCircleIcon themeColor={config.themeColor} />
                     </TooltipWrapper>
@@ -311,6 +313,9 @@ const FormationView: React.FC = () => {
                   isSubFleet={isSubFleet}
                   refd={gridRef}
                 />
+                <div id="equipment-section" className="f-grid rounded">
+                  <div className="row fleet"></div>
+                </div>
                 <div className="scroll">
                   {formationData.map((fleet, idx) => {
                     return (

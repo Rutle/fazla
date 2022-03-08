@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AppContext } from '_/App';
 import { Slot } from '_/types/shipTypes';
-import { ParsedValues, parseSlots } from '_/utils/appUtilities';
+import { ParsedSlot, parseSlots } from '_/utils/appUtilities';
 import RButton from './RButton/RButton';
-import TooltipWrapper from './Tooltip/TooltipWrapper';
 
 const slotTabs = ['Base', 'Retrofit', '?'];
 
@@ -54,7 +53,7 @@ const SlotList: React.FC<{ slots: { [key: string]: Slot }; hasRetrofit?: boolean
   ({ slots, hasRetrofit, themeColor }) => {
     const { shipData } = useContext(AppContext);
     const [selectedSlotList, setSelectedSlotList] = useState(0);
-    const [parsedData, setParsedSlots] = useState<ParsedValues>({ parsedFits: [], parsedSlots: [] });
+    const [parsedSlots, setParsedSlots] = useState<ParsedSlot[]>([]);
 
     useEffect(() => {
       setParsedSlots(parseSlots(slots, shipData, hasRetrofit));
@@ -66,9 +65,9 @@ const SlotList: React.FC<{ slots: { [key: string]: Slot }; hasRetrofit?: boolean
       <>
         <div className={`f-row ${themeColor}`}>
           <div className="f-header">Equipment</div>
-          {hasRetrofit && parsedData.parsedSlots.length > 1 ? (
+          {hasRetrofit && parsedSlots.length > 1 ? (
             <div className="f-header tab-group">
-              {parsedData.parsedSlots.map((cat, index) => (
+              {parsedSlots.map((cat, index) => (
                 <RButton
                   key={`btn-${slotTabs[index]}`}
                   themeColor={themeColor}
@@ -83,10 +82,10 @@ const SlotList: React.FC<{ slots: { [key: string]: Slot }; hasRetrofit?: boolean
             <></>
           )}
         </div>
-        {slots && parsedData.parsedSlots ? (
+        {slots && parsedSlots ? (
           //        Normal,             Retrofit
           // [{1:[], 2:[], 3:[] }, {1:[], 2:[], 3:[] }]
-          parsedData.parsedSlots.map((e, idx) => {
+          parsedSlots.map((e, idx) => {
             const t = Object.values(e);
             const tempArr = [];
             for (let i = 0; i < t.length; i += 1) {

@@ -145,8 +145,9 @@ function checkShipEqSlotTypes() {
     console.log('JSON file has been saved.');
   });
 }
+
 // checkSkills();
 // checkNationality();
 // checkHullType();
-checkShipEqSlotTypes();
-checkEqTypes();
+// checkShipEqSlotTypes();
+// checkEqTypes();

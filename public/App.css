@@ -532,6 +532,7 @@ div.f-row.action *,
   max-width: 200px;
   display: flex;
   justify-content: space-between!important;
+  height: 100%;
 }
 
 .dropdown-toggle > span {

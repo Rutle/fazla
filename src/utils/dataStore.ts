@@ -12,7 +12,7 @@ export default class DataStore {
 
   private eqArr: Equipment[] = [];
 
-  private eqByType: { [key: string]: Equipment[] } = {};
+  private eqByType: { [key: string]: string[] } = {};
 
   private shipCount = 0;
 
@@ -44,7 +44,7 @@ export default class DataStore {
   parseEqData(): void {
     this.eqByType = Object.values(eqTypes).reduce(
       (a, c) => Object.assign(a, { [c]: this.eqArr.filter((value) => value.type.name === c) }),
-      {} as { [key: string]: Equipment[] }
+      {} as { [key: string]: string[] }
     );
   }
 
@@ -65,7 +65,7 @@ export default class DataStore {
   }
 
   getEqName(type: string): string[] {
-    if (Object.keys(this.eqByType).includes(type)) return this.eqByType[type].map((eq) => eq.id);
+    if (Object.keys(this.eqByType).includes(type)) return this.eqByType[type];
     return [];
     // return this.eqArr.filter((value) => value.type.name === type).map((eq) => eq.id);
   }
@@ -85,7 +85,13 @@ export default class DataStore {
     try {
       this.eqArr = [...data.slice()];
       this.eqCount = data.length;
-      this.parseEqData();
+      // this.parseEqData();
+      // Parse equipment data into a "map" with type as a key and all equipment names as value array.
+      this.eqByType = Object.values(eqTypes).reduce(
+        (a, c) =>
+          Object.assign(a, { [c]: this.eqArr.filter((value) => value.type.name === c).map((eq) => eq.names.en) }),
+        {} as { [key: string]: string[] }
+      );
     } catch (error) {
       return Promise.reject(new Error('Failed to set equipment data in DataStore.'));
     }

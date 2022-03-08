@@ -30,7 +30,7 @@ const DropDownMenu: React.FC<FormationDropDownProps> = ({
       role="menu"
       className={`formation-dropdown-menu ${themeColor}`}
       style={{
-        opacity: `${show ? '1' : '0'}`,
+        display: `${show ? 'flex' : 'none'}`,
       }}
     >
       {listData !== undefined ? (
@@ -39,9 +39,6 @@ const DropDownMenu: React.FC<FormationDropDownProps> = ({
             <button
               key={`${value}-${index * listData.length}-data`}
               type="button"
-              style={{
-                display: `${show ? 'flex' : 'none'}`,
-              }}
               className={`btn normal menu-item ${themeColor} ${index === selectedIdx ? 'selected' : ''}`}
               onClick={() => {
                 selectIndex(index);
