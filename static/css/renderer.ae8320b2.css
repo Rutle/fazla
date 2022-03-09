@@ -507,7 +507,7 @@ button.tab-btn.normal.icon-only {
   box-sizing: border-box;
 }
 
-.tab > #formation-dropdown > button.tab-btn,
+.tab > .dropdown.formation > button.tab-btn,
 .tab > button.tab-btn {
   border-radius: inherit;
 }
@@ -548,16 +548,24 @@ div.f-row.action *,
   font-variant-caps: all-petite-caps;
 }
 
-/* ###### FORMATION DROPDOWN ###### */
-.dropdown-toggle {
-  min-width: 200px;
-  max-width: 200px;
+/* ###### DROPDOWN ###### */
+
+.dropdown.formation {
+  border-radius: inherit;
+  width: 220px;
+  min-width: 220px;
+  max-width: 220px;
+}
+
+.dropdown-toggle.equipment,
+.dropdown-toggle.formation {
+  width: inherit;
   display: flex;
   justify-content: space-between!important;
   height: 100%;
 }
-
-.dropdown-toggle > span {
+.dropdown-toggle.equipment > span,
+.dropdown-toggle.formation > span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -571,12 +579,12 @@ div.f-row.action *,
   -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, stroke 0.15s ease-in-out, transform 0.15s ease-out!important;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, stroke 0.2s ease-in-out, transform 0.15s ease-out!important;
 }
-
-.formation-dropdown-menu > .btn.menu-item {
+.dropdown-menu.equipment > .btn.menu-item,
+.dropdown-menu.formation > .btn.menu-item {
   justify-content: flex-start;
   text-align: left;
-  min-width: 200px;
-  max-width: 200px;
+  width: 210px;
+  border-radius: inherit;
 }
 
 .btn.menu-item > span {
@@ -587,10 +595,12 @@ div.f-row.action *,
   text-overflow: ellipsis;
 }
 
-.formation-dropdown-menu {
+.dropdown-menu.equipment,
+.dropdown-menu.formation {
+  border-radius: inherit;
   display: flex;
-  padding: 1px;
-  gap: 1px;
+  padding: 5px;
+  gap: 4px;
   position: absolute;
   z-index: 30;
   flex-direction: column;
@@ -1596,9 +1606,9 @@ button.btn.light:active {
 }
 
 /* #### Formation menu ##### */
-.formation-dropdown-menu.light {
+.dropdown-menu.formation.light {
   border: 1px solid var(--main-light-border);
-  background-color:#a4d3ff;
+  background-color:var(--main-light-bg);
 }
 
 #formation-ship-search.light {
@@ -1849,7 +1859,7 @@ div.f-grid.light div.f-row.deepskyblue {
 .dark .no-focus-outline:focus,
 .dark .no-focus-outline:focus-within {
   outline: none!important;
-  background-color: unset;
+  /* background-color: unset;*/
 }
 
 .dark :not(button):not(label):not(.switch-input):not(.modal-container):not(a):not(input):not(.f-icon):focus {
@@ -2045,8 +2055,8 @@ button.dark {
 button.btn.grid-item.dark:hover,
 .btn.dark:hover {
   /* TODO: Check colors with electron for window controls */
-  background-color: #3c4652;
-  color: var(--main-dark-hover-color);
+  background-color: #3c4652!important;
+  color: var(--main-dark-hover-color)!important;
 }
 
 button.dark.tab-btn:hover {
@@ -2078,7 +2088,7 @@ button.tab-btn.dark.selected {
   color:#98caff;
 }
 
-div.f-grid.dark div.tab > #formation-dropdown,
+div.f-grid.dark div.tab > .dropdown.formation,
 div.f-grid.dark div.tab:not(.fleets) > button.tab-btn,
 div.f-grid.dark div.tab.fleets button.tab-btn.selected {
   box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.5);
@@ -2110,12 +2120,12 @@ button.dark.tab-btn:active {
 }
 
 /* #### Formation menu ##### */
-.formation-dropdown-menu.dark {
+.dropdown-menu.formation.dark {
   -webkit-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   -moz-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   border: 1px solid #1a1a1a;
-  background-color: var(--main-dark-body-bg);
+  background-color: var(--main-dark-header-bg);
 }
 
 /* #### Popover #### */
