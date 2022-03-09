@@ -39,7 +39,7 @@
 .dark .no-focus-outline:focus,
 .dark .no-focus-outline:focus-within {
   outline: none!important;
-  background-color: unset;
+  /* background-color: unset;*/
 }
 
 .dark :not(button):not(label):not(.switch-input):not(.modal-container):not(a):not(input):not(.f-icon):focus {
@@ -235,8 +235,8 @@ button.dark {
 button.btn.grid-item.dark:hover,
 .btn.dark:hover {
   /* TODO: Check colors with electron for window controls */
-  background-color: #3c4652;
-  color: var(--main-dark-hover-color);
+  background-color: #3c4652!important;
+  color: var(--main-dark-hover-color)!important;
 }
 
 button.dark.tab-btn:hover {
@@ -268,7 +268,7 @@ button.tab-btn.dark.selected {
   color:#98caff;
 }
 
-div.f-grid.dark div.tab > #formation-dropdown,
+div.f-grid.dark div.tab > .dropdown.formation,
 div.f-grid.dark div.tab:not(.fleets) > button.tab-btn,
 div.f-grid.dark div.tab.fleets button.tab-btn.selected {
   box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.5);
@@ -300,12 +300,12 @@ button.dark.tab-btn:active {
 }
 
 /* #### Formation menu ##### */
-.formation-dropdown-menu.dark {
+.dropdown-menu.formation.dark {
   -webkit-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   -moz-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   border: 1px solid #1a1a1a;
-  background-color: var(--main-dark-body-bg);
+  background-color: var(--main-dark-header-bg);
 }
 
 /* #### Popover #### */

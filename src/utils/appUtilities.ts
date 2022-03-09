@@ -311,8 +311,8 @@ export const parseFits = (slots: { [key: string]: Slot }, data: DataStore, hasRe
     } else {
       retroFit = baseFit;
     }
-    baseFits[key] = baseFit;
-    retroFits[key] = retroFit;
+    baseFits[slots[key].type] = baseFit;
+    retroFits[slots[key].type] = retroFit;
   });
   if (hasRetrofit) return [baseFits, retroFits];
   return [baseFits];

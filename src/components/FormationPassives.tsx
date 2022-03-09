@@ -17,9 +17,12 @@ interface FormationPassivesProps {
  * Component for displaying passives of ships in a formation.
  */
 const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet, isSelected }) => {
+  // console.log(`Rendered FormationPassives`);
   const [showMain, setShowMain] = useState(true);
   const [showVanguard, setShowVanguard] = useState(true);
   const [isOpen, setIsOpen] = useState({ main: true, vanguard: true });
+  // TODO: Switch useResizeObserver to use onResize callback to prevent unnecessary re-renders when
+  // resizing size of browser window.
   const refMain = useRef<HTMLDivElement>(null);
   const refVanguard = useRef<HTMLDivElement>(null);
   const mainSize = useResizeObserver<HTMLDivElement>({ ref: refMain });

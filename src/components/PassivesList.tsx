@@ -10,6 +10,7 @@ interface PassiveProps {
  * Component for listing passives of a ship.
  */
 const PassivesList: React.FC<PassiveProps> = ({ optionalName, skills, hullType }) => {
+  // console.log(`Render PassiveList`);
   return (
     <>
       {skills !== undefined ? (
@@ -30,4 +31,4 @@ const PassivesList: React.FC<PassiveProps> = ({ optionalName, skills, hullType }
   );
 };
 
-export default PassivesList;
+export default React.memo(PassivesList);

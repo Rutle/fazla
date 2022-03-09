@@ -76,26 +76,26 @@ const FormationView: React.FC = () => {
 
   const hideSearchSection = (isOpen: boolean) => {
     setShowSearch(isOpen);
-    setSelectedGrid(NaN);
+    // setSelectedGrid(NaN);
     dispatch(setFleet({ fleet: 'ALL' }));
   };
 
   useEffect(() => {
     setFleetTabIndex(0);
     hideSearchSection(false);
-    setSelectedGrid(NaN);
+    // setSelectedGrid(NaN);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fData.selectedIndex]);
 
   useEffect(() => {
-    /* TODO: Check that is scrolls to top when search lit is hidden especially on small screen */
+    /* TODO: Check that it scrolls to top when search lit is hidden especially on small screen */
     if (showSearch) scrollTo('reset');
   }, [scrollTo, showSearch]);
 
   // Update currently selected formation data.
   useEffect(() => {
     if (fData.formations.length !== 0) {
-      setFormationData([]);
+      // setFormationData([]);
       // get(fData.formations[fData.selectedIndex].data, shipData): <form[], isSubFleet, fleetcnt>
       getFormationData(fData.formations[fData.selectedIndex].data, shipData)
         .then((res) => {
@@ -111,33 +111,36 @@ const FormationView: React.FC = () => {
   }, [fData.selectedIndex, fData.formations]);
 
   // Update search list and show the search section.
-  const showSearchSection = (isOpen: boolean, gridIndex: number) => {
-    setSelectedGrid(gridIndex);
-    // dispatch(formationAction(FormationAction.Search, { shipData, gridIndex }));
-    if (!Number.isNaN(gridIndex) && shipData && gridIndex !== undefined) {
-      let fleet: 'ALL' | 'VANGUARD' | 'MAIN' | 'SUBMARINE' = 'ALL';
-      if (MAININDEX[fleetCount].includes(gridIndex)) {
-        fleet = 'MAIN';
-      } else if (VANGUARDINDEX[fleetCount].includes(gridIndex)) {
-        fleet = 'VANGUARD';
-      } else if (SUBMARINE[fleetCount].includes(gridIndex)) {
-        fleet = 'SUBMARINE';
+  const showSearchSection = useCallback(
+    (isOpen: boolean, gridIndex: number) => {
+      setSelectedGrid(gridIndex);
+      // dispatch(formationAction(FormationAction.Search, { shipData, gridIndex }));
+      if (!Number.isNaN(gridIndex) && shipData && gridIndex !== undefined) {
+        let fleet: 'ALL' | 'VANGUARD' | 'MAIN' | 'SUBMARINE' = 'ALL';
+        if (MAININDEX[fleetCount].includes(gridIndex)) {
+          fleet = 'MAIN';
+        } else if (VANGUARDINDEX[fleetCount].includes(gridIndex)) {
+          fleet = 'VANGUARD';
+        } else if (SUBMARINE[fleetCount].includes(gridIndex)) {
+          fleet = 'SUBMARINE';
+        }
+        dispatch(setFleet({ fleet }));
+        dispatch(setIsUpdated({ key: appState.cToggle, value: false }));
+        dispatch(
+          updateSearch(shipData, SearchAction.UpdateList, {
+            list: appState.cToggle,
+          })
+        );
       }
-      dispatch(setFleet({ fleet }));
-      dispatch(setIsUpdated({ key: appState.cToggle, value: false }));
-      dispatch(
-        updateSearch(shipData, SearchAction.UpdateList, {
-          list: appState.cToggle,
-        })
-      );
-    }
-    setShowSearch(isOpen);
-  };
+      setShowSearch(isOpen);
+    },
+    [appState.cToggle, dispatch, fleetCount, shipData]
+  );
 
   const addShip = () => {
     dispatch(formationAction(FormationAction.AddShip, { shipData, gridIndex: selectedGrid }));
     setShowSearch(false);
-    setSelectedGrid(NaN);
+    // setSelectedGrid(NaN);
   };
 
   const renderModal = (): JSX.Element => {
@@ -178,6 +181,8 @@ const FormationView: React.FC = () => {
     if (appState.cState === 'RUNNING' && appState.eState === 'WARNING') {
       dispatch(clearErrorMessage());
     }
+    if (gridSize && gridSize.width && gridSize.height && gridSize.height !== cHeight.current)
+      cHeight.current = gridSize.height;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
@@ -203,7 +208,12 @@ const FormationView: React.FC = () => {
     }
     return {};
   };
-
+  const setTabIndex = useCallback(
+    (idx: number) => () => {
+      setFleetTabIndex(idx);
+    },
+    []
+  );
   return (
     <PageTemplate>
       <>
@@ -291,9 +301,11 @@ const FormationView: React.FC = () => {
                             key={`${'fleet-button'}-${idx * formationData.length}`}
                             themeColor={config.themeColor}
                             className={`tab-btn normal${fleetTabIndex === idx ? ' selected' : ''}`}
+                            /*
                             onClick={() => {
                               setFleetTabIndex(idx);
-                            }}
+                            }} */
+                            onClick={setTabIndex(idx)}
                             disabled={fData.formations.length === 0}
                           >
                             {idx + 1 === formationData.length && isSubFleet ? 'Submarines' : `Fleet ${idx + 1}`}
@@ -304,6 +316,7 @@ const FormationView: React.FC = () => {
                   </div>
                 </div>
                 <FormationGrid
+                  fleetName={fData.formations[fData.selectedIndex].name}
                   themeColor={config.themeColor}
                   selectedFleetIndex={fleetTabIndex}
                   ships={formationData}
@@ -313,9 +326,20 @@ const FormationView: React.FC = () => {
                   isSubFleet={isSubFleet}
                   refd={gridRef}
                 />
+                {/*
                 <div id="equipment-section" className="f-grid rounded">
-                  <div className="row fleet"></div>
+                  {formationData.map((fleet, idx) => {
+                    return (
+                      <div
+                        key={`eq-${idx * formationData.length}`}
+                        className={`f-row fleet ${fleetTabIndex !== idx ? 'hidden' : ''}`}
+                      >
+                        <FormationEquipment key={`eq-fleet-${fleetTabIndex}`} fleet={fleet} />
+                      </div>
+                    );
+                  })}
                 </div>
+                */}
                 <div className="scroll">
                   {formationData.map((fleet, idx) => {
                     return (

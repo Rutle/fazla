@@ -485,7 +485,7 @@ button.tab-btn.normal.icon-only {
   box-sizing: border-box;
 }
 
-.tab > #formation-dropdown > button.tab-btn,
+.tab > .dropdown.formation > button.tab-btn,
 .tab > button.tab-btn {
   border-radius: inherit;
 }
@@ -526,16 +526,24 @@ div.f-row.action *,
   font-variant-caps: all-petite-caps;
 }
 
-/* ###### FORMATION DROPDOWN ###### */
-.dropdown-toggle {
-  min-width: 200px;
-  max-width: 200px;
+/* ###### DROPDOWN ###### */
+
+.dropdown.formation {
+  border-radius: inherit;
+  width: 220px;
+  min-width: 220px;
+  max-width: 220px;
+}
+
+.dropdown-toggle.equipment,
+.dropdown-toggle.formation {
+  width: inherit;
   display: flex;
   justify-content: space-between!important;
   height: 100%;
 }
-
-.dropdown-toggle > span {
+.dropdown-toggle.equipment > span,
+.dropdown-toggle.formation > span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -549,12 +557,12 @@ div.f-row.action *,
   -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, stroke 0.15s ease-in-out, transform 0.15s ease-out!important;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, stroke 0.2s ease-in-out, transform 0.15s ease-out!important;
 }
-
-.formation-dropdown-menu > .btn.menu-item {
+.dropdown-menu.equipment > .btn.menu-item,
+.dropdown-menu.formation > .btn.menu-item {
   justify-content: flex-start;
   text-align: left;
-  min-width: 200px;
-  max-width: 200px;
+  width: 210px;
+  border-radius: inherit;
 }
 
 .btn.menu-item > span {
@@ -565,10 +573,12 @@ div.f-row.action *,
   text-overflow: ellipsis;
 }
 
-.formation-dropdown-menu {
+.dropdown-menu.equipment,
+.dropdown-menu.formation {
+  border-radius: inherit;
   display: flex;
-  padding: 1px;
-  gap: 1px;
+  padding: 5px;
+  gap: 4px;
   position: absolute;
   z-index: 30;
   flex-direction: column;

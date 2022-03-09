@@ -22,12 +22,10 @@ export default class DataStore {
 
   /**
    * Constructor for DataStore
-   * @param shipData Ship data json.
    */
   constructor(ships?: Ship[], eqs?: Equipment[]) {
     if (ships && eqs) {
       this.shipsArr = [...ships.slice()];
-      // Split data into categories by slot type to avoid having to filter everytime?
       this.eqArr = [...eqs.slice()];
       this.parseEqData();
       this.shipCount = ships.length;
@@ -67,7 +65,6 @@ export default class DataStore {
   getEqName(type: string): string[] {
     if (Object.keys(this.eqByType).includes(type)) return this.eqByType[type];
     return [];
-    // return this.eqArr.filter((value) => value.type.name === type).map((eq) => eq.id);
   }
 
   async setShips(data: Ship[]): Promise<Ship[]> {
@@ -85,7 +82,6 @@ export default class DataStore {
     try {
       this.eqArr = [...data.slice()];
       this.eqCount = data.length;
-      // this.parseEqData();
       // Parse equipment data into a "map" with type as a key and all equipment names as value array.
       this.eqByType = Object.values(eqTypes).reduce(
         (a, c) =>

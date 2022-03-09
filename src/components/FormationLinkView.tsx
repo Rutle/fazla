@@ -98,6 +98,7 @@ const FormationLinkView: React.FC = () => {
                       </RButton>
                     </div>
                     <FormationGrid
+                      fleetName={importedF.name}
                       themeColor={config.themeColor}
                       selectedFleetIndex={fleetTabIndex}
                       ships={importData.data}

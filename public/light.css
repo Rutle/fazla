@@ -232,9 +232,9 @@ button.btn.light:active {
 }
 
 /* #### Formation menu ##### */
-.formation-dropdown-menu.light {
+.dropdown-menu.formation.light {
   border: 1px solid var(--main-light-border);
-  background-color:#a4d3ff;
+  background-color:var(--main-light-bg);
 }
 
 #formation-ship-search.light {

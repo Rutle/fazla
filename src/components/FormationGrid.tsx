@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Ship } from '_/types/shipTypes';
 import FormationGridItem from './FormationGridItem';
 
 interface FormationGridProps {
+  fleetName: string;
   themeColor: string;
   selectedFleetIndex: number;
   ships: Ship[][];
@@ -18,6 +19,7 @@ interface FormationGridProps {
  * Component presenting ships in a grid.
  */
 const FormationGrid: React.FC<FormationGridProps> = ({
+  fleetName,
   themeColor,
   selectedFleetIndex,
   ships,
@@ -28,34 +30,26 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   refd,
   isExportedLink = false,
 }) => {
-  // const dispatch = useDispatch();
+  // console.log(`Render FormationGrid`);
   const vanRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
   const subRef = useRef<HTMLDivElement>(null);
+
   const open = useCallback(
     (gridIndex: number) => () => {
       if (openSearchSection) openSearchSection(true, gridIndex);
     },
     [openSearchSection]
   );
-  useEffect(() => {
-    console.log(selectedFleetIndex);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedFleetIndex]);
+
   return (
     <div id="formation-grid" className={`f-grid rounded gap ${themeColor}`} ref={refd}>
       <div className={`f-row gap wrap ${isSubFleet && selectedFleetIndex === fleetCount ? 'hidden' : ''}`}>
         <div id="main-section" className="f-column" ref={mainRef}>
-          {/* 
-          <div className="f-row">
-            <div className="f-header">Main</div>
-          </div>
-          */}
           {ships.slice(0, fleetCount).map((fleet, fleetIdx) => (
             <div
-              key={`main-${fleetIdx * fleet.length}`}
+              key={`main-${fleetIdx + 1}-${fleetName}`}
               className={`f-row fleet${selectedFleetIndex === fleetIdx ? '' : ' hidden'}`}
-
             >
               {fleet.slice(0, 3).map((ship, shipIdx) => (
                 <FormationGridItem
@@ -76,7 +70,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
         <div id="vanguard-section" className="f-column" ref={vanRef}>
           {ships.slice(0, fleetCount).map((fleet, fleetIdx) => (
             <div
-              key={`vanguard-${fleetIdx * fleet.length}`}
+              key={`vanguard-${fleetIdx + 1}-${fleetName}`}
               className={`f-row fleet${selectedFleetIndex === fleetIdx ? '' : ' hidden'}`}
             >
               {fleet.slice(3).map((ship, shipIdx) => (
@@ -86,6 +80,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
                   ship={ship}
                   themeColor={themeColor}
                   onClick={open(fleetIdx * 6 + (shipIdx + 3))}
+                  // onClick={open(fleetIdx * 6 + (shipIdx + 3))}
                   isSelected={selectedGridIndex === fleetIdx * 6 + (shipIdx + 3)}
                   // dragFunctions={dragFunctions}
                   fleetCount={fleetCount}
@@ -108,13 +103,12 @@ const FormationGrid: React.FC<FormationGridProps> = ({
               <div key="submarine" className="f-row fleet">
                 {fleet.map((ship, shipIdx) => (
                   <FormationGridItem
-                    key={`sub-${fleetCount * 6 + shipIdx}`}
+                    key={`sub-${fleetCount * 6 + shipIdx}-${fleetName}`}
                     index={fleetCount * 6 + shipIdx}
                     ship={ship}
                     themeColor={themeColor}
                     onClick={open(fleetCount * 6 + shipIdx)}
                     isSelected={selectedGridIndex === fleetCount * 6 + shipIdx}
-                    // dragFunctions={dragFunctions}
                     isSub
                     fleetCount={fleetCount}
                     isInteractive={!isExportedLink}
@@ -131,4 +125,4 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   );
 };
 
-export default FormationGrid;
+export default React.memo(FormationGrid);

@@ -6,7 +6,8 @@ interface RButtonProps {
   id?: string;
   children: React.ReactNode;
   themeColor?: string;
-  onClick(event: React.MouseEvent<HTMLButtonElement>): void;
+  // onClick(event: React.MouseEvent<HTMLButtonElement>): void;
+  onClick: () => void;
   onRightClick?(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
   disabled?: boolean;
   extraStyle?: React.CSSProperties;

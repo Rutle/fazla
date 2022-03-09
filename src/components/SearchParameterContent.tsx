@@ -23,7 +23,8 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
         options: { name: string; cat: string; param: string; list: 'ALL' | 'OWNED'; id: string }
       ) =>
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      // (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      () => {
         dispatch(updateSearch(data, action, options));
       },
     [dispatch]
