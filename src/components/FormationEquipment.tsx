@@ -7,10 +7,9 @@ import { parseFits } from '_/utils/appUtilities';
 import DropDownButton from './DropDown/CustomDropDown';
 
 const EqDropDown: React.FC<{ text: string; listData: string[] }> = ({ text, listData }) => {
-  const config = useSelector((state: RootState) => state.config);
   const [show, setShow] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
+  const [selectedIndex, setSelectedIndex] = useState<number>();
+  const config = useSelector((state: RootState) => state.config);
   return (
     <DropDownButton
       dropdownClass="equipment"
@@ -23,38 +22,48 @@ const EqDropDown: React.FC<{ text: string; listData: string[] }> = ({ text, list
       themeColor={config.themeColor}
       selectIndex={setSelectedIndex}
       onSelect={setShow}
-      toggleText="test"
+      toggleText={typeof selectedIndex !== 'undefined' ? listData[selectedIndex] : text}
+      // Text need to be either Empty (none in formation data) or Name of equipment from formation data.
     />
   );
   // return <div>{text}</div>;
 };
 
-const FormationEquipment: React.FC<{ fleet: Ship[] }> = ({ fleet }) => {
-  // console.log(`Render FormationEquipment`);
+const FormationEquipment: React.FC<{ selectedFleetIndex: number; data: Ship[][]; fleetName: string }> = ({
+  selectedFleetIndex,
+  data,
+  fleetName,
+}) => {
   const { shipData } = useContext(AppContext);
 
   return (
-    <>
-      {fleet.map((ship, idxf) => {
-        if (!ship)
-          return (
-            <div key={`none-${idxf + 1}`} className="f-column">
-              <div>None</div>
-              <div>None</div>
-              <div>None</div>
+    <div id="equipment-section" className="f-grid gap rounded">
+      <div key={`eq-fleet-${fleetName}-${selectedFleetIndex + 1}`} className="f-row gap fleet">
+        {data[selectedFleetIndex].map((ship, shipIdx) => {
+          return !ship ? (
+            <div key={`none-${shipIdx + 1}`} className="f-column">
+              <div>N/A</div>
+              <div>N/A</div>
+              <div>N/A</div>
             </div>
+          ) : (
+            parseFits(ship.slots, shipData, true, ship.retrofit).map((slot) => {
+              return (
+                <div key={ship.names.en} className="f-column" style={{ gap: '2px 0px', minWidth: '0' }}>
+                  {Object.keys(slot).map((key, keyIdx) => (
+                    <EqDropDown
+                      key={`${ship.names.en}-slot-${keyIdx + 1}`}
+                      text={`${key} - ${slot[key].length}`}
+                      listData={slot[key]}
+                    />
+                  ))}
+                </div>
+              );
+            })
           );
-        return (
-          <div key={ship.names.en} className="f-column">
-            {parseFits(ship.slots, shipData, ship.retrofit).map((slot) => {
-              return Object.values(slot).map((eq, eqIdx) => (
-                <EqDropDown key={`${ship.names.en}-eq-menu-${eqIdx + 1}`} text="test" listData={eq[eqIdx]} />
-              ));
-            })}
-          </div>
-        );
-      })}
-    </>
+        })}
+      </div>
+    </div>
   );
 };
 

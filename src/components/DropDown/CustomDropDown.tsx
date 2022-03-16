@@ -27,7 +27,7 @@ const DropDownMenuItem: React.FC<{
 interface FormationDropDownProps {
   listData: string[] | undefined;
   themeColor: string;
-  selectedIdx: number;
+  selectedIdx: number | undefined;
   menuClass: string;
   selectIndex: (idx: number) => void;
   onSelect: React.Dispatch<React.SetStateAction<boolean>>;
@@ -56,12 +56,12 @@ const DropDownMenu: React.FC<FormationDropDownProps> = React.memo(
           display: `${show ? 'flex' : 'none'}`,
         }}
       >
-        {listData !== undefined ? (
+        {listData !== undefined ? ( // Add react-window
           listData.map((value, index) => (
             <DropDownMenuItem
               key={`${value}-${index + 1}`}
               text={value}
-              isSelected={index === selectedIdx}
+              isSelected={index === selectedIdx && typeof selectedIdx !== 'undefined'}
               themeColor={themeColor}
               onClick={click}
               index={index}
@@ -115,7 +115,7 @@ interface DropDownButtonProps {
   onToggle: (nextShow: boolean, event?: React.SyntheticEvent<Element, Event> | undefined) => void;
   drop: 'up' | 'down' | 'left' | 'right' | undefined;
   alignEnd: boolean | undefined;
-  selectedIdx: number;
+  selectedIdx: number | undefined;
   listData: string[];
   themeColor: string;
   selectIndex: (idx: number) => void;
@@ -138,14 +138,18 @@ export const DropDownButton: React.FC<DropDownButtonProps> = ({
   <Dropdown show={show} onToggle={onToggle} drop={drop} alignEnd={alignEnd} itemSelector="button:not(:disabled)">
     <div className={`dropdown ${dropdownClass}`}>
       <DropDownToggle text={toggleText} themeColor={themeColor} toggleClass={dropdownClass} />
-      <DropDownMenu
-        menuClass={dropdownClass}
-        listData={listData}
-        themeColor={themeColor}
-        selectedIdx={selectedIdx}
-        selectIndex={selectIndex}
-        onSelect={onSelect}
-      />
+      {!show ? (
+        <></>
+      ) : (
+        <DropDownMenu
+          menuClass={dropdownClass}
+          listData={listData}
+          themeColor={themeColor}
+          selectedIdx={selectedIdx}
+          selectIndex={selectIndex}
+          onSelect={onSelect}
+        />
+      )}
     </div>
   </Dropdown>
 );

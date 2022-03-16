@@ -300,6 +300,7 @@ button.dark.tab-btn:active {
 }
 
 /* #### Formation menu ##### */
+.dropdown-menu.equipment.dark,
 .dropdown-menu.formation.dark {
   -webkit-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   -moz-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
@@ -413,6 +414,7 @@ div.f-row.dark div.f-header + div.tab-group > button:first-child {
 }
 
 /* #### hull types #### */
+.dark.equipment.tab-btn,
 .grid-item.dark.ship {
   background-color: var(--main-dark-body-bg);
 }

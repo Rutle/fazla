@@ -257,10 +257,6 @@ export interface ParsedSlot {
   }[];
 }
 
-export interface ParsedFit {
-  [key: string]: string[][];
-}
-
 /**
  * Parses ship equipment slot-data from generic string to proper slot categories.
  * @param {Object} slots Object containing equipment slot data.
@@ -291,30 +287,44 @@ export const parseSlots = (slots: { [key: string]: Slot }, data: DataStore, hasR
   return [baseSlots];
 };
 
+export interface ParsedFit {
+  [key: string]: string[];
+}
 /**
  * Parses ship equipment slot-data from generic string to proper slot categories.
  * @param {Object} slots Object containing equipment slot data.
  * @param {class} data Ship data.
+ * @param {boolean} combineResult Should the slot results be combined in case of retrofit
  * @param {boolean|undefined} hasRetrofit If the ship has retrofit.
- * @returns {Object[][]} Parsed data object.
+ * @returns {Object[]} Parsed data object.
  */
-export const parseFits = (slots: { [key: string]: Slot }, data: DataStore, hasRetrofit?: boolean): ParsedFit[] => {
+export const parseFits = (
+  slots: { [key: string]: Slot },
+  data: DataStore,
+  combineResult = false,
+  hasRetrofit?: boolean
+): ParsedFit[] => {
   const baseFits: ParsedFit = {};
   const retroFits: ParsedFit = {};
   Object.keys(slots).forEach((key) => {
     const slotIDs = slotTypes[slots[key].type];
-    let retroFit: string[][] = [];
-    // List of equipment that fit the slot
-    const baseFit = slotIDs[0].map((eqID) => data.getEqName(eqTypes[eqID]));
+    let retroFit: string[] = [];
+    // List of equipment that fit the slot. Reduce it into a single array.
+    const baseFit = slotIDs[0].reduce((acc, eqID) => [...acc, ...data.getEqName(eqTypes[eqID])], []);
     if (slotIDs.length > 1) {
-      retroFit = slotIDs[1].map((eqID) => data.getEqName(eqTypes[eqID]));
+      retroFit = slotIDs[1].reduce((acc, eqID) => [...acc, ...data.getEqName(eqTypes[eqID])], []);
     } else {
       retroFit = baseFit;
     }
-    baseFits[slots[key].type] = baseFit;
-    retroFits[slots[key].type] = retroFit;
+    // Combine base equipment and retrofit equipment into one array. [[baseslot] * N, [retrofitslot] * M]
+    if (hasRetrofit && combineResult && slotIDs.length > 1) {
+      baseFits[key] = [...baseFit, ...retroFit];
+    } else {
+      baseFits[key] = baseFit;
+      retroFits[key] = retroFit;
+    }
   });
-  if (hasRetrofit) return [baseFits, retroFits];
+  if (hasRetrofit && !combineResult) return [baseFits, retroFits];
   return [baseFits];
 };
 

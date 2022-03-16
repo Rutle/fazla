@@ -535,19 +535,23 @@ div.f-row.action *,
   max-width: 220px;
 }
 
+.dropdown.equipment {
+  border-radius: inherit;
+  width: 100%;
+}
 .dropdown-toggle.equipment,
 .dropdown-toggle.formation {
   width: inherit;
   display: flex;
   justify-content: space-between!important;
-  height: 100%;
+  border-radius: inherit;
 }
 .dropdown-toggle.equipment > span,
 .dropdown-toggle.formation > span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 145px;
+  /* max-width: 145px;*/
   align-self: center;
 }
 
@@ -563,6 +567,8 @@ div.f-row.action *,
   text-align: left;
   width: 210px;
   border-radius: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .btn.menu-item > span {

@@ -32,6 +32,7 @@ import ShipDetails from './ShipDetails';
 import useVisibility from '../hooks/useVisibility';
 import { ArrowDegUp, BoxArrowUp, CloseIcon, QuestionCircleIcon } from './Icons';
 import TooltipWrapper from './Tooltip/TooltipWrapper';
+import FormationEquipment from './FormationEquipment';
 
 ReactModal.setAppElement('#root');
 /**
@@ -326,20 +327,12 @@ const FormationView: React.FC = () => {
                   isSubFleet={isSubFleet}
                   refd={gridRef}
                 />
-                {/*
-                <div id="equipment-section" className="f-grid rounded">
-                  {formationData.map((fleet, idx) => {
-                    return (
-                      <div
-                        key={`eq-${idx * formationData.length}`}
-                        className={`f-row fleet ${fleetTabIndex !== idx ? 'hidden' : ''}`}
-                      >
-                        <FormationEquipment key={`eq-fleet-${fleetTabIndex}`} fleet={fleet} />
-                      </div>
-                    );
-                  })}
-                </div>
-                */}
+                <FormationEquipment
+                  selectedFleetIndex={fleetTabIndex}
+                  data={formationData}
+                  fleetName={fData.formations[fData.selectedIndex].name}
+                />
+
                 <div className="scroll">
                   {formationData.map((fleet, idx) => {
                     return (
