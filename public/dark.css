@@ -299,7 +299,7 @@ button.dark.tab-btn:active {
   border-right: 1px solid transparent;
 }
 
-/* #### Formation menu ##### */
+/* #### dropdown menu ##### */
 .dropdown-menu.equipment.dark,
 .dropdown-menu.formation.dark {
   -webkit-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
@@ -308,7 +308,10 @@ button.dark.tab-btn:active {
   border: 1px solid #1a1a1a;
   background-color: var(--main-dark-header-bg);
 }
-
+.dropdown-toggle.dark.equipment.tab-btn,
+.grid-item.dark.ship {
+  border: 1px solid #ffffff03;
+}
 /* #### Popover #### */
 .tooltip.dark,
 .popover-container.dark {
@@ -333,9 +336,7 @@ div.f-grid.dark .f-column.section,
   border: 1px solid #1a1a1a;
 }
 
-div.f-grid.dark .f-row.fleet {
-  gap: 8px;
-}
+
 
 div.f-grid.dark .f-row.fleet > button.grid-item {
   box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.5);

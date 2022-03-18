@@ -232,11 +232,22 @@ button.btn.light:active {
 }
 
 /* #### Formation menu ##### */
+.dropdown-menu.equipment.light,
 .dropdown-menu.formation.light {
   border: 1px solid var(--main-light-border);
   background-color:var(--main-light-bg);
 }
 
+#equipment-grid.f-grid.light .f-row.fleet {
+  gap: 8px;
+}
+/*
+.dropdown-toggle.dark.equipment.tab-btn, .grid-item.dark.ship {
+  border: 1px solid #ffffff03;
+}
+.dark.equipment.tab-btn, .grid-item.dark.ship {
+  background-color: var(--main-dark-body-bg);
+}*/
 #formation-ship-search.light {
   border-top: 3px solid var(--main-light-border);
   background-color: var(--root-light-bg);

@@ -17,19 +17,22 @@ const FormationDropDown: React.FC = () => {
   };
   return (
     <DropDownButton
-      toggleText={
-        fData.selectedIndex === undefined || listData.length === 0 ? 'Formations' : listData[fData.selectedIndex]
-      }
+      options={{
+        toggleText:
+          fData.selectedIndex === undefined || listData.length === 0 ? 'Formations' : listData[fData.selectedIndex],
+        dropdownClass: 'formation',
+        toggleSize: 'normal',
+        themeColor: config.themeColor,
+        listLimit: 10,
+      }}
       show={show}
       onToggle={(nextShow) => setShow(nextShow)}
       drop="down"
       alignEnd
       selectedIdx={fData.selectedIndex}
       listData={listData}
-      themeColor={config.themeColor}
       selectIndex={selectIndex}
       onSelect={setShow}
-      dropdownClass="formation"
     />
   );
 };

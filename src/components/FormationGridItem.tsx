@@ -133,7 +133,7 @@ const FormationGridItem: React.FC<GridItemProps> = ({
           onRightClick={onRightClick}
           className={`grid-item ship btn hullTypeAbb ${ship?.hullType || 'none'}`}
           themeColor={themeColor}
-          extraStyle={{ border: '2px solid transparent' }}
+          // extraStyle={{ border: '2px solid transparent' }}
           dragProps={{
             dragFunctions,
             dragOptions: { draggable: 'true' },
@@ -151,7 +151,7 @@ const FormationGridItem: React.FC<GridItemProps> = ({
       ) : (
         <div
           className={`grid-item ship non-interactive ${themeColor} hullTypeAbb ${ship?.hullType || 'none'}`}
-          style={{ border: '2px solid transparent', borderRadius: '4px', display: 'inline-block' }}
+          style={{ /* border: '2px solid transparent', */ borderRadius: '4px', display: 'inline-block' }}
         >
           <span>{ship ? `${ship.names.en}` : `Empty`}</span>
         </div>

@@ -1,23 +1,33 @@
 import React, { useCallback, useState } from 'react';
 import { Dropdown, useDropdownMenu, useDropdownToggle } from 'react-overlays';
+import { FixedSizeList as List } from 'react-window';
 import { CaretDown } from '../Icons';
+
+export interface CustomDDConf {
+  dropdownClass: 'formation' | 'equipment';
+  toggleText: string;
+  toggleSize: 'small' | 'normal';
+  listLimit?: number;
+  themeColor: 'dark' | 'light';
+}
 
 const DropDownMenuItem: React.FC<{
   themeColor: string;
   isSelected: boolean;
   text: string;
   index: number;
+  style?: React.CSSProperties;
   onClick: (index: number) => void;
-}> = React.memo(({ themeColor, isSelected, text, index, onClick }) => {
+}> = React.memo(({ themeColor, isSelected, text, index, style, onClick }) => {
   const handleClick = useCallback(() => {
     onClick(index);
   }, [onClick, index]);
-  // console.log('render menu item button', text);
   return (
     <button
       type="button"
-      className={`btn normal menu-item ${themeColor} ${isSelected ? 'selected' : ''}`}
+      className={`btn small rounded menu-item ${themeColor} ${isSelected ? 'selected' : ''}`}
       onClick={handleClick}
+      style={style}
     >
       <span>{text}</span>
     </button>
@@ -25,70 +35,88 @@ const DropDownMenuItem: React.FC<{
 });
 
 interface FormationDropDownProps {
+  options: CustomDDConf;
   listData: string[] | undefined;
-  themeColor: string;
   selectedIdx: number | undefined;
-  menuClass: string;
   selectIndex: (idx: number) => void;
   onSelect: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DropDownMenu: React.FC<FormationDropDownProps> = React.memo(
-  ({ listData, themeColor, selectedIdx, menuClass, selectIndex, onSelect }) => {
-    const [menuProps, { show }] = useDropdownMenu({
-      flip: true,
-      offset: [0, 8],
-    });
-    const click = useCallback(
-      (index: number) => {
-        selectIndex(index);
-        onSelect(!show);
-      },
-      [onSelect, selectIndex, show]
-    );
-
-    return (
-      <div
-        {...menuProps}
-        role="menu"
-        className={`dropdown-menu ${menuClass} ${themeColor}`}
-        style={{
-          display: `${show ? 'flex' : 'none'}`,
-        }}
-      >
-        {listData !== undefined ? ( // Add react-window
-          listData.map((value, index) => (
-            <DropDownMenuItem
-              key={`${value}-${index + 1}`}
-              text={value}
-              isSelected={index === selectedIdx && typeof selectedIdx !== 'undefined'}
-              themeColor={themeColor}
-              onClick={click}
-              index={index}
-            />
-          ))
-        ) : (
-          <></>
-        )}
-      </div>
-    );
-  }
-);
+const DropDownMenu: React.FC<FormationDropDownProps> = ({ options, listData, selectedIdx, selectIndex, onSelect }) => {
+  const [menuProps, { show }] = useDropdownMenu({
+    flip: true,
+    offset: [0, 8],
+  });
+  const click = useCallback(
+    (index: number) => {
+      selectIndex(index);
+      onSelect(!show);
+    },
+    [onSelect, selectIndex, show]
+  );
+  return (
+    <div
+      {...menuProps}
+      role="menu"
+      className={`dropdown-menu ${options.dropdownClass} ${options.themeColor}`}
+      style={{
+        display: `${show ? 'flex' : 'none'}`,
+      }}
+    >
+      {listData ? (
+        <List
+          height={options.listLimit ? options.listLimit * 22 : '100%'}
+          itemCount={listData.length}
+          itemSize={22}
+          width="100%"
+        >
+          {({ index, style }) => {
+            return (
+              <DropDownMenuItem
+                key={`${listData[index]}-${index + 1}`}
+                text={listData[index]}
+                isSelected={index === selectedIdx && typeof selectedIdx !== 'undefined'}
+                themeColor={options.themeColor}
+                onClick={click}
+                index={index}
+                style={{ ...style, width: 'calc(100% - 4px)' }}
+              />
+            );
+          }}
+        </List>
+      ) : (
+        <></>
+      )}
+      {/* options.dropdownClass === 'formation' && listData ? (
+        listData.map((value, index) => (
+          <DropDownMenuItem
+            key={`${value}-${index + 1}`}
+            text={value}
+            isSelected={index === selectedIdx && typeof selectedIdx !== 'undefined'}
+            themeColor={options.themeColor}
+            onClick={click}
+            index={index}
+          />
+        ))
+      ) : (
+        <></>
+      ) */}
+    </div>
+  );
+};
 
 interface DropDownToggleProps {
-  text: string;
-  themeColor: string;
-  toggleClass: string;
+  options: CustomDDConf;
 }
 
-const DropDownToggle: React.FC<DropDownToggleProps> = React.memo(({ text, themeColor, toggleClass }) => {
+const DropDownToggle: React.FC<DropDownToggleProps> = ({ options }) => {
   const [props, { show }] = useDropdownToggle();
   const [isFocusOutline, setFocusOutline] = useState(false);
   return (
     <button
       type="button"
       {...props}
-      className={`dropdown-toggle ${toggleClass} tab-btn normal ${themeColor} ${
+      className={`dropdown-toggle ${options.dropdownClass} tab-btn ${options.toggleSize} ${options.themeColor} ${
         !isFocusOutline ? 'no-focus-outline' : ''
       }`}
       onKeyUp={(e) => {
@@ -100,51 +128,46 @@ const DropDownToggle: React.FC<DropDownToggleProps> = React.memo(({ text, themeC
         if (isFocusOutline) setFocusOutline(false);
       }}
     >
-      <span>{text}</span>
+      <span>{options.toggleText}</span>
       <div className={`btn-icon ${show ? '' : 'close'}`}>
-        <CaretDown themeColor={themeColor} />
+        <CaretDown themeColor={options.themeColor} />
       </div>
     </button>
   );
-});
+};
 
 interface DropDownButtonProps {
-  dropdownClass: string;
-  toggleText: string;
+  options: CustomDDConf;
   show: boolean;
   onToggle: (nextShow: boolean, event?: React.SyntheticEvent<Element, Event> | undefined) => void;
   drop: 'up' | 'down' | 'left' | 'right' | undefined;
   alignEnd: boolean | undefined;
   selectedIdx: number | undefined;
   listData: string[];
-  themeColor: string;
   selectIndex: (idx: number) => void;
   onSelect: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const DropDownButton: React.FC<DropDownButtonProps> = ({
-  dropdownClass,
-  toggleText,
+  options,
   show,
   onToggle,
   drop,
   alignEnd,
   selectedIdx,
   listData,
-  themeColor,
   selectIndex,
   onSelect,
 }) => (
   <Dropdown show={show} onToggle={onToggle} drop={drop} alignEnd={alignEnd} itemSelector="button:not(:disabled)">
-    <div className={`dropdown ${dropdownClass}`}>
-      <DropDownToggle text={toggleText} themeColor={themeColor} toggleClass={dropdownClass} />
+    <div className={`dropdown ${options.dropdownClass}`}>
+      <DropDownToggle options={options} />
       {!show ? (
         <></>
       ) : (
         <DropDownMenu
-          menuClass={dropdownClass}
+          options={options}
           listData={listData}
-          themeColor={themeColor}
           selectedIdx={selectedIdx}
           selectIndex={selectIndex}
           onSelect={onSelect}

@@ -327,11 +327,7 @@ const FormationView: React.FC = () => {
                   isSubFleet={isSubFleet}
                   refd={gridRef}
                 />
-                <FormationEquipment
-                  selectedFleetIndex={fleetTabIndex}
-                  data={formationData}
-                  fleetName={fData.formations[fData.selectedIndex].name}
-                />
+                <FormationEquipment selectedFleetIndex={fleetTabIndex} data={formationData} />
 
                 <div className="scroll">
                   {formationData.map((fleet, idx) => {

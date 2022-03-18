@@ -388,13 +388,13 @@ button:disabled * {
   cursor: default!important;
   opacity: 0.4;
 }
-
+button.tab-btn.small,
 button.btn.small {
-  font-size: 14px;
-  padding: 0px 5px 2px 5px;
+  /* font-size: 14px;*/
+  /* padding: 0px 5px 2px 5px;*/
   min-width: 35px;
   font-variant-caps: all-petite-caps;
-  border-radius: 0px;
+  /* border-radius: 0px;*/
 }
 
 button.btn.grid-item *,
@@ -529,15 +529,17 @@ div.f-row.action *,
 /* ###### DROPDOWN ###### */
 
 .dropdown.formation {
+  position: relative;
   border-radius: inherit;
-  width: 220px;
-  min-width: 220px;
-  max-width: 220px;
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
 }
 
 .dropdown.equipment {
   border-radius: inherit;
   width: 100%;
+  position: relative;
 }
 .dropdown-toggle.equipment,
 .dropdown-toggle.formation {
@@ -561,27 +563,27 @@ div.f-row.action *,
   -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, stroke 0.15s ease-in-out, transform 0.15s ease-out!important;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, stroke 0.2s ease-in-out, transform 0.15s ease-out!important;
 }
-.dropdown-menu.equipment > .btn.menu-item,
+.dropdown-menu.equipment .btn.menu-item,
 .dropdown-menu.formation > .btn.menu-item {
   justify-content: flex-start;
   text-align: left;
   width: 210px;
-  border-radius: inherit;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .btn.menu-item > span {
   width: inherit;
-  border-top: unset;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  display: block;
 }
 
 .dropdown-menu.equipment,
 .dropdown-menu.formation {
   border-radius: inherit;
+  width: calc(100% - 10px);
   display: flex;
   padding: 5px;
   gap: 4px;
@@ -897,6 +899,10 @@ div.f-grid div.tab {
 div.f-grid > div.f-row > div.tab.fleets {
   background-color: unset;
   border: unset;
+}
+
+div.f-grid .f-row.fleet {
+  gap: 8px;
 }
 
 div.f-grid div.f-row.fleet > button.grid-item:first-child {
