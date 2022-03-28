@@ -29,7 +29,7 @@ import ShipList from './ShipList';
 import SideBar from './SideBar';
 import ShipDetails from './ShipDetails';
 import useVisibility from '../hooks/useVisibility';
-import { ArrowDegUp, BoxArrowUp, CloseIcon, PlusIcon, QuestionCircleIcon } from './Icons';
+import { ArrowDegUp, CloseIcon, PlusIcon, QuestionCircleIcon } from './Icons';
 import TooltipWrapper from './Tooltip/TooltipWrapper';
 import FormationEquipment from './FormationEquipment';
 

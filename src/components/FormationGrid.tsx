@@ -58,7 +58,6 @@ const FormationGrid: React.FC<FormationGridProps> = ({
                   themeColor={themeColor}
                   onClick={open(fleetIdx * 6 + shipIdx)}
                   isSelected={selectedGridIndex === fleetIdx * 6 + shipIdx}
-                  // dragFunctions={dragFunctions}
                   fleetCount={fleetCount}
                   isInteractive={!isExportedLink}
                 />
@@ -79,9 +78,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
                   ship={ship}
                   themeColor={themeColor}
                   onClick={open(fleetIdx * 6 + (shipIdx + 3))}
-                  // onClick={open(fleetIdx * 6 + (shipIdx + 3))}
                   isSelected={selectedGridIndex === fleetIdx * 6 + (shipIdx + 3)}
-                  // dragFunctions={dragFunctions}
                   fleetCount={fleetCount}
                   isInteractive={!isExportedLink}
                 />

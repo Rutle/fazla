@@ -11,6 +11,7 @@ import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
 import RButton from './RButton/RButton';
+import FormationEquipment from './FormationEquipment';
 
 /**
  * View for displaying a formation page.
@@ -19,7 +20,7 @@ const FormationLinkView: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { code } = useParams<{ code: string }>();
-  const { shipData, storage, addToast } = useContext(AppContext);
+  const { shipData, addToast } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
   const appState = useSelector((state: RootState) => state.appState);
@@ -57,12 +58,6 @@ const FormationLinkView: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [importedF]);
 
-  // Save data when formation data is edited.
-  useEffect(() => {
-    dispatch(formationAction(FormationAction.Save, { storage }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, fData.isEdit]);
-
   useEffect(() => {
     if (appState.cState === 'RUNNING' && appState.eState === 'WARNING') {
       dispatch(clearErrorMessage());
@@ -70,12 +65,11 @@ const FormationLinkView: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // TODO: Add the new layout from formation view.
   return (
     <PageTemplate>
       <>
         <section className="page-content formations">
-          <div id="formation-content" className="container content">
+          <div className="scroll container content">
             {validCode !== undefined && typeof fleetTabIndex !== 'undefined' ? (
               <>
                 {validCode &&
@@ -84,22 +78,42 @@ const FormationLinkView: React.FC = () => {
                 appState.eState !== 'WARNING' &&
                 appState.cState === 'RUNNING' ? (
                   <>
-                    <div className="tab">
-                      <RButton
-                        themeColor={config.themeColor}
-                        className="tab-btn normal"
-                        onClick={() => {
-                          dispatch(formationAction(FormationAction.Import, { importedFormation: importedF }, addToast));
-                          /*
-                          history.push({
-                            pathname: '/formations',
-                            state: { newImportedFleet: true },
-                          });
-                          */
-                        }}
-                      >
-                        <span style={{ display: 'inline-block' }}>Add to your formations</span>
-                      </RButton>
+                    <div id="formation-tab">
+                      <div className={`f-grid rounded ${config.themeColor}`}>
+                        <div className="tab" style={{ gap: '5px' }}>
+                          <RButton
+                            themeColor={config.themeColor}
+                            className="tab-btn normal"
+                            onClick={() => {
+                              dispatch(
+                                formationAction(FormationAction.Import, { importedFormation: importedF }, addToast)
+                              );
+                              history.push('/formations');
+                            }}
+                          >
+                            <span style={{ display: 'inline-block' }}>Save and Close</span>
+                          </RButton>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="fleet-selector" className={`f-grid rounded ${config.themeColor}`}>
+                      <div className="f-row">
+                        <div className="tab fleets" style={{ gap: '5px' }}>
+                          {importData.fleets.map((fleet, idx) => {
+                            return (
+                              <RButton
+                                key={`${'fleet-button'}-${idx * importData.fleets.length}`}
+                                themeColor={config.themeColor}
+                                className={`tab-btn normal${fleetTabIndex === idx ? ' selected' : ''}`}
+                                onClick={() => setFleetTabIndex(idx)}
+                                disabled={fData.formations.length === 0}
+                              >
+                                {idx + 1 === importData.fleets.length ? 'Submarines' : `Fleet ${idx + 1}`}
+                              </RButton>
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
                     <FormationGrid
                       fleetName={importedF.name}
@@ -110,23 +124,14 @@ const FormationLinkView: React.FC = () => {
                       refd={gridRef}
                       isExportedLink
                     />
-                    <div id="fleet-selector" className="tab">
-                      {importData.fleets.map((fleet, idx) => {
-                        return (
-                          <RButton
-                            key={`${'fleet-button'}-${idx * importData.fleets.length}`}
-                            themeColor={config.themeColor}
-                            className={`tab-btn normal${fleetTabIndex === idx ? ' selected' : ''}`}
-                            onClick={() => {
-                              setFleetTabIndex(idx);
-                            }}
-                          >
-                            {idx + 1 === importData.fleets.length ? 'Submarines' : `Fleet ${idx + 1}`}
-                          </RButton>
-                        );
-                      })}
-                    </div>
-                    <div className="scroll">
+                    <FormationEquipment
+                      selectedFleetIndex={fleetTabIndex}
+                      data={importData.fleets}
+                      equipmentData={importData.equipment}
+                      isOldFormation={importData.isOldFormation}
+                      isExportedLink
+                    />
+                    <div className="scroll" style={{ minHeight: '300px' }}>
                       {importData.fleets.map((fleet, idx) => {
                         return (
                           <div

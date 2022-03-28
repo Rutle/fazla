@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppContext } from '_/App';
 import { RootState } from '_/reducers/rootReducer';
@@ -67,7 +67,8 @@ const FormationEquipment: React.FC<{
   data: Ship[][];
   equipmentData: string[][][];
   isOldFormation: boolean;
-}> = ({ selectedFleetIndex, data, equipmentData, isOldFormation }) => {
+  isExportedLink?: boolean;
+}> = ({ selectedFleetIndex, data, equipmentData, isOldFormation, isExportedLink = false }) => {
   const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
   const { shipData } = useContext(AppContext);
@@ -79,22 +80,9 @@ const FormationEquipment: React.FC<{
         <div className="f-column">
           <div className="f-row fleet gap">
             {data[selectedFleetIndex].slice(0, 3).map((ship, shipIdx) => {
-              // slice (0, 3) and (3) -> main and vanguard each has their own f-row container for easy
-              // column change in smaller screen
-              return !ship ? (
-                <div key={`none-${shipIdx + 1}`} className="f-column" style={{ gap: '2px 0px', minWidth: '0' }}>
-                  <div className="dropdown placeholder">
-                    <span style={{ height: '18px' /* , display: 'inline-flex', alignItems: 'center' */ }}>-</span>
-                  </div>
-                  <div className="dropdown placeholder">
-                    <span style={{ height: '18px' /* , display: 'inline-flex', alignItems: 'center' */ }}>-</span>
-                  </div>
-                  <div className="dropdown placeholder">
-                    <span style={{ height: '18px' /* , display: 'inline-flex', alignItems: 'center' */ }}>-</span>
-                  </div>
-                </div>
-              ) : (
-                parseFits(ship.slots, shipData, true, ship.retrofit).map((shipFits) => {
+              console.log('test');
+              if (ship && !isExportedLink) {
+                return parseFits(ship.slots, shipData, true, ship.retrofit).map((shipFits) => {
                   return (
                     <div ref={ddRef} key={ship.names.en} className="f-column" style={{ gap: '2px 0px', minWidth: '0' }}>
                       {Object.keys(shipFits).map((slotName, slotIdx) => (
@@ -111,8 +99,29 @@ const FormationEquipment: React.FC<{
                       ))}
                     </div>
                   );
-                })
+                });
+              }
+              return (
+                <div key={`none-${shipIdx + 1}`} className="f-column" style={{ gap: '2px 0px', minWidth: '0' }}>
+                  <div className="dropdown placeholder">
+                    <span style={{ height: '18px' }}>
+                      {!ship ? '-' : equipmentData[selectedFleetIndex][shipIdx][0]}
+                    </span>
+                  </div>
+                  <div className="dropdown placeholder">
+                    <span style={{ height: '18px' }}>
+                      {!ship ? '-' : equipmentData[selectedFleetIndex][shipIdx][1]}
+                    </span>
+                  </div>
+                  <div className="dropdown placeholder">
+                    <span style={{ height: '18px' }}>
+                      {!ship ? '-' : equipmentData[selectedFleetIndex][shipIdx][2]}
+                    </span>
+                  </div>
+                </div>
               );
+              // slice (0, 3) and (3) -> main and vanguard each has their own f-row container for easy
+              // column change in smaller screen
             })}
           </div>
         </div>

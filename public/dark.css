@@ -237,7 +237,7 @@ button.dark {
 }
 button.menu-item.dark:hover,
 button.btn.grid-item.dark:hover,
-.btn.dark:hover {
+.btn:not(.non-interactive).dark:hover {
   /* TODO: Check colors with electron for window controls */
   /* background-color: #3c4652!important;*/
   /* background-color: #3c4652b3 !important;*/
@@ -351,7 +351,7 @@ div.f-grid.dark .f-column.section,
 }
 
 
-
+div.f-grid.dark .f-row.fleet > div.grid-item,
 div.f-grid.dark .f-row.fleet > button.grid-item {
   box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.5);
 }

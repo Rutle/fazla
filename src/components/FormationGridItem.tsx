@@ -149,8 +149,8 @@ const FormationGridItem: React.FC<GridItemProps> = ({
         </RButton>
       ) : (
         <div
-          className={`grid-item ship non-interactive ${themeColor} hullTypeAbb ${ship?.hullType || 'none'}`}
-          style={{ borderRadius: '4px', display: 'inline-block' }}
+          className={`grid-item ship btn non-interactive ${themeColor} hullTypeAbb ${ship?.hullType || 'none'}`}
+          // style={{ borderRadius: '4px', display: 'inline-block' }}
         >
           <span>{ship ? `${ship.names.en}` : `Empty`}</span>
         </div>
