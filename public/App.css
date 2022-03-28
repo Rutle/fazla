@@ -48,15 +48,22 @@ form {
 
 .page-content {
   height: 100%;
-  min-height: min-content;
+  /* min-height: min-content; */
   display: flex;
-  justify-content: center;
+  /* justify-content: center;*/
+}
+
+.page-content.formations {
+  flex-direction: column;
+}
+
+.page-content.ships {
   flex-direction: row;
 }
 div.scroll {
   height: 100%;
-  overflow-y: scroll;
-  padding-right: 5px;
+  overflow-y: auto;
+  /* padding-right: 5px; */
 }
 
 :not(input):not(textarea),
@@ -172,33 +179,6 @@ div.scroll {
 #window-controls > .navigation > button {
   width: 20px;
 }
-/*
-#window-controls label.btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 12px;
-  height: 18px;
-  border: 0;
-  font-size: 12px;
-  border-radius: 0;
-  padding: 0;
-  height: inherit;
-  width: 32px;
-  font-size: 15px;
-  border-bottom: 2px solid transparent;
-}*/
-/*
-#window-controls #light-toggle {
-  grid-row: 1 / span 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  border: 0;
-  padding: 0;
-}*/
 
 #window-controls .title-button {
   grid-row: 1 / span 1;
@@ -304,7 +284,7 @@ div.scroll {
   flex-direction: column;
   padding: 15px;
   margin: 15px;
-  width: 100%;
+  /* width: 100%; */
   border-radius: 5px;
 }
 
@@ -388,15 +368,16 @@ button:disabled * {
   cursor: default!important;
   opacity: 0.4;
 }
+
+button.menu-item.small,
 button.tab-btn.small,
 button.btn.small {
-  /* font-size: 14px;*/
-  /* padding: 0px 5px 2px 5px;*/
   min-width: 35px;
   font-variant-caps: all-petite-caps;
-  /* border-radius: 0px;*/
 }
 
+button.menu-item *,
+button.menu-item,
 button.btn.grid-item *,
 label.btn,
 label.btn *,
@@ -407,11 +388,8 @@ button.btn,
 button.btn * {
   cursor: pointer;
   box-sizing: border-box;
-  /*
-  -webkit-transition: background-color 0.15s ease-in-out, border 0.15s ease-in-out, stroke 0.15s ease-in-out, color 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border 0.15s ease-in-out, stroke 0.15s ease-in-out, color 0.15s ease-in-out;*/
-  -webkit-transition: 0.15s ease-in-out;
-  transition: 0.15s ease-in-out;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
 }
 
 /* TODO. Check on electron.
@@ -423,12 +401,10 @@ button.btn {
 
 div.grid-item.non-interactive,
 button.btn.grid-item {
-  /* padding: 3px 5px;*/
   white-space: nowrap;
   font-size: 15px;
   background: unset;
   overflow: hidden;
-  /* min-width: 150px; */
   border-radius: 0px;
 }
 
@@ -437,14 +413,14 @@ button.btn.normal,
 button.tab-btn.normal {
   font-size: 15px;
   font-variant-caps: all-petite-caps;
-  padding: 0px 10px 2px 10px;
+  padding: 0px 10px 2px 10px; /* all-petite-caps behaves differently and requires bottom padding 2px to get it to middle */
   justify-content: center;
 }
 
 label.btn.normal.icon,
 button.btn.normal.icon,
 button.tab-btn.normal.icon {
-  padding: 0px 10px 2px 5px;
+  padding: 0px 10px 2px 5px; /* all-petite-caps behaves differently and requires bottom padding 2px to get it to middle */
 }
 
 label.btn.normal.icon-only,
@@ -452,13 +428,14 @@ button.btn.normal.icon-only,
 button.tab-btn.normal.icon-only {
   padding: 0px 5px 0px 5px;
 }
-
+/*
 .btn:not(:disabled):active > span,
 .tab-btn:active > span,
 .btn:active > div.name,
 .btn:active > div.hulltype {
   transform: translateY(1px);
 }
+*/
 /* ###### top-container + tab ##### */
 .top-container {
   display: flex;
@@ -488,6 +465,7 @@ button.tab-btn.normal.icon-only {
 .tab > .dropdown.formation > button.tab-btn,
 .tab > button.tab-btn {
   border-radius: inherit;
+  /* box-shadow: 0px 4px 10px 0px #435e7740; for light theme TODO */
 }
 
 .navigation > button.nav-item,
@@ -501,7 +479,7 @@ div.f-icon.action,
 button.icon *,
 div.f-row.action *,
 .rList .rList-item *,
-.tab *,
+#window-menu .tab *,
 .navigation * {
   cursor: pointer;
 }
@@ -541,6 +519,14 @@ div.f-row.action *,
   width: 100%;
   position: relative;
 }
+
+.dropdown.placeholder {
+  padding: 1px 4px;
+  font-variant-caps: all-petite-caps;
+  border-radius: inherit;
+  display: flex;
+}
+
 .dropdown-toggle.equipment,
 .dropdown-toggle.formation {
   width: inherit;
@@ -548,6 +534,7 @@ div.f-row.action *,
   justify-content: space-between!important;
   border-radius: inherit;
 }
+
 .dropdown-toggle.equipment > span,
 .dropdown-toggle.formation > span {
   overflow: hidden;
@@ -563,8 +550,7 @@ div.f-row.action *,
   -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, stroke 0.15s ease-in-out, transform 0.15s ease-out!important;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, stroke 0.2s ease-in-out, transform 0.15s ease-out!important;
 }
-.dropdown-menu.equipment .btn.menu-item,
-.dropdown-menu.formation > .btn.menu-item {
+.dropdown-menu .menu-item {
   justify-content: flex-start;
   text-align: left;
   width: 210px;
@@ -572,7 +558,7 @@ div.f-row.action *,
   text-overflow: ellipsis;
 }
 
-.btn.menu-item > span {
+.dropdown-menu .menu-item > span {
   width: inherit;
   overflow: hidden;
   white-space: nowrap;
@@ -652,23 +638,11 @@ div.f-row.action *,
 span.Super.Rare:last-child {
   color: PaleGoldenrod;
 }
-/*
-.rList-item div.name.Super.Rare {
-  border-bottom: 2px solid PaleGoldenrod;
-}
-*/
+
 span.Rare:last-child {
   color: powderblue;
 }
-/*
-.rList-item div.name.Rare {
-  border-bottom: 2px solid powderblue;
-}
 
-.rList-item div.name.Normal {
-  border-bottom: 2px solid Gainsboro;
-}
-*/
 span.Ultra.Rare:last-child,
 span.Priority:last-child,
 span.Decisive:last-child {
@@ -677,25 +651,11 @@ span.Decisive:last-child {
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-/*
-.rList-item div.name.Priority,
-.rList-item div.name.Ultra.Rare,
-.rList-item div.name.Decisive {
-  border-image-source: linear-gradient(to bottom, #AFA 15%, #AAF, #FAA 85%);
-  border-image-slice: 1;
-  border-width: 0px;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-}
-*/
 
 span.Elite:last-child {
   color: rgba(144, 98, 253, 0.616);
 }
-/* 
-.rList-item div.name.Elite {
-  border-bottom: 2px solid rgba(144, 98, 253, 0.616);
-}*/
+
 /* #####  rList  ##### */
 .rList {
   flex: 1;
@@ -768,17 +728,30 @@ span.Elite:last-child {
 }
 
 .f-header.tab-group > button:last-child,
-.button-group > button:last-child,
-.radio-group > label:last-child {
+.button-group > button:last-of-type,
+.radio-group > label:last-of-type {
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
 }
-/*
-div.f-grid div.tab-group {
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
+div.radio-group > label:not(:only-child):not(:last-of-type):not(:first-child),
+div.button-group > button:not(:only-child):not(:last-of-type):not(:first-child),
+div.tab-group > button:not(:only-child):not(:last-of-type):not(:first-child) {
+  border-left: none;
+  border-right: none;
 }
-*/
+
+div.radio-group > label:first-child,
+div.button-group > button:first-child,
+div.tab-group > button:first-child {
+  border-right: none;
+}
+
+div.radio-group > label:last-of-type,
+div.button-group > button:last-of-type,
+div.tab-group > button:last-child {
+  border-left: none;
+}
+
 .radio-group input[type="radio"] {
   opacity: 0;
   position: fixed;
@@ -1229,7 +1202,10 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
   #footer {
     display: none;
   }
-  label.btn.normal, button.btn.normal, button.tab-btn.normal {
+  label.btn.normal,
+  button.btn.normal,
+  button.tab-btn.normal,
+  button.btn.normal.icon {
     padding: 0px 5px 2px 5px;
   }
   #fleet-selector {
@@ -1262,16 +1238,16 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
     width: max-content;
   }
 
-  #formation-ship-search,
-  .page-content {
+  #formation-ship-search {
     flex-direction: column;
-    justify-content: unset;
+    /* justify-content: unset;
     min-height: unset;
-    margin-top: 1px;
+    margin-top: 1px; */
   }
 
   .page-content.ships {
     overflow-y: scroll;
+    flex-direction: column;
   }
 
   .page-content.formations > .container.content {
@@ -1281,10 +1257,10 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
 
   #formation-ship-search {
     overflow-y: scroll;
-    top: 55px!important;
+    top: 40px!important;
     left: 0;
-    min-height: calc(100% - 55px)!important;
-    height: calc(100% - 55px)!important;
+    min-height: calc(100% - 40px)!important;
+    height: calc(100% - 40px)!important;
     width: 100%;
     border-top: unset!important;
     box-shadow: unset!important;
@@ -1353,12 +1329,16 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
     flex-direction: row;
   }
 
+  #equipment-grid > div.f-row {
+    flex-direction: column;
+  }
   #formation-grid div.f-row.fleet > button.grid-item:last-child {
     border-top-right-radius: inherit;
     border-bottom-left-radius: 0px;
   }
   #formation-grid div.f-row.fleet > button.grid-item:first-child {
     border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
   }
 
 }

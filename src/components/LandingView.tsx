@@ -20,7 +20,7 @@ const LandingView: React.FC = () => {
       // history.push(rr);
     }
     if (appState.cState === 'RUNNING' && appState.isData && rr === null) {
-      // ocalStorage.removeItem('rr');
+      // localStorage.removeItem('rr');
       // Used when coming directly to the '/' path. '/' is not inside RefreshRoute so rr is null.
       history.push('/ships');
     }
@@ -32,15 +32,18 @@ const LandingView: React.FC = () => {
     <>
       <TitleBar showMenu={false} />
       <div className={`page ${config.themeColor}`}>
-        <section className="page-content">
-          <div className={`container content ${config.themeColor}`}>
+        <section className="page-content" style={{ flexDirection: 'column' }}>
+          <div
+            className={`container content ${config.themeColor}`}
+            style={{ height: '100%', justifyContent: 'center' }}
+          >
             <div
               style={{
-                height: '50%',
+                height: '200px',
                 width: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'flex-end',
+                justifyContent: 'center',
                 alignItems: 'center',
               }}
             >

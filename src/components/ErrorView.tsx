@@ -16,36 +16,33 @@ const ErrorView: React.FC<{ isNotFound?: boolean }> = ({ isNotFound = false }) =
     <>
       <TitleBar showMenu={isNotFound} />
       <div className={`page ${config.themeColor}`}>
-        <section className="page-content">
-          <div className="container content">
-            <div style={{ display: 'flex', height: '100%', justifyContent: 'center', width: '100%' }}>
-              <div
-                className={`message-container ${config.themeColor}`}
-                style={{
-                  alignSelf: 'center',
-                  width: '50%',
-                  minHeight: '40px',
-                }}
-              >
-                <span className="message" style={{ fontSize: '24px', justifyContent: 'center' }}>
-                  {!isNotFound ? appState.eMsg : 'Page not found.'}
-                </span>
-              </div>
-              {process.env.PLAT_ENV === 'electron' ? (
-                <RButton
-                  themeColor={config.themeColor}
-                  onClick={() => {
-                    openLogs();
-                    closeWindow();
-                  }}
-                  extraStyle={{ marginTop: '30px', height: '50px', width: '20%' }}
-                >
-                  Close program
-                </RButton>
-              ) : (
-                <></>
-              )}
+        <section className="page-content" style={{ flexDirection: 'column' }}>
+          <div className="container content" style={{ height: '100%', justifyContent: 'center' }}>
+            <div
+              className={`message-container ${config.themeColor}`}
+              style={{
+                alignSelf: 'center',
+                minHeight: '40px',
+              }}
+            >
+              <span className="message" style={{ fontSize: '24px', justifyContent: 'center', width: '100%' }}>
+                {!isNotFound ? appState.eMsg : 'Page not found.'}
+              </span>
             </div>
+            {process.env.PLAT_ENV === 'electron' ? (
+              <RButton
+                themeColor={config.themeColor}
+                onClick={() => {
+                  openLogs();
+                  closeWindow();
+                }}
+                extraStyle={{ marginTop: '30px', height: '50px', width: '20%' }}
+              >
+                Close program
+              </RButton>
+            ) : (
+              <></>
+            )}
           </div>
         </section>
       </div>

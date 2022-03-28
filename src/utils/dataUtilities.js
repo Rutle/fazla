@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const shipData = require('../data/ships.json');
 const eqData = require('../data/equipments.json');
 
@@ -146,8 +147,77 @@ function checkShipEqSlotTypes() {
   });
 }
 
+
+// https://mattbatman.com/programmatically-writing-javascript-files-in-node/
+// Assign custom IDs to every unique equipment to reduce the size of formation data
+// when 
+function createCustomEqId() {
+  const data = eqData.map((eq, idx) => eq.id);
+  const file = fs.createWriteStream(
+    path.join(__dirname, '../data', 'eqIds.ts')
+  );
+  file.write('// Custom ID for each equipment.\r\n');
+  file.write('// JSON eq data has long names as IDs, but I need simple number ID\r\n');
+  file.write('// so that I can keep the export url length short. For that reason\r\n');
+  file.write('// the JSON data is reduced to number:string key:value pairs.\r\n');
+  file.write('// Programmatically created using a script in test.js\r\n');
+  file.write('const eqIds = {\r\n');
+  data.forEach((d, idx) => {
+    file.write(`  '${idx}': '${d}'`);
+    file.write(',\r\n');
+  });
+  file.write('};\r\n');
+  file.write('\r\n');
+  file.write('export default eqIds;\r\n');
+  file.end();
+}
+
+function updateCustomEqId() {
+  let parsedData = {};
+
+  const data = fs.readFile(path.join(__dirname, `../data/eqIds.ts`), 'utf8', (err, data) => {
+    if (err) throw err;
+    parsedData = JSON.parse(data
+      .replace('const eqIds =', '')
+      .replace('export default eqIds;', '')
+      .replace('// Custom ID for each equipment.', '')
+      .replace('// JSON eq data has long names as IDs, but I need simple number ID', '')
+      .replace('// so that I can keep the export url length short. For that reason', '')
+      .replace('// the JSON data is reduced to number:string key:value pairs.', '')
+      .replace('// Programmatically created using a script in test.js', '')
+      .replace(/(\"\w+)"/g, '\\$1\"') // Words in quotation.
+      .replace(/(")\//g, '\\$1/') // inch /
+      .replace(/(" )/g, '\\$1') // inch
+      .replace(/'(\d+)':/g, '\"$1\":') // key
+      .replace(/'(.+)'/g, '\"$1\"') // put all values in quotation marks
+      .replace(/\,(?=[^,]*$)/, "") // last trailing comma
+      .replace('};', '}'));
+    console.log(parsedData);
+  });
+
+  /*
+  const file = fs.createWriteStream(
+    resolve(__dirname, '../data', 'eqIds.ts')
+  );
+  file.write('// Custom ID for each equipment\r\n');
+  file.write('// Programmatically created using a script in test.js\r\n');
+  file.write('const eqIds = {\r\n');
+  data.forEach((d, idx) => {
+    file.write(`  ${idx}: '${d}'`);
+    file.write(',\r\n');
+  });
+  file.write('};\r\n');
+  file.write('\r\n');
+  file.write('export default eqIds;\r\n');
+  file.end();
+  */
+}
+
+
 // checkSkills();
 // checkNationality();
 // checkHullType();
 // checkShipEqSlotTypes();
 // checkEqTypes();
+// createCustomEqId();
+updateCustomEqId();

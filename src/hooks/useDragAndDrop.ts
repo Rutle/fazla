@@ -109,9 +109,7 @@ export const useDragAndDrop = ({
     if (!data.inDropZone) dispatch({ type: 'setInDropZone', payload: true });
     const oKey = event.currentTarget.getAttribute(overKey) as string;
     const sKey = event.dataTransfer.types[0];
-    // console.log('types', event.dataTransfer.types, '[oKey]', oKey, 'sKey', sKey, 'baseKey', baseKey, 'overKey', overKey);
     if (isValidDropZone && isValidDropZone(sKey, oKey)) return;
-    // console.log('dragover none');
     // eslint-disable-next-line no-param-reassign
     event.dataTransfer.dropEffect = 'none';
   };
@@ -122,8 +120,6 @@ export const useDragAndDrop = ({
     const sKey = event.dataTransfer.types[0];
     const oKey = event.currentTarget.getAttribute(overKey) as string;
     dispatch({ type: 'setDropDepth', payload: data.dropDepth + 1 });
-    // console.log(event.dataTransfer.types);
-    // console.log('onDragEnter sKey:', sKey, 'oKey', oKey, 'baseKey', baseKey);
     if (isValidDropZone) {
       const isValid = isValidDropZone(sKey, oKey);
       if (isValid && data.dropDepth === 0) {

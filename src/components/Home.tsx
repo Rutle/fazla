@@ -42,7 +42,7 @@ const Home: React.FC = () => {
       disabled = true;
     }
     return (
-      <div className={`button-group ${config.themeColor}`}>
+      <div className={`button-group rounded ${config.themeColor}`}>
         <RButton
           themeColor={`${config.themeColor}`}
           onClick={() => {
@@ -145,7 +145,7 @@ const Home: React.FC = () => {
               <div className="f-row wrap">
                 <div className="grid-item name">Theme color</div>
                 <div className="grid-item action">
-                  <div className={`radio-group ${config.themeColor}`}>
+                  <div className={`radio-group rounded ${config.themeColor}`}>
                     <RToggle
                       id="dark"
                       value="dark"

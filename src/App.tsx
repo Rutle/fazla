@@ -101,7 +101,7 @@ const App: React.FC = () => {
                 <LandingView />
               )}
             </Route>
-            <RefreshRoute /* path={['/ships', '/ships/:id']} */ path="/ships">
+            <RefreshRoute path="/ships">
               <ShipDetailView />
             </RefreshRoute>
             <RefreshRoute path="/formations">

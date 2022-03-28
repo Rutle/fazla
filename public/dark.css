@@ -5,9 +5,11 @@
   --main-dark-body-bg: #252525;
   --main-dark-border: #40556b;
   --main-dark-color: rgb(184, 184, 184);
-  --main-dark-hover-bg: #3c4652;
+  /* --main-dark-hover-bg: #3c4652;*/
+  --main-dark-hover-bg: #38414d;;
   --main-dark-hover-color: #98caff;
-  --main-dark-active-bg: #40556b;
+  /* --main-dark-active-bg: #40556b;*/
+  --main-dark-active-bg: #38414d;
   --main-dark-tooltip-bg: #2a2c31;
   --main-dark-tooltip-border: #3f4657;
 }
@@ -188,10 +190,10 @@ nav.tab.dark {
 
 nav.tab.dark > a {
   color: rgba(184, 184, 184, 0.4);
-  border-right: 1px solid var(--main-dark-header-bg);
-  border-left: 1px solid var(--main-dark-header-bg);
   box-shadow: inset 0px -4px 3px -4px #00000099;
   border-bottom: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-left: 1px solid transparent;
 }
 
 nav.tab.dark > a.active {
@@ -230,17 +232,26 @@ label.dark,
 button.dark {
   background-color: var(--main-dark-header-bg);
   color: var(--main-dark-color);
-  border: 1px solid transparent;
+  /* border: 1px solid #ffffff03;*/
+  border: 1px solid #ffffff0a;
 }
+button.menu-item.dark:hover,
 button.btn.grid-item.dark:hover,
 .btn.dark:hover {
   /* TODO: Check colors with electron for window controls */
-  background-color: #3c4652!important;
+  /* background-color: #3c4652!important;*/
+  /* background-color: #3c4652b3 !important;*/
+  background-color: var(--main-dark-active-bg)!important;
   color: var(--main-dark-hover-color)!important;
 }
 
+button.menu-item.dark {
+  border: 1px solid transparent;
+}
+
 button.dark.tab-btn:hover {
-  background-color: var(--main-dark-hover-bg);
+  /* background-color: var(--main-dark-hover-bg);*/
+  background-color: #3c4652b3 !important;
   color: var(--main-dark-hover-color);
 }
 
@@ -255,16 +266,17 @@ button.btn.rList-item.dark:hover {
 
 button.btn.dark:disabled:hover,
 button.tab-btn.dark:disabled:hover {
-  background-color: var(--main-dark-header-bg);
+  background-color: var(--main-dark-header-bg)!important;
   color: var(--main-dark-color);
 }
-
+button.menu-item.dark.selected,
 label.btn.dark.selected, 
 button.grid-item.btn.dark.selected,
 button.rList-item.dark.btn.selected,
 button.btn.dark.selected,
 button.tab-btn.dark.selected {
   background-color: var(--main-dark-active-bg);
+  /* background-color: #38414d;*/
   color:#98caff;
 }
 
@@ -282,9 +294,9 @@ button.btn.dark:active {
 
 button.dark.tab-btn:active {
   background-color: var(--main-dark-active-bg);
-  box-shadow: 1px 1px 3px 0px var(--main-dark-header-bg) inset;
-  -webkit-box-shadow: 1px 1px 3px 0px var(--main-dark-header-bg) inset;
-  -moz-box-shadow: 1px 1px 3px 0px var(--main-dark-header-bg) inset;
+  box-shadow: 0px 0px 10px 0px var(--main-dark-header-bg) inset;
+  -webkit-box-shadow: 0px 0px 10px 0px var(--main-dark-header-bg) inset;
+  -moz-box-shadow: 0px 0px 10px 0px var(--main-dark-header-bg) inset;
 }
 
 .rList-item.dark:hover .owned-indicator {
@@ -292,7 +304,7 @@ button.dark.tab-btn:active {
 }
 
 .rList-item.dark.owned > .owned-indicator /* + .name */ {
-  background-color: var(--main-dark-border);
+  background-color: var(--main-dark-active-bg);
   border-right: 1px solid var(--main-dark-header-bg);
 }
 .rList-item.dark > .owned-indicator /* + .name */ {
@@ -308,10 +320,13 @@ button.dark.tab-btn:active {
   border: 1px solid #1a1a1a;
   background-color: var(--main-dark-header-bg);
 }
-.dropdown-toggle.dark.equipment.tab-btn,
-.grid-item.dark.ship {
-  border: 1px solid #ffffff03;
+
+.dark .dropdown.placeholder {
+  /* border: 1px solid #ffffff03;*/
+  border: 1px solid #ffffff0a;
 }
+
+
 /* #### Popover #### */
 .tooltip.dark,
 .popover-container.dark {
@@ -319,7 +334,6 @@ button.dark.tab-btn:active {
   -webkit-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   -moz-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
   box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.35);
-  /* border: 1px solid #1a1a1a;*/
 }
 
 /* #### ship title bar #### */
@@ -344,6 +358,7 @@ div.f-grid.dark .f-row.fleet > button.grid-item {
 
 
 #theme-controls.navigation.dark > .nav-item {
+  border: 1px solid transparent;
   border-bottom: 2px solid transparent;
 }
 #theme-controls.navigation.dark > button.selected,
@@ -379,12 +394,12 @@ input[type="url"].dark.is-invalid,
 }
 
 .grid-item.dark.drag-over {
-  border: 2px dotted!important;
+  border: 1px dotted!important;
   border-radius: 4px!important;
 }
 
 .grid-item.dark.drag-over-invalid {
-  border: 2px dotted red!important;
+  border: 1px dotted red!important;
   border-radius: 4px!important;
 }
 
@@ -404,20 +419,20 @@ div.f-grid.dark div.f-title {
   border-bottom: 1px solid var(--main-dark-border);
   border-top: 1px solid var(--main-dark-border);
 }
-/*
-div.f-grid.dark div.tab {
-  background-color: var(--main-dark-header-bg);
-}
-*/
+
 div.f-grid.dark div.f-row div.f-header + div.f-icon,
 div.f-row.dark div.f-header + div.tab-group > button:first-child {
   border-left: 2px dotted var(--main-dark-border);
 }
 
+
 /* #### hull types #### */
+.dark .dropdown.placeholder,
 .dark.equipment.tab-btn,
 .grid-item.dark.ship {
   background-color: var(--main-dark-body-bg);
+  /* border: 1px solid #ffffff08;*/
+  border: 1px solid #ffffff0a;
 }
 .grid-item.dark.ship.Carrier {
   background-color: #352035;
@@ -529,7 +544,10 @@ div.f-grid.dark div.f-row.deepskyblue {
   nav.tab.dark > a.active:first-child {
     border-left: 1px solid transparent;
   }
-
+  #fleet-selector.dark {
+    background-color: var(--root-dark-bg);
+  }
+  /*
   div.f-grid.dark div.f-row.fleet > button.grid-item:first-child {
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
@@ -540,5 +558,5 @@ div.f-grid.dark div.f-row.deepskyblue {
     border-bottom-right-radius: inherit;
     border-top-right-radius: 0px;
   }
-
+  */
 }

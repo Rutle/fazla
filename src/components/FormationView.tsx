@@ -9,7 +9,6 @@ import {
   SUBMARINE,
   VANGUARDINDEX,
 } from '_/reducers/slices/formationGridSlice';
-import { Ship } from '_/types/shipTypes';
 import { RootState } from '_/reducers/rootReducer';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { CSSTransition } from 'react-transition-group';
@@ -17,7 +16,7 @@ import { SearchAction, setFleet, updateSearch } from '_/reducers/slices/searchPa
 import { clearErrorMessage, setErrorMessage, setIsUpdated } from '_/reducers/slices/appStateSlice';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import useResizeObserver from 'use-resize-observer';
-import { getFormationData } from '_/utils/appUtilities';
+import { FormationData, getFormationData } from '_/utils/appUtilities';
 import PageTemplate from './PageTemplate';
 import FormationGrid from './FormationGrid';
 import FormationPassives from './FormationPassives';
@@ -30,7 +29,7 @@ import ShipList from './ShipList';
 import SideBar from './SideBar';
 import ShipDetails from './ShipDetails';
 import useVisibility from '../hooks/useVisibility';
-import { ArrowDegUp, BoxArrowUp, CloseIcon, QuestionCircleIcon } from './Icons';
+import { ArrowDegUp, BoxArrowUp, CloseIcon, PlusIcon, QuestionCircleIcon } from './Icons';
 import TooltipWrapper from './Tooltip/TooltipWrapper';
 import FormationEquipment from './FormationEquipment';
 
@@ -47,15 +46,13 @@ const FormationView: React.FC = () => {
   const fData = useSelector((state: RootState) => state.formationGrid);
   const appState = useSelector((state: RootState) => state.appState);
   const [showModal, setModalOpen] = useState({ modal: '', isOpen: false });
-  const [fleetTabIndex, setFleetTabIndex] = useState(0);
-  const [formationData, setFormationData] = useState<Ship[][]>([]);
+  const [fleetTabIndex, setFleetTabIndex] = useState<number>();
+  const [formationData, setFormationData] = useState<FormationData>();
   const [showSearch, setShowSearch] = useState(false);
   const [selectedGrid, setSelectedGrid] = useState(NaN);
   const refData = useRef<HTMLDivElement>(null);
   const refTransition = useRef<HTMLDivElement>(null);
   const [isVisible, refSide] = useVisibility();
-  const [fleetCount, setFleetCount] = useState(0);
-  const [isSubFleet, setIsSubFleet] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
   const gridSize = useResizeObserver<HTMLDivElement>({ ref: gridRef });
   const cHeight = useRef(0);
@@ -96,15 +93,13 @@ const FormationView: React.FC = () => {
   // Update currently selected formation data.
   useEffect(() => {
     if (fData.formations.length !== 0) {
-      // setFormationData([]);
-      // get(fData.formations[fData.selectedIndex].data, shipData): <form[], isSubFleet, fleetcnt>
-      getFormationData(fData.formations[fData.selectedIndex].data, shipData)
+      getFormationData(fData.formations[fData.selectedIndex], shipData)
         .then((res) => {
-          setIsSubFleet(res.isSubFleet);
-          setFleetCount(res.fleetCount);
-          setFormationData(res.data);
+          setFormationData(res);
         })
         .catch((e) => {
+          setFormationData(undefined);
+          setFleetTabIndex(undefined);
           if (e instanceof Error) dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: e.message, eState: 'WARNING' }));
         });
     }
@@ -115,14 +110,13 @@ const FormationView: React.FC = () => {
   const showSearchSection = useCallback(
     (isOpen: boolean, gridIndex: number) => {
       setSelectedGrid(gridIndex);
-      // dispatch(formationAction(FormationAction.Search, { shipData, gridIndex }));
-      if (!Number.isNaN(gridIndex) && shipData && gridIndex !== undefined) {
+      if (!Number.isNaN(gridIndex) && shipData && gridIndex !== undefined && formationData) {
         let fleet: 'ALL' | 'VANGUARD' | 'MAIN' | 'SUBMARINE' = 'ALL';
-        if (MAININDEX[fleetCount].includes(gridIndex)) {
+        if (MAININDEX[formationData.fleetCount].includes(gridIndex)) {
           fleet = 'MAIN';
-        } else if (VANGUARDINDEX[fleetCount].includes(gridIndex)) {
+        } else if (VANGUARDINDEX[formationData.fleetCount].includes(gridIndex)) {
           fleet = 'VANGUARD';
-        } else if (SUBMARINE[fleetCount].includes(gridIndex)) {
+        } else if (SUBMARINE[formationData.fleetCount].includes(gridIndex)) {
           fleet = 'SUBMARINE';
         }
         dispatch(setFleet({ fleet }));
@@ -135,7 +129,7 @@ const FormationView: React.FC = () => {
       }
       setShowSearch(isOpen);
     },
-    [appState.cToggle, dispatch, fleetCount, shipData]
+    [appState.cToggle, dispatch, formationData, shipData]
   );
 
   const addShip = () => {
@@ -163,7 +157,7 @@ const FormationView: React.FC = () => {
     }
   };
 
-  // Save data when formation data is edited.
+  // Save the data when the formation data is edited.
   useEffect(() => {
     if (fData.isEdit.some((val) => val !== false)) {
       dispatch(formationAction(FormationAction.Save, { storage }));
@@ -184,8 +178,14 @@ const FormationView: React.FC = () => {
     }
     if (gridSize && gridSize.width && gridSize.height && gridSize.height !== cHeight.current)
       cHeight.current = gridSize.height;
+    /* Not correct place.
+    if (location.state !== null && location.state) {
+      const newImport = location.state as { newImportedFleet: boolean };
+      if (newImport.newImportedFleet) setFleetTabIndex(fData.formations.length);
+    } */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   useEffect(() => {
     // Use width to prevent re-renders when drag and dropping items.
     if (gridSize && gridSize.width && gridSize.height && gridSize.height !== cHeight.current)
@@ -215,6 +215,7 @@ const FormationView: React.FC = () => {
     },
     []
   );
+  /* TODO: Adjust scroll. Move "container content" to "scroll". Remove inner scroll from passive list. */
   return (
     <PageTemplate>
       <>
@@ -227,79 +228,91 @@ const FormationView: React.FC = () => {
           >
             {renderModal()}
           </ReactModal>
-          <div id="formation-content" className="container content">
-            <div className={`f-grid rounded ${config.themeColor}`}>
-              <div className="tab" style={{ gap: '5px' }}>
-                {fData.formations.length !== 0 ? <FormationDropDown /> : <></>}
-                <RButton
-                  themeColor={config.themeColor}
-                  className="tab-btn normal"
-                  onClick={() => setModalOpen({ modal: 'new', isOpen: true })}
-                >
-                  New
-                </RButton>
-                {fData.formations.length !== 0 ? (
-                  <>
-                    <RButton
-                      themeColor={config.themeColor}
-                      className="tab-btn normal"
-                      onClick={() => dispatch(formationAction(FormationAction.Remove, { storage }, addToast))}
-                      disabled={fData.formations.length === 0}
-                    >
-                      Remove
-                    </RButton>
-                    <RButton
-                      themeColor={config.themeColor}
-                      className="tab-btn normal"
-                      onClick={() => setModalOpen({ modal: 'rename', isOpen: true })}
-                    >
-                      Rename
-                    </RButton>
-                    <RButton
-                      themeColor={config.themeColor}
-                      className="tab-btn normal"
-                      onClick={() => setModalOpen({ modal: 'export', isOpen: true })}
-                    >
-                      Export
-                    </RButton>
-                    <RButton
-                      themeColor={config.themeColor}
-                      className="tab-btn normal"
-                      onClick={() => setModalOpen({ modal: 'import', isOpen: true })}
-                    >
-                      Import
-                    </RButton>
-                    <TooltipWrapper
-                      data={
-                        <ul>
-                          <li>Left mouse click to select a ship.</li>
-                          <li>Right mouse click to remove a ship.</li>
-                          <li>Drag and drop ships.</li>
-                        </ul>
-                      }
-                      WrapperElement="div"
-                      extraProps={{
-                        style: { maxWidth: '20px', padding: '2px', display: 'flex', alignItems: 'center' },
-                      }}
-                    >
-                      <QuestionCircleIcon themeColor={config.themeColor} />
-                    </TooltipWrapper>
-                  </>
-                ) : (
-                  <></>
-                )}
+          <div className="scroll container content">
+            <div id="formation-tab">
+              <div className={`f-grid rounded ${config.themeColor}`}>
+                <div className="tab" style={{ gap: '5px' }}>
+                  {fData.formations.length !== 0 ? <FormationDropDown /> : <></>}
+                  <RButton
+                    themeColor={config.themeColor}
+                    className="tab-btn normal"
+                    onClick={() => setModalOpen({ modal: 'new', isOpen: true })}
+                  >
+                    New
+                  </RButton>
+                  {fData.formations.length !== 0 ? (
+                    <>
+                      <RButton
+                        themeColor={config.themeColor}
+                        className="tab-btn normal"
+                        onClick={() => dispatch(formationAction(FormationAction.Remove, { storage }, addToast))}
+                        disabled={fData.formations.length === 0}
+                      >
+                        Remove
+                      </RButton>
+                      <RButton
+                        themeColor={config.themeColor}
+                        className="tab-btn normal"
+                        onClick={() => setModalOpen({ modal: 'rename', isOpen: true })}
+                      >
+                        Rename
+                      </RButton>
+                      <RButton
+                        themeColor={config.themeColor}
+                        className="tab-btn normal"
+                        onClick={() => setModalOpen({ modal: 'export', isOpen: true })}
+                      >
+                        Export
+                      </RButton>
+                      <RButton
+                        themeColor={config.themeColor}
+                        className="tab-btn normal"
+                        onClick={() => setModalOpen({ modal: 'import', isOpen: true })}
+                      >
+                        Import
+                      </RButton>
+                      {formationData?.isOldFormation ? (
+                        <RButton
+                          themeColor={config.themeColor}
+                          className="tab-btn normal"
+                          onClick={() => dispatch(formationAction(FormationAction.Convert, {}))}
+                        >
+                          Convert
+                        </RButton>
+                      ) : (
+                        <></>
+                      )}
+                      <TooltipWrapper
+                        data={
+                          <ul>
+                            <li>Left mouse click to select a ship.</li>
+                            <li>Right mouse click to remove a ship.</li>
+                            <li>Drag and drop ships.</li>
+                          </ul>
+                        }
+                        WrapperElement="div"
+                        extraProps={{
+                          style: { maxWidth: '20px', padding: '2px', display: 'flex', alignItems: 'center' },
+                        }}
+                      >
+                        <QuestionCircleIcon themeColor={config.themeColor} />
+                      </TooltipWrapper>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
             </div>
-
-            {formationData.length !== 0 && fData.formations.length !== 0 ? (
+            {formationData && typeof fleetTabIndex !== 'undefined' && fData.formations.length !== 0 ? (
               <>
                 <div id="fleet-selector" className={`f-grid rounded ${config.themeColor}`}>
                   <div className="f-row">
                     <div className="tab fleets" style={{ gap: '5px' }}>
-                      {formationData.map((fleet, idx) => {
+                      {formationData.fleets.map((fleet, idx) => {
                         return (
                           <RButton
-                            key={`${'fleet-button'}-${idx * formationData.length}`}
+                            key={`${'fleet-button'}-${idx * formationData.fleets.length}`}
                             themeColor={config.themeColor}
                             className={`tab-btn normal${fleetTabIndex === idx ? ' selected' : ''}`}
                             /*
@@ -309,7 +322,7 @@ const FormationView: React.FC = () => {
                             onClick={setTabIndex(idx)}
                             disabled={fData.formations.length === 0}
                           >
-                            {idx + 1 === formationData.length && isSubFleet ? 'Submarines' : `Fleet ${idx + 1}`}
+                            {idx + 1 === formationData.fleets.length ? 'Submarines' : `Fleet ${idx + 1}`}
                           </RButton>
                         );
                       })}
@@ -320,25 +333,30 @@ const FormationView: React.FC = () => {
                   fleetName={fData.formations[fData.selectedIndex].name}
                   themeColor={config.themeColor}
                   selectedFleetIndex={fleetTabIndex}
-                  ships={formationData}
+                  ships={formationData.fleets}
                   openSearchSection={showSearchSection}
                   selectedGridIndex={selectedGrid}
-                  fleetCount={fleetCount}
-                  isSubFleet={isSubFleet}
+                  fleetCount={formationData.fleetCount}
+                  // isSubFleet={isSubFleet}
                   refd={gridRef}
                 />
-                <FormationEquipment selectedFleetIndex={fleetTabIndex} data={formationData} />
+                <FormationEquipment
+                  selectedFleetIndex={fleetTabIndex}
+                  data={formationData.fleets}
+                  equipmentData={formationData.equipment}
+                  isOldFormation={formationData.isOldFormation}
+                />
 
-                <div className="scroll">
-                  {formationData.map((fleet, idx) => {
+                <div className="scroll" style={{ minHeight: '300px' }}>
+                  {formationData.fleets.map((fleet, idx) => {
                     return (
                       <div
                         id="passive-section"
-                        key={`tab${idx * formationData.length}`}
+                        key={`tab${idx * formationData.fleets.length}`}
                         className={`${fleetTabIndex !== idx ? 'hidden' : ''}`}
                       >
                         <FormationPassives
-                          key={`${'passive'}-${idx * formationData.length}`}
+                          key={`${'passive'}-${idx * formationData.fleets.length}`}
                           fleet={fleet}
                           themeColor={config.themeColor}
                           isSelected={fleetTabIndex === idx}
@@ -354,12 +372,11 @@ const FormationView: React.FC = () => {
                   className={`message-container ${config.themeColor}`}
                   style={{
                     alignSelf: 'center',
-                    width: '50%',
                     minHeight: '40px',
                   }}
                 >
                   <span className="message" style={{ fontSize: '24px', justifyContent: 'center', width: '100%' }}>
-                    {appState.cState === 'RUNNING' && appState.eState === 'WARNING' ? (
+                    {appState.cState === 'RUNNING' && appState.eState === 'WARNING' && fData.formations.length > 0 ? (
                       <>{appState.eMsg}</>
                     ) : (
                       <>No formations.</>
@@ -373,7 +390,7 @@ const FormationView: React.FC = () => {
             <div
               id="formation-ship-search"
               ref={refTransition}
-              className={`${fleetCount === 2 ? 'normal-fleet' : 'siren-fleet'}${isSubFleet ? ' sub-fleet' : ''} ${
+              className={`${formationData && formationData.fleetCount === 2 ? 'normal-fleet' : 'siren-fleet'} ${
                 config.themeColor
               }`}
               style={
@@ -426,13 +443,11 @@ const FormationView: React.FC = () => {
                 <ShipDetails
                   topButtonGroup={
                     <>
-                      <RButton
-                        themeColor={config.themeColor}
-                        onClick={addShip}
-                        className="btn normal icon-only"
-                        extraStyle={{ display: 'flex', padding: '4px' }}
-                      >
-                        <BoxArrowUp themeColor={config.themeColor} className="icon" />
+                      <RButton themeColor={config.themeColor} onClick={addShip} className="btn normal icon">
+                        <div className="btn-icon">
+                          <PlusIcon themeColor={config.themeColor} />
+                        </div>
+                        Fleet
                       </RButton>
                     </>
                   }

@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppContext } from '_/App';
-import { Ship } from '_/types/shipTypes';
 import { RootState } from '_/reducers/rootReducer';
-import { useParams } from 'react-router-dom';
-import { getFormationData, parseImportCode } from '_/utils/appUtilities';
+import { useParams, useHistory } from 'react-router-dom';
+import { FormationData, getFormationData, parseImportCode } from '_/utils/appUtilities';
 import { Formation } from '_/types/types';
 import { FormationAction, formationAction } from '_/reducers/slices/formationGridSlice';
 import { clearErrorMessage, setErrorMessage } from '_/reducers/slices/appStateSlice';
@@ -18,20 +17,17 @@ import RButton from './RButton/RButton';
  */
 const FormationLinkView: React.FC = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { code } = useParams<{ code: string }>();
   const { shipData, storage, addToast } = useContext(AppContext);
   const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
   const appState = useSelector((state: RootState) => state.appState);
-  const [fleetTabIndex, setFleetTabIndex] = useState(0);
+  const [fleetTabIndex, setFleetTabIndex] = useState<number>();
   const gridRef = useRef<HTMLDivElement>(null);
   const [validCode, setValidCode] = useState<boolean | undefined>(undefined);
   const [importedF, setImportedF] = useState<Formation | undefined>(undefined);
-  const [importData, setImportData] = useState<{ data: Ship[][]; isSubFleet: boolean; fleetCount: number }>({
-    data: [],
-    isSubFleet: false,
-    fleetCount: 0,
-  });
+  const [importData, setImportData] = useState<FormationData>();
 
   // Parse given code.
   useEffect(() => {
@@ -49,14 +45,10 @@ const FormationLinkView: React.FC = () => {
   // Update currently selected formation data.
   useEffect(() => {
     if (importedF && validCode) {
-      // setFormationData([]);
-      setImportData({ ...importData, data: [] });
-      getFormationData(importedF.data, shipData)
+      getFormationData(importedF, shipData)
         .then((res) => {
           setImportData(res);
-          // setIsSubFleet(res.isSubFleet);
-          // setFleetCount(res.fleetCount);
-          // setFormationData(res.data);
+          setFleetTabIndex(0);
         })
         .catch((e) => {
           if (e instanceof Error) dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: e.message, eState: 'WARNING' }));
@@ -77,14 +69,20 @@ const FormationLinkView: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // TODO: Add the new layout from formation view.
   return (
     <PageTemplate>
       <>
         <section className="page-content formations">
           <div id="formation-content" className="container content">
-            {validCode !== undefined ? (
+            {validCode !== undefined && typeof fleetTabIndex !== 'undefined' ? (
               <>
-                {validCode && importedF && appState.eState !== 'WARNING' && appState.cState === 'RUNNING' ? (
+                {validCode &&
+                importedF &&
+                importData &&
+                appState.eState !== 'WARNING' &&
+                appState.cState === 'RUNNING' ? (
                   <>
                     <div className="tab">
                       <RButton
@@ -92,6 +90,12 @@ const FormationLinkView: React.FC = () => {
                         className="tab-btn normal"
                         onClick={() => {
                           dispatch(formationAction(FormationAction.Import, { importedFormation: importedF }, addToast));
+                          /*
+                          history.push({
+                            pathname: '/formations',
+                            state: { newImportedFleet: true },
+                          });
+                          */
                         }}
                       >
                         <span style={{ display: 'inline-block' }}>Add to your formations</span>
@@ -101,40 +105,37 @@ const FormationLinkView: React.FC = () => {
                       fleetName={importedF.name}
                       themeColor={config.themeColor}
                       selectedFleetIndex={fleetTabIndex}
-                      ships={importData.data}
+                      ships={importData.fleets}
                       fleetCount={importData.fleetCount}
-                      isSubFleet={importData.isSubFleet}
                       refd={gridRef}
                       isExportedLink
                     />
                     <div id="fleet-selector" className="tab">
-                      {importData.data.map((fleet, idx) => {
+                      {importData.fleets.map((fleet, idx) => {
                         return (
                           <RButton
-                            key={`${'fleet-button'}-${idx * importData.data.length}`}
+                            key={`${'fleet-button'}-${idx * importData.fleets.length}`}
                             themeColor={config.themeColor}
                             className={`tab-btn normal${fleetTabIndex === idx ? ' selected' : ''}`}
                             onClick={() => {
                               setFleetTabIndex(idx);
                             }}
                           >
-                            {idx + 1 === importData.data.length && importData.isSubFleet
-                              ? 'Submarines'
-                              : `Fleet ${idx + 1}`}
+                            {idx + 1 === importData.fleets.length ? 'Submarines' : `Fleet ${idx + 1}`}
                           </RButton>
                         );
                       })}
                     </div>
                     <div className="scroll">
-                      {importData.data.map((fleet, idx) => {
+                      {importData.fleets.map((fleet, idx) => {
                         return (
                           <div
                             id="passive-section"
-                            key={`tab${idx * importData.data.length}`}
+                            key={`tab${idx * importData.fleets.length}`}
                             className={`${fleetTabIndex !== idx ? 'hidden' : ''}`}
                           >
                             <FormationPassives
-                              key={`${'passive'}-${idx * importData.data.length}`}
+                              key={`${'passive'}-${idx * importData.fleets.length}`}
                               fleet={fleet}
                               themeColor={config.themeColor}
                               isSelected={fleetTabIndex === idx}

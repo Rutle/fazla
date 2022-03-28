@@ -5,7 +5,7 @@ import { Formation } from '_/types/types';
 import DataStore from '_/utils/dataStore';
 import { batch } from 'react-redux';
 import { CallbackDismiss, ToastMessageType } from '_/hooks/useToast';
-import { setErrorMessage } from './appStateSlice';
+import { initShipData, setErrorMessage } from './appStateSlice';
 import { SearchAction, setFleet, updateSearch } from './searchParametersSlice';
 
 export enum FormationAction {
@@ -20,6 +20,8 @@ export enum FormationAction {
   Import = 'IMPORT',
   Search = 'SEARCH',
   Switch = 'SWITCH',
+  AddEq = 'ADDEQ',
+  Convert = 'CONVERT',
 }
 
 export const MAININDEX: { [key: number]: number[] } = {
@@ -45,7 +47,7 @@ export const SUBMARINE: { [key: number]: number[] } = {
 interface Formations {
   formations: Formation[];
   selectedIndex: number;
-  isEdit: boolean[];
+  isEdit: boolean[]; // Might be redundant and instead could use a single value.
 }
 const initialState: Formations = {
   formations: [],
@@ -57,29 +59,75 @@ const formationGridSlice = createSlice({
   name: 'formationGridSlice',
   initialState,
   reducers: {
-    addShipToFormation(state, action: PayloadAction<{ id: string; gridIndex: number; selectedIndex: number }>) {
-      const { id, gridIndex, selectedIndex } = action.payload;
+    addShipToFormation(state, action: PayloadAction<{ id: string; shipIndex: number; selectedFleetIndex: number }>) {
+      const { id, shipIndex, selectedFleetIndex } = action.payload;
       const newForms = state.formations.map((item, index) => {
-        if (index !== selectedIndex) {
+        if (index !== selectedFleetIndex) {
           return item;
+        }
+        // Get the old index of the ship in case it already was in the formation.
+        // We need it to replace the equipment of the old ship location with empty values.
+        let oldIndex = NaN;
+        const shipData = item.data.map((value, index2) => {
+          // Keep the current value. Not the one we are searching
+          if (index2 !== shipIndex && value !== id) {
+            return value;
+          }
+          // Remove the duplicate ID value.
+          if (index2 !== shipIndex && value === id) {
+            oldIndex = index2;
+            return 'N';
+          }
+          // Add the ID.
+          return id;
+        });
+        let newEq: string[] | string[][] = [];
+        const isOld = item.equipment.length === 15 || item.equipment.length === 27;
+        // Old equipment data structure
+        if (isOld) {
+          newEq = item.equipment.map((value, index2) => {
+            if (index2 === shipIndex) {
+              return ['N', 'N', 'N'];
+            }
+            if (!Number.isNaN(oldIndex) && index2 === oldIndex) {
+              return ['N', 'N', 'N'];
+            }
+            return value;
+          }) as string[][];
+        } else {
+          // New equipment data structure
+          newEq = item.equipment.slice();
+          // Equipment in old index
+          let oldIndexEq: string[] = [];
+          if (!Number.isNaN(oldIndex)) {
+            oldIndexEq = newEq.slice(oldIndex * 3, oldIndex * 3 + 3) as string[];
+            newEq = [
+              ...newEq.slice(0, oldIndex * 3),
+              ...newEq.slice(oldIndex * 3, oldIndex * 3 + 3).map(() => 'N'),
+              ...newEq.slice(oldIndex * 3 + 3),
+            ] as string[];
+          }
+          // Replace equipment in new place with either 'N' values or
+          // transfer equipment from old index.
+          newEq = [
+            ...newEq.slice(0, shipIndex * 3),
+            ...newEq
+              .slice(shipIndex * 3, shipIndex * 3 + 3)
+              .map((v, i) => (!Number.isNaN(oldIndex) ? oldIndexEq[i] : 'N')),
+            ...newEq.slice(shipIndex * 3 + 3),
+          ] as string[];
         }
         return {
           ...item,
-          data: item.data.map((value, index2) => {
-            if (index2 !== gridIndex && value !== id) {
-              return value;
-            }
-            if (index2 !== gridIndex && value === id) {
-              return 'NONE';
-            }
-            return id;
-          }),
+          data: shipData,
+          equipment: newEq,
         };
       });
+
       return {
         ...state,
         formations: newForms,
-        isEdit: state.isEdit.map((value, index) => (index !== selectedIndex ? value : true)),
+        isEdit: state.isEdit.map((value, index) => (index !== selectedFleetIndex ? value : true)),
       };
     },
     resetFormation() {
@@ -152,18 +200,47 @@ const formationGridSlice = createSlice({
       const { data, fleetIndex } = action.payload;
       const fromIdx = parseInt(data[0], 10);
       const toIdx = parseInt(data[1], 10);
-      const newFleet = state.formations[fleetIndex].data.slice();
-      const fromID = newFleet[fromIdx];
-      const toID = newFleet[toIdx];
-      newFleet[fromIdx] = toID;
-      newFleet[toIdx] = fromID;
+      const newData = state.formations[fleetIndex].data.slice();
+      let newEq = state.formations[fleetIndex].equipment.slice();
+      const isOld = newEq.length === 15 || newEq.length === 27;
+      if (isOld) {
+        // Old style equipment data structure
+        const oldSpot = newEq[fromIdx];
+        const newSpot = newEq[toIdx];
+        newEq[fromIdx] = newSpot;
+        newEq[toIdx] = oldSpot;
+      } else {
+        // Get equipment from old index and new index.
+        const oldIndexEq = newEq.slice(fromIdx * 3, fromIdx * 3 + 3);
+        const newIndexEq = newEq.slice(toIdx * 3, toIdx * 3 + 3);
+
+        // Move equipment from new index to old index.
+        newEq = [
+          ...newEq.slice(0, fromIdx * 3),
+          ...newEq.slice(fromIdx * 3, fromIdx * 3 + 3).map((v, i) => newIndexEq[i]),
+          ...newEq.slice(fromIdx * 3 + 3),
+        ] as string[];
+
+        // Move equipment from old index to new index.
+        newEq = [
+          ...newEq.slice(0, toIdx * 3),
+          ...newEq.slice(toIdx * 3, toIdx * 3 + 3).map((v, i) => oldIndexEq[i]),
+          ...newEq.slice(toIdx * 3 + 3),
+        ] as string[];
+      }
+      const fromID = newData[fromIdx];
+      const toID = newData[toIdx];
+      newData[fromIdx] = toID;
+      newData[toIdx] = fromID;
+
       const newForms = state.formations.map((item, index) => {
         if (index !== fleetIndex) {
           return item;
         }
         return {
           ...item,
-          data: newFleet,
+          data: newData,
+          equipment: newEq,
         };
       });
       return {
@@ -182,19 +259,87 @@ const formationGridSlice = createSlice({
     },
     removeShipFromFormation(state, action: PayloadAction<{ gridIndex: number; selectedIndex: number }>) {
       const { gridIndex, selectedIndex } = action.payload;
+      let newEq = state.formations[selectedIndex].equipment.slice();
+      const isOld = newEq.length === 15 || newEq.length === 27;
+      if (isOld) {
+        newEq[gridIndex] = ['N', 'N', 'N'];
+      } else {
+        newEq = [
+          ...newEq.slice(0, gridIndex * 3),
+          ...newEq.slice(gridIndex * 3, gridIndex * 3 + 3).map(() => 'N'),
+          ...newEq.slice(gridIndex * 3 + 3),
+        ] as string[];
+      }
       const newForms = state.formations.map((item, index) => {
         if (index !== selectedIndex) {
           return item;
         }
         return {
           ...item,
-          data: item.data.map((value, index2) => (index2 !== gridIndex ? value : 'NONE')),
+          data: item.data.map((value, index2) => (index2 !== gridIndex ? value : 'N')),
+          equipment: newEq,
         };
       });
       return {
         ...state,
         formations: newForms,
         isEdit: state.isEdit.map((value, index3) => (index3 !== selectedIndex ? value : true)),
+      };
+    },
+    addEquipmentToShipSlot(
+      state,
+      action: PayloadAction<{
+        formIdx: number;
+        shipIdx: number;
+        fleetIdx: number;
+        slotIdx: number;
+        eqId: string;
+        isOldFormation: boolean;
+      }>
+    ) {
+      const { formIdx, shipIdx, slotIdx, eqId, isOldFormation, fleetIdx } = action.payload;
+      const newForms = state.formations.map((item, index) => {
+        if (index !== formIdx) {
+          return item;
+        }
+        return {
+          ...item,
+          equipment: item.equipment.map((value, index2) => {
+            if (isOldFormation && typeof value === 'object') {
+              if (index2 === shipIdx) {
+                return value.map((v, i) => (i === slotIdx ? eqId : v));
+              }
+            } else if (index2 === shipIdx * 3 + slotIdx && !isOldFormation) {
+              return eqId;
+            }
+            return value;
+          }),
+        };
+      });
+      return {
+        ...state,
+        formations: newForms as Formation[],
+        isEdit: state.isEdit.map((value, index) => (index !== fleetIdx ? value : true)),
+      };
+    },
+
+    convertFormation(state, action: PayloadAction<{ formIdx: number }>) {
+      const { formIdx } = action.payload;
+      const newEq = state.formations[formIdx].equipment.slice().flat();
+      const newForms = state.formations.map((item, index) => {
+        if (index !== formIdx) {
+          return item;
+        }
+        return {
+          ...item,
+          equipment: newEq,
+        };
+      });
+
+      return {
+        ...state,
+        formations: newForms as Formation[],
+        isEdit: state.isEdit.map((value, index) => (index !== formIdx ? value : true)),
       };
     },
   },
@@ -211,6 +356,8 @@ export const {
   toggleEdit,
   removeShipFromFormation,
   switchPlacements,
+  addEquipmentToShipSlot,
+  convertFormation,
 } = formationGridSlice.actions;
 
 interface FormActionData {
@@ -222,6 +369,14 @@ interface FormActionData {
   shipData?: DataStore;
   switchData?: string[];
   insertData?: { gridIndex: number; shipID: string };
+  eqData?: {
+    formIdx: number;
+    fleetIdx: number;
+    shipIdx: number;
+    slotIdx: number;
+    isOldFormation: boolean;
+    eqId: string;
+  };
 }
 
 /**
@@ -248,18 +403,19 @@ export const formationAction =
       const iFormation = data.importedFormation;
       const shipGridIndex = data.gridIndex; // Ship selected on the grid of ships.
       const { storage, shipData } = data;
+      const { eqData } = data; // When an equipment is added.
       let emptyFormation: string[] = [];
-      let emptyEquips: string[][] = [];
+      let emptyEquips: string[] = [];
       switch (action) {
         case 'NEW':
           if (fType === 'normal') {
             // 12 normal ships and 3 submarines
             emptyFormation = Array.from({ length: 15 }, () => 'N');
-            emptyEquips = Array.from({ length: 15 }, () => ['N', 'N', 'N']);
+            emptyEquips = Array.from({ length: 15 * 3 }, () => 'N');
           } else {
             // 24 normal ships and 3 submarines
             emptyFormation = Array.from({ length: 27 }, () => 'N');
-            emptyEquips = Array.from({ length: 27 }, () => ['N', 'N', 'N']);
+            emptyEquips = Array.from({ length: 27 * 3 }, () => 'N');
           }
           dispatch(addNewFormationData({ data: emptyFormation, name, equipment: emptyEquips }));
           if (addToast) addToast('info', 'New formation', 'New formation was created.');
@@ -279,7 +435,6 @@ export const formationAction =
           break;
         case 'SAVE':
           {
-            // TODO: Move at the end of try block, because every action requires it.
             const platform = process.env.PLAT_ENV;
             result = await saveFormationData(formationGrid.formations, platform as string, storage);
             if (result.isOk) dispatch(toggleEdit());
@@ -289,7 +444,7 @@ export const formationAction =
           // Add ship and reset list.
           if (shipGridIndex !== undefined && !Number.isNaN(shipGridIndex) && shipData) {
             batch(() => {
-              dispatch(addShipToFormation({ id, gridIndex: shipGridIndex, selectedIndex: formIdx }));
+              dispatch(addShipToFormation({ id, shipIndex: shipGridIndex, selectedFleetIndex: formIdx }));
               dispatch(setFleet({ fleet: 'ALL' }));
               // dispatch(setIsUpdated({ key: list, value: false }));
               // dispatch(resetParameters());
@@ -300,7 +455,7 @@ export const formationAction =
         case 'INSERT':
           if (data.insertData) {
             const { gridIndex, shipID } = data.insertData;
-            dispatch(addShipToFormation({ id: shipID, gridIndex, selectedIndex: formIdx }));
+            dispatch(addShipToFormation({ id: shipID, shipIndex: gridIndex, selectedFleetIndex: formIdx }));
           }
           break;
         case 'REMOVESHIP':
@@ -316,6 +471,14 @@ export const formationAction =
           break;
         case 'SWITCH':
           if (data && data.switchData) dispatch(switchPlacements({ data: data.switchData, fleetIndex: formIdx }));
+          break;
+        case 'ADDEQ':
+          if (eqData) {
+            dispatch(addEquipmentToShipSlot(eqData));
+          }
+          break;
+        case 'CONVERT':
+          dispatch(convertFormation({ formIdx }));
           break;
         default:
           break;

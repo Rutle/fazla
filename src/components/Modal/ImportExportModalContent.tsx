@@ -30,19 +30,25 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
 
   useEffect(() => {
     if (isType === 'export') {
-      const encURI = encodeURIComponent(encodeFormation(fGrid.formations[fGrid.selectedIndex]));
+      const res = encodeFormation(fGrid.formations[fGrid.selectedIndex]);
+      const encURI = encodeURIComponent(res);
       const urlList = window.location.href.split('/');
       const linkURL = urlList.slice(0, -1).concat('link').join('/');
       setValue(`${linkURL}/${encURI}`);
     }
   }, [fGrid.formations, fGrid.selectedIndex, isType]);
 
-  const copyCode = () => {
+  const copyCode = async () => {
     if (inputRef && inputRef.current) {
       inputRef.current.select();
-      document.execCommand('copy');
-      inputRef.current.focus();
-      setCopySuccess(true);
+      if (!navigator.clipboard) {
+        // Fallback for old execCommand usage.
+        document.execCommand('copy');
+        inputRef.current.focus();
+        setCopySuccess(true);
+      } else {
+        await navigator.clipboard.writeText(inputRef.current.value);
+      }
     }
   };
 
@@ -69,11 +75,17 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
                 value={value}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setValue(e.target.value);
-                  const result = parseImportCode(e.target.value);
-                  if (result) {
-                    setImportedFormation(result as Formation);
-                    setIsValidCode(true);
-                  } else {
+                  try {
+                    const decoded = decodeURIComponent(e.target.value);
+                    const result = parseImportCode(decoded);
+                    if (result) {
+                      setImportedFormation(result as Formation);
+                      setIsValidCode(true);
+                    } else {
+                      setImportedFormation({ data: [], equipment: [], name: '' });
+                      setIsValidCode(false);
+                    }
+                  } catch (err) {
                     setImportedFormation({ data: [], equipment: [], name: '' });
                     setIsValidCode(false);
                   }
@@ -145,10 +157,12 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
               </RButton>
             </>
           ) : (
+            // Add code/link options
             <RButton
               themeColor={config.themeColor}
-              onClick={() => {
-                copyCode();
+              onClick={async () => {
+                await copyCode();
+                setModalOpen({ modal: '', isOpen: false });
               }}
             >
               {!copySuccess ? 'Copy to clipboard' : 'Copied successfully.'}

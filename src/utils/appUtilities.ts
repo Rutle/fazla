@@ -92,7 +92,7 @@ export const parseImportCode = (codeString: string): Formation | boolean => {
       .map((x) => x.charCodeAt(0));
     const f = new Uint8Array(data);
     const result = safeJsonParse(isImportJson)(pako.inflate(f, { to: 'string' }));
-    if (result) return { ...(result as { data: string[]; name: string }), equipment: [] };
+    if (result) return { ...(result as Formation) };
     return false;
   } catch (e) {
     return false;
@@ -100,7 +100,6 @@ export const parseImportCode = (codeString: string): Formation | boolean => {
 };
 
 export const encodeFormation = (formation: Formation): string => {
-  // const { equipment, ...rest } = formation;
   const compressed = pako.deflate(JSON.stringify(formation));
   return btoa(String.fromCharCode.apply(null, compressed));
 };
@@ -288,7 +287,7 @@ export const parseSlots = (slots: { [key: string]: Slot }, data: DataStore, hasR
 };
 
 export interface ParsedFit {
-  [key: string]: string[];
+  [key: string]: Equipment[];
 }
 /**
  * Parses ship equipment slot-data from generic string to proper slot categories.
@@ -308,11 +307,11 @@ export const parseFits = (
   const retroFits: ParsedFit = {};
   Object.keys(slots).forEach((key) => {
     const slotIDs = slotTypes[slots[key].type];
-    let retroFit: string[] = [];
+    let retroFit: Equipment[] = [];
     // List of equipment that fit the slot. Reduce it into a single array.
-    const baseFit = slotIDs[0].reduce((acc, eqID) => [...acc, ...data.getEqName(eqTypes[eqID])], []);
+    const baseFit = slotIDs[0].reduce((acc, eqID) => [...acc, ...data.getEqsByType(eqTypes[eqID])], []);
     if (slotIDs.length > 1) {
-      retroFit = slotIDs[1].reduce((acc, eqID) => [...acc, ...data.getEqName(eqTypes[eqID])], []);
+      retroFit = slotIDs[1].reduce((acc, eqID) => [...acc, ...data.getEqsByType(eqTypes[eqID])], []);
     } else {
       retroFit = baseFit;
     }
@@ -328,42 +327,95 @@ export const parseFits = (
   return [baseFits];
 };
 
-export const getFormationData = async (
-  data: string[],
-  shipData: DataStore
-): Promise<{ data: Ship[][]; isSubFleet: boolean; fleetCount: number }> => {
+export interface FormationData {
+  fleets: Ship[][];
+  fleetCount: number;
+  equipment: string[][][];
+  isOldFormation: boolean;
+}
+/**
+ * Function that takes formation data, that just contains IDs, and returns more detailed data back.
+ * @param {Object} formation Formation data
+ * @param {Object} shipData Ship data in the Datastore.
+ * @returns {Object} A Promise containing detailed data.
+ */
+export const getFormationData = async (formation: Formation, shipData: DataStore): Promise<FormationData> => {
   try {
+    const formLen = formation.data.length;
+    const eqLen = formation.equipment.length;
+    // Add some checks
+    if (!(eqLen === 45 || eqLen === 81 || eqLen === 15 || eqLen === 27))
+      throw new Error('Equipment data structure is not correct.');
+    if (!(formLen === 15 || formLen === 27)) throw new Error('Fleet data structure is not correct.');
+
     // Find Ship data for each ship ID in the formation and transform it to key-value pairs of
     // { ID:Ship }
     const formationShips = shipData
       .getShips()
-      .filter((ship) => data.includes(ship.id))
+      .filter((ship) => formation.data.includes(ship.id))
       .reduce(
         (accumulator, currentValue) => Object.assign(accumulator, { [currentValue.id]: currentValue }),
         {} as { [key: string]: Ship }
       );
-    const formLen = data.length;
+
     const fleetCount = Math.floor(formLen / 6);
     const form: Ship[][] = [];
+
     // Normal ships
     // Slice array of formation IDs into size 6 and match the ID with correct ship.
     for (let idx = 0; idx < fleetCount; idx += 1) {
-      const temp = data.slice(idx * 6, idx * 6 + 6);
+      const temp = formation.data.slice(idx * 6, idx * 6 + 6);
       form.push(temp.map((id) => formationShips[id]));
     }
+
     // Submarines
-    // Submarines are at the end of the array.
-    let isSubFleet = false;
-    if (formLen === 15 || formLen === 27) {
-      const temp = data.slice(-3);
-      form.push(temp.map((id) => formationShips[id]));
-      isSubFleet = true;
+    // TODO: Add function to convert old one to new form.
+    const eqData: string[][][] = [];
+    const temp = formation.data.slice(-3);
+    form.push(temp.map((id) => formationShips[id]));
+
+    // Equipment
+    // Old equipment array length 15/27
+    // New equipment array length 45/87
+    // Take older equipment structure in consideration just in case if someone has actually used the website
+    let updateRequired = false;
+    if (eqLen === 15 || eqLen === 27) {
+      updateRequired = true;
+      for (let idx = 0; idx <= fleetCount; idx += 1) {
+        const tempEq = formation.equipment.slice(idx * 6, idx * 6 + 6);
+        const tempNames: string[][] = [];
+        for (let shipIdx = 0; shipIdx < tempEq.length; shipIdx += 1) {
+          const t = tempEq[shipIdx] as string[];
+          tempNames.push(t.map((id) => shipData.getEqNameByCustomId(id)));
+        }
+        eqData.push(tempNames);
+      }
     } else {
-      // In case of old formation data.
-      isSubFleet = false;
+      // New style equipment of the formation for vanguard and main
+      for (let idx = 0; idx < fleetCount; idx += 1) {
+        const tempEq = formation.equipment.slice(idx * 6 * 3, idx * 6 * 3 + 6 * 3) as string[];
+        const tempNames: string[][] = [];
+        for (let slotIdx = 0; slotIdx < tempEq.length; slotIdx += 3) {
+          const e = tempEq.slice(slotIdx, slotIdx + 3).map((id) => shipData.getEqNameByCustomId(id));
+          tempNames.push(e);
+        }
+        eqData.push(tempNames);
+      }
+      const subEq = formation.equipment.slice(-(3 * 3));
+      const tempNames: string[][] = [];
+
+      // For submarines
+      for (let slotIdx = 0; slotIdx < subEq.length; slotIdx += 3) {
+        const tempEq = subEq.slice(slotIdx, slotIdx + 3) as string[];
+        tempNames.push(tempEq.map((id) => shipData.getEqNameByCustomId(id)));
+      }
+      eqData.push(tempNames);
     }
-    return Promise.resolve({ data: form, isSubFleet, fleetCount });
-  } catch (e) {
-    return Promise.reject(new Error('Failed to form formation data.'));
+    return Promise.resolve({ fleets: form, fleetCount, equipment: eqData, isOldFormation: updateRequired });
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return Promise.reject(new Error(e.message));
+    }
+    return Promise.reject(new Error('Something went wrong when parsing formation data.'));
   }
 };

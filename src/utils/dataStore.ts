@@ -12,7 +12,15 @@ export default class DataStore {
 
   private eqArr: Equipment[] = [];
 
-  private eqByType: { [key: string]: string[] } = {};
+  private eqMap: Record<string, Equipment> = {};
+
+  private eqByType: Record<string, Equipment[]> = {};
+
+  private eqIds: Record<string, string> = {};
+
+  // To prevent unnecessary array/object manipulations when saving selected equipment
+  // for a ship slot.
+  private reverseEqId: Record<string, string> = {};
 
   private shipCount = 0;
 
@@ -27,7 +35,6 @@ export default class DataStore {
     if (ships && eqs) {
       this.shipsArr = [...ships.slice()];
       this.eqArr = [...eqs.slice()];
-      this.parseEqData();
       this.shipCount = ships.length;
       this.eqCount = eqs.length;
     } else {
@@ -37,13 +44,6 @@ export default class DataStore {
       this.eqCount = 0;
     }
     this.state = 'INIT';
-  }
-
-  parseEqData(): void {
-    this.eqByType = Object.values(eqTypes).reduce(
-      (a, c) => Object.assign(a, { [c]: this.eqArr.filter((value) => value.type.name === c) }),
-      {} as { [key: string]: string[] }
-    );
   }
 
   getShips(): Ship[] {
@@ -58,13 +58,44 @@ export default class DataStore {
     return this.shipsArr[index];
   }
 
-  getEqByIndex(index: number): Equipment | undefined {
-    return this.eqArr[index];
-  }
-
-  getEqName(type: string): string[] {
+  getEqsByType(type: string): Equipment[] {
     if (Object.keys(this.eqByType).includes(type)) return this.eqByType[type];
     return [];
+  }
+
+  getEqNameByCustomId(id: string): string {
+    // TODO: Make this return the .names.en value
+    // Remove getEqNameByLongId-call from formation equipment text field
+    // Or just return the Equipment object.
+    if (Object.keys(this.eqIds).includes(id)) return this.eqMap[this.eqIds[id]].names.en;
+    return '-';
+  }
+
+  getEqCustomId(longId: string): string {
+    if (Object.keys(this.reverseEqId).includes(longId)) return this.reverseEqId[longId];
+    return '-';
+  }
+
+  async setCustomEqIds(data: { [key: string]: string }): Promise<void> {
+    try {
+      this.eqIds = { ...data };
+
+      // Form another "map" that contains values from data as keys
+      // and keys from data as values. The original raw data contains long names as IDs
+      // which we don't want to use because when we are exporting formation
+      // data the resulting string size becomes much larger. We use short customs IDs.
+      // Do the one time array/object manipulation here rather than doing
+      // array/manipulation everytime we need to get shorther Id.
+      this.reverseEqId = Object.fromEntries(
+        Object.entries(data).map(([key, value]) => {
+          // const keyNumber = Number(key);
+          return [value, key];
+        })
+      );
+    } catch (error) {
+      return Promise.reject(new Error('Failed to set custom IDs data in DataStore.'));
+    }
+    return Promise.resolve();
   }
 
   async setShips(data: Ship[]): Promise<Ship[]> {
@@ -85,9 +116,13 @@ export default class DataStore {
       // Parse equipment data into a "map" with type as a key and all equipment names as value array.
       this.eqByType = Object.values(eqTypes).reduce(
         (a, c) =>
-          Object.assign(a, { [c]: this.eqArr.filter((value) => value.type.name === c).map((eq) => eq.names.en) }),
-        {} as { [key: string]: string[] }
+          Object.assign(a, {
+            [c]: this.eqArr.filter((value) => value.type.name === c),
+          }),
+        {} as Record<string, Equipment[]>
       );
+
+      this.eqMap = Object.fromEntries(this.eqArr.map((v) => [v.id, v]));
     } catch (error) {
       return Promise.reject(new Error('Failed to set equipment data in DataStore.'));
     }

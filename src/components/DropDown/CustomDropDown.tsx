@@ -25,7 +25,7 @@ const DropDownMenuItem: React.FC<{
   return (
     <button
       type="button"
-      className={`btn small rounded menu-item ${themeColor} ${isSelected ? 'selected' : ''}`}
+      className={`small rounded menu-item ${themeColor} ${isSelected ? 'selected' : ''}`}
       onClick={handleClick}
       style={style}
     >
@@ -54,6 +54,12 @@ const DropDownMenu: React.FC<FormationDropDownProps> = ({ options, listData, sel
     },
     [onSelect, selectIndex, show]
   );
+
+  const getCount = (limit: number, data: string[]) => {
+    if (data.length < limit) return data.length;
+    return limit;
+  };
+
   return (
     <div
       {...menuProps}
@@ -65,9 +71,9 @@ const DropDownMenu: React.FC<FormationDropDownProps> = ({ options, listData, sel
     >
       {listData ? (
         <List
-          height={options.listLimit ? options.listLimit * 22 : '100%'}
+          height={options.listLimit && listData ? getCount(options.listLimit, listData) * 23 : '100%'}
           itemCount={listData.length}
-          itemSize={22}
+          itemSize={23}
           width="100%"
         >
           {({ index, style }) => {
@@ -79,7 +85,7 @@ const DropDownMenu: React.FC<FormationDropDownProps> = ({ options, listData, sel
                 themeColor={options.themeColor}
                 onClick={click}
                 index={index}
-                style={{ ...style, width: 'calc(100% - 4px)' }}
+                style={{ ...style, top: (style.top as number) + 1, height: 22, width: 'calc(100% - 4px)' }}
               />
             );
           }}

@@ -21,6 +21,7 @@ import { setOwnedSearchList } from './ownedSearchListSlice';
 import { setOwnedList } from './ownedShipListSlice';
 import { setFormationsData } from './formationGridSlice';
 import { setConfig, setUpdateDate } from './programConfigSlice';
+import eqIds from '../../data/eqIds';
 
 // const SHIPDATAURL = 'https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 // const SHIPAPIURL =
@@ -241,7 +242,7 @@ export const initShipData =
           if (!res.isOk) throw new Error(res.msg);
           dispatch(setCurrentState({ cState: 'INIT', cMsg: 'Initializing.' }));
         } else if (days >= 7) {
-          // 7 more days since update check. Compare version numbers and update if necessary.
+          // 7 or more days since update check. Compare version numbers and update if necessary.
           const result = await compareVersion(versionInfo);
           await storage.setItem('timeOfUpdateCheck', Date.now());
           if (!result.isOk) throw new Error(result.msg);
@@ -260,6 +261,7 @@ export const initShipData =
       if (dataObj.code === 'InitError') throw new Error("Couldn't initialize application.");
       await data.setShips(dataObj.shipData);
       await data.setEqs(dataObj.eqData);
+      await data.setCustomEqIds(eqIds);
       dispatch(setVersionData(dataObj.versionData));
       dispatch(initShipLists(dataObj.ownedShips, data, dataObj.config, dataObj.formations));
     } catch (e) {

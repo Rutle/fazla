@@ -73,8 +73,10 @@ export type SearchParams = {
 export type Formation = {
   // Array of Ids (ships)
   data: string[];
-  // Array of Arrays (equips for ships)
-  equipment: string[][];
+  // Array of Arrays (equips for ships).
+  // string[] is new form to save space
+  // string[][] old form
+  equipment: string[] | string[][];
   // Name of the fleet
   name: string;
 };
