@@ -32,25 +32,23 @@ const LandingView: React.FC = () => {
     <>
       <TitleBar showMenu={false} />
       <div className={`page ${config.themeColor}`}>
-        <section className="page-content" style={{ flexDirection: 'column' }}>
+        <div
+          className={`container content ${config.themeColor}`}
+          style={{ justifyContent: 'center', width: 'calc(100% - 60px)' }}
+        >
           <div
-            className={`container content ${config.themeColor}`}
-            style={{ height: '100%', justifyContent: 'center' }}
+            style={{
+              height: '200px',
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
           >
-            <div
-              style={{
-                height: '200px',
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              {appState.cState !== 'RUNNING' ? appState.cMsg : 'Launching.'}
-            </div>
+            {appState.cState !== 'RUNNING' ? appState.cMsg : 'Launching.'}
           </div>
-        </section>
+        </div>
       </div>
       <FooterBar />
     </>

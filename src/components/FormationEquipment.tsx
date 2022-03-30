@@ -26,7 +26,6 @@ const EqDropDown: React.FC<{
   const { shipData } = useContext(AppContext);
 
   const selectIndex = (eqIdx: number) => {
-    // console.log('shipIdx: ', shipIdx, ', slotIdx: ', slotIdx, ', formIdx:', formIdx);
     dispatch(
       formationAction(FormationAction.AddEq, {
         eqData: {
@@ -80,7 +79,6 @@ const FormationEquipment: React.FC<{
         <div className="f-column">
           <div className="f-row fleet gap">
             {data[selectedFleetIndex].slice(0, 3).map((ship, shipIdx) => {
-              console.log('test');
               if (ship && !isExportedLink) {
                 return parseFits(ship.slots, shipData, true, ship.retrofit).map((shipFits) => {
                   return (
@@ -131,20 +129,8 @@ const FormationEquipment: React.FC<{
               {data[selectedFleetIndex].slice(3).map((ship, shipIdx) => {
                 // slice (0, 3) and (3) -> main and vanguard each has their own f-row container for easy
                 // column change in smaller screen
-                return !ship ? (
-                  <div key={`none-${shipIdx + 1}`} className="f-column" style={{ gap: '2px 0px', minWidth: '0' }}>
-                    <div className="dropdown placeholder">
-                      <span style={{ height: '18px' /* , display: 'inline-flex', alignItems: 'center' */ }}>-</span>
-                    </div>
-                    <div className="dropdown placeholder">
-                      <span style={{ height: '18px' /* , display: 'inline-flex', alignItems: 'center' */ }}>-</span>
-                    </div>
-                    <div className="dropdown placeholder">
-                      <span style={{ height: '18px' /* , display: 'inline-flex', alignItems: 'center' */ }}>-</span>
-                    </div>
-                  </div>
-                ) : (
-                  parseFits(ship.slots, shipData, true, ship.retrofit).map((shipFits) => {
+                if (ship && !isExportedLink) {
+                  return parseFits(ship.slots, shipData, true, ship.retrofit).map((shipFits) => {
                     return (
                       <div
                         ref={ddRef}
@@ -166,7 +152,26 @@ const FormationEquipment: React.FC<{
                         ))}
                       </div>
                     );
-                  })
+                  });
+                }
+                return (
+                  <div key={`none-${shipIdx + 1}`} className="f-column" style={{ gap: '2px 0px', minWidth: '0' }}>
+                    <div className="dropdown placeholder">
+                      <span style={{ height: '18px' }}>
+                        {!ship ? '-' : equipmentData[selectedFleetIndex][shipIdx + 3][0]}
+                      </span>
+                    </div>
+                    <div className="dropdown placeholder">
+                      <span style={{ height: '18px' }}>
+                        {!ship ? '-' : equipmentData[selectedFleetIndex][shipIdx + 3][1]}
+                      </span>
+                    </div>
+                    <div className="dropdown placeholder">
+                      <span style={{ height: '18px' }}>
+                        {!ship ? '-' : equipmentData[selectedFleetIndex][shipIdx + 3][2]}
+                      </span>
+                    </div>
+                  </div>
                 );
               })}
             </div>

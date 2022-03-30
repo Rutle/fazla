@@ -219,6 +219,12 @@ nav.tab.dark > a:hover {
   background-color: var(--main-dark-hover-bg);
 }
 
+#small-nav.navigation.dark > button.nav-item {
+  -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.6);
+}
+
 /* Tooltip */
 .tooltip.dark {
   color: var(--main-dark-color);

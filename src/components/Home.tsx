@@ -74,20 +74,19 @@ const Home: React.FC = () => {
   };
   return (
     <PageTemplate>
-      <section className="page-content">
-        <div className="container content">
-          <div className={`f-grid rounded ${config.themeColor}`}>
-            <div className="f-row">
-              <div className="f-header">Options</div>
+      <div className="container content" style={{ height: '100%' }}>
+        <div className={`f-grid rounded ${config.themeColor}`}>
+          <div className="f-row">
+            <div className="f-header">Options</div>
+          </div>
+          <div className="f-column f-body widen">
+            <div className="f-row wrap">
+              <div className="grid-item name">Update ship data</div>
+              <div className="grid-item action">{renderUpdate()}</div>
             </div>
-            <div className="f-column f-body widen">
-              <div className="f-row wrap">
-                <div className="grid-item name">Update ship data</div>
-                <div className="grid-item action">{renderUpdate()}</div>
-              </div>
-              {process.env.PLAT_ENV === 'electron' ? (
-                <>
-                  {/* 
+            {process.env.PLAT_ENV === 'electron' ? (
+              <>
+                {/* 
                 <div className="f-row wrap">
                   <div className="grid-item name">Raw data URL</div>
                   <div className="grid-item action">
@@ -138,60 +137,59 @@ const Home: React.FC = () => {
                     />
                   </div>
                 </div> */}
-                </>
-              ) : (
-                <></>
-              )}
-              <div className="f-row wrap">
-                <div className="grid-item name">Theme color</div>
-                <div className="grid-item action">
-                  <div className={`radio-group rounded ${config.themeColor}`}>
-                    <RToggle
-                      id="dark"
-                      value="dark"
-                      themeColor={config.themeColor}
-                      onChange={() => updateConfig('themeColor', 'dark')}
-                      selected={config.themeColor === 'dark'}
-                    >
-                      Dark
-                    </RToggle>
-                    <RToggle
-                      id="light"
-                      value="light"
-                      themeColor={config.themeColor}
-                      onChange={() => updateConfig('themeColor', 'light')}
-                      selected={config.themeColor === 'light'}
-                    >
-                      Light
-                    </RToggle>
-                  </div>
-                </div>
-              </div>
-              <div className="f-row wrap">
-                <div className="grid-item name">Last update on</div>
-                <div className="grid-item name" style={{ maxWidth: 'unset' }}>
-                  {config.updateDate !== '' ? config.updateDate : 'N/A'}
+              </>
+            ) : (
+              <></>
+            )}
+            <div className="f-row wrap">
+              <div className="grid-item name">Theme color</div>
+              <div className="grid-item action">
+                <div className={`radio-group rounded ${config.themeColor}`}>
+                  <RToggle
+                    id="dark"
+                    value="dark"
+                    themeColor={config.themeColor}
+                    onChange={() => updateConfig('themeColor', 'dark')}
+                    selected={config.themeColor === 'dark'}
+                  >
+                    Dark
+                  </RToggle>
+                  <RToggle
+                    id="light"
+                    value="light"
+                    themeColor={config.themeColor}
+                    onChange={() => updateConfig('themeColor', 'light')}
+                    selected={config.themeColor === 'light'}
+                  >
+                    Light
+                  </RToggle>
                 </div>
               </div>
             </div>
-          </div>
-          <div className={`f-grid rounded ${config.themeColor}`}>
-            <div className="f-row">
-              <div className="f-header">Stats</div>
-            </div>
-            <div className="f-column f-body widen">
-              <div className="f-row wrap">
-                <div className="grid-item name">Ship count</div>
-                <div className="grid-item action">{getShipCount()}</div>
-              </div>
-              <div className="f-row wrap">
-                <div className="grid-item name">Ships in docks</div>
-                <div className="grid-item action">{appState.cState === 'INIT' ? '-' : docksCount}</div>
+            <div className="f-row wrap">
+              <div className="grid-item name">Last update on</div>
+              <div className="grid-item name" style={{ maxWidth: 'unset' }}>
+                {config.updateDate !== '' ? config.updateDate : 'N/A'}
               </div>
             </div>
           </div>
         </div>
-      </section>
+        <div className={`f-grid rounded ${config.themeColor}`}>
+          <div className="f-row">
+            <div className="f-header">Stats</div>
+          </div>
+          <div className="f-column f-body widen">
+            <div className="f-row wrap">
+              <div className="grid-item name">Ship count</div>
+              <div className="grid-item action">{getShipCount()}</div>
+            </div>
+            <div className="f-row wrap">
+              <div className="grid-item name">Ships in docks</div>
+              <div className="grid-item action">{appState.cState === 'INIT' ? '-' : docksCount}</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </PageTemplate>
   );
 };

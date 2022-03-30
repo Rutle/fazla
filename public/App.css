@@ -40,17 +40,10 @@ form {
 .page {
   height: 100%;
   display: flex;
-  flex-direction: column;
   margin-top: 40px;
   margin-bottom: 25px;
+  /* 65px because of navigation bar at the top and footer at the bottom */
   max-height: calc(100% - 65px);
-}
-
-.page-content {
-  height: 100%;
-  /* min-height: min-content; */
-  display: flex;
-  /* justify-content: center;*/
 }
 
 .page-content.formations {
@@ -61,7 +54,7 @@ form {
   flex-direction: row;
 }
 div.scroll {
-  height: 100%;
+  /* height: 100%;*/
   overflow-y: auto;
   /* padding-right: 5px; */
 }
@@ -259,7 +252,6 @@ div.scroll {
   min-width: 40%;
 }
 
-
 .modal-container.formation-action {
   width: 500px;
   max-width: 100%;
@@ -275,24 +267,38 @@ div.scroll {
   background-color: rgba(0,0,0,0.1);
   z-index: 30;
 }
-/* 
-    box-shadow: 0px 0px 20px 5px #0000005e;
-    border-radius: 5px;
-*/
+
 .container {
   display: flex;
   flex-direction: column;
   padding: 15px;
   margin: 15px;
-  /* width: 100%; */
   border-radius: 5px;
+  width: calc(100% - 60px);
 }
 
 .sidebar {
   min-width: 20%;
-  width: 20%;
+  min-height: calc(100% - 40px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
 }
 
+#ships.container.content {
+  flex-direction: row;
+}
+
+#ship-details-content {
+  display: flex;
+  flex-direction: column;
+}
+
+#ship-details-content > .scroll {
+  overflow: auto;
+  max-height: calc(100% - 80px);
+}
 #formation-grid {
   margin-top: 10px;
 }
@@ -300,9 +306,11 @@ div.scroll {
 #formation-ship-search {
   display: none;
   position: fixed;
-  width: 100%;
+  /* width: 100%;*/
   flex-direction: row;
   z-index: 25;
+  padding: 15px;
+  /* margin: 15px;*/
   -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
@@ -413,14 +421,16 @@ button.btn.normal,
 button.tab-btn.normal {
   font-size: 15px;
   font-variant-caps: all-petite-caps;
-  padding: 0px 10px 2px 10px; /* all-petite-caps behaves differently and requires bottom padding 2px to get it to middle */
+  /* all-petite-caps behaves differently and requires bottom padding 2px to get it to middle */
+  padding: 0px 10px 2px 10px;
   justify-content: center;
 }
 
 label.btn.normal.icon,
 button.btn.normal.icon,
 button.tab-btn.normal.icon {
-  padding: 0px 10px 2px 5px; /* all-petite-caps behaves differently and requires bottom padding 2px to get it to middle */
+  /* all-petite-caps behaves differently and requires bottom padding 2px to get it to middle */
+  padding: 0px 10px 2px 5px;
 }
 
 label.btn.normal.icon-only,
@@ -535,12 +545,12 @@ div.f-row.action *,
   border-radius: inherit;
 }
 
+.dropdown.placeholder > span,
 .dropdown-toggle.equipment > span,
 .dropdown-toggle.formation > span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  /* max-width: 145px;*/
   align-self: center;
 }
 
@@ -1053,6 +1063,7 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
   box-shadow: 0 0 8px rgba(0,0,0,0.2), 0 0 2px rgba(0,0,0,0.4);
   cursor: pointer;
 }
+
 .switch [type=checkbox]:checked+.switch-toggle::before,
 .switch [type=checkbox]:checked+.switch-toggle::after {
   background-color: #72b352;
@@ -1061,7 +1072,6 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
 .switch [type=checkbox]:checked+.switch-toggle::after {
   transform: translate(calc(3em - 100%), -50%);
 }
-
 
 .switch [type=checkbox] {
   position: absolute;
@@ -1202,25 +1212,20 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
   #footer {
     display: none;
   }
+
   label.btn.normal,
   button.btn.normal,
   button.tab-btn.normal,
   button.btn.normal.icon {
     padding: 0px 5px 2px 5px;
   }
+
   #fleet-selector {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     margin-bottom: 0px;
-  }
-
-  #fleet-selector .tab {
-    border-radius: 0px;
-  }
-  #fleet-selector .tab > button.tab-btn {
-    border-radius: 4px;
   }
 
   #small-nav.navigation {
@@ -1240,37 +1245,47 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
 
   #formation-ship-search {
     flex-direction: column;
-    /* justify-content: unset;
-    min-height: unset;
-    margin-top: 1px; */
   }
 
-  .page-content.ships {
-    overflow-y: scroll;
-    flex-direction: column;
-  }
-
-  .page-content.formations > .container.content {
-    min-height: calc(100% - 80px);
-    margin-bottom: 25px;
+  #ship-details-content {
+    margin-top: 30px;
+    min-height: 100%;
   }
 
   #formation-ship-search {
     overflow-y: scroll;
     top: 40px!important;
     left: 0;
-    min-height: calc(100% - 40px)!important;
-    height: calc(100% - 40px)!important;
-    width: 100%;
+    min-height: calc(100% - 70px)!important;
+    height: calc(100% - 70px)!important;
     border-top: unset!important;
     box-shadow: unset!important;
     -webkit-box-shadow: unset!important;
     -moz-box-shadow: unset!important;
   }
-  .page-content .container.content,
-  .page-content .container.sidebar {
+
+  #formations.container.content {
     width: calc(100% - 60px);
-    min-height: calc(100% - 60px);
+    min-height: calc(100% - 60px); /* margin + padding = 60px */
+  }
+
+  #formation-ship-search,
+  #ships.container.content {
+    /* scrollTo all the way to the top because of padding at the top is 15px */
+    scroll-padding-top: 15px;
+    flex-direction: column;
+    margin: 0px;
+    /* Added because of chromium/electron. Also because of the adjusted width due to margin: 0px. */
+    width: calc(100% - 30px);
+  }
+
+  #ships.container.content {
+    /* Different value compared to #formation-ship-search because of its position: fixed + top: 40px */
+    min-height: calc(100% - 30px)!important;
+  }
+  .sidebar {
+    min-height: 100%;
+    margin-right: 0px;
   }
 
   .popover-container {
@@ -1281,8 +1296,7 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
     display: none;
   }
 
-  div.f-grid div.f-row.passive-item,
-  #formation-grid .f-row {
+  div.f-grid div.f-row.passive-item {
     flex-direction: column;
   }
 
@@ -1292,7 +1306,6 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
   .tab > .tab-btn.normal {
     flex-grow: 1;
   }
-
 
   .message-container {
     width: 100%;
@@ -1316,29 +1329,22 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
 
   .page {
     margin-bottom: 0px;
+    /* 40px removed because of the navigation bar at the top */
     max-height: calc(100% - 40px);
+    height: 100%;
+    flex-direction: column;
   }
 
   #stats-slots-details {
     flex-direction: column;
   }
 
-  #main-section > div.f-row.fleet,
-  #vanguard-section > div.f-row.fleet,
-  #submarine-section > div.f-row.fleet {
-    flex-direction: row;
-  }
-
   #equipment-grid > div.f-row {
     flex-direction: column;
   }
-  #formation-grid div.f-row.fleet > button.grid-item:last-child {
-    border-top-right-radius: inherit;
-    border-bottom-left-radius: 0px;
-  }
-  #formation-grid div.f-row.fleet > button.grid-item:first-child {
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-  }
 
+  #main-section.f-column,
+  #vanguard-section.f-column {
+    width: unset!important;
+  }
 }

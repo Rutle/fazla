@@ -64,9 +64,6 @@ export default class DataStore {
   }
 
   getEqNameByCustomId(id: string): string {
-    // TODO: Make this return the .names.en value
-    // Remove getEqNameByLongId-call from formation equipment text field
-    // Or just return the Equipment object.
     if (Object.keys(this.eqIds).includes(id)) return this.eqMap[this.eqIds[id]].names.en;
     return '-';
   }

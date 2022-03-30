@@ -44,7 +44,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   return (
     <div id="formation-grid" className={`f-grid rounded gap ${themeColor}`} ref={refd}>
       <div className={`f-row gap wrap ${selectedFleetIndex === fleetCount ? 'hidden' : ''}`}>
-        <div id="main-section" className="f-column" ref={mainRef}>
+        <div id="main-section" className="f-column" ref={mainRef} style={{ width: '50%' }}>
           {ships.slice(0, fleetCount).map((fleet, fleetIdx) => (
             <div
               key={`main-${fleetIdx + 1}-${fleetName}`}
@@ -65,7 +65,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
             </div>
           ))}
         </div>
-        <div id="vanguard-section" className="f-column" ref={vanRef}>
+        <div id="vanguard-section" className="f-column" ref={vanRef} style={{ width: '50%' }}>
           {ships.slice(0, fleetCount).map((fleet, fleetIdx) => (
             <div
               key={`vanguard-${fleetIdx + 1}-${fleetName}`}

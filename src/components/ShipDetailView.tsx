@@ -20,7 +20,7 @@ const ShipDetailView: React.FC = () => {
   const searchParams = useSelector((state: RootState) => state.searchParameters);
   const config = useSelector((state: RootState) => state.config);
   const refData = useRef<HTMLDivElement>(null);
-  const refPageContent = useRef<HTMLDivElement>(null);
+  // const refPageContent = useRef<HTMLDivElement>(null);
   const [isVisible, refSide] = useVisibility();
 
   const scrollTo = (loc: string) => {
@@ -34,9 +34,9 @@ const ShipDetailView: React.FC = () => {
 
   return (
     <PageTemplate>
-      <section className="page-content ships" ref={refPageContent}>
+      <div id="ships" className="scroll container content">
         {appState.cState === 'INIT' ? (
-          <div id="ship-details-content" className="container content">
+          <div id="ship-details-content">
             <div style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
               <div
                 className={`message-container ${config.themeColor}`}
@@ -69,12 +69,12 @@ const ShipDetailView: React.FC = () => {
               </RButton>
             </div>
 
-            <div id="ship-details-content" className="container content" ref={refData}>
+            <div id="ship-details-content" ref={refData}>
               <ShipDetails />
             </div>
           </>
         )}
-      </section>
+      </div>
     </PageTemplate>
   );
 };

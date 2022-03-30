@@ -86,6 +86,7 @@ const FormationView: React.FC = () => {
   }, [fData.selectedIndex]);
 
   useEffect(() => {
+    // console.log(window.innerWidth);
     /* TODO: Check that it scrolls to top when search lit is hidden especially on small screen */
     if (showSearch) scrollTo('reset');
   }, [scrollTo, showSearch]);
@@ -215,247 +216,240 @@ const FormationView: React.FC = () => {
     },
     []
   );
-  /* TODO: Adjust scroll. Move "container content" to "scroll". Remove inner scroll from passive list. */
+
   return (
     <PageTemplate>
       <>
-        <section className="page-content formations">
-          <ReactModal
-            overlayClassName={`modal-overlay ${config.themeColor}`}
-            isOpen={showModal.isOpen}
-            className="modal-container formation-action rounded"
-            onRequestClose={requestClose}
-          >
-            {renderModal()}
-          </ReactModal>
-          <div className="scroll container content">
-            <div id="formation-tab">
-              <div className={`f-grid rounded ${config.themeColor}`}>
-                <div className="tab" style={{ gap: '5px' }}>
-                  {fData.formations.length !== 0 ? <FormationDropDown /> : <></>}
-                  <RButton
-                    themeColor={config.themeColor}
-                    className="tab-btn normal"
-                    onClick={() => setModalOpen({ modal: 'new', isOpen: true })}
-                  >
-                    New
-                  </RButton>
-                  {fData.formations.length !== 0 ? (
-                    <>
-                      <RButton
-                        themeColor={config.themeColor}
-                        className="tab-btn normal"
-                        onClick={() => dispatch(formationAction(FormationAction.Remove, { storage }, addToast))}
-                        disabled={fData.formations.length === 0}
-                      >
-                        Remove
-                      </RButton>
-                      <RButton
-                        themeColor={config.themeColor}
-                        className="tab-btn normal"
-                        onClick={() => setModalOpen({ modal: 'rename', isOpen: true })}
-                      >
-                        Rename
-                      </RButton>
-                      <RButton
-                        themeColor={config.themeColor}
-                        className="tab-btn normal"
-                        onClick={() => setModalOpen({ modal: 'export', isOpen: true })}
-                      >
-                        Export
-                      </RButton>
-                      <RButton
-                        themeColor={config.themeColor}
-                        className="tab-btn normal"
-                        onClick={() => setModalOpen({ modal: 'import', isOpen: true })}
-                      >
-                        Import
-                      </RButton>
-                      {formationData?.isOldFormation ? (
-                        <RButton
-                          themeColor={config.themeColor}
-                          className="tab-btn normal"
-                          onClick={() => dispatch(formationAction(FormationAction.Convert, {}))}
-                        >
-                          Convert
-                        </RButton>
-                      ) : (
-                        <></>
-                      )}
-                      <TooltipWrapper
-                        data={
-                          <ul>
-                            <li>Left mouse click to select a ship.</li>
-                            <li>Right mouse click to remove a ship.</li>
-                            <li>Drag and drop ships.</li>
-                          </ul>
-                        }
-                        WrapperElement="div"
-                        extraProps={{
-                          style: { maxWidth: '20px', padding: '2px', display: 'flex', alignItems: 'center' },
-                        }}
-                      >
-                        <QuestionCircleIcon themeColor={config.themeColor} />
-                      </TooltipWrapper>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            </div>
-            {formationData && typeof fleetTabIndex !== 'undefined' && fData.formations.length !== 0 ? (
-              <>
-                <div id="fleet-selector" className={`f-grid rounded ${config.themeColor}`}>
-                  <div className="f-row">
-                    <div className="tab fleets" style={{ gap: '5px' }}>
-                      {formationData.fleets.map((fleet, idx) => {
-                        return (
-                          <RButton
-                            key={`${'fleet-button'}-${idx * formationData.fleets.length}`}
-                            themeColor={config.themeColor}
-                            className={`tab-btn normal${fleetTabIndex === idx ? ' selected' : ''}`}
-                            /*
-                            onClick={() => {
-                              setFleetTabIndex(idx);
-                            }} */
-                            onClick={setTabIndex(idx)}
-                            disabled={fData.formations.length === 0}
-                          >
-                            {idx + 1 === formationData.fleets.length ? 'Submarines' : `Fleet ${idx + 1}`}
-                          </RButton>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-                <FormationGrid
-                  fleetName={fData.formations[fData.selectedIndex].name}
+        <ReactModal
+          overlayClassName={`modal-overlay ${config.themeColor}`}
+          isOpen={showModal.isOpen}
+          className="modal-container formation-action rounded"
+          onRequestClose={requestClose}
+        >
+          {renderModal()}
+        </ReactModal>
+        <div id="formations" className="scroll container content">
+          <div id="formation-tab">
+            <div className={`f-grid rounded ${config.themeColor}`}>
+              <div className="tab" style={{ gap: '5px' }}>
+                {fData.formations.length !== 0 ? <FormationDropDown /> : <></>}
+                <RButton
                   themeColor={config.themeColor}
-                  selectedFleetIndex={fleetTabIndex}
-                  ships={formationData.fleets}
-                  openSearchSection={showSearchSection}
-                  selectedGridIndex={selectedGrid}
-                  fleetCount={formationData.fleetCount}
-                  // isSubFleet={isSubFleet}
-                  refd={gridRef}
-                />
-                <FormationEquipment
-                  selectedFleetIndex={fleetTabIndex}
-                  data={formationData.fleets}
-                  equipmentData={formationData.equipment}
-                  isOldFormation={formationData.isOldFormation}
-                />
-
-                <div className="scroll" style={{ minHeight: '300px' }}>
-                  {formationData.fleets.map((fleet, idx) => {
-                    return (
-                      <div
-                        id="passive-section"
-                        key={`tab${idx * formationData.fleets.length}`}
-                        className={`${fleetTabIndex !== idx ? 'hidden' : ''}`}
-                      >
-                        <FormationPassives
-                          key={`${'passive'}-${idx * formationData.fleets.length}`}
-                          fleet={fleet}
-                          themeColor={config.themeColor}
-                          isSelected={fleetTabIndex === idx}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              </>
-            ) : (
-              <div style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
-                <div
-                  className={`message-container ${config.themeColor}`}
-                  style={{
-                    alignSelf: 'center',
-                    minHeight: '40px',
-                  }}
+                  className="tab-btn normal"
+                  onClick={() => setModalOpen({ modal: 'new', isOpen: true })}
                 >
-                  <span className="message" style={{ fontSize: '24px', justifyContent: 'center', width: '100%' }}>
-                    {appState.cState === 'RUNNING' && appState.eState === 'WARNING' && fData.formations.length > 0 ? (
-                      <>{appState.eMsg}</>
+                  New
+                </RButton>
+                {fData.formations.length !== 0 ? (
+                  <>
+                    <RButton
+                      themeColor={config.themeColor}
+                      className="tab-btn normal"
+                      onClick={() => dispatch(formationAction(FormationAction.Remove, { storage }, addToast))}
+                      disabled={fData.formations.length === 0}
+                    >
+                      Remove
+                    </RButton>
+                    <RButton
+                      themeColor={config.themeColor}
+                      className="tab-btn normal"
+                      onClick={() => setModalOpen({ modal: 'rename', isOpen: true })}
+                    >
+                      Rename
+                    </RButton>
+                    <RButton
+                      themeColor={config.themeColor}
+                      className="tab-btn normal"
+                      onClick={() => setModalOpen({ modal: 'export', isOpen: true })}
+                    >
+                      Export
+                    </RButton>
+                    <RButton
+                      themeColor={config.themeColor}
+                      className="tab-btn normal"
+                      onClick={() => setModalOpen({ modal: 'import', isOpen: true })}
+                    >
+                      Import
+                    </RButton>
+                    {formationData?.isOldFormation ? (
+                      <RButton
+                        themeColor={config.themeColor}
+                        className="tab-btn normal"
+                        onClick={() => dispatch(formationAction(FormationAction.Convert, {}))}
+                      >
+                        Convert
+                      </RButton>
                     ) : (
-                      <>No formations.</>
+                      <></>
                     )}
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
-          <CSSTransition nodeRef={refTransition} in={showSearch} timeout={300} classNames="search-section">
-            <div
-              id="formation-ship-search"
-              ref={refTransition}
-              className={`${formationData && formationData.fleetCount === 2 ? 'normal-fleet' : 'siren-fleet'} ${
-                config.themeColor
-              }`}
-              style={
-                cHeight.current
-                  ? {
-                      top: `${cHeight.current + 184}px`,
-                      minHeight: `calc(100% - ${cHeight.current + 212}px)`,
-                      height: `calc(100% - ${cHeight.current + 212}px)`,
-                    }
-                  : {}
-              }
-            >
-              <SideBar refer={refSide}>
-                <ShipList
-                  shipSearchList={shipSearchList}
-                  listName="ALL"
-                  scrollTo={() => scrollTo('ship')}
-                  isDraggable
-                />
-                <ShipList
-                  shipSearchList={ownedSearchList}
-                  listName="OWNED"
-                  scrollTo={() => scrollTo('ship')}
-                  isDraggable
-                />
-              </SideBar>
-              <div id="small-nav" className={`navigation ${config.themeColor}`} style={getSlideStyle()}>
-                {!isVisible ? (
-                  <RButton
-                    themeColor={config.themeColor}
-                    className="nav-item"
-                    onClick={() => scrollTo('top')}
-                    extraStyle={{ display: 'flex', padding: '6px', marginTop: '4px', borderRadius: 'inherit' }}
-                  >
-                    <ArrowDegUp themeColor={config.themeColor} className="icon" />
-                  </RButton>
+                    <TooltipWrapper
+                      data={
+                        <ul>
+                          <li>Left mouse click to select a ship.</li>
+                          <li>Right mouse click to remove a ship.</li>
+                          <li>Drag and drop ships.</li>
+                        </ul>
+                      }
+                      WrapperElement="div"
+                      extraProps={{
+                        style: { maxWidth: '20px', padding: '2px', display: 'flex', alignItems: 'center' },
+                      }}
+                    >
+                      <QuestionCircleIcon themeColor={config.themeColor} />
+                    </TooltipWrapper>
+                  </>
                 ) : (
                   <></>
                 )}
+              </div>
+            </div>
+          </div>
+          {formationData && typeof fleetTabIndex !== 'undefined' && fData.formations.length !== 0 ? (
+            <>
+              <div id="fleet-selector" className={`f-grid rounded ${config.themeColor}`}>
+                <div className="f-row">
+                  <div className="tab fleets" style={{ gap: '5px' }}>
+                    {formationData.fleets.map((fleet, idx) => {
+                      return (
+                        <RButton
+                          key={`${'fleet-button'}-${idx * formationData.fleets.length}`}
+                          themeColor={config.themeColor}
+                          className={`tab-btn normal${fleetTabIndex === idx ? ' selected' : ''}`}
+                          /*
+                            onClick={() => {
+                              setFleetTabIndex(idx);
+                            }} */
+                          onClick={setTabIndex(idx)}
+                          disabled={fData.formations.length === 0}
+                        >
+                          {idx + 1 === formationData.fleets.length ? 'Submarines' : `Fleet ${idx + 1}`}
+                        </RButton>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+              <FormationGrid
+                fleetName={fData.formations[fData.selectedIndex].name}
+                themeColor={config.themeColor}
+                selectedFleetIndex={fleetTabIndex}
+                ships={formationData.fleets}
+                openSearchSection={showSearchSection}
+                selectedGridIndex={selectedGrid}
+                fleetCount={formationData.fleetCount}
+                // isSubFleet={isSubFleet}
+                refd={gridRef}
+              />
+              <FormationEquipment
+                selectedFleetIndex={fleetTabIndex}
+                data={formationData.fleets}
+                equipmentData={formationData.equipment}
+                isOldFormation={formationData.isOldFormation}
+              />
+
+              <div className="scroll" style={{ minHeight: '300px' }}>
+                {formationData.fleets.map((fleet, idx) => {
+                  return (
+                    <div
+                      id="passive-section"
+                      key={`tab${idx * formationData.fleets.length}`}
+                      className={`${fleetTabIndex !== idx ? 'hidden' : ''}`}
+                    >
+                      <FormationPassives
+                        key={`${'passive'}-${idx * formationData.fleets.length}`}
+                        fleet={fleet}
+                        themeColor={config.themeColor}
+                        isSelected={fleetTabIndex === idx}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            <div style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
+              <div
+                className={`message-container ${config.themeColor}`}
+                style={{
+                  alignSelf: 'center',
+                  minHeight: '40px',
+                }}
+              >
+                <span className="message" style={{ fontSize: '24px', justifyContent: 'center', width: '100%' }}>
+                  {appState.cState === 'RUNNING' && appState.eState === 'WARNING' && fData.formations.length > 0 ? (
+                    <>{appState.eMsg}</>
+                  ) : (
+                    <>No formations.</>
+                  )}
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+        <CSSTransition nodeRef={refTransition} in={showSearch} timeout={300} classNames="search-section">
+          <div
+            id="formation-ship-search"
+            ref={refTransition}
+            className={`${formationData && formationData.fleetCount === 2 ? 'normal-fleet' : 'siren-fleet'} ${
+              config.themeColor
+            }`}
+            style={
+              cHeight.current
+                ? {
+                    top: `${cHeight.current + 184}px`,
+                    minHeight: `calc(100% - ${cHeight.current + 212}px)`,
+                    height: `calc(100% - ${cHeight.current + 212}px)`,
+                  }
+                : {}
+            }
+          >
+            <SideBar refer={refSide}>
+              <ShipList shipSearchList={shipSearchList} listName="ALL" scrollTo={() => scrollTo('ship')} isDraggable />
+              <ShipList
+                shipSearchList={ownedSearchList}
+                listName="OWNED"
+                scrollTo={() => scrollTo('ship')}
+                isDraggable
+              />
+            </SideBar>
+            <div id="small-nav" className={`navigation ${config.themeColor}`} style={getSlideStyle()}>
+              {!isVisible ? (
                 <RButton
                   themeColor={config.themeColor}
                   className="nav-item"
-                  onClick={() => hideSearchSection(false)}
+                  onClick={() => scrollTo('top')}
                   extraStyle={{ display: 'flex', padding: '6px', marginTop: '4px', borderRadius: 'inherit' }}
                 >
-                  <CloseIcon themeColor={config.themeColor} className="icon" />
+                  <ArrowDegUp themeColor={config.themeColor} className="icon" />
                 </RButton>
-              </div>
-              <div className={`container content ${config.themeColor}`} ref={refData}>
-                <ShipDetails
-                  topButtonGroup={
-                    <>
-                      <RButton themeColor={config.themeColor} onClick={addShip} className="btn normal icon">
-                        <div className="btn-icon">
-                          <PlusIcon themeColor={config.themeColor} />
-                        </div>
-                        Fleet
-                      </RButton>
-                    </>
-                  }
-                />
-              </div>
+              ) : (
+                <></>
+              )}
+              <RButton
+                themeColor={config.themeColor}
+                className="nav-item"
+                onClick={() => hideSearchSection(false)}
+                extraStyle={{ display: 'flex', padding: '6px', marginTop: '4px', borderRadius: 'inherit' }}
+              >
+                <CloseIcon themeColor={config.themeColor} className="icon" />
+              </RButton>
             </div>
-          </CSSTransition>
-        </section>
+            <div id="ship-details-content" ref={refData}>
+              <ShipDetails
+                topButtonGroup={
+                  <>
+                    <RButton themeColor={config.themeColor} onClick={addShip} className="btn normal icon">
+                      <div className="btn-icon">
+                        <PlusIcon themeColor={config.themeColor} />
+                      </div>
+                      Fleet
+                    </RButton>
+                  </>
+                }
+              />
+            </div>
+          </div>
+        </CSSTransition>
       </>
     </PageTemplate>
   );

@@ -6,6 +6,7 @@ import { FormationAction, formationAction } from '_/reducers/slices/formationGri
 import { CloseIcon } from '_components/Icons';
 import { Formation } from '_/types/types';
 import RButton from '../RButton/RButton';
+import RToggle from '../RToggle/RToggle';
 
 interface FormModalProps {
   setModalOpen: (openProp: { modal: string; isOpen: boolean }) => void;
@@ -16,6 +17,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
   const config = useSelector((state: RootState) => state.config);
   const fGrid = useSelector((state: RootState) => state.formationGrid);
   const [value, setValue] = useState('');
+  const [typeVal, setTypeVal] = useState('link');
   const [inputFocus, setInputFocus] = useState(false);
   const [isValidCode, setIsValidCode] = useState(true);
   const [importedFormation, setImportedFormation] = useState<Formation>({ data: [], equipment: [], name: '' });
@@ -134,6 +136,30 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
             ) : (
               <></>
             )}
+          </div>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px', justifyContent: 'center' }}>
+          <div className={`radio-group rounded ${config.themeColor}`}>
+            <RToggle
+              id="normal-toggle"
+              value="normal"
+              className="btn normal"
+              themeColor={config.themeColor}
+              onChange={() => setTypeVal('link')}
+              selected={typeVal === 'link'}
+            >
+              Link
+            </RToggle>
+            <RToggle
+              id="siren-toggle"
+              value="siren"
+              className="btn normal"
+              themeColor={config.themeColor}
+              onChange={() => setTypeVal('code')}
+              selected={typeVal === 'code'}
+            >
+              Code
+            </RToggle>
           </div>
         </div>
       </div>
