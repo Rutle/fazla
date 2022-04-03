@@ -79,6 +79,9 @@ const FormationEquipment: React.FC<{
         <div className="f-column">
           <div className="f-row fleet gap">
             {data[selectedFleetIndex].slice(0, 3).map((ship, shipIdx) => {
+              // slice (0, 3) for main fleet ships, but also submarine fleet.
+              // Keep main and vanguard in separate divs for easier column
+              // direction change for smaller screen
               if (ship && !isExportedLink) {
                 return parseFits(ship.slots, shipData, true, ship.retrofit).map((shipFits) => {
                   return (
@@ -118,8 +121,6 @@ const FormationEquipment: React.FC<{
                   </div>
                 </div>
               );
-              // slice (0, 3) and (3) -> main and vanguard each has their own f-row container for easy
-              // column change in smaller screen
             })}
           </div>
         </div>
@@ -127,8 +128,8 @@ const FormationEquipment: React.FC<{
           <div className="f-column">
             <div className="f-row fleet gap">
               {data[selectedFleetIndex].slice(3).map((ship, shipIdx) => {
-                // slice (0, 3) and (3) -> main and vanguard each has their own f-row container for easy
-                // column change in smaller screen
+                // slice (3) for vanguard fleet ships. Keep main and vanguard in separate divs for easier
+                // column direction change in smaller screen
                 if (ship && !isExportedLink) {
                   return parseFits(ship.slots, shipData, true, ship.retrofit).map((shipFits) => {
                     return (

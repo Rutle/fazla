@@ -16,8 +16,9 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
   const dispatch = useDispatch();
   const config = useSelector((state: RootState) => state.config);
   const fGrid = useSelector((state: RootState) => state.formationGrid);
-  const [value, setValue] = useState('');
-  const [typeVal, setTypeVal] = useState('link');
+  const [textValue, setValue] = useState({ url: '', code: '' });
+  const [importValue, setImportValue] = useState('');
+  const [typeValue, setTypeValue] = useState<'url' | 'code'>('url');
   const [inputFocus, setInputFocus] = useState(false);
   const [isValidCode, setIsValidCode] = useState(true);
   const [importedFormation, setImportedFormation] = useState<Formation>({ data: [], equipment: [], name: '' });
@@ -36,9 +37,29 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
       const encURI = encodeURIComponent(res);
       const urlList = window.location.href.split('/');
       const linkURL = urlList.slice(0, -1).concat('link').join('/');
-      setValue(`${linkURL}/${encURI}`);
+      setValue({ url: `${linkURL}/${encURI}`, code: encURI });
     }
   }, [fGrid.formations, fGrid.selectedIndex, isType]);
+
+  useEffect(() => {
+    if (isType === 'import') {
+      try {
+        const decoded = decodeURIComponent(importValue);
+        const result = parseImportCode(decoded);
+        if (result) {
+          setImportedFormation(result as Formation);
+          setIsValidCode(true);
+        } else {
+          setImportedFormation({ data: [], equipment: [], name: '' });
+          setIsValidCode(false);
+        }
+      } catch (err) {
+        setImportedFormation({ data: [], equipment: [], name: '' });
+        setIsValidCode(false);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [importValue]);
 
   const copyCode = async () => {
     if (inputRef && inputRef.current) {
@@ -62,7 +83,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
           <div
             id="input-group"
             className={`${config.themeColor} ${inputFocus ? 'input-focus' : ''} ${
-              !isValidCode && value.length !== 0 ? 'is-invalid' : ''
+              !isValidCode && importValue.length !== 0 ? 'is-invalid' : ''
             }`}
           >
             {isType === 'import' ? (
@@ -73,24 +94,10 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
                 autoFocus
                 spellCheck="false"
                 className={`${config.themeColor}`}
-                placeholder="Input import code"
-                value={value}
+                placeholder="Input import code without url"
+                value={importValue}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setValue(e.target.value);
-                  try {
-                    const decoded = decodeURIComponent(e.target.value);
-                    const result = parseImportCode(decoded);
-                    if (result) {
-                      setImportedFormation(result as Formation);
-                      setIsValidCode(true);
-                    } else {
-                      setImportedFormation({ data: [], equipment: [], name: '' });
-                      setIsValidCode(false);
-                    }
-                  } catch (err) {
-                    setImportedFormation({ data: [], equipment: [], name: '' });
-                    setIsValidCode(false);
-                  }
+                  setImportValue(e.target.value);
                 }}
                 onFocus={(e) => {
                   setInputFocus(true);
@@ -112,23 +119,17 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
                 spellCheck="false"
                 className={`${config.themeColor}`}
                 placeholder=""
-                value={value}
+                value={textValue[typeValue]}
                 readOnly
-                onKeyUp={(e) => {
-                  if (e.key === 'Enter') {
-                    document.execCommand('copy');
-                    setModalOpen({ modal: '', isOpen: false });
-                  }
-                }}
               />
             )}
 
-            {value.length > 0 ? (
+            {textValue[typeValue].length > 0 ? (
               <RButton
                 themeColor={config.themeColor}
                 className="btn input"
                 onClick={() => {
-                  setValue('');
+                  setValue({ url: '', code: '' });
                 }}
               >
                 <CloseIcon themeColor={config.themeColor} className="icon" />
@@ -138,30 +139,34 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
             )}
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px', justifyContent: 'center' }}>
-          <div className={`radio-group rounded ${config.themeColor}`}>
-            <RToggle
-              id="normal-toggle"
-              value="normal"
-              className="btn normal"
-              themeColor={config.themeColor}
-              onChange={() => setTypeVal('link')}
-              selected={typeVal === 'link'}
-            >
-              Link
-            </RToggle>
-            <RToggle
-              id="siren-toggle"
-              value="siren"
-              className="btn normal"
-              themeColor={config.themeColor}
-              onChange={() => setTypeVal('code')}
-              selected={typeVal === 'code'}
-            >
-              Code
-            </RToggle>
+        {isType === 'export' ? (
+          <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px', justifyContent: 'center' }}>
+            <div className={`radio-group rounded ${config.themeColor}`}>
+              <RToggle
+                id="normal-toggle"
+                value="normal"
+                className="btn normal"
+                themeColor={config.themeColor}
+                onChange={() => setTypeValue('url')}
+                selected={typeValue === 'url'}
+              >
+                Link
+              </RToggle>
+              <RToggle
+                id="siren-toggle"
+                value="siren"
+                className="btn normal"
+                themeColor={config.themeColor}
+                onChange={() => setTypeValue('code')}
+                selected={typeValue === 'code'}
+              >
+                Code
+              </RToggle>
+            </div>
           </div>
-        </div>
+        ) : (
+          <></>
+        )}
       </div>
 
       <div className="modal-action">
@@ -169,7 +174,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
           {isType === 'import' ? (
             <>
               <RButton
-                disabled={!isValidCode || value.length === 0}
+                disabled={!isValidCode || importValue.length === 0}
                 themeColor={config.themeColor}
                 onClick={() => {
                   dispatch(formationAction(FormationAction.Import, { importedFormation }));

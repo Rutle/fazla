@@ -374,9 +374,10 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
     const temp = formation.data.slice(-3);
     form.push(temp.map((id) => formationShips[id]));
 
-    // Equipment
+    // Equipment TODO: Should I also add the general equipment slots?
     // Old equipment array length 15/27
     // New equipment array length 45/87
+    // New with all equipment slots: 75/135
     // Take older equipment structure in consideration just in case if someone has actually used the website
     let updateRequired = false;
     if (eqLen === 15 || eqLen === 27) {
