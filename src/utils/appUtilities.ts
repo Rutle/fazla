@@ -418,7 +418,13 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
       }
       eqData.push(tempNames);
     }
-    return Promise.resolve({ fleets: form, fleetCount, equipment: eqData, isOldFormation });
+    return Promise.resolve({
+      fleets: form,
+      fleetCount,
+      equipment: eqData,
+      isOldFormation,
+      convertAction: isOldFormation ? 'EQSTRUCTURE' : undefined,
+    });
   } catch (e: unknown) {
     if (e instanceof Error) {
       return Promise.reject(new Error(e.message));

@@ -290,14 +290,14 @@ const FormationView: React.FC = () => {
                     {formationData?.isOldFormation ? (
                       <RButton
                         themeColor={config.themeColor}
-                        className="tab-btn normal"
+                        className="tab-btn normal selected"
                         onClick={() => {
-                          if (!fleetTabIndex && formationData.isOldFormation) {
-                            dispatch(formationAction(FormationAction.Convert, { convertType: 'SUB' }));
-                          } else {
-                            dispatch(formationAction(FormationAction.Convert, { convertType: 'EQSTRUCTURE' }));
+                          if (formationData.convertAction && formationData.isOldFormation) {
+                            dispatch(
+                              formationAction(FormationAction.Convert, { convertType: formationData.convertAction })
+                            );
+                            setIsUpdateRequired(true);
                           }
-                          setIsUpdateRequired(true);
                         }}
                       >
                         Convert
