@@ -34,7 +34,16 @@ const FooterBar: React.FC = () => {
           {getDate(appState.versions.ships['last-data-refresh-date'])}
         </div>
         <div id="footer-state-msg" style={process.env.PLAT_ENV === 'web' ? { justifyContent: 'flex-end' } : {}}>
-          {process.env.PLAT_ENV === 'electron' ? <span>{`${appState.cMsg}`}</span> : <span>Code by Rutle</span>}
+          {process.env.PLAT_ENV === 'electron' ? (
+            <span>{`${appState.cMsg}`}</span>
+          ) : (
+            <span>
+              {`Code by `}
+              <a className="no-focus-outline" href="https://github.com/Rutle/fazla" target="_blank" rel="noreferrer">
+                Rutle
+              </a>
+            </span>
+          )}
         </div>
       </div>
     </div>

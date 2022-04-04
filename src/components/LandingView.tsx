@@ -32,10 +32,7 @@ const LandingView: React.FC = () => {
     <>
       <TitleBar showMenu={false} />
       <div className={`page ${config.themeColor}`}>
-        <div
-          className={`container content ${config.themeColor}`}
-          style={{ justifyContent: 'center', width: 'calc(100% - 60px)' }}
-        >
+        <div className={`container content ${config.themeColor}`} style={{ justifyContent: 'center', height: '100%' }}>
           <div
             style={{
               height: '200px',

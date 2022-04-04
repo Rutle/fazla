@@ -264,7 +264,7 @@ div.scroll {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0,0,0,0.25);
   z-index: 30;
 }
 
@@ -1215,11 +1215,12 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
 
   label.btn.normal,
   button.btn.normal,
-  button.tab-btn.normal,
-  button.btn.normal.icon {
+  button.tab-btn.normal {
     padding: 0px 5px 2px 5px;
   }
-
+  button.btn.normal.icon {
+    padding: 0px 10px 2px 5px;
+  }
   #fleet-selector {
     position: fixed;
     left: 0;
@@ -1263,10 +1264,15 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
     -webkit-box-shadow: unset!important;
     -moz-box-shadow: unset!important;
   }
+  .page > .container.content {
+    margin: 0px;
+    width: calc(100% - 30px);
+  }
 
   #formations.container.content {
-    width: calc(100% - 60px);
-    min-height: calc(100% - 60px); /* margin + padding = 60px */
+    width: calc(100% - 30px);
+    margin: 0px 0px 25px 0px;
+    min-height: calc(100% - 50px); /* top padding 15px + bottom margin 25px = 50px */
   }
 
   #formation-ship-search,

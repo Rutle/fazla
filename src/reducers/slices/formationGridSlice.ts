@@ -323,12 +323,24 @@ const formationGridSlice = createSlice({
       };
     },
 
-    convertFormation(state, action: PayloadAction<{ formIdx: number }>) {
-      const { formIdx } = action.payload;
+    convertFormation(state, action: PayloadAction<{ formIdx: number; type?: 'SUB' | 'EQSTRUCTURE' }>) {
+      const { formIdx, type } = action.payload;
       const newEq = state.formations[formIdx].equipment.slice().flat();
+      const newFleet = state.formations[formIdx].data.slice();
+      if (type === 'SUB') {
+        newEq.push(...Array.from({ length: 9 }, () => 'N').flat());
+        newFleet.push(...Array.from({ length: 3 }, () => 'N').flat());
+      }
       const newForms = state.formations.map((item, index) => {
         if (index !== formIdx) {
           return item;
+        }
+        if (type === 'SUB') {
+          return {
+            ...item,
+            data: newFleet,
+            equipment: newEq,
+          };
         }
         return {
           ...item,
@@ -377,6 +389,7 @@ interface FormActionData {
     isOldFormation: boolean;
     eqId: string;
   };
+  convertType?: 'SUB' | 'EQSTRUCTURE';
 }
 
 /**
@@ -404,6 +417,7 @@ export const formationAction =
       const shipGridIndex = data.gridIndex; // Ship selected on the grid of ships.
       const { storage, shipData } = data;
       const { eqData } = data; // When an equipment is added.
+      const cType = data.convertType;
       let emptyFormation: string[] = [];
       let emptyEquips: string[] = [];
       switch (action) {
@@ -478,7 +492,7 @@ export const formationAction =
           }
           break;
         case 'CONVERT':
-          dispatch(convertFormation({ formIdx }));
+          dispatch(convertFormation({ formIdx, type: cType }));
           break;
         default:
           break;

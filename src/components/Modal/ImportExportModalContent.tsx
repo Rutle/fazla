@@ -121,10 +121,11 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
                 placeholder=""
                 value={textValue[typeValue]}
                 readOnly
+                style={{ padding: '2px 6px 2px 6px' }}
               />
             )}
 
-            {textValue[typeValue].length > 0 ? (
+            {/* textValue[typeValue].length > 0 ? (
               <RButton
                 themeColor={config.themeColor}
                 className="btn input"
@@ -136,7 +137,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
               </RButton>
             ) : (
               <></>
-            )}
+            ) */}
           </div>
         </div>
         {isType === 'export' ? (

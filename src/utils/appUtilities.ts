@@ -332,6 +332,7 @@ export interface FormationData {
   fleetCount: number;
   equipment: string[][][];
   isOldFormation: boolean;
+  convertAction?: 'SUB' | 'EQSTRUCTURE';
 }
 /**
  * Function that takes formation data, that just contains IDs, and returns more detailed data back.
@@ -343,10 +344,15 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
   try {
     const formLen = formation.data.length;
     const eqLen = formation.equipment.length;
+    // Old formation without submarines but no equipment either.
+    if (formLen === 12 || formLen === 24)
+      return Promise.resolve({ fleets: [], fleetCount: 0, equipment: [], isOldFormation: true, convertAction: 'SUB' });
     // Add some checks
     if (!(eqLen === 45 || eqLen === 81 || eqLen === 15 || eqLen === 27))
       throw new Error('Equipment data structure is not correct.');
-    if (!(formLen === 15 || formLen === 27)) throw new Error('Fleet data structure is not correct.');
+    if (!(formLen === 15 || formLen === 27)) {
+      throw new Error('Fleet data structure is not correct.');
+    }
 
     // Find Ship data for each ship ID in the formation and transform it to key-value pairs of
     // { ID:Ship }
@@ -379,9 +385,9 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
     // New equipment array length 45/87
     // New with all equipment slots: 75/135
     // Take older equipment structure in consideration just in case if someone has actually used the website
-    let updateRequired = false;
+    let isOldFormation = false;
     if (eqLen === 15 || eqLen === 27) {
-      updateRequired = true;
+      isOldFormation = true;
       for (let idx = 0; idx <= fleetCount; idx += 1) {
         const tempEq = formation.equipment.slice(idx * 6, idx * 6 + 6);
         const tempNames: string[][] = [];
@@ -412,7 +418,7 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
       }
       eqData.push(tempNames);
     }
-    return Promise.resolve({ fleets: form, fleetCount, equipment: eqData, isOldFormation: updateRequired });
+    return Promise.resolve({ fleets: form, fleetCount, equipment: eqData, isOldFormation });
   } catch (e: unknown) {
     if (e instanceof Error) {
       return Promise.reject(new Error(e.message));

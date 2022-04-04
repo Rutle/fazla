@@ -50,6 +50,7 @@ const FormationView: React.FC = () => {
   const [formationData, setFormationData] = useState<FormationData>();
   const [showSearch, setShowSearch] = useState(false);
   const [selectedGrid, setSelectedGrid] = useState(NaN);
+  const [isUpdateRequired, setIsUpdateRequired] = useState(false);
   const refData = useRef<HTMLDivElement>(null);
   const refTransition = useRef<HTMLDivElement>(null);
   const [isVisible, refSide] = useVisibility();
@@ -86,7 +87,6 @@ const FormationView: React.FC = () => {
   }, [fData.selectedIndex]);
 
   useEffect(() => {
-    // console.log(window.innerWidth);
     /* TODO: Check that it scrolls to top when search lit is hidden especially on small screen */
     if (showSearch) scrollTo('reset');
   }, [scrollTo, showSearch]);
@@ -96,7 +96,16 @@ const FormationView: React.FC = () => {
     if (fData.formations.length !== 0) {
       getFormationData(fData.formations[fData.selectedIndex], shipData)
         .then((res) => {
-          setFormationData(res);
+          if (res.isOldFormation && res.convertAction) {
+            // TODO: Add cleaner way for this.
+            setFormationData(res);
+            setFleetTabIndex(undefined);
+            dispatch(
+              setErrorMessage({ cState: 'RUNNING', eMsg: 'Please convert formation to new format', eState: 'WARNING' })
+            );
+          } else {
+            setFormationData(res);
+          }
         })
         .catch((e) => {
           setFormationData(undefined);
@@ -162,7 +171,14 @@ const FormationView: React.FC = () => {
   useEffect(() => {
     if (fData.isEdit.some((val) => val !== false)) {
       dispatch(formationAction(FormationAction.Save, { storage }));
+      if (isUpdateRequired) {
+        // After using formation convert we need to remove the warning and update the screen.
+        setIsUpdateRequired(false);
+        dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: '', eState: '' }));
+        setFleetTabIndex(0);
+      }
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, fData.isEdit]);
 
@@ -275,7 +291,14 @@ const FormationView: React.FC = () => {
                       <RButton
                         themeColor={config.themeColor}
                         className="tab-btn normal"
-                        onClick={() => dispatch(formationAction(FormationAction.Convert, {}))}
+                        onClick={() => {
+                          if (!fleetTabIndex && formationData.isOldFormation) {
+                            dispatch(formationAction(FormationAction.Convert, { convertType: 'SUB' }));
+                          } else {
+                            dispatch(formationAction(FormationAction.Convert, { convertType: 'EQSTRUCTURE' }));
+                          }
+                          setIsUpdateRequired(true);
+                        }}
                       >
                         Convert
                       </RButton>
@@ -304,7 +327,11 @@ const FormationView: React.FC = () => {
               </div>
             </div>
           </div>
-          {formationData && typeof fleetTabIndex !== 'undefined' && fData.formations.length !== 0 ? (
+          {formationData?.equipment.length !== 0 &&
+          formationData?.fleets.length !== 0 &&
+          formationData &&
+          typeof fleetTabIndex !== 'undefined' &&
+          fData.formations.length !== 0 ? (
             <>
               <div id="fleet-selector" className={`f-grid rounded ${config.themeColor}`}>
                 <div className="f-row">

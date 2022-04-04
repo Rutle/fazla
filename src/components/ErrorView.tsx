@@ -16,7 +16,7 @@ const ErrorView: React.FC<{ isNotFound?: boolean }> = ({ isNotFound = false }) =
     <>
       <TitleBar showMenu={isNotFound} />
       <div className={`page ${config.themeColor}`}>
-        <div className="container content" style={{ justifyContent: 'center', width: 'calc(100% - 60px)' }}>
+        <div className="container content" style={{ justifyContent: 'center', height: '100%' }}>
           <div
             className={`message-container ${config.themeColor}`}
             style={{
@@ -28,11 +28,11 @@ const ErrorView: React.FC<{ isNotFound?: boolean }> = ({ isNotFound = false }) =
               {!isNotFound ? appState.eMsg : 'Page not found.'}
             </span>
           </div>
-          {process.env.PLAT_ENV === 'electron' ? (
+          {/* process.env.PLAT_ENV === 'electron' ? (
             <RButton
               themeColor={config.themeColor}
               onClick={() => {
-                openLogs();
+                // openLogs();
                 closeWindow();
               }}
               extraStyle={{ marginTop: '30px', height: '50px', width: '20%' }}
@@ -41,7 +41,7 @@ const ErrorView: React.FC<{ isNotFound?: boolean }> = ({ isNotFound = false }) =
             </RButton>
           ) : (
             <></>
-          )}
+          ) */}
         </div>
       </div>
       <FooterBar />
