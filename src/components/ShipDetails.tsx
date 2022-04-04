@@ -127,6 +127,7 @@ const ShipDetails: React.FC<{ topButtonGroup?: JSX.Element }> = ({ topButtonGrou
       </div>
     </>
   ) : (
+    // TODO: Find a way to show this immediately on a small screen, too.
     <div style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
       <div className={`message-container ${config.themeColor}`}>
         <span className="message">No ship selected or found.</span>

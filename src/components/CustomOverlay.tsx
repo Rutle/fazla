@@ -71,6 +71,8 @@ const CustomOverlay: React.FC<{ themeColor: string; isSmallScreen: boolean; chil
           extraStyle={{ flexGrow: 1 }}
           disabled={!isToggled}
           onClick={() => {
+            // TODO: Make it so that reset respects the main/vanguard category
+            // when using it in formation view.
             dispatch(resetToggles());
             dispatch(updateSearch(shipData, SearchAction.UpdateList));
           }}

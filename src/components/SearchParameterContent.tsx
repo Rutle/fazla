@@ -38,13 +38,17 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
             <RButton
               className={`btn small ${sParam.nationality.All ? 'selected' : ''}`}
               themeColor={themeColor}
-              onClick={updSearch(shipData, SearchAction.ToggleAll, {
-                name: '',
-                cat: 'nationality',
-                param: '',
-                list: appState.cToggle,
-                id: '',
-              })}
+              onClick={() => {
+                if (!sParam.nationality.All) {
+                  updSearch(shipData, SearchAction.ToggleAll, {
+                    name: '',
+                    cat: 'nationality',
+                    param: '',
+                    list: appState.cToggle,
+                    id: '',
+                  });
+                }
+              }}
             >
               All
             </RButton>
@@ -74,49 +78,59 @@ const SearchParameterContent: React.FC<{ themeColor: string }> = ({ themeColor }
             <RButton
               className={`btn small ${sParam.hullType.All ? 'selected' : ''}`}
               themeColor={themeColor}
-              onClick={updSearch(shipData, SearchAction.ToggleAll, {
-                name: '',
-                cat: 'hullType',
-                param: '',
-                list: appState.cToggle,
-                id: '',
-              })}
+              onClick={() => {
+                if (!sParam.hullType.All) {
+                  updSearch(shipData, SearchAction.ToggleAll, {
+                    name: '',
+                    cat: 'hullType',
+                    param: '',
+                    list: appState.cToggle,
+                    id: '',
+                  });
+                }
+              }}
             >
               All
             </RButton>
           </div>
-          {Object.keys(hullTypesAbb).map((key) => {
-            return (
-              <div className="grid-item toggle" key={key}>
-                <RButton
-                  className={`btn small ${sParam.hullType[key] ? 'selected' : ''}`}
-                  themeColor={themeColor}
-                  onClick={updSearch(shipData, SearchAction.ToggleParameter, {
-                    name: '',
-                    cat: 'hullType',
-                    param: key,
-                    list: appState.cToggle,
-                    id: '',
-                  })}
-                >
-                  {hullTypesAbb[key]}
-                </RButton>
-              </div>
-            );
-          })}
+          {Object.keys(sParam.hullType)
+            .slice(1)
+            .map((key) => {
+              return (
+                <div className="grid-item toggle" key={key}>
+                  <RButton
+                    className={`btn small ${sParam.hullType[key] ? 'selected' : ''}`}
+                    themeColor={themeColor}
+                    onClick={updSearch(shipData, SearchAction.ToggleParameter, {
+                      name: '',
+                      cat: 'hullType',
+                      param: key,
+                      list: appState.cToggle,
+                      id: '',
+                    })}
+                  >
+                    {hullTypesAbb[key]}
+                  </RButton>
+                </div>
+              );
+            })}
         </div>
         <div className="f-row wrap">
           <div className="grid-item toggle">
             <RButton
               className={`btn small ${sParam.rarity.All ? 'selected' : ''}`}
               themeColor={themeColor}
-              onClick={updSearch(shipData, SearchAction.ToggleAll, {
-                name: '',
-                cat: 'rarity',
-                param: '',
-                list: appState.cToggle,
-                id: '',
-              })}
+              onClick={() => {
+                if (!sParam.rarity.All) {
+                  updSearch(shipData, SearchAction.ToggleAll, {
+                    name: '',
+                    cat: 'rarity',
+                    param: '',
+                    list: appState.cToggle,
+                    id: '',
+                  });
+                }
+              }}
             >
               All
             </RButton>

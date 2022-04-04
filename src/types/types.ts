@@ -61,9 +61,9 @@ export interface BooleanSearchParam {
 export type SearchParams = {
   [key: string]: any;
   name: string;
-  hullTypeArr: string[];
-  nationalityArr: string[];
-  rarityArr: string[];
+  // hullTypeArr: string[];
+  // nationalityArr: string[];
+  // rarityArr: string[];
   hullType: BooleanSearchParam;
   nationality: BooleanSearchParam;
   rarity: BooleanSearchParam;

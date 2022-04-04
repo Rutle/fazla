@@ -15,26 +15,51 @@ export enum SearchAction {
   UpdateList = 'UPDATE',
 }
 
+const allHullTypes = {
+  All: true,
+  Destroyer: false,
+  'Light Cruiser': false,
+  'Heavy Cruiser': false,
+  Battlecruiser: false,
+  Battleship: false,
+  // 'Light Aircraft Carrier': false,
+  'Light Carrier': false,
+  'Aircraft Carrier': false,
+  Monitor: false,
+  Repair: false,
+  Submarine: false,
+  // 'Submarine Carrier': false,
+  'Large Cruiser': false,
+};
+
+const mainFleetHullTypes = {
+  All: true,
+  Battlecruiser: false,
+  Battleship: false,
+  // 'Light Aircraft Carrier': false,
+  'Aircraft Carrier': false,
+  'Light Carrier': false,
+  Monitor: false,
+  Repair: false,
+};
+
+const vanguardFleetHullTypes = {
+  All: true,
+  Destroyer: false,
+  'Light Cruiser': false,
+  'Heavy Cruiser': false,
+  'Large Cruiser': false,
+};
+
+const subFleetHullTypes = {
+  All: true,
+  Submarine: false,
+  // 'Submarine Carrier': false,
+};
+
 const initialState: SearchParams = {
   name: '',
-  hullTypeArr: [],
-  nationalityArr: [],
-  rarityArr: [],
-  hullType: {
-    All: true,
-    Destroyer: false,
-    'Light Cruiser': false,
-    'Heavy Cruiser': false,
-    Battlecruiser: false,
-    Battleship: false,
-    'Light Aircraft Carrier': false,
-    'Aircraft Carrier': false,
-    Monitor: false,
-    'Repair Ship': false,
-    Submarine: false,
-    'Submarine Carrier': false,
-    'Large Cruiser': false,
-  },
+  hullType: allHullTypes,
   nationality: {
     All: true,
     'Sakura Empire': false,
@@ -75,7 +100,7 @@ const searchParametersSlice = createSlice({
       const { cat, param } = action.payload;
       const od = state[cat] as BooleanSearchParam;
       const oldVal = od[param];
-      let newArray = [];
+      // let newArray = [];
       const newObj = {
         ...state,
         isChanged: true,
@@ -85,38 +110,6 @@ const searchParametersSlice = createSlice({
           [param]: !oldVal,
         },
       };
-      switch (cat) {
-        case 'nationality':
-          if (oldVal) {
-            newArray = state.nationalityArr.slice().filter((item) => item !== param);
-            newObj.nationalityArr = newArray;
-          } else {
-            newArray = state.nationalityArr.slice();
-            newArray.push(param);
-            newObj.nationalityArr = newArray;
-          }
-          break;
-        case 'hullType':
-          if (oldVal) {
-            newObj.hullTypeArr = state.hullTypeArr.slice().filter((item) => item !== param);
-          } else {
-            newArray = state.hullTypeArr.slice();
-            newArray.push(param);
-            newObj.hullTypeArr = newArray;
-          }
-          break;
-        case 'rarity':
-          if (oldVal) {
-            newObj.rarityArr = state.rarityArr.slice().filter((item) => item !== param);
-          } else {
-            newArray = state.rarityArr.slice();
-            newArray.push(param);
-            newObj.rarityArr = newArray;
-          }
-          break;
-        default:
-          break;
-      }
       return newObj;
     },
     toggleAll(state, action: PayloadAction<string>) {
@@ -135,28 +128,35 @@ const searchParametersSlice = createSlice({
           All: !oldVal,
         },
       };
-      switch (cat) {
-        case 'nationality':
-          newState.nationalityArr = [];
-          break;
-        case 'rarity':
-          newState.rarityArr = [];
-          break;
-        case 'hullType':
-          newState.hullTypeArr = [];
-          break;
-        default:
-          break;
-      }
       return newState;
     },
     setSearchString(state, action: PayloadAction<string>) {
       return { ...state, name: action.payload, isChanged: true };
     },
     setFleet(state, action: PayloadAction<{ fleet: 'ALL' | 'VANGUARD' | 'MAIN' | 'SUBMARINE' }>) {
+      const { fleet } = action.payload;
+      let newHullType = {};
+      switch (fleet) {
+        case 'ALL':
+          newHullType = allHullTypes;
+          break;
+        case 'VANGUARD':
+          newHullType = vanguardFleetHullTypes;
+          break;
+        case 'MAIN':
+          newHullType = mainFleetHullTypes;
+          break;
+        case 'SUBMARINE':
+          newHullType = subFleetHullTypes;
+          break;
+        default:
+          newHullType = allHullTypes;
+          break;
+      }
       return {
         ...state,
-        fleet: action.payload.fleet,
+        fleet,
+        hullType: newHullType,
         isChanged: true,
       };
     },
@@ -167,7 +167,26 @@ const searchParametersSlice = createSlice({
       return initialState;
     },
     resetToggles(state) {
-      return { ...initialState, name: state.name, isChanged: true };
+      const { fleet, name } = state;
+      let newHullType = {};
+      switch (fleet) {
+        case 'ALL':
+          newHullType = allHullTypes;
+          break;
+        case 'VANGUARD':
+          newHullType = vanguardFleetHullTypes;
+          break;
+        case 'MAIN':
+          newHullType = mainFleetHullTypes;
+          break;
+        case 'SUBMARINE':
+          newHullType = subFleetHullTypes;
+          break;
+        default:
+          newHullType = allHullTypes;
+          break;
+      }
+      return { ...initialState, fleet, hullType: newHullType, name, isChanged: true };
     },
   },
 });

@@ -148,10 +148,7 @@ const FormationGridItem: React.FC<GridItemProps> = ({
           <span>{ship ? `${ship.names.en}` : `Add ${!isSub ? getLocation(index) : 'ship'}`}</span>
         </RButton>
       ) : (
-        <div
-          className={`grid-item ship btn non-interactive ${themeColor} hullTypeAbb ${ship?.hullType || 'none'}`}
-          // style={{ borderRadius: '4px', display: 'inline-block' }}
-        >
+        <div className={`grid-item ship btn non-interactive ${themeColor} hullTypeAbb ${ship?.hullType || 'none'}`}>
           <span>{ship ? `${ship.names.en}` : `Empty`}</span>
         </div>
       )}
