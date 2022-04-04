@@ -315,6 +315,7 @@ div.scroll {
 #ship-details-content {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 #ship-details-content > .scroll {
@@ -328,7 +329,7 @@ div.scroll {
 #formation-ship-search {
   display: none;
   position: fixed;
-  /* width: 100%;*/
+  width: calc(100% - 30px);
   flex-direction: row;
   z-index: 25;
   padding: 15px;
