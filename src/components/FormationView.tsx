@@ -229,6 +229,7 @@ const FormationView: React.FC = () => {
   const setTabIndex = useCallback(
     (idx: number) => () => {
       setFleetTabIndex(idx);
+      setShowSearch(false);
     },
     []
   );

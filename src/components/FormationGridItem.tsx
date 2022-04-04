@@ -10,9 +10,7 @@ import RButton from './RButton/RButton';
 
 /**
  * Function to check if drop zone is valid.
- * @param fleetCount Number of fleets
- * @param main Object containing list of main fleet indexes based on fleetcount.
- * @param vanguard Object containing list of vanguard fleet indexes based on fleetcount.
+ * @param {Object} fleetHulls Number of fleets
  * @returns true if valid, false otherwise.
  */
 const isValidDropZone =
@@ -60,8 +58,6 @@ const FormationGridItem: React.FC<GridItemProps> = ({
   themeColor,
   onClick,
   isSelected,
-  // dragFunctions,
-  // isDragged,
   fleetCount,
   isSub = false,
   isInteractive = true,
@@ -73,7 +69,6 @@ const FormationGridItem: React.FC<GridItemProps> = ({
     isValidDropZone: isValidDropZone(fleets),
   });
   const dispatch = useDispatch();
-  // console.log(`Rendering `, ship?.names.en);
   useEffect(() => {
     // Finished drag and drop.
     if (!dragStates.isDragged && dragStates.isTransferOk) {
@@ -131,7 +126,7 @@ const FormationGridItem: React.FC<GridItemProps> = ({
         <RButton
           onClick={onClick}
           onRightClick={onRightClick}
-          className={`grid-item ship btn hullTypeAbb ${ship?.hullType || 'none'}`}
+          className={`grid-item ship btn hullTypeAbb ${isSelected ? 'selected' : ''} ${ship?.hullType || 'none'}`}
           themeColor={themeColor}
           dragProps={{
             dragFunctions,

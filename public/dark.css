@@ -273,7 +273,7 @@ button.btn.rList-item.dark:hover {
 button.btn.dark:disabled:hover,
 button.tab-btn.dark:disabled:hover {
   background-color: var(--main-dark-header-bg)!important;
-  color: var(--main-dark-color);
+  color: var(--main-dark-color)!important;
 }
 button.menu-item.dark.selected,
 label.btn.dark.selected, 
