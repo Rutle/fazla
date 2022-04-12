@@ -90,6 +90,7 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
               <input
                 id="code-input"
                 type="text"
+                // TODO: Improve accessibility.
                 // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 spellCheck="false"

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { AppContext } from '_/App';
+import React, { useState, useEffect } from 'react';
 import { Slot } from '_/types/shipTypes';
 import { ParsedSlot, parseSlots } from '_/utils/appUtilities';
 import RButton from './RButton/RButton';
@@ -51,15 +50,20 @@ const EqList: React.FC<{ list?: string[][]; headers?: string[]; themeColor: stri
 
 const SlotList: React.FC<{ slots: { [key: string]: Slot }; hasRetrofit?: boolean; themeColor: string }> = React.memo(
   ({ slots, hasRetrofit, themeColor }) => {
-    const { shipData } = useContext(AppContext);
-    const [selectedSlotList, setSelectedSlotList] = useState(0);
-    const [parsedSlots, setParsedSlots] = useState<ParsedSlot[]>([]);
+    const [selectedSlotList, setSelectedSlotList] = useState<number>();
+    const [parsedSlots, setParsedSlots] = useState<ParsedSlot[]>();
 
     useEffect(() => {
-      // TODO: Add try/catch block to prevent whole program crash.
-      // Add warning to the slot section about the missing/wrong data.
-      setParsedSlots(parseSlots(slots, shipData, hasRetrofit));
-      setSelectedSlotList(0);
+      parseSlots(slots, hasRetrofit)
+        .then((result) => {
+          setParsedSlots(result);
+          setSelectedSlotList(0);
+        })
+        .catch((e) => {
+          setParsedSlots(undefined);
+          setSelectedSlotList(undefined);
+        });
+
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slots]);
 
@@ -67,7 +71,7 @@ const SlotList: React.FC<{ slots: { [key: string]: Slot }; hasRetrofit?: boolean
       <>
         <div className={`f-row ${themeColor}`}>
           <div className="f-header">Equipment</div>
-          {hasRetrofit && parsedSlots.length > 1 ? (
+          {hasRetrofit && parsedSlots && selectedSlotList !== undefined ? (
             <div className="f-header tab-group">
               {parsedSlots.map((cat, index) => (
                 <RButton
@@ -84,7 +88,7 @@ const SlotList: React.FC<{ slots: { [key: string]: Slot }; hasRetrofit?: boolean
             <></>
           )}
         </div>
-        {slots && parsedSlots ? (
+        {slots && parsedSlots && selectedSlotList !== undefined ? (
           //        Normal,             Retrofit
           // [{1:[], 2:[], 3:[] }, {1:[], 2:[], 3:[] }]
           parsedSlots.map((e, idx) => {
@@ -123,7 +127,13 @@ const SlotList: React.FC<{ slots: { [key: string]: Slot }; hasRetrofit?: boolean
             );
           })
         ) : (
-          <></>
+          <div
+            key="div-info"
+            className={`f-column f-body slots wrap ${themeColor}`}
+            style={{ padding: '3px 5px', textAlign: 'center', justifyContent: 'center' }}
+          >
+            Unavailable
+          </div>
         )}
       </>
     );

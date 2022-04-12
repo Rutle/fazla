@@ -263,27 +263,38 @@ export interface ParsedSlot {
  * @param {boolean|undefined} hasRetrofit If the ship has retrofit.
  * @returns {Object[]} Parsed data object.
  */
-export const parseSlots = (slots: { [key: string]: Slot }, data: DataStore, hasRetrofit?: boolean): ParsedSlot[] => {
+export const parseSlots = async (
+  slots: { [key: string]: Slot },
+  // data: DataStore,
+  hasRetrofit?: boolean
+): Promise<ParsedSlot[]> => {
   // [{1: [006], 2: [002, 001], 3: [013]}, {1: [006], 2: [012], 3: [013]}]
-  const baseSlots: ParsedSlot = {};
-  const retroSlots: ParsedSlot = {};
-  Object.keys(slots).forEach((key) => {
-    const slotIDs = slotTypes[slots[key].type];
-    const baseSlot = slotIDs[0].map((eqID) => ({ str: `${eqTypes[eqID]}`, slot: slots[key] }));
-    let retroSlot: {
-      str: string;
-      slot: Slot;
-    }[] = [];
-    if (slotIDs.length > 1) {
-      retroSlot = slotIDs[1].map((eqID) => ({ str: `${eqTypes[eqID]}`, slot: slots[key] }));
-    } else {
-      retroSlot = baseSlot;
+  try {
+    const baseSlots: ParsedSlot = {};
+    const retroSlots: ParsedSlot = {};
+    Object.keys(slots).forEach((key) => {
+      const slotIDs = slotTypes[slots[key].type];
+      const baseSlot = slotIDs[0].map((eqID) => ({ str: `${eqTypes[eqID]}`, slot: slots[key] }));
+      let retroSlot: {
+        str: string;
+        slot: Slot;
+      }[] = [];
+      if (slotIDs.length > 1) {
+        retroSlot = slotIDs[1].map((eqID) => ({ str: `${eqTypes[eqID]}`, slot: slots[key] }));
+      } else {
+        retroSlot = baseSlot;
+      }
+      baseSlots[key] = baseSlot;
+      retroSlots[key] = retroSlot;
+    });
+    if (hasRetrofit) return Promise.resolve([baseSlots, retroSlots]);
+    return Promise.resolve([baseSlots]);
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return Promise.reject(new Error(e.message));
     }
-    baseSlots[key] = baseSlot;
-    retroSlots[key] = retroSlot;
-  });
-  if (hasRetrofit) return [baseSlots, retroSlots];
-  return [baseSlots];
+    return Promise.reject(new Error('Unable to parse slots data.'));
+  }
 };
 
 export interface ParsedFit {
@@ -303,6 +314,7 @@ export const parseFits = (
   combineResult = false,
   hasRetrofit?: boolean
 ): ParsedFit[] => {
+  // TODO: ADD try/catch + promise.
   const baseFits: ParsedFit = {};
   const retroFits: ParsedFit = {};
   Object.keys(slots).forEach((key) => {
@@ -331,7 +343,7 @@ export interface FormationData {
   fleets: Ship[][];
   fleetCount: number;
   equipment: string[][][];
-  isOldFormation: boolean;
+  // isOldFormation: boolean;
   convertAction?: 'SUB' | 'EQSTRUCTURE';
 }
 /**
@@ -344,9 +356,15 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
   try {
     const formLen = formation.data.length;
     const eqLen = formation.equipment.length;
+    let convertAction: 'SUB' | 'EQSTRUCTURE' | undefined;
     // Old formation without submarines but no equipment either.
     if (formLen === 12 || formLen === 24)
-      return Promise.resolve({ fleets: [], fleetCount: 0, equipment: [], isOldFormation: true, convertAction: 'SUB' });
+      return Promise.resolve({
+        fleets: [],
+        fleetCount: 0,
+        equipment: [],
+        convertAction: 'SUB',
+      });
     // Add some checks
     if (!(eqLen === 45 || eqLen === 81 || eqLen === 15 || eqLen === 27))
       throw new Error('Equipment data structure is not correct.');
@@ -355,7 +373,7 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
     }
 
     // Find Ship data for each ship ID in the formation and transform it to key-value pairs of
-    // { ID:Ship }
+    // { ID: Ship }
     const formationShips = shipData
       .getShips()
       .filter((ship) => formation.data.includes(ship.id))
@@ -375,7 +393,6 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
     }
 
     // Submarines
-    // TODO: Add function to convert old one to new form.
     const eqData: string[][][] = [];
     const temp = formation.data.slice(-3);
     form.push(temp.map((id) => formationShips[id]));
@@ -385,9 +402,8 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
     // New equipment array length 45/87
     // New with all equipment slots: 75/135
     // Take older equipment structure in consideration just in case if someone has actually used the website
-    let isOldFormation = false;
     if (eqLen === 15 || eqLen === 27) {
-      isOldFormation = true;
+      convertAction = 'EQSTRUCTURE';
       for (let idx = 0; idx <= fleetCount; idx += 1) {
         const tempEq = formation.equipment.slice(idx * 6, idx * 6 + 6);
         const tempNames: string[][] = [];
@@ -418,12 +434,17 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
       }
       eqData.push(tempNames);
     }
+    if (convertAction)
+      return Promise.resolve({
+        fleets: form,
+        fleetCount,
+        equipment: eqData,
+        convertAction,
+      });
     return Promise.resolve({
       fleets: form,
       fleetCount,
       equipment: eqData,
-      isOldFormation,
-      convertAction: isOldFormation ? 'EQSTRUCTURE' : undefined,
     });
   } catch (e: unknown) {
     if (e instanceof Error) {

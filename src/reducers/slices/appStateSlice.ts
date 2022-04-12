@@ -28,7 +28,6 @@ import eqIds from '../../data/eqIds';
 //  'http://slowwly.robertomurray.co.uk/delay/10000/url/https://raw.githubusercontent.com/AzurAPI/azurapi-js-setup/master/ships.json';
 
 interface ErrorState {
-  eState: '' | 'WARNING' | 'ERROR';
   eMsg: string;
 }
 
@@ -64,7 +63,6 @@ const initialState: ListStateObject = {
   cState: 'INIT',
   cMsg: 'Initializing.',
   eMsg: '',
-  eState: '',
   shipCount: 0,
   isSearchChanged: false,
   versions: emptyVersionInfo(),
@@ -97,20 +95,16 @@ const appStateSlice = createSlice({
       const { cState, cMsg } = action.payload;
       return { ...state, cState, cMsg };
     },
-    setErrorMessage(
-      state,
-      action: PayloadAction<{ cState: 'RUNNING' | 'ERROR'; eMsg: string; eState: '' | 'WARNING' | 'ERROR' }>
-    ) {
-      const { cState, eMsg, eState } = action.payload;
+    setErrorMessage(state, action: PayloadAction<{ cState: 'RUNNING' | 'ERROR'; eMsg: string }>) {
+      const { cState, eMsg } = action.payload;
       return {
         ...state,
         cState,
         eMsg,
-        eState,
       };
     },
     clearErrorMessage(state) {
-      return { ...state, eMsg: '', eState: '' };
+      return { ...state, eMsg: '' };
     },
     resetList() {
       return initialState;
@@ -197,7 +191,7 @@ export const initShipLists =
       dispatch(setListValue({ key: 'isData', value: true }));
       dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
     } catch (e) {
-      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Unable to initialize ship lists.', eState: 'ERROR' }));
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Unable to initialize ship lists.' }));
     }
   };
 
@@ -257,8 +251,10 @@ export const initShipData =
       const dataObj = await initData(platform, storage);
       if (dataObj.code === 'ResNotFound') throw new Error('Was not able to retrieve ship data.');
       if (dataObj.code === 'JSONParseFail' && platform === 'electron')
-        throw new Error("JSON data form didn't match. Delete ships.json and restart app.");
-      if (dataObj.code === 'InitError') throw new Error("Couldn't initialize application.");
+        throw new Error(
+          "JSON data structure didn't match. Delete ships.json and equipment.json, and restart application."
+        );
+      if (dataObj.code === 'InitError') throw new Error(dataObj.msg);
       await data.setShips(dataObj.shipData);
       await data.setEqs(dataObj.eqData);
       await data.setCustomEqIds(eqIds);
@@ -266,7 +262,7 @@ export const initShipData =
       dispatch(initShipLists(dataObj.ownedShips, data, dataObj.config, dataObj.formations));
     } catch (e) {
       if (e instanceof Error) {
-        dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message, eState: 'ERROR' }));
+        dispatch(setErrorMessage({ cState: 'ERROR', eMsg: e.message }));
       }
     }
   };
@@ -289,7 +285,7 @@ export const setSelectedShip =
     try {
       dispatch(setListState({ key, data: { id, index, isUpdated: appState[key].isUpdated } }));
     } catch (e) {
-      dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'There was a problem selecting a ship', eState: 'WARNING' }));
+      dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'There was a problem with selecting a ship' }));
     }
   };
 
@@ -335,7 +331,7 @@ export const updateShipData =
       dispatch(setCurrentState({ cState: 'RUNNING', cMsg: 'Running.' }));
       if (config.isToast && addToast) addToast('success', 'Update', 'Update finished succesfully.');
     } catch (e) {
-      dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'Failed to update ship data.', eState: 'WARNING' }));
+      dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: 'Failed to update ship data.' }));
       if (config.isToast && addToast) addToast('warning', 'Update', 'Failed to update ship data.');
     }
   };

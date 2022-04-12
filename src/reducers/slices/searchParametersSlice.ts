@@ -223,11 +223,11 @@ export const updateSearch =
             curParamList = oldParams[cat as string] as BooleanSearchParam;
             curParamValue = curParamList[param as string];
           } else {
+            // TODO: This doesn't really do anything. Could just be a throw new Error with message.
             dispatch(
               setErrorMessage({
                 cState: 'RUNNING',
                 eMsg: 'Failed to toggle parameter. Problem with parameter object.',
-                eState: 'WARNING',
               })
             );
             return;
@@ -316,9 +316,7 @@ export const updateSearch =
       }
     } catch (e) {
       // if (e instanceof Error) console.log(e.message);
-      dispatch(
-        setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with performing search update.', eState: 'ERROR' })
-      );
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with performing search update.' }));
     }
   };
 export default searchParametersSlice.reducer;

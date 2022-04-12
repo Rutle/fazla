@@ -6,7 +6,7 @@ import FooterBar from './FooterBar';
 /**
  * Component for unified page template.
  */
-const PageTemplate: React.FC<{ children: JSX.Element }> = ({ children }) => {
+const PageTemplate: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const config = useSelector((state: RootState) => state.config);
 
   return (

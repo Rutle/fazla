@@ -5,6 +5,7 @@ import { RootState } from '_/reducers/rootReducer';
 import FooterBar from './FooterBar';
 import RButton from './RButton/RButton';
 import TitleBar from './TitleBar';
+import MessageBox from './MessageBox';
 /**
  * A view for displaying error messages.
  */
@@ -16,18 +17,8 @@ const ErrorView: React.FC<{ isNotFound?: boolean }> = ({ isNotFound = false }) =
     <>
       <TitleBar showMenu={isNotFound} />
       <div className={`page ${config.themeColor}`}>
-        <div className="container content" style={{ justifyContent: 'center', height: '100%' }}>
-          <div
-            className={`message-container ${config.themeColor}`}
-            style={{
-              alignSelf: 'center',
-              minHeight: '40px',
-            }}
-          >
-            <span className="message" style={{ fontSize: '24px', justifyContent: 'center', width: '100%' }}>
-              {!isNotFound ? appState.eMsg : 'Page not found.'}
-            </span>
-          </div>
+        <div id="error" className="container content">
+          <MessageBox>{!isNotFound ? appState.eMsg : 'Page not found.'}</MessageBox>
           {/* process.env.PLAT_ENV === 'electron' ? (
             <RButton
               themeColor={config.themeColor}

@@ -13,7 +13,6 @@ import Tooltip from './components/Tooltip/Tooltip';
 import { CallbackDismiss, ToastList, ToastMessageType, useToast } from './hooks/useToast';
 import { useTooltip, TooltipHooks } from './hooks/useTooltip';
 import { initShipData, setErrorMessage } from './reducers/slices/appStateSlice';
-import FormationLinkView from './components/FormationLinkView';
 import LandingView from './components/LandingView';
 
 export const AppContext = React.createContext(
@@ -71,7 +70,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (platform === 'NOSET') {
-      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Platform has not been defined', eState: 'ERROR' }));
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'Platform has not been defined' }));
     }
     if (appState.cState === 'INIT' && !appState.isData) {
       dispatch(initShipData(shipData.current, platform, storage));
@@ -105,13 +104,13 @@ const App: React.FC = () => {
               <ShipDetailView />
             </RefreshRoute>
             <RefreshRoute path="/formations">
-              <FormationView />
+              <FormationView viewOnly={false} />
             </RefreshRoute>
             <RefreshRoute path="/options">
               <Home />
             </RefreshRoute>
             <RefreshRoute path="/link/:code">
-              <FormationLinkView />
+              <FormationView viewOnly />
             </RefreshRoute>
             <Route path="/error">
               <ErrorView />

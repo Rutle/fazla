@@ -11,8 +11,8 @@ interface FormationGridProps {
   selectedGridIndex?: number;
   fleetCount: number;
   // isSubFleet: boolean;
-  refd: React.RefObject<HTMLDivElement>;
-  isExportedLink?: boolean;
+  // refd: React.RefObject<HTMLDivElement>;
+  viewOnly?: boolean;
 }
 
 /**
@@ -27,8 +27,8 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   selectedGridIndex,
   fleetCount,
   // isSubFleet,
-  refd,
-  isExportedLink = false,
+  // refd,
+  viewOnly = false,
 }) => {
   const vanRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
@@ -42,7 +42,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   );
 
   return (
-    <div id="formation-grid" className={`f-grid rounded gap ${themeColor}`} ref={refd}>
+    <div id="formation-grid" className={`f-grid rounded gap ${themeColor}`} /* ref={refd} */>
       <div className={`f-row gap wrap ${selectedFleetIndex === fleetCount ? 'hidden' : ''}`}>
         <div id="main-section" className="f-column" ref={mainRef} style={{ width: '50%' }}>
           {ships.slice(0, fleetCount).map((fleet, fleetIdx) => (
@@ -59,7 +59,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
                   onClick={open(fleetIdx * 6 + shipIdx)}
                   isSelected={selectedGridIndex === fleetIdx * 6 + shipIdx}
                   fleetCount={fleetCount}
-                  isInteractive={!isExportedLink}
+                  isInteractive={!viewOnly}
                 />
               ))}
             </div>
@@ -80,7 +80,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
                   onClick={open(fleetIdx * 6 + (shipIdx + 3))}
                   isSelected={selectedGridIndex === fleetIdx * 6 + (shipIdx + 3)}
                   fleetCount={fleetCount}
-                  isInteractive={!isExportedLink}
+                  isInteractive={!viewOnly}
                 />
               ))}
             </div>
@@ -106,7 +106,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
                   isSelected={selectedGridIndex === fleetCount * 6 + shipIdx}
                   isSub
                   fleetCount={fleetCount}
-                  isInteractive={!isExportedLink}
+                  isInteractive={!viewOnly}
                 />
               ))}
             </div>

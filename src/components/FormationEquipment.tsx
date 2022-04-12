@@ -66,8 +66,8 @@ const FormationEquipment: React.FC<{
   data: Ship[][];
   equipmentData: string[][][];
   isOldFormation: boolean;
-  isExportedLink?: boolean;
-}> = ({ selectedFleetIndex, data, equipmentData, isOldFormation, isExportedLink = false }) => {
+  viewOnly?: boolean;
+}> = ({ selectedFleetIndex, data, equipmentData, isOldFormation, viewOnly = false }) => {
   const config = useSelector((state: RootState) => state.config);
   const fData = useSelector((state: RootState) => state.formationGrid);
   const { shipData } = useContext(AppContext);
@@ -82,7 +82,7 @@ const FormationEquipment: React.FC<{
               // slice (0, 3) for main fleet ships, but also submarine fleet.
               // Keep main and vanguard in separate divs for easier column
               // direction change for smaller screen
-              if (ship && !isExportedLink) {
+              if (ship && !viewOnly) {
                 return parseFits(ship.slots, shipData, true, ship.retrofit).map((shipFits) => {
                   return (
                     <div ref={ddRef} key={ship.names.en} className="f-column" style={{ gap: '2px 0px', minWidth: '0' }}>
@@ -130,7 +130,7 @@ const FormationEquipment: React.FC<{
               {data[selectedFleetIndex].slice(3).map((ship, shipIdx) => {
                 // slice (3) for vanguard fleet ships. Keep main and vanguard in separate divs for easier
                 // column direction change in smaller screen
-                if (ship && !isExportedLink) {
+                if (ship && !viewOnly) {
                   return parseFits(ship.slots, shipData, true, ship.retrofit).map((shipFits) => {
                     return (
                       <div

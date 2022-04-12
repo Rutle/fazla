@@ -362,6 +362,7 @@ ipcMain.handle('initData', async () => {
       code,
     };
   } catch (error) {
+    console.log('error');
     return {
       shipData: dataArr,
       versionData,

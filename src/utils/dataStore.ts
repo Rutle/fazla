@@ -18,8 +18,10 @@ export default class DataStore {
 
   private eqIds: Record<string, string> = {};
 
-  // To prevent unnecessary array/object manipulations when saving selected equipment
-  // for a ship slot.
+  /**
+   * To prevent unnecessary array/object manipulations when saving selected equipment
+   *  for a ship slot.
+   */
   private reverseEqId: Record<string, string> = {};
 
   private shipCount = 0;

@@ -110,7 +110,7 @@ export const configAction =
           break;
       }
     } catch (e) {
-      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with a config action.', eState: 'ERROR' }));
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with a config action.' }));
     }
   };
 

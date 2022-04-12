@@ -54,9 +54,7 @@ export const addShip =
         dispatch(setIsUpdated({ key: 'OWNED', value: false }));
       }
     } catch (e) {
-      dispatch(
-        setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with adding ship to docks.', eState: 'ERROR' })
-      );
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with adding ship to docks.' }));
     }
   };
 
@@ -94,9 +92,7 @@ export const removeShip =
         }
       }
     } catch (e) {
-      dispatch(
-        setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with adding ship to docks.', eState: 'ERROR' })
-      );
+      dispatch(setErrorMessage({ cState: 'ERROR', eMsg: 'There was an error with adding ship to docks.' }));
     }
   };
 export default ownedShipListSlice.reducer;

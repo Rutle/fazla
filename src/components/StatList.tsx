@@ -75,42 +75,6 @@ const StatList: React.FC<{ stats: ShipStats; themeColor: string }> = ({ stats, t
           </table>
         </div>
       ) : (
-        /*
-        orderedKeys.map((key, idx) => {
-          // Grab stats of a stat catergory
-          console.log('ddd');
-          const statArr = Object.keys(stats[key]);
-          const tempArr = [];
-          // Go through array in steps of 4
-          for (let i = 0; i < statArr.length; i += 4) {
-            const temp = statArr.slice(i, i + 4);
-            // Add table rows with data to tempArr
-            tempArr.push(
-              <tr key={`${key}-${i + 4}`} className="f-table-row">
-                {temp.map((stat) => {
-                  const len = temp.length;
-                  if (isStat(stat) && len === 4) {
-                    return (
-                      <td key={`${key}-${stat}`} className="stat-item">{`${statsAbb[stat]}: ${stats[key][stat]}`}</td>
-                    );
-                  }
-                  if (isStat(stat) && len < 4 && len >= 1) {
-                    return (
-                      <React.Fragment key={`${key}-${stat}`}>
-                        <td className="stat-item">{`${statsAbb[stat]}: ${stats[key][stat]}`}</td>
-                        <td colSpan={4 - len} className="stat-item filler" />
-                      </React.Fragment>
-                    );
-                  }
-                  return <></>;
-                })}
-              </tr>
-            );
-          }
-          return ( */
-
-        // );
-        // })
         <></>
       )}
     </>

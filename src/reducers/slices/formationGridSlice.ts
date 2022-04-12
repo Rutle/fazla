@@ -503,7 +503,7 @@ export const formationAction =
       if (e instanceof Error) {
         msg = e.message;
       }
-      dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: msg, eState: 'WARNING' }));
+      dispatch(setErrorMessage({ cState: 'RUNNING', eMsg: msg }));
     }
   };
 

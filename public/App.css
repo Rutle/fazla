@@ -50,9 +50,6 @@ form {
   flex-direction: column;
 }
 
-.page-content.ships {
-  flex-direction: row;
-}
 div.scroll {
   /* height: 100%;*/
   overflow-y: auto;
@@ -507,7 +504,7 @@ div.f-row.action *,
   display: flex;
   font-size: 24px;
   /* height: inherit;*/
-  padding: 15px;
+  padding: 15px 15px 17px 15px;
   /* flex-grow: 1;*/
   box-sizing: border-box;
   /*align-items: center; TODO: Check if these are needed in electron
@@ -1268,6 +1265,10 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
   .page > .container.content {
     margin: 0px;
     width: calc(100% - 30px);
+  }
+
+  #error.container.content {
+    height: 100%;
   }
 
   #formations.container.content {
