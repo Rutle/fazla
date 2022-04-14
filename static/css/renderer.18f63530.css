@@ -416,16 +416,9 @@ button.btn,
 button.btn * {
   cursor: pointer;
   box-sizing: border-box;
-  -webkit-transition: 0.2s ease;
-  transition: 0.2s ease;
+  -webkit-transition: background-color 0.2s ease, border 0.2s ease;
+  transition: background-color 0.2s ease, border 0.2s ease;
 }
-
-/* TODO. Check on electron.
-label.btn,
-button.btn {
-  display: inline-block;
-}
-*/
 
 div.grid-item.non-interactive,
 button.btn.grid-item {
@@ -458,14 +451,7 @@ button.btn.normal.icon-only,
 button.tab-btn.normal.icon-only {
   padding: 0px 5px 0px 5px;
 }
-/*
-.btn:not(:disabled):active > span,
-.tab-btn:active > span,
-.btn:active > div.name,
-.btn:active > div.hulltype {
-  transform: translateY(1px);
-}
-*/
+
 /* ###### top-container + tab ##### */
 .top-container {
   display: flex;
@@ -519,18 +505,14 @@ div.f-row.action *,
   align-self: center;
   border-radius: 5px;
   /* margin-bottom: 5px;*/
-  box-shadow: rgba(0, 0, 0, 0.39) 0px 0px 8px 2px;
+  box-shadow: 0px 0px 12px 0 rgb(0 0 0 / 24%);
 }
 
 .message-container > span.message {
   display: flex;
-  font-size: 24px;
-  /* height: inherit;*/
+  font-size: 20px;
   padding: 15px 15px 17px 15px;
-  /* flex-grow: 1;*/
   box-sizing: border-box;
-  /*align-items: center; TODO: Check if these are needed in electron
-  justify-content: center;*/
   font-variant-caps: all-petite-caps;
 }
 
@@ -655,7 +637,6 @@ div.f-row.action *,
   font-size: 1.5em;
   align-items: center; /* TODO: check on electron */
   margin-bottom: 10px;
-  /* flex-wrap: wrap;*/
 }
 .rounded {
   border-radius: 5px;
@@ -707,7 +688,6 @@ span.Elite:last-child {
   box-sizing: border-box;
   padding: 0px;
   border: unset;
-  /* border: 1px solid transparent;*/
 }
 
 .rList .rList-item > div.hulltype {
@@ -743,12 +723,8 @@ span.Elite:last-child {
 .button-group,
 .radio-group {
   box-sizing: border-box;
-  /* width: 100%;*/ /*Check on Electron. TODO */
   display: flex;
-  /* flex-wrap: wrap;*/ /*Check on Electron. TODO */
   flex-direction: row;
-  /* justify-content: center;*/ /*Check on Electron. TODO */
-  /*border-radius: 4px; */
 }
 
 .button-group > button:first-child,
@@ -838,7 +814,6 @@ button.input:hover {
 .f-grid {
   display: flex;
   flex-direction: column;
-  /* padding: 1px;*/
   margin-bottom: 10px;
 }
 
@@ -889,7 +864,6 @@ div.f-grid div.tab,
 div.f-grid div.f-header {
   display: flex;
   flex: 1;
-  /* flex-direction: column;*/
   border-top-left-radius: inherit;
   padding: 5px 5px;
   font-size: 15px;
@@ -907,17 +881,7 @@ div.f-grid > div.f-row > div.tab.fleets {
 div.f-grid .f-row.fleet {
   gap: 8px;
 }
-/* 
-div.f-grid div.f-row.fleet > button.grid-item:first-child {
-  border-top-left-radius: inherit;
-  border-bottom-left-radius: inherit;
-}
 
-div.f-grid div.f-row.fleet > button.grid-item:last-child {
-  border-top-right-radius: inherit;
-  border-bottom-right-radius: inherit;
-}
-*/
 div.f-grid div.f-header + div.f-icon,
 div.f-grid div.f-header:only-child {
   border-top-right-radius: inherit;
@@ -1038,8 +1002,6 @@ div.f-grid .f-body > div.f-row > button.grid-item:first-child {
 div.f-grid .f-body > div.f-row > button.grid-item:last-child {
   border-bottom-right-radius: inherit;
 }
-
-
 
 /* https://dev.to/link2twenty/accessibility-first-toggle-switches-3obj */
 .switch {
@@ -1372,10 +1334,13 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
   #equipment-grid > div.f-row {
     flex-direction: column;
   }
-
+  #equipment-grid div.f-column {
+    width: unset!important;
+  }
   #main-section.f-column,
   #vanguard-section.f-column {
     width: unset!important;
+    min-width: 100%!important;
   }
 }
 /* ##### Light theme ##### */
@@ -1518,13 +1483,16 @@ nav.navigation.tab.light {
 }
 #small-nav.light button.nav-item {
   border: 1px solid var(--main-light-border);
+  box-shadow: 0px 4px 10px 0px #435e7740;
 }
+
 #small-nav.navigation.light > .nav-item:hover {
   background-color: var(--main-light-hover-bg);
 }
 
 .navigation.light > .nav-item {
   color: white;
+  border-bottom: 2px solid transparent;
 }
 
 :not(#small-nav).navigation.light > .nav-item:hover {
@@ -1568,11 +1536,11 @@ input[type="text"].light {
 }
 
 button.menu-item.light:hover,
-button.grid-item.btn.light:hover,
+button.grid-item.ship.btn.light:hover,
 .light .tab-btn:hover,
 .btn.light:hover {
-  background-color: #a4d3ff!important;
-  color: var(--main-light-color)!important;
+  background-color: #a4d3ff;
+  color: var(--main-light-color);
   /* border: 1px solid #a4d3ff;*/
 }
 button.rList-item.light.btn:hover {
@@ -1582,7 +1550,7 @@ button.rList-item.light.btn:hover {
 }
 button.btn.light:disabled:hover,
 button.tab-btn.light:disabled:hover {
-  background-color: var(--main-light-bg);
+  background-color: var(--main-light-bg)!important;
 }
 button.menu-item.light.selected,
 label.btn.light.selected,
@@ -1626,11 +1594,11 @@ button.btn.light:active {
   border: 1px solid #aed8ff;
   background-color: var(--main-light-bg);
 }
-.f-grid.light .f-row.fleet > button,
+
+.f-grid.light .f-row.fleet > .grid-item.ship.btn,
 .light .tab > .dropdown.formation > button.tab-btn,
 .light .tab > button.tab-btn {
-  /* border-radius: inherit;*/
-  box-shadow: 0px 4px 10px 0px #435e7740; /* for light theme TODO */
+  box-shadow: 0px 4px 10px 0px #435e7740;
 }
 
 .light .dropdown.placeholder {
@@ -1686,14 +1654,13 @@ input[type="url"].light.is-invalid,
 }
 
 .grid-item.light.drag-over {
-  border: 2px dotted!important;
-  border-radius: 4px!important;
+  border: 1px dotted!important;
 }
 
 .grid-item.light.drag-over-invalid {
-  border: 2px dotted red!important;
-  border-radius: 4px!important;
+  border: 1px dotted red!important;
 }
+
 /* #### Grid #### */
 div.f-grid.light div.f-header {
   border-bottom: 2px solid var(--main-light-border);
@@ -2086,15 +2053,11 @@ label.dark,
 button.dark {
   background-color: var(--main-dark-header-bg);
   color: var(--main-dark-color);
-  /* border: 1px solid #ffffff03;*/
   border: 1px solid #ffffff0a;
 }
 button.menu-item.dark:hover,
 button.btn.grid-item.dark:hover,
 .btn:not(.non-interactive).dark:hover {
-  /* TODO: Check colors with electron for window controls */
-  /* background-color: #3c4652!important;*/
-  /* background-color: #3c4652b3 !important;*/
   background-color: var(--main-dark-active-bg)!important;
   color: var(--main-dark-hover-color)!important;
 }
@@ -2104,7 +2067,6 @@ button.menu-item.dark {
 }
 
 button.dark.tab-btn:hover {
-  /* background-color: var(--main-dark-hover-bg);*/
   background-color: #3c4652b3 !important;
   color: var(--main-dark-hover-color);
 }
@@ -2129,9 +2091,9 @@ button.grid-item.btn.dark.selected,
 button.rList-item.dark.btn.selected,
 button.btn.dark.selected,
 button.tab-btn.dark.selected {
-  background-color: var(--main-dark-active-bg);
+  background-color: var(--main-dark-active-bg)!important;
   /* background-color: #38414d;*/
-  color:#98caff;
+  color:#98caff!important;
 }
 
 div.f-grid.dark div.tab > .dropdown.formation,
@@ -2368,7 +2330,7 @@ div.f-grid.dark div.f-row.deepskyblue {
 .message-container.dark {
   color: var(--main-dark-color);
   border: 1px solid #1a1a1a;
-  background-color: var(--main-dark-header-bg);
+  background-color: var(--main-dark-body-bg);
 }
 .toast-container.dark > .toast {
   box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;
