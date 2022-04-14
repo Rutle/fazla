@@ -28,6 +28,12 @@ export const elapsedSinceUpdate = (ms: number): number => {
   const days = Math.floor(elapsed / (24 * 60 * 60 * 1000));
   return days;
 };
+const isCorrectEquipmentLength = (length: number): boolean => {
+  return length === 45 || length === 81 || length === 15 || length === 27 || length === 12 || length === 24;
+};
+const isCorrectFormationLength = (length: number): boolean => {
+  return length === 15 || length === 27 || length === 12 || length === 24;
+};
 
 // TODO: More fields to check.
 // TYPE guards
@@ -62,14 +68,14 @@ export const isEquipmentJson = <
   return !o.some(eqTypeCheck);
 };
 
-const isImportJson = <T extends { data?: unknown; name?: unknown }>(
+const isImportJson = <T extends { data?: unknown; name?: unknown; equipment?: unknown }>(
   o: T
 ): o is T & { data: string[]; name: string } => {
   if (!(o.data && o.name)) return false;
   if (!(o.data instanceof Array)) return false;
-  // if (!(o.equipment instanceof Array && !o.equipment.some((k) => !(k instanceof Array)))) return false;
+  if (!(o.equipment instanceof Array)) return false;
+  if (!isCorrectEquipmentLength(o.equipment.length)) return false;
   if (typeof o.name !== 'string') return false;
-
   return true;
 };
 
@@ -343,7 +349,6 @@ export interface FormationData {
   fleets: Ship[][];
   fleetCount: number;
   equipment: string[][][];
-  // isOldFormation: boolean;
   convertAction?: 'SUB' | 'EQSTRUCTURE';
 }
 /**
@@ -357,20 +362,10 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
     const formLen = formation.data.length;
     const eqLen = formation.equipment.length;
     let convertAction: 'SUB' | 'EQSTRUCTURE' | undefined;
-    // Old formation without submarines but no equipment either.
-    if (formLen === 12 || formLen === 24)
-      return Promise.resolve({
-        fleets: [],
-        fleetCount: 0,
-        equipment: [],
-        convertAction: 'SUB',
-      });
+
     // Add some checks
-    if (!(eqLen === 45 || eqLen === 81 || eqLen === 15 || eqLen === 27))
-      throw new Error('Equipment data structure is not correct.');
-    if (!(formLen === 15 || formLen === 27)) {
-      throw new Error('Fleet data structure is not correct.');
-    }
+    if (!isCorrectEquipmentLength(eqLen)) throw new Error('Equipment data structure is not correct.');
+    if (!isCorrectFormationLength(formLen)) throw new Error('Fleet data structure is not correct.');
 
     // Find Ship data for each ship ID in the formation and transform it to key-value pairs of
     // { ID: Ship }
@@ -384,7 +379,7 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
 
     const fleetCount = Math.floor(formLen / 6);
     const form: Ship[][] = [];
-
+    const eqData: string[][][] = [];
     // Normal ships
     // Slice array of formation IDs into size 6 and match the ID with correct ship.
     for (let idx = 0; idx < fleetCount; idx += 1) {
@@ -393,16 +388,19 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
     }
 
     // Submarines
-    const eqData: string[][][] = [];
-    const temp = formation.data.slice(-3);
-    form.push(temp.map((id) => formationShips[id]));
+    if (!(formLen === 12 || formLen === 24)) {
+      const temp = formation.data.slice(-3);
+      form.push(temp.map((id) => formationShips[id]));
+    } else {
+      form.push([]);
+    }
 
     // Equipment TODO: Should I also add the general equipment slots?
     // Old equipment array length 15/27
     // New equipment array length 45/87
     // New with all equipment slots: 75/135
     // Take older equipment structure in consideration just in case if someone has actually used the website
-    if (eqLen === 15 || eqLen === 27) {
+    if (eqLen === 15 || eqLen === 27 || eqLen === 12 || eqLen === 24) {
       convertAction = 'EQSTRUCTURE';
       for (let idx = 0; idx <= fleetCount; idx += 1) {
         const tempEq = formation.equipment.slice(idx * 6, idx * 6 + 6);
@@ -413,6 +411,7 @@ export const getFormationData = async (formation: Formation, shipData: DataStore
         }
         eqData.push(tempNames);
       }
+      if (eqLen === 12 || eqLen === 24) convertAction = 'SUB';
     } else {
       // New style equipment of the formation for vanguard and main
       for (let idx = 0; idx < fleetCount; idx += 1) {

@@ -5,7 +5,7 @@ import { Formation } from '_/types/types';
 import DataStore from '_/utils/dataStore';
 import { batch } from 'react-redux';
 import { CallbackDismiss, ToastMessageType } from '_/hooks/useToast';
-import { initShipData, setErrorMessage } from './appStateSlice';
+import { setErrorMessage } from './appStateSlice';
 import { SearchAction, setFleet, updateSearch } from './searchParametersSlice';
 
 export enum FormationAction {
@@ -83,8 +83,9 @@ const formationGridSlice = createSlice({
         });
         let newEq: string[] | string[][] = [];
         const isOld = item.equipment.length === 15 || item.equipment.length === 27;
+        const isSubless = item.equipment.length === 12 || item.equipment.length === 24;
         // Old equipment data structure
-        if (isOld) {
+        if (isOld || isSubless) {
           newEq = item.equipment.map((value, index2) => {
             if (index2 === shipIndex) {
               return ['N', 'N', 'N'];
@@ -203,7 +204,8 @@ const formationGridSlice = createSlice({
       const newData = state.formations[fleetIndex].data.slice();
       let newEq = state.formations[fleetIndex].equipment.slice();
       const isOld = newEq.length === 15 || newEq.length === 27;
-      if (isOld) {
+      const isSubLess = newEq.length === 12 || newEq.length === 24;
+      if (isOld || isSubLess) {
         // Old style equipment data structure
         const oldSpot = newEq[fromIdx];
         const newSpot = newEq[toIdx];

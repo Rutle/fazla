@@ -87,31 +87,47 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
             }`}
           >
             {isType === 'import' ? (
-              <input
-                id="code-input"
-                type="text"
-                // TODO: Improve accessibility.
-                // eslint-disable-next-line jsx-a11y/no-autofocus
-                autoFocus
-                spellCheck="false"
-                className={`${config.themeColor}`}
-                placeholder="Input import code without url"
-                value={importValue}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setImportValue(e.target.value);
-                }}
-                onFocus={(e) => {
-                  setInputFocus(true);
-                  e.target.select();
-                }}
-                onBlur={() => setInputFocus(false)}
-                onKeyUp={(e) => {
-                  if (e.key === 'Enter') {
-                    dispatch(formationAction(FormationAction.Import, { importedFormation }));
-                    setModalOpen({ modal: '', isOpen: false });
-                  }
-                }}
-              />
+              <>
+                <input
+                  id="code-input"
+                  type="text"
+                  // TODO: Improve accessibility.
+                  // eslint-disable-next-line jsx-a11y/no-autofocus
+                  autoFocus
+                  spellCheck="false"
+                  className={`${config.themeColor}`}
+                  placeholder="Input import code without url"
+                  value={importValue}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setImportValue(e.target.value);
+                  }}
+                  onFocus={(e) => {
+                    setInputFocus(true);
+                    e.target.select();
+                  }}
+                  onBlur={() => setInputFocus(false)}
+                  onKeyUp={(e) => {
+                    if (e.key === 'Enter') {
+                      dispatch(formationAction(FormationAction.Import, { importedFormation }));
+                      setModalOpen({ modal: '', isOpen: false });
+                    }
+                  }}
+                />
+
+                {importValue.length > 0 ? (
+                  <RButton
+                    themeColor={config.themeColor}
+                    className="btn input"
+                    onClick={() => {
+                      setImportValue('');
+                    }}
+                  >
+                    <CloseIcon themeColor={config.themeColor} className="icon" />
+                  </RButton>
+                ) : (
+                  <></>
+                )}
+              </>
             ) : (
               <input
                 ref={inputRef}
@@ -125,20 +141,6 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
                 style={{ padding: '2px 6px 2px 6px' }}
               />
             )}
-
-            {/* textValue[typeValue].length > 0 ? (
-              <RButton
-                themeColor={config.themeColor}
-                className="btn input"
-                onClick={() => {
-                  setValue({ url: '', code: '' });
-                }}
-              >
-                <CloseIcon themeColor={config.themeColor} className="icon" />
-              </RButton>
-            ) : (
-              <></>
-            ) */}
           </div>
         </div>
         {isType === 'export' ? (
@@ -190,7 +192,6 @@ const ImportExportModalContent: React.FC<FormModalProps> = ({ setModalOpen, isTy
               </RButton>
             </>
           ) : (
-            // Add code/link options
             <RButton
               themeColor={config.themeColor}
               onClick={async () => {

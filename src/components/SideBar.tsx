@@ -54,16 +54,13 @@ const SideBar: React.FC<ShipListProps> = ({ children, refer = null }) => {
               className={`${config.themeColor}`}
               value={searchValue}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                // console.log('change', e.target.value);
                 setSearchValue(e.target.value);
-                // if (e.target.value.length > 1) {
                 dispatch(
                   updateSearch(shipData, SearchAction.SetSearch, {
                     searchString: e.target.value,
                     list: appState.cToggle,
                   })
                 );
-                // }
               }}
               onFocus={(e) => {
                 e.target.select();

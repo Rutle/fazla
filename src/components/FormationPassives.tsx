@@ -17,7 +17,6 @@ interface FormationPassivesProps {
  * Component for displaying passives of ships in a formation.
  */
 const FormationPassives: React.FC<FormationPassivesProps> = ({ themeColor, fleet, isSelected }) => {
-  // console.log(`Rendered FormationPassives`);
   const [showMain, setShowMain] = useState(true);
   const [showVanguard, setShowVanguard] = useState(true);
   const [isOpen, setIsOpen] = useState({ main: true, vanguard: true });

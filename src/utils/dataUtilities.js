@@ -71,7 +71,6 @@ function checkSkills() {
   const jsonObject = {};
   Object.keys(shipData).forEach((ele, idx) => {
     const ship = shipData[ele];
-    // if (idx === 0) console.log(ship);
     if (ship.names === undefined) {
       console.log('skills undefined')
       if (jsonObject.nonames === undefined) {
@@ -80,8 +79,6 @@ function checkSkills() {
       } else {
         jsonObject.nonames = jsonObject.nonames + 1;
       }
-      
-      // console.log(ship.names);
     } else {
       if (jsonObject.names === undefined) {
         console.log('eka2')

@@ -16,7 +16,7 @@ const FooterBar: React.FC = () => {
     if (Number.isNaN(version)) return '-';
     return `v${version}`;
   };
-  // TODO: Add link to repo.
+
   return (
     <div id="footer" className={`${config.themeColor}`}>
       <div className="footer-msg-container">

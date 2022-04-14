@@ -72,11 +72,10 @@ const FormationEquipment: React.FC<{
   const fData = useSelector((state: RootState) => state.formationGrid);
   const { shipData } = useContext(AppContext);
   const ddRef = useRef<HTMLDivElement>(null);
-
   return (
     <div id="equipment-grid" className={`f-grid rounded gap ${config.themeColor}`}>
       <div className="f-row gap wrap">
-        <div className="f-column">
+        <div className="f-column" style={{ minWidth: '0', width: '50%' }}>
           <div className="f-row fleet gap">
             {data[selectedFleetIndex].slice(0, 3).map((ship, shipIdx) => {
               // slice (0, 3) for main fleet ships, but also submarine fleet.
@@ -103,7 +102,11 @@ const FormationEquipment: React.FC<{
                 });
               }
               return (
-                <div key={`none-${shipIdx + 1}`} className="f-column" style={{ gap: '2px 0px', minWidth: '0' }}>
+                <div
+                  key={`none-${shipIdx + 1}`}
+                  className="f-column"
+                  style={{ gap: '2px 0px', minWidth: '0', width: '50%' }}
+                >
                   <div className="dropdown placeholder">
                     <span style={{ height: '18px' }}>
                       {!ship ? '-' : equipmentData[selectedFleetIndex][shipIdx][0]}
@@ -125,7 +128,7 @@ const FormationEquipment: React.FC<{
           </div>
         </div>
         {data[selectedFleetIndex].length > 3 ? (
-          <div className="f-column">
+          <div className="f-column" style={{ minWidth: '0', width: '50%' }}>
             <div className="f-row fleet gap">
               {data[selectedFleetIndex].slice(3).map((ship, shipIdx) => {
                 // slice (3) for vanguard fleet ships. Keep main and vanguard in separate divs for easier
@@ -156,7 +159,11 @@ const FormationEquipment: React.FC<{
                   });
                 }
                 return (
-                  <div key={`none-${shipIdx + 1}`} className="f-column" style={{ gap: '2px 0px', minWidth: '0' }}>
+                  <div
+                    key={`none-${shipIdx + 1}`}
+                    className="f-column"
+                    style={{ gap: '2px 0px', minWidth: '0', width: '50%' }}
+                  >
                     <div className="dropdown placeholder">
                       <span style={{ height: '18px' }}>
                         {!ship ? '-' : equipmentData[selectedFleetIndex][shipIdx + 3][0]}

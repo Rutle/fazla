@@ -13,7 +13,7 @@ const MessageBox: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           minHeight: '40px',
         }}
       >
-        <span className="message" style={{ justifyContent: 'center', width: '100%', whiteSpace: 'pre-wrap' }}>
+        <span className="message" style={{ justifyContent: 'center', width: '100%' }}>
           {children}
         </span>
       </div>

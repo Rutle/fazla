@@ -138,13 +138,16 @@ nav.navigation.tab.light {
 }
 #small-nav.light button.nav-item {
   border: 1px solid var(--main-light-border);
+  box-shadow: 0px 4px 10px 0px #435e7740;
 }
+
 #small-nav.navigation.light > .nav-item:hover {
   background-color: var(--main-light-hover-bg);
 }
 
 .navigation.light > .nav-item {
   color: white;
+  border-bottom: 2px solid transparent;
 }
 
 :not(#small-nav).navigation.light > .nav-item:hover {
@@ -188,11 +191,11 @@ input[type="text"].light {
 }
 
 button.menu-item.light:hover,
-button.grid-item.btn.light:hover,
+button.grid-item.ship.btn.light:hover,
 .light .tab-btn:hover,
 .btn.light:hover {
-  background-color: #a4d3ff!important;
-  color: var(--main-light-color)!important;
+  background-color: #a4d3ff;
+  color: var(--main-light-color);
   /* border: 1px solid #a4d3ff;*/
 }
 button.rList-item.light.btn:hover {
@@ -202,7 +205,7 @@ button.rList-item.light.btn:hover {
 }
 button.btn.light:disabled:hover,
 button.tab-btn.light:disabled:hover {
-  background-color: var(--main-light-bg);
+  background-color: var(--main-light-bg)!important;
 }
 button.menu-item.light.selected,
 label.btn.light.selected,
@@ -246,11 +249,11 @@ button.btn.light:active {
   border: 1px solid #aed8ff;
   background-color: var(--main-light-bg);
 }
-.f-grid.light .f-row.fleet > button,
+
+.f-grid.light .f-row.fleet > .grid-item.ship.btn,
 .light .tab > .dropdown.formation > button.tab-btn,
 .light .tab > button.tab-btn {
-  /* border-radius: inherit;*/
-  box-shadow: 0px 4px 10px 0px #435e7740; /* for light theme TODO */
+  box-shadow: 0px 4px 10px 0px #435e7740;
 }
 
 .light .dropdown.placeholder {
@@ -306,14 +309,13 @@ input[type="url"].light.is-invalid,
 }
 
 .grid-item.light.drag-over {
-  border: 2px dotted!important;
-  border-radius: 4px!important;
+  border: 1px dotted!important;
 }
 
 .grid-item.light.drag-over-invalid {
-  border: 2px dotted red!important;
-  border-radius: 4px!important;
+  border: 1px dotted red!important;
 }
+
 /* #### Grid #### */
 div.f-grid.light div.f-header {
   border-bottom: 2px solid var(--main-light-border);

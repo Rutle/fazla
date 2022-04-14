@@ -238,15 +238,11 @@ label.dark,
 button.dark {
   background-color: var(--main-dark-header-bg);
   color: var(--main-dark-color);
-  /* border: 1px solid #ffffff03;*/
   border: 1px solid #ffffff0a;
 }
 button.menu-item.dark:hover,
 button.btn.grid-item.dark:hover,
 .btn:not(.non-interactive).dark:hover {
-  /* TODO: Check colors with electron for window controls */
-  /* background-color: #3c4652!important;*/
-  /* background-color: #3c4652b3 !important;*/
   background-color: var(--main-dark-active-bg)!important;
   color: var(--main-dark-hover-color)!important;
 }
@@ -256,7 +252,6 @@ button.menu-item.dark {
 }
 
 button.dark.tab-btn:hover {
-  /* background-color: var(--main-dark-hover-bg);*/
   background-color: #3c4652b3 !important;
   color: var(--main-dark-hover-color);
 }
@@ -281,9 +276,9 @@ button.grid-item.btn.dark.selected,
 button.rList-item.dark.btn.selected,
 button.btn.dark.selected,
 button.tab-btn.dark.selected {
-  background-color: var(--main-dark-active-bg);
+  background-color: var(--main-dark-active-bg)!important;
   /* background-color: #38414d;*/
-  color:#98caff;
+  color:#98caff!important;
 }
 
 div.f-grid.dark div.tab > .dropdown.formation,
@@ -520,7 +515,7 @@ div.f-grid.dark div.f-row.deepskyblue {
 .message-container.dark {
   color: var(--main-dark-color);
   border: 1px solid #1a1a1a;
-  background-color: var(--main-dark-header-bg);
+  background-color: var(--main-dark-body-bg);
 }
 .toast-container.dark > .toast {
   box-shadow: rgba(0, 0, 0, 0.39) 0px 2px 4px 1px;

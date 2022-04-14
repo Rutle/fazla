@@ -7,10 +7,10 @@ interface FormationGridProps {
   themeColor: string;
   selectedFleetIndex: number;
   ships: Ship[][];
-  openSearchSection?: (isOpen: boolean, gridIndex: number) => void;
+  openSearchSection?: (gridIndex: number) => void;
   selectedGridIndex?: number;
   fleetCount: number;
-  // isSubFleet: boolean;
+  isSubFleet: boolean;
   // refd: React.RefObject<HTMLDivElement>;
   viewOnly?: boolean;
 }
@@ -26,8 +26,7 @@ const FormationGrid: React.FC<FormationGridProps> = ({
   openSearchSection,
   selectedGridIndex,
   fleetCount,
-  // isSubFleet,
-  // refd,
+  isSubFleet,
   viewOnly = false,
 }) => {
   const vanRef = useRef<HTMLDivElement>(null);
@@ -36,13 +35,13 @@ const FormationGrid: React.FC<FormationGridProps> = ({
 
   const open = useCallback(
     (gridIndex: number) => () => {
-      if (openSearchSection) openSearchSection(true, gridIndex);
+      if (openSearchSection) openSearchSection(gridIndex);
     },
     [openSearchSection]
   );
 
   return (
-    <div id="formation-grid" className={`f-grid rounded gap ${themeColor}`} /* ref={refd} */>
+    <div id="formation-grid" className={`f-grid rounded gap ${themeColor}`}>
       <div className={`f-row gap wrap ${selectedFleetIndex === fleetCount ? 'hidden' : ''}`}>
         <div id="main-section" className="f-column" ref={mainRef} style={{ width: '50%' }}>
           {ships.slice(0, fleetCount).map((fleet, fleetIdx) => (
@@ -94,23 +93,36 @@ const FormationGrid: React.FC<FormationGridProps> = ({
           ref={subRef}
           style={{ marginBottom: '10px' }}
         >
-          {ships.slice(-1).map((fleet) => (
-            <div key="submarine" className="f-row fleet">
-              {fleet.map((ship, shipIdx) => (
-                <FormationGridItem
-                  key={`sub-${fleetCount * 6 + shipIdx}-${fleetName}`}
-                  index={fleetCount * 6 + shipIdx}
-                  ship={ship}
-                  themeColor={themeColor}
-                  onClick={open(fleetCount * 6 + shipIdx)}
-                  isSelected={selectedGridIndex === fleetCount * 6 + shipIdx}
-                  isSub
-                  fleetCount={fleetCount}
-                  isInteractive={!viewOnly}
-                />
-              ))}
+          {isSubFleet ? (
+            ships.slice(-1).map((fleet) => (
+              <div key="submarine" className="f-row fleet">
+                {fleet.map((ship, shipIdx) => (
+                  <FormationGridItem
+                    key={`sub-${fleetCount * 6 + shipIdx}-${fleetName}`}
+                    index={fleetCount * 6 + shipIdx}
+                    ship={ship}
+                    themeColor={themeColor}
+                    onClick={open(fleetCount * 6 + shipIdx)}
+                    isSelected={selectedGridIndex === fleetCount * 6 + shipIdx}
+                    isSub
+                    fleetCount={fleetCount}
+                    isInteractive={!viewOnly}
+                  />
+                ))}
+              </div>
+            ))
+          ) : (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                fontVariantCaps: 'all-petite-caps',
+                marginBottom: '10px',
+              }}
+            >
+              No submarines
             </div>
-          ))}
+          )}
         </div>
       </div>
     </div>

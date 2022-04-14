@@ -40,10 +40,11 @@ interface FormationViewState {
   formationData?: FormationData;
   fleetTabIndex: number;
   warning?: string;
-  isUpdateRequired: boolean;
   cAction?: 'SUB' | 'EQSTRUCTURE';
   validCode?: boolean;
   importedF?: Formation;
+  selectedGrid: number;
+  showSearch: boolean;
 }
 
 type FormationViewAction =
@@ -56,16 +57,19 @@ type FormationViewAction =
       cAction?: 'SUB' | 'EQSTRUCTURE';
     }
   | { type: 'WARNING'; warning: string; validCode?: boolean }
-  | { type: 'SELECT'; index: number }
-  | { type: 'UPDATE'; isUpdate: boolean };
+  | { type: 'SELECTFLEET'; fleetIndex: number; showSearch: boolean; shipIndex: number }
+  | { type: 'SELECTSHIP'; index: number }
+  | { type: 'OPENSEARCH' }
+  | { type: 'HIDESEARCH' };
 
 const initialFormationState: FormationViewState = {
   formationData: undefined,
   fleetTabIndex: 0,
   warning: undefined,
-  isUpdateRequired: false,
   cAction: undefined,
   validCode: undefined,
+  selectedGrid: NaN,
+  showSearch: false,
 };
 
 const formationReducer = (state: FormationViewState, action: FormationViewAction) => {
@@ -74,11 +78,11 @@ const formationReducer = (state: FormationViewState, action: FormationViewAction
       return {
         ...state,
         warning: action.warning,
-        isUpdateRequired: false,
         formationData: action.data,
         cAction: action.cAction,
         validCode: action.validCode,
         importedF: action.importedF,
+        selectedGrid: NaN,
       };
     }
     case 'WARNING': {
@@ -88,13 +92,25 @@ const formationReducer = (state: FormationViewState, action: FormationViewAction
         formationData: undefined,
         warning: action.warning,
         validCode: action.validCode,
+        selectedGrid: NaN,
       };
     }
-    case 'SELECT': {
-      return { ...state, fleetTabIndex: action.index };
+    case 'SELECTFLEET': {
+      return {
+        ...state,
+        fleetTabIndex: action.fleetIndex,
+        showSearch: action.showSearch,
+        selectedGrid: action.shipIndex,
+      };
     }
-    case 'UPDATE': {
-      return { ...state, isUpdateRequired: action.isUpdate };
+    case 'SELECTSHIP': {
+      return { ...state, selectedGrid: action.index };
+    }
+    case 'OPENSEARCH': {
+      return { ...state, showSearch: true };
+    }
+    case 'HIDESEARCH': {
+      return { ...state, showSearch: false, selectedGrid: NaN };
     }
     default: {
       return state;
@@ -116,16 +132,16 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
   const fData = useSelector((state: RootState) => state.formationGrid);
   const appState = useSelector((state: RootState) => state.appState);
   const [showModal, setModalOpen] = useState({ modal: '', isOpen: false });
-  const [showSearch, setShowSearch] = useState(false);
-  const [selectedGrid, setSelectedGrid] = useState(NaN);
   const refData = useRef<HTMLDivElement>(null);
   const refTransition = useRef<HTMLDivElement>(null);
   const [isVisible, refSide] = useVisibility();
   const gridRef = useRef<HTMLDivElement>(null);
   const gridSize = useResizeObserver<HTMLDivElement>({ ref: gridRef });
   const cHeight = useRef(0);
-  const [{ fleetTabIndex, warning, formationData, isUpdateRequired, cAction, validCode, importedF }, dispatchState] =
-    useReducer(formationReducer, initialFormationState);
+  const [
+    { fleetTabIndex, warning, formationData, cAction, validCode, importedF, selectedGrid, showSearch },
+    dispatchState,
+  ] = useReducer(formationReducer, initialFormationState);
   /*
   useEffect(() => {
     if (gridSize && gridSize.width && gridSize.height && gridSize.height !== cHeight.current)
@@ -141,17 +157,13 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
       if (parsed) {
         getFormationData(parsed as Formation, shipData)
           .then((res) => {
-            if (res.convertAction) {
-              dispatchState({
-                type: 'READY',
-                data: res,
-                warning: 'Please convert formation to the new structure.',
-                cAction: res.convertAction,
-                validCode: true,
-              });
-            } else {
-              dispatchState({ type: 'READY', data: res, validCode: true, importedF: parsed as Formation });
-            }
+            dispatchState({
+              type: 'READY',
+              data: res,
+              validCode: true,
+              importedF: parsed as Formation,
+              cAction: res.convertAction,
+            });
           })
           .catch((e: unknown) => {
             if (e instanceof Error) dispatchState({ type: 'WARNING', warning: e.message });
@@ -178,19 +190,18 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
     [refSide]
   );
 
-  const hideSearchSection = (isOpen: boolean) => {
-    setShowSearch(isOpen);
+  const hideSearchSection = useCallback(() => {
+    dispatchState({ type: 'HIDESEARCH' });
     dispatch(setFleet({ fleet: 'ALL' }));
-  };
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatchState({ type: 'SELECT', index: 0 });
-    hideSearchSection(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fData.selectedIndex]);
+    // Resets selected fleet index to 0 when formation index is changed.
+    dispatchState({ type: 'SELECTFLEET', fleetIndex: 0, showSearch: false, shipIndex: NaN });
+    dispatch(setFleet({ fleet: 'ALL' }));
+  }, [dispatch, fData.selectedIndex]);
 
   useEffect(() => {
-    /* TODO: Check that it scrolls to top when search lit is hidden especially on small screen */
     if (showSearch) scrollTo('reset');
   }, [scrollTo, showSearch]);
 
@@ -200,39 +211,18 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
     if (!viewOnly && fData.formations.length !== 0) {
       getFormationData(fData.formations[fData.selectedIndex], shipData)
         .then((res) => {
-          switch (res.convertAction) {
-            case 'SUB':
-              dispatchState({
-                type: 'READY',
-                data: undefined,
-                warning: 'Please convert formation to the new structure.\nReason: Submarines are missing.',
-                cAction: res.convertAction,
-              });
-              break;
-            case 'EQSTRUCTURE':
-              dispatchState({
-                type: 'READY',
-                data: res,
-                warning: 'Please convert formation to the new structure.\nReason: Old equipment structure.',
-                cAction: res.convertAction,
-              });
-              break;
-            default:
-              dispatchState({ type: 'READY', data: res });
-              break;
-          }
+          dispatchState({ type: 'READY', data: res, cAction: res.convertAction });
         })
         .catch((e: unknown) => {
           if (e instanceof Error) dispatchState({ type: 'WARNING', warning: e.message });
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fData.selectedIndex, fData.formations, viewOnly]);
+  }, [fData.selectedIndex, fData.formations, viewOnly, shipData]);
 
   // Update search list and show the search section.
   const showSearchSection = useCallback(
-    (isOpen: boolean, gridIndex: number) => {
-      setSelectedGrid(gridIndex);
+    (gridIndex: number) => {
+      dispatchState({ type: 'SELECTSHIP', index: gridIndex });
       if (!Number.isNaN(gridIndex) && shipData && gridIndex !== undefined && formationData) {
         let fleet: 'ALL' | 'VANGUARD' | 'MAIN' | 'SUBMARINE' = 'ALL';
         if (MAININDEX[formationData.fleetCount].includes(gridIndex)) {
@@ -250,14 +240,14 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
           })
         );
       }
-      setShowSearch(isOpen);
+      dispatchState({ type: 'OPENSEARCH' });
     },
     [appState.cToggle, dispatch, formationData, shipData]
   );
 
   const addShip = () => {
     dispatch(formationAction(FormationAction.AddShip, { shipData, gridIndex: selectedGrid }));
-    setShowSearch(false);
+    dispatchState({ type: 'HIDESEARCH' });
   };
 
   const renderModal = (): JSX.Element => {
@@ -283,17 +273,13 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
   useEffect(() => {
     if (fData.isEdit.some((val) => val !== false)) {
       dispatch(formationAction(FormationAction.Save, { storage }));
-      if (isUpdateRequired) {
-        // After using formation convert we need to remove the warning and update the screen.
-        dispatchState({ type: 'READY' });
-      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, fData.isEdit]);
 
   useEffect(() => {
     if (appState.cState === 'RUNNING') {
-      hideSearchSection(false);
+      hideSearchSection();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState.cState, config.themeColor]);
@@ -323,15 +309,14 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
   };
   const setTabIndex = useCallback(
     (idx: number) => () => {
-      dispatchState({ type: 'SELECT', index: idx });
-      setShowSearch(false);
+      dispatchState({ type: 'SELECTFLEET', fleetIndex: idx, showSearch: false, shipIndex: NaN });
     },
     []
   );
 
   const showMessage = () => {
-    if (cAction && warning) return warning;
     if (viewOnly && !validCode) return warning;
+    if (warning) return warning;
     return 'No formation data.';
   };
 
@@ -359,9 +344,7 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
                       history.push('/formations');
                     }}
                   >
-                    <span style={{ display: 'inline-block' }}>
-                      Save and Close {`${validCode && cAction ? '(older formation data)' : ''}`}
-                    </span>
+                    <span style={{ display: 'inline-block' }}>Save and Close</span>
                   </RButton>
                 )}
                 {!viewOnly && fData.formations.length !== 0 && (
@@ -389,10 +372,9 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
                     >
                       Rename
                     </RButton>
-
                     <RButton
                       themeColor={config.themeColor}
-                      disabled={!!cAction}
+                      disabled={!!cAction || !!warning}
                       className="tab-btn normal"
                       onClick={() => setModalOpen({ modal: 'export', isOpen: true })}
                     >
@@ -400,7 +382,6 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
                     </RButton>
                     <RButton
                       themeColor={config.themeColor}
-                      disabled={!!cAction}
                       className="tab-btn normal"
                       onClick={() => setModalOpen({ modal: 'import', isOpen: true })}
                     >
@@ -414,7 +395,6 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
                         onClick={() => {
                           if (cAction) {
                             dispatch(formationAction(FormationAction.Convert, { convertType: cAction }));
-                            dispatchState({ type: 'UPDATE', isUpdate: true });
                           }
                         }}
                       >
@@ -441,18 +421,6 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
               </div>
             </div>
           </div>
-          {!viewOnly && cAction === 'EQSTRUCTURE' && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                fontVariantCaps: 'all-petite-caps',
-                marginBottom: '10px',
-              }}
-            >
-              Please convert. Reason: Old equipment structure.
-            </div>
-          )}
           {formationData ? (
             <>
               <div id="fleet-selector" className={`f-grid rounded ${config.themeColor}`}>
@@ -482,7 +450,7 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
                 openSearchSection={showSearchSection}
                 selectedGridIndex={selectedGrid}
                 fleetCount={formationData.fleetCount}
-                // refd={gridRef}
+                isSubFleet={cAction !== 'SUB'}
                 viewOnly={viewOnly}
               />
               <FormationEquipment
@@ -564,7 +532,7 @@ const FormationView: React.FC<{ viewOnly: boolean }> = ({ viewOnly }) => {
                 <RButton
                   themeColor={config.themeColor}
                   className="nav-item"
-                  onClick={() => hideSearchSection(false)}
+                  onClick={() => hideSearchSection()}
                   extraStyle={{ display: 'flex', padding: '6px', marginTop: '4px', borderRadius: 'inherit' }}
                 >
                   <CloseIcon themeColor={config.themeColor} className="icon" />

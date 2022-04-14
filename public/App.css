@@ -394,16 +394,9 @@ button.btn,
 button.btn * {
   cursor: pointer;
   box-sizing: border-box;
-  -webkit-transition: 0.2s ease;
-  transition: 0.2s ease;
+  -webkit-transition: background-color 0.2s ease, border 0.2s ease;
+  transition: background-color 0.2s ease, border 0.2s ease;
 }
-
-/* TODO. Check on electron.
-label.btn,
-button.btn {
-  display: inline-block;
-}
-*/
 
 div.grid-item.non-interactive,
 button.btn.grid-item {
@@ -436,14 +429,7 @@ button.btn.normal.icon-only,
 button.tab-btn.normal.icon-only {
   padding: 0px 5px 0px 5px;
 }
-/*
-.btn:not(:disabled):active > span,
-.tab-btn:active > span,
-.btn:active > div.name,
-.btn:active > div.hulltype {
-  transform: translateY(1px);
-}
-*/
+
 /* ###### top-container + tab ##### */
 .top-container {
   display: flex;
@@ -497,18 +483,14 @@ div.f-row.action *,
   align-self: center;
   border-radius: 5px;
   /* margin-bottom: 5px;*/
-  box-shadow: rgba(0, 0, 0, 0.39) 0px 0px 8px 2px;
+  box-shadow: 0px 0px 12px 0 rgb(0 0 0 / 24%);
 }
 
 .message-container > span.message {
   display: flex;
-  font-size: 24px;
-  /* height: inherit;*/
+  font-size: 20px;
   padding: 15px 15px 17px 15px;
-  /* flex-grow: 1;*/
   box-sizing: border-box;
-  /*align-items: center; TODO: Check if these are needed in electron
-  justify-content: center;*/
   font-variant-caps: all-petite-caps;
 }
 
@@ -633,7 +615,6 @@ div.f-row.action *,
   font-size: 1.5em;
   align-items: center; /* TODO: check on electron */
   margin-bottom: 10px;
-  /* flex-wrap: wrap;*/
 }
 .rounded {
   border-radius: 5px;
@@ -685,7 +666,6 @@ span.Elite:last-child {
   box-sizing: border-box;
   padding: 0px;
   border: unset;
-  /* border: 1px solid transparent;*/
 }
 
 .rList .rList-item > div.hulltype {
@@ -721,12 +701,8 @@ span.Elite:last-child {
 .button-group,
 .radio-group {
   box-sizing: border-box;
-  /* width: 100%;*/ /*Check on Electron. TODO */
   display: flex;
-  /* flex-wrap: wrap;*/ /*Check on Electron. TODO */
   flex-direction: row;
-  /* justify-content: center;*/ /*Check on Electron. TODO */
-  /*border-radius: 4px; */
 }
 
 .button-group > button:first-child,
@@ -816,7 +792,6 @@ button.input:hover {
 .f-grid {
   display: flex;
   flex-direction: column;
-  /* padding: 1px;*/
   margin-bottom: 10px;
 }
 
@@ -867,7 +842,6 @@ div.f-grid div.tab,
 div.f-grid div.f-header {
   display: flex;
   flex: 1;
-  /* flex-direction: column;*/
   border-top-left-radius: inherit;
   padding: 5px 5px;
   font-size: 15px;
@@ -885,17 +859,7 @@ div.f-grid > div.f-row > div.tab.fleets {
 div.f-grid .f-row.fleet {
   gap: 8px;
 }
-/* 
-div.f-grid div.f-row.fleet > button.grid-item:first-child {
-  border-top-left-radius: inherit;
-  border-bottom-left-radius: inherit;
-}
 
-div.f-grid div.f-row.fleet > button.grid-item:last-child {
-  border-top-right-radius: inherit;
-  border-bottom-right-radius: inherit;
-}
-*/
 div.f-grid div.f-header + div.f-icon,
 div.f-grid div.f-header:only-child {
   border-top-right-radius: inherit;
@@ -1016,8 +980,6 @@ div.f-grid .f-body > div.f-row > button.grid-item:first-child {
 div.f-grid .f-body > div.f-row > button.grid-item:last-child {
   border-bottom-right-radius: inherit;
 }
-
-
 
 /* https://dev.to/link2twenty/accessibility-first-toggle-switches-3obj */
 .switch {
@@ -1350,9 +1312,12 @@ div.f-grid .f-body > div.f-row > button.grid-item:last-child {
   #equipment-grid > div.f-row {
     flex-direction: column;
   }
-
+  #equipment-grid div.f-column {
+    width: unset!important;
+  }
   #main-section.f-column,
   #vanguard-section.f-column {
     width: unset!important;
+    min-width: 100%!important;
   }
 }
